@@ -19,14 +19,14 @@ jobs:
 
       - run:
           name: "Generate PDF"
-          command: cd ..; bash scripts/generate_pdf.sh;
+          command: bash scripts/generate_pdf.sh;
 
       # echo "222.222.95.49 uc.qbox.me": adds a new host
       - deploy:
           name: "Publish PDF"
           command: |
             sudo bash -c 'echo "222.222.95.49 uc.qbox.me" >> /etc/hosts';
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            if [ "${CIRCLE_BRANCH}" == "release-1.0" ]; then
               python3 scripts/upload.py output_en.pdf tidb-data-migration-manual-en-v1.0.pdf;
               python3 scripts/upload.py output_zh.pdf tidb-data-migration-manual-cn-v1.0.pdf;
             fi
@@ -39,4 +39,4 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - release-1.0
