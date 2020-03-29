@@ -27,16 +27,9 @@ jobs:
           command: |
             sudo bash -c 'echo "222.222.95.49 uc.qbox.me" >> /etc/hosts';
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              python3 scripts/upload.py output_en.pdf tidb-data-migration-manual-en-1.0.pdf;
-              python3 scripts/upload.py output_zh.pdf tidb-data-migration-manual-cn-1.0.pdf;
+              python3 scripts/upload.py output_en.pdf tidb-data-migration-manual-en-v1.0.pdf;
+              python3 scripts/upload.py output_zh.pdf tidb-data-migration-manual-cn-v1.0.pdf;
             fi
-
-      - run:
-          name: "Copy Generated PDF"
-          command: mkdir /tmp/artifacts && cp output_en.pdf en/doc.md output_zh.pdf zh/doc.md /tmp/artifacts
-
-      - store_artifacts:
-          path: /tmp/artifacts
 
 workflows:
   version: 2
