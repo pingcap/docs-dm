@@ -25,8 +25,8 @@
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
 + Deploy
   + Deploy a DM Cluster
-    - [使用 DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
-    - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
+    - [Use DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
+    - [Use Binary](deploy-a-dm-cluster-using-binary.md)
   + [Replicate Data Using DM](replicate-data-using-dm.md)
 + Configure
   - [Overview](config-overview.md)
