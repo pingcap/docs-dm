@@ -88,7 +88,7 @@ DM Portal 可以在 [dm-portal-latest-linux-amd64.tar.gz](https://download.pingc
 1. 填写任务名称。
 2. 选择任务类型。
 
-![DM Portal BasicConfig](/media/dm-portal-basicconfig.png)
+![DM Portal BasicConfig](/media/zh/dm-portal-basicconfig.png)
 
 ### 实例信息配置
 
@@ -110,7 +110,7 @@ DM Portal 可以在 [dm-portal-latest-linux-amd64.tar.gz](https://download.pingc
 2. 填写下游实例信息。
 3. 点击**下一步**。
 
-![DM Portal InstanceConfig](/media/dm-portal-instanceconfig.png)
+![DM Portal InstanceConfig](/media/zh/dm-portal-instanceconfig.png)
 
 ### binlog 过滤配置
 
@@ -132,11 +132,11 @@ DM Portal 可以在 [dm-portal-latest-linux-amd64.tar.gz](https://download.pingc
 1. 点击需要配置的数据库或者数据表。
 2. 点击编辑按钮，选择需要过滤的 binlog 类型。
 
-![DM Portal InstanceShow](/media/dm-portal-instanceshow.png)
+![DM Portal InstanceShow](/media/zh/dm-portal-instanceshow.png)
 
-![DM Portal BinlogFilter 1](/media/dm-portal-binlogfilter-1.png)
+![DM Portal BinlogFilter 1](/media/zh/dm-portal-binlogfilter-1.png)
 
-![DM Portal BinlogFilter 2](/media/dm-portal-binlogfilter-2.png)
+![DM Portal BinlogFilter 2](/media/zh/dm-portal-binlogfilter-2.png)
 
 ### 库表路由配置
 
@@ -163,40 +163,40 @@ DM Portal 可以在 [dm-portal-latest-linux-amd64.tar.gz](https://download.pingc
 
 ##### 移动同步库表
 
-![DM Portal TableRoute 1](/media/dm-portal-tableroute-1.png)
+![DM Portal TableRoute 1](/media/zh/dm-portal-tableroute-1.png)
 
-![DM Portal TableRoute 2](/media/dm-portal-tableroute-2.png)
+![DM Portal TableRoute 2](/media/zh/dm-portal-tableroute-2.png)
 
 ##### 右键修改库表名称
 
-![DM Portal ChangeTableName](/media/dm-portal-changetablename.png)
+![DM Portal ChangeTableName](/media/zh/dm-portal-changetablename.png)
 
 ##### 合并数据表操作
 
-![DM Portal MergeTable 1](/media/dm-portal-mergetable-1.png)
+![DM Portal MergeTable 1](/media/zh/dm-portal-mergetable-1.png)
 
-![DM Portal MergeTable 2](/media/dm-portal-mergetable-2.png)
+![DM Portal MergeTable 2](/media/zh/dm-portal-mergetable-2.png)
 
 ##### 移动数据表至其他数据库
 
-![DM Portal MoveToDB 1](/media/dm-portal-movetodb-1.png)
+![DM Portal MoveToDB 1](/media/zh/dm-portal-movetodb-1.png)
 
-![DM Portal MoveToDB 2](/media/dm-portal-movetodb-2.png)
+![DM Portal MoveToDB 2](/media/zh/dm-portal-movetodb-2.png)
 
 ##### 移动数据表至新建默认数据库
 
-![DM Portal MoveToNewDB 1](/media/dm-portal-movetonewdb-1.png)
+![DM Portal MoveToNewDB 1](/media/zh/dm-portal-movetonewdb-1.png)
 
-![DM Portal MoveToNewDB 2](/media/dm-portal-movetonewdb-2.png)
+![DM Portal MoveToNewDB 2](/media/zh/dm-portal-movetonewdb-2.png)
 
 ##### 撤销本次操作
 
-![DM Portal Revert](/media/dm-portal-revert.png)
+![DM Portal Revert](/media/zh/dm-portal-revert.png)
 
 ##### 清空下游实例
 
-![DM Portal Reset](/media/dm-portal-reset.png)
+![DM Portal Reset](/media/zh/dm-portal-reset.png)
 
 ##### 完成并下载
 
-![DM Portal GenerateConfig](/media/dm-portal-generateconfig.png)
+![DM Portal GenerateConfig](/media/zh/dm-portal-generateconfig.png)
