@@ -2,6 +2,7 @@
 title: Data Migration Relay Log
 summary: Learn the directory structure, initial replication rules and data purge of DM relay logs.
 category: reference
+aliases: ['/docs/dev/reference/tools/data-migration/relay-log/','/docs/v3.1/reference/tools/data-migration/relay-log/','/docs/v3.0/reference/tools/data-migration/relay-log/','/docs/v2.1/reference/tools/data-migration/relay-log/']
 ---
 
 # Data Migration Relay Log
@@ -36,7 +37,7 @@ An example of the directory structure of the local storage for a relay log:
 
     - `subdir` is named `<Upstream database UUID>.<Local subdir serial number>`.
 
-    - After a switch between master and slave instances in the upstream, DM-worker generates a new `subdir` directory with an incremental serial number.
+    - After [a switch between master and slave instances](cluster-operations.md#switch-between-master-and-slave-instances) in the upstream, DM-worker generates a new `subdir` directory with an incremental serial number.
 
         - In the above example, for the `7e427cc0-091c-11e9-9e45-72b7c59d52d7.000001` directory, `7e427cc0-091c-11e9-9e45-72b7c59d52d7` is the upstream database UUID and `000001` is the local `subdir` serial number.
 
@@ -101,7 +102,7 @@ Method 1: Use the command-line options.
     - The amount of remaining disk space in GB less than which the specified DM-worker machine tries to purge the relay log that can be purged securely in the automatic background purge. If it is set to `0`, data purge is not performed according to the remaining disk space.
     - "15" by default, indicating when the available disk space is less than 15GB, DM-master tries to purge the relay log securely.
 
-Method 2: Add the `[purge]` section in the configuration file of DM-worker.
+Method 2: Add the `[purge]` section in the [configuration file of DM-worker](dm-worker-configuration-file-full.md).
 
 ```toml
 # relay log purge strategy

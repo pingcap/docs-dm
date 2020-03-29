@@ -6,7 +6,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/manage-tasks/','/docs-cn/
 
 # 管理数据同步任务
 
-本文介绍了如何使用 [dmctl](/reference/tools/data-migration/overview.md#dmctl) 组件来进行数据同步任务的管理和维护。对于用 DM-Ansible 部署的 DM 集群，dmctl 二进制文件路径为 `dm-ansible/dmctl`。
+本文介绍了如何使用 [dmctl](overview.md#dmctl) 组件来进行数据同步任务的管理和维护。对于用 DM-Ansible 部署的 DM 集群，dmctl 二进制文件路径为 `dm-ansible/dmctl`。
 
 dmctl 支持交互模式用于人工操作，同时也支持命令模式用于脚本。
 

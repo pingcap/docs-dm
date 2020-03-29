@@ -21,7 +21,7 @@ MySQL/MariaDB 生成的 Binlog 文件中的数据变更信息，具体请参考 
 
 ### Binlog event filter
 
-比 Black & white table list 更加细粒度的过滤功能，具体可参考 [Binlog event filter](/reference/tools/data-migration/overview.md#binlog-event-filter)。
+比 Black & white table list 更加细粒度的过滤功能，具体可参考 [Binlog event filter](overview.md#binlog-event-filter)。
 
 ### Binlog position
 

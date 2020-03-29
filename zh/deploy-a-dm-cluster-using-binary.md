@@ -10,7 +10,7 @@ aliases: ['/docs-cn/dev/how-to/deploy/data-migration-with-binary/','/docs-cn/v3.
 
 ## 准备工作
 
-下载官方 binary，链接地址：[DM 下载](/reference/tools/download.md#tidb-dm-data-migration)。
+下载官方 binary，链接地址：[DM 下载](https://pingcap.com/docs-cn/stable/reference/tools/download/#tidb-dm-data-migration)。
 
 下载的文件中包括子目录 bin 和 conf。bin 目录下包含 dm-master、dm-worker、dmctl 以及 Mydumper 的二进制文件。conf 目录下有相关的示例配置文件。
 

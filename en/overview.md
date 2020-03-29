@@ -2,6 +2,7 @@
 title: Data Migration Overview
 summary: Learn about the Data Migration tool, the architecture, the key components and features.
 category: reference
+aliases: ['/docs/dev/reference/tools/data-migration/overview/','/docs/v3.1/reference/tools/data-migration/overview/','/docs/v3.0/reference/tools/data-migration/overview/','/docs/v2.1/reference/tools/data-migration/overview/']
 ---
 
 # Data Migration Overview
@@ -50,26 +51,56 @@ This section describes the data replication features provided by the Data Migrat
 
 ### Schema and table routing
 
-The schema and table routing feature means that DM can replicate a certain table of the upstream MySQL or MariaDB instance to the specified table in the downstream, which can be used to merge or replicate the sharding data.
+The [schema and table routing](feature-overview.md#table-routing) feature means that DM can replicate a certain table of the upstream MySQL or MariaDB instance to the specified table in the downstream, which can be used to merge or replicate the sharding data.
 
 ### Black and white lists replication at the schema and table levels
 
-The black and white lists filtering rule of the upstream database instance tables is similar to MySQL `replication-rules-db`/`replication-rules-table`, which can be used to filter or only replicate all operations of some databases or some tables.
+The [black and white lists filtering rule](feature-overview.md#black-and-white-table-lists) of the upstream database instance tables is similar to MySQL `replication-rules-db`/`replication-rules-table`, which can be used to filter or only replicate all operations of some databases or some tables.
 
 ### Binlog event filtering
 
-Binlog event filtering is a more fine-grained filtering rule than the black and white lists filtering rule. You can use statements like `INSERT` or `TRUNCATE TABLE` to specify the binlog events of `schema/table` that you need to replicate or filter out.
+[Binlog event filtering](feature-overview.md#binlog-event-filter) is a more fine-grained filtering rule than the black and white lists filtering rule. You can use statements like `INSERT` or `TRUNCATE TABLE` to specify the binlog events of `schema/table` that you need to replicate or filter out.
 
 ### Sharding support
 
-DM supports merging the original sharded instances and tables into TiDB, but with some restrictions.
+DM supports merging the original sharded instances and tables into TiDB, but with [some restrictions](feature-shard-merge.md#restrictions).
 
 ## Usage restrictions
 
 Before using the DM tool, note the following restrictions:
 
 + Database version
+
+    - 5.5 < MySQL version < 8.0
+    - MariaDB version >= 10.1.2
+
+    > **Note:**
+    >
+    > If there is a master-slave replication structure between the upstream MySQL/MariaDB servers, then choose the following version.
+    >
+    > - 5.7.1 < MySQL version < 8.0
+    > - MariaDB version >= 10.1.3
+
+    Data Migration [prechecks the corresponding privileges and configuration automatically](precheck.md) while starting the data replication task using dmctl.
+
 + DDL syntax
+
+    - Currently, TiDB is not compatible with all the DDL statements that MySQL supports. Because DM uses the TiDB parser to process DDL statements, it only supports the DDL syntax supported by the TiDB parser. For details, see [MySQL Compatibility](/reference/mysql-compatibility.md#ddl).
+
+    - DM reports an error when it encounters an incompatible DDL statement. To solve this error, you need to manually handle it using dmctl, either skipping this DDL statement or replacing it with a specified DDL statement(s). For details, see [Skip or replace abnormal SQL statements](faq.md#how-to-handle-incompatible-ddl-statements).
+
 + Sharding
+
+    - If conflict exists between sharded tables, solve the conflict by referring to [handling conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key). Otherwise, data replication is not supported. Conflicting data can cover each other and cause data loss.
+
+    - For other sharding restrictions, see [Sharding DDL usage restrictions](feature-shard-merge.md#restrictions).
+
 + Operations
+
+    - After DM-worker is restarted, the data replication task cannot be automatically restored. You need to manually run `start-task`. For details, see [Manage the Data Replication Task](manage-replication-tasks.md).
+
+    - After DM-worker is restarted, the DDL lock replication cannot be automatically restored in some conditions. You need to manually handle it. For details, see [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md).
+
 + Switching DM-worker connection to another MySQL instance
+
+    When DM-worker connects the upstream MySQL instance via a virtual IP (VIP), if you switch the VIP connection to another MySQL instance, DM might connect to the new and old MySQL instances at the same time in different connections. In this situation, the binlog replicated to DM is not consistent with other upstream status that DM receives, causing unpredictable anomalies and even data damage. To make necessary changes to DM manually, refer to [Switch DM-worker connection via virtual IP](cluster-operations.md#switch-dm-worker-connection-via-virtual-ip).

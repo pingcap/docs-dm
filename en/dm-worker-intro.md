@@ -2,6 +2,7 @@
 title: DM-worker Introduction
 summary: Learn the features of DM-worker.
 category: reference
+aliases: ['/docs/dev/reference/tools/data-migration/dm-worker-intro/','/docs/v3.1/reference/tools/data-migration/dm-worker-intro/','/docs/v3.0/reference/tools/data-migration/dm-worker-intro/','/docs/v2.1/reference/tools/data-migration/dm-worker-intro/']
 ---
 
 # DM-worker Introduction
@@ -69,7 +70,7 @@ The downstream database (TiDB) user must have the following privileges:
 |:----|:----|
 | `SELECT` | Tables |
 | `INSERT` | Tables |
-| `UPDATE`| Tables |
+| `UPDATE` | Tables |
 | `DELETE` | Tables |
 | `CREATE` | Databases, tables |
 | `DROP` | Databases, tables |

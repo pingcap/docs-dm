@@ -43,7 +43,7 @@ DM 在增量同步阶段依赖 `ROW` 格式的 binlog，如果未启用 binlog �
 
 ## 第 2 步：部署 DM 集群
 
-目前推荐使用 DM-Ansible 部署 DM 集群，具体部署方法参照[使用 DM-Ansible 部署 DM 集群](/how-to/deploy/data-migration-with-ansible.md)。
+目前推荐使用 DM-Ansible 部署 DM 集群，具体部署方法参照[使用 DM-Ansible 部署 DM 集群](deploy-a-dm-cluster-using-ansible.md)。
 
 > **注意：**
 >
