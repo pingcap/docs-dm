@@ -1,7 +1,6 @@
 ---
 title: 使用 DM-Ansible 部署 DM 集群
 category: how-to
-aliases: ['/docs-cn/dev/how-to/deploy/data-migration-with-ansible/','/docs-cn/v3.1/how-to/deploy/data-migration-with-ansible/','/docs-cn/v3.0/how-to/deploy/data-migration-with-ansible/','/docs-cn/v2.1/how-to/deploy/data-migration-with-ansible/']
 ---
 
 # 使用 DM-Ansible 部署 DM 集群

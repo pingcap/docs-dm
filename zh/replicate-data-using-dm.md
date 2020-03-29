@@ -1,7 +1,6 @@
 ---
 title: 使用 DM 同步数据
 category: reference
-aliases: ['/docs-cn/dev/reference/tools/data-migration/deploy/','/docs-cn/v3.1/reference/tools/data-migration/deploy/','/docs-cn/v3.0/reference/tools/data-migration/deploy/','/docs-cn/v2.1/reference/tools/data-migration/deploy/']
 ---
 
 # 使用 DM 同步数据

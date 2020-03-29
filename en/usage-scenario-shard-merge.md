@@ -2,7 +2,6 @@
 title: Data Migration Shard Merge Scenario
 summary: Learn how to use Data Migration to replicate data in the shard merge scenario.
 category: reference
-aliases: ['/docs/dev/reference/tools/data-migration/usage-scenarios/shard-merge','/docs/v3.1/reference/tools/data-migration/usage-scenarios/shard-merge','/docs/v3.0/reference/tools/data-migration/usage-scenarios/shard-merge','/docs/v2.1/reference/tools/data-migration/usage-scenarios/shard-merge']
 ---
 
 # Data Migration Shard Merge Scenario

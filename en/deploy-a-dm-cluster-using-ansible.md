@@ -2,7 +2,6 @@
 title: Deploy Data Migration Using DM-Ansible
 summary: Use DM-Ansible to deploy the Data Migration cluster.
 category: how-to
-aliases: ['/docs/dev/how-to/deploy/data-migration-with-ansible/','/docs/v3.1/how-to/deploy/data-migration-with-ansible/','/docs/v3.0/how-to/deploy/data-migration-with-ansible/','/docs/v2.1/how-to/deploy/data-migration-with-ansible/']
 
 ---
 

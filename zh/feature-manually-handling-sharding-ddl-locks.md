@@ -1,7 +1,6 @@
 ---
 title: 手动处理 Sharding DDL Lock
 category: reference
-aliases: ['/docs-cn/dev/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/','/docs-cn/v3.1/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/','/docs-cn/v3.0/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/','/docs-cn/v2.1/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/']
 ---
 
 # 手动处理 Sharding DDL Lock

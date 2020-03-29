@@ -2,7 +2,6 @@
 title: DM-master Configuration File
 summary: Learn the configuration file of DM-master.
 category: reference
-aliases: ['/docs/dev/reference/tools/data-migration/configure/dm-master-configuration-file/','/docs/v3.1/reference/tools/data-migration/configure/dm-master-configuration-file/','/docs/v3.0/reference/tools/data-migration/configure/dm-master-configuration-file/','/docs/v2.1/reference/tools/data-migration/configure/dm-master-configuration-file/']
 ---
 
 # DM-master Configuration File

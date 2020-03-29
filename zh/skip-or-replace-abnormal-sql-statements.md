@@ -1,7 +1,6 @@
 ---
 title: 跳过 (skip) 或替代执行 (replace) 异常的 SQL 语句
 category: reference
-aliases: ['/docs-cn/dev/reference/tools/data-migration/skip-replace-sqls/','/docs-cn/v3.1/reference/tools/data-migration/skip-replace-sqls/','/docs-cn/v3.0/reference/tools/data-migration/skip-replace-sqls/','/docs-cn/v2.1/reference/tools/data-migration/skip-replace-sqls/']
 ---
 
 # 跳过 (skip) 或替代执行 (replace) 异常的 SQL 语句

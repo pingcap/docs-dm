@@ -2,7 +2,6 @@
 title: DM-worker Advanced Configuration File
 summary: Learn the advanced configuration file of DM-worker.
 category: reference
-aliases: ['/docs/dev/reference/tools/data-migration/configure/dm-worker-configuration-file-full/','/docs/v3.1/reference/tools/data-migration/configure/dm-worker-configuration-file-full/','/docs/v3.0/reference/tools/data-migration/configure/dm-worker-configuration-file-full/','/docs/v2.1/reference/tools/data-migration/configure/dm-worker-configuration-file-full/']
 ---
 
 # DM-worker Advanced Configuration File

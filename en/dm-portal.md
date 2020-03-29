@@ -2,7 +2,6 @@
 title: DM Portal Overview
 summary: Learn the features of DM Portal and how to use it.
 category: reference
-aliases: ['/docs/dev/reference/tools/data-migration/dm-portal/','/docs/v3.1/reference/tools/data-migration/dm-portal/','/docs/v3.0/reference/tools/data-migration/dm-portal/','/docs/v2.1/reference/tools/data-migration/dm-portal/']
 ---
 
 # DM Portal Overview

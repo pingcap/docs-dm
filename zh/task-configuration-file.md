@@ -1,7 +1,6 @@
 ---
 title: DM 任务配置文件介绍
 category: reference
-aliases: ['/docs-cn/dev/reference/tools/data-migration/configure/task-configuration-file','/docs-cn/v3.1/reference/tools/data-migration/configure/task-configuration-file','/docs-cn/v3.0/reference/tools/data-migration/configure/task-configuration-file','/docs-cn/v2.1/reference/tools/data-migration/configure/task-configuration-file']
 ---
 
 # DM 任务配置文件介绍

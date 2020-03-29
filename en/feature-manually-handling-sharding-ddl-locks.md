@@ -2,7 +2,6 @@
 title: Handle Sharding DDL Locks Manually in DM
 summary: Learn how to handle sharding DDL locks manually in DM.
 category: reference
-aliases: ['/docs/dev/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/','/docs/v3.1/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/','/docs/v3.0/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/','/docs/v2.1/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/']
 ---
 
 # Handle Sharding DDL Locks Manually in DM

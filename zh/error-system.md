@@ -1,7 +1,6 @@
 ---
 title: Data Migration 错误说明
 category: reference
-aliases: ['/docs-cn/dev/reference/tools/data-migration/error-system/','/docs-cn/dev/reference/tools/data-migration/troubleshoot/error-system/','/docs-cn/v3.1/reference/tools/data-migration/troubleshoot/error-system/','/docs-cn/v3.0/reference/tools/data-migration/troubleshoot/error-system/','/docs-cn/v2.1/reference/tools/data-migration/troubleshoot/error-system/']
 ---
 
 # Data Migration 错误说明
