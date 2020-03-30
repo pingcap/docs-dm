@@ -9,7 +9,7 @@ summary: Learn about TiDB Data Migration documentation.
 
 > **Note:**
 >
-> DM replicates data to TiDB in the form of SQL statements, so DM is compatible with all versions of TiDB. It is recommended to use DM v1.0.4. Click [DM download link](https://pingcap.com/docs/stable/reference/tools/download/#tidb-dm-data-migration) to install DM.
+> DM replicates data to TiDB in the form of SQL statements, so each version of DM is compatible with **all versions** of TiDB. In the production environment, it is recommended to use the latest released version of DM. To install DM, see [DM download link](https://pingcap.com/docs/stable/reference/tools/download/#tidb-dm-data-migration).
 
 ## Architecture
 

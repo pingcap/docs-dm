@@ -9,7 +9,7 @@ summary: 了解 TiDB Data Migration 用户文档。
 
 > **注意：**
 >
-> DM 以 SQL 语句的形式将数据同步到 TiDB 中，因此 DM 兼容所有版本的 TiDB。推荐使用 DM 的最新已发布版本 v1.0.4。下载方式参见 [DM 下载链接](https://pingcap.com/docs-cn/stable/reference/tools/download/#tidb-dm-data-migration)。
+> DM 以 SQL 语句的形式将数据同步到 TiDB 中，因此各个版本的 DM 都分别兼容**所有版本**的 TiDB。在生产环境中，推荐使用 DM 的最新已发布版本。已发布版本的下载方式参见 [DM 下载链接](https://pingcap.com/docs-cn/stable/reference/tools/download/#tidb-dm-data-migration)。
 
 ## DM 架构
 
