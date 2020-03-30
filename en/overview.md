@@ -6,7 +6,11 @@ category: reference
 
 # Data Migration Overview
 
-[DM](https://github.com/pingcap/dm) (Data Migration) is an integrated data replication task management platform that supports the full data migration and the incremental data migration from MySQL/MariaDB into TiDB. It can help to reduce the operations cost and simplify the troubleshooting process.
+[TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data replication task management platform that supports the full data migration and the incremental data migration from MySQL/MariaDB into TiDB. It can help to reduce the operations cost and simplify the troubleshooting process.
+
+> **Note:**
+>
+> DM replicates data to TiDB in the form of SQL statements, so DM is compatible with all versions of TiDB. It is recommended to use DM v1.0.4. Click [DM download link](https://pingcap.com/docs/stable/reference/tools/download/#tidb-dm-data-migration) to install DM.
 
 ## Architecture
 
