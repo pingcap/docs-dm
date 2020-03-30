@@ -53,72 +53,82 @@ DM 在同步过程中会把上述 table 分成 3 类：
 - trashTable : \_\*\_ghc 、\_\*\_del
 - realTable : 执行的 online-ddl 的 origin table
 
-**gh-ost** 涉及的主要 SQL 如下：
+**gh-ost** 涉及的主要 SQL 以及 DM 的处理：
 
-```sql
--- 1.
-   Create /* gh-ost */ table `test`.`_test4_ghc` (
-                        id bigint auto_increment,
-                        last_update timestamp not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                        hint varchar(64) charset ascii not null,
-                        value varchar(4096) charset ascii not null,
-                        primary key(id),
-                        unique key hint_uidx(hint)
-                ) auto_increment=256 ;
+1. 创建 `_ghc` 表
 
--- 2.
-   Create /* gh-ost */ table `test`.`_test4_gho` like `test`.`test4` ;
+    ```sql
+    Create /* gh-ost */ table `test`.`_test4_ghc` (
+                            id bigint auto_increment,
+                            last_update timestamp not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                            hint varchar(64) charset ascii not null,
+                            value varchar(4096) charset ascii not null,
+                            primary key(id),
+                            unique key hint_uidx(hint)
+                    ) auto_increment=256 ;
+    ```
+    DM：不执行 `_test4_ghc` 的创建操作。
 
--- 3.
-   Alter /* gh-ost */ table `test`.`_test4_gho` add column cl1 varchar(20) not null ;
+2. 创建 `_gho` 表
 
--- 4.
-   Insert /* gh-ost */ into `test`.`_test4_ghc`;
+    ```sql
+    Create /* gh-ost */ table `test`.`_test4_gho` like `test`.`test4` ;
+    ```
 
--- 5.
-   Insert /* gh-ost `test`.`test4` */ ignore into `test`.`_test4_gho` (`id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2`)
-      (select `id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2` from `test`.`test4` force index (`PRIMARY`)
-        where (((`id` > _binary'1') or ((`id` = _binary'1'))) and ((`id` < _binary'2') or ((`id` = _binary'2')))) lock in share mode
-      )   ;
-
--- 6.
-   Rename /* gh-ost */ table `test`.`test4` to `test`.`_test4_del`, `test`.`_test4_gho` to `test`.`test4`;
-```
-
-> **注意：**
->
-> 具体 gh-ost 的 SQL 会根据工具执行时所带的参数而变化。本文只列出主要的 SQL，具体可以参考 gh-ost 官方文档。
-
-### DM 对于 **online-ddl-scheme: gh-ost** 的处理
-
-- 不执行 `_test4_ghc` 的创建操作。
-- 不执行 `_test4_gho` 的创建操作，根据 ghost_schema、ghost_table 以及 dm_worker 的 server_id 删除下游 dm_meta.{task_name}\_onlineddl 的记录，清理内存中的相关信息。
-
+    DM：不执行 `_test4_gho` 的创建操作，根据 ghost_schema、ghost_table 以及 dm_worker 的 server_id 删除下游 dm_meta.{task_name}\_onlineddl 的记录，清理内存中的相关信息。
+    
     ```sql
     DELETE FROM dm_meta.{task_name}_onlineddl WHERE id = {server_id} and ghost_schema = {ghost_schema} and ghost_table = {ghost_table};
     ```
 
-- 不执行 `_test4_gho` 的 DDL 操作。把执行的 DDL 记录到 dm_meta.{task_name}\_onlineddl 以及内存中。
+3. 在 `_gho` 表应用需要执行的 DDL
+    ```sql
+    Alter /* gh-ost */ table `test`.`_test4_gho` add column cl1 varchar(20) not null ;
+    ```
+
+    DM：不执行 `_test4_gho` 的 DDL 操作。把执行的 DDL 记录到 dm_meta.{task_name}\_onlineddl 以及内存中。
 
     ```sql
     REPLACE INTO dm_meta.{task_name}_onlineddl (id, ghost_schema , ghost_table , ddls) VALUES (......);
     ```
 
-- 只要不是 **realtable** 的 DML 全部不执行。
-- rename 拆分成两个 SQL。
+4. 往 `_ghc` 表写入数据 ,以及往 `_gho` 表同步 origin table 的数据
+   
+   ```sql
+    Insert /* gh-ost */ into `test`.`_test4_ghc` values (......);
+
+    Insert /* gh-ost `test`.`test4` */ ignore into `test`.`_test4_gho` (`id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2`)
+      (select `id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2` from `test`.`test4` force index (`PRIMARY`)
+        where (((`id` > _binary'1') or ((`id` = _binary'1'))) and ((`id` < _binary'2') or ((`id` = _binary'2')))) lock in share mode
+      )   ;
+   ```
+   DM：只要不是 **realtable** 的 DML 全部不执行。
+
+5. 数据同步完成后 origin table 与 `_gho` 一起改名，完成 online DDL 操作。
+ 
+   ```sql
+    Rename /* gh-ost */ table `test`.`test4` to `test`.`_test4_del`, `test`.`_test4_gho` to `test`.`test4`;
+   ```
+
+   DM: 
+    - 把 rename 拆分成两个 SQL
 
     ```sql
     rename test.test4 to test._test4_del;
     rename test._test4_gho to test.test4;
     ```
 
-- 不执行 `rename to _test4_del`。当要执行 `rename ghost_table to origin table` 的时候，并不执行 rename，而是把步骤 3 内存中的 DDL 读取出来，然后把 ghost_table、ghost_schema 替换为 origin_table 以及对应的 schema 再执行。
+    - 不执行 `rename to _test4_del`。当要执行 `rename ghost_table to origin table` 的时候，并不执行 rename，而是把步骤 3 内存中的 DDL 读取出来，然后把 ghost_table、ghost_schema 替换为 origin_table 以及对应的 schema 再执行。
 
     ```sql
     alter table test._test4_gho add column cl1 varchar(20) not null;
     --替换为
     alter table test.test4 add column cl1 varchar(20) not null;
     ```
+
+> **注意：**
+>
+> 具体 gh-ost 的 SQL 会根据工具执行时所带的参数而变化。本文只列出主要的 SQL，具体可以参考 gh-ost 官方文档。
 
 ## online-schema-change: pt
 
@@ -134,62 +144,83 @@ DM 在同步过程中会把上述 table 分成 3 类：
 - trashTable : \_\*\_old
 - realTable : 执行的 online-ddl 的 origin table
 
-pt-osc 主要涉及的 SQL如下：
+pt-osc 主要涉及的 SQL 以及 DM 的处理：
 
-``` sql
--- 1.
+1. 创建 `_new` 表
+   
+   ```sql
    CREATE TABLE `test`.`_test4_new` ( id int(11) NOT NULL AUTO_INCREMENT,
-   date date DEFAULT NULL, account_id bigint(20) DEFAULT NULL, conversion_price decimal(20,3) DEFAULT NULL,  ocpc_matched_conversions bigint(20) DEFAULT NULL, ad_cost decimal(20,3) DEFAULT NULL,cl2 varchar(20) COLLATE utf8mb4_bin NOT NULL,cl1 varchar(20) COLLATE utf8mb4_bin NOT NULL,PRIMARY KEY (id) ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ;
--- 2.
-   ALTER TABLE `test`.`_test4_new` add column c3 int
--- 3.
-   CREATE TRIGGER `pt_osc_test_test4_del` AFTER DELETE ON `test`.`test4` ...... ;
-   CREATE TRIGGER `pt_osc_test_test4_upd` AFTER UPDATE ON `test`.`test4` ...... ;
-   CREATE TRIGGER `pt_osc_test_test4_ins` AFTER INSERT ON `test`.`test4` ...... ;
--- 4.
-   INSERT LOW_PRIORITY IGNORE INTO `test`.`_test4_new` (`id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2`, `cl1`) SELECT `id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2`, `cl1` FROM `test`.`test4` LOCK IN SHARE MODE /*pt-online-schema-change 3227 copy table*/
--- 5.
-   RENAME TABLE `test`.`test4` TO `test`.`_test4_old`, `test`.`_test4_new` TO `test`.`test4`
--- 6.
-   DROP TABLE IF EXISTS `test`.`_test4_old`;
-   DROP TRIGGER IF EXISTS `pt_osc_test_test4_del` AFTER DELETE ON `test`.`test4` ...... ;
-   DROP TRIGGER IF EXISTS `pt_osc_test_test4_upd` AFTER UPDATE ON `test`.`test4` ...... ;
-   DROP TRIGGER IF EXISTS `pt_osc_test_test4_ins` AFTER INSERT ON `test`.`test4` ...... ;
-```
-
-> **注意：**
->
-> 具体 pt-osc 的 SQL 会根据工具执行时所带的参数而变化。本文只列出主要的 SQL ，具体可以参考 pt-osc 官方文档。
-
-### DM 对于 **online-ddl-scheme: pt** 的处理
-
-1. 不执行 `_test4_new` 的创建操作。根据 ghost_schema 、 ghost_table 以及 dm_worker 的 server_id 删除下游 dm_meta.{task_name}\_onlineddl 的记录，清理内存中的相关信息。
+   date date DEFAULT NULL, account_id bigint(20) DEFAULT NULL, conversion_price decimal(20,3) DEFAULT NULL,  ocpc_matched_conversions bigint(20) DEFAULT NULL, ad_cost decimal(20,3) DEFAULT NULL,cl2 varchar(20) COLLATE utf8mb4_bin NOT NULL,cl1 varchar(20) COLLATE utf8mb4_bin NOT NULL,PRIMARY KEY (id) ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ;   
+   ```
+   DM: 不执行 `_test4_new` 的创建操作。根据 ghost_schema 、 ghost_table 以及 dm_worker 的 server_id 删除下游 dm_meta.{task_name}\_onlineddl 的记录，清理内存中的相关信息。
 
     ```sql
     DELETE FROM dm_meta.{task_name}_onlineddl WHERE id = {server_id} and ghost_schema = {ghost_schema} and ghost_table = {ghost_table};
     ```
 
-2. 不执行 `_test4_new` 的 DDL 操作。把执行的 DDL 记录到 dm_meta.{task_name}\_onlineddl 以及内存中。
+2. 在 `_new` 表上执行 DDL 
+   
+   ```sql
+   ALTER TABLE `test`.`_test4_new` add column c3 int;
+   ``` 
+
+   DM: 不执行 `_test4_new` 的 DDL 操作。把执行的 DDL 记录到 dm_meta.{task_name}\_onlineddl 以及内存中。
 
     ```sql
     REPLACE INTO dm_meta.{task_name}_onlineddl (id, ghost_schema , ghost_table , ddls) VALUES (......);
     ```
 
-3. 不执行 TiDB 不支持的相关 Trigger 操作。
-4. 只要不是 **realtable** 的 DML 全部不执行。
-5. rename 拆分成两个 SQL。
+3. 创建用于同步数据的3个 Trigger
+   
+   ```sql
+   CREATE TRIGGER `pt_osc_test_test4_del` AFTER DELETE ON `test`.`test4` ...... ;
+   CREATE TRIGGER `pt_osc_test_test4_upd` AFTER UPDATE ON `test`.`test4` ...... ;
+   CREATE TRIGGER `pt_osc_test_test4_ins` AFTER INSERT ON `test`.`test4` ...... ;
+   ```
 
-    ```sql
-    rename test.test4 to test._test4_old; 
-    rename test._test4_new to test.test4;
-    ```
+   DM: 不执行 TiDB 不支持的相关 Trigger 操作。
 
-6. 不执行 `rename to _test4_old`。当要执行 `rename ghost_table to origin table` 的时候，并不执行 rename，而是把步骤 2 内存中的 DDL 读取出来，然后把 ghost_table、ghost_schema 替换为 origin_table 以及对应的 schema 再执行。
+4. 往 `_new` 表同步 origin table 的数据。
+   
+   ```sql
+   INSERT LOW_PRIORITY IGNORE INTO `test`.`_test4_new` (`id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2`, `cl1`) SELECT `id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2`, `cl1` FROM `test`.`test4` LOCK IN SHARE MODE /*pt-online-schema-change 3227 copy table*/
+   ```
 
-    ```sql
-    ALTER TABLE `test`.`_test4_new` add column c3 int;
-    --替换为
-    ALTER TABLE `test`.`test4` add column c3 int;
-    ```
+   DM: 只要不是 **realtable** 的 DML 全部不执行。
 
-7. 不执行 `_test4_old` 以及 Trigger 的删除操作。
+5. 数据同步完成后 origin table 与 `_new` 一起改名，完成 online DDL 操作。
+   
+   ```sql
+   RENAME TABLE `test`.`test4` TO `test`.`_test4_old`, `test`.`_test4_new` TO `test`.`test4`   
+   ```
+
+   DM: 
+      - rename 拆分成两个 SQL。
+  
+        ```sql
+        rename test.test4 to test._test4_old; 
+        rename test._test4_new to test.test4;
+        ```
+
+      - 不执行 `rename to _test4_old`。当要执行 `rename ghost_table to origin table` 的时候，并不执行 rename，而是把步骤 2 内存中的 DDL 读取出来，然后把 ghost_table、ghost_schema 替换为 origin_table 以及对应的 schema 再执行。
+
+        ```sql
+        ALTER TABLE `test`.`_test4_new` add column c3 int;
+        --替换为
+        ALTER TABLE `test`.`test4` add column c3 int;
+        ```
+
+6. 删除 `_old` 表以及 online DDL 的3个 Trigger 
+   
+   ```sql
+   DROP TABLE IF EXISTS `test`.`_test4_old`;
+   DROP TRIGGER IF EXISTS `pt_osc_test_test4_del` AFTER DELETE ON `test`.`test4` ...... ;
+   DROP TRIGGER IF EXISTS `pt_osc_test_test4_upd` AFTER UPDATE ON `test`.`test4` ...... ;
+   DROP TRIGGER IF EXISTS `pt_osc_test_test4_ins` AFTER INSERT ON `test`.`test4` ...... ;
+   ```
+   
+   DM: 不执行 `_test4_old` 以及 Trigger 的删除操作。
+
+> **注意：**
+>
+> 具体 pt-osc 的 SQL 会根据工具执行时所带的参数而变化。本文只列出主要的 SQL ，具体可以参考 pt-osc 官方文档。
