@@ -18,11 +18,16 @@ lang=(en zh)
 
 for d in "${lang[@]}"
 do
+if [ $d = "en" ]; then
+    doc_title="TiDB Data Migration Documentation"
+else
+    doc_title="TiDB Data Migration 用户文档"
+fi;
 pandoc -N --toc --smart --latex-engine=xelatex \
 --template=templates/template.tex \
 --columns=80 \
 --listings \
--V title="TiDB Documentation" \
+-V title="$doc_title" \
 -V author="PingCAP Inc." \
 -V date="${_version_tag}" \
 -V CJKmainfont="${MAINFONT}" \
