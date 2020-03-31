@@ -1,6 +1,6 @@
 ---
 title: DM 1.0-GA Benchmark Report
-summary: Learn about the DM benchmark report.
+summary: Learn about the DM 1.0-GA benchmark report.
 category: benchmark
 ---
 
