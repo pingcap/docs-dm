@@ -2,6 +2,7 @@
 title: DM 1.0-GA Benchmark Report
 summary: Learn about the DM 1.0-GA benchmark report.
 category: benchmark
+aliases: ['/docs/dev/benchmark/dm-v1.0-ga/','/docs/v3.0/benchmark/dm-v1.0-ga/','/docs/v3.1/benchmark/dm-v1.0-ga/']
 ---
 
 # DM 1.0-GA Benchmark Report

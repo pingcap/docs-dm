@@ -2,6 +2,7 @@
 title: DM 1.0-alpha Benchmark Report
 summary: Learn about the DM 1.0-alpha benchmark report.
 category: benchmark
+aliases: ['/docs/dev/benchmark/dm-v1-alpha/','/docs/v3.0/benchmark/dm-v1-alpha/','/docs/v3.1/benchmark/dm-v1-alpha/','/docs/v2.1/benchmark/dm-v1-alpha/']
 ---
 
 # DM 1.0-alpha Benchmark Report
