@@ -19,6 +19,9 @@
     - [Introduction](feature-shard-merge.md)
     - [Restrictions](feature-shard-merge.md#restrictions)
     - [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md)
++ Benchmark
+  - [DM 1.0-GA Benchmark Report](benchmark-v1.0-ga.md)
+  - [DM 1.0-alpha Benchmark Report](benchmark-v1-alpha.md)
 + Usage Scenarios
   - [Simple Scenario](usage-scenario-simple-replication.md)
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
