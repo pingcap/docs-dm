@@ -2,7 +2,7 @@
 title: Data Migration Query Status
 summary: Learn the DM query result and subtask status.
 category: reference
-aliases: ['/docs/dev/reference/tools/data-migration/query-status/','/docs/v3.1/reference/tools/data-migration/query-status/','/docs/v3.0/reference/tools/data-migration/query-status/','/docs/v2.1/reference/tools/data-migration/query-status/']
+aliases: ['/docs/dev/reference/tools/data-migration/query-status/','/docs/v3.1/reference/tools/data-migration/query-status/','/docs/stable/reference/tools/data-migration/query-status/','/docs/v2.1/reference/tools/data-migration/query-status/']
 ---
 
 # Data Migration Query Status

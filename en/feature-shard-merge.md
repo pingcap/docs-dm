@@ -2,7 +2,7 @@
 title: Merge and Replicate Data from Sharded Tables
 summary: Learn how DM merges and replicates data from sharded tables.
 category: reference
-aliases: ['/docs/dev/reference/tools/data-migration/features/shard-merge/','/docs/v3.1/reference/tools/data-migration/features/shard-merge/','/docs/v3.0/reference/tools/data-migration/features/shard-merge/','/docs/v2.1/reference/tools/data-migration/features/shard-merge/']
+aliases: ['/docs/dev/reference/tools/data-migration/features/shard-merge/','/docs/v3.1/reference/tools/data-migration/features/shard-merge/','/docs/stable/reference/tools/data-migration/features/shard-merge/','/docs/v2.1/reference/tools/data-migration/features/shard-merge/']
 ---
 
 # Merge and Replicate Data from Sharded Tables

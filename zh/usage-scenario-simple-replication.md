@@ -1,7 +1,7 @@
 ---
 title: Data Migration 简单使用场景
 category: reference
-aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v3.1/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v3.0/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v2.1/reference/tools/data-migration/usage-scenarios/simple-synchronization/']
+aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v3.1/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/stable/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v2.1/reference/tools/data-migration/usage-scenarios/simple-synchronization/']
 ---
 
 # Data Migration 简单使用场景

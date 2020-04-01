@@ -1,7 +1,7 @@
 ---
 title: DM 查询状态
 category: reference
-aliases: ['/docs-cn/dev/reference/tools/data-migration/query-status/','/docs-cn/v3.1/reference/tools/data-migration/query-status/','/docs-cn/v3.0/reference/tools/data-migration/query-status/','/docs-cn/v2.1/reference/tools/data-migration/query-status/']
+aliases: ['/docs-cn/dev/reference/tools/data-migration/query-status/','/docs-cn/v3.1/reference/tools/data-migration/query-status/','/docs-cn/stable/reference/tools/data-migration/query-status/','/docs-cn/v2.1/reference/tools/data-migration/query-status/']
 ---
 
 # DM 查询状态
