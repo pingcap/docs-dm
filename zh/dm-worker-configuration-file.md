@@ -1,7 +1,7 @@
 ---
 title: DM-worker 配置文件介绍
 category: reference
-aliases: ['/docs-cn/dev/reference/tools/data-migration/configure/dm-worker-configuration-file/','/docs-cn/v3.1/reference/tools/data-migration/configure/dm-worker-configuration-file/','/docs-cn/v3.0/reference/tools/data-migration/configure/dm-worker-configuration-file/','/docs-cn/v2.1/reference/tools/data-migration/configure/dm-worker-configuration-file/']
+aliases: ['/docs-cn/dev/reference/tools/data-migration/configure/dm-worker-configuration-file/','/docs-cn/v3.1/reference/tools/data-migration/configure/dm-worker-configuration-file/','/docs-cn/stable/reference/tools/data-migration/configure/dm-worker-configuration-file/','/docs-cn/v2.1/reference/tools/data-migration/configure/dm-worker-configuration-file/']
 ---
 
 # DM-worker 配置文件介绍

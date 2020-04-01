@@ -1,7 +1,7 @@
 ---
 title: Data Migration 简介
 category: reference
-aliases: ['/docs-cn/dev/reference/tools/data-migration/overview/','/docs-cn/v3.1/reference/tools/data-migration/overview/','/docs-cn/v3.1/reference/tools/data-migration/overview/','/docs-cn/v2.1/reference/tools/data-migration/overview/']
+aliases: ['/docs-cn/dev/reference/tools/data-migration/overview/','/docs-cn/v3.1/reference/tools/data-migration/overview/','/docs-cn/stable/reference/tools/data-migration/overview/','/docs-cn/v2.1/reference/tools/data-migration/overview/']
 ---
 
 # Data Migration 简介
