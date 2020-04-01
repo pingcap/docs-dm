@@ -1,6 +1,6 @@
 # TiDB Data Migration (DM) Documentation
 
-This repository stores all the source files of [TiDB Data Migration (DM) documentation](https://pingcap.com/docs/tidb-data-migration/stable/) at the PingCAP website. That is, the documentation for [DM](https://github.com/pingcap/dm).
+This repository stores all the source files of [TiDB Data Migration (DM) documentation](https://pingcap.com/docs/tidb-data-migration/stable/) at the PingCAP website. That is, the documentation for [TiDB DM](https://github.com/pingcap/dm).
 
 - `en`: [documentation in English](/en/TOC.md)
 - `zh`: [documentation in Chinese](/zh/TOC.md)
