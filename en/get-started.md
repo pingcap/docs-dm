@@ -229,14 +229,11 @@ Each of the upstream MySQL Server instances corresponds to a separate DM-worker 
 ```toml
 # Worker Configuration.
 
-# server-id = 1
 source-id = "mysql1"
-# flavor = "mysql"
 worker-addr = ":8262"
 log-file = "logs/worker1.log"
 relay-dir = "data/relay1"
 meta-dir = "data/meta1"
-# dir = "data/dump1"
 
 [from]
 host = "127.0.0.1"
@@ -247,7 +244,7 @@ port = 3307
 
 - If you migrate data from MySQL Server, Percona Server, Percona XtraDB Cluster, Amazon Aurora or RDS, set the `flavor` option to `"mysql"`, which is the default value. This value is valid only when you are using a MySQL version between 5.5 (not included) and 8.0 (not included).
 - If you migrate data from MariaDB Server or MariaDB (Galera) Cluster, set `flavor = "mariadb"`. You can set this value only when you are using a MariaDB version later than 10.1.2.
-- Starting with DM 1.0.2, `dir` was removed, DM automatically generates the values of the `flavor` and `server-id` options. You do not need to manually configure these options in normal situations.
+- Starting with DM 1.0.2, DM automatically generates the values of the `flavor` and `server-id` options. You do not need to manually configure these options in normal situations.
 - If `password` in the `[from]` configuration is not an empty string, you need to use dmctl to encrypt the password. Refer to [Encrypt the upstream MySQL user password using dmctl](deploy-a-dm-cluster-using-ansible.md#encrypt-the-upstream-mysql-user-password-using-dmctl) for detailed steps.
 
 Tasks are defined in YAML files. First, let's look at dmtask1.yaml:
@@ -267,15 +264,12 @@ target-database:
 
 mysql-instances:
   - source-id: "mysql1"
-    # server-id: 1
     black-white-list: "dmtest1"
     loader-config-name: "loader1"
   - source-id: "mysql2"
-    # server-id: 2
     black-white-list: "dmtest1"
     loader-config-name: "loader2"
   - source-id: "mysql3"
-    # server-id: 3
     black-white-list: "dmtest1"
     loader-config-name: "loader3"
 
