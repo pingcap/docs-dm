@@ -43,7 +43,7 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
 
 本部分介绍如何部署 3 个 MySQL Server 实例及 `pd-server`、`tikv-server` 和 `tidb-server` 实例各 1 个，以及如何启动 1 个 DM-master 和 3 个 DM-worker 实例。
 
-1. 安装 MySQL 5.7，下载或提取 TiDB v3.0 以及 DM v1.0.2 安装包：
+1. 安装 MySQL 5.7，下载或提取 TiDB v3.0 以及 DM v1.0.4 安装包：
 
     {{< copyable "shell-regular" >}}
 
@@ -51,8 +51,8 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
     sudo yum install -y http://repo.mysql.com/yum/mysql-5.7-community/el/7/x86_64/mysql57-community-release-el7-10.noarch.rpm &&
     sudo yum install -y mysql-community-server &&
     curl https://download.pingcap.org/tidb-v3.0-linux-amd64.tar.gz | tar xzf - &&
-    curl https://download.pingcap.org/dm-v1.0.2-linux-amd64.tar.gz | tar xzf - &&
-    curl -L https://github.com/pingcap/docs/raw/master/dev/how-to/get-started/dm-cnf/dm-cnf.tgz | tar xvzf -
+    curl https://download.pingcap.org/dm-v1.0.4-linux-amd64.tar.gz | tar xzf - &&
+    curl -L https://github.com/pingcap/docs-dm/raw/master/assets/get-started/dm-cnf.tgz | tar xvzf -
     ```
 
 2. 创建目录和符号链接：
@@ -104,7 +104,7 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
     do
         echo  "mysql$i"
         mysqld --defaults-group-suffix="$i" --initialize-insecure
-        mysqld --defaults-group-suffix="$i" &
+        mysqld --defaults-group-suffix="$i" --user=root &
     done
     ```
 
@@ -117,9 +117,9 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
     ```
 
     ```
-    [1]   Running                 mysqld --defaults-group-suffix="$i" &
-    [2]-  Running                 mysqld --defaults-group-suffix="$i" &
-    [3]+  Running                 mysqld --defaults-group-suffix="$i" &
+    [1]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
+    [2]-  Running                 mysqld --defaults-group-suffix="$i" --user=root &
+    [3]+  Running                 mysqld --defaults-group-suffix="$i" --user=root &
     ```
 
     {{< copyable "shell-regular" >}}
@@ -129,9 +129,9 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
     ```
 
     ```
-    17672 mysqld --defaults-group-suffix=1
-    17727 mysqld --defaults-group-suffix=2
-    17782 mysqld --defaults-group-suffix=3
+    17672 mysqld --defaults-group-suffix=1 --user=root
+    17727 mysqld --defaults-group-suffix=2 --user=root
+    17782 mysqld --defaults-group-suffix=3 --user=root
     ```
 
 ## 同步分片数据
@@ -228,9 +228,9 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
     ```
 
     ```
-    [1]   Running                 mysqld --defaults-group-suffix="$i" &
-    [2]   Running                 mysqld --defaults-group-suffix="$i" &
-    [3]   Running                 mysqld --defaults-group-suffix="$i" &
+    [1]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
+    [2]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
+    [3]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
     [4]   Running                 tidb-server --log-file=logs/tidb-server.log &
     [5]   Running                 dm-worker --config=dm-cnf/dm-worker$i.toml &
     [6]   Running                 dm-worker --config=dm-cnf/dm-worker$i.toml &
@@ -273,14 +273,14 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
 ```toml
 # DM-worker 配置
 
-server-id = 1
+# server-id = 1
 source-id = "mysql1"
-flavor = "mysql"
+# flavor = "mysql"
 worker-addr = ":8262"
 log-file = "logs/worker1.log"
 relay-dir = "data/relay1"
 meta-dir = "data/meta1"
-dir = "data/dump1"
+# dir = "data/dump1"
 
 [from]
 host = "127.0.0.1"
@@ -291,7 +291,7 @@ port = 3307
 
 - 如果从 MySQL Server、Percona Server、Percona XtraDB Cluster、Amazon Aurora 或 RDS 迁移数据，则 `flavor` 配置项应设为 "mysql"（默认值，支持 5.5 < MySQL 版本 < 8.0）。
 - 如果从 MariaDB Server 或 MariaDB (Galera) Cluster 迁移数据，则设置 `flavor = "mariadb"`（仅支持 10.1.2 以上 MariaDB 版本）。
-- 从 DM 1.0.2 版本开始，`flavor`、`server-id` 项均会由 DM 自动生成，一般情况下不需要手动配置。
+- 从 DM 1.0.2 版本开始，`dir`项被移除、`flavor`、`server-id` 项均会由 DM 自动生成，一般情况下不需要手动配置。
 - `from` 中的 `password` 如果不为空，则需要使用 dmctl 进行加密，参见[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
 
 任务在 YAML 文件中定义。以下为一个 `dmtask1.yaml` 文件示例：

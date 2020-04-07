@@ -36,14 +36,14 @@ For additional information about DM, please consult [Data Migration Overview](ov
 
 We're going to deploy 3 instances of MySQL Server, and 1 instance each of pd-server, tikv-server, and tidb-server. Then we'll start a single DM-master and 3 instances of DM-worker.
 
-1. Install MySQL 5.7, download and extract the TiDB v3.0 and DM v1.0.2 packages we'll use:
+1. Install MySQL 5.7, download and extract the TiDB v3.0 and DM v1.0.4 packages we'll use:
 
     ```bash
     sudo yum install -y http://repo.mysql.com/yum/mysql-5.7-community/el/7/x86_64/mysql57-community-release-el7-10.noarch.rpm
     sudo yum install -y mysql-community-server
     curl https://download.pingcap.org/tidb-v3.0-linux-amd64.tar.gz | tar xzf -
-    curl https://download.pingcap.org/dm-v1.0.2-linux-amd64.tar.gz | tar xzf -
-    curl -L https://github.com/pingcap/docs/raw/master/dev/how-to/get-started/dm-cnf/dm-cnf.tgz | tar xvzf -
+    curl https://download.pingcap.org/dm-v1.0.4-linux-amd64.tar.gz | tar xzf -
+    curl -L https://github.com/pingcap/docs-dm/raw/master/assets/get-started/dm-cnf.tgz | tar xvzf -
     ```
 
 2. Create some directories and symlinks:
@@ -89,7 +89,7 @@ We're going to deploy 3 instances of MySQL Server, and 1 instance each of pd-ser
     do
         echo  "mysql$i"
         mysqld --defaults-group-suffix="$i" --initialize-insecure
-        mysqld --defaults-group-suffix="$i" &
+        mysqld --defaults-group-suffix="$i" --user=root &
     done
     ```
 
@@ -100,9 +100,9 @@ We're going to deploy 3 instances of MySQL Server, and 1 instance each of pd-ser
     ```
 
     ```
-    [1]   Running                 mysqld --defaults-group-suffix="$i" &
-    [2]-  Running                 mysqld --defaults-group-suffix="$i" &
-    [3]+  Running                 mysqld --defaults-group-suffix="$i" &
+    [1]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
+    [2]-  Running                 mysqld --defaults-group-suffix="$i" --user=root &
+    [3]+  Running                 mysqld --defaults-group-suffix="$i" --user=root &
     ```
 
     ```bash
@@ -110,9 +110,9 @@ We're going to deploy 3 instances of MySQL Server, and 1 instance each of pd-ser
     ```
 
     ```
-    17672 mysqld --defaults-group-suffix=1
-    17727 mysqld --defaults-group-suffix=2
-    17782 mysqld --defaults-group-suffix=3
+    17672 mysqld --defaults-group-suffix=1 --user=root
+    17727 mysqld --defaults-group-suffix=2 --user=root
+    17782 mysqld --defaults-group-suffix=3 --user=root
     ```
 
 ## Replicating shards
@@ -196,9 +196,9 @@ jobs
 ```
 
 ```
-[1]   Running                 mysqld --defaults-group-suffix="$i" &
-[2]   Running                 mysqld --defaults-group-suffix="$i" &
-[3]   Running                 mysqld --defaults-group-suffix="$i" &
+[1]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
+[2]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
+[3]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
 [4]   Running                 tidb-server --log-file=logs/tidb-server.log &
 [5]   Running                 dm-worker --config=dm-cnf/dm-worker$i.toml &
 [6]   Running                 dm-worker --config=dm-cnf/dm-worker$i.toml &
@@ -229,14 +229,14 @@ Each of the upstream MySQL Server instances corresponds to a separate DM-worker 
 ```toml
 # Worker Configuration.
 
-server-id = 1
+# server-id = 1
 source-id = "mysql1"
-flavor = "mysql"
+# flavor = "mysql"
 worker-addr = ":8262"
 log-file = "logs/worker1.log"
 relay-dir = "data/relay1"
 meta-dir = "data/meta1"
-dir = "data/dump1"
+# dir = "data/dump1"
 
 [from]
 host = "127.0.0.1"
@@ -247,7 +247,7 @@ port = 3307
 
 - If you migrate data from MySQL Server, Percona Server, Percona XtraDB Cluster, Amazon Aurora or RDS, set the `flavor` option to `"mysql"`, which is the default value. This value is valid only when you are using a MySQL version between 5.5 (not included) and 8.0 (not included).
 - If you migrate data from MariaDB Server or MariaDB (Galera) Cluster, set `flavor = "mariadb"`. You can set this value only when you are using a MariaDB version later than 10.1.2.
-- Starting with DM 1.0.2, DM automatically generates the values of the `flavor` and `server-id` options. You do not need to manually configure these options in normal situations.
+- Starting with DM 1.0.2, `dir` was removed, DM automatically generates the values of the `flavor` and `server-id` options. You do not need to manually configure these options in normal situations.
 - If `password` in the `[from]` configuration is not an empty string, you need to use dmctl to encrypt the password. Refer to [Encrypt the upstream MySQL user password using dmctl](deploy-a-dm-cluster-using-ansible.md#encrypt-the-upstream-mysql-user-password-using-dmctl) for detailed steps.
 
 Tasks are defined in YAML files. First, let's look at dmtask1.yaml:
