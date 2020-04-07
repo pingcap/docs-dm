@@ -267,15 +267,15 @@ target-database:
 
 mysql-instances:
   - source-id: "mysql1"
-    server-id: 1
+    # server-id: 1
     black-white-list: "dmtest1"
     loader-config-name: "loader1"
   - source-id: "mysql2"
-    server-id: 2
+    # server-id: 2
     black-white-list: "dmtest1"
     loader-config-name: "loader2"
   - source-id: "mysql3"
-    server-id: 3
+    # server-id: 3
     black-white-list: "dmtest1"
     loader-config-name: "loader3"
 
