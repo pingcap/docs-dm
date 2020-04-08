@@ -1,7 +1,7 @@
 ---
 title: DM 版本升级
 category: reference
-aliases: ['/docs-cn/dev/reference/tools/data-migration/dm-upgrade/','/docs-cn/v3.1/reference/tools/data-migration/dm-upgrade/','/docs-cn/stable/reference/tools/data-migration/dm-upgrade/','/docs-cn/v2.1/reference/tools/data-migration/dm-upgrade/']
+aliases: ['/docs-cn/dev/reference/tools/data-migration/dm-upgrade/','/docs-cn/v3.1/reference/tools/data-migration/dm-upgrade/','/docs-cn/v3.0/reference/tools/data-migration/dm-upgrade/','/docs-cn/v2.1/reference/tools/data-migration/dm-upgrade/']
 ---
 
 # DM 版本升级

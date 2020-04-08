@@ -1,7 +1,7 @@
 ---
 title: 上游 MySQL 实例配置前置检查
 category: reference
-aliases: ['/docs-cn/dev/reference/tools/data-migration/precheck/','/docs-cn/v3.1/reference/tools/data-migration/precheck/','/docs-cn/stable/reference/tools/data-migration/precheck/','/docs-cn/v2.1/reference/tools/data-migration/precheck/']
+aliases: ['/docs-cn/dev/reference/tools/data-migration/precheck/','/docs-cn/v3.1/reference/tools/data-migration/precheck/','/docs-cn/v3.0/reference/tools/data-migration/precheck/','/docs-cn/v2.1/reference/tools/data-migration/precheck/']
 ---
 
 # 上游 MySQL 实例配置前置检查
