@@ -1,7 +1,7 @@
 ---
 title: DM-worker 简介
 category: reference
-aliases: ['/docs-cn/dev/reference/tools/data-migration/dm-worker-intro/','/docs-cn/v3.1/reference/tools/data-migration/dm-worker-intro/','/docs-cn/stable/reference/tools/data-migration/dm-worker-intro/','/docs-cn/v2.1/reference/tools/data-migration/dm-worker-intro/']
+aliases: ['/docs-cn/dev/reference/tools/data-migration/dm-worker-intro/','/docs-cn/v3.1/reference/tools/data-migration/dm-worker-intro/','/docs-cn/v3.0/reference/tools/data-migration/dm-worker-intro/','/docs-cn/v2.1/reference/tools/data-migration/dm-worker-intro/']
 ---
 
 # DM-worker 简介

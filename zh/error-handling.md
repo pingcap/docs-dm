@@ -1,7 +1,7 @@
 ---
 title: Data Migration 常见错误修复
 category: reference
-aliases: ['/docs-cn/dev/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v3.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/stable/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v2.1/reference/tools/data-migration/troubleshoot/error-handling/']
+aliases: ['/docs-cn/dev/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v3.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v3.0/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v2.1/reference/tools/data-migration/troubleshoot/error-handling/']
 ---
 
 # Data Migration 常见错误修复
