@@ -2,7 +2,7 @@
 title: TiDB Data Migration FAQ
 summary: Learn about frequently asked questions (FAQs) about TiDB Data Migration (DM).
 category: reference
-aliases: ['/docs/dev/faq/data-migration/','/docs/dev/reference/tools/data-migration/faq/','/docs/v3.1/reference/tools/data-migration/faq/','/docs/stable/reference/tools/data-migration/faq/','/docs/v2.1/reference/tools/data-migration/faq/']
+aliases: ['/docs/dev/faq/data-migration/','/docs/dev/reference/tools/data-migration/faq/','/docs/v3.1/reference/tools/data-migration/faq/','/docs/v3.0/reference/tools/data-migration/faq/','/docs/v2.1/reference/tools/data-migration/faq/']
 ---
 
 # TiDB Data Migration FAQ

@@ -2,7 +2,7 @@
 title: Data Migration Task Configuration File
 summary: This document introduces the task configuration file of Data Migration.
 category: reference
-aliases: ['/docs/dev/reference/tools/data-migration/configure/task-configuration-file','/docs/v3.1/reference/tools/data-migration/configure/task-configuration-file','/docs/stable/reference/tools/data-migration/configure/task-configuration-file','/docs/v2.1/reference/tools/data-migration/configure/task-configuration-file']
+aliases: ['/docs/dev/reference/tools/data-migration/configure/task-configuration-file','/docs/v3.1/reference/tools/data-migration/configure/task-configuration-file','/docs/v3.0/reference/tools/data-migration/configure/task-configuration-file','/docs/v2.1/reference/tools/data-migration/configure/task-configuration-file']
 ---
 
 # Data Migration Task Configuration File

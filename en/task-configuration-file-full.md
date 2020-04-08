@@ -1,7 +1,7 @@
 ---
 title: DM Advanced Task Configuration File
 category: reference
-aliases: ['/docs/dev/reference/tools/data-migration/configure/task-configuration-file-full/','/docs/v3.1/reference/tools/data-migration/configure/task-configuration-file-full/','/docs/stable/reference/tools/data-migration/configure/task-configuration-file-full/','/docs/v2.1/reference/tools/data-migration/configure/task-configuration-file-full/']
+aliases: ['/docs/dev/reference/tools/data-migration/configure/task-configuration-file-full/','/docs/v3.1/reference/tools/data-migration/configure/task-configuration-file-full/','/docs/v3.0/reference/tools/data-migration/configure/task-configuration-file-full/','/docs/v2.1/reference/tools/data-migration/configure/task-configuration-file-full/']
 ---
 
 # DM Advanced Task Configuration File

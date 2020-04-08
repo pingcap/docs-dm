@@ -2,7 +2,7 @@
 title: Replicate Data Using Data Migration
 summary: Use the Data Migration tool to replicate the full data and the incremental data.
 category: reference
-aliases: ['/docs/dev/reference/tools/data-migration/deploy/','/docs/v3.1/reference/tools/data-migration/deploy/','/docs/stable/reference/tools/data-migration/deploy/','/docs/v2.1/reference/tools/data-migration/deploy/']
+aliases: ['/docs/dev/reference/tools/data-migration/deploy/','/docs/v3.1/reference/tools/data-migration/deploy/','/docs/v3.0/reference/tools/data-migration/deploy/','/docs/v2.1/reference/tools/data-migration/deploy/']
 ---
 
 # Replicate Data Using Data Migration
