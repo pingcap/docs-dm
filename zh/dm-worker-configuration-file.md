@@ -36,7 +36,7 @@ join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
 | `name`   | 标识一个 DM-worker。   |
 | `worker-addr` | DM-worker 服务的地址，可以省略 IP 信息，例如：":8262"。|
 | `advertise-addr` | DM-worker 向外界宣告的地址。 |
-| `join` | 对应一个或多个 DM-master 配置中的 `master-addr`。 |
+| `join` | 对应一个或多个 DM-master 配置中的 [`master-addr`](dm-master-configuration-file.md#global-配置)。 |
 
 > **注意：**
 >
