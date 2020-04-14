@@ -31,7 +31,7 @@ join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
 
 | 配置项        | 说明                                    |
 | :------------ | :--------------------------------------- |
-| `log-level`   | 日志级别：debug, info, warn, error, fatal。默认为 info。   |
+| `log-level` | 日志级别：debug、info、warn、error、fatal。默认为 info。   |
 | `log-file`   | 日志文件，如果不配置日志会输出到标准输出中。   |
 | `name`   | 标识一个worker。   |
 | `worker-addr` | DM-worker 服务的地址，可以省略 IP 信息，例如：":8262"。|
