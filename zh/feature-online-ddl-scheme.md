@@ -67,6 +67,7 @@ DM 在同步过程中会把上述 table 分成 3 类：
                             unique key hint_uidx(hint)
                     ) auto_increment=256 ;
     ```
+
     DM：不执行 `_test4_ghc` 的创建操作。
 
 2. 创建 `_gho` 表
