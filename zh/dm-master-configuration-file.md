@@ -12,7 +12,6 @@ category: reference
 DM-master 的示例配置文件如下所示：
 
 ```toml
-
 name = "dm-master"
 
 # log configuration
