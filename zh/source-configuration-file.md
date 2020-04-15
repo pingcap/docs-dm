@@ -19,7 +19,7 @@ source-id = "mysql-replica-01"
 host = "127.0.0.1"
 port = 3306
 user = "root"
-password = "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # 使用 dmctl 对密码进行加密的 "eweLdSi++2sb"
+password = "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # 使用 dmctl 对上游数据库的用户密码加密之后的密码
 ```
 
 ## 配置项说明
