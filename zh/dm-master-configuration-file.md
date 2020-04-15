@@ -51,7 +51,7 @@ rpc-rate-limit = 10.0
 | `advertise-addr` | DM-master 向外界宣告的地址。|
 | `peer-urls` | DM-master 节点的对等 URL。|
 | `advertise-peer-urls` | DM-master 向外界宣告的对等 URL。默认为 `peer-urls` 的值。|
-| `initial-cluster` | 初始集群中所有DM-master的 `advertise-peer-urls` 值。|
+| `initial-cluster` | 初始集群中所有 DM-master 的 `advertise-peer-urls` 的值。|
 | `join` | 集群里已有的DM-master的 `advertise-peer-urls` 值。加入新 DM-master 节点时使用 `join` 替代 `initial-cluster` 。|
 | `rpc-timeout` | rpc超时时间，正数。使用golang标准时间单位 ns, us, ms, s, m, h。默认为 "10m"。|
 | `rpc-rate-burst` | 令牌桶的大小，正数。默认为 40 。|
