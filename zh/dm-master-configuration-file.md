@@ -54,4 +54,4 @@ rpc-rate-limit = 10.0
 | `join` | 集群里已有的 DM-master 的 `advertise-peer-urls` 的值。如果是新加入的 DM-master 节点，使用 `join` 替代 `initial-cluster`。|
 | `rpc-timeout` | RPC 超时时间，正数。使用 golang 标准时间单位 ns、us、ms、s、m、h。默认为“10m”。|
 | `rpc-rate-burst` | 令牌桶的大小，为正数。默认为 40 。|
-| `rpc-rate-limit` | 控制事件发生的频率。令牌桶最初是满的，以每秒 `rpc-rate-limit` 个令牌的速率填充令牌桶。float64 类型，默认为 10.0 ，如果恰好为整数，需要添加小数点和 0。|
+| `rpc-rate-limit` | 控制事件发生的频率。令牌桶最初是满的，以每秒 `rpc-rate-limit` 个令牌的速率填充令牌桶。值为 float64 类型，默认为 10.0，如果恰好为整数，需要添加小数点和 0。|
