@@ -49,7 +49,7 @@ rpc-rate-limit = 10.0
 | `log-file` | 日志文件，如果不配置，日志会输出到标准输出中。|
 | `master-addr` | DM-master 服务的地址，可以省略 IP 信息，例如：":8261"。|
 | `advertise-addr` | DM-master 向外界宣告的地址。|
-| `peer-urls` | DM-master 节点的对等url。|
+| `peer-urls` | DM-master 节点的对等 URL。|
 | `advertise-peer-urls` | DM-master 向外界宣告的对等url。默认为 `peer-urls` 的值。|
 | `initial-cluster` | 初始集群中所有DM-master的 `advertise-peer-urls` 值。|
 | `join` | 集群里已有的DM-master的 `advertise-peer-urls` 值。加入新 DM-master 节点时使用 `join` 替代 `initial-cluster` 。|
