@@ -12,7 +12,6 @@ category: reference
 上游数据库的示例配置文件如下所示：
 
 ```toml
-
 source-id = "mysql-replica-01"
 
 [from]
