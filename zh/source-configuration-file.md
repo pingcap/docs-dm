@@ -32,4 +32,4 @@ password = "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # 使用 dmctl 对上游�
 | `host` | 上游数据库的 host。|
 | `port` | 上游数据库的端口。|
 | `user` | 上游数据库使用的用户名。|
-| `password` | 连接数据库使用的密码。注意：需要使用 dmctl 加密后的密码。|
+| `password` | 上游数据库的用户密码。注意：需要使用 dmctl 加密后的密码。|
