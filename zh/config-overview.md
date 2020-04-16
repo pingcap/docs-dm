@@ -17,7 +17,7 @@ category: reference
 
 ### 任务配置文件
 
-每一个数据同步任务对应一个 `task.yaml` 文件。关于该配置文件的详细介绍，参见 [任务配置文件](task-configuration-file.md)。
+每一个数据同步任务对应一个 `task.yaml` 文件。关于该配置文件的详细介绍，参见[任务配置文件](task-configuration-file.md)。
 
 ### 创建数据同步任务
 
