@@ -164,7 +164,7 @@ mysql-instances:
 | :------------ | :--------------------------------------- |
 | `routes` | 上游和下游表之间的路由 table routing 规则集。如果上游与下游的库名、表名一致，则不需要配置该项。使用场景及示例配置参见 [Table Routing](feature-overview.md#table-routing) |
 | `filters` | 上游数据库实例匹配的表的 binlog event filter 规则集。如果不需要对 binlog 进行过滤，则不需要配置该项。使用场景及示例配置参见 [Binlog Event Filter](feature-overview.md#binlog-event-filter) |
-| `column-mappings` | 对表的列值进行修改的规则集。由于 `column-mapping` 的使用限制较多，我们不推荐使用 `column-mapping` 功能作为首选方案。使用场景及示例配置参见 [Column mapping](feature-overview.md#column-mapping) |
+| `column-mappings` | 对表的列值进行修改的规则集。由于 Column mapping 的使用限制较多，不推荐使用 Column mapping 功能作为首选方案。使用场景及示例配置参见 [Column mapping](feature-overview.md#column-mapping) |
 | `black-white-list` | 该上游数据库实例匹配的表的 black & white list 过滤规则集。建议通过该项指定需要同步的库和表，否则会同步所有的库和表。使用场景及示例配置参见 [Black & White Lists](feature-overview.md#black--white-table-lists) |
 | `mydumpers` | mydumper 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `mydumper-thread` 对 `thread` 配置项单独进行配置。 |
 | `loaders` | loader 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `loader-thread` 对 `pool-size` 配置项单独进行配置。 |
