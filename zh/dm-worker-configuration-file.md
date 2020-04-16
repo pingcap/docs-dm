@@ -5,9 +5,7 @@ category: reference
 
 # DM-worker 配置文件介绍
 
-本文档主要介绍 DM-worker 的基础配置文件。在一般场景中，用户只需要使用基础配置即可完成 DM-worker 的部署。
-
-完整配置项参考 [DM-worker 完整配置说明](dm-worker-configuration-file-full.md)。
+本文介绍 DM-worker 的配置文件，包括配置文件示例与配置项说明。
 
 ## 配置文件示例
 
@@ -38,7 +36,3 @@ join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
 | `worker-addr` | DM-worker 服务的地址，可以省略 IP 信息，例如：":8262"。|
 | `advertise-addr` | DM-worker 向外界宣告的地址。 |
 | `join` | 对应一个或多个 DM-master 配置中的 [`master-addr`](dm-master-configuration-file.md#global-配置)。 |
-
-> **注意：**
->
-> 以上配置为部署 DM-worker 的基础配置，一般情况下使用基础配置即可，更多配置项参考 [DM-worker 完整配置说明](dm-worker-configuration-file-full.md)。
