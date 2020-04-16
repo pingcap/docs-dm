@@ -30,11 +30,6 @@ advertise-peer-urls = "http://127.0.0.1:8291"
 initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,master3=http://127.0.0.1:8293"
 join = ""
 
-# rpc configuration
-rpc-timeout = "30s"
-rpc-rate-burst = 40
-rpc-rate-limit = 10.0
-
 ```
 
 ## 配置项说明
@@ -52,6 +47,3 @@ rpc-rate-limit = 10.0
 | `advertise-peer-urls` | DM-master 向外界宣告的对等 URL。默认为 `peer-urls` 的值。|
 | `initial-cluster` | 初始集群中所有 DM-master 的 `advertise-peer-urls` 的值。|
 | `join` | 集群里已有的 DM-master 的 `advertise-peer-urls` 的值。如果是新加入的 DM-master 节点，使用 `join` 替代 `initial-cluster`。|
-| `rpc-timeout` | RPC 超时时间，正数。使用 golang 标准时间单位 ns、us、ms、s、m、h。默认为“10m”。|
-| `rpc-rate-burst` | 令牌桶的大小，为正数。默认为 40 。|
-| `rpc-rate-limit` | 控制事件发生的频率。令牌桶最初是满的，以每秒 `rpc-rate-limit` 个令牌的速率填充令牌桶。值为 float64 类型，默认为 10.0，如果恰好为整数，需要添加小数点和 0。|
