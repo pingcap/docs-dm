@@ -10,7 +10,7 @@ category: reference
 ## 配置文件
 
 - `dm-master.toml`：DM-master 进程的配置文件，包括 DM-master 的拓扑信息、日志和 RPC 等各项配置。配置说明详见 [DM-master 配置文件介绍](dm-master-configuration-file.md)。
-- `dm-worker.toml`：DM-worker 进程的配置文件，包括DM-worker的拓扑信息，日志等各项配置。说明详见 [DM-worker 配置文件介绍](dm-worker-configuration-file.md)
+- `dm-worker.toml`：DM-worker 进程的配置文件，包括 DM-worker 的拓扑信息、日志等各项配置。配置说明详见 [DM-worker 配置文件介绍](dm-worker-configuration-file.md)。
 - `source.toml`: 上游数据库 MySQL/MariaDB 相关配置。说明详见 [上游数据库配置文件介绍](source-configuration-file.md)
 
 ## 同步任务配置
