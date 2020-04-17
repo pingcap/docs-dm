@@ -5,7 +5,7 @@ category: reference
 
 # DM 任务配置文件介绍
 
-本文档主要介绍 Data Migration (DM) 的任务基础配置文件 [`task_basic.yaml`](https://github.com/pingcap/dm/blob/master/dm/master/task_basic.yaml)，包含[全局配置](#全局配置)和[实例配置](#实例配置)两部分。
+本文档主要介绍 Data Migration (DM) 的任务基础配置文件，包含[全局配置](#全局配置)和[实例配置](#实例配置)两部分。
 
 完整的任务配置参见 [DM 任务完整配置文件介绍](task-configuration-file-full.md)。关于各配置项的功能和配置，请参阅[数据同步功能](feature-overview.md)。
 
@@ -40,15 +40,15 @@ black-white-list:        # 上游数据库实例匹配的表的 black & white li
 mysql-instances:
   - source-id: "mysql-replica-01"  # 上游实例或者复制组 ID，参考 `dm-master.toml` 的 `source-id` 配置
     black-white-list:  "bw-rule-1" # 黑白名单配置名称
-    mydumper-thread: 4             # mydumper 用于导出数据的线程数量，在 v1.0.2 版本引入
-    loader-thread: 16              # loader 用于导入数据的线程数量，在 v1.0.2 版本引入
-    syncer-thread: 16              # syncer 用于同步增量数据的线程数量，在 v1.0.2 版本引入
+    mydumper-thread: 4             # mydumper 用于导出数据的线程数量
+    loader-thread: 16              # loader 用于导入数据的线程数量
+    syncer-thread: 16              # syncer 用于同步增量数据的线程数量
 
   - source-id: "mysql-replica-02" # 上游实例或者复制组 ID，参考 `dm-master.toml` 的 `source-id` 配置
     black-white-list:  "bw-rule-1" # 黑白名单配置名称
-    mydumper-thread: 4             # mydumper 用于导出数据的线程数量，在 v1.0.2 版本引入
-    loader-thread: 16              # loader 用于导入数据的线程数量，在 v1.0.2 版本引入
-    syncer-thread: 16              # syncer 用于同步增量数据的线程数量，在 v1.0.2 版本引入
+    mydumper-thread: 4             # mydumper 用于导出数据的线程数量
+    loader-thread: 16              # loader 用于导入数据的线程数量
+    syncer-thread: 16              # syncer 用于同步增量数据的线程数量
 ```
 
 ## 配置顺序
