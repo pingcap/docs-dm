@@ -15,7 +15,7 @@ category: reference
 
 DM 主要包括三个组件：DM-master，DM-worker 和 dmctl。
 
-![Data Migration architecture](/media/dm-architecture.png)
+![Data Migration architecture](/media/dm-architecture-2.0.png)
 
 ### DM-master
 
