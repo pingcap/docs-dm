@@ -14,6 +14,9 @@ category: reference
 ```toml
 source-id = "mysql-replica-01"
 
+# 开启 GTID
+enable-gtid = false
+
 [from]
 host = "127.0.0.1"
 port = 3306
@@ -28,6 +31,7 @@ password = "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # 使用 dmctl 对上游�
 | 配置项        | 说明                                    |
 | :------------ | :--------------------------------------- |
 | `source-id` | 标识一个 MySQL 实例。|
+| `enable-gtid` | 是否使用 GTID 方式从上游拉取 binlog，默认值为 false。一般情况下不需要手动配置，如果上游数据库启用了 GTID 支持，且需要做主从切换，则将该配置项设置为 true。 |
 | `host` | 上游数据库的 host。|
 | `port` | 上游数据库的端口。|
 | `user` | 上游数据库使用的用户名。|
