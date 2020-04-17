@@ -5,7 +5,7 @@ category: reference
 
 # DM 任务完整配置文件介绍
 
-本文档主要介绍 Data Migration (DM) 的任务完整的配置文件 [`task_advanced.yaml`](https://github.com/pingcap/dm/blob/master/dm/master/task_advanced.yaml)，包含[全局配置](#全局配置) 和[实例配置](#实例配置) 两部分。
+本文档主要介绍 Data Migration (DM) 的任务完整的配置文件，包含[全局配置](#全局配置) 和[实例配置](#实例配置) 两部分。
 
 关于各配置项的功能和配置，请参阅[数据同步功能](feature-overview.md#同步功能介绍)。
 
@@ -25,9 +25,15 @@ category: reference
 name: test                      # 任务名称，需要全局唯一
 task-mode: all                  # 任务模式，可设为 "full"、"incremental"、"all"
 is-sharding: true               # 是否为分库分表合并任务
+shard-mode: "optimistic"        # shard DDL 同步模式，可设为 ""、"pessimistic"、"optimistic"
+ignore-checking-items: []       # 忽略的检测项，可包含 "all"、"dump_privilege"、"replication_privilege"、"version"、"binlog_enable"、"binlog_format"、"binlog_row_image"、"table_schema"、"schema_of_shard_tables"、"auto_increment_ID"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
 remove-meta: false              # 是否在任务同步开始前移除该任务名对应的 `meta`（`checkpoint` 和 `onlineddl` 等）。
 enable-heartbeat: false         # 是否开启 `heartbeat` 功能
+heartbeat-update-interval: 1    # `heartbeat` 更新间隔
+heartbeat-report-interval: 10   # `heartbeat` 反应间隔
+timezone: "Asia/Shanghai"       # 时区
+case-sensitive: false           # schema/table 是否大小写敏感
 online-ddl-scheme: "gh-ost"     # 目前仅支持 "gh-ost" 、"pt"
 
 target-database:                # 下游数据库实例配置
@@ -35,7 +41,6 @@ target-database:                # 下游数据库实例配置
   port: 4000
   user: "root"
   password: ""                  # 如果不为空则需经过 dmctl 加密
-
 
 ## ******** 功能配置集 **********
 
@@ -79,7 +84,7 @@ mydumpers:                           # mydumper 处理单元运行配置参数
     threads: 4                       # mydumper 从上游数据库实例导出数据的线程数量，默认值为 4
     chunk-filesize: 64               # mydumper 生成的数据文件大小，默认值为 64，单位为 MB
     skip-tz-utc: true                # 忽略对时间类型数据进行时区转化，默认值为 true
-    extra-args: "--no-locks"         # mydumper 的其他参数，在 v1.0.2 版本中 DM 会自动生成 table-list 配置，在其之前的版本仍然需要人工配置
+    extra-args: "--no-locks"         # mydumper 的其他参数，不需要在 extra-args 中配置 table-list，DM 会自动生成
 
 loaders:                             # loader 处理单元运行配置参数
   global:                            # 配置名称
@@ -94,7 +99,7 @@ syncers:                             # syncer 处理单元运行配置参数
 # ----------- 实例配置 -----------
 mysql-instances:
   -
-    source-id: "mysql-replica-01"           # 上游实例或者复制组 ID，参考 `inventory.ini` 的 `source_id` 或者 `dm-master.toml` 的 `source-id` 配置
+    source-id: "mysql-replica-01"           # 对应 source.toml 中的 `source-id`
     meta:                                   # `task-mode` 为 `incremental` 且下游数据库的 `checkpoint` 不存在时 binlog 同步开始的位置; 如果 checkpoint 存在，则以 `checkpoint` 为准
       binlog-name: binlog.000001
       binlog-pos: 4
@@ -108,10 +113,10 @@ mysql-instances:
     syncer-config-name: "global"            # Syncer 配置名称
 
   -
-    source-id: "mysql-replica-02"  # 上游实例或者复制组 ID，参考 `inventory.ini` 的 `source_id` 或者 `dm-master.toml` 的 `source-id` 配置
-    mydumper-thread: 4             # mydumper 用于导出数据的线程数量，等同于 mydumper 处理单元配置中的 `threads`，在 v1.0.2 版本引入
-    loader-thread: 16              # loader 用于导入数据的线程数量，等同于 loader 处理单元配置中的 `pool-size`, 在 v1.0.2 版本引入
-    syncer-thread: 16              # syncer 用于同步增量数据的线程数量，等同于 syncer 处理单元配置中的 `worker-count`，在 v1.0.2 版本引入
+    source-id: "mysql-replica-02"  # 对应 source.toml 中的 `source-id`
+    mydumper-thread: 4             # mydumper 用于导出数据的线程数量，等同于 mydumper 处理单元配置中的 `threads`
+    loader-thread: 16              # loader 用于导入数据的线程数量，等同于 loader 处理单元配置中的 `pool-size`
+    syncer-thread: 16              # syncer 用于同步增量数据的线程数量，等同于 syncer 处理单元配置中的 `worker-count`
 ```
 
 ## 配置顺序
