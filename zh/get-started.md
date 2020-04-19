@@ -27,7 +27,7 @@ DM 功能如下：
 
 ## Data Migration 架构
 
-![TiDB Data Migration 架构](/media/dm-architecture.png)
+![TiDB Data Migration 架构](/media/dm-architecture-2.0.png)
 
 TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl。
 
@@ -41,17 +41,17 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
 
 ## 安装
 
-本部分介绍如何部署 3 个 MySQL Server 实例及 `pd-server`、`tikv-server` 和 `tidb-server` 实例各 1 个，以及如何启动 1 个 DM-master 和 3 个 DM-worker 实例。
+本部分介绍如何部署 3 个 MySQL Server 实例及 `pd-server`、`tikv-server` 和 `tidb-server` 实例各 1 个，以及如何启动 3 个 DM-master 和 3 个 DM-worker 实例。
 
-1. 安装 MySQL 5.7，下载或提取 TiDB v3.0 以及 DM v1.0.4 安装包：
+1. 安装 MySQL 5.7，下载或提取 TiDB v4.0 以及 DM v2.0 安装包：
 
     {{< copyable "shell-regular" >}}
 
     ```bash
     sudo yum install -y http://repo.mysql.com/yum/mysql-5.7-community/el/7/x86_64/mysql57-community-release-el7-10.noarch.rpm &&
     sudo yum install -y mysql-community-server &&
-    curl https://download.pingcap.org/tidb-v3.0-linux-amd64.tar.gz | tar xzf - &&
-    curl https://download.pingcap.org/dm-v1.0.4-linux-amd64.tar.gz | tar xzf - &&
+    curl https://download.pingcap.org/tidb-master-linux-amd64.tar.gz | tar xzf - &&
+    curl http://download.pingcap.org/dm-nightly-linux-amd64.tar.gz | tar xzf - &&
     curl -L https://github.com/pingcap/docs-dm/raw/master/assets/get-started/dm-cnf.tgz | tar xvzf -
     ```
 
@@ -207,16 +207,16 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
 配置文件包 `dm-cnf.tgz` 包含：
 
 - TiDB 集群组件和 DM 组件的配置
-- 本教程后文介绍的 2 个 DM 任务的配置
+- 本教程后文介绍的 1 个 DM 任务的配置
 
-1. 启动单个 `tidb-server` 实例、每个 MySQL Server 实例 （总共 3 个实例）的 DM-worker 进程和一个 DM-master 进程：
+1. 启动单个 `tidb-server` 实例、每个 MySQL Server 实例 （总共 3 个实例）, 3个 DM-master 进程和3个 DM-worker 进程：
 
     {{< copyable "shell-regular" >}}
 
     ```bash
     tidb-server --log-file=logs/tidb-server.log &
-    for i in 1 2 3; do dm-worker --config=dm-cnf/dm-worker$i.toml & done
-    dm-master --config=dm-cnf/dm-master.toml &
+    for i in 1 2 3; do dm-master --config=dm-cnf/dm-master"$i".toml --log-file=logs/dm-master"$i".log >> logs/dm-master"$i".log 2>&1 & done
+    for i in 1 2 3; do dm-worker --config=dm-cnf/dm-worker"$i".toml --log-file=logs/dm-worker"$i".log >> logs/dm-worker"$i".log 2>&1 & done
     ```
 
 2. 执行 `jobs` 和/或 `ps -a`，确保这些进程都正在运行：
@@ -232,10 +232,12 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
     [2]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
     [3]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
     [4]   Running                 tidb-server --log-file=logs/tidb-server.log &
-    [5]   Running                 dm-worker --config=dm-cnf/dm-worker$i.toml &
-    [6]   Running                 dm-worker --config=dm-cnf/dm-worker$i.toml &
-    [7]-  Running                 dm-worker --config=dm-cnf/dm-worker$i.toml &
-    [8]+  Running                 dm-master --config=dm-cnf/dm-master.toml &
+    [5]   Running                 dm-master --config=dm-cnf/dm-master"$i".toml --log-file=logs/dm-master"$i".log >> logs/dm-master"$i".log 2>&1 &
+    [6]   Running                 dm-master --config=dm-cnf/dm-master"$i".toml --log-file=logs/dm-master"$i".log >> logs/dm-master"$i".log 2>&1 &
+    [7]   Running                 dm-master --config=dm-cnf/dm-master"$i".toml --log-file=logs/dm-master"$i".log >> logs/dm-master"$i".log 2>&1 &
+    [8]   Running                 dm-worker --config=dm-cnf/dm-worker"$i".toml --log-file=logs/dm-worker"$i".log >> logs/dm-worker"$i".log 2>&1 &
+    [9]-  Running                 dm-worker --config=dm-cnf/dm-worker"$i".toml --log-file=logs/dm-worker"$i".log >> logs/dm-worker"$i".log 2>&1 &
+    [10]+  Running                 dm-worker --config=dm-cnf/dm-worker"$i".toml --log-file=logs/dm-worker"$i".log >> logs/dm-worker"$i".log 2>&1 &
     ```
 
     {{< copyable "shell-regular" >}}
@@ -246,49 +248,113 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
 
     ```
        PID TTY          TIME CMD
-     17317 pts/0    00:00:00 screen
-     17672 pts/1    00:00:04 mysqld
-     17727 pts/1    00:00:04 mysqld
-     17782 pts/1    00:00:04 mysqld
-     18586 pts/1    00:00:02 tidb-server
-     18587 pts/1    00:00:00 dm-worker
-     18588 pts/1    00:00:00 dm-worker
-     18589 pts/1    00:00:00 dm-worker
-     18590 pts/1    00:00:00 dm-master
-     18892 pts/1    00:00:00 ps
+        77 pts/0    00:00:00 mysqld
+       132 pts/0    00:00:00 mysqld
+       187 pts/0    00:00:00 mysqld
+       229 pts/0    00:00:01 tidb-server
+       243 pts/0    00:00:02 dm-master
+       244 pts/0    00:00:03 dm-master
+       245 pts/0    00:00:02 dm-master
+       283 pts/0    00:00:00 dm-worker
+       284 pts/0    00:00:00 dm-worker
+       285 pts/0    00:00:00 dm-worker
+       324 pts/0    00:00:00 ps
     ```
 
-每个上游的 MySQL Server 实例对应一个单独的 DM-worker 实例，每个 DM-worker 实例都有各自的配置文件。这些文件内容包括：
+3. 使用 dmctl 将数据源配置加载到 DM 集群中，执行如下命令并得到相应的返回:
 
-- 连接到上游 MySQL Server 的详细信息
-- relay log（上游服务器的 binlog）的存储路径
-- mydumper 的输出
+    {{< copyable "shell-regular" >}}
 
-各个 DM-worker 通过不同的端口监听（由 `worker-addr` 定义）。
+    ```bash
+    for i in 1 2 3; 
+    do dmctl --master-addr=127.0.0.1:8261 operate-source create dm-cnf/source"$i".toml 
+    done
+    ```
+
+    ```
+    {
+        "result": true,
+        "msg": "",
+        "sources": [
+            {
+                "result": true,
+                "msg": "",
+                "source": "mysql-replica-01",
+                "worker": "worker1"
+            }
+        ]
+    }
+    {
+        "result": true,
+        "msg": "",
+        "sources": [
+            {
+                "result": true,
+                "msg": "",
+                "source": "mysql-replica-02",
+                "worker": "worker2"
+            }
+        ]
+    }
+    {
+        "result": true,
+        "msg": "",
+        "sources": [
+            {
+                "result": true,
+                "msg": "",
+                "source": "mysql-replica-03",
+                "worker": "worker3"
+            }
+        ]
+    }
+    ```
+
+每个上游的 MySQL Server 实例对应一个单独的 source.toml。每个 DM-master ， DM-worker 实例都有各自的配置文件。
+
+以下为 `dm-master1.toml` 的示例：
+
+{{< copyable "" >}}
+
+```toml
+# DM-Master1 Configuration.
+
+name = "master1"
+master-addr = ":8261"
+advertise-addr = "127.0.0.1:8261"
+peer-urls = "127.0.0.1:8291"
+initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,master3=http://127.0.0.1:8293"
+```
 
 以下为 `dm-worker1.toml` 的示例：
 
 {{< copyable "" >}}
 
 ```toml
-# DM-worker 配置
+# DM-worker1 Configuration
 
-source-id = "mysql1"
-worker-addr = ":8262"
-log-file = "logs/worker1.log"
-relay-dir = "data/relay1"
-meta-dir = "data/meta1"
+name = "worker1"
+worker-addr="0.0.0.0:8262"
+advertise-addr="127.0.0.1:8262"
+join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
+```
 
+以下为 `source1.toml` 的示例：
+
+{{< copyable "" >}}
+
+```toml
+# MySQL1 Configuration.
+ 
+source-id = "mysql-replica-01"
+ 
 [from]
 host = "127.0.0.1"
 user = "root"
 password = ""
 port = 3307
-```
+`````
 
-- 如果从 MySQL Server、Percona Server、Percona XtraDB Cluster、Amazon Aurora 或 RDS 迁移数据，则 `flavor` 配置项应设为 "mysql"（默认值，支持 5.5 < MySQL 版本 < 8.0）。
-- 如果从 MariaDB Server 或 MariaDB (Galera) Cluster 迁移数据，则设置 `flavor = "mariadb"`（仅支持 10.1.2 以上 MariaDB 版本）。
-- 从 DM 1.0.2 版本开始，`flavor`、`server-id` 项均会由 DM 自动生成，一般情况下不需要手动配置。
 - `from` 中的 `password` 如果不为空，则需要使用 dmctl 进行加密，参见[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
 
 任务在 YAML 文件中定义。以下为一个 `dmtask1.yaml` 文件示例：
@@ -296,32 +362,43 @@ port = 3307
 {{< copyable "" >}}
 
 ```yaml
+---
 name: dmtask1
 task-mode: all
 is-sharding: true
 enable-heartbeat: true
 ignore-checking-items: ["auto_increment_ID"]
-
+timezone: "Asia/Shanghai"
+ 
 target-database:
   host: "127.0.0.1"
   port: 4000
   user: "root"
   password: ""
-
+ 
 mysql-instances:
-  - source-id: "mysql1"
-    black-white-list: "dmtest1"
+  - source-id: "mysql-replica-01"
+    black-white-list:  "instance"
+    mydumper-config-name: "global"
     loader-config-name: "loader1"
-  - source-id: "mysql2"
-    black-white-list: "dmtest1"
-    loader-config-name: "loader2"
-  - source-id: "mysql3"
-    black-white-list: "dmtest1"
-    loader-config-name: "loader3"
 
+  - source-id: "mysql-replica-02"
+    black-white-list:  "instance"
+    mydumper-config-name: "global"
+    loader-config-name: "loader2"
+ 
+  - source-id: "mysql-replica-03"
+    black-white-list:  "instance"
+    mydumper-config-name: "global"
+    loader-config-name: "loader3"
+ 
 black-white-list:
-  dmtest1:
+  instance:
     do-dbs: ["dmtest1"]
+ 
+mydumpers:
+  global:
+    mydumper-path: "./bin/mydumper"
 
 loaders:
   loader1:
@@ -344,7 +421,9 @@ loaders:
 
 * `black-white-list`：将一个任务限制在数据库 `dmtest` 中。
 
-* `loaders`：定义由各个 DM-worker 实例执行的每个 mydumper 实例的输出地址。
+* `mydumpers`: 定义各个 MySQL 源的 mydumper 二进制文件路径。
+
+* `loaders`：定义由各个 MySQL 源执行的每个 mydumper 实例的输出地址。
 
 * `target-database`：定义目标数据库的链接信息，其中的 `password` 如果不为空，则需要使用 dmctl 进行加密，参见 [使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
 
@@ -379,21 +458,24 @@ start-task dm-cnf/dmtask1.yaml
 {
     "result": true,
     "msg": "",
-    "workers": [
+    "sources": [
         {
             "result": true,
-            "worker": "127.0.0.1:8262",
-            "msg": ""
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
         },
         {
             "result": true,
-            "worker": "127.0.0.1:8263",
-            "msg": ""
+            "msg": "",
+            "source": "mysql-replica-02",
+            "worker": "worker2"
         },
         {
             "result": true,
-            "worker": "127.0.0.1:8264",
-            "msg": ""
+            "msg": "",
+            "source": "mysql-replica-03",
+            "worker": "worker3"
         }
     ]
 }
