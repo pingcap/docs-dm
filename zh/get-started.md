@@ -216,9 +216,15 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
     ```bash
     tidb-server --log-file=logs/tidb-server.log &
     ```
+
+    {{< copyable "shell-regular" >}}
+
     ```bash
     for i in 1 2 3; do dm-master --config=dm-cnf/dm-master"$i".toml --log-file=logs/dm-master"$i".log >> logs/dm-master"$i".log 2>&1 & done
     ```
+
+    {{< copyable "shell-regular" >}}
+
     ```bash
     for i in 1 2 3; do dm-worker --config=dm-cnf/dm-worker"$i".toml --log-file=logs/dm-worker"$i".log >> logs/dm-worker"$i".log 2>&1 & done
     ```
