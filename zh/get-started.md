@@ -209,7 +209,7 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
 - TiDB 集群组件和 DM 组件的配置
 - 本教程后文介绍的 1 个 DM 任务的配置
 
-1. 启动单个 `tidb-server` 实例、每个 MySQL Server 实例 （总共 3 个实例）, 3个 DM-master 进程和3个 DM-worker 进程：
+1. 启动单个 `tidb-server` 实例、每个 MySQL Server 实例 （总共 3 个实例），3 个 DM-master 进程和 3 个 DM-worker 进程：
 
     {{< copyable "shell-regular" >}}
 
