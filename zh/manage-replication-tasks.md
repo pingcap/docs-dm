@@ -98,7 +98,7 @@ Usage:
 
 Available Commands:
   check-task           check the config file of the task
-  help                 Help about any command
+  help                 help about any command
   migrate-relay        migrate DM-worker's relay unit
   offline-worker       offline worker which has been closed
   operate-source       create/update/stop upstream MySQL/MariaDB source
