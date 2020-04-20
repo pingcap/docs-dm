@@ -111,8 +111,7 @@ Available Commands:
   resume-task          resume a specified paused task
   show-ddl-locks       show un-resolved DDL locks
   sql-inject           inject (limited) SQLs into binlog replication unit as binlog events
-  sql-replace          replace SQLs matched by a specific binlog position (binlog-pos) or a SQL pattern (sql-pattern); e
-ach SQL must end with a semicolon
+  sql-replace          replace SQLs matched by a specific binlog position (binlog-pos) or a SQL pattern (sql-pattern); each SQL must end with a semicolon
   sql-skip             skip the binlog event matched by a specific binlog position (binlog-pos) or a SQL pattern (sql-pa
 ttern)
   start-task           start a task as defined in the config file
