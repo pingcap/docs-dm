@@ -10,6 +10,8 @@ This document introduces the configuration of DM worker, including a configurati
 
 ## Configuration file template
 
+The following is a configuration file template of the DM-worker:
+
 ```toml
 # Worker Configuration.
 name = "worker1"
