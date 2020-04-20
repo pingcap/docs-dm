@@ -344,7 +344,7 @@ initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,m
 # DM-worker1 Configuration
 
 name = "worker1"
-worker-addr="0.0.0.0:8262"
+worker-addr = "0.0.0.0:8262"
 advertise-addr="127.0.0.1:8262"
 join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
 ```
