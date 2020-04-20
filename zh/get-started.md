@@ -393,12 +393,12 @@ mysql-instances:
     loader-config-name: "loader1"
 
   - source-id: "mysql-replica-02"
-    black-white-list:  "instance"
+    black-white-list: "instance"
     mydumper-config-name: "global"
     loader-config-name: "loader2"
  
   - source-id: "mysql-replica-03"
-    black-white-list:  "instance"
+    black-white-list: "instance"
     mydumper-config-name: "global"
     loader-config-name: "loader3"
 
