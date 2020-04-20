@@ -157,7 +157,7 @@ Global Flags:
 
 #### 命令用法示例
 
-{{< copyable "" >}}
+{{< copyable "shell-regular" >}}
 
 ```bash
 operate-source create ./source.toml
