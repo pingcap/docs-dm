@@ -55,7 +55,7 @@ Global Options:
   --V prints version and exit
   --config path to config file
   --master-addr master API server addr
-  --rpc-timeout rpc timeout, default is 10m
+  --rpc-timeout rpc timeout; default value is 10m
 ```
 
 ### 加密数据库密码
