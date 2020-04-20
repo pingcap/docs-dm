@@ -6,7 +6,7 @@ category: reference
 
 # DM-worker Configuration File
 
-This document introduces the basic configuration of DM worker, including a configuration file template and instructions about what the configuration parameters mean.
+This document introduces the configuration of DM worker, including a configuration file template and instructions about what the configuration parameters mean.
 
 ## Configuration file template
 
