@@ -360,7 +360,7 @@ pause-task [-s "mysql-replica-01"] task-name
 - `-s`：
     - 可选
     - 指定在特定的一个 MySQL 源上暂停数据同步任务的子任务
-    - 如果设置，则只暂停该任务在指定 DM-workers 上的子任务
+    - 如果设置，则只暂停该任务在指定 MySQL 源上的子任务
 - `task-name`：
     - 必选
     - 指定任务名称
@@ -490,7 +490,7 @@ stop-task [-s "mysql-replica-01"]  task-name
 - `-s`：
     - 可选
     - 指定在特定的一个 Mysql 源上停止数据同步任务的子任务
-    - 如果设置，则只停止该任务在指定 DM-workers 上的子任务
+    - 如果设置，则只停止该任务在指定 MySQL 源上的子任务
 - `task-name`：
     - 必选
     - 指定任务名称
