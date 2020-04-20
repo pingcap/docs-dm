@@ -363,7 +363,7 @@ host = "127.0.0.1"
 user = "root"
 password = ""
 port = 3307
-`````
+```
 
 - `from` 中的 `password` 如果不为空，则需要使用 dmctl 进行加密，参见[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
 
@@ -385,7 +385,7 @@ target-database:
   port: 4000
   user: "root"
   password: ""
- 
+
 mysql-instances:
   - source-id: "mysql-replica-01"
     black-white-list: "instance"
@@ -401,7 +401,7 @@ mysql-instances:
     black-white-list:  "instance"
     mydumper-config-name: "global"
     loader-config-name: "loader3"
- 
+
 black-white-list:
   instance:
     do-dbs: ["dmtest1"]
