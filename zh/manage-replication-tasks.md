@@ -127,7 +127,7 @@ Flags:
   -h, --help             help for dmctl
   -s, --source strings   MySQL Source ID
 
-Use "dmctl [command] --help" for more information about a command.
+Use `dmctl [command] --help` to get more information about a command.
 ```
 
 ## 管理数据同步任务
