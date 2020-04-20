@@ -112,8 +112,7 @@ Available Commands:
   show-ddl-locks       show un-resolved DDL locks
   sql-inject           inject (limited) SQLs into binlog replication unit as binlog events
   sql-replace          replace SQLs matched by a specific binlog position (binlog-pos) or a SQL pattern (sql-pattern); each SQL must end with a semicolon
-  sql-skip             skip the binlog event matched by a specific binlog position (binlog-pos) or a SQL pattern (sql-pa
-ttern)
+  sql-skip             skip the binlog event matched by a specific binlog position (binlog-pos) or a SQL pattern (sql-pattern)
   start-task           start a task as defined in the config file
   stop-task            stop a specified task
   switch-relay-master  switch the master server of the DM-worker's relay unit
