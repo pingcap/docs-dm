@@ -431,7 +431,7 @@ loaders:
 
 * `black-white-list`：将一个任务限制在数据库 `dmtest` 中。
 
-* `mydumpers`: 定义各个 MySQL 源的 mydumper 二进制文件路径。
+* `mydumpers`：定义各个 MySQL 源的 mydumper 二进制文件路径。
 
 * `loaders`：定义由各个 MySQL 源执行的每个 mydumper 实例的输出地址。
 
