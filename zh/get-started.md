@@ -320,7 +320,7 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
     }
     ```
 
-每个上游的 MySQL Server 实例对应一个单独的 source.toml。每个 DM-master ， DM-worker 实例都有各自的配置文件。
+每个上游的 MySQL Server 实例对应一个单独的 source.toml。每个 DM-master、DM-worker 实例都有各自的配置文件。
 
 以下为 `dm-master1.toml` 的示例：
 
