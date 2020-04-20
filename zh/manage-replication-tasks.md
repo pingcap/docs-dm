@@ -165,7 +165,7 @@ operate-source create ./source.toml
 
 #### 参数解释
 
-+ `create`: 创建一个上游的数据库源
++ `create`：创建一个上游的数据库源
 
 + `update`: 更新一个上游的数据库源
 
