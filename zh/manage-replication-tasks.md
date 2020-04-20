@@ -169,7 +169,7 @@ operate-source create ./source.toml
 
 + `update`：更新一个上游的数据库源
 
-+ `stop`: 停止一个上游的数据库源
++ `stop`：停止一个上游的数据库源
 
 + `config-file`：
     - 必选
