@@ -389,27 +389,20 @@ target-database:
 mysql-instances:
   - source-id: "mysql-replica-01"
     black-white-list: "instance"
-    mydumper-config-name: "global"
     loader-config-name: "loader1"
 
   - source-id: "mysql-replica-02"
     black-white-list: "instance"
-    mydumper-config-name: "global"
     loader-config-name: "loader2"
  
   - source-id: "mysql-replica-03"
     black-white-list: "instance"
-    mydumper-config-name: "global"
     loader-config-name: "loader3"
 
 black-white-list:
   instance:
     do-dbs: ["dmtest1"]
  
-mydumpers:
-  global:
-    mydumper-path: "./bin/mydumper"
-
 loaders:
   loader1:
     dir: "data/dump1"
@@ -430,8 +423,6 @@ loaders:
 * `ignore-checking-items: ["auto_increment_ID"]`：关闭 DM 对上游实例中潜在的自增 ID 冲突的检测。DM 能检测出上游表结构相同、并包含自增列的分片间潜在的列值冲突。通过配置 `auto-increment-increment` 和 `auto-increment-offset` 可使每个 MySQL Server 的 ID 都不重叠，从而避免不同表之间冲突的产生。因此，可以让 DM 关闭对自增 ID 冲突的检测。
 
 * `black-white-list`：将一个任务限制在数据库 `dmtest` 中。
-
-* `mydumpers`：定义各个 MySQL 源的 mydumper 二进制文件路径。
 
 * `loaders`：定义由各个 MySQL 源执行的每个 mydumper 实例的输出地址。
 
