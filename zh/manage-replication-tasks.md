@@ -589,7 +589,7 @@ update-task [-s "mysql-replica-01"] ./task.yaml
 - `-s`：
     - 可选
     - 指定在特定的一个 MySQL 源上更新数据同步任务的子任务
-    - 如果设置，则只更新指定 DM-workers 上的子任务配置
+    - 如果设置，则只更新指定 MySQL 源上的子任务配置
 - `config-file`：
     - 必选
     - 指定 `task.yaml` 的文件路径
