@@ -177,7 +177,7 @@ operate-source create ./source.toml
 
 #### 返回结果示例
 
-{{< copyable "" >}}
+{{< copyable "shell-regular" >}}
 
 ```bash
 operate-source create ./source.toml
