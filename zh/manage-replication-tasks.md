@@ -22,18 +22,40 @@ dmctl 支持交互模式用于人工操作，同时也支持命令模式用于�
 ```
 
 ```
-Usage of dmctl:
- -V prints version and exit
- -config string
-       path to config file
- # 按照 DM 提供的加密方法加密数据库密码，用于 DM 的配置文件
- -encrypt string
-       encrypt plaintext to ciphertext
- # DM-master 访问地址，dmctl 与 DM-master 交互以完成任务管理操作
- -master-addr string
-       master API server addr
- -rpc-timeout string
-       rpc timeout, default is 10m (default "10m")
+Usage: dmctl [global options] command [command options] [arguments...]
+
+Available Commands:
+  check-task            check-task <config-file>
+  migrate-relay         migrate-relay <source> <binlogName> <binlogPos>
+  offline-worker        offline-worker <name> <address>
+  operate-source        operate-source <operate-type> <config-file>
+  pause-relay           pause-relay <-s source ...>
+  pause-task            pause-task [-s source ...] <task-name>
+  purge-relay           purge-relay <-s source> [--filename] [--sub-dir]
+  query-error           query-error [-s source ...] [task-name]
+  query-status          query-status [-s source ...] [task-name] [--more]
+  resume-relay          resume-relay <-s source ...>
+  resume-task           resume-task [-s source ...] <task-name>
+  show-ddl-locks        show-ddl-locks [-s source ...] [task-name]
+  sql-inject            sql-inject <-s source> <task-name> <sql1;sql2;>
+  sql-replace           sql-replace <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name> <sql1;sql2;>
+  sql-skip              sql-skip <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name>
+  start-task            start-task [-s source ...] <config-file>
+  stop-task             stop-task [-s source ...] <task-name>
+  switch-relay-master   switch-relay-master <-s source ...>
+  unlock-ddl-lock       unlock-ddl-lock [-s source ...] <lock-ID>
+  update-master-config  update-master-config <config-file>
+  update-relay          update-relay [-s source ...] <config-file>
+  update-task           update-task [-s source ...] <config-file>
+
+Special Commands:
+  --encrypt encrypt plaintext to ciphertext
+
+Global Options:
+  --V prints version and exit
+  --config path to config file
+  --master-addr master API server addr
+  --rpc-timeout rpc timeout; default value is 10m
 ```
 
 ### 加密数据库密码
@@ -75,16 +97,16 @@ Usage:
   dmctl [command]
 
 Available Commands:
-  break-ddl-lock       forcefully break DM-worker's DDL lock
   check-task           check the config file of the task
   help                 help about any command
   migrate-relay        migrate DM-worker's relay unit
+  offline-worker       offline worker which has been closed
+  operate-source       create/update/stop upstream MySQL/MariaDB source
   pause-relay          pause DM-worker's relay unit
   pause-task           pause a specified running task
   purge-relay          purge relay log files of the DM-worker according to the specified filename
   query-error          query task error
   query-status         query task status
-  refresh-worker-tasks refresh worker -> tasks mapper
   resume-relay         resume DM-worker's relay unit
   resume-task          resume a specified paused task
   show-ddl-locks       show un-resolved DDL locks
@@ -101,14 +123,80 @@ Available Commands:
 
 Flags:
   -h, --help             help for dmctl
-  -w, --worker strings   DM-worker ID
+  -s, --source strings   MySQL Source ID
 
-# 使用 `dmctl [command] --help` 来获取某个命令的更多信息
+Use `dmctl [command] --help` to get more information about a command.
 ```
 
 ## 管理数据同步任务
 
 本部分描述了如何使用不同的任务管理命令来执行相应操作。
+
+### 加载数据源配置
+
+`operate-source` 命令用于将数据源配置加载到 DM 集群中。
+
+{{< copyable "" >}}
+
+```bash
+help operate-source
+```
+
+```
+create/update/stop upstream MySQL/MariaDB source
+
+Usage:
+  dmctl operate-source <operate-type> <config-file> [flags]
+
+Flags:
+  -h, --help   help for operate-source
+
+Global Flags:
+  -s, --source strings   MySQL Source ID
+```
+
+#### 命令用法示例
+
+{{< copyable "" >}}
+
+```bash
+operate-source create ./source.toml
+```
+
+#### 参数解释
+
++ `create`：创建一个上游的数据库源
+
++ `update`：更新一个上游的数据库源
+
++ `stop`：停止一个上游的数据库源
+
++ `config-file`：
+    - 必选
+    - 指定 `source.toml` 的文件路径
+
+#### 返回结果示例
+
+{{< copyable "" >}}
+
+```bash
+operate-source create ./source.toml
+```
+
+```
+{
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "dm-worker-1"
+        }
+    ]
+}
+```
 
 ### 创建数据同步任务
 
@@ -124,13 +212,13 @@ help start-task
 start a task as defined in the config file
 
 Usage:
- dmctl start-task [-w worker ...] <config-file> [flags]
+ dmctl start-task [-s source ...] <config-file> [flags]
 
 Flags:
  -h, --help   help for start-task
 
 Global Flags:
- -w, --worker strings   DM-worker ID
+ -s, --source strings   MySQL Source ID
 ```
 
 #### 命令用法示例
@@ -138,15 +226,15 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-start-task [ -w "172.16.30.15:8262"] ./task.yaml
+start-task [ -s "mysql-replica-01"] ./task.yaml
 ```
 
 #### 参数解释
 
-+ `-w`：
++ `-s`：
     - 可选
-    - 指定在特定的一组 DM-workers 上执行 `task.yaml`
-    - 如果设置，则只启动指定任务在该组 DM-workers 上的子任务
+    - 指定在特定的一个 MySQL 源上执行 `task.yaml`
+    - 如果设置，则只启动指定任务在该 MySQL 源上的子任务
 + `config-file`：
     - 必选
     - 指定 `task.yaml` 的文件路径
@@ -161,20 +249,16 @@ start-task task.yaml
 
 ```
 {
-     "result": true,
-     "msg": "",
-     "workers": [
-         {
-             "result": true,
-             "worker": "172.16.30.15:8262",
-             "msg": ""
-         },
-         {
-             "result": true,
-             "worker": "172.16.30.16:8262",
-             "msg": ""
-         }
-     ]
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
+        }
+    ]
 }
 ```
 
@@ -192,13 +276,14 @@ help query-status
 query task status
 
 Usage:
- dmctl query-status [-w worker ...] [task-name] [flags]
+ dmctl query-status [-s source ...] [task-name] [--more] [flags]
 
 Flags:
  -h, --help   help for query-status
+     --more   whether to print the detailed task information
 
 Global Flags:
- -w, --worker strings   DM-worker ID
+ -s, --source strings   MySQL Source ID
 ```
 
 #### 命令用法示例
@@ -211,9 +296,9 @@ query-status
 
 #### 参数解释
 
-- `-w`：
+- `-s`：
     - 可选
-    - 查询在指定的一组 DM-workers 上运行的数据同步任务的子任务
+    - 查询在指定的一个 MySQL 源上运行的数据同步任务的子任务
 - `task-name`：
     - 可选
     - 指定任务名称
@@ -251,13 +336,13 @@ help pause-task
 pause a specified running task
 
 Usage:
- dmctl pause-task [-w worker ...] <task-name> [flags]
+ dmctl pause-task [-s source ...] <task-name> [flags]
 
 Flags:
  -h, --help   help for pause-task
 
 Global Flags:
- -w, --worker strings   DM-worker ID
+ -s, --source strings   MySQL Source ID
 ```
 
 #### 命令用法示例
@@ -265,15 +350,15 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-pause-task [-w "127.0.0.1:8262"] task-name
+pause-task [-s "mysql-replica-01"] task-name
 ```
 
 #### 参数解释
 
-- `-w`：
+- `-s`：
     - 可选
-    - 指定在特定的一组 DM-workers 上暂停数据同步任务的子任务
-    - 如果设置，则只暂停该任务在指定 DM-workers 上的子任务
+    - 指定在特定的一个 MySQL 源上暂停数据同步任务的子任务
+    - 如果设置，则只暂停该任务在指定 MySQL 源上的子任务
 - `task-name`：
     - 必选
     - 指定任务名称
@@ -288,29 +373,17 @@ pause-task test
 
 ```
 {
-     "op": "Pause",
-     "result": true,
-     "msg": "",
-     "workers": [
-         {
-            "meta": {
-                "result": true,
-                "worker": "172.16.30.15:8262",
-                "msg": ""
-            },
-            "op": "Pause",
-            "logID": "2"
-         },
-         {
-            "meta": {
-                "result": true,
-                "worker": "172.16.30.16:8262",
-                "msg": ""
-            },
-            "op": "Pause",
-            "logID": "2"
-         }
-     ]
+    "op": "Pause",
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
+        }
+    ]
 }
 ```
 
@@ -328,13 +401,13 @@ help resume-task
 resume a specified paused task
 
 Usage:
- dmctl resume-task [-w worker ...] <task-name> [flags]
+ dmctl resume-task [-s source ...] <task-name> [flags]
 
 Flags:
  -h, --help   help for resume-task
 
 Global Flags:
- -w, --worker strings   DM-worker ID
+ -s, --source strings   MySQL Source ID
 ```
 
 #### 命令用法示例
@@ -342,15 +415,15 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-resume-task [-w "127.0.0.1:8262"] task-name
+resume-task [-s "mysql-replica-01"] task-name
 ```
 
 #### 参数解释
 
-- `-w`：
+- `-s`：
     - 可选
-    - 指定在特定的一组 DM-workers 上恢复数据同步任务的子任务
-    - 如果设置，则只恢复该任务在指定 DM-workers 上的子任务
+    - 指定在特定的一个 MySQL 源上恢复数据同步任务的子任务
+    - 如果设置，则只恢复该任务在指定 MySQL 源上的子任务
 - `task-name`：
     - 必选
     - 指定任务名称
@@ -365,29 +438,17 @@ resume-task test
 
 ```
 {
-     "op": "Resume",
-     "result": true,
-     "msg": "",
-     "workers": [
-         {
-             "meta": {
-                 "result": true,
-                 "worker": "172.16.30.15:8262",
-                 "msg": ""
-             },
-             "op": "Resume",
-             "logID": "3"
-         },
-         {
-             "meta": {
-                 "result": true,
-                 "worker": "172.16.30.16:8262",
-                 "msg": ""
-             },
-             "op": "Resume",
-             "logID": "3"
-         }
-     ]
+    "op": "Resume",
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
+        }
+    ]
 }
 ```
 
@@ -405,13 +466,13 @@ help stop-task
 stop a specified task
 
 Usage:
- dmctl stop-task [-w worker ...] <task-name> [flags]
+ dmctl stop-task [-s source ...] <task-name> [flags]
 
 Flags:
  -h, --help   help for stop-task
 
 Global Flags:
- -w, --worker strings   DM-worker ID
+ -s, --source strings   MySQL Source ID
 ```
 
 #### 命令用法示例
@@ -419,15 +480,15 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-stop-task [-w "127.0.0.1:8262"]  task-name
+stop-task [-s "mysql-replica-01"]  task-name
 ```
 
 #### 参数解释
 
-- `-w`：
+- `-s`：
     - 可选
-    - 指定在特定的一组 DM-workers 上停止数据同步任务的子任务
-    - 如果设置，则只停止该任务在指定 DM-workers 上的子任务
+    - 指定在特定的一个 MySQL 源上停止数据同步任务的子任务
+    - 如果设置，则只停止该任务在指定 MySQL 源上的子任务
 - `task-name`：
     - 必选
     - 指定任务名称
@@ -442,29 +503,17 @@ stop-task test
 
 ```
 {
-     "op": "Stop",
-     "result": true,
-     "msg": "",
-     "workers": [
-         {
-             "meta": {
-                 "result": true,
-                 "worker": "172.16.30.15:8262",
-                 "msg": ""
-             },
-             "op": "Stop",
-             "logID": "4"
-         },
-         {
-             "meta": {
-                 "result": true,
-                 "worker": "172.16.30.16:8262",
-                 "msg": ""
-             },
-             "op": "Stop",
-             "logID": "4"
-         }
-     ]
+    "op": "Stop",
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
+        }
+    ]
 }
 ```
 
@@ -516,13 +565,13 @@ help update-task
 update a task's config for routes, filters, or black-white-list
 
 Usage:
-  dmctl update-task [-w worker ...] <config-file> [flags]
+  dmctl update-task [-s source ...] <config-file> [flags]
 
 Flags:
   -h, --help   help for update-task
 
 Global Flags:
-  -w, --worker strings   DM-worker ID
+  -s, --source strings   MySQL Source ID
 ```
 
 #### 命令用法示例
@@ -530,15 +579,15 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-update-task [-w "127.0.0.1:8262"] ./task.yaml
+update-task [-s "mysql-replica-01"] ./task.yaml
 ```
 
 #### 参数解释
 
-- `-w`：
+- `-s`：
     - 可选
-    - 指定在特定的一组 DM-workers 上更新数据同步任务的子任务
-    - 如果设置，则只更新指定 DM-workers 上的子任务配置
+    - 指定在特定的一个 MySQL 源上更新数据同步任务的子任务
+    - 如果设置，则只更新指定 MySQL 源上的子任务配置
 - `config-file`：
     - 必选
     - 指定 `task.yaml` 的文件路径
@@ -553,26 +602,16 @@ update-task task_all_black.yaml
 
 ```
 {
-     "result": true,
-     "msg": "",
-     "workers": [
-         {
-             "result": true,
-             "worker": "172.16.30.15:8262",
-             "msg": ""
-         },
-         {
-             "result": true,
-             "worker": "172.16.30.16:8262",
-             "msg": ""
-         }
-     ]
+    "result": true,
+    "msg": "",
+    "sources": [
+    ]
 }
 ```
 
 ## 管理 DDL lock
 
-目前与 DDL lock 相关的命令主要包括 `show-ddl-locks`、`unlock-ddl-lock`、`break-ddl-lock` 等。有关它们的功能、用法以及适用场景等，请参考[手动处理 sharding DDL lock](feature-manually-handling-sharding-ddl-locks.md)。
+目前与 DDL lock 相关的命令主要包括 `show-ddl-locks`、`unlock-ddl-lock` 等。有关它们的功能、用法以及适用场景等，请参考[手动处理 sharding DDL lock](feature-manually-handling-sharding-ddl-locks.md)。
 
 ## 其他任务与集群管理命令
 
@@ -600,7 +639,7 @@ Flags:
  -h, --help   help for check-task
 
 Global Flags:
- -w, --worker strings   DM-worker ID
+ -s, --source strings   MySQL Source ID
 ```
 
 #### 命令用法示例
@@ -648,13 +687,13 @@ help pause-relay
 pause DM-worker's relay unit
 
 Usage:
-  dmctl pause-relay <-w worker ...> [flags]
+  dmctl pause-relay <-s source ...> [flags]
 
 Flags:
   -h, --help   help for pause-relay
 
 Global Flags:
-  -w, --worker strings   DM-worker ID
+  -s, --source strings   MySQL Source ID
 ```
 
 #### 命令用法示例
@@ -662,34 +701,34 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-pause-relay -w "127.0.0.1:8262"
+pause-relay -s "mysql-replica-01"
 ```
 
 #### 参数解释
 
-- `-w`：
+- `-s`：
     - 必选
-    - 指定需要暂停 relay 处理单元的 DM-worker
+    - 指定需要暂停 relay 处理单元的 MySQL 源
 
 #### 返回结果示例
 
 {{< copyable "" >}}
 
 ```bash
-pause-relay -w "172.16.30.15:8262"
+pause-relay -w "mysql-replica-01"
 ```
 
 ```
 {
-    "op": "InvalidRelayOp",
+    "op": "PauseRelay",
     "result": true,
     "msg": "",
-    "workers": [
+    "sources": [
         {
-            "op": "PauseRelay",
             "result": true,
-            "worker": "172.16.30.15:8262",
-            "msg": ""
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
         }
     ]
 }
@@ -711,13 +750,13 @@ help resume-relay
 resume DM-worker's relay unit
 
 Usage:
-  dmctl resume-relay <-w worker ...> [flags]
+  dmctl resume-relay <-s source ...> [flags]
 
 Flags:
   -h, --help   help for resume-relay
 
 Global Flags:
-  -w, --worker strings   DM-worker ID
+  -s, --source strings   MySQL Source ID
 ```
 
 #### 命令用法示例
@@ -725,34 +764,34 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-resume-relay -w "127.0.0.1:8262"
+resume-relay -s "mysql-replica-01"
 ```
 
 #### 参数解释
 
-- `-w`：
+- `-s`：
     - 必选
-    - 指定需要恢复 relay 处理单元的 DM-worker
+    - 指定需要恢复 relay 处理单元的 MySQL 源
 
 #### 返回结果示例
 
 {{< copyable "" >}}
 
 ```bash
-resume-relay -w "172.16.30.15:8262"
+resume-relay -s "mysql-replica-01"
 ```
 
 ```
 {
-    "op": "InvalidRelayOp",
+    "op": "ResumeRelay",
     "result": true,
     "msg": "",
-    "workers": [
+    "sources": [
         {
-            "op": "ResumeRelay",
             "result": true,
-            "worker": "172.16.30.15:8262",
-            "msg": ""
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
         }
     ]
 }
@@ -774,13 +813,13 @@ help switch-relay-master
 switch the master server of the DM-worker's relay unit
 
 Usage:
-  dmctl switch-relay-master <-w worker ...> [flags]
+  dmctl switch-relay-master <-s source ...> [flags]
 
 Flags:
   -h, --help   help for switch-relay-master
 
 Global Flags:
-  -w, --worker strings   DM-worker ID
+  -s, --source strings   MySQL Source ID
 ```
 
 #### 命令用法示例
@@ -788,32 +827,33 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-switch-relay-master -w "127.0.0.1:8262"
+switch-relay-master -s "mysql-replica-01"
 ```
 
 #### 参数解释
 
-- `-w`：
+- `-s`：
     - 必选
-    - 指定需要切换 relay 处理单元使用子目录的 DM-worker
+    - 指定需要切换 relay 处理单元使用子目录的 MySQL 源
 
 #### 返回结果示例
 
 {{< copyable "" >}}
 
 ```bash
-switch-relay-master -w "172.16.30.15:8262"
+switch-relay-master -s "mysql-replica-01"
 ```
 
 ```
 {
     "result": true,
     "msg": "",
-    "workers": [
+    "sources": [
         {
             "result": true,
-            "worker": "172.16.30.15:8262",
-            "msg": ""
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": ""
         }
     ]
 }
@@ -833,15 +873,17 @@ help purge-relay
 purge relay log files of the DM-worker according to the specified filename
 
 Usage:
-  dmctl purge-relay <-w worker> [--filename] [--sub-dir] [flags]
+  dmctl purge-relay <-s source> [--filename] [--sub-dir] [flags]
 
 Flags:
-  -f, --filename string   name of the terminal file before which to purge relay log files. Sample format: "mysql-bin.000006"
+  -f, --filename string   name of the terminal file before which to purge relay log files. Sample format: "mysql-bin.000
+006"
   -h, --help              help for purge-relay
-  -s, --sub-dir string    specify relay sub directory for --filename. If not specified, the latest one will be used. Sample format: "2ae76434-f79f-11e8-bde2-0242ac130008.000001"
+     --sub-dir string    specify relay sub directory for --filename. If not specified, the latest one will be used. Sam
+ple format: "2ae76434-f79f-11e8-bde2-0242ac130008.000001"
 
 Global Flags:
-  -w, --worker strings   DM-worker ID
+  -s, --source strings   MySQL Source ID
 ```
 
 #### 命令用法示例
@@ -849,14 +891,14 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-purge-relay -w "127.0.0.1:8262" --filename "mysql-bin.000003"
+purge-relay -s "mysql-replica-01" --filename "mysql-bin.000003"
 ```
 
 #### 参数解释
 
-- `-w`：
+- `-s`：
     - 必选
-    - 指定需要执行 relay log 清理操作的 DM-worker
+    - 指定需要执行 relay log 清理操作的 MySQL 源
 - `--filename`：
     - 必选
     - 指定标识 relay log 将要停止清理的文件名。如指定为 `mysql-bin.000100`，则只尝试清理到 `mysql-bin.000099`
@@ -869,7 +911,7 @@ purge-relay -w "127.0.0.1:8262" --filename "mysql-bin.000003"
 {{< copyable "" >}}
 
 ```bash
-purge-relay -w "127.0.0.1:8262" --filename "mysql-bin.000003"
+purge-relay -s "mysql-replica-01" --filename "mysql-bin.000003"
 ```
 
 ```
@@ -895,14 +937,6 @@ purge-relay -w "127.0.0.1:8262" --filename "mysql-bin.000003"
 
 `sql-replace` 命令用于预设一个替换执行操作。当 binlog event 的 position 或 SQL 语句与指定的 `binlog-pos` 或 `sql-pattern` 匹配时，执行该替换执行操作。相关参数与结果解释，请参考[`sql-replace`](skip-or-replace-abnormal-sql-statements.md#sql-replace)。
 
-### 强制刷新 `task => DM-workers` 映射关系
-
-`refresh-worker-tasks` 命令用于强制刷新 DM-master 内存中维护的 `task => DM-workers` 映射关系。
-
-> **注意：**
->
-> 一般不需要使用此命令。仅当已确定 `task => DM-workers` 映射关系存在，但执行其它命令时仍提示必须刷新它时，你才需要使用此命令。
-
 ## dmctl 命令模式
 
 命令模式跟交互模式的区别是，执行命令时只需要在 dmctl 命令后紧接着执行任务操作，任务操作同交互模式的参数一致。
@@ -922,28 +956,28 @@ purge-relay -w "127.0.0.1:8262" --filename "mysql-bin.000003"
 
 ```
 Available Commands:
-  break-ddl-lock        break-ddl-lock <-w worker ...> <task-name> [--remove-id] [--exec] [--skip]
   check-task            check-task <config-file>
-  migrate-relay         migrate-relay <worker> <binlogName> <binlogPos>
-  pause-relay           pause-relay <-w worker ...>
-  pause-task            pause-task [-w worker ...] <task-name>
-  purge-relay           purge-relay <-w worker> [--filename] [--sub-dir]
-  query-error           query-error [-w worker ...] [task-name]
-  query-status          query-status [-w worker ...] [task-name]
-  refresh-worker-tasks  refresh-worker-tasks
-  resume-relay          resume-relay <-w worker ...>
-  resume-task           resume-task [-w worker ...] <task-name>
-  show-ddl-locks        show-ddl-locks [-w worker ...] [task-name]
-  sql-inject            sql-inject <-w worker> <task-name> <sql1;sql2;>
-  sql-replace           sql-replace <-w worker> [-b binlog-pos] [-s sql-pattern] [--sharding] <task-name> <sql1;sql2;>
-  sql-skip              sql-skip <-w worker> [-b binlog-pos] [-s sql-pattern] [--sharding] <task-name>
-  start-task            start-task [-w worker ...] <config-file>
-  stop-task             stop-task [-w worker ...] <task-name>
-  switch-relay-master   switch-relay-master <-w worker ...>
-  unlock-ddl-lock       unlock-ddl-lock [-w worker ...] <lock-ID>
+  migrate-relay         migrate-relay <source> <binlogName> <binlogPos>
+  offline-worker        offline-worker <name> <address>
+  operate-source        operate-source <operate-type> <config-file>
+  pause-relay           pause-relay <-s source ...>
+  pause-task            pause-task [-s source ...] <task-name>
+  purge-relay           purge-relay <-s source> [--filename] [--sub-dir]
+  query-error           query-error [-s source ...] [task-name]
+  query-status          query-status [-s source ...] [task-name] [--more]
+  resume-relay          resume-relay <-s source ...>
+  resume-task           resume-task [-s source ...] <task-name>
+  show-ddl-locks        show-ddl-locks [-s source ...] [task-name]
+  sql-inject            sql-inject <-s source> <task-name> <sql1;sql2;>
+  sql-replace           sql-replace <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name> <sql1;sql2;>
+  sql-skip              sql-skip <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name>
+  start-task            start-task [-s source ...] <config-file>
+  stop-task             stop-task [-s source ...] <task-name>
+  switch-relay-master   switch-relay-master <-s source ...>
+  unlock-ddl-lock       unlock-ddl-lock [-s source ...] <lock-ID>
   update-master-config  update-master-config <config-file>
-  update-relay          update-relay [-w worker ...] <config-file>
-  update-task           update-task [-w worker ...] <config-file>
+  update-relay          update-relay [-s source ...] <config-file>
+  update-task           update-task [-s source ...] <config-file>
 ```
 
 ## 废弃或不推荐使用的命令
