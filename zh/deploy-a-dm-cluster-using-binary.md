@@ -200,7 +200,7 @@ fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
 
 MySQL1 的配置文件
 
-如需要启用 GTID 模式，则额外配置 enable-gtid = true。
+如需要启用 GTID 模式，则额外配置 enable-gtid 为 true。
 
 ```toml
 # MySQL1 Configuration.
