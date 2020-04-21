@@ -31,7 +31,7 @@ MySQL1 和 MySQL2 中需要开启 binlog。下面以此为例，说明如何部�
 
 ### DM-master 的部署
 
-DM-master 提供命令行参数和配置文件两种配置方式。
+DM-master 提供[命令行参数](#使用命令行参数部署-DM-master)和[配置文件](#使用配置文件部署-DM-master)两种配置方式。
 
 #### 使用命令行参数部署 DM-master
 
