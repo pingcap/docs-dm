@@ -134,7 +134,7 @@ Use `dmctl [command] --help` to get more information about a command.
 
 ### 加载数据源配置
 
-`operate-source` 命令将数据源配置加载到 DM 集群中。
+`operate-source` 命令用于将数据源配置加载到 DM 集群中。
 
 {{< copyable "" >}}
 
