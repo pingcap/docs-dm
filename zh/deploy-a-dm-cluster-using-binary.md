@@ -31,7 +31,7 @@ MySQL1 和 MySQL2 中需要开启 binlog。下面以此为例，说明如何部�
 
 ### DM-master 的部署
 
-DM-master 提供[命令行参数](#使用命令行参数部署-DM-master)和[配置文件](#使用配置文件部署-DM-master)两种配置方式。
+DM-master 提供[命令行参数](#使用命令行参数部署-dm-master)和[配置文件](#使用配置文件部署-dm-master)两种配置方式。
 
 #### 使用命令行参数部署 DM-master
 
@@ -111,9 +111,9 @@ initial-cluster = "master1=http://192.168.0.4:8291,master2=http://192.168.0.5:82
 
 ### DM-worker 的部署
 
-DM-worker 提供命令行参数和配置文件两种配置方式。
+DM-worker 提供[命令行参数](#使用命令行参数部署-dm-worker)和[配置文件](#使用配置文件部署-dm-worker)两种配置方式。
 
-**配置方式 1：命令行参数**
+#### 使用命令行参数部署 DM-worker
 
 查看 DM-worker 的命令行参数说明：
 
@@ -150,7 +150,7 @@ Usage of worker:
 >
 > 某些情况下，无法使用命令行参数的方法来配置 DM-worker，因为有的配置并未暴露给命令行。
 
-**配置方式 2：配置文件**
+#### 使用配置文件部署 DM-worker
 
 推荐使用配置文件来配置 DM-worker，把以下配置文件内容写入到 `conf/dm-worker1.toml` 中。
 
