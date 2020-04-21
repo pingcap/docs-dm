@@ -136,7 +136,7 @@ Use `dmctl [command] --help` to get more information about a command.
 
 `operate-source` 命令将数据源配置加载到 DM 集群中。
 
-{{< copyable "shell-regular" >}}
+{{< copyable "" >}}
 
 ```bash
 help operate-source
@@ -157,7 +157,7 @@ Global Flags:
 
 #### 命令用法示例
 
-{{< copyable "shell-regular" >}}
+{{< copyable "" >}}
 
 ```bash
 operate-source create ./source.toml
@@ -177,7 +177,7 @@ operate-source create ./source.toml
 
 #### 返回结果示例
 
-{{< copyable "shell-regular" >}}
+{{< copyable "" >}}
 
 ```bash
 operate-source create ./source.toml
