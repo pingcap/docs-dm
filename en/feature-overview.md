@@ -10,7 +10,7 @@ This document describes the data replication features provided by the Data Migra
 
 For different DM versions, pay attention to the different match rules of schema or table names in the table routing, black & white lists, and binlog event filter features:
 
-+ For DM v1.0.4 or later versions, all the above features support the [wildcard match](https://en.wikipedia.org/wiki/Glob_(programming)#Syntax).
++ For DM v1.0.4 or later versions, all the above features support the [wildcard match](https://en.wikipedia.org/wiki/Glob_(programming)#Syntax). For all versions of DM, note that there can be **only one** `*` in the wildcard expression, and `*` **must be placed at the end**.
 + For DM versions earlier than v1.0.4, table routing and binlog event filter support the wildcard but do not support the `[...]` and `[!...]` expressions. The black & white lists only supports the regular expression.
 
 It is recommended that you use the wildcard for matching in simple scenarios.
