@@ -271,7 +271,7 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
        324 pts/0    00:00:00 ps
     ```
 
-3. 使用 dmctl 将数据源配置加载到 DM 集群中，执行如下命令并得到相应的返回：
+3. 使用 dmctl 将数据源配置加载到 DM 集群中，执行如下命令并得到相应的返回结果：
 
     {{< copyable "shell-regular" >}}
 
