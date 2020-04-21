@@ -95,7 +95,7 @@ master-addr = ":8261"
 # DM-master 节点的对等 URL
 peer-urls = "192.168.0.4:8291"
 
-# 初始集群中所有 DM-master 的 advertise-peer-urls 的值。
+# 初始集群中所有 DM-master 的 advertise-peer-urls 的值
 initial-cluster = "master1=http://192.168.0.4:8291,master2=http://192.168.0.5:8292"
 ```
 
