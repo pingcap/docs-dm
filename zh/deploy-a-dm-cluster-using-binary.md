@@ -214,7 +214,7 @@ password = "fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg="
 port = 3306
 ```
 
-在终端中使用下面的命令，使用 dmctl 将数据源配置加载到 DM 集群中 ：
+在终端中执行下面的命令，使用 dmctl 将数据源配置加载到 DM 集群中 ：
 
 {{< copyable "shell-regular" >}}
 
