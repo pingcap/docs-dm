@@ -55,7 +55,7 @@ Usage of dm-master:
   -data-dir string
         path to the data directory (default "default.${name}")
   -initial-cluster string
-        initial cluster configuration for bootstrapping, e,g. dm-master=http://127.0.0.1:8291
+        initial cluster configuration for bootstrapping, e.g. dm-master=http://127.0.0.1:8291
   -join string
         join to an existing cluster (usage: cluster's "${master-addr}" list, e,g. "127.0.0.1:8261,127.0.0.1:18261"
   -log-file string
