@@ -327,7 +327,7 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
 {{< copyable "" >}}
 
 ```toml
-# DM-Master1 Configuration.
+# DM-master1 Configuration.
 
 name = "master1"
 master-addr = ":8261"
