@@ -57,7 +57,7 @@ Usage of dm-master:
   -initial-cluster string
         initial cluster configuration for bootstrapping, e.g. dm-master=http://127.0.0.1:8291
   -join string
-        join to an existing cluster (usage: cluster's "${master-addr}" list, e,g. "127.0.0.1:8261,127.0.0.1:18261"
+        join to an existing cluster (usage: cluster's "${master-addr}" list, e.g. "127.0.0.1:8261,127.0.0.1:18261"
   -log-file string
         log file path
   -master-addr string
