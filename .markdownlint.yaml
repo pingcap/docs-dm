@@ -16,10 +16,6 @@ heading-style:
 # MD010
 no-hard-tabs: true
 
-# MD007
-ul-indent:
-  indent: 4
-
 # MD012
 no-multiple-blanks: true
 
