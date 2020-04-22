@@ -199,7 +199,7 @@ fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
 
 记录该加密后的密码，用于下面 MySQL1 的配置。把以下配置文件内容写入到 `conf/source1.toml` 中。
 
-MySQL1 的配置文件
+MySQL1 的配置文件：
 
 ```toml
 # MySQL1 Configuration.
