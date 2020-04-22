@@ -224,7 +224,7 @@ port = 3306
 ./bin/dmctl --master-addr=192.168.0.4:8261 operate-source create conf/source1.toml
 ```
 
-对于 MySQL2 ，修改配置文件中的 `name` 为 `mysql-replica-02`， `host` 为 `192.168.0.2`，并将 `password` 和 `port` 改为相应的值即可。
+对于 MySQL2，修改配置文件中的 `name` 为 `mysql-replica-02`，`host` 为 `192.168.0.2`，并将 `password` 和 `port` 改为相应的值即可。
 
 这样，DM 集群就部署成功了。下面创建简单的数据同步任务来使用 DM 集群。
 
