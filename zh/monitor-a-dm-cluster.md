@@ -49,9 +49,9 @@ overview 下包含运行当前选定 task 的所有 DM-worker instance 的部分
 | binlog file index | relay log 最大的文件序列号。如 value = 1 表示 relay-log.000001 | N/A | N/A |
 | binlog file gap between master and relay | relay 与上游 master 相比落后的 binlog file 个数 | 落后 binlog file 个数超过 1 个（不含 1 个）且持续 10 分钟时 | critical |
 | binlog pos | relay log 最新文件的写入 offset  | N/A | N/A |
-| read binlog duration | relay log 从上游的 MySQL 读取 binlog 的时延，单位：秒 |  N/A | N/A |
+| read binlog even duration | relay log 从上游的 MySQL 读取 binlog 的时延，单位：秒 |  N/A | N/A |
 | write relay log duration | relay log 每次写 binlog 到磁盘的时延，单位：秒| N/A | N/A |
-| binlog size | relay log 写到磁盘的单条 binlog 的大小 | N/A | N/A |
+| binlog even size | relay log 写到磁盘的单条 binlog 的大小 | N/A | N/A |
 
 ### Dump/Load unit
 
@@ -65,8 +65,8 @@ overview 下包含运行当前选定 task 的所有 DM-worker instance 的部分
 | load process exits with error | load unit 在 DM-worker 内部遇到错误并且退出了  | 立即告警 | critical |
 | table count | load unit 导入的全量数据中 table 的数量总和  | N/A | N/A |
 | data file count | load unit 导入的全量数据中数据文件（内含 `INSERT INTO` 语句）的数量总和| N/A | N/A |
-| latency of execute transaction | load unit 在执行事务的时延，单位：秒 | N/A | N/A |
-| latency of query | load unit 执行 query 的耗时，单位：秒 | N/A | N/A |
+| transaction execution latency | load unit 在执行事务的时延，单位：秒 | N/A | N/A |
+| statement execution latency | load unit 执行语句的耗时，单位：秒 | N/A | N/A |
 
 ### Binlog replication
 
@@ -79,12 +79,20 @@ overview 下包含运行当前选定 task 的所有 DM-worker instance 的部分
 | process exist with error | binlog replication 在 DM-worker 内部遇到错误并且退出了 | 立即告警 | critical |
 | binlog file gap between master and syncer | 与上游 master 相比落后的 binlog file 个数 | 落后 binlog file 个数超过 1 个（不含 1 个）且持续 10 分钟时 | critical |
 | binlog file gap between relay and syncer | 与 relay 相比落后的 binlog file 个数 | 落后 binlog file 个数超过 1 个（不含 1 个）且持续 10 分钟时 | critical |
-| binlog event qps | 单位时间内接收到的 binlog event 数量 (不包含需要跳过的 event) | N/A | N/A |
-| skipped binlog event qps  | 单位时间内接收到的需要跳过的 binlog event 数量  | N/A | N/A |
-| cost of binlog event transform | Syncer 解析并且转换 binlog 成 SQLs 的耗时，单位：秒 | N/A | N/A |
+| binlog event QPS | 单位时间内接收到的 binlog event 数量 (不包含需要跳过的 event) | N/A | N/A |
+| skipped binlog event QPS | 单位时间内接收到的需要跳过的 binlog event 数量  | N/A | N/A |
+| read binlog event duration | binlog replication unit 从 relay log 或上游 MySQL 读取 binlog 的耗时，单位：秒 | N/A | N/A |
+| transform binlog event duration | binlog replication unit 解析并且转换 binlog 成 SQLs 的耗时，单位：秒 | N/A | N/A |
+| dispatch binlog event duration | binlog replication unit 调度一条 binlog event 的耗时，单位：秒 | N/A | N/A |
+| transaction execution latency | binlog replication 执行事务到下游的耗时，单位：秒 | N/A | N/A |
+| binlog event size | binlog replication unit 从 relay log 或上游 MySQL 读取的单条 binlog event 的大小 | N/A | N/A |
+| DML queue remain length | 剩余 DML job 队列的长度 | N/A | N/A |
 | total sqls jobs | 单位时间内新增的 job 数量 | N/A | N/A |
 | finished sqls jobs | 单位时间内完成的 job 数量 | N/A | N/A |
-| execution latency | Syncer 执行 transaction 到下游的耗时，单位：秒 | N/A | N/A |
+| statement execution latency | binlog replication 执行语句到下游的耗时，单位：秒 | N/A | N/A |
+| add job duration | binlog replication unit 增加一条 job 到队列的耗时，单位：秒 | N/A | N/A |
+| DML conflict detect duration | binlog replication unit 检测 DML 间冲突的耗时，单位：秒 | N/A | N/A |
+| skipped event duration | binlog replication unit 跳过 binlog event 的耗时，单位：秒 | N/A | N/A |
 | unsynced tables | 当前子任务内还未收到 shard DDL 的分表数量 | N/A | N/A |
 | shard lock resolving | 当前子任务是否正在等待 shard DDL 同步，大于 0 表示正在等待同步 | N/A | N/A |
 
