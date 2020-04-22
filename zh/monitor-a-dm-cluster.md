@@ -82,7 +82,7 @@ overview 下包含运行当前选定 task 的所有 DM-worker instance 的部分
 | binlog event QPS | 单位时间内接收到的 binlog event 数量 (不包含需要跳过的 event) | N/A | N/A |
 | skipped binlog event QPS | 单位时间内接收到的需要跳过的 binlog event 数量  | N/A | N/A |
 | read binlog event duration | binlog replication unit 从 relay log 或上游 MySQL 读取 binlog 的耗时，单位：秒 | N/A | N/A |
-| transform binlog event duration | binlog replication unit 解析并且转换 binlog 成 SQLs 的耗时，单位：秒 | N/A | N/A |
+| transform binlog event duration | binlog replication unit 解析并且将 binlog 转换成 SQLs 的耗时，单位：秒 | N/A | N/A |
 | dispatch binlog event duration | binlog replication unit 调度一条 binlog event 的耗时，单位：秒 | N/A | N/A |
 | transaction execution latency | binlog replication 执行事务到下游的耗时，单位：秒 | N/A | N/A |
 | binlog event size | binlog replication unit 从 relay log 或上游 MySQL 读取的单条 binlog event 的大小 | N/A | N/A |
