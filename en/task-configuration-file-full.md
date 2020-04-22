@@ -104,7 +104,7 @@ syncers:
 # ----------- Instance configuration -----------
 mysql-instances:
   -
-    source-id: "mysql-replica-01"                                      # The `source-id` in source.toml
+    source-id: "mysql-replica-01"                                      # The `source-id` in source.toml.
     meta:                                                              # The position where the binlog replication starts when `task-mode` is `incremental` and the downstream database checkpoint does not exist. If the checkpoint exists, the checkpoint is used.
 
       binlog-name: binlog.000001
@@ -119,7 +119,7 @@ mysql-instances:
     syncer-config-name: "global"                                       # The configuration name of the Syncer processing unit.
 
   -
-    source-id: "mysql-replica-02"  # The `source-id` in source.toml
+    source-id: "mysql-replica-02"  # The `source-id` in source.toml.
     mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data. `mydumper-thread` corresponds to `threads` in the configuration of mydumper processing unit.
     loader-thread: 16              # The number of threads that Loader uses for loading data. `loader-thread` corresponds to `pool-size` in the configuration of loader processing unit.
     syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data. `syncer-thread` corresponds to `worker-count` in the configuration of the syncer processing unit.
