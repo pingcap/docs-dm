@@ -49,7 +49,7 @@ overview 下包含运行当前选定 task 的所有 DM-worker instance 的部分
 | binlog file index | relay log 最大的文件序列号。如 value = 1 表示 relay-log.000001 | N/A | N/A |
 | binlog file gap between master and relay | relay 与上游 master 相比落后的 binlog file 个数 | 落后 binlog file 个数超过 1 个（不含 1 个）且持续 10 分钟时 | critical |
 | binlog pos | relay log 最新文件的写入 offset  | N/A | N/A |
-| read binlog even duration | relay log 从上游的 MySQL 读取 binlog 的时延，单位：秒 |  N/A | N/A |
+| read binlog event duration | relay log 从上游的 MySQL 读取 binlog 的时延，单位：秒 |  N/A | N/A |
 | write relay log duration | relay log 每次写 binlog 到磁盘的时延，单位：秒| N/A | N/A |
 | binlog even size | relay log 写到磁盘的单条 binlog 的大小 | N/A | N/A |
 
