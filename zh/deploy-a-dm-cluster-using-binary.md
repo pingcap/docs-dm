@@ -15,7 +15,7 @@ category: how-to
 
 ## 使用样例
 
-假设在两台服务器上部署 MySQL，在一台服务器上部署 TiDB（mocktikv 模式），另外在四台服务器上部署两个 DM-worker 实例和两个 DM-master 实例。各个节点的信息如下：
+假设在两台服务器上部署 MySQL，在一台服务器上部署 TiDB（mocktikv 模式），另外在五台服务器上部署两个 DM-worker 实例和三个 DM-master 实例。各个节点的信息如下：
 
 | 实例        | 服务器地址   |
 | :---------- | :----------- |
@@ -24,8 +24,9 @@ category: how-to
 | TiDB       | 192.168.0.3 |
 | DM-master1 | 192.168.0.4 |
 | DM-master2 | 192.168.0.5 |
-| DM-worker1 | 192.168.0.6 |
-| DM-worker2 | 192.168.0.7 |
+| DM-master3 | 192.168.0.6 |
+| DM-worker1 | 192.168.0.7 |
+| DM-worker2 | 192.168.0.8 |
 
 MySQL1 和 MySQL2 中需要开启 binlog。下面以此为例，说明如何部署 DM。
 
@@ -96,7 +97,7 @@ master-addr = ":8261"
 peer-urls = "192.168.0.4:8291"
 
 # 初始集群中所有 DM-master 的 advertise-peer-urls 的值
-initial-cluster = "master1=http://192.168.0.4:8291,master2=http://192.168.0.5:8292"
+initial-cluster = "master1=http://192.168.0.4:8291,master2=http://192.168.0.5:8291,master3=http://192.168.0.6:8291"
 ```
 
 在终端中使用下面的命令运行 DM-master：
@@ -107,7 +108,7 @@ initial-cluster = "master1=http://192.168.0.4:8291,master2=http://192.168.0.5:82
 ./bin/dm-master -config conf/dm-master1.toml
 ```
 
-对于 DM-master2，修改配置文件中的 `name` 为 `master2`，并将 `master-addr` 的端口改为 `8361` ，将 `peer-urls` 的改为 `192.168.0.5:8292` 即可。
+对于 DM-master2 和 DM-master3 ，修改配置文件中的 `name` 为 `master2` 和 `master3` ，并将 `peer-urls` 的值改为 `192.168.0.5:8291` 和 `192.168.0.6:8291` 即可。
 
 ### DM-worker 的部署
 
@@ -169,7 +170,7 @@ log-file = "dm-worker.log"
 worker-addr = ":8262"
 
 # 对应集群中 DM-master 配置中的 master-addr
-join = "192.168.0.4:8261,192.168.0.5:8361"
+join = "192.168.0.4:8261,192.168.0.5:8261,192.168.0.6:8261"
 ```
 
 在终端中使用下面的命令运行 DM-worker：
@@ -180,7 +181,7 @@ join = "192.168.0.4:8261,192.168.0.5:8361"
 ./bin/dm-worker -config conf/dm-worker1.toml
 ```
 
-对于 DM-worker2，修改配置文件中的 `name` 为 `worker2`，并将 `worker-addr` 的端口改为 `8263` 即可。如果因为没有多余的机器，将 DM-worker2 与 DM-worker1 部署在一台机器上，需要把两个 DM-worker 实例部署在不同的路径下，否则保存元信息和 relay log 的默认路径会冲突。
+对于 DM-worker2，修改配置文件中的 `name` 为 `worker2` 即可。
 
 ### 配置 MySQL 数据源
 
@@ -200,12 +201,13 @@ fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
 
 MySQL1 的配置文件
 
-如需要启用 GTID 模式，则额外配置 enable-gtid 为 true。
-
 ```toml
 # MySQL1 Configuration.
  
 source-id = "mysql-replica-01"
+
+# 是否开启 GTID
+enable-gtid = false
  
 [from]
 host = "192.168.0.1"
