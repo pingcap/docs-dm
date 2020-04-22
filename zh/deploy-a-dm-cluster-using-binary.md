@@ -108,7 +108,7 @@ initial-cluster = "master1=http://192.168.0.4:8291,master2=http://192.168.0.5:82
 ./bin/dm-master -config conf/dm-master1.toml
 ```
 
-对于 DM-master2 和 DM-master3 ，修改配置文件中的 `name` 为 `master2` 和 `master3` ，并将 `peer-urls` 的值改为 `192.168.0.5:8291` 和 `192.168.0.6:8291` 即可。
+对于 DM-master2 和 DM-master3，修改配置文件中的 `name` 为 `master2` 和 `master3`，并将 `peer-urls` 的值改为 `192.168.0.5:8291` 和 `192.168.0.6:8291` 即可。
 
 ### DM-worker 的部署
 
