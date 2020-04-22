@@ -6,8 +6,7 @@ category: reference
 
 # Data Migration Task Configuration File
 
-This document introduces the basic task configuration file of Data Migration --
-[`task_basic.yaml`](https://github.com/pingcap/dm/blob/master/dm/master/task_advanced.yaml), including [global configuration](#global-configuration) and [instance configuration](#instance-configuration).
+This document introduces the basic task configuration file of Data Migration (DM), including [global configuration](#global-configuration) and [instance configuration](#instance-configuration).
 
 DM also implements [an advanced task configuration file](task-configuration-file-full.md) which provides greater flexibility and more control over DM.
 
@@ -47,9 +46,10 @@ mysql-instances:
   # The ID of the upstream instance or replication group. It can be configured by referring to the `source-id` in the `dm-master.toml` file.
   - source-id: "mysql-replica-01"
     black-white-list:  "bw-rule-1"
-        mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data, new in v1.0.2 and later versions
-        loader-thread: 16              # The number of threads that Loader uses for loading data, new in v1.0.2 and later versions
-        syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data, new in v1.0.2 and later versions
+    mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data
+    loader-thread: 16              # The number of threads that Loader uses for loading data
+    syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data
+
   - source-id: "mysql-replica-02"
     black-white-list:  "bw-rule-1"
     mydumper-thread: 4
