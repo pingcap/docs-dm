@@ -12,7 +12,7 @@ This document gives an overview of configuration files of DM (Data Migration).
 
 - `dm-master.toml`: The configuration file of running the DM-master process, including the topology information and the logs of the DM-master and . For more details, refer to [DM-master Configuration File](dm-master-configuration-file.md).
 - `dm-worker.toml`: The configuration file of running the DM-worker process, including the topology information and the logs of the DM-worker. For more details, refer to [DM-worker Configuration File](dm-worker-configuration-file.md).
-- `source.toml`: The configuration of the upstream database such as MySQL and MariaDB. For more details, refer to [Upstream Database Configuration File].
+- `source.toml`: The configuration of the upstream database such as MySQL and MariaDB. For more details, refer to [Upstream Database Configuration File](source-configuration-file.md).
 
 ## DM replication task configuration
 
