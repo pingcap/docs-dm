@@ -715,7 +715,7 @@ pause-relay -s "mysql-replica-01"
 {{< copyable "" >}}
 
 ```bash
-pause-relay -w "mysql-replica-01"
+pause-relay -s "mysql-replica-01"
 ```
 
 ```
@@ -919,11 +919,12 @@ purge-relay -s "mysql-replica-01" --filename "mysql-bin.000003"
 {
     "result": true,
     "msg": "",
-    "workers": [
+    "sources": [
         {
             "result": true,
-            "worker": "127.0.0.1:8262",
             "msg": ""
+            "source": "mysql-replica-01",
+            "worker": "worker1",
         }
     ]
 }
