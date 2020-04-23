@@ -20,7 +20,7 @@ Suppose that you are going to deploy a DM cluster based on this sample scenario:
 
 + Two MySQL instances are deployed on two servers.
 + One TiDB instance is deployed on one server (in the mocktikv mode).
-+ Two DM-worker nodes and one DM-master node are deployed on three servers.
++ Two DM-worker nodes and three DM-master nodes are deployed on five servers.
 
 Here is the address of each node:
 
@@ -29,37 +29,97 @@ Here is the address of each node:
 | MySQL1     | 192.168.0.1 |
 | MySQL2     | 192.168.0.2 |
 | TiDB       | 192.168.0.3 |
-| DM-master  | 192.168.0.4 |
-| DM-worker1 | 192.168.0.5 |
-| DM-worker2 | 192.168.0.6 |
+| DM-master1 | 192.168.0.4 |
+| DM-master2 | 192.168.0.5 |
+| DM-master3 | 192.168.0.6 |
+| DM-worker1 | 192.168.0.7 |
+| DM-worker2 | 192.168.0.8 |
 
-Enable the binlog on MySQL1 and on MySQL2. DM-worker1 replicates the data from MySQL1 and DM-worker2 replicates the data from MySQL2.
+You need to enable the binlog on MySQL1 and on MySQL2.
 
 Based on this scenario, the following sections describe how to deploy the DM cluster.
 
-### Deploy DM-worker
+### Deploy DM-master
 
-Establish the connection between DM-worker and the upstream MySQL instances, and for safety reasons, you must configure the encrypted password.
+You can configure DM-master by using [command-line parameters](#dm-master-command-line-parameters) or [the configuration file](#dm-master-configuration-file).
 
-Encrypt the MySQL password by executing the following command. Suppose the password is "123456".
+#### DM-master command-line parameters
+
+The following is the description of DM-master command-line parameters:
+
+```bash
+./bin/dm-master --help
+```
+
+```
+Usage of dm-master:
+  -L string
+        log level: debug, info, warn, error, fatal (default "info")
+  -V    prints version and exit
+  -advertise-addr string
+        advertise address for client traffic (default "${master-addr}")
+  -advertise-peer-urls string
+        advertise URLs for peer traffic (default "${peer-urls}")
+  -config string
+        path to config file
+  -data-dir string
+        path to the data directory (default "default.${name}")
+  -initial-cluster string
+        initial cluster configuration for bootstrapping, e.g. dm-master=http://127.0.0.1:8291
+  -join string
+        join to an existing cluster (usage: cluster's "${master-addr}" list, e.g. "127.0.0.1:8261,127.0.0.1:18261"
+  -log-file string
+        log file path
+  -master-addr string
+        master API server and status addr
+  -name string
+        human-readable name for this DM-master member
+  -peer-urls string
+        URLs for peer traffic (default "http://127.0.0.1:8291")
+  -print-sample-config
+        print sample config file of dm-worker
+```
+
+> **Note:**
+>
+> In some situations, you cannot use the above method to configure DM-master because some configurations are not exposed to the command line. Then use the configuration file instead.
+
+#### DM-master configuration file
+
+The following is the configuration file of DM-master. It is recommended that you use this method and write the following configuration to `conf/dm-master1.toml`.
+
+```toml
+# Master Configuration.
+name = "master1"
+
+# Log configurations.
+log-level = "info"
+log-file = "dm-master.log"
+
+# The listening address of DM-master.
+master-addr = ":8261"
+
+# The value of `initial-cluster` is the combination of the `advertise-peer-urls` value of all DM-master nodes in the initial cluster.
+initial-cluster = "master1=http://192.168.0.4:8291,master2=http://192.168.0.5:8291,master3=http://192.168.0.6:8291"
+```
+
+Then, execute the following command in the terminal to run DM-master:
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl --encrypt "123456"
+./bin/dm-master -config conf/dm-master1.toml
 ```
 
-Then, you get the encrypted password as shown below. Record this encrypted value, which is used for deploying DM-worker in the following steps.
+For DM-master2 and DM-master3, change `name` in the configuration file to `master2` and `master3` respectively, and change `peer-urls` to `192.168.0.5:8291` and `192.168.0.6:8291` respectively.
 
-```
-fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
-```
+### Deploy DM-worker
 
-You can configure DM-worker by using command-line parameters or the configuration file.
+You can configure DM-worker by using [command-line parameters](#dm-worker-command-line-parameters) or [the configuration file](#dm-worker-configuration-file).
 
-**Deployment method 1: DM-worker command-line parameters**
+#### DM-worker command-line parameters
 
-Below is the description of the DM-worker command-line parameters:
+The following is the description of the DM-worker command-line parameters:
 
 {{< copyable "shell-regular" >}}
 
@@ -70,69 +130,47 @@ Below is the description of the DM-worker command-line parameters:
 ```
 Usage of worker:
   -L string
-        Log level. Available values: "debug", "info" (default value), "warn", "error" or "fatal"
-  -V    The output version number
-  -checker-backoff-max duration
-        The longest waiting time for the automatic recovery after errors are found in the task check module. The default value is "5m0s" which generally needs no change. It is not recommended to change this default value unless you have an in-depth understanding of this parameter.
-  -checker-backoff-rollback duration
-        The time interval for adjusting the waiting time of the automatic recovery in the task check module. The default value is "5m0s" which generally needs no change. It is not recommended to change this default value unless you have an in-depth understanding of this parameter.
-  -checker-check-enable
-        Enables or disables the task status check. When it is enabled, DM automatically tries to resume the data replication tasks interrupted by errors. Default value: "true".
+        log level: debug, info, warn, error, fatal (default "info")
+  -V    prints version and exit
+  -advertise-addr string
+        advertise address for client traffic (default "${worker-addr}")
   -config string
-        The path of the configuration file
+        path to config file
+  -join string
+        join to an existing cluster (usage: dm-master cluster's "${master-addr}")
+  -keepalive-ttl int
+        dm-worker's TTL for keepalive with etcd (in seconds) (default 10)
   -log-file string
-        The path of log files
+        log file path
+  -name string
+        human-readable name for DM-worker member
   -print-sample-config
-        Prints the sample configuration
-  -purge-expires int
-        The expiration time of relay logs. DM-worker tries to delete the relay logs whose last modified time exceeds this value. Unit: hour.
-  -purge-interval int
-        The time interval at which relay logs are regularly checked for expiration. Default value: "3600". Unit: second.
-  -purge-remain-space int
-        Sets the minimum available disk space. When the disk space is smaller than this value, DM-worker tries to delete relay logs. Default value: "15". Unit: GB.
-  -relay-dir string
-        The path in which relay logs are stored. Default value: "./relay_log".
+        print sample config file of dm-worker
   -worker-addr string
-        DM-worker address
+        listen address for client traffic
 ```
 
 > **Note:**
 >
 > In some situations, you cannot use the above method to configure DM-worker because some configurations are not exposed to the command line. Then use the configuration file instead.
 
-**Deployment method 2: configuration file**
+#### DM-worker configuration file
 
-Below is the DM-worker configuration file. It is recommended that you use this method and write the following configuration to `conf/dm-worker1.toml`.
+The following is the DM-worker configuration file. It is recommended that you use this method and write the following configuration to `conf/dm-worker1.toml`.
 
 ```toml
 # Worker Configuration.
+name = "worker1"
 
-# Log configuration
+# Log configuration.
 log-level = "info"
 log-file = "dm-worker.log"
 
-# DM-worker address
+# DM-worker address.
 worker-addr = ":8262"
 
-# The server ID of MySQL slave, used when pulling binlog from MySQL
-# In a replication group, each instance (master and slave) must have a unique server ID
-server-id = 101
-# In v1.0.2 and later versions, the server ID is automatically generated by DM
-
-# Used to mark a replication group or MySQL/MariaDB instance
-source-id = "mysql-replica-01"
-
-# The type of the upstream instance
-# Available values: "mysql", "mariadb"
-#  In v1.0.2 and later versions, DM automatically detects and fills in the type of the upstream instance
-flavor = "mysql"
-
-# MySQL connection address
-[from]
-host = "192.168.0.1"
-user = "root"
-password = "fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg="
-port = 3306
+# The master-addr configuration of the DM-master nodes in the cluster.
+join = "192.168.0.4:8261,192.168.0.5:8261,192.168.0.6:8261"
 ```
 
 Then, execute the following command in the terminal to run DM-worker:
@@ -140,77 +178,54 @@ Then, execute the following command in the terminal to run DM-worker:
 {{< copyable "shell-regular" >}}
 
 ```bash
-bin/dm-worker -config conf/dm-worker1.toml
+./bin/dm-worker -config conf/dm-worker1.toml
 ```
 
-In DM-worker2, change `source-id` in the configuration file to `mysql-replica-02` and change the `from` configuration to the address of MySQL2. If you deploy Dm-worker2 and Dm-worker1 on one machine, you need to deploy two dm-worker instances in different paths, otherwise the default path for saving meta-information and relay log will conflict.
+For DM-worker2, change `name` in the configuration file to `worker2`.
 
-### Deploy DM-master
+### Configure MySQL source
 
-You can configure DM-master by using command-line parameters or the configuration file.
+Before creating a data replication task, you need to configure the MySQL source first. For safety reasons, you must configure and use the encrypted password.
 
-**Deployment method 1: DM-master command-line parameters**
-
-Below is the description of DM-master command-line parameters:
-
-```bash
-./bin/dm-master --help
-```
-
-```
-Usage of dm-master:
-  -L string
-        Log level. Available values: "debug", "info" (default value), "warn", "error" or "fatal"
-  -V    Outputs the version information
-  -config string
-        The path of the configuration file
-  -log-file string
-        The path of log files
-  -master-addr string
-        DM-master address
-  -print-sample-config
-        Prints the sample configuration of DM-master
-```
-
-> **Note:**
->
-> In some situations, you cannot use the above method to configure DM-master because some configurations are not exposed to the command line. Then use the configuration file instead.
-
-**Deployment method 2: configuration file**
-
-Below is the configuration file of DM-master. It is recommended that you use this method and write the following configuration to `conf/dm-master.toml`.
-
-```toml
-# Master Configuration.
-
-# Log configurations
-log-level = "info"
-log-file = "dm-master.log"
-
-# The listening address of DM-master
-master-addr = ":8261"
-
-# DM-worker configuration
-[[deploy]]
-# Corresponding to the source-id in the DM-worker1 configuration file
-source-id = "mysql-replica-01"
-# The service address of DM-worker1
-dm-worker = "192.168.0.5:8262"
-
-[[deploy]]
-# Corresponding to the source-id in the DM-worker2 configuration file
-source-id = "mysql-replica-02"
-# The service address of DM-worker1
-dm-worker = "192.168.0.6:8262"
-```
-
-Then, execute the following command in the terminal to run DM-master:
+First, encrypt the MySQL password using dmctl. Suppose the password is "123456".
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-bin/dm-master -config conf/dm-master.toml
+./bin/dmctl --encrypt "123456"
 ```
+
+Then, you get the encrypted password as shown below.
+
+```
+fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
+```
+
+Record this encrypted password, which is used for configuring MySQL1. The following is the configuration file of MySQL1. You need to write the following configuration to `conf/source1.toml`.
+
+```toml
+# MySQL1 Configuration.
+source-id = "mysql-replica-01"
+
+# Determines whether to enable GTID
+enable-gtid = false
+
+[from]
+host = "192.168.0.1"
+user = "root"
+password = "fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg="
+port = 3306
+```
+
+Run the following command in the terminal to load the data source configuration into the DM cluster using dmctl:
+
+{{< copyable "shell-regular" >}}
+
+```bash
+./bin/dmctl --master-addr=192.168.0.4:8261 operate-source create conf/source1.toml
+```
+
+For MySQL2, change `name` in the configuration file to `mysql-replica-02`, `host` to `192.168.0.2`, and change `password` and `port` to the corresponding value.
 
 Now, a DM cluster is successfully deployed.
 
@@ -240,9 +255,9 @@ Now you need to replicate these sharded tables to the `db_target.t_target` table
       - source-id: "mysql-replica-01"
         black-white-list:  "instance"
         route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
-        mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data, new in v1.0.2 and later versions
-        loader-thread: 16              # The number of threads that Loader uses for loading data, new in v1.0.2 and later versions
-        syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data, new in v1.0.2 and later versions
+        mydumper-thread: 4
+        loader-thread: 16
+        syncer-thread: 16
 
       - source-id: "mysql-replica-02"
         black-white-list:  "instance"
@@ -275,7 +290,7 @@ Now you need to replicate these sharded tables to the `db_target.t_target` table
     {{< copyable "shell-regular" >}}
 
     ```bash
-    bin/dmctl -master-addr 192.168.0.4:8261
+    ./bin/dmctl -master-addr 192.168.0.4:8261
     ```
 
     ```
@@ -298,16 +313,18 @@ Now you need to replicate these sharded tables to the `db_target.t_target` table
     {
         "result": true,
         "msg": "",
-        "workers": [
+        "sources": [
             {
                 "result": true,
-                "worker": "192.168.0.5:8262",
-                "msg": ""
+                "msg": "",
+                "source": "mysql-replica-01",
+                "worker": "worker1"
             },
             {
                 "result": true,
-                "worker": "192.168.0.6:8262",
-                "msg": ""
+                "msg": "",
+                "source": "mysql-replica-02",
+                "worker": "worker2"
             }
         ]
     }
