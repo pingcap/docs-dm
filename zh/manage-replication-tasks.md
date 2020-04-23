@@ -922,7 +922,7 @@ purge-relay -s "mysql-replica-01" --filename "mysql-bin.000003"
     "sources": [
         {
             "result": true,
-            "msg": ""
+            "msg": "",
             "source": "mysql-replica-01",
             "worker": "worker1",
         }
