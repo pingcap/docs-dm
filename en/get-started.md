@@ -20,9 +20,9 @@ This tutorial assumes you're using a new, clean CentOS 7 instance. You can virtu
 
 ## Architecture
 
-![TiDB DM architecture](/media/dm-architecture.png)
+![TiDB DM architecture](/media/dm-architecture-2.0.png)
 
-The TiDB DM (Data Migration) platform consists of 3 components: DM-master, DM-worker, and dmctl.
+The TiDB DM platform consists of 3 components: DM-master, DM-worker, and dmctl.
 
 * DM-master manages and schedules the operation of data replication tasks.
 * DM-worker executes specific data replication tasks.
@@ -34,15 +34,15 @@ For additional information about DM, please consult [Data Migration Overview](ov
 
 ## Setup
 
-We're going to deploy 3 instances of MySQL Server, and 1 instance each of pd-server, tikv-server, and tidb-server. Then we'll start a single DM-master and 3 instances of DM-worker.
+We're going to deploy 3 instances of MySQL Server, and 1 instance each of pd-server, tikv-server, and tidb-server. Then we'll start 3 DM-master instances and 3 instances of DM-worker.
 
-1. Install MySQL 5.7, download and extract the TiDB v3.0 and DM v1.0.4 packages we'll use:
+1. Install MySQL 5.7, download and extract the TiDB v4.0 and DM v2.0 packages we'll use:
 
     ```bash
     sudo yum install -y http://repo.mysql.com/yum/mysql-5.7-community/el/7/x86_64/mysql57-community-release-el7-10.noarch.rpm
     sudo yum install -y mysql-community-server
-    curl https://download.pingcap.org/tidb-v3.0-linux-amd64.tar.gz | tar xzf -
-    curl https://download.pingcap.org/dm-v1.0.4-linux-amd64.tar.gz | tar xzf -
+    curl https://download.pingcap.org/tidb-master-linux-amd64.tar.gz | tar xzf - &&
+    curl http://download.pingcap.org/dm-nightly-linux-amd64.tar.gz | tar xzf - &&
     curl -L https://github.com/pingcap/docs-dm/raw/master/assets/get-started/dm-cnf.tgz | tar xvzf -
     ```
 
@@ -179,61 +179,154 @@ Note that we have incrementing, non-overlapping IDs in the left-hand column. The
 
 Our goal in this exercise is to use DM to combine the data from these distinct MySQL instances into a single table in TiDB.
 
-The package of configuration files we unpacked earlier (dm-cnf.tgz) contains the configuration for the components of the TiDB cluster, the DM components, and for the 2 DM tasks we'll explore in this tutorial.
+The package of configuration files we unpacked earlier (dm-cnf.tgz) contains the configuration for the components of the TiDB cluster, the DM components, and for a DM task we'll explore in this tutorial.
 
-We'll start a single tidb-server instance, one DM-worker process for each of the MySQL server instances (3 total), and a single DM-master process:
+1. Start a single `tidb-server` instance, 3 DM-worker processes, and 3 DM-master processes:
 
-```bash
-tidb-server --log-file=logs/tidb-server.log &
-for i in 1 2 3; do dm-worker --config=dm-cnf/dm-worker$i.toml & done
-dm-master --config=dm-cnf/dm-master.toml &
+    {{< copyable "shell-regular" >}}
+
+    ```bash
+    tidb-server --log-file=logs/tidb-server.log &
+    ```
+
+    {{< copyable "shell-regular" >}}
+
+    ```bash
+    for i in 1 2 3; do dm-master --config=dm-cnf/dm-master"$i".toml --log-file=logs/dm-master"$i".log >> logs/dm-master"$i".log 2>&1 & done
+    ```
+
+    {{< copyable "shell-regular" >}}
+
+    ```bash
+    for i in 1 2 3; do dm-worker --config=dm-cnf/dm-worker"$i".toml --log-file=logs/dm-worker"$i".log >> logs/dm-worker"$i".log 2>&1 & done
+    ```
+
+2. Execute `jobs` and/or `ps -a` to make sure these processes are all running:
+
+    {{< copyable "shell-regular" >}}
+
+    ```bash
+    jobs
+    ```
+
+    ```
+    [1]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
+    [2]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
+    [3]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
+    [4]   Running                 tidb-server --log-file=logs/tidb-server.log &
+    [5]   Running                 dm-master --config=dm-cnf/dm-master"$i".toml --log-file=logs/dm-master"$i".log >> logs/dm-master"$i".log 2>&1 &
+    [6]   Running                 dm-master --config=dm-cnf/dm-master"$i".toml --log-file=logs/dm-master"$i".log >> logs/dm-master"$i".log 2>&1 &
+    [7]   Running                 dm-master --config=dm-cnf/dm-master"$i".toml --log-file=logs/dm-master"$i".log >> logs/dm-master"$i".log 2>&1 &
+    [8]   Running                 dm-worker --config=dm-cnf/dm-worker"$i".toml --log-file=logs/dm-worker"$i".log >> logs/dm-worker"$i".log 2>&1 &
+    [9]-  Running                 dm-worker --config=dm-cnf/dm-worker"$i".toml --log-file=logs/dm-worker"$i".log >> logs/dm-worker"$i".log 2>&1 &
+    [10]+  Running                 dm-worker --config=dm-cnf/dm-worker"$i".toml --log-file=logs/dm-worker"$i".log >> logs/dm-worker"$i".log 2>&1 &
+    ```
+
+    {{< copyable "shell-regular" >}}
+
+    ```bash
+    ps -a
+    ```
+
+    ```
+        77 pts/0    00:00:00 mysqld
+       132 pts/0    00:00:00 mysqld
+       187 pts/0    00:00:00 mysqld
+       229 pts/0    00:00:01 tidb-server
+       243 pts/0    00:00:02 dm-master
+       244 pts/0    00:00:03 dm-master
+       245 pts/0    00:00:02 dm-master
+       283 pts/0    00:00:00 dm-worker
+       284 pts/0    00:00:00 dm-worker
+       285 pts/0    00:00:00 dm-worker
+       324 pts/0    00:00:00 ps
+    ```
+
+3. Load the data source configuration into the DM cluster using dmctl, and execute the following command to get the returned results.
+
+    {{< copyable "shell-regular" >}}
+
+    ```bash
+    for i in 1 2 3; 
+    do dmctl --master-addr=127.0.0.1:8261 operate-source create dm-cnf/source"$i".toml 
+    done
+    ```
+
+    ```
+    {
+        "result": true,
+        "msg": "",
+        "sources": [
+            {
+                "result": true,
+                "msg": "",
+                "source": "mysql-replica-01",
+                "worker": "worker1"
+            }
+        ]
+    }
+    {
+        "result": true,
+        "msg": "",
+        "sources": [
+            {
+                "result": true,
+                "msg": "",
+                "source": "mysql-replica-02",
+                "worker": "worker2"
+            }
+        ]
+    }
+    {
+        "result": true,
+        "msg": "",
+        "sources": [
+            {
+                "result": true,
+                "msg": "",
+                "source": "mysql-replica-03",
+                "worker": "worker3"
+            }
+        ]
+    }
+    ```
+
+Each of the upstream MySQL Server instances corresponds to a separate DM-worker instance, each of which has its own configuration file.
+
+The following is an example of `dm-master1.toml`:
+
+{{< copyable "" >}}
+
+```toml
+# DM-master1 Configuration.
+
+name = "master1"
+master-addr = ":8261"
+advertise-addr = "127.0.0.1:8261"
+peer-urls = "127.0.0.1:8291"
+initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,master3=http://127.0.0.1:8293"
 ```
 
-You can execute `jobs` and/or `ps -a` to make sure these processes are all running:
-
-```bash
-jobs
-```
-
-```
-[1]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
-[2]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
-[3]   Running                 mysqld --defaults-group-suffix="$i" --user=root &
-[4]   Running                 tidb-server --log-file=logs/tidb-server.log &
-[5]   Running                 dm-worker --config=dm-cnf/dm-worker$i.toml &
-[6]   Running                 dm-worker --config=dm-cnf/dm-worker$i.toml &
-[7]-  Running                 dm-worker --config=dm-cnf/dm-worker$i.toml &
-[8]+  Running                 dm-master --config=dm-cnf/dm-master.toml &
-```
-
-```bash
-ps -a
-```
-
-```
-   PID TTY          TIME CMD
- 17317 pts/0    00:00:00 screen
- 17672 pts/1    00:00:04 mysqld
- 17727 pts/1    00:00:04 mysqld
- 17782 pts/1    00:00:04 mysqld
- 18586 pts/1    00:00:02 tidb-server
- 18587 pts/1    00:00:00 dm-worker
- 18588 pts/1    00:00:00 dm-worker
- 18589 pts/1    00:00:00 dm-worker
- 18590 pts/1    00:00:00 dm-master
- 18892 pts/1    00:00:00 ps
-```
-
-Each of the upstream MySQL Server instances corresponds to a separate DM-worker instance, each of which has its own configuration file. These files describe the details of the connection to the upstream MySQL Server as well as where to store the relay log files (the local copy of the upstream server's binary log) and the output of Mydumper. Each DM-worker should listen on a different port (defined by `worker-addr`). Here's dm-worker1.toml, for example:
+The following is an example of `dm-worker1.toml`:
 
 ```toml
 # Worker Configuration.
 
-source-id = "mysql1"
-worker-addr = ":8262"
-log-file = "logs/worker1.log"
-relay-dir = "data/relay1"
-meta-dir = "data/meta1"
+name = "worker1"
+worker-addr = "0.0.0.0:8262"
+advertise-addr = "127.0.0.1:8262"
+join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
+```
+
+The following is an example of `source1.toml`:
+
+{{< copyable "" >}}
+
+```toml
+# MySQL1 Configuration.
+
+
+source-id = "mysql-replica-01"
 
 [from]
 host = "127.0.0.1"
@@ -242,19 +335,18 @@ password = ""
 port = 3307
 ```
 
-- If you migrate data from MySQL Server, Percona Server, Percona XtraDB Cluster, Amazon Aurora or RDS, set the `flavor` option to `"mysql"`, which is the default value. This value is valid only when you are using a MySQL version between 5.5 (not included) and 8.0 (not included).
-- If you migrate data from MariaDB Server or MariaDB (Galera) Cluster, set `flavor = "mariadb"`. You can set this value only when you are using a MariaDB version later than 10.1.2.
-- Starting with DM 1.0.2, DM automatically generates the values of the `flavor` and `server-id` options. You do not need to manually configure these options in normal situations.
 - If `password` in the `[from]` configuration is not an empty string, you need to use dmctl to encrypt the password. Refer to [Encrypt the upstream MySQL user password using dmctl](deploy-a-dm-cluster-using-ansible.md#encrypt-the-upstream-mysql-user-password-using-dmctl) for detailed steps.
 
 Tasks are defined in YAML files. First, let's look at dmtask1.yaml:
 
 ```yaml
+---
 name: dmtask1
 task-mode: all
 is-sharding: true
 enable-heartbeat: true
 ignore-checking-items: ["auto_increment_ID"]
+timezone: "Asia/Shanghai"
 
 target-database:
   host: "127.0.0.1"
@@ -263,18 +355,20 @@ target-database:
   password: ""
 
 mysql-instances:
-  - source-id: "mysql1"
-    black-white-list: "dmtest1"
+  - source-id: "mysql-replica-01"
+    black-white-list: "instance"
     loader-config-name: "loader1"
-  - source-id: "mysql2"
-    black-white-list: "dmtest1"
+
+  - source-id: "mysql-replica-02"
+    black-white-list: "instance"
     loader-config-name: "loader2"
-  - source-id: "mysql3"
-    black-white-list: "dmtest1"
+
+  - source-id: "mysql-replica-03"
+    black-white-list: "instance"
     loader-config-name: "loader3"
 
 black-white-list:
-  dmtest1:
+  instance:
     do-dbs: ["dmtest1"]
 
 loaders:
@@ -300,7 +394,7 @@ There are a number of global options, and several groups of options that define 
 
 * We use `black-white-list` to limit the scope of this task to database `dmtest`.
 
-* The `loaders` section defines where to find the output of each instance of Mydumper that was executed by the respective instance of DM-worker.
+* The `loaders` section defines where to find the output of each instance of Mydumper that was executed by the respective MySQL source.
 
 The `dmctl` tool is an interactive client that facilitates interaction with the DM cluster. You use it to start tasks, query task status, et cetera. Start the tool by executing `dmctl -master-addr :8261` to get the interactive prompt:
 
@@ -326,21 +420,24 @@ To start dmtask1, execute `start-task dm-cnf/dmtask1.yaml`:
 {
     "result": true,
     "msg": "",
-    "workers": [
+    "sources": [
         {
             "result": true,
-            "worker": "127.0.0.1:8262",
-            "msg": ""
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
         },
         {
             "result": true,
-            "worker": "127.0.0.1:8263",
-            "msg": ""
+            "msg": "",
+            "source": "mysql-replica-02",
+            "worker": "worker2"
         },
         {
             "result": true,
-            "worker": "127.0.0.1:8264",
-            "msg": ""
+            "msg": "",
+            "source": "mysql-replica-03",
+            "worker": "worker3"
         }
     ]
 }
