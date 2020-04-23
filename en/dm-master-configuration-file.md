@@ -6,7 +6,7 @@ category: reference
 
 # DM-master Configuration File
 
-This document introduces the configuration of DM-master, including a configuration file template and instructions about what the configuration parameters mean.
+This document introduces the configuration of DM-master, including a configuration file template and a description of each configuration parameter in this file.
 
 ## Configuration file template
 
@@ -38,9 +38,9 @@ join = ""
 
 | Parameter        | Description                                    |
 | :------------ | :--------------------------------------- |
-| `name` | Identifies a DM-master. |
+| `name` | Marks a DM-master name. |
 | `log-level` | Specifies a log level from `debug`, `info`, `warn`, `error`, and `fatal`. The default log level is `info`. |
-| `log-file` | Specifies the log file directory. If not specified, the logs are printed onto the standard output. |
+| `log-file` | Specifies the log file directory. If the parameter is not specified, the logs are printed onto the standard output. |
 | `master-addr` | Specifies the address of DM-master which provides services. You can omit the IP address and specify the port number only, such as ":8261". |
 | `advertise-addr` | Specifies the address that DM-master advertises to the outside world. |
 | `peer-urls` | Specifies the peer URL of the DM-master node. |
