@@ -6,43 +6,44 @@ category: reference
 
 # DM-master Configuration File
 
-This document introduces the configuration of DM-master, including the configuration file template and configurable items.
+This document introduces the configuration of DM-master, including a configuration file template and a description of each configuration parameter in this file.
 
 ## Configuration file template
 
 The following is a configuration file template of DM-master.
 
 ```toml
+name = "dm-master"
+
 # log configuration
+log-level = "info"
 log-file = "dm-master.log"
 
 # DM-master listening address
 master-addr = ":8261"
+advertise-addr = "127.0.0.1:8261"
 
-# DM-worker deployment. It will be refined when the new deployment function is available.
-[[deploy]]
-source-id = "mysql-replica-01"
-dm-worker = "172.16.10.72:8262"
+# URLs for peer traffic
+peer-urls = "http://127.0.0.1:8291"
+advertise-peer-urls = "http://127.0.0.1:8291"
 
-[[deploy]]
-source-id = "mysql-replica-02"
-dm-worker = "172.16.10.73:8262"
+# cluster configuration
+initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,master3=http://127.0.0.1:8293"
+join = ""
 ```
 
-## Configurable items
+## Configuration parameters
 
 ### Global configuration
 
-| Name        | Description                                    |
+| Parameter        | Description                                    |
 | :------------ | :--------------------------------------- |
-| `log-file` | The log file. If not specified, the log is printed to the standard output. |
-| `master-addr` | The address of DM-master which provides services. You can omit the IP address and specify the port number only, such as ":8261". |
-
-### DM-worker configuration
-
-Each DM-worker must be configured in separate `[deploy]` sections.
-
-| Name        | Description                                    |
-| :------------ | :--------------------------------------- |
-| `source-id` | Uniquely identifies a MySQL or MariaDB instance, or a replication group with the master-slave structure, which needs to be consistent with the `source-id` of DM-worker. |
-| `dm-worker` | The service address of DM-worker. |
+| `name` | Marks a DM-master name. |
+| `log-level` | Specifies a log level from `debug`, `info`, `warn`, `error`, and `fatal`. The default log level is `info`. |
+| `log-file` | Specifies the log file directory. If the parameter is not specified, the logs are printed onto the standard output. |
+| `master-addr` | Specifies the address of DM-master which provides services. You can omit the IP address and specify the port number only, such as ":8261". |
+| `advertise-addr` | Specifies the address that DM-master advertises to the outside world. |
+| `peer-urls` | Specifies the peer URL of the DM-master node. |
+| `advertise-peer-urls` | Specifies the peer URL that DM-master advertises to the outside world. The value of `advertise-peer-urls` is by default the same as that of `peer-urls`. |
+| `initial-cluster` | The value of `initial-cluster` is the combination of the `advertise-peer-urls` value of all DM-master nodes in the initial cluster. |
+| `join` | The value of `join` is the combination of the `advertise-peer-urls` value of the existed DM-master nodes in the cluster. If the DM-master node is newly added, replace `initial-cluster` with `join`. |
