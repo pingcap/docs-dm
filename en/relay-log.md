@@ -101,7 +101,7 @@ Method 1: Use the command-line options.
     - The amount of remaining disk space in GB less than which the specified DM-worker machine tries to purge the relay log that can be purged securely in the automatic background purge. If it is set to `0`, data purge is not performed according to the remaining disk space.
     - "15" by default, indicating when the available disk space is less than 15GB, DM-master tries to purge the relay log securely.
 
-Method 2: Add the `[purge]` section in the [configuration file of DM-worker](dm-worker-configuration-file-full.md).
+Method 2: Add the `[purge]` section in the configuration file of DM-worker.
 
 ```toml
 # relay log purge strategy
