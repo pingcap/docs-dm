@@ -207,7 +207,7 @@ Record this encrypted password, which is used for configuring MySQL1. The follow
 # MySQL1 Configuration.
 source-id = "mysql-replica-01"
 
-# Determines whether to enable GTID
+# Determines whether to enable GTID.
 enable-gtid = false
 
 [from]
