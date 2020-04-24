@@ -82,36 +82,41 @@ Usage of dm-master:
 
 > **Note:**
 >
-> In some situations, you cannot use the above method to configure DM-master because some configurations are not exposed to the command line. Then use the configuration file instead.
+> In some situations, you cannot use the above method to configure DM-master because some configurations are not exposed to the command line. In such cases, use the configuration file instead.
 
 #### DM-master configuration file
 
-The following is the configuration file of DM-master. It is recommended that you use this method and write the following configuration to `conf/dm-master1.toml`.
+The following is the configuration file of DM-master. It is recommended that you configure DM-master by using this method.
 
-```toml
-# Master Configuration.
-name = "master1"
+1. Write the following configuration to `conf/dm-master1.toml`:
 
-# Log configurations.
-log-level = "info"
-log-file = "dm-master.log"
+      ```toml
+      # Master Configuration.
+      name = "master1"
 
-# The listening address of DM-master.
-master-addr = ":8261"
+      # Log configurations.
+      log-level = "info"
+      log-file = "dm-master.log"
 
-# The value of `initial-cluster` is the combination of the `advertise-peer-urls` value of all DM-master nodes in the initial cluster.
-initial-cluster = "master1=http://192.168.0.4:8291,master2=http://192.168.0.5:8291,master3=http://192.168.0.6:8291"
-```
+      # The listening address of DM-master.
+      master-addr = ":8261"
 
-Then, execute the following command in the terminal to run DM-master:
+      # The peer URLs of DM-master.
+      peer-urls = "192.168.0.4:8291"
 
-{{< copyable "shell-regular" >}}
+      # The value of `initial-cluster` is the combination of the `advertise-peer-urls` value of all DM-master nodes in the initial cluster.
+      initial-cluster = "master1=http://192.168.0.4:8291,master2=http://192.168.0.5:8291,master3=http://192.168.0.6:8291"
+      ```
 
-```bash
-./bin/dm-master -config conf/dm-master1.toml
-```
+2. Execute the following command in the terminal to run DM-master:
 
-For DM-master2 and DM-master3, change `name` in the configuration file to `master2` and `master3` respectively, and change `peer-urls` to `192.168.0.5:8291` and `192.168.0.6:8291` respectively.
+      {{< copyable "shell-regular" >}}
+
+      ```bash
+      ./bin/dm-master -config conf/dm-master1.toml
+      ```
+
+3. For DM-master2 and DM-master3, change `name` in the configuration file to `master2` and `master3` respectively, and change `peer-urls` to `192.168.0.5:8291` and `192.168.0.6:8291` respectively. Then repeat Step 2.
 
 ### Deploy DM-worker
 
@@ -152,80 +157,82 @@ Usage of worker:
 
 > **Note:**
 >
-> In some situations, you cannot use the above method to configure DM-worker because some configurations are not exposed to the command line. Then use the configuration file instead.
+> In some situations, you cannot use the above method to configure DM-worker because some configurations are not exposed to the command line. In such cases, use the configuration file instead.
 
 #### DM-worker configuration file
 
-The following is the DM-worker configuration file. It is recommended that you use this method and write the following configuration to `conf/dm-worker1.toml`.
+The following is the DM-worker configuration file. It is recommended that you configure DM-worker by using this method.
 
-```toml
-# Worker Configuration.
-name = "worker1"
+1. Write the following configuration to `conf/dm-worker1.toml`:
 
-# Log configuration.
-log-level = "info"
-log-file = "dm-worker.log"
+      ```toml
+      # Worker Configuration.
+      name = "worker1"
 
-# DM-worker address.
-worker-addr = ":8262"
+      # Log configuration.
+      log-level = "info"
+      log-file = "dm-worker.log"
 
-# The master-addr configuration of the DM-master nodes in the cluster.
-join = "192.168.0.4:8261,192.168.0.5:8261,192.168.0.6:8261"
-```
+      # DM-worker address.
+      worker-addr = ":8262"
 
-Then, execute the following command in the terminal to run DM-worker:
+      # The master-addr configuration of the DM-master nodes in the cluster.
+      join = "192.168.0.4:8261,192.168.0.5:8261,192.168.0.6:8261"
+      ```
 
-{{< copyable "shell-regular" >}}
+2. Execute the following command in the terminal to run DM-worker:
 
-```bash
-./bin/dm-worker -config conf/dm-worker1.toml
-```
+      {{< copyable "shell-regular" >}}
 
-For DM-worker2, change `name` in the configuration file to `worker2`.
+      ```bash
+      ./bin/dm-worker -config conf/dm-worker1.toml
+      ```
+
+3. For DM-worker2, change `name` in the configuration file to `worker2`. Then repeat Step 2.
 
 ### Configure MySQL source
 
-Before creating a data replication task, you need to configure the MySQL source first. For safety reasons, you must configure and use the encrypted password.
+Before creating a data replication task, configure the MySQL source first. For safety reasons, you must configure and use the encrypted password.
 
-First, encrypt the MySQL password using dmctl. Suppose the password is "123456".
+1. Encrypt the MySQL password using dmctl. Suppose the password is "123456":
 
-{{< copyable "shell-regular" >}}
+      {{< copyable "shell-regular" >}}
 
-```bash
-./bin/dmctl --encrypt "123456"
-```
+      ```bash
+      ./bin/dmctl --encrypt "123456"
+      ```
 
-Then, you get the encrypted password as shown below.
+      Then, you get the encrypted password as shown below:
 
-```
-fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
-```
+      ```
+      fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
+      ```
 
-Record this encrypted password, which is used for configuring MySQL1. The following is the configuration file of MySQL1. You need to write the following configuration to `conf/source1.toml`.
+2. Record this encrypted password, which is used for configuring MySQL1. The following is the configuration file of MySQL1. You need to write the following configuration to `conf/source1.toml`.
 
-```toml
-# MySQL1 Configuration.
-source-id = "mysql-replica-01"
+      ```toml
+      # MySQL1 Configuration.
+      source-id = "mysql-replica-01"
 
-# Determines whether to enable GTID.
-enable-gtid = false
+      # Determines whether to enable GTID.
+      enable-gtid = false
 
-[from]
-host = "192.168.0.1"
-user = "root"
-password = "fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg="
-port = 3306
-```
+      [from]
+      host = "192.168.0.1"
+      user = "root"
+      password = "fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg="
+      port = 3306
+      ```
 
-Run the following command in the terminal to load the data source configuration into the DM cluster using dmctl:
+3. Run the following command in the terminal to load the data source configuration into the DM cluster using dmctl:
 
-{{< copyable "shell-regular" >}}
+      {{< copyable "shell-regular" >}}
 
-```bash
-./bin/dmctl --master-addr=192.168.0.4:8261 operate-source create conf/source1.toml
-```
+      ```bash
+      ./bin/dmctl --master-addr=192.168.0.4:8261 operate-source create conf/source1.toml
+      ```
 
-For MySQL2, change `name` in the configuration file to `mysql-replica-02`, `host` to `192.168.0.2`, and change `password` and `port` to the corresponding value.
+4. For MySQL2, change `name` in the configuration file to `mysql-replica-02`, `host` to `192.168.0.2`, and change `password` and `port` to the corresponding value. Then repeat Step 3.
 
 Now, a DM cluster is successfully deployed.
 
