@@ -34,7 +34,7 @@ For additional information about DM, please consult [Data Migration Overview](ov
 
 ## Setup
 
-We're going to deploy 3 instances of MySQL Server, and 1 instance each of pd-server, tikv-server, and tidb-server. Then we'll start 3 DM-master instances and 3 instances of DM-worker.
+We're going to deploy 3 instances of MySQL Server, and 1 instance each of pd-server, tikv-server, and tidb-server. Then we'll start 3 instances of DM-master and 3 instances of DM-worker.
 
 1. Install MySQL 5.7, download and extract the TiDB v4.0 and DM v2.0 packages we'll use:
 
@@ -324,7 +324,6 @@ The following is an example of `source1.toml`:
 
 ```toml
 # MySQL1 Configuration.
-
 
 source-id = "mysql-replica-01"
 
