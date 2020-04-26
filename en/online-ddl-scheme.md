@@ -37,7 +37,7 @@ target-database:                # Configuration of the downstream database insta
   password: ""                  # The dmctl encryption is needed when the password is not empty.
 ```
 
-For all the configuration items and their usage, refer to [DM advanced task configuration file template](/reference/tools/data-migration/configure/task-configuration-file-full.md#task-configuration-file-template-advanced).
+For all the configuration items and their usage, refer to [DM advanced task configuration file template](task-configuration-file-full.md#task-configuration-file-template-advanced).
 
 ## online-schema-change: gh-ost
 
@@ -135,7 +135,7 @@ The SQL statements mostly used by gh-ost and the corresponding operation of DM a
 
 > **Note:**
 >
-> The specific SQL statements of gh-ost vary with the parameters used in the execution. This document only lists the major SQL statements. For more details, refer to the [gh-ost documentation]((https://github.com/github/gh-ost#gh-ost)).
+> The specific SQL statements of gh-ost vary with the parameters used in the execution. This document only lists the major SQL statements. For more details, refer to the [gh-ost documentation](https://github.com/github/gh-ost#gh-ost).
 
 ## online-schema-change: pt
 
