@@ -88,7 +88,7 @@ The SQL statements mostly used by gh-ost and the corresponding operation of DM a
     Alter /* gh-ost */ table `test`.`_test4_gho` add column cl1 varchar(20) not null ;
     ```
 
-    DM does not perform the DDL operation of `_test4_gho`. It records the executed DDL in `dm_meta.{task_name}\_onlineddl` and memory.
+    DM does not perform the DDL operation of `_test4_gho`. It records the DDL to be executed in `dm_meta.{task_name}\_onlineddl` and memory.
 
     ```sql
     REPLACE INTO dm_meta.{task_name}_onlineddl (id, ghost_schema , ghost_table , ddls) VALUES (......);
@@ -104,7 +104,7 @@ The SQL statements mostly used by gh-ost and the corresponding operation of DM a
       )   ;
     ```
 
-    DM does not executes DML statements that are not for **realtable**.
+    DM does not execute DML statements that are not for **realtable**.
 
 5. After the replication is completed, both the origin table and `_gho` table are renamed, and the online DDL operation is completed:
 
@@ -154,3 +154,86 @@ In the process of replication, DM divides the above tables into 3 categories:
 The SQL statements mostly used by pt-osc and the corresponding operation of DM are as follows:
 
 1. Create the `_new` table:
+
+    ```sql
+    CREATE TABLE `test`.`_test4_new` ( id int(11) NOT NULL AUTO_INCREMENT,
+    date date DEFAULT NULL, account_id bigint(20) DEFAULT NULL, conversion_price decimal(20,3) DEFAULT NULL,  ocpc_matched_conversions bigint(20) DEFAULT NULL, ad_cost decimal(20,3) DEFAULT NULL,cl2 varchar(20) COLLATE utf8mb4_bin NOT NULL,cl1 varchar(20) COLLATE utf8mb4_bin NOT NULL,PRIMARY KEY (id) ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ;   
+    ```
+
+    DM does not create the `_test4_new` table. It deletes the `dm_meta.{task_name}\_onlineddl` record in the downstream according to the `server_id` of `ghost_schema`, `ghost_table`, and `dm_worker`, and clears the related information in memory.
+
+    ```sql
+    DELETE FROM dm_meta.{task_name}_onlineddl WHERE id = {server_id} and ghost_schema = {ghost_schema} and ghost_table = {ghost_table};
+    ```
+
+2. Execute DDL in the `_new` table:
+
+    ```sql
+    ALTER TABLE `test`.`_test4_new` add column c3 int;
+    ``` 
+
+    DM does not perform the DDL operation of `_test4_new`. Instead, it records the DDL to be executed in `dm_meta.{task_name}\_onlineddl` and memory.
+
+    ```sql
+    REPLACE INTO dm_meta.{task_name}_onlineddl (id, ghost_schema , ghost_table , ddls) VALUES (......);
+    ```
+
+3. Create 3 Triggers used for data replication:
+
+    ```sql
+    CREATE TRIGGER `pt_osc_test_test4_del` AFTER DELETE ON `test`.`test4` ...... ;
+    CREATE TRIGGER `pt_osc_test_test4_upd` AFTER UPDATE ON `test`.`test4` ...... ;
+    CREATE TRIGGER `pt_osc_test_test4_ins` AFTER INSERT ON `test`.`test4` ...... ;
+    ```
+
+    DM does not execute Trigger operations that are not supported in TiDB.
+
+4. Replicate the origin table data to the `_new` table:
+
+    ```sql
+    INSERT LOW_PRIORITY IGNORE INTO `test`.`_test4_new` (`id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2`, `cl1`) SELECT `id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2`, `cl1` FROM `test`.`test4` LOCK IN SHARE MODE /*pt-online-schema-change 3227 copy table*/
+    ```
+
+    DM does not execute the DML statements that are not for **realtable**.
+
+5. After the data replication is completed, the origin table and `_new` table are renamed, and the online DDL operation is completed:
+
+    ```sql
+    RENAME TABLE `test`.`test4` TO `test`.`_test4_old`, `test`.`_test4_new` TO `test`.`test4`
+    ```
+
+    DM performs the following two operations:
+
+    * DM splits rename into two SQL statements:
+
+        ```sql
+         rename test.test4 to test._test4_old; 
+         rename test._test4_new to test.test4;
+         ```
+    
+    * DM does not execute `rename to _test4_old`. When executing `rename ghost_table to origin table`, DM takes the following steps:
+
+        - Read the DDL recorded in memory in Step 2
+        - Replace `ghost_table` and `ghost_schema` with `origin_table` and its corresponding schema
+        - Execute the origin command
+
+        ```sql
+        ALTER TABLE `test`.`_test4_new` add column c3 int;
+        -- Replaced with:
+        ALTER TABLE `test`.`test4` add column c3 int;
+        ```
+
+6. Delete the `_old` table and 3 Triggers of the online DDL operation:
+
+    ```sql
+    DROP TABLE IF EXISTS `test`.`_test4_old`;
+    DROP TRIGGER IF EXISTS `pt_osc_test_test4_del` AFTER DELETE ON `test`.`test4` ...... ;
+    DROP TRIGGER IF EXISTS `pt_osc_test_test4_upd` AFTER UPDATE ON `test`.`test4` ...... ;
+    DROP TRIGGER IF EXISTS `pt_osc_test_test4_ins` AFTER INSERT ON `test`.`test4` ...... ;
+    ```
+
+    DM does not delete `_test4_old` and Triggers.
+
+> **Note:**
+>
+> The specific SQL statements of pt-osc vary with the parameters used in the execution. This document only lists the major SQL statements. For more details, refer to the [pt-osc documentation](https://www.percona.com/doc/percona-toolkit/2.2/pt-online-schema-change.html).
