@@ -181,7 +181,7 @@ Note that we have incrementing, non-overlapping IDs in the left-hand column. The
 
 Our goal in this exercise is to use DM to combine the data from these distinct MySQL instances into a single table in TiDB.
 
-The package of configuration files we unpacked earlier (dm-cnf.tgz) contains the configuration for the components of the TiDB cluster, the DM components, and for a DM task we'll explore in this tutorial.
+The package of configuration files we have unpacked earlier (dm-cnf.tgz) contains the configuration for the components of the TiDB cluster, the DM components, and for a DM task we'll explore in this tutorial.
 
 1. Start a single `tidb-server` instance, 3 DM-worker processes, and 3 DM-master processes:
 
