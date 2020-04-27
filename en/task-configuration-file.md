@@ -39,7 +39,7 @@ target-database:                # Configuration of the downstream database insta
 ## ******** Feature configuration set **********
 # The filter rule set of the black white list of the matched table of the upstream database instance.
 black-white-list:
-  bw-rule-1:             # # The name of the black and white lists filtering rule of the table matching the upstream database instance.
+  bw-rule-1:             # The name of the black and white lists filtering rule of the table matching the upstream database instance.
     do-dbs: ["all_mode"] # white list of upstream tables needs to be replicated.
 # ----------- Instance configuration -----------
 mysql-instances:
