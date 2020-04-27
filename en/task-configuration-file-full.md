@@ -29,11 +29,11 @@ shard-mode: "optimistic"        # The shard DDL replication mode. Can be set to 
 ignore-checking-items: []       # The checking items that are ignored, including `all`/`dump_privilege`/`replication_privilege`/`version`/`binlog_enable`/`binlog_format`/`binlog_row_image`/`table_schema`/`schema_of_shard_tables`/`auto_increment_ID`.
 meta-schema: "dm_meta"          # The downstream database that stores the `meta` information.
 remove-meta: false              # Whether to remove the `meta` information (`checkpoint` and `onlineddl`) corresponding to the task name before starting the replication task.
-enable-heartbeat: false         # If the heartbeat feature is enabled, the MySQL heartbeat table in the upstream is updated regularly by DM. This can be used to estimate the delay time in replication.
-heartbeat-update-interval: 1    # The interval at which the MySQL heartbeat table in the upstream is updated by DM.
-heartbeat-report-interval: 10   # The interval at which the lag (the delay time) is estimated.
+enable-heartbeat: false         # If the heartbeat feature is enabled, DM regularly updates the MySQL heartbeat table in the upstream to estimate the replication delay.
+heartbeat-update-interval: 1    # The interval at which DM updates the MySQL heartbeat table in the upstream.
+heartbeat-report-interval: 10   # The interval at which DM estimates the lag (the delay time).
 timezone: "Asia/Shanghai"       # The timezone.
-case-sensitive: false           # Whether the schema/table is case-sensitive.
+case-sensitive: false           # Determines whether the schema/table is case-sensitive.
 target-database:                # Configuration of the downstream database instance.
   host: "192.168.0.1"
   port: 4000
