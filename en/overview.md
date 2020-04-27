@@ -4,6 +4,8 @@ summary: Learn about the Data Migration tool, the architecture, the key componen
 category: reference
 ---
 
+<!-- markdownlint-disable MD007 -->
+
 # Data Migration Overview
 
 [TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data replication task management platform that supports the full data migration and the incremental data migration from MySQL/MariaDB into TiDB. It can help to reduce the operations cost and simplify the troubleshooting process.
@@ -16,7 +18,7 @@ category: reference
 
 The Data Migration tool includes three components: DM-master, DM-worker, and dmctl.
 
-![Data Migration architecture](/media/dm-architecture.png)
+![Data Migration architecture](/media/dm-architecture-2.0.png)
 
 ### DM-master
 
