@@ -36,7 +36,9 @@ For additional information about DM, please consult [Data Migration Overview](ov
 
 We're going to deploy 3 instances of MySQL Server, and 1 instance each of pd-server, tikv-server, and tidb-server. Then we'll start 3 instances of DM-master and 3 instances of DM-worker.
 
-1. Install MySQL 5.7, download and extract the TiDB v4.0 and DM v2.0 packages we'll use:
+1. Install MySQL 5.7. Then download and extract the TiDB v4.0 and DM v2.0 packages we'll use:
+
+    {{< copyable "shell-regular" >}}
 
     ```bash
     sudo yum install -y http://repo.mysql.com/yum/mysql-5.7-community/el/7/x86_64/mysql57-community-release-el7-10.noarch.rpm
@@ -229,6 +231,7 @@ The package of configuration files we unpacked earlier (dm-cnf.tgz) contains the
     ```
 
     ```
+       PID TTY          TIME CMD
         77 pts/0    00:00:00 mysqld
        132 pts/0    00:00:00 mysqld
        187 pts/0    00:00:00 mysqld
@@ -291,7 +294,7 @@ The package of configuration files we unpacked earlier (dm-cnf.tgz) contains the
     }
     ```
 
-Each of the upstream MySQL Server instances corresponds to a separate DM-worker instance, each of which has its own configuration file.
+Each of the upstream MySQL Server instances corresponds to a separate `source.toml`. Each DM-master and DM-worker instance has its own configuration file.
 
 The following is an example of `dm-master1.toml`:
 
@@ -309,8 +312,10 @@ initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,m
 
 The following is an example of `dm-worker1.toml`:
 
+{{< copyable "" >}}
+
 ```toml
-# Worker Configuration.
+# DM-worker1 Configuration.
 
 name = "worker1"
 worker-addr = "0.0.0.0:8262"
@@ -393,7 +398,7 @@ There are a number of global options, and several groups of options that define 
 
 * We use `black-white-list` to limit the scope of this task to database `dmtest`.
 
-* The `loaders` section defines where to find the output of each instance of Mydumper that was executed by the respective MySQL source.
+* The `loaders` section defines where to find the output of each instance of Mydumper that has been executed by the respective MySQL source.
 
 The `dmctl` tool is an interactive client that facilitates interaction with the DM cluster. You use it to start tasks, query task status, et cetera. Start the tool by executing `dmctl -master-addr :8261` to get the interactive prompt:
 
