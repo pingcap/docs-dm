@@ -28,7 +28,7 @@ In the Grafana dashboard, the default name of DM is `DM-task`.
 | storage remain | The remaining storage capacity of the disk occupied by relay logs | N/A | N/A |
 | binlog file gap between master and relay | The number of binlog files by which the `relay` processing unit is behind the upstream master | N/A | N/A |
 | load progress | The percentage of the completed loading process of the load unit. The value is between 0%~100% | N/A | N/A |
-| binlog file gap between master and syncer | The number of binlog files by which binlog replication is behind the upstream master | N/A | N/A |
+| binlog file gap between master and syncer | The number of binlog files by which the binlog replication unit is behind the upstream master | N/A | N/A |
 | shard lock resolving | Whether the current subtask is waiting for sharding DDL replication. A value greater than 0 means that the current subtask is waiting for sharding DDL replication | N/A | N/A |
 
 ### Task state
@@ -50,9 +50,9 @@ In the Grafana dashboard, the default name of DM is `DM-task`.
 | binlog file index | The largest index number of relay log files. For example, "value = 1" indicates "relay-log.000001" | N/A | N/A |
 | binlog file gap between master and relay | The number of binlog files in the relay log that are behind the upstream master | An alert occurs when the number of binlog files by which the `relay` processing unit is behind the upstream master exceeds one (>1) and the condition lasts over 10 minutes | critical |
 | binlog pos | The write offset of the latest relay log file | N/A | N/A |
-| read binlog duration | The duration that the relay log reads binlog from the upstream MySQL (in seconds) | N/A | N/A |
+| read binlog event duration | The duration that the relay log reads binlog from the upstream MySQL (in seconds) | N/A | N/A |
 | write relay log duration | The duration that the relay log writes binlog into the disks each time (in seconds) | N/A | N/A |
-| binlog size | The size of a single binlog event that the relay log writes into the disks | N/A | N/A |
+| binlog event size | The size of a single binlog event that the relay log writes into the disks | N/A | N/A |
 
 ### Dump/Load unit
 
@@ -66,8 +66,8 @@ The following metrics show only when `task-mode` is in the `full` or `all` mode.
 | load process exits with error | The load unit encounters an error within the DM-worker and exits | Immediate alerts | critical |
 | table count | The total number of tables in the full data imported by the load unit | N/A | N/A |
 | data file count | The total number of data files (includes the `INSERT INTO` statement) in the full data imported by the load unit | N/A | N/A |
-| latency of execute transaction | The latency of executing a transaction by the load unit (in seconds) | N/A | N/A |
-| latency of query | The latency of executing of executing a query by the load unit (in seconds) | N/A | N/A |
+| transaction execution latency | The latency of executing a transaction by the load unit (in seconds) | N/A | N/A |
+| statement execution latency | The duration of executing a statement by the load unit (in seconds) | N/A | N/A |
 
 ### Binlog replication
 
@@ -77,15 +77,23 @@ The following metrics show only when `task-mode` is in the `incremental` or `all
 |:----|:------------|:----|:----|
 | remaining time to sync | The predicted remaining time it takes `syncer` to be completely replicated with the master (in minutes) | N/A | N/A |
 | replicate lag | The latency time it takes to replicate the binlog from master to `syncer` (in seconds) | N/A | N/A |
-| process exist with error | The binlog replication process encounters an error within the DM-worker and exits | Immediate alerts | critical |
+| process exist with error | The binlog replication unit encounters an error within the DM-worker and exits | Immediate alerts | critical |
 | binlog file gap between master and syncer | The number of binlog files by which the `syncer` processing unit is behind the master | An alert occurs when the number of binlog files by which the `syncer` processing unit is behind the master exceeds one (>1) and the condition lasts over 10 minutes | critical |
 | binlog file gap between relay and syncer | The number of binlog files by which `syncer` is behind `relay` | An alert occurs when the number of binlog files by which the `syncer` processing unit is behind the `relay` processing unit exceeds one (>1) and the condition lasts over 10 minutes | critical |
-| binlog event qps | The number of binlog events received per unit of time (this number does not include the events that need to be skipped) | N/A | N/A |
-| skipped binlog event qps | The number of binlog events received per unit of time that need to be skipped | N/A | N/A |
-| cost of binlog event transform | The time it takes `syncer` to parse and transform the binlog into SQL statements (in seconds) | N/A | N/A |
+| binlog event QPS | The number of binlog events received per unit of time (this number does not include the events that need to be skipped) | N/A | N/A |
+| skipped binlog event QPS | The number of binlog events received per unit of time that need to be skipped | N/A | N/A |
+| read binlog event duration | The duration that the binlog replication unit reads the binlog from the relay log or the upstream MySQL (in seconds) | N/A | N/A |
+| transform binlog event duration | The duration that the binlog replication unit parses and transforms the binlog into SQL statements (in seconds) | N/A | N/A |
+| dispatch binlog event duration | The duration that the binlog replication unit dispatches a binlog event (in seconds) | N/A | N/A |
+| transaction execution latency | The duration that the binlog replication unit executes the transaction to the downstream (in seconds) | N/A | N/A |
+| binlog event size | The size of a binlog event that the binlog replication unit reads from the relay log or the upstream MySQL | N/A | N/A |
+| DML queue remain length | The length of the remaining DML job queue | N/A | N/A |
 | total sqls jobs | The number of newly added jobs per unit of time | N/A | N/A |
 | finished sqls jobs | The number of finished jobs per unit of time | N/A | N/A |
-| execution latency | The time it takes `syncer` to execute the transaction to the downstream (in seconds) | N/A | N/A |
+| statement execution latency | The duration that the binlog replication unit executes the statement to the downstream (in seconds) | N/A | N/A |
+| add job duration | The duration tht the binlog replication unit adds a job to the queue (in seconds) | N/A | N/A |
+| DML conflict detect duration | The duration that the binlog replication unit detects the conflict in DML (in seconds) | N/A | N/A |
+| skipped event duration | The duration that the binlog replication unit skips a binlog event (in seconds) | N/A | N/A |
 | unsynced tables | The number of tables that have not received the shard DDL statement in the current subtask | N/A | N/A |
 | shard lock resolving | Whether the current subtask is waiting for the shard DDL lock to be resolved. A value greater than 0 indicates that it is waiting for the shard DDL lock to be resolved | N/A | N/A |
 
@@ -116,5 +124,5 @@ In the Grafana dashboard, the default name of an instance is `DM-instance`.
 |:----|:------------|:----|:----|
 | task state | The state of subtasks for replication | An alert occurs when the subtask has been paused for more than 10 minutes | critical |
 | load progress | The percentage of the completed loading process of the load unit. The value range is 0%~100% | N/A | N/A |
-| binlog file gap between master and syncer | The number of binlog files by which binlog replication is behind the upstream master | N/A | N/A |
+| binlog file gap between master and syncer | The number of binlog files by which the binlog replication unit is behind the upstream master | N/A | N/A |
 | shard lock resolving | Whether the current subtask is waiting for sharding DDL replication. A value greater than 0 means that the current subtask is waiting for sharding DDL replication | N/A | N/A |
