@@ -36,6 +36,7 @@
   - [Overview](config-overview.md)
   - [DM-master Configuration](dm-master-configuration-file.md)
   - [DM-worker Configuration](dm-worker-configuration-file.md)
+  - [Upstream Database Configuration](source-configuration-file.md)
   - [Task Configuration](task-configuration-file.md)
 + Manage the DM Cluster
   - [Cluster Operations](cluster-operations.md)
