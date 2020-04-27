@@ -43,11 +43,11 @@ target-database:                # Configuration of the downstream database insta
 ## ******** Feature configuration set **********
 # The routing mapping rule set between the upstream and downstream tables.
 routes:
-  route-rule-1:                   # The name of the routing mapping rule.
-    schema-pattern: "test_*"      # The pattern of the upstream schema name, wildcard characters (*?) are supported.
-    table-pattern: "t_*"          # The pattern of the upstream table name, wildcard characters (*?) are supported.
-    target-schema: "test"         # The name of the downstream schema.
-    target-table: "t"             # The name of the downstream table.
+  route-rule-1:                 # The name of the routing mapping rule.
+    schema-pattern: "test_*"    # The pattern of the upstream schema name, wildcard characters (*?) are supported.
+    table-pattern: "t_*"        # The pattern of the upstream table name, wildcard characters (*?) are supported.
+    target-schema: "test"       # The name of the downstream schema.
+    target-table: "t"           # The name of the downstream table.
   route-rule-2:
     schema-pattern: "test_*"
     target-schema: "test"
@@ -104,19 +104,19 @@ syncers:
 # ----------- Instance configuration -----------
 mysql-instances:
   -
-    source-id: "mysql-replica-01"                                      # The `source-id` in source.toml.
-    meta:                                                              # The position where the binlog replication starts when `task-mode` is `incremental` and the downstream database checkpoint does not exist. If the checkpoint exists, the checkpoint is used.
+    source-id: "mysql-replica-01"                   # The `source-id` in source.toml.
+    meta:                                           # The position where the binlog replication starts when `task-mode` is `incremental` and the downstream database checkpoint does not exist. If the checkpoint exists, the checkpoint is used.
 
       binlog-name: binlog.000001
       binlog-pos: 4
 
-    route-rules: ["route-rule-1", "route-rule-2"]                      # The name of the mapping rule between the table matching the upstream database instance and the downstream database.
-    filter-rules: ["filter-rule-1"]                                    # The name of the binlog event filtering rule of the table matching the upstream database instance.
-    black-white-list:  "bw-rule-1"                                     # The name of the black and white lists filtering rule of the table matching the upstream database instance.
+    route-rules: ["route-rule-1", "route-rule-2"]   # The name of the mapping rule between the table matching the upstream database instance and the downstream database.
+    filter-rules: ["filter-rule-1"]                 # The name of the binlog event filtering rule of the table matching the upstream database instance.
+    black-white-list:  "bw-rule-1"                  # The name of the black and white lists filtering rule of the table matching the upstream database instance.
 
-    mydumper-config-name: "global"                                     # The configuration name of the Mydumper processing unit.
-    loader-config-name: "global"                                       # The configuration name of the Loader processing unit.
-    syncer-config-name: "global"                                       # The configuration name of the Syncer processing unit.
+    mydumper-config-name: "global"                  # The configuration name of the Mydumper processing unit.
+    loader-config-name: "global"                    # The configuration name of the Loader processing unit.
+    syncer-config-name: "global"                    # The configuration name of the Syncer processing unit.
 
   -
     source-id: "mysql-replica-02"  # The `source-id` in source.toml.
