@@ -156,11 +156,11 @@ operate-source create ./source.toml
 
 #### Flags description
 
-+ `create`: Creates an upstream database source
++ `create`: Creates an upstream database source.
 
-+ `update`: Updates an upstream database source
++ `update`: Updates an upstream database source.
 
-+ `stop`: Stops an upstream database source
++ `stop`: Stops an upstream database source.
 
 + `config-file`: (Required) Specifies the file path of `source.toml`.
 
@@ -397,7 +397,7 @@ resume-task test
 
 ```bash
 {
-     "op": "Resume",
+    "op": "Resume",
     "result": true,
     "msg": "",
     "sources": [
@@ -546,7 +546,7 @@ update-task task_all_black.yaml
 
 ## Manage DDL locks
 
-Currently, DDL lock related commands mainly include `show-ddl-locks`, `unlock-ddl-lock`, etc. For more information on their functions, usages, and applicable scenarios, refer to [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md).
+Currently, DDL lock related commands mainly include `show-ddl-locks`, `unlock-ddl-lock`. For more information on their functions, usages, and applicable scenarios, refer to [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md).
 
 ## Other task and cluster management commands
 
