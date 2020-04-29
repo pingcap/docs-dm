@@ -88,7 +88,7 @@ For more details, refer to the comments about `mysql-instances` in the [template
 
 In some cases, you might need to update the task configuration. For example, if you set `remove-meta` to `true` and `task-mode` to `all` when resetting the data replication task, you need to set `remove-meta` to `false` after the task is reset. This can prevent the task from being replicated the next time the task is started.
 
-It is recommended to update the modified configuration to the DM cluster by executing the `stop-task` and `start-task` commands, since the DM cluster persists the task configuration. If the task configuration file is modified directly, without the task restart, the configuration changes does not take effect. In this case, the DM cluster still reads the previous task configuration when the DM cluster is restarted.
+It is recommended to update the modified configuration to the DM cluster by executing the `stop-task` and `start-task` commands, since the DM cluster persists the task configuration. If the task configuration file is modified directly, without restarting the task, the configuration changes does not take effect. In this case, the DM cluster still reads the previous task configuration when the DM cluster is restarted.
 
 To illustrate how to modify the task configuration, the following is an example of modifying `remove-meta`:
 
@@ -99,7 +99,7 @@ To illustrate how to modify the task configuration, the following is an example 
     {{< copyable "" >}}
 
     ```bash
-    `stop-task <task-name>`
+    stop-task <task-name>
     ```
 
 3. Start the task by executing the `start-task` command:
@@ -107,5 +107,5 @@ To illustrate how to modify the task configuration, the following is an example 
     {{< copyable "" >}}
 
     ```bash
-    `start-task <config-file>`
+    start-task <config-file>
     ```
