@@ -6,8 +6,7 @@ category: reference
 
 # Data Migration Task Configuration File
 
-This document introduces the basic task configuration file of Data Migration --
-[`task_basic.yaml`](https://github.com/pingcap/dm/blob/master/dm/master/task_advanced.yaml), including [global configuration](#global-configuration) and [instance configuration](#instance-configuration).
+This document introduces the basic task configuration file of Data Migration (DM), including [global configuration](#global-configuration) and [instance configuration](#instance-configuration).
 
 DM also implements [an advanced task configuration file](task-configuration-file-full.md) which provides greater flexibility and more control over DM.
 
@@ -40,16 +39,17 @@ target-database:                # Configuration of the downstream database insta
 ## ******** Feature configuration set **********
 # The filter rule set of the black white list of the matched table of the upstream database instance.
 black-white-list:
-  bw-rule-1:             # # The name of the black and white lists filtering rule of the table matching the upstream database instance.
-    do-dbs: ["all_mode"] # white list of upstream tables needs to be replicated
+  bw-rule-1:             # The name of the black and white lists filtering rule of the table matching the upstream database instance.
+    do-dbs: ["all_mode"] # white list of upstream tables needs to be replicated.
 # ----------- Instance configuration -----------
 mysql-instances:
   # The ID of the upstream instance or replication group. It can be configured by referring to the `source-id` in the `dm-master.toml` file.
   - source-id: "mysql-replica-01"
     black-white-list:  "bw-rule-1"
-        mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data, new in v1.0.2 and later versions
-        loader-thread: 16              # The number of threads that Loader uses for loading data, new in v1.0.2 and later versions
-        syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data, new in v1.0.2 and later versions
+    mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data.
+    loader-thread: 16              # The number of threads that Loader uses for loading data.
+    syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data.
+
   - source-id: "mysql-replica-02"
     black-white-list:  "bw-rule-1"
     mydumper-thread: 4
@@ -83,3 +83,29 @@ For basic applications, you only need to modify the black and white lists filter
 This part defines the subtask of data replication. DM supports replicating data from one or multiple MySQL instances to the same instance.
 
 For more details, refer to the comments about `mysql-instances` in the [template](#task-configuration-file-template-basic).
+
+## Modify the task configuration
+
+In some cases, you might need to update the task configuration. For example, if you set `remove-meta` to `true` and `task-mode` to `all` when resetting the data replication task, you need to set `remove-meta` to `false` after the task is reset. This can prevent the task from being replicated the next time the task is started.
+
+It is recommended to update the modified configuration to the DM cluster by executing the `stop-task` and `start-task` commands, since the DM cluster persists the task configuration. If the task configuration file is modified directly, without restarting the task, the configuration changes does not take effect. In this case, the DM cluster still reads the previous task configuration when the DM cluster is restarted.
+
+To illustrate how to modify the task configuration, the following is an example of modifying `remove-meta`:
+
+1. Modify the task configuration file and set `remove-meta` to `false`.
+
+2. Stop the task by executing the `stop-task` command:
+
+    {{< copyable "" >}}
+
+    ```bash
+    stop-task <task-name>
+    ```
+
+3. Start the task by executing the `start-task` command:
+
+    {{< copyable "" >}}
+
+    ```bash
+    start-task <config-file>
+    ```
