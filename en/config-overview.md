@@ -18,7 +18,7 @@ This document gives an overview of configuration files of DM (Data Migration).
 
 ### DM task configuration file
 
-`task.yaml` is the configuration file for the data replication task . For more details, refer to [Task Configuration File](task-configuration-file.md).
+`task.yaml` is the configuration file for the data replication task. For more details, refer to [Task Configuration File](task-configuration-file.md).
 
 ### Data replication task creation
 
