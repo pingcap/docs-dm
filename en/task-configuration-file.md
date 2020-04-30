@@ -6,8 +6,7 @@ category: reference
 
 # Data Migration Task Configuration File
 
-This document introduces the basic task configuration file of Data Migration --
-[`task_basic.yaml`](https://github.com/pingcap/dm/blob/master/dm/master/task_advanced.yaml), including [global configuration](#global-configuration) and [instance configuration](#instance-configuration).
+This document introduces the basic task configuration file of Data Migration (DM), including [global configuration](#global-configuration) and [instance configuration](#instance-configuration).
 
 DM also implements [an advanced task configuration file](task-configuration-file-full.md) which provides greater flexibility and more control over DM.
 
@@ -40,16 +39,17 @@ target-database:                # Configuration of the downstream database insta
 ## ******** Feature configuration set **********
 # The filter rule set of the black white list of the matched table of the upstream database instance.
 black-white-list:
-  bw-rule-1:             # # The name of the black and white lists filtering rule of the table matching the upstream database instance.
-    do-dbs: ["all_mode"] # white list of upstream tables needs to be replicated
+  bw-rule-1:             # The name of the black and white lists filtering rule of the table matching the upstream database instance.
+    do-dbs: ["all_mode"] # white list of upstream tables needs to be replicated.
 # ----------- Instance configuration -----------
 mysql-instances:
   # The ID of the upstream instance or replication group. It can be configured by referring to the `source-id` in the `dm-master.toml` file.
   - source-id: "mysql-replica-01"
     black-white-list:  "bw-rule-1"
-        mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data, new in v1.0.2 and later versions
-        loader-thread: 16              # The number of threads that Loader uses for loading data, new in v1.0.2 and later versions
-        syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data, new in v1.0.2 and later versions
+    mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data.
+    loader-thread: 16              # The number of threads that Loader uses for loading data.
+    syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data.
+
   - source-id: "mysql-replica-02"
     black-white-list:  "bw-rule-1"
     mydumper-thread: 4
