@@ -78,7 +78,7 @@ The SQL statements mostly used by gh-ost and the corresponding operation of DM a
     Create /* gh-ost */ table `test`.`_test4_gho` like `test`.`test4` ;
     ```
 
-    DM does not create the `_test4_gho` table. It deletes the `dm_meta.{task_name}\_onlineddl` record in the downstream according to the `server_id` of ghost_schema, ghost_table, and dm_worker, and clears the related information in memory.
+    DM does not create the `_test4_gho` table. It deletes the `dm_meta.{task_name}\_onlineddl` record in the downstream according to `ghost_schema`, `ghost_table`, and the `server_id` of `dm_worker`, and clears the related information in memory.
 
     ```
     DELETE FROM dm_meta.{task_name}_onlineddl WHERE id = {server_id} and ghost_schema = {ghost_schema} and ghost_table = {ghost_table};
@@ -162,7 +162,7 @@ The SQL statements mostly used by pt-osc and the corresponding operation of DM a
     date date DEFAULT NULL, account_id bigint(20) DEFAULT NULL, conversion_price decimal(20,3) DEFAULT NULL,  ocpc_matched_conversions bigint(20) DEFAULT NULL, ad_cost decimal(20,3) DEFAULT NULL,cl2 varchar(20) COLLATE utf8mb4_bin NOT NULL,cl1 varchar(20) COLLATE utf8mb4_bin NOT NULL,PRIMARY KEY (id) ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ;   
     ```
 
-    DM does not create the `_test4_new` table. DM deletes the `dm_meta.{task_name}\_onlineddl` record in the downstream according to the `server_id` of `ghost_schema`, `ghost_table`, and `dm_worker`, and clears the related information in memory.
+    DM does not create the `_test4_new` table. DM deletes the `dm_meta.{task_name}\_onlineddl` record in the downstream according to `ghost_schema`, `ghost_table`, and the `server_id` of `dm_worker`, and clears the related information in memory.
 
     ```sql
     DELETE FROM dm_meta.{task_name}_onlineddl WHERE id = {server_id} and ghost_schema = {ghost_schema} and ghost_table = {ghost_table};
