@@ -61,7 +61,7 @@ The above error can be caused by the following reason:
     - DM [processes the gh-ost table during the `alter ghost_table` operation](online-ddl-scheme.md#online-schema-change-gh-ost) and records the information of the DDL information of ghost_table;
     - When dm-worker is restarted to start the task, DM reads the DDL from `dm_meta.{task_name}_onlineddl`.
 
-Therefore, in the process of incremental replication, if the specified Pos skipped the `alter ghost_table` DDL but the Pos is still in the online-ddl process of gh-ost, the ghost_table is not written into memory or `dm_meta.{task_name}_onlineddl` correctly. In such cases, the above error is returned.
+Therefore, in the process of incremental replication, if the specified Pos has skipped the `alter ghost_table` DDL but the Pos is still in the online-ddl process of gh-ost, the ghost_table is not written into memory or `dm_meta.{task_name}_onlineddl` correctly. In such cases, the above error is returned.
 
 You can avoid this error by the following steps:
 
