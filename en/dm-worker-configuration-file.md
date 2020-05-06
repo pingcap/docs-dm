@@ -33,7 +33,7 @@ join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
 
 | Parameter        | Description                           |
 | :------------ | :--------------------------------------- |
-| `name` | Marks a DM-worker name. |
+| `name` | The name of the DM-worker. |
 | `log-level` | Specifies a log level from `debug`, `info`, `warn`, `error`, and `fatal`. The default log level is `info`. |
 | `log-file` | Specifies the log file directory. If this parameter is not specified, the logs are printed onto the standard output. |
 | `worker-addr` | Specifies the address of DM-worker which provides services. You can omit the IP address and specify the port number only, such as ":8262". |

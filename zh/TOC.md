@@ -38,6 +38,7 @@
   - [概述](config-overview.md)
   - [DM-master 配置](dm-master-configuration-file.md)
   - [DM-worker 配置](dm-worker-configuration-file.md)
+  - [上游数据库配置](source-configuration-file.md)
   - [任务配置](task-configuration-file.md)
 + DM 集群管理
   - [集群操作](cluster-operations.md)
@@ -61,4 +62,5 @@
     - [1.0.2](releases/1.0.2.md)
     - [1.0.3](releases/1.0.3.md)
     - [1.0.4](releases/1.0.4.md)
+    - [1.0.5](releases/1.0.5.md)
 - [TiDB DM 术语表](glossary.md)

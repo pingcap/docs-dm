@@ -16,21 +16,45 @@ This section describes the basic use of dmctl commands in the interactive mode.
 
 ### dmctl help
 
+{{< copyable "shell-regular" >}}
+
 ```bash
-$ ./dmctl --help
-Usage of dmctl:
- # Prints the version information.
- -V prints version and exit
- -config string
-       path to config file
- # Encrypts the database password according to the encryption method provided by DM; used in DM configuration files.
- -encrypt string
-       encrypt plaintext to ciphertext
- # The DM-master access address. dmctl interacts with the DM-master to complete task management operations.
- -master-addr string
-       master API server addr
- -rpc-timeout string
-       rpc timeout ("10m" by default)
+./dmctl --help
+```
+
+```
+Usage: dmctl [global options] command [command options] [arguments...]
+
+Available Commands:
+  check-task            check-task <config-file>
+  migrate-relay         migrate-relay <source> <binlogName> <binlogPos>
+  offline-worker        offline-worker <name> <address>
+  operate-source        operate-source <operate-type> <config-file>
+  pause-relay           pause-relay <-s source ...>
+  pause-task            pause-task [-s source ...] <task-name>
+  purge-relay           purge-relay <-s source> [--filename] [--sub-dir]
+  query-error           query-error [-s source ...] [task-name]
+  query-status          query-status [-s source ...] [task-name] [--more]
+  resume-relay          resume-relay <-s source ...>
+  resume-task           resume-task [-s source ...] <task-name>
+  show-ddl-locks        show-ddl-locks [-s source ...] [task-name]
+  sql-inject            sql-inject <-s source> <task-name> <sql1;sql2;>
+  sql-replace           sql-replace <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name> <sql1;sql2;>
+  sql-skip              sql-skip <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name>
+  start-task            start-task [-s source ...] <config-file>
+  stop-task             stop-task [-s source ...] <task-name>
+  switch-relay-master   switch-relay-master <-s source ...>
+  unlock-ddl-lock       unlock-ddl-lock [-s source ...] <lock-ID>
+  update-master-config  update-master-config <config-file>
+  update-relay          update-relay [-s source ...] <config-file>
+  update-task           update-task [-s source ...] <config-file>
+Special Commands:
+  --encrypt encrypt plaintext to ciphertext
+Global Options:
+  --V prints version and exit
+  --config path to config file
+  --master-addr master API server addr
+  --rpc-timeout rpc timeout; default value is 10m
 ```
 
 ### Database password encryption
@@ -67,16 +91,16 @@ Usage:
   dmctl [command]
 
 Available Commands:
-  break-ddl-lock       forcefully break DM-worker's DDL lock
   check-task           check the config file of the task
   help                 help about any command
   migrate-relay        migrate DM-worker's relay unit
+  offline-worker       offline worker which has been closed
+  operate-source       create/update/stop upstream MySQL/MariaDB source
   pause-relay          pause DM-worker's relay unit
   pause-task           pause a specified running task
   purge-relay          purge relay log files of the DM-worker according to the specified filename
   query-error          query task error
   query-status         query task status
-  refresh-worker-tasks refresh worker -> tasks mapper
   resume-relay         resume DM-worker's relay unit
   resume-task          resume a specified paused task
   show-ddl-locks       show un-resolved DDL locks
@@ -93,14 +117,75 @@ Available Commands:
 
 Flags:
   -h, --help             help for dmctl
-  -w, --worker strings   DM-worker ID
+  -s, --source strings   MySQL Source ID
 
-# Use "dmctl [command] --help" for more information about a command.
+Use `dmctl [command] --help` to get more information about a command.
 ```
 
 ## Manage the data replication task
 
 This section describes how to use the task management commands to execute corresponding operations.
+
+### Load the data source configuration
+
+You can use the `operate-source` command to load the data source configuration to the DM cluster.
+
+{{< copyable "" >}}
+
+```bash
+help operate-source
+```
+
+```
+create/update/stop upstream MySQL/MariaDB source
+Usage:
+  dmctl operate-source <operate-type> <config-file> [flags]
+Flags:
+  -h, --help   help for operate-source
+Global Flags:
+  -s, --source strings   MySQL Source ID
+```
+
+#### Command usage example
+
+{{< copyable "" >}}
+
+```bash
+operate-source create ./source.toml
+```
+
+#### Flags description
+
++ `create`: Creates an upstream database source.
+
++ `update`: Updates an upstream database source.
+
++ `stop`: Stops an upstream database source.
+
++ `config-file`: (Required) Specifies the file path of `source.toml`.
+
+#### Returned results
+
+{{< copyable "" >}}
+
+```bash
+operate-source create ./source.toml
+```
+
+```
+{
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "dm-worker-1"
+        }
+    ]
+}
+```
 
 ### Create the data replication task
 
@@ -116,13 +201,13 @@ help start-task
 start a task as defined in the config file
 
 Usage:
- dmctl start-task [-w worker ...] <config-file> [flags]
+ dmctl start-task [-s source ...] <config-file> [flags]
 
 Flags:
  -h, --help   help for start-task
 
 Global Flags:
- -w, --worker strings   DM-worker ID
+ -s, --source strings   MySQL Source ID
 ```
 
 #### Command usage example
@@ -130,32 +215,34 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-start-task [ -w "172.16.30.15:8262"] ./task.yaml
+start-task [ -s "mysql-replica-01"] ./task.yaml
 ```
 
 #### Flags description
 
-- `-w`: (Optional) Specifies the group of DM-workers to execute `task.yaml`. If it is set, only subtasks of the specified task on these DM-workers are started.
+- `-s`: (Optional) Specifies the MySQL source to execute `task.yaml`. If it is set, only subtasks of the specified task on the MySQL source are started.
 - `config-file`: (Required) Specifies the file path of `task.yaml`.
 
 #### Returned results
 
+{{< copyable "" >}}
+
+```bash
+start-task task.yaml
+```
+
 ```bash
 {
-​    "result": true,
-​    "msg": "",
-​    "workers": [
-​        {
-​            "result": true,
-​            "worker": "172.16.30.15:8262",
-​            "msg": ""
-​        },
-​        {
-​            "result": true,
-​            "worker": "172.16.30.16:8262",
-​            "msg": ""
-​        }
-​    ]
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
+        }
+    ]
 }
 ```
 
@@ -171,16 +258,19 @@ help query-status
 query task status
 
 Usage:
- dmctl query-status [-w worker ...] [task-name] [flags]
+ dmctl query-status [-s source ...] [task-name] [--more] [flags]
 
 Flags:
  -h, --help   help for query-status
+     --more   whether to print the detailed task information
 
 Global Flags:
- -w, --worker strings   DM-worker ID
+ -s, --source strings   MySQL Source ID
 ```
 
 #### Command usage example
+
+{{< copyable "" >}}
 
 ```bash
 query-status
@@ -188,7 +278,7 @@ query-status
 
 #### Flags description
 
-- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the replication task (that you want to query) run.
+- `-s`: (Optional) Specifies the MySQL source where the subtasks of the replication task (that you want to query) run.
 - `task-name`: (Optional) Specifies the task name. If it is not set, the results of all data replication tasks are returned.
 
 #### Returned results
@@ -215,13 +305,13 @@ help pause-task
 pause a specified running task
 
 Usage:
- dmctl pause-task [-w worker ...] <task-name> [flags]
+ dmctl pause-task [-s source ...] <task-name> [flags]
 
 Flags:
  -h, --help   help for pause-task
 
 Global Flags:
- -w, --worker strings   DM-worker ID
+ -s, --source strings   MySQL Source ID
 ```
 
 > **Note:**
@@ -234,13 +324,15 @@ Global Flags:
 
 #### Command usage example
 
+{{< copyable "" >}}
+
 ```bash
-pause-task [-w "127.0.0.1:8262"] task-name
+pause-task [-s "mysql-replica-01"] task-name
 ```
 
 #### Flags description
 
-- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the replication task (that you want to pause) run. If it is set, only subtasks on the specified DM-workers are paused.
+- `-s`: (Optional) Specifies the MySQL source where the subtasks of the replication task (that you want to pause) run. If it is set, only subtasks on the specified MySQL source are paused.
 - `task-name`: (Required) Specifies the task name.
 
 #### Returned results
@@ -252,28 +344,16 @@ pause-task test
 ```
 {
 ​    "op": "Pause",
-​    "result": true,
-​    "msg": "",
-​    "workers": [
-​        {
-            "meta": {
-                "result": true,
-                "worker": "172.16.30.15:8262",
-                "msg": ""
-            },
-            "op": "Pause",
-            "logID": "2"
-​        },
-​        {
-            "meta": {
-                "result": true,
-                "worker": "172.16.30.16:8262",
-                "msg": ""
-            },
-            "op": "Pause",
-            "logID": "2"
-​        }
-​    ]
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
+        }
+    ]
 }
 ```
 
@@ -289,24 +369,24 @@ help resume-task
 resume a specified paused task
 
 Usage:
- dmctl resume-task [-w worker ...] <task-name> [flags]
+ dmctl resume-task [-s source ...] <task-name> [flags]
 
 Flags:
  -h, --help   help for resume-task
 
 Global Flags:
- -w, --worker strings   DM-worker ID
+ -s, --source strings   MySQL Source ID
 ```
 
 #### Command usage example
 
 ```bash
-resume-task [-w "127.0.0.1:8262"] task-name
+resume-task [-s "mysql-replica-01"] task-name
 ```
 
 #### Flags description
 
-- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the replication task (that you want to restart) run. If it is set, only subtasks on the specified DM-workers are restarted.
+- `-s`: (Optional) Specifies the MySQL source where the subtasks of the replication task (that you want to restart) run. If it is set, only subtasks on the specified MySQL source are restarted.
 - `task-name`: (Required) Specifies the task name.
 
 #### Returned results
@@ -317,29 +397,17 @@ resume-task test
 
 ```bash
 {
-     "op": "Resume",
-     "result": true,
-     "msg": "",
-     "workers": [
-         {
-             "meta": {
-                 "result": true,
-                 "worker": "172.16.30.15:8262",
-                 "msg": ""
-             },
-             "op": "Resume",
-             "logID": "3"
-         },
-         {
-             "meta": {
-                 "result": true,
-                 "worker": "172.16.30.16:8262",
-                 "msg": ""
-             },
-             "op": "Resume",
-             "logID": "3"
-         }
-     ]
+    "op": "Resume",
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
+        }
+    ]
 }
 ```
 
@@ -355,24 +423,24 @@ help stop-task
 stop a specified task
 
 Usage:
- dmctl stop-task [-w worker ...] <task-name> [flags]
+ dmctl stop-task [-s source ...] <task-name> [flags]
 
 Flags:
  -h, --help   help for stop-task
 
 Global Flags:
- -w, --worker strings   DM-worker ID
+ -s, --source strings   MySQL Source ID
 ```
 
 #### Command usage example
 
 ```bash
-stop-task [-w "127.0.0.1:8262"]  task-name
+stop-task [-s "mysql-replica-01"]  task-name
 ```
 
 #### Flags description
 
-- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the replication task (that you want to stop) run. If it is set, only subtasks on the specified DM-workers are stopped.
+- `-s`: (Optional) Specifies the MySQL source where the subtasks of the replication task (that you want to stop) run. If it is set, only subtasks on the specified MySQL source are stopped.
 - `task-name`: (Required) Specifies the task name.
 
 #### Returned results
@@ -383,29 +451,17 @@ stop-task test
 
 ```
 {
-     "op": "Stop",
-     "result": true,
-     "msg": "",
-     "workers": [
-         {
-             "meta": {
-                 "result": true,
-                 "worker": "172.16.30.15:8262",
-                 "msg": ""
-             },
-             "op": "Stop",
-             "logID": "4"
-         },
-         {
-             "meta": {
-                 "result": true,
-                 "worker": "172.16.30.16:8262",
-                 "msg": ""
-             },
-             "op": "Stop",
-             "logID": "4"
-         }
-     ]
+    "op": "Stop",
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
+        }
+    ]
 }
 ```
 
@@ -453,24 +509,24 @@ help update-task
 update a task's config for routes, filters, black-white-list
 
 Usage:
-  dmctl update-task [-w worker ...] <config-file> [flags]
+  dmctl update-task [-s source ...] <config-file> [flags]
 
 Flags:
   -h, --help   help for update-task
 
 Global Flags:
-  -w, --worker strings   DM-worker ID
+  -s, --source strings   MySQL Source ID
 ```
 
 #### Command usage example
 
 ```bash
-update-task [-w "127.0.0.1:8262"] ./task.yaml
+update-task [-s "mysql-replica-01"] ./task.yaml
 ```
 
 #### Flags description
 
-- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the replication task (that you want to update) run. If it is set, only subtasks on the specified DM-workers are updated.
+- `-s`: (Optional) Specifies the MySQL source where the subtasks of the replication task (that you want to update) run. If it is set, only subtasks on the specified MySQL source are updated.
 - `config-file`: (Required) Specifies the file path of `task.yaml`.
 
 #### Returned results
@@ -482,25 +538,15 @@ update-task task_all_black.yaml
 ```bash
 {
 ​    "result": true,
-​    "msg": "",
-​    "workers": [
-​        {
-​            "result": true,
-​            "worker": "172.16.30.15:8262",
-​            "msg": ""
-​        },
-​        {
-​            "result": true,
-​            "worker": "172.16.30.16:8262",
-​            "msg": ""
-​        }
-​    ]
+    "msg": "",
+    "sources": [
+    ]
 }
 ```
 
 ## Manage DDL locks
 
-Currently, DDL lock related commands mainly include `show-ddl-locks`, `unlock-ddl-lock`, `break-ddl-lock`, etc. For more information on their functions, usages, and applicable scenarios, refer to [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md).
+Currently, DDL lock related commands mainly include `show-ddl-locks`, `unlock-ddl-lock`. For more information on their functions, usages, and applicable scenarios, refer to [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md).
 
 ## Other task and cluster management commands
 
@@ -528,7 +574,7 @@ Flags:
  -h, --help   help for check-task
 
 Global Flags:
- -w, --worker strings   DM-worker ID
+ -s, --source strings   MySQL Source ID
 ```
 
 #### Command usage example
@@ -574,13 +620,13 @@ help pause-relay
 pause DM-worker's relay unit
 
 Usage:
-  dmctl pause-relay <-w worker ...> [flags]
+  dmctl pause-relay <-s source ...> [flags]
 
 Flags:
   -h, --help   help for pause-relay
 
 Global Flags:
-  -w, --worker strings   DM-worker ID
+  -s, --source strings   MySQL Source ID
 ```
 
 #### Command usage example
@@ -588,32 +634,32 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-pause-relay -w "127.0.0.1:8262"
+pause-relay -s "mysql-replica-01"
 ```
 
 #### Flags description
 
-- `-w`: (Required) Specifies the DM-worker for which to pause the relay unit
+- `-s`: (Required) Specifies the MySQL source for which to pause the relay unit
 
 #### Returned results
 
 {{< copyable "" >}}
 
 ```bash
-pause-relay -w "172.16.30.15:8262"
+pause-relay -s "mysql-replica-01"
 ```
 
 ```
 {
-    "op": "InvalidRelayOp",
+    "op": "ResumeRelay",
     "result": true,
     "msg": "",
-    "workers": [
+    "sources": [
         {
-            "op": "PauseRelay",
             "result": true,
-            "worker": "172.16.30.15:8262",
-            "msg": ""
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
         }
     ]
 }
@@ -635,13 +681,13 @@ help resume-relay
 resume DM-worker's relay unit
 
 Usage:
-  dmctl resume-relay <-w worker ...> [flags]
+  dmctl resume-relay <-s source ...> [flags]
 
 Flags:
   -h, --help   help for resume-relay
 
 Global Flags:
-  -w, --worker strings   DM-worker ID
+  -s, --source strings   MySQL Source ID
 ```
 
 #### Command usage example
@@ -649,32 +695,32 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-resume-relay -w "127.0.0.1:8262"
+resume-relay -s "mysql-replica-01"
 ```
 
 #### Flags description
 
-- `-w`: (Required) Specifies the DM-worker for which to resume the relay unit
+- `-s`: (Required) Specifies the MySQL source for which to resume the relay unit
 
 #### Returned results
 
 {{< copyable "" >}}
 
 ```bash
-resume-relay -w "172.16.30.15:8262"
+resume-relay -s "mysql-replica-01"
 ```
 
 ```
 {
-    "op": "InvalidRelayOp",
+    "op": "ResumeRelay",
     "result": true,
     "msg": "",
-    "workers": [
+    "sources": [
         {
-            "op": "ResumeRelay",
             "result": true,
-            "worker": "172.16.30.15:8262",
-            "msg": ""
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
         }
     ]
 }
@@ -696,13 +742,13 @@ help switch-relay-master
 switch the master server of the DM-worker's relay unit
 
 Usage:
-  dmctl switch-relay-master <-w worker ...> [flags]
+  dmctl switch-relay-master <-s source ...> [flags]
 
 Flags:
   -h, --help   help for switch-relay-master
 
 Global Flags:
-  -w, --worker strings   DM-worker ID
+  -s, --source strings   MySQL Source ID
 ```
 
 #### Command usage example
@@ -710,30 +756,31 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-switch-relay-master -w "127.0.0.1:8262"
+switch-relay-master -s "mysql-replica-01"
 ```
 
 #### Flags description
 
-- `-w`: (Required) Specifies the DM-worker for which to switch the relay unit
+- `-s`: (Required) Specifies the MySQL source for which to switch the relay unit
 
 #### Returned results
 
 {{< copyable "" >}}
 
 ```bash
-switch-relay-master -w "172.16.30.15:8262"
+switch-relay-master -s "mysql-replica-01"
 ```
 
 ```
 {
     "result": true,
     "msg": "",
-    "workers": [
+    "sources": [
         {
             "result": true,
-            "worker": "172.16.30.15:8262",
-            "msg": ""
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": ""
         }
     ]
 }
@@ -753,15 +800,17 @@ help purge-relay
 purge relay log files of the DM-worker according to the specified filename
 
 Usage:
-  dmctl purge-relay <-w worker> [--filename] [--sub-dir] [flags]
+  dmctl purge-relay <-s source> [--filename] [--sub-dir] [flags]
 
 Flags:
-  -f, --filename string   name of the terminal file before which to purge relay log files. Sample format: "mysql-bin.000006"
+  -f, --filename string   name of the terminal file before which to purge relay log files. Sample format: "mysql-bin.000
+006"
   -h, --help              help for purge-relay
-  -s, --sub-dir string    specify relay sub directory for --filename. If not specified, the latest one will be used. Sample format: "2ae76434-f79f-11e8-bde2-0242ac130008.000001"
+     --sub-dir string    specify relay sub directory for --filename. If not specified, the latest one will be used. Sam
+ple format: "2ae76434-f79f-11e8-bde2-0242ac130008.000001"
 
 Global Flags:
-  -w, --worker strings   DM-worker ID
+  -s, --source strings   MySQL Source ID
 ```
 
 #### Command usage example
@@ -769,12 +818,12 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-purge-relay -w "127.0.0.1:8262" --filename "mysql-bin.000003"
+purge-relay -s "mysql-replica-01" --filename "mysql-bin.000003"
 ```
 
 #### Flags description
 
-- `-w`: (Required) Specifies the DM-worker for which to perform a clean operation
+- `-s`: (Required) Specifies the MySQL source for which to perform a clean operation
 - `--filename`: (Required) Specifies the name of the terminal file before which to purge relay log files. For example, if the value is `mysql-bin.000100`, the clean operation stops at `mysql-bin.000099`.
 - `--sub-dir`: (Optional) Specifies the relay log sub-directory corresponding to `--filename`. If not specified, the latest one is used.
 
@@ -783,7 +832,7 @@ purge-relay -w "127.0.0.1:8262" --filename "mysql-bin.000003"
 {{< copyable "" >}}
 
 ```bash
-purge-relay -w "127.0.0.1:8262" --filename "mysql-bin.000003"
+purge-relay -s "mysql-replica-01" --filename "mysql-bin.000003"
 ```
 
 ```
@@ -791,11 +840,12 @@ purge-relay -w "127.0.0.1:8262" --filename "mysql-bin.000003"
 {
     "result": true,
     "msg": "",
-    "workers": [
+    sources": [
         {
             "result": true,
-            "worker": "127.0.0.1:8262",
-            "msg": ""
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "
         }
     ]
 }
@@ -808,22 +858,6 @@ You can use `sql-skip` to preset a skip operation to be executed when the positi
 ### Preset replace operation
 
 You can use `sql-replace` to preset a replace operation to be executed when the position or the SQL statement of the binlog event matches with the specified `binlog-pos` or `sql-pattern`. For descriptions of related parameters and results, refer to [`sql-replace`](skip-or-replace-abnormal-sql-statements.md#sql-replace).
-
-### Forcefully refresh the `task => DM-workers` mapping
-
-You can use the `refresh-worker-tasks` command to forcefully refresh the `task => DM-workers` mapping cached in the memory of the DM-master.
-
-> **Note:**
->
-> Normally it is not necessary to use this command. Use it only when the `task => DM-workers` already exists and you are prompted to refresh it when executing other commands.
-
-## Refresh worker tasks
-
-You can use the `refresh-worker-tasks` command to forcefully refresh the `task => DM-workers` mapping maintained in the DM-master memory.
-
-> **Note:**
->
-> Normally, you do not need to use this command. Use it only when you are sure that the `task => DM-workers` mapping exists, but you are still prompted to refresh while you are executing other commands.
 
 ## dmctl command mode
 
@@ -844,28 +878,28 @@ The command mode differs from the interactive mode in that you need to append th
 
 ```
 Available Commands:
-  break-ddl-lock        break-ddl-lock <-w worker ...> <task-name> [--remove-id] [--exec] [--skip]
   check-task            check-task <config-file>
-  migrate-relay         migrate-relay <worker> <binlogName> <binlogPos>
-  pause-relay           pause-relay <-w worker ...>
-  pause-task            pause-task [-w worker ...] <task-name>
-  purge-relay           purge-relay <-w worker> [--filename] [--sub-dir]
-  query-error           query-error [-w worker ...] [task-name]
-  query-status          query-status [-w worker ...] [task-name]
-  refresh-worker-tasks  refresh-worker-tasks
-  resume-relay          resume-relay <-w worker ...>
-  resume-task           resume-task [-w worker ...] <task-name>
-  show-ddl-locks        show-ddl-locks [-w worker ...] [task-name]
-  sql-inject            sql-inject <-w worker> <task-name> <sql1;sql2;>
-  sql-replace           sql-replace <-w worker> [-b binlog-pos] [-s sql-pattern] [--sharding] <task-name> <sql1;sql2;>
-  sql-skip              sql-skip <-w worker> [-b binlog-pos] [-s sql-pattern] [--sharding] <task-name>
-  start-task            start-task [-w worker ...] <config-file>
-  stop-task             stop-task [-w worker ...] <task-name>
-  switch-relay-master   switch-relay-master <-w worker ...>
-  unlock-ddl-lock       unlock-ddl-lock [-w worker ...] <lock-ID>
+  migrate-relay         migrate-relay <source> <binlogName> <binlogPos>
+  offline-worker        offline-worker <name> <address>
+  operate-source        operate-source <operate-type> <config-file>
+  pause-relay           pause-relay <-s source ...>
+  pause-task            pause-task [-s source ...] <task-name>
+  purge-relay           purge-relay <-s source> [--filename] [--sub-dir]
+  query-error           query-error [-s source ...] [task-name]
+  query-status          query-status [-s source ...] [task-name] [--more]
+  resume-relay          resume-relay <-s source ...>
+  resume-task           resume-task [-s source ...] <task-name>
+  show-ddl-locks        show-ddl-locks [-s source ...] [task-name]
+  sql-inject            sql-inject <-s source> <task-name> <sql1;sql2;>
+  sql-replace           sql-replace <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name> <sql1;sql2;>
+  sql-skip              sql-skip <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name>
+  start-task            start-task [-s source ...] <config-file>
+  stop-task             stop-task [-s source ...] <task-name>
+  switch-relay-master   switch-relay-master <-s source ...>
+  unlock-ddl-lock       unlock-ddl-lock [-s source ...] <lock-ID>
   update-master-config  update-master-config <config-file>
-  update-relay          update-relay [-w worker ...] <config-file>
-  update-task           update-task [-w worker ...] <config-file>
+  update-relay          update-relay [-s source ...] <config-file>
+  update-task           update-task [-s source ...] <config-file>
 ```
 
 ## Deprecated or unrecommended commands

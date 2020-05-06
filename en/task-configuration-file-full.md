@@ -5,8 +5,7 @@ category: reference
 
 # DM Advanced Task Configuration File
 
-This document introduces the advanced task configuration file of Data Migration --
-[`task_advanced.yaml`](https://github.com/pingcap/dm/blob/master/dm/master/task_advanced.yaml), including [global configuration](#global-configuration) and [instance configuration](#instance-configuration).
+This document introduces the advanced task configuration file of Data Migration (DM), including [global configuration](#global-configuration) and [instance configuration](#instance-configuration).
 
 For the feature and configuration of each configuration item, see [Data replication features](feature-overview.md).
 
@@ -26,9 +25,15 @@ The following is the task configuration file template which allows you to perfor
 name: test                      # The name of the task. Should be globally unique.
 task-mode: all                  # The task mode. Can be set to `full`/`incremental`/`all`.
 is-sharding: true               # Whether it is a task to merge shards.
+shard-mode: "optimistic"        # The shard DDL replication mode. Can be set to ""/`pessimistic`/`optimistic`.
+ignore-checking-items: []       # The checking items that are ignored, including `all`/`dump_privilege`/`replication_privilege`/`version`/`binlog_enable`/`binlog_format`/`binlog_row_image`/`table_schema`/`schema_of_shard_tables`/`auto_increment_ID`.
 meta-schema: "dm_meta"          # The downstream database that stores the `meta` information.
 remove-meta: false              # Whether to remove the `meta` information (`checkpoint` and `onlineddl`) corresponding to the task name before starting the replication task.
-enable-heartbeat: false         # Whether to enable the heartbeat feature.
+enable-heartbeat: false         # If the heartbeat feature is enabled, DM regularly updates the MySQL heartbeat table in the upstream to estimate the replication delay.
+heartbeat-update-interval: 1    # The interval at which DM updates the MySQL heartbeat table in the upstream.
+heartbeat-report-interval: 10   # The interval at which DM estimates the lag (the delay time).
+timezone: "Asia/Shanghai"       # The timezone.
+case-sensitive: false           # Determines whether the schema/table is case-sensitive.
 online-ddl-scheme: "gh-ost"     # Only "gh-ost" and "pt" are currently supported.
 
 target-database:                # Configuration of the downstream database instance.
@@ -40,22 +45,22 @@ target-database:                # Configuration of the downstream database insta
 ## ******** Feature configuration set **********
 # The routing mapping rule set between the upstream and downstream tables.
 routes:
-  route-rule-1:                   # The name of the routing mapping rule
-    schema-pattern: "test_*"      # The pattern of the upstream schema name, wildcard characters (*?) are supported
-    table-pattern: "t_*"          # The pattern of the upstream table name, wildcard characters (*?) are supported
-    target-schema: "test"         # The name of the downstream schema
-    target-table: "t"             # The name of the downstream table
+  route-rule-1:                 # The name of the routing mapping rule.
+    schema-pattern: "test_*"    # The pattern of the upstream schema name, wildcard characters (*?) are supported.
+    table-pattern: "t_*"        # The pattern of the upstream table name, wildcard characters (*?) are supported.
+    target-schema: "test"       # The name of the downstream schema.
+    target-table: "t"           # The name of the downstream table.
   route-rule-2:
     schema-pattern: "test_*"
     target-schema: "test"
 
 # The binlog event filter rule set of the matched table of the upstream database instance.
 filters:
-  filter-rule-1:                                # The name of the filtering rule
-    schema-pattern: "test_*"                    # The pattern of the upstream schema name, wildcard characters (*?) are supported
-    table-pattern: "t_*"                        # The pattern of the upstream schema name, wildcard characters (*?) are supported
-    events: ["truncate table", "drop table"]    # What event types to match
-    action: Ignore                              # Whether to replicate (Do) or ignore (Ignore) the binlog that matches the filtering rule
+  filter-rule-1:                                # The name of the filtering rule.
+    schema-pattern: "test_*"                    # The pattern of the upstream schema name, wildcard characters (*?) are supported.
+    table-pattern: "t_*"                        # The pattern of the upstream schema name, wildcard characters (*?) are supported.
+    events: ["truncate table", "drop table"]    # What event types to match.
+    action: Ignore                              # Whether to replicate (Do) or ignore (Ignore) the binlog that matches the filtering rule.
   filter-rule-2:
     schema-pattern: "test_*"
     events: ["all dml"]
@@ -63,19 +68,19 @@ filters:
 
 # The filter rule set of the black white list of the matched table of the upstream database instance.
 black-white-list:
-  bw-rule-1:                         # The name of the black white list rule
-    do-dbs: ["~^test.*", "user"]     # The white list of upstream schemas needs to be replicated
-    ignore-dbs: ["mysql", "account"] # The black list of upstream schemas needs to be replicated
-    do-tables:                       # The white list of upstream tables needs to be replicated
+  bw-rule-1:                         # The name of the black white list rule.
+    do-dbs: ["~^test.*", "user"]     # The white list of upstream schemas needs to be replicated.
+    ignore-dbs: ["mysql", "account"] # The black list of upstream schemas needs to be replicated.
+    do-tables:                       # The white list of upstream tables needs to be replicated.
     - db-name: "~^test.*"
       tbl-name: "~^t.*"
     - db-name: "user"
       tbl-name: "information"
-    ignore-tables:                   # The black list of upstream tables needs to be replicated
+    ignore-tables:                   # The black list of upstream tables needs to be replicated.
     - db-name: "user"
       tbl-name: "log"
 
-# Configuration arguments of the Mydumper processing unit
+# Configuration arguments of the Mydumper processing unit.
 mydumpers:
   global:                            # The configuration name of the processing unit.
     # The Mydumper binary file path ("./bin/mydumper" by default).
@@ -83,16 +88,16 @@ mydumpers:
     threads: 4                       # The number of the threads Mydumper dumps from the upstream database (4 by default).
     chunk-filesize: 64               # The size of the file generated by Mydumper (64 in MB by default).
     skip-tz-utc: true                # Ignore timezone conversion for time type data (true by default).
-    extra-args: "--no-locks"         # Other arguments of Mydumper. In v1.0.2 and later versions, DM automatically generates the table-list configurable items.
+    extra-args: "--no-locks"         # Other arguments of Mydumper. You do not need to manually configure table-list in `extra-args`, because table-list is automatically generated by DM.
 
-# Configuration arguments of the Loader processing unit
+# Configuration arguments of the Loader processing unit.
 loaders:
   global:                            # The configuration name of the processing unit.
     pool-size: 16                    # The number of threads that execute Mydumper SQL files concurrently in Loader (16 by default).
     # The directory output by Mydumper that Loader reads ("./dumped_data" by default). Directories for different tasks of the same instance must be different (Mydumper outputs the SQL file based on the directory).
     dir: "./dumped_data"
 
-# Configuration arguments of the Syncer processing unit
+# Configuration arguments of the Syncer processing unit.
 syncers:
   global:                            # The configuration name of the processing unit.
     worker-count: 16                 # The number of threads that replicate binlog events concurrently in Syncer.
@@ -101,25 +106,25 @@ syncers:
 # ----------- Instance configuration -----------
 mysql-instances:
   -
-    source-id: "mysql-replica-01"                                      # The ID of the upstream instance or replication group. It can be configured by referring to the `source_id` in the `inventory.ini` file or the `source-id` in the `dm-master.toml` file.
-    meta:                                                              # The position where the binlog replication starts when `task-mode` is `incremental` and the downstream database checkpoint does not exist. If the checkpoint exists, the checkpoint is used.
+    source-id: "mysql-replica-01"                   # The `source-id` in source.toml.
+    meta:                                           # The position where the binlog replication starts when `task-mode` is `incremental` and the downstream database checkpoint does not exist. If the checkpoint exists, the checkpoint is used.
 
       binlog-name: binlog.000001
       binlog-pos: 4
 
-    route-rules: ["route-rule-1", "route-rule-2"]                      # The name of the mapping rule between the table matching the upstream database instance and the downstream database.
-    filter-rules: ["filter-rule-1"]                                    # The name of the binlog event filtering rule of the table matching the upstream database instance.
-    black-white-list:  "bw-rule-1"                                     # The name of the black and white lists filtering rule of the table matching the upstream database instance.
+    route-rules: ["route-rule-1", "route-rule-2"]   # The name of the mapping rule between the table matching the upstream database instance and the downstream database.
+    filter-rules: ["filter-rule-1"]                 # The name of the binlog event filtering rule of the table matching the upstream database instance.
+    black-white-list:  "bw-rule-1"                  # The name of the black and white lists filtering rule of the table matching the upstream database instance.
 
-    mydumper-config-name: "global"                                     # The configuration name of the Mydumper processing unit.
-    loader-config-name: "global"                                       # The configuration name of the Loader processing unit.
-    syncer-config-name: "global"                                       # The configuration name of the Syncer processing unit.
+    mydumper-config-name: "global"                  # The configuration name of the Mydumper processing unit.
+    loader-config-name: "global"                    # The configuration name of the Loader processing unit.
+    syncer-config-name: "global"                    # The configuration name of the Syncer processing unit.
 
   -
-    source-id: "mysql-replica-02"
-    mydumper-config-name: "global"
-    loader-config-name: "global"
-    syncer-config-name: "global"
+    source-id: "mysql-replica-02"                   # The `source-id` in source.toml.
+    mydumper-thread: 4                              # The number of threads that Mydumper uses for dumping data. `mydumper-thread` corresponds to `threads` in the configuration of mydumper processing unit.
+    loader-thread: 16                               # The number of threads that Loader uses for loading data. `loader-thread` corresponds to `pool-size` in the configuration of loader processing unit.
+    syncer-thread: 16                               # The number of threads that Syncer uses for replicating incremental data. `syncer-thread` corresponds to `worker-count` in the configuration of the syncer processing unit.
 ```
 
 ## Configuration order

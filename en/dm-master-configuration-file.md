@@ -34,11 +34,13 @@ join = ""
 
 ## Configuration parameters
 
+This section introduces the configuration parameters of DM-master.
+
 ### Global configuration
 
 | Parameter        | Description                                    |
 | :------------ | :--------------------------------------- |
-| `name` | Marks a DM-master name. |
+| `name` | The name of the DM-master. |
 | `log-level` | Specifies a log level from `debug`, `info`, `warn`, `error`, and `fatal`. The default log level is `info`. |
 | `log-file` | Specifies the log file directory. If the parameter is not specified, the logs are printed onto the standard output. |
 | `master-addr` | Specifies the address of DM-master which provides services. You can omit the IP address and specify the port number only, such as ":8261". |
