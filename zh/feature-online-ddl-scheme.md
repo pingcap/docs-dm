@@ -77,7 +77,7 @@ DM 在同步过程中会把上述 table 分成 3 类：
     ```
 
     DM：不执行 `_test4_gho` 的创建操作，根据 ghost_schema、ghost_table 以及 dm_worker 的 `server_id`，删除下游 `dm_meta.{task_name}\_onlineddl` 的记录，清理内存中的相关信息。
-    
+
     ```sql
     DELETE FROM dm_meta.{task_name}_onlineddl WHERE id = {server_id} and ghost_schema = {ghost_schema} and ghost_table = {ghost_table};
     ```
@@ -95,7 +95,7 @@ DM 在同步过程中会把上述 table 分成 3 类：
     ```
 
 4. 往 `_ghc` 表写入数据，以及往 `_gho` 表同步 origin table 的数据：
-   
+
     ```sql
     Insert /* gh-ost */ into `test`.`_test4_ghc` values (......);
 
@@ -104,16 +104,16 @@ DM 在同步过程中会把上述 table 分成 3 类：
         where (((`id` > _binary'1') or ((`id` = _binary'1'))) and ((`id` < _binary'2') or ((`id` = _binary'2')))) lock in share mode
       )   ;
     ```
-    
+
     DM：只要不是 **realtable** 的 DML 全部不执行。
 
 5. 数据同步完成后 origin table 与 `_gho` 一起改名，完成 online DDL 操作：
- 
+
     ```sql
     Rename /* gh-ost */ table `test`.`test4` to `test`.`_test4_del`, `test`.`_test4_gho` to `test`.`test4`;
     ```
 
-    DM 执行以下两个操作: 
+    DM 执行以下两个操作:
 
     - 把 rename 语句拆分成两个 SQL：
 
@@ -151,12 +151,12 @@ DM 在同步过程中会把上述 table 分成 3 类：
 pt-osc 主要涉及的 SQL 以及 DM 的处理：
 
 1. 创建 `_new` 表：
-   
+
     ```sql
-    CREATE TABLE `test`.`_test4_new` ( id int(11) NOT NULL AUTO_INCREMENT,
-    date date DEFAULT NULL, account_id bigint(20) DEFAULT NULL, conversion_price decimal(20,3) DEFAULT NULL,  ocpc_matched_conversions bigint(20) DEFAULT NULL, ad_cost decimal(20,3) DEFAULT NULL,cl2 varchar(20) COLLATE utf8mb4_bin NOT NULL,cl1 varchar(20) COLLATE utf8mb4_bin NOT NULL,PRIMARY KEY (id) ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ;   
+    CREATE TABLE `test`.`_test4_new` (id int(11) NOT NULL AUTO_INCREMENT,
+    date date DEFAULT NULL, account_id bigint(20) DEFAULT NULL, conversion_price decimal(20,3) DEFAULT NULL,  ocpc_matched_conversions bigint(20) DEFAULT NULL, ad_cost decimal(20,3) DEFAULT NULL,cl2 varchar(20) COLLATE utf8mb4_bin NOT NULL,cl1 varchar(20) COLLATE utf8mb4_bin NOT NULL,PRIMARY KEY (id) ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ;
     ```
-    
+
     DM: 不执行 `_test4_new` 的创建操作。根据 ghost_schema、ghost_table 以及 dm_worker 的 `server_id`，删除下游 `dm_meta.{task_name}\_onlineddl` 的记录，清理内存中的相关信息。
 
     ```sql
@@ -164,10 +164,10 @@ pt-osc 主要涉及的 SQL 以及 DM 的处理：
     ```
 
 2. 在 `_new` 表上执行 DDL：
-   
+
     ```sql
     ALTER TABLE `test`.`_test4_new` add column c3 int;
-    ``` 
+    ```
 
     DM: 不执行 `_test4_new` 的 DDL 操作，而是把该 DDL 记录到 `dm_meta.{task_name}\_onlineddl` 以及内存中。
 
@@ -175,8 +175,8 @@ pt-osc 主要涉及的 SQL 以及 DM 的处理：
     REPLACE INTO dm_meta.{task_name}_onlineddl (id, ghost_schema , ghost_table , ddls) VALUES (......);
     ```
 
-3. 创建用于同步数据的3个 Trigger：
-   
+3. 创建用于同步数据的 3 个 Trigger：
+
     ```sql
     CREATE TRIGGER `pt_osc_test_test4_del` AFTER DELETE ON `test`.`test4` ...... ;
     CREATE TRIGGER `pt_osc_test_test4_upd` AFTER UPDATE ON `test`.`test4` ...... ;
@@ -186,7 +186,7 @@ pt-osc 主要涉及的 SQL 以及 DM 的处理：
     DM: 不执行 TiDB 不支持的相关 Trigger 操作。
 
 4. 往 `_new` 表同步 origin table 的数据：
-   
+
     ```sql
     INSERT LOW_PRIORITY IGNORE INTO `test`.`_test4_new` (`id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2`, `cl1`) SELECT `id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2`, `cl1` FROM `test`.`test4` LOCK IN SHARE MODE /*pt-online-schema-change 3227 copy table*/
     ```
@@ -194,17 +194,17 @@ pt-osc 主要涉及的 SQL 以及 DM 的处理：
     DM: 只要不是 **realTable** 的 DML 全部不执行。
 
 5. 数据同步完成后 origin table 与 `_new` 一起改名，完成 online DDL 操作：
-   
+
     ```sql
-    RENAME TABLE `test`.`test4` TO `test`.`_test4_old`, `test`.`_test4_new` TO `test`.`test4`   
+    RENAME TABLE `test`.`test4` TO `test`.`_test4_old`, `test`.`_test4_new` TO `test`.`test4`
     ```
 
     DM 执行以下两个操作:
 
       - 把 rename 语句拆分成两个 SQL。
-  
+
          ```sql
-         rename test.test4 to test._test4_old; 
+         rename test.test4 to test._test4_old;
          rename test._test4_new to test.test4;
          ```
 
@@ -217,14 +217,14 @@ pt-osc 主要涉及的 SQL 以及 DM 的处理：
           ```
 
 6. 删除 `_old` 表以及 online DDL 的 3 个 Trigger：
-   
+
     ```sql
     DROP TABLE IF EXISTS `test`.`_test4_old`;
     DROP TRIGGER IF EXISTS `pt_osc_test_test4_del` AFTER DELETE ON `test`.`test4` ...... ;
     DROP TRIGGER IF EXISTS `pt_osc_test_test4_upd` AFTER UPDATE ON `test`.`test4` ...... ;
     DROP TRIGGER IF EXISTS `pt_osc_test_test4_ins` AFTER INSERT ON `test`.`test4` ...... ;
     ```
-   
+
     DM: 不执行 `_test4_old` 以及 Trigger 的删除操作。
 
 > **注意：**
