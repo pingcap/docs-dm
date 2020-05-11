@@ -12,7 +12,7 @@ This document introduces how to quickly deploy the Data Migration (DM) cluster u
 
 Download the official binary from [here](https://pingcap.com/docs/dev/reference/tools/download/#tidb-dm-data-migration).
 
-The downloaded files have two subdirectories, `bin` and `conf`. The `bin` directory contains the binary files of DM-master, DM-worker, dmctl and Mydumper. The `conf` directory contains the sample configuration files.
+The downloaded files have two subdirectories, `bin` and `conf`. The `bin` directory contains the binary files of DM-master, DM-worker, and dmctl. The `conf` directory contains the sample configuration files.
 
 ## Sample scenario
 
