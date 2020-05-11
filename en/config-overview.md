@@ -37,5 +37,11 @@ This section shows description of some important concepts.
 
 | Concept  | Description  | Configuration File  |
 | :------ | :--------- | :------------- |
+<<<<<<< HEAD
 | `source-id`  | Uniquely identifies a MySQL or MariaDB instance, or a replication group with the master-slave structure. The maximum length of `source-id` is 32. | `source_id` of `inventory.ini`;<br> `source-id` of `dm-master.toml`;<br> `source-id` of `task.yaml` |
 | DM-worker ID | Uniquely identifies a DM-worker (by the `worker-addr` parameter of `dm-worker.toml`) | `worker-addr` of `dm-worker.toml`;<br> the `-worker`/`-w` flag of the dmctl command line |
+=======
+| `source-id`  | Uniquely represents a MySQL or MariaDB instance, or a replication group with the master-slave structure. The maximum length of `source-id` is 32. | `source_id` of `source.toml`;<br/> `source-id` of `task.yaml` |
+| DM-master ID | Uniquely represents a DM-master (by the `master-addr` parameter of `dm-master.toml`) | `master-addr` of `dm-master.toml` |
+| DM-worker ID | Uniquely represents a DM-worker (by the `worker-addr` parameter of `dm-worker.toml`) | `worker-addr` of `dm-worker.toml` |
+>>>>>>> 9fb2dfc... fix: add closing tag for 'br' (#68)

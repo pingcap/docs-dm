@@ -90,10 +90,10 @@ GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER,INDEX  ON db.table TO 'your_
 
 | 处理单元 | 最小上游 (MySQL/MariaDB) 权限 | 最小下游 (TiDB) 权限 | 最小系统权限 |
 |:----|:--------------------|:------------|:----|
-| Relay log | `REPLICATION SLAVE` (读取 binlog）<br>`REPLICATION CLIENT` (`show master status`, `show slave status`) | 无 | 本地读/写磁盘 |
-| Dumper | `SELECT`<br>`RELOAD`（获取读锁将表数据刷到磁盘，进行一些操作后，再释放读锁对表进行解锁）| 无 | 本地写磁盘 |
-| Loader | 无 | `SELECT`（查询 checkpoint 历史）<br>`CREATE`（创建数据库或表）<br>`DELETE`（删除 checkpoint）<br>`INSERT`（插入 dump 数据）| 读/写本地文件 |
-| Binlog replication | `REPLICATION SLAVE`（读 binlog）<br>`REPLICATION CLIENT` (`show master status`, `show slave status`) | `SELECT`（显示索引和列）<br>`INSERT` (DML)<br>`UPDATE` (DML)<br>`DELETE` (DML)<br>`CREATE`（创建数据库或表）<br>`DROP`（删除数据库或表）<br>`ALTER`（修改表）<br>`INDEX`（创建或删除索引）| 本地读/写磁盘 |
+| Relay log | `REPLICATION SLAVE` (读取 binlog）<br/>`REPLICATION CLIENT` (`show master status`, `show slave status`) | 无 | 本地读/写磁盘 |
+| Dumper | `SELECT`<br/>`RELOAD`（获取读锁将表数据刷到磁盘，进行一些操作后，再释放读锁对表进行解锁）| 无 | 本地写磁盘 |
+| Loader | 无 | `SELECT`（查询 checkpoint 历史）<br/>`CREATE`（创建数据库或表）<br/>`DELETE`（删除 checkpoint）<br/>`INSERT`（插入 dump 数据）| 读/写本地文件 |
+| Binlog replication | `REPLICATION SLAVE`（读 binlog）<br/>`REPLICATION CLIENT` (`show master status`, `show slave status`) | `SELECT`（显示索引和列）<br/>`INSERT` (DML)<br/>`UPDATE` (DML)<br/>`DELETE` (DML)<br/>`CREATE`（创建数据库或表）<br/>`DROP`（删除数据库或表）<br/>`ALTER`（修改表）<br/>`INDEX`（创建或删除索引）| 本地读/写磁盘 |
 
 > **注意：**
 >
