@@ -238,9 +238,9 @@ black-white-list:
 | `logs`.`messages_2018` | 是 | schema `logs` 没有匹配到 `do-dbs` 任意一项 |
 | `forum_backup_2016`.`messages` | 是 | schema `forum_backup_2016` 没有匹配到 `do-dbs` 任意一项 |
 | `forum_backup_2017`.`messages` | 是 | schema `forum_backup_2017` 没有匹配到 `do-dbs` 任意一项 |
-| `forum`.`users` | 是 | 1. schema `forum` 匹配到 `do-dbs` 进入 table 过滤<br> 2. schema 和 table 没有匹配到 `do-tables` 和 `ignore-tables` 中任意一项，并且 `do-tables` 不为空，因此过滤 |
-| `forum`.`messages` | 否 | 1. schema `forum` 匹配到 `do-dbs` 进入 table 过滤<br> 2. schema 和 table 匹配到 `do-tables` 的 `db-name: "~^forum.*",tbl-name: "messages"` |
-| `forum_backup_2018`.`messages` | 否 | 1. schema `forum_backup_2018` 匹配到 `do-dbs` 进入 table 过滤<br> 2. schema 和 table 匹配到 `do-tables` 的  `db-name: "~^forum.*",tbl-name: "messages"` |
+| `forum`.`users` | 是 | 1. schema `forum` 匹配到 `do-dbs` 进入 table 过滤<br/> 2. schema 和 table 没有匹配到 `do-tables` 和 `ignore-tables` 中任意一项，并且 `do-tables` 不为空，因此过滤 |
+| `forum`.`messages` | 否 | 1. schema `forum` 匹配到 `do-dbs` 进入 table 过滤<br/> 2. schema 和 table 匹配到 `do-tables` 的 `db-name: "~^forum.*",tbl-name: "messages"` |
+| `forum_backup_2018`.`messages` | 否 | 1. schema `forum_backup_2018` 匹配到 `do-dbs` 进入 table 过滤<br/> 2. schema 和 table 匹配到 `do-tables` 的  `db-name: "~^forum.*",tbl-name: "messages"` |
 
 ## Binlog event filter
 
