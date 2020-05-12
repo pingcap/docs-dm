@@ -120,7 +120,7 @@ routes:
 ```yaml
 black-white-list:
   rule-1:
-    do-dbs: ["test*"]         # 非 ~ 字符开头，表示规则是通配符；v1.0.4 及后续版本支持通配符规则。
+    do-dbs: ["test*"]         # 非 ~ 字符开头，表示规则是通配符；v1.0.5 及后续版本支持通配符规则。
 ​    do-tables:
     - db-name: "test[123]"    # 匹配 test1、test2、test3。
       tbl-name: "t[1-5]"      # 匹配 t1、t2、t3、t4、t5。
