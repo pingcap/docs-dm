@@ -51,7 +51,7 @@ When gh-ost implements online-schema-change, 3 types of tables are created:
 
 In the process of replication, DM divides the above tables into 3 categories:
 
-- ghostTable: \_\*\_gho
+- ghostTable: `\_\*\_gho`
 - trashTable: `\_\*\_ghc`, `\_\*\_del`
 - realTable: the origin table that executes online-ddl.
 
