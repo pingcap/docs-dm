@@ -15,6 +15,7 @@
   - [Black and White Lists](feature-overview.md#black-and-white-table-lists)
   - [Binlog Event Filter](feature-overview.md#binlog-event-filter)
   - [Replication Delay Monitoring](feature-overview.md#replication-delay-monitoring)
+  - [Online-ddl-scheme](online-ddl-scheme.md)
   + Sharding Support
     - [Introduction](feature-shard-merge.md)
     - [Restrictions](feature-shard-merge.md#restrictions)

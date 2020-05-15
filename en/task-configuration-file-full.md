@@ -34,6 +34,8 @@ heartbeat-update-interval: 1    # The interval at which DM updates the MySQL hea
 heartbeat-report-interval: 10   # The interval at which DM estimates the lag (the delay time).
 timezone: "Asia/Shanghai"       # The timezone.
 case-sensitive: false           # Determines whether the schema/table is case-sensitive.
+online-ddl-scheme: "gh-ost"     # Only "gh-ost" and "pt" are currently supported.
+
 target-database:                # Configuration of the downstream database instance.
   host: "192.168.0.1"
   port: 4000
