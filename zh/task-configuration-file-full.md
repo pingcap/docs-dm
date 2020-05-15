@@ -80,7 +80,6 @@ black-white-list:                    # 上游数据库实例匹配的表的 blac
 
 mydumpers:                           # mydumper 处理单元运行配置参数
   global:                            # 配置名称
-    mydumper-path: "./bin/mydumper"  # mydumper binary 文件地址，默认值为 "./bin/mydumper"
     threads: 4                       # mydumper 从上游数据库实例导出数据的线程数量，默认值为 4
     chunk-filesize: 64               # mydumper 生成的数据文件大小，默认值为 64，单位为 MB
     skip-tz-utc: true                # 忽略对时间类型数据进行时区转化，默认值为 true

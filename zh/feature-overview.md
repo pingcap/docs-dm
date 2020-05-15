@@ -10,8 +10,8 @@ category: reference
 
 Table Routing、Black & White Lists、Binlog Event Filter 在匹配库表名时，有以下版本差异：
 
-+ 对于 v1.0.4 版及后续版本，以上功能均支持[通配符匹配](https://en.wikipedia.org/wiki/Glob_(programming)#Syntax)。但注意所有版本中通配符匹配中的 `*` 符号 **只能有一个且必须在末尾**。
-+ 对于 v1.0.4 以前的版本，Table Routing 和 Binlog Event Filter 支持通配符，但不支持 `[...]` 与 `[!...]` 表达式。Black & White Lists 仅支持正则表达式。
++ 对于 v1.0.5 版及后续版本，以上功能均支持[通配符匹配](https://en.wikipedia.org/wiki/Glob_(programming)#Syntax)。但注意所有版本中通配符匹配中的 `*` 符号 **只能有一个且必须在末尾**。
++ 对于 v1.0.5 以前的版本，Table Routing 和 Binlog Event Filter 支持通配符，但不支持 `[...]` 与 `[!...]` 表达式。Black & White Lists 仅支持正则表达式。
 
 在简单任务场景下推荐使用通配符匹配。
 
@@ -120,7 +120,7 @@ routes:
 ```yaml
 black-white-list:
   rule-1:
-    do-dbs: ["test*"]         # 非 ~ 字符开头，表示规则是通配符；v1.0.4 及后续版本支持通配符规则。
+    do-dbs: ["test*"]         # 非 ~ 字符开头，表示规则是通配符；v1.0.5 及后续版本支持通配符规则。
 ​    do-tables:
     - db-name: "test[123]"    # 匹配 test1、test2、test3。
       tbl-name: "t[1-5]"      # 匹配 t1、t2、t3、t4、t5。
@@ -237,9 +237,9 @@ black-white-list:
 | `logs`.`messages_2018` | 是 | schema `logs` 没有匹配到 `do-dbs` 任意一项 |
 | `forum_backup_2016`.`messages` | 是 | schema `forum_backup_2016` 没有匹配到 `do-dbs` 任意一项 |
 | `forum_backup_2017`.`messages` | 是 | schema `forum_backup_2017` 没有匹配到 `do-dbs` 任意一项 |
-| `forum`.`users` | 是 | 1. schema `forum` 匹配到 `do-dbs` 进入 table 过滤<br> 2. schema 和 table 没有匹配到 `do-tables` 和 `ignore-tables` 中任意一项，并且 `do-tables` 不为空，因此过滤 |
-| `forum`.`messages` | 否 | 1. schema `forum` 匹配到 `do-dbs` 进入 table 过滤<br> 2. schema 和 table 匹配到 `do-tables` 的 `db-name: "~^forum.*",tbl-name: "messages"` |
-| `forum_backup_2018`.`messages` | 否 | 1. schema `forum_backup_2018` 匹配到 `do-dbs` 进入 table 过滤<br> 2. schema 和 table 匹配到 `do-tables` 的  `db-name: "~^forum.*",tbl-name: "messages"` |
+| `forum`.`users` | 是 | 1. schema `forum` 匹配到 `do-dbs` 进入 table 过滤<br/> 2. schema 和 table 没有匹配到 `do-tables` 和 `ignore-tables` 中任意一项，并且 `do-tables` 不为空，因此过滤 |
+| `forum`.`messages` | 否 | 1. schema `forum` 匹配到 `do-dbs` 进入 table 过滤<br/> 2. schema 和 table 匹配到 `do-tables` 的 `db-name: "~^forum.*",tbl-name: "messages"` |
+| `forum_backup_2018`.`messages` | 否 | 1. schema `forum_backup_2018` 匹配到 `do-dbs` 进入 table 过滤<br/> 2. schema 和 table 匹配到 `do-tables` 的  `db-name: "~^forum.*",tbl-name: "messages"` |
 
 ## Binlog event filter
 
