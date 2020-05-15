@@ -13,7 +13,7 @@ DDL 是数据库应用中必然会使用的一类 SQL。MySQL 虽然在 5.6 的�
 
 TiDB 根据 Google F1 的在线异步 schema 变更算法实现，在 DDL 过程中并不会阻塞读写。因此，在 online-schema-change 过程中，gh-ost 和 pt-osc 所产生的大量中间表数据以及 binlog event，在 MySQL 与 TiDB 的数据同步过程中并不需要。
 
-DM 是将 MySQL 同步到 TiDB 的工具，online-ddl-scheme 功能就是对上述两个 online-schema-change 的工具进行特殊的处理，以便更快完成所需的 DDL 同步。
+DM 是 MySQL 到 TiDB 的数据同步工具，online-ddl-scheme 功能就是对上述两个 online-schema-change 的工具进行特殊的处理，以便更快完成所需的 DDL 同步。
 
 如果想从源码方面了解 DM online-ddl-scheme，可以参考 [DM 源码阅读系列文章（八）Online Schema Change 同步支持](https://pingcap.com/blog-cn/dm-source-code-reading-8/#dm-源码阅读系列文章八online-schema-change-同步支持)
 
