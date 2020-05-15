@@ -46,8 +46,6 @@ Currently, DM Portal's visualized pages cover most DM configuration scenarios, b
 
 - The upstream instance configuration on the page can only be used to obtain the upstream table schema. The related upstream instance information still needs to be configured in DM-worker.
 
-- In the generated `task.yaml` file, mydumper-path is `./bin/mydumper` by default. If you use another path, modify the generated `task.yaml` file manually.
-
 ## Deploy
 
 This section describes how to deploy DM Portal in two ways: using binary or DM Ansible.

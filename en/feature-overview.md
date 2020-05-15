@@ -10,8 +10,8 @@ This document describes the data replication features provided by the Data Migra
 
 For different DM versions, pay attention to the different match rules of schema or table names in the table routing, black & white lists, and binlog event filter features:
 
-+ For DM v1.0.4 or later versions, all the above features support the [wildcard match](https://en.wikipedia.org/wiki/Glob_(programming)#Syntax). For all versions of DM, note that there can be **only one** `*` in the wildcard expression, and `*` **must be placed at the end**.
-+ For DM versions earlier than v1.0.4, table routing and binlog event filter support the wildcard but do not support the `[...]` and `[!...]` expressions. The black & white lists only supports the regular expression.
++ For DM v1.0.5 or later versions, all the above features support the [wildcard match](https://en.wikipedia.org/wiki/Glob_(programming)#Syntax). For all versions of DM, note that there can be **only one** `*` in the wildcard expression, and `*` **must be placed at the end**.
++ For DM versions earlier than v1.0.5, table routing and binlog event filter support the wildcard but do not support the `[...]` and `[!...]` expressions. The black & white lists only supports the regular expression.
 
 It is recommended that you use the wildcard for matching in simple scenarios.
 
@@ -110,7 +110,7 @@ The black and white lists filtering rule of the upstream database instance table
 black-white-list:
   rule-1:
     do-dbs: ["test*"]         # Starting with characters other than "~" indicates that it is a wildcard;
-                              # v1.0.4 or later versions support the regular expression rules.
+                              # v1.0.5 or later versions support the regular expression rules.
 ​    do-tables:
     - db-name: "test[123]"    # Matches test1, test2, and test3.
       tbl-name: "t[1-5]"      # Matches t1, t2, t3, t4, and t5.
@@ -225,9 +225,9 @@ After using the `bw-rule` rule:
 | `logs`.`messages_2018` | Yes | The schema `logs` fails to match any `do-dbs`. |
 | `forum_backup_2016`.`messages` | Yes | The schema `forum_backup_2016` fails to match any `do-dbs`. |
 | `forum_backup_2017`.`messages` | Yes | The schema `forum_backup_2017` fails to match any `do-dbs`. |
-| `forum`.`users` | Yes | 1. The schema `forum` matches `do-dbs` and continues to filter at the table level.<br> 2. The schema and table fail to match any of `do-tables` and `ignore-tables` and `do-tables` is not empty. |
-| `forum`.`messages` | No | 1. The schema `forum` matches `do-dbs` and continues to filter at the table level.<br> 2. The table `messages` is in the `db-name: "~^forum.*",tbl-name: "messages"` of `do-tables`. |
-| `forum_backup_2018`.`messages` | No | 1. The schema `forum_backup_2018` matches `do-dbs` and continues to filter at the table level.<br> 2. The schema and table match the `db-name: "~^forum.*",tbl-name: "messages"` of `do-tables`. |
+| `forum`.`users` | Yes | 1. The schema `forum` matches `do-dbs` and continues to filter at the table level.<br/> 2. The schema and table fail to match any of `do-tables` and `ignore-tables` and `do-tables` is not empty. |
+| `forum`.`messages` | No | 1. The schema `forum` matches `do-dbs` and continues to filter at the table level.<br/> 2. The table `messages` is in the `db-name: "~^forum.*",tbl-name: "messages"` of `do-tables`. |
+| `forum_backup_2018`.`messages` | No | 1. The schema `forum_backup_2018` matches `do-dbs` and continues to filter at the table level.<br/> 2. The schema and table match the `db-name: "~^forum.*",tbl-name: "messages"` of `do-tables`. |
 
 ## Binlog event filter
 
