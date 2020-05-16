@@ -29,16 +29,8 @@ task-mode: all                  # The task mode. Can be set to `full`/`increment
 is-sharding: true               # Whether it is a task to merge shards.
 meta-schema: "dm_meta"          # The downstream database that stores the `meta` information.
 remove-meta: false              # Whether to remove the `meta` information (`checkpoint` and `onlineddl`) corresponding to the task name before starting the replication task.
-<<<<<<< HEAD
 enable-heartbeat: false         # Whether to enable the heartbeat feature.
-=======
-enable-heartbeat: false         # If the heartbeat feature is enabled, DM regularly updates the MySQL heartbeat table in the upstream to estimate the replication delay.
-heartbeat-update-interval: 1    # The interval at which DM updates the MySQL heartbeat table in the upstream.
-heartbeat-report-interval: 10   # The interval at which DM estimates the lag (the delay time).
-timezone: "Asia/Shanghai"       # The timezone.
-case-sensitive: false           # Determines whether the schema/table is case-sensitive.
 online-ddl-scheme: "gh-ost"     # Only "gh-ost" and "pt" are currently supported.
->>>>>>> 02fc17a... en: add doc for online-ddl-scheme (#58)
 
 target-database:                # Configuration of the downstream database instance.
   host: "192.168.0.1"
