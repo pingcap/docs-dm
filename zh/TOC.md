@@ -3,7 +3,7 @@
 <!-- markdownlint-disable MD007 -->
 <!-- markdownlint-disable MD032 -->
 
-## 文档目录 @张学程 @王相
+## 文档目录
 
 + TiDB Data Migration 简介
   + 基本信息
