@@ -3,7 +3,9 @@ title: 创建数据同步任务及测试验证
 category: reference
 ---
 
-# 创建数据同步任务及测试验证
+# 测试验证
+
+在 DM 集群部署成功后，创建简单的数据同步任务，验证集群是否可以正常工作。
 
 ## 配置 MySQL 数据源
 
@@ -150,3 +152,5 @@ Go Version: go version go1.12 linux/amd64
 这样就成功创建了一个将 MySQL1 和 MySQL2 实例中的分表数据同步到 TiDB 的任务。
 
 ## 测试验证
+
+修改上游 MySQL 分表中的数据，然后使用 [sync-diff-inspector](https://pingcap.com/docs-cn/stable/sync-diff-inspector/shard-diff/) 校验上下游数据是否一致，如果一致则说明同步任务运行正常。
