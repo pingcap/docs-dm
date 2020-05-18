@@ -51,9 +51,9 @@
   - [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
 + 性能调优指南
   + 软件调优
-    - 配置调优
+    - 配置调优 另可参考 [DM Portal](dm-portal.md)
 + 参考指南
-  - [架构](overview.md#dm-架构)
+  - [架构](overview.md#dm-架构) 另外可参考 [DM-worker 简介](dm-worker-intro.md)，[DM Relay Log](relay-log.md)
   - 命令行参数描述
   - 配置文件描述 参考 [概述](config-overview.md)，[DM-master 配置](dm-master-configuration-file.md)，[DM-worker 配置](dm-worker-configuration-file.md)，[上游数据库配置](source-configuration-file.md)，[任务配置](task-configuration-file.md)
   - [监控指标](monitor-a-dm-cluster.md)
@@ -68,8 +68,3 @@
     - [1.0.5](releases/1.0.5.md)
 + [术语表](glossary.md)
 + 文档指南
-
-其他未出现在新版 TOC 中，但出现在原版 TOC 中的文档
-- [DM-worker 简介](dm-worker-intro.md)
-- [DM Relay Log](relay-log.md)
-- [DM Portal](dm-portal.md)
