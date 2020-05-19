@@ -180,7 +180,90 @@ nohup dm-worker --config=dm-worker3.toml --log-file=dm-worker3.log >> dm-worker3
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl --master-addr=127.0.0.1:8261 show-ddl-locks
+./bin/dmctl --master-addr=127.0.0.1:8261 list-member
 ```
 
-返回结果中包含 `result: "true"` 说明 DM 集群启动正常
+检查返回结果中是否有 leader 项，同时检查 master 与 worker 项是否包含了所有的 master 与 worker 拓扑。
+
+一个正常 DM 集群的范例返回结果如下所示：
+
+```bash
+{
+    "result": true,
+    "msg": "",
+    "members": [
+        {
+            "leader": {
+                "msg": "",
+                "name": "master1",
+                "addr": "127.0.0.1:8261"
+            }
+        },
+        {
+            "master": {
+                "msg": "",
+                "masters": [
+                    {
+                        "name": "master1",
+                        "memberID": "11007177379717700053",
+                        "alive": true,
+                        "peerURLs": [
+                            "http://127.0.0.1:8291"
+                        ],
+                        "clientURLs": [
+                            "http://0.0.0.0:8261"
+                        ]
+                    },
+                    {
+                        "name": "master2",
+                        "memberID": "12007177379717800042",
+                        "alive": true,
+                        "peerURLs": [
+                            "http://127.0.0.1:8292"
+                        ],
+                        "clientURLs": [
+                            "http://0.0.0.0:8361"
+                        ]
+                    },
+                    {
+                        "name": "master3",
+                        "memberID": "13007157379717700087",
+                        "alive": true,
+                        "peerURLs": [
+                            "http://127.0.0.1:8293"
+                        ],
+                        "clientURLs": [
+                            "http://0.0.0.0:8461"
+                        ]
+                    },
+                ]
+            }
+        },
+        {
+            "worker": {
+                "msg": "",
+                "workers": [
+                    {
+                        "name": "worker1",
+                        "addr": "127.0.0.1:8262",
+                        "stage": "free",
+                        "source": ""
+                    },
+                    {
+                        "name": "worker2",
+                        "addr": "127.0.0.1:8263",
+                        "stage": "free",
+                        "source": ""
+                    },
+                    {
+                        "name": "worker3",
+                        "addr": "127.0.0.1:8264",
+                        "stage": "free",
+                        "source": ""
+                    }
+                ]
+            }
+        }
+    ]
+}
+```
