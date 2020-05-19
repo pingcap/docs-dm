@@ -23,7 +23,11 @@ category: reference
 
 ## 配置 MySQL 数据源
 
-运行数据同步任务前，需要对 source 进行配置，也就是 MySQL 的相关设置。且为了安全，建议配置及使用加密后的密码。首先使用 dmctl 对 MySQL 的密码进行加密，以密码为 "123456" 为例：
+运行数据同步任务前，需要对 source 进行配置，也就是 MySQL 的相关设置。
+
+### 对密码进行加密
+
+为了安全，建议配置及使用加密后的密码。使用 dmctl 对 MySQL 的密码进行加密，以密码为 "123456" 为例：
 
 {{< copyable "shell-regular" >}}
 
@@ -35,7 +39,11 @@ category: reference
 fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
 ```
 
-记录该加密后的密码，用于下面 MySQL1 的配置。把以下配置文件内容写入到 `conf/source1.toml` 中。
+记录该加密后的密码，用于下面 MySQL 的配置。
+
+### 编写 source 配置文件
+
+把以下配置文件内容写入到 `conf/source1.toml` 中。
 
 MySQL1 的配置文件：
 
@@ -54,7 +62,11 @@ password = "fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg="
 port = 3306
 ```
 
-在终端中执行下面的命令，使用 dmctl 将数据源配置加载到 DM 集群中：
+对于 MySQL2，修改配置文件中的 `name` 为 `mysql-replica-02`，`host` 为 `192.168.0.2`，并将 `password` 和 `port` 改为相应的值即可。
+
+### 创建 source
+
+在终端中执行下面的命令，使用 dmctl 将 MySQL1 的数据源配置加载到 DM 集群中：
 
 {{< copyable "shell-regular" >}}
 
@@ -62,7 +74,7 @@ port = 3306
 ./bin/dmctl --master-addr=192.168.0.4:8261 operate-source create conf/source1.toml
 ```
 
-对于 MySQL2，修改配置文件中的 `name` 为 `mysql-replica-02`，`host` 为 `192.168.0.2`，并将 `password` 和 `port` 改为相应的值即可。
+对于 MySQL2，将上面命令中的配置文件替换成 MySQL2 对应的配置文件即可。
 
 ## 创建数据同步任务
 
