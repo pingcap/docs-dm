@@ -27,7 +27,7 @@ category: how-to
 
 下面以此为例，说明如何部署 DM。
 
-### DM-master 的部署
+### 部署 DM-master
 
 DM-master 提供[命令行参数](#使用命令行参数部署-dm-master)和[配置文件](#使用配置文件部署-dm-master)两种配置方式。
 
@@ -107,7 +107,7 @@ initial-cluster = "master1=http://192.168.0.4:8291,master2=http://192.168.0.5:82
 
 对于 DM-master2 和 DM-master3，修改配置文件中的 `name` 为 `master2` 和 `master3`，并将 `peer-urls` 的值改为 `192.168.0.5:8291` 和 `192.168.0.6:8291` 即可。
 
-### DM-worker 的部署
+### 部署 DM-worker
 
 DM-worker 提供[命令行参数](#使用命令行参数部署-dm-worker)和[配置文件](#使用配置文件部署-dm-worker)两种配置方式。
 
