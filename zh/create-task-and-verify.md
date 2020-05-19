@@ -8,6 +8,19 @@ category: reference
 
 在 DM 集群部署成功后，创建简单的数据同步任务，验证集群是否可以正常工作。
 
+## 使用样例
+
+假设上游 MySQL 实例部署在两台服务器上，且 MySQL1 和 MySQL2 中均开启了 binlog；在若干台服务器上部署了 TiDB 集群，在其中一台服务器上暴露 TiDB 服务；DM 集群的一个 DM-master 对外提供服务。各个节点的信息如下：
+
+| 实例        | 服务器地址   | 端口   |
+| :---------- | :----------- | :--- |
+| MySQL1     | 192.168.0.1 | 3306 |
+| MySQL2     | 192.168.0.2 | 3306 |
+| TiDB       | 192.168.0.3 | 4000 |
+| DM-master  | 192.168.0.4 | 8261 |
+
+下面以此为例，说明如何创建数据同步任务。
+
 ## 配置 MySQL 数据源
 
 运行数据同步任务前，需要对 source 进行配置，也就是 MySQL 的相关设置。且为了安全，建议用户配置及使用加密后的密码。首先使用 dmctl 对 MySQL 的密码进行加密，以密码为 "123456" 为例：
@@ -110,24 +123,10 @@ routes:
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl -master-addr 192.168.0.4:8261
+./bin/dmctl -master-addr 192.168.0.4:8261 start-task conf/task.yaml
 ```
 
-```
-Welcome to dmctl
-Release Version: v1.0.0-69-g5134ad1
-Git Commit Hash: 5134ad19fbf6c57da0c7af548f5ca2a890bddbe4
-Git Branch: master
-UTC Build Time: 2019-04-29 09:36:42
-Go Version: go version go1.12 linux/amd64
-»
-```
-
-{{< copyable "" >}}
-
-```bash
-» start-task conf/task.yaml
-```
+结果如下：
 
 ```
 {
