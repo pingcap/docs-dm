@@ -66,7 +66,7 @@ Binlog replication 模块会根据配置选择从上游 MySQL/MariaDB 或 relay 
 
 Binlog replication 模块从 binlog event 数据中尝试构造 DML、解析 DDL 以及进行 [table router](feature-overview.md#table-routing) 转换等，主要的性能指标是 `transform binlog event duration`。
 
-这部分的耗时受上游写入的业务特点影响较大，如对于 `INSERT INTO` 语句，转换单个 `VALUES` 的时间和转换大量 `VALUES` 的时间差距很多，但总时间通过仍在微秒级别，且一般不会成为系统的瓶颈。
+这部分的耗时受上游写入的业务特点影响较大，如对于 `INSERT INTO` 语句，转换单个 `VALUES` 的时间和转换大量 `VALUES` 的时间差距很多，但总时间通常仍在微秒级别，且一般不会成为系统的瓶颈。
 
 ### 写入 SQL 到下游
 
