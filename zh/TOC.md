@@ -5,7 +5,7 @@
 
 ## 文档目录
 
-+ TiDB Data Migration 简介
++ 关于 TiDB Data Migration
   + 基本信息
     - 开源
     - 性能数据
