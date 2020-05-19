@@ -7,7 +7,7 @@
 
 + 关于 TiDB Data Migration
   + 基本信息
-    - 开源
+    - [开源信息说明](licensing.md)
     - 性能数据
   - [主要特性](feature-overview.md) 参考 [Online-ddl-scheme](feature-online-ddl-scheme.md)，和 Shard Support 相关文档（[简介](feature-shard-merge.md)，[使用限制](feature-shard-merge.md#使用限制)，[手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md)）
   - What's New
