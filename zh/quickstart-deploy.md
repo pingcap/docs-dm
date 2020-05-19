@@ -70,7 +70,6 @@ docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=tru
 
 向 mysql-3307 写入[示例数据](https://github.com/pingcap/dm/blob/52205177910024c8b66c7a6ef05b1f9501c5901b/tests/ha/data/db2.prepare.sql)
 
-
 ### 运行下游 TiDB
 
 使用下面的命令运行一个 mocktikv 模式的 TiDB：
