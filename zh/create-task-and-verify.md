@@ -23,7 +23,7 @@ category: reference
 
 ## 配置 MySQL 数据源
 
-运行数据同步任务前，需要对 source 进行配置，也就是 MySQL 的相关设置。且为了安全，建议用户配置及使用加密后的密码。首先使用 dmctl 对 MySQL 的密码进行加密，以密码为 "123456" 为例：
+运行数据同步任务前，需要对 source 进行配置，也就是 MySQL 的相关设置。且为了安全，建议配置及使用加密后的密码。首先使用 dmctl 对 MySQL 的密码进行加密，以密码为 "123456" 为例：
 
 {{< copyable "shell-regular" >}}
 
