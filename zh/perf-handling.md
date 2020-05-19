@@ -31,6 +31,7 @@ category: reference
 对于跨机房的数据迁移，可尝试将 DM-worker 与 MySQL/MariaDB 部署在同一机房（TiDB 集群等位于目标机房）。
 
 > **Note:**
+>
 > 如果该值较大，另一种常见的情况是上游 MySQL/MariaDB 负载较低，一段时间内暂时没有需要发送给 DM 的 binlog event 而使 Relay log 模块处于等待状态并使该值包含了额外的等待时间。
 
 ### binlog 数据解码与验证
