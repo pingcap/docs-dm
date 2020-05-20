@@ -28,7 +28,7 @@ category: reference
 
 对于同机房的数据迁移，这部分一般不会成为性能瓶颈；如果该值过大，请排查 DM-worker 与 MySQL/MariaDB 间的网络连通情况。
 
-对于跨机房的数据迁移，可尝试将 DM-worker 与 MySQL/MariaDB 部署在同一机房（TiDB 集群等位于目标机房）。
+对于跨机房的数据迁移，可尝试将 DM-worker 与 MySQL/MariaDB 部署在同一机房，而仍将 TiDB 集群部署在目标机房。
 
 > **Note:**
 >
@@ -50,7 +50,7 @@ Load 模块主要操作为从本地读取 SQL 文件数据并写入到下游，�
 
 ## Binlog replication 模块的性能问题及处理方法
 
-在 [Binlog replication 的监控部分](monitor-a-dm-cluster.md#binlog-replication)，我们主要通过 `binlog file gap between master and syncer` 监控项确认是否存在性能问题，如果该指标长时间大于 1 则通常表明存在性能问题；如果该指标基本为 0，则一般表明没有性能问题。
+在 [Binlog replication 的监控部分](monitor-a-dm-cluster.md#binlog-replication)，可以主要通过 `binlog file gap between master and syncer` 监控项确认是否存在性能问题，如果该指标长时间大于 1 则通常表明存在性能问题；如果该指标基本为 0，则一般表明没有性能问题。
 
 如果 `binlog file gap between master and syncer` 长时间大于 1，则可以再通过 `binlog file gap between relay and syncer` 判断延迟主要存在于哪个模块，如果该值也长时间大于 1，则延迟可能存在于 relay log 模块，请先参考 [relay log 模块的性能问题及处理方法](#relay-log-模块的性能问题及处理方法) 进行处理；否则继续对 Binlog replication 进行排查。
 
@@ -72,7 +72,7 @@ Binlog replication 模块从 binlog event 数据中尝试构造 DML、解析 DDL
 
 Binlog replication 模块将转换后的 SQL 写入到下游时，涉及到的性能指标主要包括 `DML queue remain length` 与 `transaction execution latency`。
 
-DM 在从 binlog event 构造出 SQL 后，会使用 `worker-count` 个队列尝试并发写入到下游。但为了避免监控条目过多，会将并发队列编号按 `8` 取模后，即所有并发队列在监控上会对应到 `q_0` 到 `q_7` 的某一项。
+DM 在从 binlog event 构造出 SQL 后，会使用 `worker-count` 个队列尝试并发写入到下游。但为了避免监控条目过多，会将并发队列编号按 `8` 取模，即所有并发队列在监控上会对应到 `q_0` 到 `q_7` 的某一项。
  
 `DML queue remain length` 用于表示并发处理队列中尚未取出并开始用于向下游写入的 DML 语句数，理想情况下，各 `q_*` 对应的曲线应该基本一致，如果极不一致则表明并发的负载极不均衡。
 
