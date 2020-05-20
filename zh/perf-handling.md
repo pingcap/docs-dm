@@ -14,17 +14,17 @@ category: reference
 
 在诊断问题前，也可以先了解 DM 的[性能测试报告](benchmark-v1.0-ga.md)。
 
-## Relay log 模块的性能问题及处理方法
+## relay log 模块的性能问题及处理方法
 
-在 [Relay log 的监控部分](monitor-a-dm-cluster.md#relay-log)，可以主要通过 `binlog file gap between master and relay` 监控项确认是否存在性能问题。如果该指标长时间大于 1 ，通常表明存在性能问题；如果该指标基本为 0，一般表明没有性能问题。
+在 [relay log 的监控部分](monitor-a-dm-cluster.md#relay-log)，可以主要通过 `binlog file gap between master and relay` 监控项确认是否存在性能问题。如果该指标长时间大于 1 ，通常表明存在性能问题；如果该指标基本为 0，一般表明没有性能问题。
 
 如果 `binlog file gap between master and relay` 基本为 0，但仍怀疑存在性能问题，则可以继续查看 `binlog pos`，如果该指标中 `master` 远大于 `relay`，则表明可能存在性能问题。
 
-如果存在性能问题，则继续根据 Relay log 模块的主要处理流程分别进行诊断与处理。
+如果存在性能问题，则继续根据 relay log 模块的主要处理流程分别进行诊断与处理。
 
 ### 读取 binlog 数据
 
-与 Relay log 模块从上游读取 binlog 数据相关的主要性能指标是 `read binlog event duration`，该指标表示从上游 MySQL/MariaDB 读取到单个 binlog event 所需要的时间，理想情况下应接近于 DM-worker 与 MySQL/MariaDB 实例间的网络延迟。
+与 relay log 模块从上游读取 binlog 数据相关的主要性能指标是 `read binlog event duration`，该指标表示从上游 MySQL/MariaDB 读取到单个 binlog event 所需要的时间，理想情况下应接近于 DM-worker 与 MySQL/MariaDB 实例间的网络延迟。
 
 对于同机房的数据迁移，这部分一般不会成为性能瓶颈；如果该值过大，请排查 DM-worker 与 MySQL/MariaDB 间的网络连通情况。
 
@@ -52,13 +52,13 @@ Load 模块主要操作为从本地读取 SQL 文件数据并写入到下游，�
 
 在 [Binlog replication 的监控部分](monitor-a-dm-cluster.md#binlog-replication)，我们主要通过 `binlog file gap between master and syncer` 监控项确认是否存在性能问题，如果该指标长时间大于 1 则通常表明存在性能问题；如果该指标基本为 0，则一般表明没有性能问题。
 
-如果 `binlog file gap between master and syncer` 长时间大于 1，则可以再通过 `binlog file gap between relay and syncer` 判断延迟主要存在于哪个模块，如果该值也长时间大于 1，则延迟可能存在于 Relay log 模块，请先参考 [Relay log 模块的性能问题及处理方法](#relay-log-模块的性能问题及处理方法) 进行处理；否则继续对 Binlog replication 进行排查。
+如果 `binlog file gap between master and syncer` 长时间大于 1，则可以再通过 `binlog file gap between relay and syncer` 判断延迟主要存在于哪个模块，如果该值也长时间大于 1，则延迟可能存在于 relay log 模块，请先参考 [relay log 模块的性能问题及处理方法](#relay-log-模块的性能问题及处理方法) 进行处理；否则继续对 Binlog replication 进行排查。
 
 ### 读取 binlog 数据
 
 Binlog replication 模块会根据配置选择从上游 MySQL/MariaDB 或 relay log 文件中读取 binlog event，对应的主要性能指标是 `read binlog event duration`。
 
-- 如果是从上游 MySQL/MariaDB 读取 binlog event，则可参考 Relay log 模块下的[读取 binlog 数据](#读取-binlog-数据)进行排查与处理。
+- 如果是从上游 MySQL/MariaDB 读取 binlog event，则可参考 relay log 模块下的[读取 binlog 数据](#读取-binlog-数据)进行排查与处理。
 
 - 如果是从 relay log 文件中读取，则在 `binlog event size` 不是特别大时，`write relay log duration` 的值应在微秒级别。如果 `read binlog event duration` 过大，则需排查磁盘写入性能，如尽量优先为 DM-worker 使用本地 SSD 等。
 
