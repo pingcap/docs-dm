@@ -1,9 +1,9 @@
 ---
-title: Data Migration 快速上手
+title: Data Migration 快速上手指南
 category: reference
 summary: 了解如何快速上手部署试用 DM
 ---
-# DM 快速上手指南
+# Data Migration 快速上手指南
 
 本文将介绍如何快速上手体验 DM 数据迁移工具。体验方式为使用 binary 包部署。
 
@@ -31,7 +31,7 @@ summary: 了解如何快速上手部署试用 DM
 
 首先需要下载 DM 2.0 的 binary 或者手动编译。
 
-下载最新 DM binary 包:
+#### 第一种方式：下载最新 DM binary 包
 
 {{< copyable "shell-regular" >}}
 
@@ -39,7 +39,7 @@ summary: 了解如何快速上手部署试用 DM
 wget http://download.pingcap.org/dm-nightly-linux-amd64.tar.gz && mkdir bin && tar -xzvf dm-nightly-linux-amd64.tar.gz && mv dm-nightly-linux-amd64/bin ./
 ```
 
-编译最新 DM binary 包:
+#### 第二种方式：编译最新 DM binary 包
 
 {{< copyable "shell-regular" >}}
 
@@ -48,10 +48,14 @@ git clone https://github.com/pingcap/dm.git
 cd dm && make
 ```
 
-将下载/编译的 binary 加入环境变量 PATH 中，方便部署使用：
+#### 可选项：将下载/编译的 binary 加入环境变量 PATH 中，方便部署使用
 
+{{< copyable "shell-regular" >}}
+
+```bash
 DM_PATH=`pwd`
 export PATH=$PATH:/DM_PATH/bin
+```
 
 ### 运行上游 MySQL
 

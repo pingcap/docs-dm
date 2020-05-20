@@ -28,8 +28,7 @@
   - [分库分表合并场景](usage-scenario-shard-merge.md)
   - [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
   - [DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
-+ 快速上手
-  - [部署集群](quickstart-deploy.md)
++ [快速上手](get-started.md)
 + 部署
   + 部署 DM 集群
     - [使用 DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
