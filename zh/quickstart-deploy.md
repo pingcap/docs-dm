@@ -54,7 +54,7 @@ cd dm && make
 
 ```bash
 DM_PATH=`pwd`
-export PATH=$PATH:/DM_PATH/bin
+export PATH=$PATH:$DM_PATH/bin
 ```
 
 ### 运行上游 MySQL
@@ -184,7 +184,7 @@ nohup dm-worker --config=dm-worker3.toml --log-file=dm-worker3.log >> dm-worker3
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl --master-addr=127.0.0.1:8261 list-member
+dmctl --master-addr=127.0.0.1:8261 list-member
 ```
 
 检查返回结果中是否有 leader 项，同时检查 master 与 worker 项是否包含了所有的 master 与 worker 拓扑。
