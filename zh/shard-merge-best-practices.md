@@ -26,7 +26,7 @@ category: reference
 
 ## 自增主键冲突处理
 
-在 DM 中，我们提供了 [Column mapping](feature-overview.md#column-mapping) 用于处理 bigint 类型的自增主键在合并时可能出现冲突的问题，但我们**强烈不推荐**使用该功能。如果业务上允许，我们推荐使用以下两种处理方式。
+在 DM 中，我们提供了 [Column mapping](key-features.md#column-mapping) 用于处理 bigint 类型的自增主键在合并时可能出现冲突的问题，但我们**强烈不推荐**使用该功能。如果业务上允许，我们推荐使用以下两种处理方式。
 
 ### 去掉自增主键的主键属性
 
