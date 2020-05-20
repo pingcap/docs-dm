@@ -1,6 +1,6 @@
 ---
 title: 性能问题及处理方法
-summary: 了解 DM 可能存在的常见性能问题及其处理方法
+summary: 了解 DM 可能存在的常见性能问题及其处理方法。
 category: reference
 ---
 
