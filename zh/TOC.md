@@ -18,14 +18,14 @@
   - 软硬件要求
   - 环境与系统配置检查
   - 配置拓扑结构
-+ 安装与启动
-  + 部署社区版本
-    + Linux (Redhat/CentOS)
-      - 使用 TiUP
-      - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
-    - 监控与告警设置 [参考](monitor-a-dm-cluster.md)
-    - 测试验证
-    - [性能测试](benchmark-v1.0-ga.md)
+  + 安装与启动
+    + 部署社区版本
+      + Linux (Redhat/CentOS)
+        - 使用 TiUP
+        - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
+  + 监控与告警设置 [参考](monitor-a-dm-cluster.md)
+  + 测试验证
+  + [性能测试](benchmark-v1.0-ga.md)
 + 运维操作
   - [版本升级](dm-upgrade.md)
   - 扩缩容
