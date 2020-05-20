@@ -157,6 +157,10 @@ syncers:
 sysbench --test=oltp_insert --tables=4 --num-threads=32 --mysql-host=172.17.4.40 --mysql-port=3306 --mysql-user=root --mysql-db=dm_benchmark --db-driver=mysql --report-interval=10 --time=1800 run
 ```
 
+> **注意：**
+>
+> 可以调整 sysbench 的语句类型来测试在不同业务场景下 DM 的数据同步性能。
+
 ### 获取测试结果
 
 通过 `query-status` 命令观测 DM 的同步状态，通过 Grafana 观测 DM 的监控指标。主要包括同步延迟 `replicate lag`，单位时间内完成的 job 数量 `finished sqls jobs` 等。

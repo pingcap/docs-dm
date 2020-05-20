@@ -59,46 +59,11 @@ category: benchmark
 
 ## 测试场景
 
-### 同步数据流
+使用[性能测试](./performance-test.md)中介绍的测试场景进行测试，即 MySQL1 (172.16.4.40) -> DM-worker -> TiDB (172.16.4.41)
 
-MySQL1 (172.16.4.40) -> DM-worker1 (172.16.4.39) -> TiDB (172.16.4.41)
+### 全量导入性能测试
 
-### 公共配置信息
-
-#### 同步数据表结构
-
-{{< copyable "sql" >}}
-
-```sql
-CREATE TABLE `sbtest` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `k` int(11) NOT NULL DEFAULT '0',
-  `c` char(120) CHARSET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-  `pad` char(60) CHARSET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `k_1` (`k`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin
-```
-
-#### 数据库配置
-
-使用 TiDB Ansible 部署 TiDB 测试集群，所有配置使用 TiDB Ansible 提供的默认配置。
-
-### 全量导入性能测试用例
-
-#### 测试过程
-
-- 部署测试环境
-- 使用 `sysbench` 在上游创建测试表，并生成全量导入的测试数据
-- 在 `full` 模式下启动 DM 同步任务
-
-`sysbench` 生成数据的命令如下所示：
-
-{{< copyable "shell-regular" >}}
-
-```bash
-sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=3306 --mysql-user=root --mysql-db=dm_benchmark --db-driver=mysql --table-size=50000000 prepare
-```
+使用[全量导入性能测试用例](./performance-test.md#全量导入性能测试用例)中介绍的方法进行测试。
 
 #### 全量导入性能测试结果
 
@@ -115,13 +80,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 
 #### 在 load 处理单元使用不同 pool size 的性能测试对比
 
-该测试中全量导入的数据量为 3.78 GB，使用以下 `sysbench` 命令生成：
-
-{{< copyable "shell-regular" >}}
-
-```bash
-sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=3306 --mysql-user=root --mysql-db=dm_benchmark --db-driver=mysql --table-size=5000000 prepare
-```
+该测试中使用 `sysbench` 全量导入的数据量为 3.78 GB，测试数据如下所示：
 
 | load 处理单元 pool size | 事务执行时间 (s) | 导入时间 (s) | 导入速度 (MB/s) | TiDB 99 duration (s) |
 | :---------------------: | :--------------: | :----------: | :-------------: | :------------------: |
@@ -147,22 +106,9 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 
 ### 增量同步性能测试用例
 
-#### 测试过程
-
-- 部署测试环境
-- 使用 `sysbench` 在上游创建测试表，并生成全量导入的测试数据
-- 在 `all` 模式下启动 DM 同步任务，等待同步任务进入 `sync` 同步阶段
-- 使用 `sysbench` 在上游持续生成增量数据，通过 `query-status` 命令观测 DM 的同步状态，通过 Grafana 观测 DM 和 TiDB 的监控指标。
+使用[增量同步性能测试用例](./performance-test.md#增量同步性能测试用例)中介绍的方法进行测试。
 
 #### 增量同步性能测试结果
-
-上游 `sysbench` 生成增量数据命令
-
-{{< copyable "shell-regular" >}}
-
-```bash
-sysbench --test=oltp_insert --tables=4 --num-threads=32 --mysql-host=172.17.4.40 --mysql-port=3306 --mysql-user=root --mysql-db=dm_benchmark --db-driver=mysql --report-interval=10 --time=1800 run
-```
 
 该性能测试中同步任务 `sync` 处理单元 `worker-count` 设置为 32，`batch` 大小设置为 100。
 
