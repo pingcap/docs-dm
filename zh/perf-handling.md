@@ -58,7 +58,7 @@ Load 模块主要操作为从本地读取 SQL 文件数据并写入到下游，�
 
 Binlog replication 模块会根据配置选择从上游 MySQL/MariaDB 或 relay log 文件中读取 binlog event，对应的主要性能指标是 `read binlog event duration`。
 
-如果是从上游 MySQL/MariaDB 读取 binlog event，则可参考 Relay log 模块下的[读取 binlog 数据](#读取-binlog-数据)进行排查与处理。
+- 如果是从上游 MySQL/MariaDB 读取 binlog event，则可参考 Relay log 模块下的[读取 binlog 数据](#读取-binlog-数据)进行排查与处理。
 
 如果是从 relay log 文件中读取，则在 `binlog event size` 不是特别大时应在微秒级别。如果 `read binlog event duration` 过大，则需排查磁盘写入性能，如尽量优先为 DM-worker 使用本地 SSD 等。
 
