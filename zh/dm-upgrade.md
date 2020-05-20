@@ -1,7 +1,7 @@
 ---
-title: DM 版本升级
+title: TiDB Data Migration 版本升级
 category: reference
-summary: 了解 DM 版本变更和升级操作
+summary: 了解 TiDB Data Migration 工具的版本变更和升级操作
 ---
 
 # DM 版本升级
