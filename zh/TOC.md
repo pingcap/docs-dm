@@ -66,4 +66,3 @@
     - [1.0.4](releases/1.0.4.md)
     - [1.0.5](releases/1.0.5.md)
 + [术语表](glossary.md)
-+ 文档指南
