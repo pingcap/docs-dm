@@ -16,7 +16,7 @@ category: reference
 
 ## Relay log 模块的性能问题及处理方法
 
-在 [Relay log 的监控部分](monitor-a-dm-cluster.md#relay-log)，我们主要通过 `binlog file gap between master and relay` 监控项确认是否存在性能问题，如果该指标长时间大于 1 则通常表明存在性能问题；如果该指标基本为 0，则一般表明没有性能问题。
+在 [Relay log 的监控部分](monitor-a-dm-cluster.md#relay-log)，可以主要通过 `binlog file gap between master and relay` 监控项确认是否存在性能问题。如果该指标长时间大于 1 ，通常表明存在性能问题；如果该指标基本为 0，一般表明没有性能问题。
 
 如果 `binlog file gap between master and relay` 基本为 0，但仍怀疑存在性能问题，则可以继续查看 `binlog pos`，如果该指标中 `master` 远大于 `relay`，则表明可能存在性能问题。
 
