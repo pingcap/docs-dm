@@ -1,12 +1,13 @@
 ---
-title: 数据同步功能
-summary: DM 提供的功能及其配置介绍
+title: 主要特性
+summary: 了解 DM 的各主要功能特性或相关的配置选项。
 category: reference
+aliases: ['/docs-cn/tidb-data-migration/dev/feature-overview/']
 ---
 
-# 数据同步功能
+# 主要特性
 
-本文将详细介绍 DM 提供的数据同步功能，以及相关的配置选项。
+本文档介绍 DM 提供的数据同步功能以及相关的配置选项与使用示例。
 
 Table Routing、Black & White Lists、Binlog Event Filter 在匹配库表名时，有以下版本差异：
 
@@ -22,7 +23,7 @@ Table routing 提供将上游 MySQL/MariaDB 实例的某些表同步到下游指
 > **注意：**
 >
 > - 不支持对同一个表设置多个不同的路由规则。
-> - Schema 的匹配规则需要单独设置，用来同步 `create/drop schema xx`，例如下面[参数配置](#参数配置)中的 rule-2。
+> - Schema 的匹配规则需要单独设置，用来同步 `CREATE/DROP SCHEMA xx`，例如下面[参数配置](#参数配置)中的 rule-2。
 
 ### 参数配置
 
@@ -55,7 +56,7 @@ routes:
 为了同步到下游实例的表 `test`.`t` 需要创建两个 table routing 规则：
 
 - `rule-1` 用来同步匹配上 `schema-pattern: "test_*"` 和 `table-pattern: "t_*"` 的表的 DML/DDL 语句到下游的 `test`.`t`。
-- `rule-2` 用来同步匹配上 `schema-pattern: "test_*"` 的库的 DDL 语句，例如 `create/drop schema xx`。
+- `rule-2` 用来同步匹配上 `schema-pattern: "test_*"` 的库的 DDL 语句，例如 `CREATE/DROP SCHEMA xx`。
 
 > **注意：**
 >
@@ -267,7 +268,7 @@ filters:
 
 - [`schema-pattern`/`table-pattern`](table-selector.md)：对匹配上的上游 MySQL/MariaDB 实例的表的 binlog events 或者 DDL SQL 语句进行以下规则过滤。
 
-- `events`：binlog events 数组。
+- `events`：binlog events 数组，仅支持从以下 `Event` 中选择一项或多项。
 
     | Event           | 分类 | 解释                           |
     | --------------- | ---- | ----------------------------- |
@@ -374,7 +375,7 @@ filters:
 >
 > 全局过滤规则的设置必须尽可能严格，以避免预期之外地过滤掉需要同步的数据。
 
-可设置如下规则过滤 TiDB parser 不支持的 `PARTITION` 语句：
+可设置如下规则过滤某些版本的 TiDB parser 不支持的 `PARTITION` 语句：
 
 {{< copyable "" >}}
 
@@ -513,6 +514,7 @@ DM 支持通过 heartbeat 真实同步数据来计算每个同步任务与 MySQL
 
 > **注意：**
 >
+> - heartbeat 开启后会在 dm-worker 连接的上游 MySQL 实例上执行写入操作，如果上游多个 MySQL 实例构成主从集群，请确保 dm-worker 连接的是主实例，否则会造成 MySQL 主从间数据的不一致。
 > - 同步延迟的估算的精度在秒级别。
 > - heartbeat 相关的 binlog 不会同步到下游，在计算延迟后会被丢弃。
 
@@ -541,3 +543,48 @@ enable-heartbeat: true
 - DM-worker 每 10 秒在对应的上游 MySQL/MariaDB 的 `dm_heartbeat`.`heartbeat` 查询当前的 `TS_master`，并且对每个任务计算 `task_lag` = `TS_master` - `TS_slave_task`
 
 可以在 metrics 的 [binlog replication](monitor-a-dm-cluster.md#binlog-replication) 处理单元找到 replicate lag 监控项。
+
+## online DDL 工具支持
+
+在 MySQL 生态中， gh-ost 与 pt-osc 等工具较广泛地被使用，DM 对其提供了特殊的支持以避免对不必要的中间数据进行同步。
+
+有关 DM 对 online DDL 工具支持的原理、处理流程等，可参考 [online-ddl-scheme](feature-online-ddl-scheme.md)。
+
+### 使用限制
+
+- DM 仅针对 gh-ost 与 pt-osc 做了特殊支持。
+- 在开启 `online-ddl-scheme` 时，增量同步对应的 checkpoint 应不处于 online DDL 执行过程中。
+
+### 参数配置
+
+如上游 MySQL/MariaDB 使用的是 gh-ost 工具，则在 task 的配置文件中设置：
+
+```
+online-ddl-scheme: "gh-ost"
+```
+
+如上游 MySQL/MariaDB 使用的是 pt-osc 工具，则在 task 的配置文件中设置：
+
+```
+online-ddl-scheme: "pt"
+```
+
+## 分库分表合并
+
+DM 支持将上游 MySQL/MariaDB 各分库分表中的 DML、DDL 数据合并后同步到下游 TiDB 的库表中。
+
+### 使用限制
+
+目前分库分表合并功能仅支持有限的场景，使用该功能前，请仔细阅读[分库分表合并同步使用限制](feature-shard-merge.md#使用限制)。
+
+### 参数配置
+
+在 task 的配置文件中设置：
+
+```
+is-sharding: true
+```
+
+### 手动处理 Sharding DDL Lock
+
+如果分库分表合并同步过程中发生了异常，对于部分场景，可尝试参考[手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md)进行处理。
