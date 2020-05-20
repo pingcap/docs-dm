@@ -46,7 +46,7 @@ category: reference
 
 Load 模块主要操作为从本地读取 SQL 文件数据并写入到下游，对应的主要性能指标是 `transaction execution latency`，如果该值过大，则通常需要根据下游数据库的监控对下游性能进行排查。
 
-另外，也可以关注是否 DM 到下游数据库间的网络存在较大的延迟。
+另外，也可以查看是否 DM 到下游数据库间的网络存在较大的延迟。
 
 ## Binlog replication 模块的性能问题及处理方法
 
