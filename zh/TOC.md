@@ -53,9 +53,7 @@
   - [从 MySQL/Amazon Aurora MySQL 迁移数据](migrate-from-mysql-aurora.md)
 - [DM Portal](dm-portal.md)
 + DM 故障诊断
-  - [故障诊断](troubleshoot-dm.md)
-  - [错误含义](error-system.md)
-  - [常见错误修复](error-handling.md)
+  - [故障及处理方法](error-handling.md)
 - [DM FAQ](faq.md)
 + 版本发布历史
   + v1.0
