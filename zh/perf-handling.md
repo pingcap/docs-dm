@@ -40,7 +40,7 @@ category: reference
 
 ### 写入 relay log 文件
 
-将 binlog event 写入 relay log 文件的主要性能指标是 `write relay log duration`，该指标在 `binlog event size` 不是特别大时应在微秒级别。如果该值过大则需排查磁盘写入性能，如尽量优先为 DM-worker 使用本地 SSD 等。
+在将 binlog event 写入 relay log 文件时，相关的主要性能指标是 `write relay log duration`，该指标在 `binlog event size` 不是特别大时，值应在微秒级别。如果该值过大，需排查磁盘写入性能，如尽量优先为 DM-worker 使用本地 SSD 等。
 
 ## Load 模块的性能问题及处理方法
 
