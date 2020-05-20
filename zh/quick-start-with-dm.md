@@ -1,11 +1,11 @@
 ---
-title: Data Migration 快速上手指南
+title: TiDB Data Migration 快速上手指南
 category: reference
-summary: 了解如何快速上手部署试用 DM
+summary: 了解如何快速上手部署试用 TiDB Data Migration 工具。
 ---
-# Data Migration 快速上手指南
+# TiDB Data Migration 快速上手指南
 
-本文将介绍如何快速上手体验 DM 数据迁移工具。体验方式为使用 binary 包部署。
+本文将介绍如何快速上手体验数据迁移工具 [TiDB Data Migration](https://github.com/pingcap/dm) (DM)。体验方式为使用 binary 包部署 DM。
 
 ## 使用样例
 
@@ -59,7 +59,7 @@ export PATH=$PATH:$DM_PATH/bin
 
 ### 运行上游 MySQL
 
-运行两个 MySQL 服务，使用 docker 启动 MySQL 的命令如下：
+运行两个 MySQL 客户端的服务，使用 Docker 启动 MySQL，命令如下：
 
 {{< copyable "shell-regular" >}}
 
@@ -76,7 +76,7 @@ docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=tru
 
 ### 运行下游 TiDB
 
-使用下面的命令运行一个 mocktikv 模式的 TiDB：
+使用以下命令运行一个 mocktikv 模式的 TiDB server：
 
 {{< copyable "shell-regular" >}}
 
@@ -92,7 +92,7 @@ mv tidb-v4.0.0-rc.2-linux-amd64/bin ./
 
 分别创建 master1、master2、master3 三个目录，在每个目录下创建 DM-master 的配置文件，配置文件如下：
 
-master1/dm-master1.toml:
+`master1/dm-master1.toml`:
 
 ```toml
 # DM-Master1 Configuration.
@@ -103,7 +103,7 @@ peer-urls = "127.0.0.1:8291"
 initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,master3=http://127.0.0.1:8293"
 ```
 
-master2/dm-master2.toml:
+`master2/dm-master2.toml`:
 
 ```toml
 # DM-Master2 Configuration.
@@ -114,7 +114,7 @@ peer-urls = "127.0.0.1:8292"
 initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,master3=http://127.0.0.1:8293"
 ```
 
-master3/dm-master3.toml:
+`master3/dm-master3.toml`:
 
 ```toml
 # DM-Master3 Configuration.
@@ -139,7 +139,7 @@ nohup dm-master --config=dm-master3.toml --log-file=dm-master3.log >> dm-master3
 
 分别创建 worker1、worker2、worker3 三个目录，在每个目录下创建 DM-worker 的配置文件，配置文件如下：
 
-worker1/dm-worker1.toml:
+`worker1/dm-worker1.toml`:
 
 ```toml
 # DM-worker1 Configuration
@@ -149,7 +149,7 @@ advertise-addr="127.0.0.1:8262"
 join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
 ```
 
-worker2/dm-worker2.toml
+`worker2/dm-worker2.toml`:
 
 ```toml
 # DM-worker2 Configuration
@@ -159,7 +159,7 @@ advertise-addr="127.0.0.1:8263"
 join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
 ```
 
-worker3/dm-worker3.toml
+`worker3/dm-worker3.toml`:
 
 ```toml
 # DM-worker3 Configuration
