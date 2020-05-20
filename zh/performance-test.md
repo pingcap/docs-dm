@@ -53,7 +53,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 
 创建上游 MySQL 的 source, source-id 配置为 `source-1`。
 
-然后创建 `full` 模式的 DM 同步任务。示例任务配置文件如下：
+然后创建 `full` 模式的 DM 同步任务，示例任务配置文件如下：
 
 ```yaml
 ---
@@ -86,7 +86,10 @@ mydumpers:
     threads: 32
 ```
 
-配置文件中 `mydumpers` 配置项的 `rows` 选项会开启单表多线程并发导出，加快数据导出速度。
+> **注意：**
+>
+> - `mydumpers` 配置项的 `rows` 选项会开启单表多线程并发导出，加快数据导出速度。
+> - `mysql-instances` 配置中的 `loader-thread` 以及 `mydumpers` 配置项中的 `rows` 和 `threads` 可以做适当调整，测试在不同配置下对性能的影响。
 
 #### 获取测试结果
 
@@ -108,7 +111,7 @@ mydumpers:
 
 创建上游 MySQL 的 source, source-id 配置为 `source-1`。（如果在全量同步性能测试中已经创建，则不需要再次创建）。
 
-然后创建 `all` 模式的 DM 同步任务。示例任务配置文件如下：
+然后创建 `all` 模式的 DM 同步任务，示例任务配置文件如下：
 
 ```yaml
 ---
@@ -139,6 +142,10 @@ syncers:
     worker-count: 16
     batch: 100
 ```
+
+> **注意：**
+>
+> - `syncers` 配置项中的 `worker-count` 和 `batch` 可以做适当调整，测试在不同配置下对性能的影响。
 
 ### 生成增量数据
 
