@@ -54,7 +54,7 @@ query-status
 
 `query-error` 可用于查询数据同步任务与 relay 处理单元的错误信息。相比于 `query-status`，`query-error` 一般不用于获取除错误信息之外的其他信息。有关查询结果及子任务状态，详见[查询错误](query-error.md)。
 
-`query-error` 常用于获取 `sql-skip`/`sql-replace` 所需的 binlog position 信息，有关 `query-error` 的参数与结果解释，请参考 [“跳过或替代执行异常的 SQL 语句”文档中的 query-error](skip-or-replace-abnormal-sql-statements.md#query-error)。
+`query-error` 常用于获取 `sql-skip`/`sql-replace` 所需的 binlog position 信息，有关 `sql-skip` 和 `sql-replace` 的介绍，请参考 [跳过或替代执行异常的 SQL 语句](skip-or-replace-abnormal-sql-statements.md#query-error)。
 
 {{< copyable "" >}}
 
