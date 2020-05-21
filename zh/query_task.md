@@ -4,7 +4,7 @@ summary: 了解 TiDB Data Migration 如何查询数据同步任务信息。
 category: reference
 ---
 
-# 查询数据同步任务状态
+# 查询数据同步任务信息
 
 `query-status` 命令用于查询数据同步任务状态。有关查询结果及子任务状态，详见[查询状态](query-status.md)。
 
