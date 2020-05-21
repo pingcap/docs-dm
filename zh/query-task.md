@@ -32,7 +32,7 @@ Global Flags:
  -s, --source strings   MySQL Source ID
 ```
 
-## 命令用法示例
+### 命令用法示例
 
 {{< copyable "" >}}
 
@@ -40,7 +40,7 @@ Global Flags:
 query-status
 ```
 
-## 参数解释
+### 参数解释
 
 - `-s`：
     - 可选
@@ -50,7 +50,7 @@ query-status
     - 指定任务名称
     - 如果未设置，则返回全部数据同步任务的查询结果
 
-## 返回结果示例
+### 返回结果示例
 
 有关查询结果中各参数的意义，详见[查询状态结果](query-status.md#查询结果)。
 
@@ -79,7 +79,7 @@ Global Flags:
  -s, --source strings   MySQL Source ID
 ```
 
-## 命令用法示例
+### 命令用法示例
 
 {{< copyable "" >}}
 
@@ -87,7 +87,7 @@ Global Flags:
 query-error
 ```
 
-## 参数解释
+### 参数解释
 
 - `-s`：
     - 可选
@@ -97,6 +97,6 @@ query-error
     - 指定任务名称
     - 如果未设置，则返回全部数据同步任务错误的查询结果
 
-## 返回结果示例
+### 返回结果示例
 
 有关查询错误结果中各参数的意义，详见[查询错误结果](query-error.md#查询结果)。
