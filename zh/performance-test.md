@@ -14,7 +14,7 @@ category: reference
 
 ## 部署测试环境
 
-- 使用 TiDB Ansible 部署 TiDB 测试集群，所有配置使用 TiDB Ansible 提供的默认配置。
+- 使用 TiUP 部署 TiDB 测试集群，所有配置使用 TiUP 提供的默认配置。
 - 部署 MySQL 服务，开启 row 模式 binlog，其他配置项使用默认配置。
 - 部署 DM 集群，部署一个 DM-worker 和 一个 DM-master 即可。
 
