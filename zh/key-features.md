@@ -429,7 +429,7 @@ column-mappings:
 
 #### `partition id` 表达式
 
-`partition id` 目的是为了解决分库分表合并同步的自增主键的冲突。
+`partition id` 用于解决分库分表合并同步的自增主键的冲突。
 
 **`partition id` 限制**
 
