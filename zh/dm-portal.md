@@ -35,7 +35,7 @@ category: reference
 
 ### 使用限制
 
-当前的 DM 配置可视化生成页面能够覆盖绝大部分的 DM 配置场景，但也有一定的使用限制：
+目前，DM Portal 提供的可视化页面能够覆盖绝大部分的 DM 配置场景，但也有一定的使用限制：
 
 - 不支持 [Binlog event filter](key-features.md#binlog-event-filter) 的 SQL pattern 方式
 - 编辑功能不支持解析用户之前写的 `task.yaml` 文件，页面只能编辑由页面生成的 `task.yaml` 文件
