@@ -27,7 +27,7 @@ category: reference
 
 ### binlog 过滤配置
 
-支持对数据库、数据表配置 binlog event 过滤。
+支持对数据库、数据表配置 binlog event filter 过滤规则。
 
 ### 配置文件生成
 
