@@ -243,7 +243,7 @@ black-white-list:
 
 ## Binlog event filter
 
-Binlog event filter 是比同步表黑白名单更加细粒度的过滤规则，可以指定只同步或者过滤掉某些 `schema / table` 的指定类型 binlog，比如 `INSERT`，`TRUNCATE TABLE`。
+Binlog event filter 是比同步表黑白名单更加细粒度的过滤规则，可以指定只同步或者过滤掉某些 `schema / table` 的指定类型 binlog，比如 `INSERT`、`TRUNCATE TABLE`。
 
 > **注意：**
 >
