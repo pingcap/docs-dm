@@ -552,7 +552,7 @@ enable-heartbeat: true
 ### 使用限制
 
 - DM 仅针对 gh-ost 与 pt-osc 做了特殊支持。
-- 在开启 `online-ddl-scheme` 时，增量同步对应的 checkpoint 应不处于 online DDL 执行过程中。
+- 在开启 `online-ddl-scheme` 时，增量同步对应的 checkpoint 应不处于 online DDL 执行过程中。如上游某次 online DDL 操作开始于 binlog `position-A`、结束于 `position-B`，则增量同步的起始点应早于 `position-A` 或晚于 `position-B`，否则可能出现同步出错，具体可参考 [FAQ](faq.md#设置了-online-ddl-scheme-gh-ost-gh-ost-表相关的-ddl-报错该如何处理)。
 
 ### 参数配置
 
