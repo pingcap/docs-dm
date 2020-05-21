@@ -61,7 +61,7 @@ Go Version: go version go1.13 linux/amd64
 - 修复到下游 TiDB 连接异常导致同步暂停后，resume-task 可能无法正常恢复同步的问题
 - 修复 online DDL 执行失败后错误清理了 online DDL meta 信息而导致重启任务后无法继续正确处理 online DDL 同步的问题
 - 修复 `start-task` 异常返回的 `query-error` 可能导致 DM-worker panic 的问题
-- 修复 relay.meta 写入成功前 DM-worker 进程异常停止后，重启 DM-worker 时可能无法正确 recover relay log 文件与 relay.meta 的问题
+- 修复 `relay.meta` 写入完成前，DM-worker 进程异常停止，导致重启 DM-worker 时可能无法正确恢复 relay log 文件与 `relay.meta` 的问题
 
 ### 升级操作示例
 
