@@ -39,7 +39,7 @@ category: reference
 fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
 ```
 
-记录该加密后的密码，用于下面 MySQL 的配置。
+记录该加密后的密码，用于下面新建 MySQL 数据源。
 
 ### 编写 source 配置文件
 
@@ -62,7 +62,7 @@ password = "fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg="
 port = 3306
 ```
 
-对于 MySQL2，修改配置文件中的 `name` 为 `mysql-replica-02`，`host` 为 `192.168.0.2`，并将 `password` 和 `port` 改为相应的值即可。
+对于 MySQL2 数据源，将以上内容复制到文件 `conf/source2.toml` 中，修改 `conf/source2.toml` 配置文件中的 `name` 为 `mysql-replica-02`，`host` 为 `192.168.0.2`，并将 `password` 和 `port` 改为相应的值。
 
 ### 创建 source
 
@@ -74,7 +74,7 @@ port = 3306
 ./bin/dmctl --master-addr=192.168.0.4:8261 operate-source create conf/source1.toml
 ```
 
-对于 MySQL2，将上面命令中的配置文件替换成 MySQL2 对应的配置文件即可。
+对于 MySQL2，将上面命令中的配置文件替换成 MySQL2 对应的配置文件。
 
 ## 创建数据同步任务
 
