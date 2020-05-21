@@ -5,6 +5,7 @@ category: reference
 ---
 
 # 管理上游 MySQL 实例
+
 本文介绍了如何使用 [dmctl](overview.md#dmctl) 组件来加密数据库密码和管理数据源配置。
 
 ## 加密数据库密码
