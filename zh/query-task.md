@@ -6,6 +6,10 @@ category: reference
 
 # 查询数据同步任务信息
 
+本文介绍了如何使用 [dmctl](overview.md#dmctl) 组件来查询任务状态和任务错误。
+
+## 查询数据同步任务状态
+
 `query-status` 命令用于查询数据同步任务状态。有关查询结果及子任务状态，详见[查询状态](query-status.md)。
 
 {{< copyable "" >}}
@@ -50,7 +54,7 @@ query-status
 
 有关查询结果中各参数的意义，详见[查询状态结果](query-status.md#查询结果)。
 
-# 查询数据同步任务错误
+## 查询数据同步任务错误
 
 `query-error` 可用于查询数据同步任务与 relay 处理单元的错误信息。相比于 `query-status`，`query-error` 一般不用于获取除错误信息之外的其他信息。有关查询结果及子任务状态，详见[查询错误](query-error.md)。
 

@@ -4,7 +4,10 @@ summary: 了解如何管理上游 MySQL 实例。
 category: reference
 ---
 
-# 加密数据库密码
+# 管理上游 MySQL 实例
+本文介绍了如何使用 [dmctl](overview.md#dmctl) 组件来加密数据库密码和管理数据源配置。
+
+## 加密数据库密码
 
 在 DM 相关配置文件中，如果上游 MySQL 密码不为空，要求必须使用经 dmctl 加密后的密码，否则会报错。对于同一个原始密码，每次加密后密码不同。
 
@@ -18,7 +21,7 @@ category: reference
 VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU=
 ```
 
-# 加载数据源配置
+## 加载数据源配置
 
 `operate-source` 命令用于将数据源配置加载到 DM 集群中。
 
