@@ -51,7 +51,7 @@ category: reference
 DM Portal 可以在 [dm-portal-latest-linux-amd64.tar.gz](https://download.pingcap.org/dm-portal-latest-linux-amd64.tar.gz) 下载，通过 `./dm-portal` 的命令即可直接启动。
 
 * 如果在本地启动，浏览器访问 `127.0.0.1:8280` 即可使用。
-* 如果在服务器上启动，需要为服务器上配置访问代理。
+* 如果在服务器上启动，需要为服务器配置访问代理。
 
 ### DM Ansible 部署
 
