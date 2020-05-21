@@ -44,4 +44,4 @@ category: reference
 
 ## 变更 DM 连接的上游 MySQL 实例
 
-使用 MySQL/MariaDB 时，经常会构建主从集群以提升读取性能、确保数据安全等，如果在使用 DM 进行数据迁移过程中，dm-worker 原来连接的上游 MySQL/MariaDB 实例由于某些原因不可用，则需要将 dm-worker 变更连接到上游主从集群间的另一实例。对于此类场景，DM 提供了较好的支持，但仍有一些限制，具体可以参考 [切换 DM-worker 与上游 MySQL 实例的连接](usage-scenario-master-slave-switch.md)。
+使用 MySQL/MariaDB 时，经常会构建主从集群以提升读取性能，确保数据安全。如果在使用 DM 进行数据迁移过程中，DM-worker 原来连接的上游 MySQL/MariaDB 实例由于某些原因不可用，则需要将 DM-worker 连接到上游主从集群间的另一实例。对于此类场景，DM 提供了较好的支持，但仍有一些限制，具体可以参考 [切换 DM-worker 与上游 MySQL 实例的连接](usage-scenario-master-slave-switch.md)。
