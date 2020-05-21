@@ -6,7 +6,7 @@ category: reference
 
 # TiDB Data Migration 版本升级
 
-本文档主要介绍各 DM (Data Migration) 版本间的升级操作步骤。
+本文档主要介绍各 TiDB Data Migration (DM) 版本间的升级操作步骤。
 
 > **注意：**
 >
