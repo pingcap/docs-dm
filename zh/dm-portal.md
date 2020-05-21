@@ -123,7 +123,7 @@ DM Portal 可以在 [dm-portal-latest-linux-amd64.tar.gz](https://download.pingc
 #### 注意事项
 
 * binlog 过滤配置只能在上游实例处进行修改编辑，一旦数据库或者数据表被移动到下游实例后，就不可以进行修改编辑。
-* 在数据库上配置的 binlog 过滤会自动被其下的数据表继承。
+* 在数据库上配置的 binlog 过滤规则会自动被其下的数据表继承。
 
 #### 操作步骤
 
