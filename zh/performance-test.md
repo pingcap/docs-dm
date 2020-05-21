@@ -118,6 +118,7 @@ mydumpers:
 name: test-all
 task-mode: all
 is-sharding: false
+enable-heartbeat: true
 
 # 使用实际测试环境中 TiDB 的信息配置
 target-database:
