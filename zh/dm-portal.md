@@ -114,7 +114,7 @@ DM Portal 可以在 [dm-portal-latest-linux-amd64.tar.gz](https://download.pingc
 
 #### 功能描述
 
-用于配置上游的 binlog 过滤，可以选择需要过滤的 DDL/DML，并且在数据库上配置的 filter 后会自动给其下的数据表继承。
+用于配置上游的 binlog 过滤规则，可以选择需要过滤的 DDL/DML。在数据库上配置的过滤规则，之后会自动被数据库下的数据表继承。
 
 #### 前置条件
 
