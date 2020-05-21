@@ -52,7 +52,7 @@ routes:
 
 假设存在分库分表场景，需要将上游两个 MySQL 实例的表 `test_{1,2,3...}`.`t_{1,2,3...}` 同步到下游 TiDB 的一张表 `test`.`t`。
 
-为了同步到下游实例的表 `test`.`t` 需要创建两个 table routing 规则：
+为了同步到下游实例的表 `test`.`t`，需要创建以下 table routing 规则：
 
 - `rule-1` 用来同步匹配上 `schema-pattern: "test_*"` 和 `table-pattern: "t_*"` 的表的 DML/DDL 语句到下游的 `test`.`t`。
 - `rule-2` 用来同步匹配上 `schema-pattern: "test_*"` 的库的 DDL 语句，例如 `CREATE/DROP SCHEMA xx`。
