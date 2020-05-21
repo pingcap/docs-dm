@@ -72,9 +72,9 @@ DM 的迁移任务状态取决于其分配到 DM-worker 上的[子任务状态](
 
 ```
 {
-    "result": true,     # 查询是否成功。
-    "msg": "",          # 查询失败原因描述。
-    "sources": [        # DM-worker 列表。
+    "result": true,     # 查询是否成功
+    "msg": "",          # 查询失败原因描述
+    "sources": [        # DM-worker 列表
         {
             "result": true,
             "msg": "",
@@ -84,41 +84,41 @@ DM 的迁移任务状态取决于其分配到 DM-worker 上的[子任务状态](
                 "result": null,
                 "relayStatus": null
             },
-            "subTaskStatus": [              # 上游 MySQL 所有子任务的信息。
+            "subTaskStatus": [              # 上游 MySQL 所有子任务的信息
                 {
-                    "name": "test",         # 子任务名称。
-                    "stage": "Running",     # 子任务运行状态，包括 “New”，“Running”，“Paused”，“Stopped” 以及 “Finished”。
-                    "unit": "Sync",         # DM 的处理单元，包括 “Check”，“Dump“，“Load” 以及 “Sync”。
-                    "result": null,         # 子任务失败时显示错误信息。
-                    "unresolvedDDLLockID": "test-`test`.`t_target`",    # sharding DDL lock ID，可用于异常情况下手动处理 sharding DDL lock。
-                    "sync": {                   # 当前 `Sync` 处理单元的同步信息。
-                        "totalEvents": "12",    # 该子任务中同步的 binlog event 总数。
-                        "totalTps": "1",        # 该子任务中每秒同步的 binlog event 数量。
-                        "recentTps": "1",       # 该子任务中最后一秒同步的 binlog event 数量。
-                        "masterBinlog": "(bin.000001, 3234)",                               # 上游数据库当前的 binlog position。
-                        "masterBinlogGtid": "c0149e17-dff1-11e8-b6a8-0242ac110004:1-14",    # 上游数据库当前的 GTID 信息。
-                        "syncerBinlog": "(bin.000001, 2525)",                               # 已被 `Sync` 处理单元同步的 binlog position。
-                        "syncerBinlogGtid": "",                                             # 当前版本总是为空（因为 `Sync` 处理单元暂不使用 GTID 同步数据）。
-                        "blockingDDLs": [       # 当前被阻塞的 DDL 列表。该项仅在当前 DM-worker 所有上游表都处于 “synced“ 状态时才有数值，此时该列表包含的是待执行或待跳过的 sharding DDL 语句.
+                    "name": "test",         # 子任务名称
+                    "stage": "Running",     # 子任务运行状态，包括 “New”，“Running”，“Paused”，“Stopped” 以及 “Finished”
+                    "unit": "Sync",         # DM 的处理单元，包括 “Check”，“Dump“，“Load” 以及 “Sync”
+                    "result": null,         # 子任务失败时显示错误信息
+                    "unresolvedDDLLockID": "test-`test`.`t_target`",    # sharding DDL lock ID，可用于异常情况下手动处理 sharding DDL lock
+                    "sync": {                   # 当前 `Sync` 处理单元的同步信息
+                        "totalEvents": "12",    # 该子任务中同步的 binlog event 总数
+                        "totalTps": "1",        # 该子任务中每秒同步的 binlog event 数量
+                        "recentTps": "1",       # 该子任务中最后一秒同步的 binlog event 数量
+                        "masterBinlog": "(bin.000001, 3234)",                               # 上游数据库当前的 binlog position
+                        "masterBinlogGtid": "c0149e17-dff1-11e8-b6a8-0242ac110004:1-14",    # 上游数据库当前的 GTID 信息
+                        "syncerBinlog": "(bin.000001, 2525)",                               # 已被 `Sync` 处理单元同步的 binlog position
+                        "syncerBinlogGtid": "",                                             # 当前版本总是为空（因为 `Sync` 处理单元暂不使用 GTID 同步数据）
+                        "blockingDDLs": [       # 当前被阻塞的 DDL 列表。该项仅在当前 DM-worker 所有上游表都处于 “synced“ 状态时才有数值，此时该列表包含的是待执行或待跳过的 sharding DDL 语句
                             "USE `test`; ALTER TABLE `test`.`t_target` DROP COLUMN `age`;"
                         ],
-                        "unresolvedGroups": [   # 没有被解决的 sharding group 信息。
+                        "unresolvedGroups": [   # 没有被解决的 sharding group 信息
                             {
-                                "target": "`test`.`t_target`",                  # 待同步的下游表。
+                                "target": "`test`.`t_target`",                  # 待同步的下游表
                                 "DDLs": [
                                     "USE `test`; ALTER TABLE `test`.`t_target` DROP COLUMN `age`;"
                                 ],
-                                "firstPos": "(bin|000001.000001, 3130)",        # sharding DDL 语句起始 binlog position。
-                                "synced": [                                     # `Sync` 处理单元已经读到该 sharding DDL 的上游分表。
+                                "firstPos": "(bin|000001.000001, 3130)",        # sharding DDL 语句起始 binlog position
+                                "synced": [                                     # `Sync` 处理单元已经读到该 sharding DDL 的上游分表
                                     "`test`.`t2`"
                                     "`test`.`t3`"
                                     "`test`.`t1`"
                                 ],
-                                "unsynced": [                                   # `Sync` 处理单元未读到该 sharding DDL 的上游分表。如有上游分表未完成同步，`blockingDDLs` 为空。
+                                "unsynced": [                                   # `Sync` 处理单元未读到该 sharding DDL 的上游分表。如有上游分表未完成同步，`blockingDDLs` 为空
                                 ]
                             }
                         ],
-                        "synced": false         # 增量同步是否已追上上游。由于后台 `Sync` 单元并不会实时刷新保存点，当前值为 “false“ 并不一定代表发生了同步延迟。
+                        "synced": false         # 增量同步是否已追上上游。由于后台 `Sync` 单元并不会实时刷新保存点，当前值为 “false“ 并不一定代表发生了同步延迟
                     }
                 }
             ]
@@ -139,10 +139,10 @@ DM 的迁移任务状态取决于其分配到 DM-worker 上的[子任务状态](
                     "unit": "Load",
                     "result": null,
                     "unresolvedDDLLockID": "",
-                    "load": {                   # `Load` 处理单元的同步信息。
-                        "finishedBytes": "115", # 已全量导入字节数。
-                        "totalBytes": "452",    # 总计需要导入的字节数。
-                        "progress": "25.44 %"   # 全量导入进度。
+                    "load": {                   # `Load` 处理单元的同步信息
+                        "finishedBytes": "115", # 已全量导入字节数
+                        "totalBytes": "452",    # 总计需要导入的字节数
+                        "progress": "25.44 %"   # 全量导入进度
                     }
                 }
             ]

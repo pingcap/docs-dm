@@ -1,6 +1,6 @@
 ---
 title: TiDB Data Migration 查询运行错误
-summary: 深入了解 TiDB Data Migration 如何查询数据同步任务运行错误
+summary: 深入了解 TiDB Data Migration 如何查询数据同步任务运行错误。
 category: reference
 ---
 
