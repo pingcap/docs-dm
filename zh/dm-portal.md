@@ -38,7 +38,7 @@ category: reference
 目前，DM Portal 提供的可视化页面能够覆盖绝大部分的 DM 配置场景，但也有一定的使用限制：
 
 - 不支持 [Binlog event filter](key-features.md#binlog-event-filter) 的 SQL pattern 方式
-- 编辑功能不支持解析用户之前写的 `task.yaml` 文件，页面只能编辑由页面生成的 `task.yaml` 文件
+- 编辑功能不支持解析用户之前写的 `task.yaml` 文件，只支持编辑由页面生成的 `task.yaml` 文件
 - 编辑功能不支持修改实例配置信息，如果用户需要调整实例配置，需要重新生成 `task.yaml` 文件
 - 页面的上游实例配置仅用于获取上游库表结构，DM-worker 里依旧需要配置对应的上游实例信息
 
