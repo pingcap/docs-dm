@@ -4,7 +4,7 @@ summary: 了解 TiDB Data Migration 工具的版本变更和升级操作。
 category: reference
 ---
 
-# DM 版本升级
+# TiDB Data Migration 版本升级
 
 本文档主要介绍各 DM (Data Migration) 版本间的升级操作步骤。
 
