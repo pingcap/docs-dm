@@ -292,7 +292,7 @@ filters:
 
 - `sql-pattern`：用于过滤指定的 DDL SQL 语句，支持正则表达式匹配，例如上面示例 `"^DROP\\s+PROCEDURE"`。
 
-- `action`：string(`Do` / `Ignore`)；进行下面规则判断，满足其中之一则过滤，否则不过滤。
+- `action`：string (`Do` / `Ignore`)；进行下面规则判断，满足其中之一则过滤，否则不过滤。
 
     - `Do`：白名单。binlog event 如果满足下面两个条件之一就会被过滤掉：
         - 不在该 rule 的 `events` 中。
