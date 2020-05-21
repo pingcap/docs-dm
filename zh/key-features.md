@@ -545,7 +545,7 @@ enable-heartbeat: true
 
 ## online DDL 工具支持
 
-在 MySQL 生态中， gh-ost 与 pt-osc 等工具较广泛地被使用，DM 对其提供了特殊的支持以避免对不必要的中间数据进行同步。
+在 MySQL 生态中，gh-ost 与 pt-osc 等工具较广泛地被使用，DM 对其提供了特殊的支持以避免对不必要的中间数据进行同步。
 
 有关 DM 对 online DDL 工具支持的原理、处理流程等，可参考 [online-ddl-scheme](feature-online-ddl-scheme.md)。
 
