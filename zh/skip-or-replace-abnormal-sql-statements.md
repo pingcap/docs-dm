@@ -1,5 +1,6 @@
 ---
 title: 跳过或替代执行异常的 SQL 语句
+summary: 了解 Tidb Data Migration 如何跳过或替代执行异常的 SQL 语句。
 category: reference
 ---
 
@@ -136,67 +137,7 @@ DM 在进行增量数据同步时，简化后的流程大致为：
 
 #### query-error
 
-`query-error` 命令用于查询 DM-worker 内子任务及 relay 单元当前在运行中存在的错误。
-
-##### 命令用法
-
-```bash
-query-error [--worker=127.0.0.1:8262] [task-name]
-```
-
-##### 参数解释
-
-+ `worker`：
-    - flag 参数，string，`--worker`，可选；
-    - 不指定时查询所有 DM-worker 上的错误，指定时仅查询特定一组 DM-worker 上的错误。
-
-+ `task-name`：
-    - 非 flag 参数，string，可选；
-    - 不指定时查询所有任务内的错误，指定时仅查询特定任务内的错误。
-
-##### 结果示例
-
-{{< copyable "" >}}
-
-```bash
-» query-error test
-```
-
-```
-{
-    "result": true,                              # query-error 操作本身是否成功
-    "msg": "",                                   # query-error 操作失败的说明信息
-    "workers": [                                 # DM-worker 信息列表
-        {
-            "result": true,                      # 该 DM-worker 上 query-error 操作是否成功
-            "worker": "127.0.0.1:8262",          # 该 DM-worker 的 IP:port（worker-id）
-            "msg": "",                           # 该 DM-worker 上 query-error 操作失败的说明信息
-            "subTaskError": [                    # 该 DM-worker 上运行子任务的错误信息
-                {
-                    "name": "test",              # 任务名
-                    "stage": "Paused",           # 当前任务的状态
-                    "unit": "Sync",              # 当前正在处理任务的处理单元
-                    "sync": {                    # binlog 同步单元（sync）的错误信息
-                        "errors": [              # 当前处理单元的错误信息列表
-                            {
-                                // 错误信息描述
-                                "msg": "exec sqls[[USE `db1`; ALTER TABLE `db1`.`tbl1` CHANGE COLUMN `c2` `c2` decimal(10,3);]] failed, err:Error 1105: unsupported modify column length 10 is less than origin 11",
-                                // 发生错误的 binlog event 的 position
-                                "failedBinlogPosition": "mysql-bin|000001.000003:34642",
-                                // 发生错误的 SQL 语句
-                                "errorSQL": "[USE `db1`; ALTER TABLE `db1`.`tbl1` CHANGE COLUMN `c2` `c2` decimal(10,3);]"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "RelayError": {                      # 该 DM-worker 上 relay 处理单元的错误信息
-                "msg": ""                        # 错误信息描述
-            }
-        }
-    ]
-}
-```
+`query-error` 命令用于查询 MySQL 实例子任务在运行中存在的错误，详见[查询错误](query-error.md)。
 
 #### sql-skip
 
@@ -205,15 +146,15 @@ query-error [--worker=127.0.0.1:8262] [task-name]
 ##### 命令用法
 
 ```bash
-sql-skip <--worker=127.0.0.1:8262> [--binlog-pos=mysql-bin|000001.000003:3270] [--sql-pattern=~(?i)ALTER\s+TABLE\s+`db1`.`tbl1`\s+ADD\s+COLUMN\s+col1\s+INT] [--sharding] <task-name>
+sql-skip <--source mysql-replica-01> [--binlog-pos=mysql-bin|000001.000003:3270] [--sql-pattern=~(?i)ALTER\s+TABLE\s+`db1`.`tbl1`\s+ADD\s+COLUMN\s+col1\s+INT] [--sharding] <task-name>
 ```
 
 ##### 参数解释
 
-+ `worker`：
-    - flag 参数，string，`--worker`；
++ `source`：
+    - flag 参数，string，`--source`；
     - 未指定 `--sharding` 时必选，指定 `--sharding` 时禁止使用；
-    - `worker` 指定预设操作将生效的 DM-worker。
+    - `source` 指定预设操作将生效的 MySQL 实例。
 
 + `binlog-pos`：
     - flag 参数，string，`--binlog-pos`；
@@ -246,13 +187,13 @@ sql-skip <--worker=127.0.0.1:8262> [--binlog-pos=mysql-bin|000001.000003:3270] [
 ##### 命令用法
 
 ```bash
-sql-replace <--worker=127.0.0.1:8262> [--binlog-pos=mysql-bin|000001.000003:3270] [--sql-pattern=~(?i)ALTER\s+TABLE\s+`db1`.`tbl1`\s+ADD\s+COLUMN\s+col1\s+INT] [--sharding] <task-name> <SQL-1;SQL-2>
+sql-replace <--source mysql-replica-01> [--binlog-pos=mysql-bin|000001.000003:3270] [--sql-pattern=~(?i)ALTER\s+TABLE\s+`db1`.`tbl1`\s+ADD\s+COLUMN\s+col1\s+INT] [--sharding] <task-name> <SQL-1;SQL-2>
 ```
 
 ##### 参数解释
 
-+ `worker`：
-    - 与 `sql-skip` 命令的 `--worker` 参数解释一致。
++ `source`：
+    - 与 `sql-skip` 命令的 `--source` 参数解释一致。
 
 + `binlog-pos`：
     - 与 `sql-skip` 命令的 `--binlog-pos` 参数解释一致。
@@ -328,24 +269,25 @@ err:Error 1105: unsupported modify column length 10 is less than origin 11
     {{< copyable "" >}}
 
     ```bash
-    » sql-skip --worker=127.0.0.1:8262 --binlog-pos=mysql-bin|000001.000003:34642 test
+    » sql-skip --source=mysql-replica-01 --binlog-pos=mysql-bin|000001.000003:34642 test
     ```
 
     ```
     {
         "result": true,
         "msg": "",
-        "workers": [
+        "sources": [
             {
                 "result": true,
-                "worker": "",
-                "msg": ""
+                "msg": "",
+                "source": "",
+                "worker": ""
             }
         ]
     }
     ```
 
-    对应 DM-worker 节点中也可以看到类似如下日志：
+    source 对应的 DM-worker 节点中也可以看到类似如下日志：
 
     ```
     2018/12/28 11:17:51 operator.go:121: [info] [sql-operator] set a new operator
@@ -358,7 +300,7 @@ err:Error 1105: unsupported modify column length 10 is less than origin 11
     {{< copyable "" >}}
 
     ```bash
-    » resume-task --worker=127.0.0.1:8262 test
+    » resume-task --source=mysql-replica-01 test
     ```
 
     ```
@@ -366,18 +308,18 @@ err:Error 1105: unsupported modify column length 10 is less than origin 11
         "op": "Resume",
         "result": true,
         "msg": "",
-        "workers": [
+        "sources": [
             {
-                "op": "Resume",
                 "result": true,
-                "worker": "127.0.0.1:8262",
-                "msg": ""
+                "msg": "",
+                "source": "mysql-replica-01",
+                "worker": "worker1"
             }
         ]
     }
     ```
 
-    对应 DM-worker 节点中也可以看到类似如下日志：
+    source 对应的 DM-worker 节点中也可以看到类似如下日志：
 
     ```
     2018/12/28 11:27:46 operator.go:158: [info] [sql-operator] binlog-pos (mysql-bin|000001.000003, 34642) matched,
@@ -455,24 +397,25 @@ err:Error 1105: can't drop column c2 with index covered now
     {{< copyable "" >}}
 
     ```bash
-    » sql-replace --worker=127.0.0.1:8262 --sql-pattern=~(?i)ALTER\s+TABLE\s+`db2`.`tbl2`\s+DROP\s+COLUMN\s+`c2` test ALTER TABLE `db2`.`tbl2` DROP INDEX idx_c2;ALTER TABLE `db2`.`tbl2` DROP COLUMN `c2`
+    » sql-replace --source=mysql-replica-01 --sql-pattern=~(?i)ALTER\s+TABLE\s+`db2`.`tbl2`\s+DROP\s+COLUMN\s+`c2` test ALTER TABLE `db2`.`tbl2` DROP INDEX idx_c2;ALTER TABLE `db2`.`tbl2` DROP COLUMN `c2`
     ```
 
     ```
     {
         "result": true,
         "msg": "",
-        "workers": [
+        "sources": [
             {
                 "result": true,
-                "worker": "",
-                "msg": ""
+                "msg": "",
+                "source": "",
+                "worker": ""
             }
         ]
     }
     ```
 
-    对应 DM-worker 节点中也可以看到类似如下日志：
+    source 对应的 DM-worker 节点中也可以看到类似如下日志：
 
     ```
     2018/12/28 15:33:13 operator.go:121: [info] [sql-operator] set a new operator
@@ -594,12 +537,12 @@ err:Error 1105: can't drop column c2 with index covered now
     ```
 
     ```
-     {
-         "result": true,
-         "msg": "request with --sharding saved and will be sent to DDL lock's owner when resolving DDL lock",
-         "workers": [
-         ]
-     }
+    {
+        "result": true,
+        "msg": "request with --sharding saved and will be sent to DDL lock's owner when resolving DDL lock",
+        "sources": [
+        ]
+    }
     ```
 
     **DM-master** 节点中也可以看到类似如下日志：
