@@ -8,7 +8,7 @@
 + 关于 TiDB Data Migration
   + 基本信息
     - [开源信息说明](licensing.md)
-    - [性能数据](performance.md)
+    - [性能数据](benchmark-v1.0-ga.md)
   - [主要特性](key-features.md)  可参考 [特性概述](feature-overview.md)，[Online-ddl-scheme](feature-online-ddl-scheme.md)，和 Shard Support 相关文档（[简介](feature-shard-merge.md)，[使用限制](feature-shard-merge.md#使用限制)，[手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md)）
   - [应用场景](scenarios.md) 参考 [分表合并数据迁移最佳实践](shard-merge-best-practices.md)，[DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
 + 快速上手
@@ -25,7 +25,7 @@
         - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
   + [监控与告警设置](monitor-a-dm-cluster.md)
   + 测试验证
-  + [性能测试](benchmark-v1.0-ga.md)
+  + [性能测试](performance-test.md)
 + 运维操作
   - [版本升级](dm-upgrade.md)
   - [扩缩容](scale-a-dm-cluster.md)
