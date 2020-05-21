@@ -24,8 +24,8 @@ DM 全量备份时会根据 chunk-filesize 参数的值把每个表的数据划�
 
 > **注意：**
 >
-> `mydumpers` 的参数值不支持在同步任务创建后更新，所以需要在创建任务前确定好各个参数的值。如果需要更新，则需要使用 dmctl stop 任务后更新配置文件，然后再重新创建任务。
-> `mydumpers`.`threads` 可以使用配置项 `mydumper-thread` 替代来简化配置。
+> - `mydumpers` 的参数值不支持在同步任务创建后更新，所以需要在创建任务前确定好各个参数的值。如果需要更新，则需要使用 dmctl stop 任务后更新配置文件，然后再重新创建任务。
+> - `mydumpers`.`threads` 可以使用配置项 `mydumper-thread` 替代来简化配置。
 
 ## 全量导入
 
@@ -37,8 +37,8 @@ DM 全量备份时会根据 chunk-filesize 参数的值把每个表的数据划�
 
 > **注意：**
 >
-> `loaders` 的参数值不支持在同步任务创建后更新，所以需要在创建任务前确定好各个参数的值。如果需要更新，则需要使用 dmctl stop 任务后更新配置文件，再清理下游已导入的数据，然后再重新创建任务。
-> `loaders`.`pool-size` 可以使用配置项 `loader-thread` 替代来简化配置。
+> - `loaders` 的参数值不支持在同步任务创建后更新，所以需要在创建任务前确定好各个参数的值。如果需要更新，则需要使用 dmctl stop 任务后更新配置文件，再清理下游已导入的数据，然后再重新创建任务。
+> - `loaders`.`pool-size` 可以使用配置项 `loader-thread` 替代来简化配置。
 
 ## 增量同步
 
@@ -54,6 +54,6 @@ DM 全量备份时会根据 chunk-filesize 参数的值把每个表的数据划�
 
 > **注意：**
 >
-> `syncers` 的参数值不支持在同步任务创建后更新，所以需要在创建任务前确定好各个参数的值。如果需要更新，则需要使用 dmctl stop 任务后更新配置文件，然后再重新创建任务。
-> `syncers`.`worker-count` 可以使用配置项 `syncer-thread` 替代来简化配置。
-> `worker-count` 和 `batch` 的设置需要根据实际的场景进行调整，例如：DM 到下游数据库的网络延迟较高，可以适当调高 `worker-count`，调低 `batch`。
+> - `syncers` 的参数值不支持在同步任务创建后更新，所以需要在创建任务前确定好各个参数的值。如果需要更新，则需要使用 dmctl stop 任务后更新配置文件，然后再重新创建任务。
+> - `syncers`.`worker-count` 可以使用配置项 `syncer-thread` 替代来简化配置。
+> - `worker-count` 和 `batch` 的设置需要根据实际的场景进行调整，例如：DM 到下游数据库的网络延迟较高，可以适当调高 `worker-count`，调低 `batch`。
