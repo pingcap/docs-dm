@@ -55,36 +55,36 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 
 2. 创建 `full` 模式的 DM 同步任务，示例任务配置文件如下：
 
-```yaml
----
-name: test-full
-task-mode: full
-is-sharding: false
+  ```yaml
+  ---
+  name: test-full
+  task-mode: full
+  is-sharding: false
 
-# 使用实际测试环境中 TiDB 的信息配置
-target-database:
-  host: "192.168.0.1"
-  port: 4000
-  user: "root"
-  password: ""
+  # 使用实际测试环境中 TiDB 的信息配置
+  target-database:
+    host: "192.168.0.1"
+    port: 4000
+    user: "root"
+    password: ""
 
-mysql-instances:
-  -
-    source-id: "source-1"
-    black-white-list:  "instance"
-    mydumper-config-name: "global"
-    loader-thread: 16
+  mysql-instances:
+    -
+      source-id: "source-1"
+      black-white-list:  "instance"
+      mydumper-config-name: "global"
+      loader-thread: 16
 
-# 配置 sysbench 生成数据所在的库的名称
-black-white-list:
-  instance:
-    do-dbs: ["sbtest"]
+  # 配置 sysbench 生成数据所在的库的名称
+  black-white-list:
+    instance:
+      do-dbs: ["sbtest"]
 
-mydumpers:
-  global:
-    rows: 32000
-    threads: 32
-```
+  mydumpers:
+    global:
+      rows: 32000
+      threads: 32
+  ```
 
 > **注意：**
 >
@@ -109,40 +109,40 @@ mydumpers:
 
 ### 创建数据同步任务
 
-创建上游 MySQL 的 source, source-id 配置为 `source-1`。（如果在全量同步性能测试中已经创建，则不需要再次创建）。
+1. 创建上游 MySQL 的 source, source-id 配置为 `source-1`。（如果在全量同步性能测试中已经创建，则不需要再次创建）。
 
-然后创建 `all` 模式的 DM 同步任务，示例任务配置文件如下：
+2. 创建 `all` 模式的 DM 同步任务，示例任务配置文件如下：
 
-```yaml
----
-name: test-all
-task-mode: all
-is-sharding: false
-enable-heartbeat: true
+  ```yaml
+  ---
+  name: test-all
+  task-mode: all
+  is-sharding: false
+  enable-heartbeat: true
 
-# 使用实际测试环境中 TiDB 的信息配置
-target-database:
-  host: "192.168.0.1"
-  port: 4000
-  user: "root"
-  password: ""
+  # 使用实际测试环境中 TiDB 的信息配置
+  target-database:
+    host: "192.168.0.1"
+    port: 4000
+    user: "root"
+    password: ""
 
-mysql-instances:
-  -
-    source-id: "source-1"
-    black-white-list:  "instance"
-    syncer-config-name: "global"
+  mysql-instances:
+    -
+      source-id: "source-1"
+      black-white-list:  "instance"
+      syncer-config-name: "global"
 
-# 配置 sysbench 生成数据所在的库的名称
-black-white-list:
-  instance:
-    do-dbs: ["sbtest"]
+  # 配置 sysbench 生成数据所在的库的名称
+  black-white-list:
+    instance:
+      do-dbs: ["sbtest"]
 
-syncers:
-  global:
-    worker-count: 16
-    batch: 100
-```
+  syncers:
+    global:
+      worker-count: 16
+      batch: 100
+  ```
 
 > **注意：**
 >
