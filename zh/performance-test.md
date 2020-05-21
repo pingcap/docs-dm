@@ -88,7 +88,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 
 > **注意：**
 >
-> - 在 `mydumpers` 配置项中使用 `--rows` 选项，可以开启单表多线程并发导出，加快数据导出速度。
+> - 在 `mydumpers` 配置项中使用 `rows` 选项，可以开启单表多线程并发导出，加快数据导出速度。
 > - `mysql-instances` 配置中的 `loader-thread` 以及 `mydumpers` 配置项中的 `rows` 和 `threads` 可以做适当调整，测试在不同配置下对性能的影响。
 
 #### 获取测试结果
