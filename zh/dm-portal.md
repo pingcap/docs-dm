@@ -61,7 +61,7 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 
 本节介绍如何使用 DM Portal 各个功能。
 
-### 新建规则
+### 1. 新建规则
 
 #### 功能描述
 
@@ -71,7 +71,7 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 
 登录 dm-portal 页面，点击**新建任务规则**。
 
-### 基础信息配置
+### 2. 基础信息配置
 
 #### 功能描述
 
@@ -88,7 +88,7 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 
 ![DM Portal BasicConfig](/media/zh/dm-portal-basicconfig.png)
 
-### 实例信息配置
+### 3. 实例信息配置
 
 #### 功能描述
 
@@ -110,7 +110,7 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 
 ![DM Portal InstanceConfig](/media/zh/dm-portal-instanceconfig.png)
 
-### binlog 过滤配置
+### 4. binlog 过滤配置
 
 #### 功能描述
 
@@ -136,7 +136,7 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 
 ![DM Portal BinlogFilter 2](/media/zh/dm-portal-binlogfilter-2.png)
 
-### 库表路由配置
+### 5. 库表路由配置
 
 #### 功能描述
 
@@ -154,47 +154,45 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 #### 操作步骤
 
 1. 在**上游实例**处，选择需要同步的数据库和数据表。
+
+    ![DM Portal TableRoute 1](/media/zh/dm-portal-tableroute-1.png)
+
 2. 点击移动按钮，将需要同步的库表移动至**下游实例**处。
+
+    ![DM Portal TableRoute 2](/media/zh/dm-portal-tableroute-2.png)
+
 3. 点击右键按钮，可以对库表进行改名操作。
-4. 选中需要操作的数据表，拖动至别的数据表图标上，可以对两个表进行合并。拖动到数据库图标上，可以将数据表移动至该库下。拖动到 target-instance 图标上，可以移动到一个新的数据库下。
+
+    ![DM Portal ChangeTableName](/media/zh/dm-portal-changetablename.png)
+
+4. 选中需要操作的数据表，拖动至别的数据表图标上，可以对两个表进行合并。
+
+    ![DM Portal MergeTable 1](/media/zh/dm-portal-mergetable-1.png)
+
+    ![DM Portal MergeTable 2](/media/zh/dm-portal-mergetable-2.png)
+
+    拖动到数据库图标上，可以将数据表移动至该库下。
+
+    ![DM Portal MoveToDB 1](/media/zh/dm-portal-movetodb-1.png)
+
+    ![DM Portal MoveToDB 2](/media/zh/dm-portal-movetodb-2.png)
+
+    拖动到 target-instance 图标上，可以移动到一个新的数据库下。
+
+    ![DM Portal MoveToNewDB 1](/media/zh/dm-portal-movetonewdb-1.png)
+
+    ![DM Portal MoveToNewDB 2](/media/zh/dm-portal-movetonewdb-2.png)
+
 5. 点击**完成**，自动下载 `task.yaml` 到本地，并且在 DM Portal 服务器上的 `/tmp/` 目录下自动创建一份 `task.yaml` 配置文件。
 
-##### 移动同步库表
+    ![DM Portal GenerateConfig](/media/zh/dm-portal-generateconfig.png)
 
-![DM Portal TableRoute 1](/media/zh/dm-portal-tableroute-1.png)
+#### 其他操作
 
-![DM Portal TableRoute 2](/media/zh/dm-portal-tableroute-2.png)
-
-##### 右键修改库表名称
-
-![DM Portal ChangeTableName](/media/zh/dm-portal-changetablename.png)
-
-##### 合并数据表操作
-
-![DM Portal MergeTable 1](/media/zh/dm-portal-mergetable-1.png)
-
-![DM Portal MergeTable 2](/media/zh/dm-portal-mergetable-2.png)
-
-##### 移动数据表至其他数据库
-
-![DM Portal MoveToDB 1](/media/zh/dm-portal-movetodb-1.png)
-
-![DM Portal MoveToDB 2](/media/zh/dm-portal-movetodb-2.png)
-
-##### 移动数据表至新建默认数据库
-
-![DM Portal MoveToNewDB 1](/media/zh/dm-portal-movetonewdb-1.png)
-
-![DM Portal MoveToNewDB 2](/media/zh/dm-portal-movetonewdb-2.png)
-
-##### 撤销本次操作
+撤销本次操作：
 
 ![DM Portal Revert](/media/zh/dm-portal-revert.png)
 
-##### 清空下游实例
+清空下游实例：
 
 ![DM Portal Reset](/media/zh/dm-portal-reset.png)
-
-##### 完成并下载
-
-![DM Portal GenerateConfig](/media/zh/dm-portal-generateconfig.png)
