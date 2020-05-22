@@ -9,7 +9,7 @@
   + 基本信息
     - [开源信息说明](licensing.md)
     - [性能数据](performance.md)
-  - [主要特性](key-features.md)  可参考 [特性概述](feature-overview.md)，[Online-ddl-scheme](feature-online-ddl-scheme.md)，和 Shard Support 相关文档（[简介](feature-shard-merge.md)，[使用限制](feature-shard-merge.md#使用限制)，[手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md)）
+  - [主要特性](key-features.md)
   - [应用场景](scenarios.md)
 + 快速上手
   - [部署集群](quick-start-with-dm.md)
@@ -24,7 +24,7 @@
         - [使用 TiUP](deploy-a-dm-cluster-using-tiup.md)
         - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
   + [监控与告警设置](monitor-a-dm-cluster.md)
-  + 测试验证
+  + [测试验证](create-task-and-verify.md)
   + [性能测试](benchmark-v1.0-ga.md)
 + 运维操作
   - [版本升级](dm-upgrade.md)
@@ -39,6 +39,7 @@
   - [切换 DM-worker 与上游 MySQL 实例的连接](usage-scenario-master-slave-switch.md)
   - [告警处理](handle-alerts.md)
   - [日常巡检](daily-check.md)
++ [DM Portal](dm-portal.md)
 + 故障处理
   - [故障及处理方法](error-handling.md)
   - [性能问题及处理方法](handle-performance-issues.md)

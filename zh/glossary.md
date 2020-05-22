@@ -61,7 +61,7 @@ MySQL/MariaDB 的全局事务 ID，当启用该功能后会在 Binlog 文件中�
 
 ### Heartbeat
 
-在增量数据迁移过程中，用于估算数据从在上游写入后到达 Binlog replication 处理单元延迟时间的机制，具体可参考[同步延迟监控](feature-overview.md#同步延迟监控)。
+在增量数据迁移过程中，用于估算数据从在上游写入后到达 Binlog replication 处理单元延迟时间的机制，具体可参考[同步延迟监控](key-features.md#同步延迟监控)。
 
 ## L
 
@@ -113,7 +113,7 @@ DM-worker 内部用于从上游拉取 Binlog 并写入数据到 Relay log 的处
 
 ### Table routing
 
-用于支持将上游 MySQL/MariaDB 实例的某些表同步到下游指定表的路由功能，可以用于分库分表的合并同步，具体可参考 [Table routing](feature-overview.md#table-routing)。
+用于支持将上游 MySQL/MariaDB 实例的某些表同步到下游指定表的路由功能，可以用于分库分表的合并同步，具体可参考 [Table routing](key-features.md#table-routing)。
 
 ### Task
 
