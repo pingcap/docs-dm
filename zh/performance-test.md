@@ -59,7 +59,6 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
   ---
   name: test-full
   task-mode: full
-  is-sharding: false
 
   # 使用实际测试环境中 TiDB 的信息配置
   target-database:
@@ -117,7 +116,6 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
   ---
   name: test-all
   task-mode: all
-  is-sharding: false
   enable-heartbeat: true
 
   # 使用实际测试环境中 TiDB 的信息配置
