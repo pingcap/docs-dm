@@ -30,12 +30,15 @@
   - [版本升级](dm-upgrade.md)
   - [扩缩容](scale-a-dm-cluster.md)
   - [重启集群](cluster-operations.md#重启集群组件)
-  + 任务管理 参考 [任务前置检查](precheck.md)，[任务状态查询](query-status.md)，[跳过或替代执行异常的 SQL 语句](skip-or-replace-abnormal-sql-statements.md)
-    - 创建 [参考](manage-replication-tasks.md##创建数据同步任务)
-    - 查询 [参考](manage-replication-tasks.md#查询数据同步任务状态)
-    - 暂停 [参考](manage-replication-tasks.md#暂停数据同步任务)
-    - 重启
-    - 删除
+  + 任务管理
+    - [管理上游数据源](manage-source.md)
+    - [任务前置检查](precheck.md)
+    - [创建任务](create-task.md)
+    - [查询任务](query-task.md)
+    - [暂停任务](pause-task.md)
+    - [恢复任务](resume-task.md)
+    - [删除任务](stop-task.md)
+    - [跳过或替代执行异常的 SQL 语句](skip-or-replace-abnormal-sql-statements.md)
   - [告警处理](handle-alerts.md)
   - [日常巡检](daily-check.md)
 + 故障处理 参考 [故障诊断](troubleshoot-dm.md)，[错误含义](error-system.md)
