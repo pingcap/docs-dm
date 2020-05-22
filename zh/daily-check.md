@@ -4,7 +4,7 @@ summary: 了解 DM 工具的日常巡检。
 category: reference
 ---
 
-# Data Migration 日常巡检
+# TiDB Data Migration 日常巡检
 
 本文总结了 DM 工具日常巡检的方法：
 
