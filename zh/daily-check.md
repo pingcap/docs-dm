@@ -6,7 +6,7 @@ category: reference
 
 # Data Migration 日常巡检
 
-本文总结了 DM 工具日常巡检的方法:
+本文总结了 DM 工具日常巡检的方法：
 
 + 方法一：执行 `query-status` 命令查看任务运行状态以及相关错误输出。详见[查询状态](query-status.md)。
 
