@@ -1,7 +1,7 @@
 ---
 title: 创建数据同步任务及测试验证
 summary: 部署 DM 集群后，创建数据同步任务验证集群是否可以正常工作。
-category: reference
+category: how-to
 ---
 
 # 创建数据同步任务及测试验证
@@ -62,7 +62,7 @@ password = "fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg="
 port = 3306
 ```
 
-对于 MySQL2 数据源，将以上内容复制到文件 `conf/source2.toml` 中，修改 `conf/source2.toml` 配置文件中的 `name` 为 `mysql-replica-02`，`host` 为 `192.168.0.2`，并将 `password` 和 `port` 改为相应的值。
+对于 MySQL2 数据源，将以上内容复制到文件 `conf/source2.toml` 中，将 `conf/source2.toml` 配置文件中的 `name` 修改为 `mysql-replica-02`，将 `host` 修改为 `192.168.0.2`，并将 `password` 和 `port` 改为相应的值。
 
 ### 创建 source
 
