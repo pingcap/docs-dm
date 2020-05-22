@@ -26,7 +26,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/get-started/']
 
 ## 准备工作
 
-部署 DM 前需要下载 binary、搭建好上下游数据库，并准备好数据。
+部署 DM 前需要下载 binary，搭建好上下游数据库，并准备好数据。
 
 ### 准备 DM binary 包
 
@@ -96,7 +96,7 @@ mv tidb-v4.0.0-rc.2-linux-amd64/bin ./
 `master1/dm-master1.toml`:
 
 ```toml
-# DM-Master1 Configuration.
+# DM-master1 Configuration.
 name = "master1"
 master-addr = ":8261"
 advertise-addr = "127.0.0.1:8261"
@@ -107,7 +107,7 @@ initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,m
 `master2/dm-master2.toml`:
 
 ```toml
-# DM-Master2 Configuration.
+# DM-master2 Configuration.
 name = "master2"
 master-addr = ":8361"
 advertise-addr = "127.0.0.1:8361"
@@ -118,7 +118,7 @@ initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,m
 `master3/dm-master3.toml`:
 
 ```toml
-# DM-Master3 Configuration.
+# DM-master3 Configuration.
 name = "master3"
 master-addr = ":8461"
 advertise-addr = "127.0.0.1:8461"
