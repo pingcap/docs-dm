@@ -1,6 +1,6 @@
 ---
 title: DM 集群性能测试
-summary: 了解如何测试 DM 集群的性能 。
+summary: 了解如何测试 DM 集群的性能。
 category: reference
 ---
 
@@ -15,7 +15,7 @@ category: reference
 ## 部署测试环境
 
 - 使用 TiUP 部署 TiDB 测试集群，所有配置使用 TiUP 提供的默认配置。
-- 部署 MySQL 服务，开启 row 模式 binlog，其他配置项使用默认配置。
+- 部署 MySQL 服务，开启 `ROW` 模式 binlog，其他配置项使用默认配置。
 - 部署 DM 集群，部署一个 DM-worker 和一个 DM-master 即可。
 
 ## 性能测试
@@ -78,7 +78,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
   # 配置 sysbench 生成数据所在的库的名称
   black-white-list:
     instance:
-      do-dbs: ["sbtest"]
+      do-dbs: ["dm_benchmark"]
 
   mydumpers:
     global:
@@ -136,7 +136,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
   # 配置 sysbench 生成数据所在的库的名称
   black-white-list:
     instance:
-      do-dbs: ["sbtest"]
+      do-dbs: ["dm_benchmark"]
 
   syncers:
     global:
