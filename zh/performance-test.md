@@ -101,13 +101,13 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 
 根据测试数据的数据量和导入消耗时间，可以算出全量数据的同步速度。
 
-## 增量同步性能测试用例
+### 增量同步性能测试用例
 
-### 初始化表 
+#### 初始化表 
 
 使用 `sysbench` 在上游创建测试表。
 
-### 创建数据同步任务
+#### 创建数据同步任务
 
 1. 创建上游 MySQL 的 source, source-id 配置为 `source-1`。（如果在全量同步性能测试中已经创建，则不需要再次创建）。
 
@@ -148,7 +148,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 >
 > `syncers` 配置项中的 `worker-count` 和 `batch` 可以做适当调整，测试在不同配置下性能的差异。
 
-### 生成增量数据
+#### 生成增量数据
 
 执行 `sysbench` 命令在上游持续生成增量数据：
 
@@ -162,6 +162,6 @@ sysbench --test=oltp_insert --tables=4 --num-threads=32 --mysql-host=172.17.4.40
 >
 > 可以通过调整 `sysbench` 的语句类型，测试在不同业务场景下 DM 的数据同步性能。
 
-### 获取测试结果
+#### 获取测试结果
 
 通过 `query-status` 命令观测 DM 的同步状态，通过 Grafana 观测 DM 的监控指标。主要包括同步延迟 `replicate lag`，单位时间内完成的 job 数量 `finished sqls jobs` 等。
