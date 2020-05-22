@@ -510,7 +510,7 @@ column-mappings:
 
 ## 同步延迟监控
 
-DM 支持通过 heartbeat 真实同步数据来计算每个同步任务与 MySQL/MariaDB 的实时同步延迟。
+DM 支持通过在 MySQL/MariaDB 上写 `heartbeat` 相关的数据，并在数据同步到 DM 时，计算每个同步任务与 MySQL/MariaDB 的实时同步延迟。
 
 > **注意：**
 >
