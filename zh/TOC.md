@@ -24,7 +24,7 @@
         - [使用 TiUP](deploy-a-dm-cluster-using-tiup.md)
         - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
   + [监控与告警设置](monitor-a-dm-cluster.md)
-  + 测试验证
+  + [测试验证](create-task-and-verify.md)
   + [性能测试](benchmark-v1.0-ga.md)
 + 运维操作
   - [版本升级](dm-upgrade.md)
@@ -38,7 +38,7 @@
     - 删除
   - [告警处理](handle-alerts.md)
   - [日常巡检](daily-check.md)
-+ 故障处理 参考 [故障诊断](troubleshoot-dm.md)，[错误含义](error-system.md)
++ 故障处理
   - [故障及处理方法](error-handling.md)
   - [性能问题及处理方法](handle-performance-issues.md)
 + 教程
