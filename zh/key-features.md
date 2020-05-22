@@ -163,7 +163,7 @@ black-white-list:
 
 判断 table `test`.`t` 是否应该被过滤的过滤流程如下：
 
-1. 首先 **schema 过滤判断**
+1. 首先进行 **schema 过滤判断**
 
     - 如果 `do-dbs` 不为空，判断 `do-dbs` 中是否存在一个匹配的 schema。
 
