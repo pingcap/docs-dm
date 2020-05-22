@@ -98,7 +98,7 @@ DM 的迁移任务状态取决于其分配到 DM-worker 上的[子任务状态](
                         "masterBinlog": "(bin.000001, 3234)",                               # 上游数据库当前的 binlog position
                         "masterBinlogGtid": "c0149e17-dff1-11e8-b6a8-0242ac110004:1-14",    # 上游数据库当前的 GTID 信息
                         "syncerBinlog": "(bin.000001, 2525)",                               # 已被 `Sync` 处理单元同步的 binlog position
-                        "syncerBinlogGtid": "",                                             # 当前版本总是为空（因为 `Sync` 处理单元暂不使用 GTID 同步数据）
+                        "syncerBinlogGtid": "",                                             # 使用 GTID 同步的 binlog position
                         "blockingDDLs": [       # 当前被阻塞的 DDL 列表。该项仅在当前 DM-worker 所有上游表都处于 “synced“ 状态时才有数值，此时该列表包含的是待执行或待跳过的 sharding DDL 语句
                             "USE `test`; ALTER TABLE `test`.`t_target` DROP COLUMN `age`;"
                         ],
