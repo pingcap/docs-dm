@@ -36,6 +36,7 @@
     - 暂停 [参考](manage-replication-tasks.md#暂停数据同步任务)
     - 重启
     - 删除
+  - [切换 DM-worker 与上游 MySQL 实例的连接](usage-scenario-master-slave-switch.md)
   - [告警处理](handle-alerts.md)
   - [日常巡检](daily-check.md)
 + 故障处理 参考 [故障诊断](troubleshoot-dm.md)，[错误含义](error-system.md)
