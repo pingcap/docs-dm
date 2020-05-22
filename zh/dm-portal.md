@@ -128,13 +128,14 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 #### 操作步骤
 
 1. 点击需要配置的数据库或者数据表。
+
+    ![DM Portal InstanceShow](/media/zh/dm-portal-instanceshow.png)
+
 2. 点击编辑按钮，选择需要过滤的 binlog 类型。
 
-![DM Portal InstanceShow](/media/zh/dm-portal-instanceshow.png)
+    ![DM Portal BinlogFilter 1](/media/zh/dm-portal-binlogfilter-1.png)
 
-![DM Portal BinlogFilter 1](/media/zh/dm-portal-binlogfilter-1.png)
-
-![DM Portal BinlogFilter 2](/media/zh/dm-portal-binlogfilter-2.png)
+    ![DM Portal BinlogFilter 2](/media/zh/dm-portal-binlogfilter-2.png)
 
 ### 5. 库表路由配置
 
