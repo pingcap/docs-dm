@@ -193,7 +193,7 @@ black-white-list:
 
 > **注意：**
 >
-> 判断 schema `test` 是否被过滤，只进行 **schema 过滤判断**
+> 如果是判断 schema `test` 是否应该被过滤，则只进行 **schema 过滤判断**。
 
 ### 使用示例
 
