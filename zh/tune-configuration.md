@@ -26,7 +26,7 @@ DM 全量备份时会根据 `chunk-filesize` 参数的值把每个表的数据�
 >
 > - `mydumpers` 的参数值不支持在同步任务创建后更新，所以需要在创建任务前确定好各个参数的值。如果需要更新，则需要使用 dmctl stop 任务后更新配置文件，然后再重新创建任务。
 > - `mydumpers`.`threads` 可以使用配置项 `mydumper-thread` 替代来简化配置。
-> - 如果设置了 `rows`, DM 会忽略 `chunk-filesize` 的值。
+> - 如果设置了 `rows`，DM 会忽略 `chunk-filesize` 的值。
 
 ## 全量导入
 
