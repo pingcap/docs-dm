@@ -56,7 +56,7 @@ Go Version: go version go1.13 linux/amd64
 
 ### 主要变更
 
-- DM-portal 新增英文 UI 的支持
+- DM Portal 新增英文 UI 的支持
 - `query-status` 命令增加 `--more` 参数用于显示完整的同步状态信息
 - 修复到下游 TiDB 连接异常导致同步暂停后，resume-task 可能无法正常恢复同步的问题
 - 修复 online DDL 执行失败后错误清理了 online DDL meta 信息而导致重启任务后无法继续正确处理 online DDL 同步的问题
