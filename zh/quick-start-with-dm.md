@@ -1,7 +1,8 @@
 ---
 title: TiDB Data Migration 快速上手指南
-category: reference
 summary: 了解如何快速上手部署试用 TiDB Data Migration 工具。
+category: how-to
+aliases: ['/docs-cn/tidb-data-migration/dev/get-started/']
 ---
 # TiDB Data Migration 快速上手指南
 
