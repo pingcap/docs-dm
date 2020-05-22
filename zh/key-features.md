@@ -516,7 +516,7 @@ DM 支持通过 heartbeat 真实同步数据来计算每个同步任务与 MySQL
 >
 > - `heartbeat` 开启后会在 DM-worker 连接的上游 MySQL 实例上执行写入操作，如果上游多个 MySQL 实例构成主从集群，请确保 DM-worker 连接的是主实例，否则会造成 MySQL 主从间数据的不一致。
 > - 同步延迟的估算的精度在秒级别。
-> - heartbeat 相关的 binlog 不会同步到下游，在计算延迟后会被丢弃。
+> - `heartbeat` 相关的 binlog 不会同步到下游，在计算延迟后会被丢弃。
 
 ### 系统权限
 
