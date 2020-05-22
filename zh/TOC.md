@@ -9,7 +9,7 @@
   + 基本信息
     - [开源信息说明](licensing.md)
     - [性能数据](performance.md)
-  - [主要特性](key-features.md)  可参考 [特性概述](feature-overview.md)，[Online-ddl-scheme](feature-online-ddl-scheme.md)，和 Shard Support 相关文档（[简介](feature-shard-merge.md)，[使用限制](feature-shard-merge.md#使用限制)，[手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md)）
+  - [主要特性](key-features.md)
   - [应用场景](scenarios.md) 参考 [分表合并数据迁移最佳实践](shard-merge-best-practices.md)，[DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
 + 快速上手
   - [部署集群](quick-start-with-dm.md)
@@ -38,6 +38,7 @@
     - 删除
   - [告警处理](handle-alerts.md)
   - [日常巡检](daily-check.md)
++ [DM Portal](dm-portal.md)
 + 故障处理
   - [故障及处理方法](error-handling.md)
   - [性能问题及处理方法](handle-performance-issues.md)
