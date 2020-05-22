@@ -12,7 +12,7 @@ category: reference
 
 ### 将 TiDB 作为 MySQL/MariaDB 的从库
 
-如需将 TiDB 作为上游 MySQL/MariaDB 的从库，即将上游实例中的所有数据先以全量形式导入到 TiDB、然后以增量形式实时复制后续变更到 TiDB，则简单按如下规则配置数据迁移任务即可：
+如需将 TiDB 作为上游 MySQL/MariaDB 的从库，即将上游实例中的所有数据先以全量形式导入到 TiDB，然后以增量形式实时复制后续变更到 TiDB，则简单按如下规则配置数据迁移任务即可：
 
 - 指定 `task-mode` 为 `all`。
 - 配置 `target-database` 为下游 TiDB 相关连接信息。
