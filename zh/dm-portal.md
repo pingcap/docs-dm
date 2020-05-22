@@ -55,7 +55,7 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 
 ### DM Ansible 部署
 
-可以使用 DM Ansible 部署 DM Portal，具体部署方法参照[使用 DM Ansible 部署 DM 集群](deploy-a-dm-cluster-using-ansible.md)。
+可以使用 DM-Ansible 部署 DM Portal，具体部署方法参照[使用 DM Ansible 部署 DM 集群](deploy-a-dm-cluster-using-ansible.md)。
 
 ## 使用说明
 
