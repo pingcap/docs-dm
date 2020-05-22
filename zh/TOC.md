@@ -39,7 +39,7 @@
   - [切换 DM-worker 与上游 MySQL 实例的连接](usage-scenario-master-slave-switch.md)
   - [告警处理](handle-alerts.md)
   - [日常巡检](daily-check.md)
-+ 故障处理 参考 [故障诊断](troubleshoot-dm.md)，[错误含义](error-system.md)
++ 故障处理
   - [故障及处理方法](error-handling.md)
   - [性能问题及处理方法](handle-performance-issues.md)
 + 教程
