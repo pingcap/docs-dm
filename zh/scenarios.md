@@ -6,7 +6,7 @@ category: reference
 
 # 应用场景
 
-本文档介绍 DM 支持的主要应用场景及相关的使用建议。
+本文档介绍 TiDB Data Migration (DM) 支持的主要应用场景及相关的使用建议。
 
 ## 非合库合表场景
 
