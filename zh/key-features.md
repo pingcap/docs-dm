@@ -266,7 +266,7 @@ filters:
 
 ### 参数解释
 
-- [`schema-pattern`/`table-pattern`](table-selector.md)：对匹配上的上游 MySQL/MariaDB 实例的表的 binlog events 或者 DDL SQL 语句进行以下规则过滤。
+- [`schema-pattern`/`table-pattern`](table-selector.md)：对匹配上的上游 MySQL/MariaDB 实例的表的 binlog events 或者 DDL SQL 语句通过以下规则进行过滤。
 
 - `events`：binlog events 数组，仅支持从以下 `Event` 中选择一项或多项。
 
