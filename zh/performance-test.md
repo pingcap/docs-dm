@@ -51,7 +51,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 
 #### 创建数据同步任务
 
-1. 创建上游 MySQL 的 source，将 `source-id` 配置为 `source-1`。
+1. 创建上游 MySQL 的 source，将 `source-id` 配置为 `source-1`。详细操作方法参考：[加载数据源配置](manage-replication-tasks.md#加载数据源配置)。
 
 2. 创建 `full` 模式的 DM 同步任务，示例任务配置文件如下：
 
@@ -85,6 +85,8 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
       threads: 32
   ```
 
+创建数据同步任务的详细操作参考[创建数据同步任务]((manage-replication-tasks.md#创建数据同步任务)。
+
 > **注意：**
 >
 > - 在 `mydumpers` 配置项中使用 `rows` 选项，可以开启单表多线程并发导出，加快数据导出速度。
@@ -108,7 +110,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 
 #### 创建数据同步任务
 
-1. 创建上游 MySQL 的 source, source-id 配置为 `source-1`。（如果在全量同步性能测试中已经创建，则不需要再次创建）。
+1. 创建上游 MySQL 的 source, source-id 配置为 `source-1`。（如果在全量同步性能测试中已经创建，则不需要再次创建）。详细操作方法参考：[加载数据源配置](manage-replication-tasks.md#加载数据源配置)。
 
 2. 创建 `all` 模式的 DM 同步任务，示例任务配置文件如下：
 
@@ -142,6 +144,8 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
       batch: 100
   ```
 
+创建数据同步任务的详细操作参考[创建数据同步任务]((manage-replication-tasks.md#创建数据同步任务)。
+
 > **注意：**
 >
 > `syncers` 配置项中的 `worker-count` 和 `batch` 可以做适当调整，测试在不同配置下性能的差异。
@@ -162,4 +166,4 @@ sysbench --test=oltp_insert --tables=4 --num-threads=32 --mysql-host=172.17.4.40
 
 #### 获取测试结果
 
-通过 `query-status` 命令观测 DM 的同步状态，通过 Grafana 观测 DM 的监控指标。主要包括同步延迟 `replicate lag`，单位时间内完成的 job 数量 `finished sqls jobs` 等。
+通过 `query-status` 命令观测 DM 的同步状态，通过 Grafana 观测 DM 的监控指标。主要包括同步延迟 `replicate lag`，单位时间内完成的 job 数量 `finished sqls jobs` 等，详细的监控指标说明参考[Binlog replication 监控指标](monitor-a-dm-cluster.md#Binlog replication)。
