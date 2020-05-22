@@ -26,7 +26,7 @@ category: reference
 
 如期望上游数据迁移到下游不同名的库或表中，则可额外配置 `route-rules`。
 
-如果对于一些归档类场景等，可能在上游会定期通过 `TRUNCATE TABLE`/`DROP TABLE` 或其他方式清理部分数据，但又期望下游 TiDB 中保留全部的数据，则可额外配置 `filter-rules` 过滤掉相关数据清理操作。
+对于一些归档类场景，可能在上游会定期通过 `TRUNCATE TABLE`/`DROP TABLE` 或其他方式清理部分数据，但又期望下游 TiDB 中保留全部的数据，则可额外配置 `filter-rules` 过滤掉相关数据清理操作。
 
 对于此类场景，可参考 [Data Migration 简单使用场景](usage-scenario-simple-replication.md)。
 
