@@ -45,8 +45,7 @@ wget http://download.pingcap.org/dm-nightly-linux-amd64.tar.gz && mkdir bin && t
 {{< copyable "shell-regular" >}}
 
 ```bash
-git clone https://github.com/pingcap/dm.git
-cd dm && make
+git clone https://github.com/pingcap/dm.git && cd dm && make
 ```
 
 #### 可选项：将下载/编译的 binary 加入环境变量 PATH 中，方便部署使用
@@ -54,8 +53,7 @@ cd dm && make
 {{< copyable "shell-regular" >}}
 
 ```bash
-DM_PATH=`pwd`
-export PATH=$PATH:$DM_PATH/bin
+DM_PATH=`pwd` && export PATH=$PATH:$DM_PATH/bin
 ```
 
 ### 运行上游 MySQL
@@ -82,11 +80,7 @@ docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=tru
 {{< copyable "shell-regular" >}}
 
 ```bash
-wget https://download.pingcap.org/tidb-v4.0.0-rc.2-linux-amd64.tar.gz # 下载 TiDB v4.0.0-rc.2 包
-tar -xzvf tidb-v4.0.0-rc.2-linux-amd64.tar.gz
-mv tidb-v4.0.0-rc.2-linux-amd64/bin ./
-
-./tidb-server -P 4000 --store mocktikv --log-file "./tidb.log" &
+wget https://download.pingcap.org/tidb-v4.0.0-rc.2-linux-amd64.tar.gz && tar -xzvf tidb-v4.0.0-rc.2-linux-amd64.tar.gz && mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./ && ./tidb-server -P 4000 --store mocktikv --log-file "./tidb.log" &
 ```
 
 ## 部署 DM-master
