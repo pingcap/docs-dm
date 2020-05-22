@@ -6,7 +6,7 @@ category: reference
 
 # 创建数据同步任务
 
-`start-task` 命令用于创建数据同步任务。 当数据同步任务启动时，DM 将[自动对相应权限和配置进行前置检查](precheck.md)。
+`start-task` 命令用于创建数据同步任务。当数据同步任务启动时，DM 将[自动对相应权限和配置进行前置检查](precheck.md)。
 
 {{< copyable "" >}}
 
