@@ -44,7 +44,7 @@ category: reference
 
 ## 部署使用
 
-本节介绍两种部署方式：Binary 部署和 DM Ansible 部署。
+本节介绍两种部署方式：Binary 部署和 DM-Ansible 部署。
 
 ### Binary 部署
 
