@@ -37,7 +37,7 @@
     - [查询任务](query-task.md)
     - [暂停任务](pause-task.md)
     - [恢复任务](resume-task.md)
-    - [删除任务](stop-task.md)
+    - [停止任务](stop-task.md)
     - [跳过或替代执行异常的 SQL 语句](skip-or-replace-abnormal-sql-statements.md)
   - [告警处理](handle-alerts.md)
   - [日常巡检](daily-check.md)
