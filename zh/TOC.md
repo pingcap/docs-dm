@@ -54,7 +54,7 @@
   - [DM 命令行参数](command-line-flags.md)
   - [配置文件](configuration-file.md) 参考 [概述](config-overview.md)，[DM-master 配置](dm-master-configuration-file.md)，[DM-worker 配置](dm-worker-configuration-file.md)，[上游数据库配置](source-configuration-file.md)，[任务配置](task-configuration-file.md)
   - [监控指标](monitor-a-dm-cluster.md)
-  - [告警信息](alert-rules.md) [参考](monitor-a-dm-cluster.md)
+  - [告警信息](alert-rules.md)
   - [错误码](error-codes.md)
 + [常见问题](faq.md)
 + 版本发布历史
