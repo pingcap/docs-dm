@@ -59,7 +59,7 @@ category: benchmark
 
 ## 测试场景
 
-可以参考[性能测试](performance-test.md)中介绍的测试场景进行测试，即 MySQL1 (172.16.4.40) -> DM-worker -> TiDB (172.16.4.41)
+可以参考[性能测试](performance-test.md)中介绍的测试场景进行测试，即 MySQL1 (172.16.4.40) -> DM-worker -> TiDB (172.16.4.41)。
 
 ### 全量导入性能测试
 
@@ -106,7 +106,7 @@ category: benchmark
 
 ### 增量同步性能测试用例
 
-使用[增量同步性能测试用例](./performance-test.md#增量同步性能测试用例)中介绍的方法进行测试。
+使用[增量同步性能测试用例](performance-test.md#增量同步性能测试用例)中介绍的方法进行测试。
 
 #### 增量同步性能测试结果
 
