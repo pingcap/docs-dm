@@ -66,4 +66,4 @@ category: reference
 
 ### `DM_binlog_file_gap_between_relay_syncer`
 
-当 Binlog replication 处理单元已处理到的 binlog 文件个数落后于 relay log 处理单元超过 1 个（不含 1 个）且持续 10 分钟时 DM 会触发该告警，些时需要参考[性能问题及处理方法](handle-performance-issues.md)对 Binlog replication 处理单元相关的性能问题进行排查与处理。
+当 Binlog replication 处理单元已处理到的 binlog 文件个数落后于 relay log 处理单元超过 1 个（不含 1 个）且持续 10 分钟时 DM 会触发该告警，此时需要参考[性能问题及处理方法](handle-performance-issues.md)对 Binlog replication 处理单元相关的性能问题进行排查与处理。
