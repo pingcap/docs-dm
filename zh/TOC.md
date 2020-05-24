@@ -7,7 +7,6 @@
 
 + 关于 TiDB Data Migration
   + 基本信息
-    - [开源信息说明](licensing.md)
     - [性能数据](performance.md)
   - [主要特性](key-features.md)
   - [应用场景](scenarios.md) 参考 [分表合并数据迁移最佳实践](shard-merge-best-practices.md)，[DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
@@ -16,8 +15,6 @@
   - [同步任务](replicate-data-using-dm.md)
 + 部署文档
   - [软硬件要求](hardware-and-software-requirements.md)
-  - [环境与系统配置检查](system-configuration-check.md)
-  - [配置拓扑结构](configure-topology.md)
   + 安装与启动
     + 部署社区版本
       + Linux (Redhat/CentOS)
@@ -50,12 +47,20 @@
   + 软件调优
     - [配置调优](tune-configuration.md) 另可参考 [DM Portal](dm-portal.md)
 + 参考指南
-  - [架构](overview.md#dm-架构) 另外可参考 [DM-worker 简介](dm-worker-intro.md)，[DM Relay Log](relay-log.md)
+  + 架构
+    - [DM 简介](overview.md)
+    - [DM-worker 简介](dm-worker-intro.md)
+    - [DM Relay Log](relay-log.md)
   - [DM 命令行参数](command-line-flags.md)
-  - [配置文件](configuration-file.md) 参考 [概述](config-overview.md)，[DM-master 配置](dm-master-configuration-file.md)，[DM-worker 配置](dm-worker-configuration-file.md)，[上游数据库配置](source-configuration-file.md)，[任务配置](task-configuration-file.md)
+  + 配置
+    - [概述](config-overview.md)
+    - [DM-master 配置](dm-master-configuration-file.md)
+    - [DM-worker 配置](dm-worker-configuration-file.md)
+    - [上游数据库配置](source-configuration-file.md)
+    - [任务配置](task-configuration-file.md)
   - [监控指标](monitor-a-dm-cluster.md)
   - [告警信息](alert-rules.md) [参考](monitor-a-dm-cluster.md)
-  - [错误码](error-codes.md)
+  - [错误码](error-handling.md#常见故障处理方法)
 + [常见问题](faq.md)
 + 版本发布历史
   + v1.0
