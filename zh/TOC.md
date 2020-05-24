@@ -45,7 +45,7 @@
   - [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
 + 性能调优指南
   + 软件调优
-    - [配置调优](tune-configuration.md) 另可参考 [DM Portal](dm-portal.md)
+    - [配置调优](tune-configuration.md)
 + 参考指南
   + 架构
     - [DM 简介](overview.md)
