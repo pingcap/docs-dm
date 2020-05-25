@@ -16,10 +16,10 @@
     - [同步延迟监控](key-features.md#同步延迟监控)
     - [Online-ddl-scheme](feature-online-ddl-scheme.md)
     - [分库分表合并同步](feature-shard-merge.md)
-    - [手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md)
 + [应用场景](scenarios.md)
 + 快速上手
   - [部署集群](quick-start-with-dm.md)
+  - [同步任务](replicate-data-using-dm.md)
 + 部署文档
   - [软硬件要求](hardware-and-software-requirements.md)
   - [环境与系统配置检查](system-configuration-check.md)
@@ -27,7 +27,6 @@
   + 部署 DM 集群
     - [使用 DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
-  + [同步任务](replicate-data-using-dm.md)
   + [监控与告警设置](monitor-a-dm-cluster.md)
   + [测试验证](create-task-and-verify.md)
   + [性能测试](benchmark-v1.0-ga.md)
@@ -53,6 +52,7 @@
   - [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
   - [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
   - [DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
+  - [手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md)
 + 性能调优
   - [配置调优](tune-configuration.md)
 + 参考指南
