@@ -40,6 +40,7 @@
     - 暂停 [参考](manage-replication-tasks.md#暂停数据同步任务)
     - 重启
     - 删除
+  - [手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md)
   - [告警处理](handle-alerts.md)
   - [日常巡检](daily-check.md)
 + [DM Portal](dm-portal.md)
@@ -52,7 +53,6 @@
   - [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
   - [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
   - [DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
-  - [手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md)
 + 性能调优
   - [配置调优](tune-configuration.md)
 + 参考指南
