@@ -1,10 +1,10 @@
 ---
-title: dmctl 使用简介
+title: dmctl 简介
 summary: 了解如何使用 dmctl 管理数据同步任务。
 category: reference
 ---
 
-# dmctl 使用简介
+# dmctl 简介
 
 dmctl 是用来控制 DM 集群的命令行工具。对于用 DM-Ansible 部署的 DM 集群，dmctl 二进制文件路径为 `dm-ansible/dmctl`。
 

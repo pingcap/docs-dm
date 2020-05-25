@@ -29,10 +29,9 @@
   + [性能测试](benchmark-v1.0-ga.md)
 + 运维操作
   - [版本升级](dm-upgrade.md)
-  - [扩缩容](scale-a-dm-cluster.md)
-  - [重启集群](cluster-operations.md#重启集群组件)
+  - [集群操作](cluster-operations.md)
   + 任务管理
-    - [dmctl 使用简介](dmctl-introduction.md)
+    - [dmctl 简介](dmctl-introduction.md)
     - [管理上游数据源](manage-source.md)
     - [任务前置检查](precheck.md)
     - [创建任务](create-task.md)
