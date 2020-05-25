@@ -12,7 +12,7 @@ category: reference
 
 ### `DM_task_state`
 
-当 DM-worker 内有子任务的状态处于 paused 超过 20 分钟时会触发该告警，此时需要参考[DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
+当 DM-worker 内有子任务处于 `Paused` 状态超过 20 分钟时会触发该告警，此时需要参考[DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
 
 ## relay log 告警
 
