@@ -12,13 +12,13 @@ category: reference
 
 ### `DM_task_state`
 
-当 DM-worker 内有子任务处于 `Paused` 状态超过 20 分钟时会触发该告警，此时需要参考[DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
+当 DM-worker 内有子任务处于 `Paused` 状态超过 20 分钟时会触发该告警，此时需要参考 [DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
 
 ## relay log 告警
 
 ### `DM_relay_process_exits_with_error`
 
-当 relay log 处理单元遇到错误时，会转为 `Paused` 状态并立即触发该告警，此时需要参考[DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
+当 relay log 处理单元遇到错误时，会转为 `Paused` 状态并立即触发该告警，此时需要参考 [DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
 
 ### `DM_remain_storage_of_relay_log`
 
@@ -30,11 +30,11 @@ category: reference
 
 ### `DM_relay_log_data_corruption`
 
-当 relay log 处理单元在校验从上游读取到的 binlog event 且发现 checksum 信息异常时会转为 paused 状态并立即触发告警，此时需要参考[DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
+当 relay log 处理单元在校验从上游读取到的 binlog event 且发现 checksum 信息异常时会转为 paused 状态并立即触发告警，此时需要参考 [DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
 
 ### `DM_fail_to_read_binlog_from_master`
 
-当 relay log 处理单元在尝试从上游读取 binlog event 发生错误时，会转为 `Paused` 状态并立即触发该告警，此时需要参考[DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
+当 relay log 处理单元在尝试从上游读取 binlog event 发生错误时，会转为 `Paused` 状态并立即触发该告警，此时需要参考 [DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
 
 ### `DM_fail_to_write_relay_log`
 
@@ -48,7 +48,7 @@ category: reference
 
 ### `DM_dump_process_exists_with_error`
 
-当 Dump 处理单元遇到错误时，会转为 `Paused` 状态并立即触发该告警，此时需要参考[DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
+当 Dump 处理单元遇到错误时，会转为 `Paused` 状态并立即触发该告警，此时需要参考 [DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
 
 ### `DM_load_process_exists_with_error`
 
@@ -58,7 +58,7 @@ category: reference
 
 ### `DM_sync_process_exists_with_error`
 
-当 Binlog replication 处理单元遇到错误时，会转为 paused 状态并立即触发该告警，此时需要参考[DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
+当 Binlog replication 处理单元遇到错误时，会转为 paused 状态并立即触发该告警，此时需要参考 [DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
 
 ### `DM_binlog_file_gap_between_master_syncer`
 
