@@ -30,7 +30,7 @@ category: reference
 
 ### `DM_relay_log_data_corruption`
 
-当 relay log 处理单元在校验从上游读取到的 binlog event 且发现 checksum 信息异常时会转为 paused 状态并立即触发告警，此时需要参考 [DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
+当 relay log 处理单元在校验从上游读取到的 binlog event 且发现 checksum 信息异常时会转为 `Paused` 状态并立即触发告警，此时需要参考 [DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
 
 ### `DM_fail_to_read_binlog_from_master`
 
