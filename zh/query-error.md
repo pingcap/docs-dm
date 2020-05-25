@@ -6,7 +6,7 @@ category: reference
 
 # TiDB Data Migration 查询运行错误
 
-本文介绍 DM（Data Migration）`query-error` 命令的查询错误与子任务错误。
+本文介绍 TiDB Data Migration (DM) `query-error` 命令的查询错误与子任务错误。
 
 ## 查询结果
 
