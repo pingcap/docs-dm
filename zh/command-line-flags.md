@@ -92,7 +92,7 @@ category: reference
 
 ### `--join`
 
-- DM-worker 将要注册到的集群的 DM-master 节点 `{advertise-addr}` 列表
+- DM-worker 注册到集群时，相应集群的 DM-master 节点的 `{advertise-addr}` 列表
 - 默认值为 `""`
 - 必选参数，一个 3 DM-master 节点的集群配置示例为 `"172.16.15.11:8261,172.16.15.12:8261,172.16.15.13:8261"`
 
