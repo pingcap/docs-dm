@@ -1,11 +1,12 @@
 ---
-title: DM 版本升级
+title: TiDB Data Migration 版本升级
+summary: 了解 TiDB Data Migration 工具的版本变更和升级操作。
 category: reference
 ---
 
-# DM 版本升级
+# TiDB Data Migration 版本升级
 
-本文档主要介绍各 DM (Data Migration) 版本间的升级操作步骤。
+本文档主要介绍各 TiDB Data Migration (DM) 版本间的升级操作步骤以及各版本的版本信息和主要变更。
 
 > **注意：**
 >
@@ -13,6 +14,61 @@ category: reference
 > - 若无特殊说明，各升级操作示例均假定已经下载了对应版本的 DM 和 DM-Ansible 且 DM binary 存在于 DM-Ansible 的相应目录中（下载 DM binary 可以参考[更新组件版本](cluster-operations.md#更新组件版本)）。
 > - 若无特殊说明，各升级操作示例均假定升级前已停止所有同步任务，升级完成后手动重新启动所有同步任务。
 > - 以下版本升级指引逆序展示。
+
+## 升级到 v1.0.5
+
+### 版本信息
+
+```bash
+Release Version: v1.0.5
+Git Commit Hash: a8e9f53f91e29756b09a22cdc37a6a6efcdfe55b
+Git Branch: release-1.0
+UTC Build Time: 2020-04-27 06:56:31
+Go Version: go version go1.13 linux/amd64
+```
+
+### 主要变更
+
+- 优化了 `UNIQUE KEY` 对应列含 `NULL` 值时的增量同步速度
+- 增加对 TiDB 返回的 `Write conflict`（9007 与 8005）错误的重试
+- 修复了全量数据导入过程中有可能触发 `Duplicate entry` 错误的问题
+- 修复了全量导入完成后上游无数据写入时可能无法 `stop-task`/`pause-task` 的问题
+- 修复 `stop-task` 后监控 metrics 仍有数据显示的问题
+
+### 升级操作示例
+
+1. 下载新版本 DM-Ansible，确认 `inventory.ini` 文件中 `dm_version = v1.0.5`
+2. 执行 `ansible-playbook local_prepare.yml` 下载新的 DM binary 到本地
+3. 执行 `ansible-playbook rolling_update.yml` 滚动升级 DM 集群组件
+4. 执行 `ansible-playbook rolling_update_monitor.yml` 滚动升级 DM 监控组件
+
+## 升级到 v1.0.4
+
+### 版本信息
+
+```bash
+Release Version: v1.0.4-1-gd681c67
+Git Commit Hash: d681c6731d3432f4d8f38ea651f44d49d6860269
+Git Branch: release-1.0
+UTC Build Time: 2020-03-16 09:45:29
+Go Version: go version go1.13 linux/amd64
+```
+
+### 主要变更
+
+- DM Portal 新增英文 UI 的支持
+- `query-status` 命令增加 `--more` 参数用于显示完整的同步状态信息
+- 修复到下游 TiDB 连接异常导致同步暂停后，resume-task 可能无法正常恢复同步的问题
+- 修复 online DDL 执行失败后错误清理了 online DDL meta 信息而导致重启任务后无法继续正确处理 online DDL 同步的问题
+- 修复 `start-task` 异常返回的 `query-error` 可能导致 DM-worker panic 的问题
+- 修复 `relay.meta` 写入完成前，DM-worker 进程异常停止，导致重启 DM-worker 时可能无法正确恢复 relay log 文件与 `relay.meta` 的问题
+
+### 升级操作示例
+
+1. 下载新版本 DM-Ansible，确认 `inventory.ini` 文件中 `dm_version = v1.0.4`
+2. 执行 `ansible-playbook local_prepare.yml` 下载新的 DM binary 到本地
+3. 执行 `ansible-playbook rolling_update.yml` 滚动升级 DM 集群组件
+4. 执行 `ansible-playbook rolling_update_monitor.yml` 滚动升级 DM 监控组件
 
 ## 升级到 v1.0.3
 

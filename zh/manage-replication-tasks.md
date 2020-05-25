@@ -611,7 +611,7 @@ update-task task_all_black.yaml
 
 ## 管理 DDL lock
 
-目前与 DDL lock 相关的命令主要包括 `show-ddl-locks`、`unlock-ddl-lock` 等。有关它们的功能、用法以及适用场景等，请参考[手动处理 sharding DDL lock](feature-manually-handling-sharding-ddl-locks.md)。
+目前与 DDL lock 相关的命令主要包括 `show-ddl-locks`、`unlock-ddl-lock` 等。有关它们的功能、用法以及适用场景等，请参考[手动处理 sharding DDL lock](manually-handling-sharding-ddl-locks.md)。
 
 ## 其他任务与集群管理命令
 

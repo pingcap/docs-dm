@@ -26,7 +26,7 @@ category: reference
 
 - 跳过/替代执行操作只适合用于一次性跳过/替代执行**下游 TiDB 不支持执行的 SQL 语句**，其它同步错误请不要使用此方式进行处理。
 
-    - 其它同步错误可尝试使用 [black & white table lists](feature-overview.md#black--white-table-lists) 或 [binlog event filter](feature-overview.md#binlog-event-filter)。
+    - 其它同步错误可尝试使用 [black & white table lists](key-features.md#black--white-table-lists) 或 [binlog event filter](key-features.md#binlog-event-filter)。
 
 - 如果业务不能接受下游 TiDB 跳过异常的 DDL 语句，也不接受使用其他 DDL 语句作为替代，则不适合使用此方式进行处理。
 
