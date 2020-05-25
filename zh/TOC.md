@@ -35,6 +35,7 @@
   - [扩缩容](scale-a-dm-cluster.md)
   - [重启集群](cluster-operations.md#重启集群组件)
   + 任务管理
+    - [dmctl 使用简介](dmctl-intro.md)
     - [管理上游数据源](manage-source.md)
     - [任务前置检查](precheck.md)
     - [创建任务](create-task.md)
