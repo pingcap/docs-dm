@@ -546,7 +546,7 @@ update-task task_all_black.yaml
 
 ## Manage DDL locks
 
-Currently, DDL lock related commands mainly include `show-ddl-locks`, `unlock-ddl-lock`. For more information on their functions, usages, and applicable scenarios, refer to [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md).
+Currently, DDL lock related commands mainly include `show-ddl-locks`, `unlock-ddl-lock`. For more information on their functions, usages, and applicable scenarios, refer to [Handle Sharding DDL Locks Manually](manually-handling-sharding-ddl-locks.md).
 
 ## Other task and cluster management commands
 
