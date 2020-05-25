@@ -34,7 +34,7 @@ category: reference
 
 ### `DM_fail_to_read_binlog_from_master`
 
-当 relay log 处理单元在尝试从上游读取 binlog event 发生错误时，会转为 paused 状态并立即触发该告警，此时需要参考[DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
+当 relay log 处理单元在尝试从上游读取 binlog event 发生错误时，会转为 `Paused` 状态并立即触发该告警，此时需要参考[DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
 
 ### `DM_fail_to_write_relay_log`
 
