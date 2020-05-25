@@ -6,7 +6,7 @@ category: reference
 
 # TiDB Data Migration 查询状态
 
-本文介绍 DM（Data Migration）`query-status` 命令的查询结果、任务状态与子任务状态。
+本文介绍 TiDB Data Migration (DM) `query-status` 命令的查询结果、任务状态与子任务状态。
 
 ## 查询结果
 
