@@ -74,7 +74,7 @@ DM 的迁移任务状态取决于其分配到 DM-worker 上的[子任务状态](
 {
     "result": true,     # 查询是否成功
     "msg": "",          # 查询失败原因描述
-    "sources": [        # DM-worker 列表
+    "sources": [        # 上游 MySQL 列表
         {
             "result": true,
             "msg": "",
