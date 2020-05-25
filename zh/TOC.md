@@ -9,8 +9,14 @@
   + 基本信息
     - [开源信息说明](licensing.md)
     - [性能数据](performance.md)
-  - [主要特性](key-features.md)
-  - [应用场景](scenarios.md) 参考 [分表合并数据迁移最佳实践](shard-merge-best-practices.md)，[DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
+  + 主要特性
+    - [Table routing](key-features.md#table-routing)
+    - [Black & White Lists](key-features.md#black--white-table-lists)
+    - [Binlog Event Filter](key-features.md#binlog-event-filter)
+    - [同步延迟监控](key-features.md#同步延迟监控)
+    - [Online-ddl-scheme](feature-online-ddl-scheme.md)
+    - [分库分表合并同步](feature-shard-merge.md)
++ [应用场景](scenarios.md)
 + 快速上手
   - [部署集群](quick-start-with-dm.md)
   - [同步任务](replicate-data-using-dm.md)
@@ -18,11 +24,9 @@
   - [软硬件要求](hardware-and-software-requirements.md)
   - [环境与系统配置检查](system-configuration-check.md)
   - [配置拓扑结构](configure-topology.md)
-  + 安装与启动
-    + 部署社区版本
-      + Linux (Redhat/CentOS)
-        - [使用 TiUP](deploy-a-dm-cluster-using-tiup.md)
-        - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
+  + 部署 DM 集群
+    - [使用 DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
+    - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
   + [监控与告警设置](monitor-a-dm-cluster.md)
   + [测试验证](create-task-and-verify.md)
   + [性能测试](benchmark-v1.0-ga.md)
@@ -36,6 +40,7 @@
     - 暂停 [参考](manage-replication-tasks.md#暂停数据同步任务)
     - 重启
     - 删除
+  - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
   - [告警处理](handle-alerts.md)
   - [日常巡检](daily-check.md)
 + [DM Portal](dm-portal.md)
@@ -46,9 +51,10 @@
   - [简单的从库同步场景](usage-scenario-simple-replication.md)
   - [分库分表合并场景](usage-scenario-shard-merge.md)
   - [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
-+ 性能调优指南
-  + 软件调优
-    - [配置调优](tune-configuration.md) 另可参考 [DM Portal](dm-portal.md)
+  - [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
+  - [DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
++ 性能调优
+  - [配置调优](tune-configuration.md)
 + 参考指南
   - [架构](overview.md#dm-架构) 另外可参考 [DM-worker 简介](dm-worker-intro.md)，[DM Relay Log](relay-log.md)
   - [DM 命令行参数](command-line-flags.md)
