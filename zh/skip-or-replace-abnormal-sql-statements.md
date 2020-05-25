@@ -10,7 +10,7 @@ category: reference
 
 > **注意：**
 >
-> 当前 master 分支中该功能尚未重构完成，某些命令暂不支持。
+> 当前 master 分支中该功能尚未重构完成，`sql-skip` 和 `sql-replace` 命令暂不支持。
 
 目前，TiDB 并不完全兼容所有的 MySQL 语法（详见 [TiDB 已支持的 DDL 语句](https://pingcap.com/docs-cn/dev/reference/mysql-compatibility/#ddl)）。当使用 DM 从 MySQL 同步数据到 TiDB 时，如果 TiDB 不支持对应的 SQL 语句，可能会造成错误并中断同步任务。在这种情况下，DM 提供以下两种方式来恢复同步：
 
