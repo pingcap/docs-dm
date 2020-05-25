@@ -65,7 +65,7 @@
     - [上游数据库配置](source-configuration-file.md)
     - [任务配置](task-configuration-file.md)
   - [监控指标](monitor-a-dm-cluster.md)
-  - [告警信息](alert-rules.md) [参考](monitor-a-dm-cluster.md)
+  - [告警信息](alert-rules.md)
   - [错误码](error-handling.md#常见故障处理方法)
 + [常见问题](faq.md)
 + 版本发布历史
