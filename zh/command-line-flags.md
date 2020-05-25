@@ -130,7 +130,7 @@ category: reference
 
 ### `--master-addr`
 
-- 要连接的集群任意 DM-master 节点的 `{advertise-addr}`
+- dmctl 要连接的集群的任意 DM-master 节点的 `{advertise-addr}`
 - 默认值为 `""`
 - 需要与 DM-master 交互时为必选参数
 
