@@ -40,7 +40,7 @@
     - 暂停 [参考](manage-replication-tasks.md#暂停数据同步任务)
     - 重启
     - 删除
-  - [手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md)
+  - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
   - [告警处理](handle-alerts.md)
   - [日常巡检](daily-check.md)
 + [DM Portal](dm-portal.md)
