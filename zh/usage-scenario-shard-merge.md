@@ -57,7 +57,7 @@ category: reference
 
 ## 同步方案
 
-- 要满足同步需求 #1 和 #2，配置 [Table routing 规则](feature-overview.md#table-routing) 如下：
+- 要满足同步需求 #1 和 #2，配置 [Table routing 规则](key-features.md#table-routing) 如下：
 
     {{< copyable "" >}}
 
@@ -69,7 +69,7 @@ category: reference
         target-schema: "user"
     ```
 
-- 要满足同步需求 #3，配置 [table routing 规则](feature-overview.md#table-routing) 如下：
+- 要满足同步需求 #3，配置 [table routing 规则](key-features.md#table-routing) 如下：
 
     {{< copyable "" >}}
 
@@ -86,7 +86,7 @@ category: reference
         target-table:  "sale"
     ```
 
-- 要满足同步需求 #4 和 #5，配置 [Binlog event filter 规则](feature-overview.md#binlog-event-filter) 如下：
+- 要满足同步需求 #4 和 #5，配置 [Binlog event filter 规则](key-features.md#binlog-event-filter) 如下：
 
     {{< copyable "" >}}
 
@@ -103,7 +103,7 @@ category: reference
     >
     > 同步需求 #4、#5 和 #7 的操作意味着过滤掉所有对 `user` 库的删除操作，所以此处配置了库级别的过滤规则。但是 `user` 库以后加入表的删除操作也都会被过滤。
 
-- 要满足同步需求 #6，配置 [Binlog event filter 规则](feature-overview.md#binlog-event-filter) 如下：
+- 要满足同步需求 #6，配置 [Binlog event filter 规则](key-features.md#binlog-event-filter) 如下：
 
     {{< copyable "" >}}
 
@@ -121,7 +121,7 @@ category: reference
         action: Ignore
     ```
 
-- 要满足同步需求 #7，配置 [Black & white table lists](feature-overview.md#black--white-table-lists) 如下：
+- 要满足同步需求 #7，配置 [Black & white table lists](key-features.md#black--white-table-lists) 如下：
 
     {{< copyable "" >}}
 
