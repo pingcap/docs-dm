@@ -6,8 +6,7 @@
 ## 文档目录
 
 + 关于 TiDB Data Migration
-  + 基本信息
-    - [性能数据](performance.md)
+  + [性能数据](performance.md)
   + 主要特性
     - [Table routing](key-features.md#table-routing)
     - [Black & White Lists](key-features.md#black--white-table-lists)
