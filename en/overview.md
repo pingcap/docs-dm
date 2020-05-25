@@ -104,7 +104,7 @@ Before using the DM tool, note the following restrictions:
 
     - After DM-worker is restarted, the data replication task cannot be automatically restored. You need to manually run `start-task`. For details, see [Manage the Data Replication Task](manage-replication-tasks.md).
 
-    - After DM-worker is restarted, the DDL lock replication cannot be automatically restored in some conditions. You need to manually handle it. For details, see [Handle Sharding DDL Locks Manually](manually-handling-sharding-ddl-locks.md).
+    - After DM-worker is restarted, the DDL lock replication cannot be automatically restored in some conditions. You need to manually handle it. For details, see [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md).
 
 + Switching DM-worker connection to another MySQL instance
 

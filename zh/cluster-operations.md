@@ -63,7 +63,7 @@ ansible-playbook stop.yml
 
       此时 DM 会再次尝试同步这些未跳过执行的 DDL 语句。然而，由于未重启的 DM-worker 实例已经执行到了此 DDL 对应的 binlog event 之后，重启的 DM-worker 实例会被阻滞在重启前 DDL binlog event 对应的位置。
 
-      要解决这个问题，请按照[手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md#场景二unlock-过程中部分-dm-worker-重启) 中描述的步骤操作。
+      要解决这个问题，请按照[手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md#场景二unlock-过程中部分-dm-worker-重启) 中描述的步骤操作。
 
 **总结**：尽量避免在 sharding DDL 同步过程中重启 DM-worker。
 

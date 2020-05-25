@@ -96,7 +96,7 @@ DM 支持对原分库分表进行合库合表操作，但需要满足一些[使�
 + 操作限制
 
     - DM-worker 重启后不能自动恢复数据同步任务，需要使用 dmctl 手动执行 `start-task`。详见[管理数据同步任务](manage-replication-tasks.md)。
-    - 在一些情况下，DM-worker 重启后不能自动恢复 DDL lock 同步，需要手动处理。详见[手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)。
+    - 在一些情况下，DM-worker 重启后不能自动恢复 DDL lock 同步，需要手动处理。详见[手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md)。
 
 + DM-worker 切换 MySQL
 

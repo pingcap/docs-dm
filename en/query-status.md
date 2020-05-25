@@ -224,7 +224,7 @@ The status of a DM migration task depends on the status of each subtask assigned
 
 For the status description and status switch relationship of "stage" of "subTaskStatus" of "workers", see [Subtask status](#subtask-status).
 
-For operation details of "unresolvedDDLLockID" of "subTaskStatus" of "workers", see [Handle Sharding DDL Locks Manually](manually-handling-sharding-ddl-locks.md).
+For operation details of "unresolvedDDLLockID" of "subTaskStatus" of "workers", see [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md).
 
 ## Subtask status
 

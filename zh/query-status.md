@@ -210,7 +210,7 @@ DM 的迁移任务状态取决于其分配到 DM-worker 上的[子任务状态](
 
 关于 `workers` 下 `subTaskStatus` 中 `stage` 状态和状态转换关系的详细信息，请参阅[子任务状态](#子任务状态)。
 
-关于 `workers` 下 `subTaskStatus` 中 `unresolvedDDLLockID`的操作细节，请参阅[手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)。
+关于 `workers` 下 `subTaskStatus` 中 `unresolvedDDLLockID`的操作细节，请参阅[手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md)。
 
 ## 子任务状态
 

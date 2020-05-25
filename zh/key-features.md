@@ -587,4 +587,4 @@ is-sharding: true
 
 ### 手动处理 Sharding DDL Lock
 
-如果分库分表合并同步过程中发生了异常，对于部分场景，可尝试参考[手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)进行处理。
+如果分库分表合并同步过程中发生了异常，对于部分场景，可尝试参考[手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md)进行处理。
