@@ -34,7 +34,7 @@ overview 下包含运行当前选定 task 的所有 DM-worker instance 的部分
 
 | metric 名称 | 说明 | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
-| task state | 同步子任务的状态 | 当子任务状态处于 paused 超过 20 分钟时| critical |
+| task state | 同步子任务的状态 | 当子任务状态处于 `Paused` 超过 20 分钟时| critical |
 
 ### Relay log
 
