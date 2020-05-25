@@ -8,7 +8,7 @@ category: reference
 
 dmctl 是用来控制 DM 集群的命令行工具。对于用 DM-Ansible 部署的 DM 集群，dmctl 二进制文件路径为 `dm-ansible/dmctl`。
 
-dmctl 支持交互模式用于人工操作，同时也支持命令模式用于脚本。
+dmctl 同时支持交互模式和命令模式。
 
 ## dmctl 交互模式
 
