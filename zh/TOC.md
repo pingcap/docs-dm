@@ -7,7 +7,7 @@
 
 + 关于 TiDB Data Migration
   + 基本信息
-    - [性能数据](performance.md)
+    - [性能数据](benchmark-v1.0-ga.md)
   + 主要特性
     - [Table routing](key-features.md#table-routing)
     - [Black & White Lists](key-features.md#black--white-table-lists)
@@ -26,7 +26,7 @@
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
   + [监控与告警设置](monitor-a-dm-cluster.md)
   + [测试验证](create-task-and-verify.md)
-  + [性能测试](benchmark-v1.0-ga.md)
+  + [性能测试](performance-test.md)
 + 运维操作
   - [版本升级](dm-upgrade.md)
   - [扩缩容](scale-a-dm-cluster.md)
