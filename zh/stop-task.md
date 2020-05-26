@@ -4,7 +4,6 @@ summary: 了解 TiDB Data Migration 如何停止数据同步任务。
 category: reference
 ---
 
-
 # 停止数据同步任务
 
 `stop-task` 命令用于停止数据同步任务。有关 `stop-task` 与 `pause-task` 的区别，请参考[暂停数据同步任务](pause-task.md)中的相关说明。
