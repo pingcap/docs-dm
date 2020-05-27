@@ -86,7 +86,7 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 1. 填写任务名称。
 2. 选择任务类型。
 
-![DM Portal BasicConfig](/media/zh/dm-portal-basicconfig.png)
+![DM Portal BasicConfig](/media/zh/dm-portal-basicconfig-zh.png)
 
 ### 3. 实例信息配置
 
@@ -108,7 +108,7 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 2. 填写下游实例信息。
 3. 点击**下一步**。
 
-![DM Portal InstanceConfig](/media/zh/dm-portal-instanceconfig.png)
+![DM Portal InstanceConfig](/media/zh/dm-portal-instanceconfig-zh.png)
 
 ### 4. binlog 过滤配置
 
@@ -129,13 +129,13 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 
 1. 点击需要配置的数据库或者数据表。
 
-    ![DM Portal InstanceShow](/media/zh/dm-portal-instanceshow.png)
+    ![DM Portal InstanceShow](/media/zh/dm-portal-instanceshow-zh.png)
 
 2. 点击编辑按钮，选择需要过滤的 binlog 类型。
 
-    ![DM Portal BinlogFilter 1](/media/zh/dm-portal-binlogfilter-1.png)
+    ![DM Portal BinlogFilter 1](/media/zh/dm-portal-binlogfilter-1-zh.png)
 
-    ![DM Portal BinlogFilter 2](/media/zh/dm-portal-binlogfilter-2.png)
+    ![DM Portal BinlogFilter 2](/media/zh/dm-portal-binlogfilter-2-zh.png)
 
 ### 5. 库表路由配置
 
@@ -156,44 +156,44 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 
 1. 在**上游实例**处，选择需要同步的数据库和数据表。
 
-    ![DM Portal TableRoute 1](/media/zh/dm-portal-tableroute-1.png)
+    ![DM Portal TableRoute 1](/media/zh/dm-portal-tableroute-1-zh.png)
 
 2. 点击移动按钮，将需要同步的库表移动至**下游实例**处。
 
-    ![DM Portal TableRoute 2](/media/zh/dm-portal-tableroute-2.png)
+    ![DM Portal TableRoute 2](/media/zh/dm-portal-tableroute-2-zh.png)
 
 3. 点击右键按钮，可以对库表进行改名操作。
 
-    ![DM Portal ChangeTableName](/media/zh/dm-portal-changetablename.png)
+    ![DM Portal ChangeTableName](/media/zh/dm-portal-changetablename-zh.png)
 
 4. 选中需要操作的数据表，拖动至别的数据表图标上，可以对两个表进行合并。
 
-    ![DM Portal MergeTable 1](/media/zh/dm-portal-mergetable-1.png)
+    ![DM Portal MergeTable 1](/media/zh/dm-portal-mergetable-1-zh.png)
 
-    ![DM Portal MergeTable 2](/media/zh/dm-portal-mergetable-2.png)
+    ![DM Portal MergeTable 2](/media/zh/dm-portal-mergetable-2-zh.png)
 
     拖动到数据库图标上，可以将数据表移动至该库下。
 
-    ![DM Portal MoveToDB 1](/media/zh/dm-portal-movetodb-1.png)
+    ![DM Portal MoveToDB 1](/media/zh/dm-portal-movetodb-1-zh.png)
 
-    ![DM Portal MoveToDB 2](/media/zh/dm-portal-movetodb-2.png)
+    ![DM Portal MoveToDB 2](/media/zh/dm-portal-movetodb-2-zh.png)
 
     拖动到 target-instance 图标上，可以移动到一个新的数据库下。
 
-    ![DM Portal MoveToNewDB 1](/media/zh/dm-portal-movetonewdb-1.png)
+    ![DM Portal MoveToNewDB 1](/media/zh/dm-portal-movetonewdb-1-zh.png)
 
-    ![DM Portal MoveToNewDB 2](/media/zh/dm-portal-movetonewdb-2.png)
+    ![DM Portal MoveToNewDB 2](/media/zh/dm-portal-movetonewdb-2-zh.png)
 
 5. 点击**完成**，自动下载 `task.yaml` 到本地，并且在 DM Portal 服务器上的 `/tmp/` 目录下自动创建一份 `task.yaml` 配置文件。
 
-    ![DM Portal GenerateConfig](/media/zh/dm-portal-generateconfig.png)
+    ![DM Portal GenerateConfig](/media/zh/dm-portal-generateconfig-zh.png)
 
 #### 其他操作
 
 撤销本次操作：
 
-![DM Portal Revert](/media/zh/dm-portal-revert.png)
+![DM Portal Revert](/media/zh/dm-portal-revert-zh.png)
 
 清空下游实例：
 
-![DM Portal Reset](/media/zh/dm-portal-reset.png)
+![DM Portal Reset](/media/zh/dm-portal-reset-zh.png)
