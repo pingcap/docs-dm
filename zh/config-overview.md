@@ -23,9 +23,9 @@ category: reference
 
 具体步骤如下：
 
-1. [使用 dmctl 将数据源配置加载到 DM 集群](manage-replication-tasks.md#加载数据源配置)
+1. [使用 dmctl 将数据源配置加载到 DM 集群](manage-source.md#加载数据源配置)
 2. 参考[任务配置文件](task-configuration-file.md)来创建 `your_task.yaml` 文件。
-3. [使用 dmctl 创建数据同步任务](manage-replication-tasks.md#创建数据同步任务)。
+3. [使用 dmctl 创建数据同步任务](create-task.md)。
 
 ### 关键概念
 

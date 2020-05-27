@@ -1,12 +1,13 @@
 ---
-title: 数据同步功能
-summary: DM 提供的功能及其配置介绍
+title: 主要特性
+summary: 了解 DM 的各主要功能特性或相关的配置选项。
 category: reference
+aliases: ['/docs-cn/tidb-data-migration/dev/feature-overview/']
 ---
 
-# 数据同步功能
+# 主要特性
 
-本文将详细介绍 DM 提供的数据同步功能，以及相关的配置选项。
+本文档介绍 DM 提供的数据同步功能以及相关的配置选项与使用示例。
 
 Table Routing、Black & White Lists、Binlog Event Filter 在匹配库表名时，有以下版本差异：
 
@@ -22,7 +23,7 @@ Table routing 提供将上游 MySQL/MariaDB 实例的某些表同步到下游指
 > **注意：**
 >
 > - 不支持对同一个表设置多个不同的路由规则。
-> - Schema 的匹配规则需要单独设置，用来同步 `create/drop schema xx`，例如下面[参数配置](#参数配置)中的 rule-2。
+> - Schema 的匹配规则需要单独设置，用来同步 `CREATE/DROP SCHEMA xx`，例如下面[参数配置](#参数配置)中的 rule-2。
 
 ### 参数配置
 
@@ -52,10 +53,10 @@ routes:
 
 假设存在分库分表场景，需要将上游两个 MySQL 实例的表 `test_{1,2,3...}`.`t_{1,2,3...}` 同步到下游 TiDB 的一张表 `test`.`t`。
 
-为了同步到下游实例的表 `test`.`t` 需要创建两个 table routing 规则：
+为了同步到下游实例的表 `test`.`t`，需要创建以下 table routing 规则：
 
 - `rule-1` 用来同步匹配上 `schema-pattern: "test_*"` 和 `table-pattern: "t_*"` 的表的 DML/DDL 语句到下游的 `test`.`t`。
-- `rule-2` 用来同步匹配上 `schema-pattern: "test_*"` 的库的 DDL 语句，例如 `create/drop schema xx`。
+- `rule-2` 用来同步匹配上 `schema-pattern: "test_*"` 的库的 DDL 语句，例如 `CREATE/DROP SCHEMA xx`。
 
 > **注意：**
 >
@@ -160,9 +161,9 @@ black-white-list:
 > - DM 当前只支持 `ROW` 格式的 binlog，不支持 `STATEMENT`/`MIXED` 格式的 binlog，因此应与 MySQL 中 `ROW` 格式下的规则对应。
 > - 对于 DDL，MySQL 仅依据默认的 database 名称（`USE` 语句显式指定的 database）进行判断，而 DM 优先依据 DDL 中的 database 名称部分进行判断，并当 DDL 中不包含 database 名称时再依据 `USE` 部分进行判断。假设需要判断的 SQL 为 `USE test_db_2; CREATE TABLE test_db_1.test_table (c1 INT PRIMARY KEY)`，且 MySQL 配置了 `replicate-do-db=test_db_1`、DM 配置了 `do-dbs: ["test_db_1"]`，则对于 MySQL 该规则不会生效，而对于 DM 该规则会生效。
 
-判断 table `test`.`t` 是否应该被过滤的过滤流程如下：
+判断 table `test`.`t` 是否应该被过滤的流程如下：
 
-1. 首先 **schema 过滤判断**
+1. 首先进行 **schema 过滤判断**
 
     - 如果 `do-dbs` 不为空，判断 `do-dbs` 中是否存在一个匹配的 schema。
 
@@ -192,7 +193,7 @@ black-white-list:
 
 > **注意：**
 >
-> 判断 schema `test` 是否被过滤，只进行 **schema 过滤判断**
+> 如果是判断 schema `test` 是否应该被过滤，则只进行 **schema 过滤判断**。
 
 ### 使用示例
 
@@ -237,13 +238,13 @@ black-white-list:
 | `logs`.`messages_2018` | 是 | schema `logs` 没有匹配到 `do-dbs` 任意一项 |
 | `forum_backup_2016`.`messages` | 是 | schema `forum_backup_2016` 没有匹配到 `do-dbs` 任意一项 |
 | `forum_backup_2017`.`messages` | 是 | schema `forum_backup_2017` 没有匹配到 `do-dbs` 任意一项 |
-| `forum`.`users` | 是 | 1. schema `forum` 匹配到 `do-dbs` 进入 table 过滤<br/> 2. schema 和 table 没有匹配到 `do-tables` 和 `ignore-tables` 中任意一项，并且 `do-tables` 不为空，因此过滤 |
-| `forum`.`messages` | 否 | 1. schema `forum` 匹配到 `do-dbs` 进入 table 过滤<br/> 2. schema 和 table 匹配到 `do-tables` 的 `db-name: "~^forum.*",tbl-name: "messages"` |
-| `forum_backup_2018`.`messages` | 否 | 1. schema `forum_backup_2018` 匹配到 `do-dbs` 进入 table 过滤<br/> 2. schema 和 table 匹配到 `do-tables` 的  `db-name: "~^forum.*",tbl-name: "messages"` |
+| `forum`.`users` | 是 | 1. schema `forum` 匹配到 `do-dbs`，进入 table 过滤判断<br/> 2. schema 和 table 没有匹配到 `do-tables` 和 `ignore-tables` 中任意一项，并且 `do-tables` 不为空，因此过滤 |
+| `forum`.`messages` | 否 | 1. schema `forum` 匹配到 `do-dbs`，进入 table 过滤判断<br/> 2. schema 和 table 匹配到 `do-tables` 的 `db-name: "~^forum.*",tbl-name: "messages"` |
+| `forum_backup_2018`.`messages` | 否 | 1. schema `forum_backup_2018` 匹配到 `do-dbs`，进入 table 过滤判断<br/> 2. schema 和 table 匹配到 `do-tables` 的  `db-name: "~^forum.*",tbl-name: "messages"` |
 
 ## Binlog event filter
 
-Binlog event filter 是比同步表黑白名单更加细粒度的过滤规则，可以指定只同步或者过滤掉某些 `schema / table` 的指定类型 binlog，比如 `INSERT`，`TRUNCATE TABLE`。
+Binlog event filter 是比同步表黑白名单更加细粒度的过滤规则，可以指定只同步或者过滤掉某些 `schema / table` 的指定类型 binlog，比如 `INSERT`、`TRUNCATE TABLE`。
 
 > **注意：**
 >
@@ -265,9 +266,9 @@ filters:
 
 ### 参数解释
 
-- [`schema-pattern`/`table-pattern`](table-selector.md)：对匹配上的上游 MySQL/MariaDB 实例的表的 binlog events 或者 DDL SQL 语句进行以下规则过滤。
+- [`schema-pattern`/`table-pattern`](table-selector.md)：对匹配上的上游 MySQL/MariaDB 实例的表的 binlog events 或者 DDL SQL 语句通过以下规则进行过滤。
 
-- `events`：binlog events 数组。
+- `events`：binlog events 数组，仅支持从以下 `Event` 中选择一项或多项。
 
     | Event           | 分类 | 解释                           |
     | --------------- | ---- | ----------------------------- |
@@ -290,9 +291,9 @@ filters:
     | drop index      | DDL  | drop index event              |
     | alter table     | DDL  | alter table event             |
 
-- `sql-pattern`：用于过滤指定的 DDL SQL 语句，支持正则表达式匹配，例如上面示例 `"^DROP\\s+PROCEDURE"`。
+- `sql-pattern`：用于过滤指定的 DDL SQL 语句，支持正则表达式匹配，例如上面示例中的 `"^DROP\\s+PROCEDURE"`。
 
-- `action`：string(`Do` / `Ignore`)；进行下面规则判断，满足其中之一则过滤，否则不过滤。
+- `action`：string (`Do` / `Ignore`)；进行下面规则判断，满足其中之一则过滤，否则不过滤。
 
     - `Do`：白名单。binlog event 如果满足下面两个条件之一就会被过滤掉：
         - 不在该 rule 的 `events` 中。
@@ -372,9 +373,9 @@ filters:
 
 > **注意：**
 >
-> 全局过滤规则的设置必须尽可能严格，以避免预期之外地过滤掉需要同步的数据。
+> 全局过滤规则的设置必须尽可能严格，以避免过滤掉需要同步的数据。
 
-可设置如下规则过滤 TiDB parser 不支持的 `PARTITION` 语句：
+可设置如下规则过滤某些版本的 TiDB parser 不支持的 `PARTITION` 语句：
 
 {{< copyable "" >}}
 
@@ -390,7 +391,7 @@ filters:
 
 > **注意：**
 >
-> 由于 Column mapping 的使用限制较多，我们不推荐使用 Column mapping 功能作为首选方案。我们优先推荐的方案请参考 [自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)。
+> 由于 Column mapping 的使用限制较多，不推荐使用 Column mapping 功能作为首选方案。优先推荐的方案可参考 [自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)。
 
 Column mapping 提供对表的列值进行修改的功能。可以根据不同的表达式对表的指定列做不同的修改操作，目前只支持 DM 提供的内置表达式。
 
@@ -429,13 +430,13 @@ column-mappings:
 
 #### `partition id` 表达式
 
-`partition id` 目的是为了解决分库分表合并同步的自增主键的冲突。
+`partition id` 用于解决分库分表合并同步的自增主键的冲突。
 
 **`partition id` 限制**
 
 注意下面的限制：
 
-- 只支持类型为 bigint 的列，通常为自增主键，联合主键或者联合唯一索引的其中一列
+- 只支持类型为 bigint 的列，通常为自增主键、联合主键或者联合唯一索引的其中一列
 - 如果 `schema 前缀` 不为空，则库名的组成必须为 `schema 前缀` 或者 `schema 前缀 + 分隔符 + 数字（即 schema ID）`，例如：支持 `s` 和 `s_1`，不支持 `s_a`
 - 如果 `table 前缀` 不为空，则表名的组成必须为 `table 前缀` 或者 `table 前缀 + 分隔符 + 数字（即 table ID）`
 - 如果库名/表名不包含 `… + 分隔符 + 数字` 部分，则对应的 ID 默认为 0
@@ -504,17 +505,18 @@ column-mappings:
 ​    arguments: ["2", "test", "t", "_"]
 ```
 
-- MySQL instance 1 的表 `test_1`.`t_1` 的 `ID = 1` 的行经过转换后 ID = 1 变为 `1 << (64-1-4) | 1 << (64-1-4-7) | 1 << 44 | 1 = 580981944116838401`
-- MySQL instance 2 的表 `test_1`.`t_2` 的 `ID = 1` 的行经过转换后 ID = 2 变为 `2 << (64-1-4) | 1 << (64-1-4-7) | 2 << 44 | 2 = 1157460288606306306`
+- MySQL instance 1 的表 `test_1`.`t_1` 的 `ID = 1` 的行经过转换后，ID = 1 变为 `1 << (64-1-4) | 1 << (64-1-4-7) | 1 << 44 | 1 = 580981944116838401`
+- MySQL instance 2 的表 `test_1`.`t_2` 的 `ID = 1` 的行经过转换后，ID = 2 变为 `2 << (64-1-4) | 1 << (64-1-4-7) | 2 << 44 | 2 = 1157460288606306306`
 
 ## 同步延迟监控
 
-DM 支持通过 heartbeat 真实同步数据来计算每个同步任务与 MySQL/MariaDB 的实时同步延迟。
+DM 支持通过在 MySQL/MariaDB 上写 `heartbeat` 相关的数据，并在数据同步到 DM 时，计算每个同步任务与 MySQL/MariaDB 的实时同步延迟。
 
 > **注意：**
 >
+> - `heartbeat` 开启后会在 DM-worker 连接的上游 MySQL 实例上执行写入操作，如果上游多个 MySQL 实例构成主从集群，请确保 DM-worker 连接的是主实例，否则会造成 MySQL 主从间数据的不一致。
 > - 同步延迟的估算的精度在秒级别。
-> - heartbeat 相关的 binlog 不会同步到下游，在计算延迟后会被丢弃。
+> - `heartbeat` 相关的 binlog 不会同步到下游，在计算延迟后会被丢弃。
 
 ### 系统权限
 
@@ -541,3 +543,48 @@ enable-heartbeat: true
 - DM-worker 每 10 秒在对应的上游 MySQL/MariaDB 的 `dm_heartbeat`.`heartbeat` 查询当前的 `TS_master`，并且对每个任务计算 `task_lag` = `TS_master` - `TS_slave_task`
 
 可以在 metrics 的 [binlog replication](monitor-a-dm-cluster.md#binlog-replication) 处理单元找到 replicate lag 监控项。
+
+## online DDL 工具支持
+
+在 MySQL 生态中，gh-ost 与 pt-osc 等工具较广泛地被使用，DM 对其提供了特殊的支持以避免对不必要的中间数据进行同步。
+
+有关 DM 对 online DDL 工具支持的原理、处理流程等，可参考 [online-ddl-scheme](feature-online-ddl-scheme.md)。
+
+### 使用限制
+
+- DM 仅针对 gh-ost 与 pt-osc 做了特殊支持。
+- 在开启 `online-ddl-scheme` 时，增量同步对应的 checkpoint 应不处于 online DDL 执行过程中。如上游某次 online DDL 操作开始于 binlog `position-A`、结束于 `position-B`，则增量同步的起始点应早于 `position-A` 或晚于 `position-B`，否则可能出现同步出错，具体可参考 [FAQ](faq.md#设置了-online-ddl-scheme-gh-ost-gh-ost-表相关的-ddl-报错该如何处理)。
+
+### 参数配置
+
+如上游 MySQL/MariaDB 使用的是 gh-ost 工具，则在 task 的配置文件中设置：
+
+```
+online-ddl-scheme: "gh-ost"
+```
+
+如上游 MySQL/MariaDB 使用的是 pt-osc 工具，则在 task 的配置文件中设置：
+
+```
+online-ddl-scheme: "pt"
+```
+
+## 分库分表合并
+
+DM 支持将上游 MySQL/MariaDB 各分库分表中的 DML、DDL 数据合并后同步到下游 TiDB 的库表中。
+
+### 使用限制
+
+目前分库分表合并功能仅支持有限的场景，使用该功能前，请仔细阅读[分库分表合并同步使用限制](feature-shard-merge.md#使用限制)。
+
+### 参数配置
+
+在 task 的配置文件中设置：
+
+```
+is-sharding: true
+```
+
+### 手动处理 Sharding DDL Lock
+
+如果分库分表合并同步过程中发生了异常，对于部分场景，可尝试参考[手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)进行处理。
