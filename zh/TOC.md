@@ -5,7 +5,7 @@
 
 ## 文档目录
 
-+ 关于 TiDB Data Migration
++ 关于 DM
   + [性能数据](benchmark-v1.0-ga.md)
   + 主要特性
     - [Table routing](key-features.md#table-routing)
@@ -71,10 +71,10 @@
   - [告警信息](alert-rules.md)
   - [错误码](error-handling.md#常见故障处理方法)
 + [常见问题](faq.md)
++ [术语表](glossary.md)
 + 版本发布历史
   + v1.0
     - [1.0.5](releases/1.0.5.md)
     - [1.0.4](releases/1.0.4.md)
     - [1.0.3](releases/1.0.3.md)
     - [1.0.2](releases/1.0.2.md)
-+ [术语表](glossary.md)
