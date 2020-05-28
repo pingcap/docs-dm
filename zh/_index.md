@@ -7,72 +7,74 @@ summary: 了解 TiDB Data Migration 用户文档。
 
 [TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据同步任务管理平台，支持从 MySQL 或 MariaDB 到 TiDB 的全量数据迁移和增量数据同步。使用 DM 工具有利于简化错误处理流程，降低运维成本。
 
-> **注意：**
->
-> DM 以 SQL 语句的形式将数据同步到 TiDB 中，因此各个版本的 DM 都分别兼容**所有版本**的 TiDB。在生产环境中，推荐使用 DM 的最新已发布版本。已发布版本的下载方式参见 [DM 下载链接](https://pingcap.com/docs-cn/stable/reference/tools/download/#tidb-dm-data-migration)。
+<NavColumns>
+<NavColumn>
+<ColumnTitle>关于 TiDB Data Migration</ColumnTitle>
 
-## DM 架构
+- [性能数据](benchmark-v1.0-ga.md)
+- [Table routing](key-features.md#table-routing)
+- [Black & White Lists](key-features.md#black--white-table-lists)
+- [Binlog Event Filter](key-features.md#binlog-event-filter)
+- [同步延迟监控](key-features.md#同步延迟监控)
+- [Online-ddl-scheme](feature-online-ddl-scheme.md)
+- [分库分表合并同步](feature-shard-merge.md)
 
-DM 主要包括三个组件：DM-master，DM-worker 和 dmctl。
+</NavColumn>
 
-![Data Migration architecture](/media/dm-architecture.png)
+<NavColumn>
+<ColumnTitle>快速上手</ColumnTitle>
 
-### DM-master
+- [应用场景](scenarios.md)
+- [部署集群](quick-start-with-dm.md)
+- [同步任务](replicate-data-using-dm.md)
 
-DM-master 负责管理和调度数据同步任务的各项操作。
+</NavColumn>
 
-- 保存 DM 集群的拓扑信息
-- 监控 DM-worker 进程的运行状态
-- 监控数据同步任务的运行状态
-- 提供数据同步任务管理的统一入口
-- 协调分库分表场景下各个实例分表的 DDL 同步
+<NavColumn>
+<ColumnTitle>部署集群</ColumnTitle>
 
-### DM-worker
+- [软硬件要求](hardware-and-software-requirements.md)
+- [使用 DM-Ansible 部署集群](deploy-a-dm-cluster-using-ansible.md)
+- [使用 Binary 部署集群](deploy-a-dm-cluster-using-binary.md)
+- [监控与告警设置](monitor-a-dm-cluster.md)
+- [测试验证](create-task-and-verify.md)
+- [性能测试](performance-test.md)
 
-DM-worker 负责执行具体的数据同步任务。
+</NavColumn>
 
-- 将 binlog 数据持久化保存在本地
-- 保存数据同步子任务的配置信息
-- 编排数据同步子任务的运行
-- 监控数据同步子任务的运行状态
+<NavColumn>
+<ColumnTitle>运维操作</ColumnTitle>
 
-DM-worker 启动后，会自动同步上游 binlog 至本地配置目录（如果使用 DM-Ansible 部署 DM 集群，默认的同步目录为 `<deploy_dir>/relay_log`）。关于 relay log，详见 [DM Relay Log](relay-log.md)。
+- [版本升级](dm-upgrade.md)
+- [集群操作](cluster-operations.md)
+- [任务管理](dmctl-introduction.md)
+- [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
+- [告警处理](handle-alerts.md)
+- [日常巡检](daily-check.md)
 
-### dmctl
+</NavColumn>
 
-dmctl 是用来控制 DM 集群的命令行工具。
+<NavColumn>
+<ColumnTitle>教程</ColumnTitle>
 
-- 创建、更新或删除数据同步任务
-- 查看数据同步任务状态
-- 处理数据同步任务错误
-- 校验数据同步任务配置的正确性
+- [简单的从库同步场景](usage-scenario-simple-replication.md)
+- [分库分表合并场景](usage-scenario-shard-merge.md)
+- [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
+- [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
+- [DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
 
-## 同步功能介绍
+</NavColumn>
 
-下面简单介绍 DM 数据同步功能的核心特性。
+<NavColumn>
+<ColumnTitle>参考指南</ColumnTitle>
 
-### Table routing
+- [DM 架构](overview.md)
+- [DM 命令行参数](command-line-flags.md)
+- [配置概述](config-overview.md)
+- [监控指标](monitor-a-dm-cluster.md)
+- [告警信息](alert-rules.md)
+- [错误码](error-handling.md#常见故障处理方法)
 
-Table routing 是指将上游 MySQL 或 MariaDB 实例的某些表同步到下游指定表的路由功能，可以用于分库分表的合并同步。
+</NavColumn>
 
-### Black & white table lists
-
-Black & white table lists 是指上游数据库实例表的黑白名单过滤规则。其过滤规则类似于 MySQL `replication-rules-db`/`replication-rules-table`，可以用来过滤或只同步某些数据库或某些表的所有操作。
-
-### Binlog event filter
-
-Binlog event filter 是比库表同步黑白名单更加细粒度的过滤规则，可以指定只同步或者过滤掉某些 `schema`/`table` 的指定类型的 binlog events，比如 `INSERT`，`TRUNCATE TABLE`。
-
-### Shard support
-
-DM 支持对原分库分表进行合库合表操作，但需要满足一些使用限制。
-
-## 使用限制
-
-在使用 DM 工具之前，需了解以下限制：
-
-+ 数据库版本
-+ DDL 语法
-+ 分库分表
-+ 操作限制
-+ DM-worker 切换 MySQL
+</NavColumns>
