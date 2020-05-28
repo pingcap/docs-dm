@@ -13,7 +13,7 @@ summary: 了解 TiDB Data Migration 用户文档。
 
 - [性能数据](benchmark-v1.0-ga.md)
 - [Table routing](key-features.md#table-routing)
-- [Black & White Lists ](key-features.md#black--white-table-lists)
+- [Black & White Lists](key-features.md#black--white-table-lists)
 - [Binlog Event Filter](key-features.md#binlog-event-filter)
 - [同步延迟监控](key-features.md#同步延迟监控)
 - [Online-ddl-scheme](feature-online-ddl-scheme.md)
