@@ -16,7 +16,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/overview/','/docs-cn/v3.1
 
 DM 主要包括三个组件：DM-master，DM-worker 和 dmctl。
 
-![Data Migration architecture](/media/dm-architecture-zh.png)
+![Data Migration architecture](/media/dm-architecture.png)
 
 ### DM-master
 

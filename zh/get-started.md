@@ -28,7 +28,7 @@ DM 功能如下：
 
 ## Data Migration 架构
 
-![TiDB Data Migration 架构](/media/dm-architecture-zh.png)
+![TiDB Data Migration 架构](/media/dm-architecture.png)
 
 TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl。
 
