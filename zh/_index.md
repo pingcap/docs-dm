@@ -15,7 +15,7 @@ summary: 了解 TiDB Data Migration 用户文档。
 
 DM 主要包括三个组件：DM-master，DM-worker 和 dmctl。
 
-![Data Migration architecture](/media/dm-architecture-zh.png)
+![Data Migration architecture](/media/dm-architecture.png)
 
 ### DM-master
 
