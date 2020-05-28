@@ -42,8 +42,8 @@ jobs:
           command: |
             sudo bash -c 'echo "222.222.95.49 uc.qbox.me" >> /etc/hosts';
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              python3 scripts/upload.py output_en.pdf tidb-data-migration-manual-en-dev.pdf;
-              python3 scripts/upload.py output_zh.pdf tidb-data-migration-manual-cn-dev.pdf;
+              python3 scripts/upload.py output_en.pdf tidb-data-migration-dev-en-manual.pdf;
+              python3 scripts/upload.py output_zh.pdf tidb-data-migration-dev-cn-manual.pdf;
             fi
 
 workflows:
