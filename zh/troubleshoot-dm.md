@@ -24,4 +24,4 @@ aliases: ['/docs-cn/dev/how-to/troubleshoot/data-migration/','/docs-cn/dev/refer
     resume-task ${task name}
     ```
 
-但在某些情况下，你还需要重置数据同步任务。有关何时需要重置以及如何重置，详见[重置数据同步任务](faq.md#重置数据同步任务)。
+但在某些情况下，你还需要重置数据同步任务。有关何时需要重置以及如何重置，详见[重置数据同步任务](faq.md#如何重置数据同步任务)。
