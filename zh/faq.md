@@ -35,8 +35,8 @@ DM 会尝试将包含多个 DDL 变更操作的单条语句拆分成只包含一
 
 3. 从下面两种方式中选择其中一种重启数据同步任务：
 
-  - 修改任务配置文件以指定新的任务名，然后使用 `start-task {task-config-file}` 重启同步任务。
-  - 使用 `start-task --remove-meta {task-config-file}` 重启数据同步任务。
+    - 修改任务配置文件以指定新的任务名，然后使用 `start-task {task-config-file}` 重启同步任务。
+    - 使用 `start-task --remove-meta {task-config-file}` 重启数据同步任务。
 
 ## 设置了 `online-ddl-scheme: "gh-ost"`， gh-ost 表相关的 DDL 报错该如何处理？
 
