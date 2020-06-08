@@ -36,7 +36,7 @@ category: reference
 
 - 上游 MySQL 从本地读取 binlog 数据并通过网络进行发送。上游 MySQL 负载无异常时，该子流程通常不会成为瓶颈。
 - binlog 数据通过网络从 MySQL/MariaDB 所在机器传输到 DM-worker 所在机器。该子流程主要由 DM-worker 与上游 MySQL/MariaDB 的网络连通情况决定。
-- DM-worker 从网络数据流中读取与构造成 binlog event。当 DM-worker 负载无异常时，该子流程通常不会成为瓶颈。
+- DM-worker 从网络数据流中读取 binlog 数据，并构造成 binlog event。当 DM-worker 负载无异常时，该子流程通常不会成为瓶颈。
 
 > **注意：**
 >
