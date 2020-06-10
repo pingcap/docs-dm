@@ -366,11 +366,11 @@ grafana_admin_password = "admin"
 
 ```bash
 cd /home/tidb/dm-ansible/resources/bin &&
-./dmctl -encrypt 123456
+./dmctl -encrypt 'abc!@#123'
 ```
 
 ```
-VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU=
+Hp/97+nW/hnsdHwFbPrAwUCjxII7JqOEMo3J7Wk0
 ```
 
 ## 第 8 步：编辑 `inventory.ini` 文件中的变量
