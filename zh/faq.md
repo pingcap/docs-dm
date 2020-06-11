@@ -88,7 +88,7 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 
 ### 同步任务当前处于 `Load` 阶段
 
-多个不同的数据同步任务在导出时，通常对应于不同的 binlog position，如将它们在 `Load` 阶段合并导入则无法就 binlog position 达成一致，因此不建议在 `Load` 阶段向数据同步任务中增加需要同步的表。
+多个不同的数据同步任务在导出时，通常对应于不同的 binlog position，如将它们在 `Load` 阶段合并导入，则无法就 binlog position 达成一致，因此不建议在 `Load` 阶段向数据同步任务中增加需要同步的表。
 
 ### 同步任务当前处于 `Sync` 阶段
 
