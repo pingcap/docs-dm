@@ -370,7 +370,7 @@ cd /home/tidb/dm-ansible/resources/bin &&
 ```
 
 ```
-Hp/97+nW/hnsdHwFbPrAwUCjxII7JqOEMo3J7Wk0
+MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
 
 ## 第 8 步：编辑 `inventory.ini` 文件中的变量
