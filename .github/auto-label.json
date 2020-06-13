@@ -1,6 +1,6 @@
 {
   "rules": {
-    "translation/welcome": ["*.md", "*.yml", "*.yaml", "*.json", "media/", "scripts/"],
-    "status/PTAL": ["*.md", "*.yml", "*.yaml", "*.json", "media/", "scripts/"]
+    "translation/welcome": ["media/en/", "media/zh/", "en/", "zh/"],
+    "status/PTAL": ["*.md", "*.yml", "*.yaml", "*.json", "media/", "scripts/", "hack/"]
   }
 }
