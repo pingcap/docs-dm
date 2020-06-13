@@ -4,9 +4,9 @@
 
 <!--Tell us what you did and why.-->
 
-### Which TiDB version(s) do your changes apply to? (Required)
+### Which DM version(s) do your changes apply to? (Required)
 
-<!-- You **must** choose the TiDB DM version(s) that your changes apply to. Fill in "x" in [] to tick the checkbox below.-->
+<!-- You **must** choose the DM version(s) that your changes apply to. Fill in "x" in [] to tick the checkbox below.-->
 
 - [ ] master (the latest development version, including v2.0 changes for now)
 - [ ] v1.0 (TiDB DM 1.0 versions)
