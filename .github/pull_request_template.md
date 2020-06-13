@@ -1,4 +1,4 @@
-<!--Thanks for your contribution to TiDB documentation. Please answer the following questions.-->
+<!--Thanks for your contribution to TiDB Data Migration (DM) documentation. Please answer the following questions.-->
 
 ### What is changed, added or deleted? (Required)
 
