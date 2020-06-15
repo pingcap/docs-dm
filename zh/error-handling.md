@@ -179,4 +179,4 @@ aliases: ['/docs-cn/tidb-data-migration/dev/troubleshoot-dm/', '/docs-cn/tidb-da
 
     * 在 TiDB Server 执行 `set @@global.max_allowed_packet=134217728` （`134217728 = 128M`）
 
-    * 根据实际情况为 DM 的任务配置文件中的 `target-database` 增加配置 `max-allowed-packet: 134217728`(128M)，然后 stop 任务后再重新 start 任务。
+    * 根据实际情况为 DM 的任务配置文件中的 `target-database` 增加配置 `max-allowed-packet: 134217728`(128M)，然后 `stop-task` 后再重新 `start-task`。
