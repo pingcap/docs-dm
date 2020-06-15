@@ -148,3 +148,32 @@ aliases: ['/docs-cn/tidb-data-migration/dev/troubleshoot-dm/', '/docs-cn/tidb-da
 在所有 DM 配置文件中，数据库相关的密码都必须使用经 dmctl 加密后的密文（若数据库密码为空，则无需加密）。有关如何使用 dmctl 加密明文密码，参见[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
 
 此外，在 DM 运行过程中，上下游数据库的用户必须具备相应的读写权限。在启动同步任务过程中，DM 会自动进行相应权限的前置检查，详见[上游 MySQL 实例配置前置检查](precheck.md)。
+
+### load 处理单元报错 `packet for query is too large. Try adjusting the 'max_allowed_packet' variable`
+
+#### 原因
+
+* MySQL client 和 MySQL/TiDB Server 都有 `max_allowed_packet` 配额的限制，如果在使用过程中违反其中任何一个 `max_allowed_packet` 配额，客户端程序就会收到对应的报错。目前最新版本的 Syncer、Loader、DM 和 TiDB Server 的默认 `max_allowed_packet` 配额都为 `64M`。
+
+* DM 的全量数据导入处理模块不支持对 dump sqls 文件进行切分，原因是 DM 的 dump 处理单元采用了最简单的编码实现，，如果在 DM 实现文件切分，那么需要在 `TiDB parser` 基础上实现一个完备的解析器才能正确的处理数据切分，但是随之会带来以下的问题：
+
+    * 工作量大
+
+    * 复杂度高，不容易保证正确性
+
+    * 性能的极大降低
+
+#### 解决方案
+
+* 依据上面的原因，在代码层面不能简单的解决这个困扰，我们推荐的方式是：在 DM dump 处理单元提供的配置 `extra-args` 中设置 `statement-size`:
+
+    依据默认的 `--statement-size` 设置，DM 的 dump 处理单元默认生成的 `Insert Statement` 大小会尽量接近在 `1M` 左右，使用默认值就可以确保绝大部分情况不会出现该问题。
+
+    有时候在 dump 过程中会出现下面的 `WARN` log，但是这个报错不影响 dump 的过程，只是表达了 dump 的表可能是宽表。
+
+    ```
+    Row bigger than statement_size for xxx
+    ```
+
+* 如果宽表的单行超过了 `64M`，那么需要修改以下配置，并且使之生效。
+    * 在 TiDB Server 执行 `set @@global.max_allowed_packet=134217728` （`134217728 = 128M`）
