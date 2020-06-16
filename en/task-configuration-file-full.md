@@ -41,7 +41,7 @@ target-database:                # Configuration of the downstream database insta
   port: 4000
   user: "root"
   password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # It is recommended to use a password encrypted with dmctl
-  session:                                      # The session variables of TiDB. For the details of the variables, see [The System Variables](https://pingcap.com/docs/dev/system-variables/)
+  session:                                      # The session variables of TiDB. For the details of the variables, see https://pingcap.com/docs/dev/system-variables/
     sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE"
     tidb_skip_utf8_check: 1
     tidb_constraint_check_in_place: 0
