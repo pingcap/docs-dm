@@ -98,7 +98,7 @@ syncers:                             # syncer 处理单元运行配置参数
   global:                            # 配置名称
     worker-count: 16                 # syncer 并发同步 binlog event 的线程数量，默认值为 16
     batch: 100                       # syncer 同步到下游数据库的一个事务批次 SQL 语句数，默认值为 100
-    enable-ansi-quotes: true         # 若 `session` 中设置 `sql-mode: "ANSI_QUOTES"`, 则需开启此项
+    enable-ansi-quotes: true         # 若 `session` 中设置 `sql-mode: "ANSI_QUOTES"`，则需开启此项
 
 # ----------- 实例配置 -----------
 mysql-instances:
