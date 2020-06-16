@@ -40,7 +40,11 @@ target-database:                # 下游数据库实例配置
   host: "192.168.0.1"
   port: 4000
   user: "root"
-  password: ""                  # 如果不为空则需经过 dmctl 加密
+  password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # 推荐使用经 dmctl 加密后的密码
+  session:                                      # 设置 TiDB 的 session 变量, 更多变量及解释参见[TiDB 专用系统变量和语法](https://pingcap.com/docs-cn/stable/tidb-specific-system-variables/)
+    sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE"
+    tidb_skip_utf8_check: 1
+    tidb_constraint_check_in_place: 0
 
 ## ******** 功能配置集 **********
 
@@ -94,6 +98,7 @@ syncers:                             # syncer 处理单元运行配置参数
   global:                            # 配置名称
     worker-count: 16                 # syncer 并发同步 binlog event 的线程数量，默认值为 16
     batch: 100                       # syncer 同步到下游数据库的一个事务批次 SQL 语句数，默认值为 100
+    enable-ansi-quotes: true         # 若 `session` 中设置 `sql-mode: "ANSI_QUOTES"`, 则需开启此项
 
 # ----------- 实例配置 -----------
 mysql-instances:

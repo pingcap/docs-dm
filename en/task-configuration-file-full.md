@@ -40,7 +40,12 @@ target-database:                # Configuration of the downstream database insta
   host: "192.168.0.1"
   port: 4000
   user: "root"
-  password: ""                  # The dmctl encryption is needed when the password is not empty.
+  password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # It is recommended to use a password encrypted with dmctl
+  session:                                      # The session variables of TiDB. For the details of the variables, see [The System Variables](https://pingcap.com/docs/dev/system-variables/)
+    sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE"
+    tidb_skip_utf8_check: 1
+    tidb_constraint_check_in_place: 0
+
 
 ## ******** Feature configuration set **********
 # The routing mapping rule set between the upstream and downstream tables.
@@ -100,6 +105,7 @@ syncers:
   global:                            # The configuration name of the processing unit.
     worker-count: 16                 # The number of threads that replicate binlog events concurrently in Syncer.
     batch: 100                       # The number of SQL statements in a transaction batch that Syncer replicates to the downstream database (100 by default).
+    enable-ansi-quotes: true         # Enable this if `sql-mode: "ANSI_QUOTES"` is set in the `session`
 
 # ----------- Instance configuration -----------
 mysql-instances:
