@@ -51,15 +51,18 @@
 + 从与 MySQL 兼容的数据库迁移数据
   - [从 MySQL/Amazon Aurora MySQL 迁移数据](migrate-from-mysql-aurora.md)
 - [DM Portal](dm-portal.md)
-+ DM 故障诊断
-  - [故障诊断](troubleshoot-dm.md)
-  - [错误含义](error-system.md)
-  - [常见错误修复](error-handling.md)
++ 告警处理
+  - [告警信息](alert-rules.md)
+  - [告警处理](handle-alerts.md)
++ 故障处理
+  - [故障及处理方法](error-handling.md)
+  - [性能问题及处理方法](handle-performance-issues.md)
 - [DM FAQ](faq.md)
 + 版本发布历史
   + v1.0
-    - [1.0.2](releases/1.0.2.md)
-    - [1.0.3](releases/1.0.3.md)
-    - [1.0.4](releases/1.0.4.md)
+    - [1.0.6](releases/1.0.6.md)
     - [1.0.5](releases/1.0.5.md)
+    - [1.0.4](releases/1.0.4.md)
+    - [1.0.3](releases/1.0.3.md)
+    - [1.0.2](releases/1.0.2.md)
 - [TiDB DM 术语表](glossary.md)

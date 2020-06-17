@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "translation/welcome": ["media/en/", "media/zh/", "en/", "zh/"],
+    "status/PTAL": ["*.md", "*.yml", "*.yaml", "*.json", "media/", "scripts/", "hack/"]
+  }
+}
