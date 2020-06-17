@@ -28,28 +28,64 @@ DM 会尝试将包含多个 DDL 变更操作的单条语句拆分成只包含一
 
 ## 如何重置数据同步任务？
 
-在以下情况中，你需要重置整个数据同步任务：
+### relay log 无异常时重置同步任务
 
-- 上游数据库中人为执行了 `RESET MASTER`，造成 relay log 同步出错
+如果数据同步任务所需要的 relay log 不存在异常，可使用如下步骤重置数据同步任务以对数据重新进行迁移：
 
-- relay log 或上游 binlog event 损坏或者丢失
+1. 使用 `stop-task` 停止异常的数据迁移任务。
 
-此时，relay 处理单元通常会发生错误而退出，且无法优雅地自动恢复，因此需要通过手动方式恢复数据同步：
+2. 清理下游已同步的数据。
+
+3. 从下面两种方式中选择其中一种重启数据同步任务：
+
+    - 修改任务配置文件以指定新的任务名，然后使用 `start-task` 重启同步任务。
+    - 修改任务配置文件以设置 `remove-meta` 为 `true`，然后使用 `start-task` 重启同步任务。
+
+### relay log 存在异常时重置同步任务
+
+#### 所需的 relay log 在上游 MySQL 中存在
+
+如果同步任务所需要的 relay log 在 DM-worker 中存在异常，但仍然正常存在于上游 MySQL 中时，可使用如下步骤恢复数据同步任务：
+
+1. 使用 `stop-task` 停止当前正在运行的所有同步任务。
+
+2. 参考[重启 DM-worker](cluster-operations.md#重启-dm-worker)文档，**停止**存在异常的 DM-worker 节点。
+
+3. 从上游 MySQL 中复制正常的 binlog 文件以替换 DM-worker 的 [relay log 目录](relay-log.md#目录结构)内的对应文件。
+
+    - 如果是使用 DM-Ansible 部署，relay log 目录即 `<deploy_dir>/relay_log` 目录。
+    - 如果是使用二进制文件手动部署，relay log 目录即 `relay-dir` 参数设置的目录。
+
+4. 修改 DM-worker 的 relay log 目录内的 `relay.meta` 的信息为下一个 binlog 文件对应的信息。
+
+    - 如果未启用 `enable-gtid`，则将 `binlog-name` 设置为下一个 binlog 文件的文件名，并将 `binlog-pos` 设置为 `4`。如从上游 MySQL 复制了 `mysq-bin.000100` 到 relay 目录，并期望之后从 `mysql-bin.000101` 开始继续 binlog 的拉取，则将 `binlog-name` 设置为 `mysql-bin.000101`。
+    - 如果启用了 `enable-gtid`，则将 `binlog-gtid` 设置为下一个 binlog 文件起始处的 `Previous_gtids` 对应的值（可通过在上游 MySQL 执行 [SHOW BINLOG EVENTS](https://dev.mysql.com/doc/refman/5.7/en/show-binlog-events.html) 获得）。
+
+5. 参考[重启 DM-worker](cluster-operations.md#重启-dm-worker)文档，**启动**存在异常的 DM-worker 节点。
+
+6. 使用 `start-task` 恢复已停止的同步任务。
+
+#### 所需的 relay log 在上游 MySQL 已清理
+
+如果同步任务所需要的 relay log 在 DM-worker 中存在异常、且在上游已被清理，可使用如下步骤重置数据同步任务以对数据重新进行迁移：
 
 1. 使用 `stop-task` 命令停止当前正在运行的所有同步任务。
 
 2. 使用 DM-Ansible [停止整个 DM 集群](deploy-a-dm-cluster-using-ansible.md#第-10-步关闭-dm-集群)。
 
-3. 手动清理掉与 binlog event 被重置的 MySQL master 相对应的 DM-worker 的 relay log 目录。
+3. 手动清理掉与 binlog event 被重置的 MySQL 相对应的 DM-worker 的 relay log 目录。
 
     - 如果是使用 DM-Ansible 部署，relay log 目录即 `<deploy_dir>/relay_log` 目录。
-    - 如果是使用二进制文件手动部署，relay log 目录即 relay-dir 参数设置的目录。
+    - 如果是使用二进制文件手动部署，relay log 目录即 `relay-dir` 参数设置的目录。
 
 4. 清理掉下游已同步的数据。
 
 5. 使用 DM-Ansible [启动整个 DM 集群](deploy-a-dm-cluster-using-ansible.md#第-9-步部署-dm-集群)。
 
-6. 以新的任务名重启数据同步任务，或设置 `remove-meta` 为 `true` 且 `task-mode` 为 `all`。
+6. 从下面两种方式中选择其中一种重启数据同步任务：
+   
+    - 修改任务配置文件以指定新的任务名，然后使用 `start-task` 重启同步任务。
+    - 修改任务配置文件以设置 `remove-meta` 为 `true`，然后使用 `start-task` 重启同步任务。
 
 ## 设置了 `online-ddl-scheme: "gh-ost"`， gh-ost 表相关的 DDL 报错该如何处理？
 

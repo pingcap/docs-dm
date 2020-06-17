@@ -88,7 +88,7 @@ DM-worker 每次启动时（或在 DM-worker 暂停后 relay log 恢复同步）
 
 ## 数据清理
 
-因为存在文件读写的检测机制，所以 DM-worker 不会清理正在使用的 relay log，也不会清理当前任务稍后会使用到的 relay log。
+因为存在文件读写的检测机制，所以 DM-worker 不会清理正在使用的 relay log，也不会清理当前已有数据迁移任务之后会使用到的 relay log。
 
 Relay log 的数据清理包括自动清理和手动清理这两种方法。
 
@@ -101,7 +101,7 @@ Relay log 的数据清理包括自动清理和手动清理这两种方法。
     - 默认为 "3600"，表示每 3600 秒执行一次后台清理任务。
 
 - `purge-expires`
-    - 未更新的 relay log 在被后台清理前可保留的小时数。
+    - 当前未由 relay 处理单元进行写入、或已有数据迁移任务当前或未来不需要读取的 relay log 在被后台清理前可保留的小时数。
     - 默认为 "0"，表示不按 relay log 的更新时间执行数据清理。
 
 - `purge-remain-space`
