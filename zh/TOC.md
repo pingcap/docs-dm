@@ -58,6 +58,13 @@
 - [DM FAQ](faq.md)
 + 版本发布历史
   + v1.0
+<<<<<<< HEAD
+=======
+    - [1.0.6](releases/1.0.6.md)
+    - [1.0.5](releases/1.0.5.md)
+    - [1.0.4](releases/1.0.4.md)
+    - [1.0.3](releases/1.0.3.md)
+>>>>>>> e1dbd23... *: add release notes for v1.0.6 (#113)
     - [1.0.2](releases/1.0.2.md)
     - [1.0.3](releases/1.0.3.md)
     - [1.0.4](releases/1.0.4.md)
