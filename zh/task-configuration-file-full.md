@@ -41,7 +41,7 @@ target-database:                # 下游数据库实例配置
   port: 4000
   user: "root"
   password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # 推荐使用经 dmctl 加密后的密码
-  session:                                      # 设置 TiDB 的 session 变量，在 v1.0.6 版本引入。更多变量及解释参见 [TiDB 专用系统变量和语法](https://docs.pingcap.com/zh/tidb/stable/tidb-specific-system-variables)
+  session:                                      # 设置 TiDB 的 session 变量，在 v1.0.6 版本引入。更多变量及解释参见 https://docs.pingcap.com/zh/tidb/stable/tidb-specific-system-variables
     sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE"
     tidb_skip_utf8_check: 1
     tidb_constraint_check_in_place: 0
