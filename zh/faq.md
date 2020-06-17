@@ -27,28 +27,16 @@ DM 会尝试将包含多个 DDL 变更操作的单条语句拆分成只包含一
 
 ## 如何重置数据同步任务？
 
-在以下情况中，你需要重置整个数据同步任务：
+当数据迁移过程中发生异常且无法恢复时，需要重置数据同步任务，对数据重新进行迁移：
 
-- 上游数据库中人为执行了 `RESET MASTER`，造成 relay log 同步出错
+1. 使用 `stop-task` 停止异常的数据迁移任务。
 
-- relay log 或上游 binlog event 损坏或者丢失
+2. 清理下游已同步的数据。
 
-此时，relay 处理单元通常会发生错误而退出，且无法优雅地自动恢复，因此需要通过手动方式恢复数据同步：
+3. 从下面两种方式中选择其中一种重启数据同步任务：
 
-1. 使用 `stop-task` 命令停止当前正在运行的所有同步任务。
-
-2. 使用 DM-Ansible [停止整个 DM 集群](deploy-a-dm-cluster-using-ansible.md#第-10-步关闭-dm-集群)。
-
-3. 手动清理掉与 binlog event 被重置的 MySQL master 相对应的 DM-worker 的 relay log 目录。
-
-    - 如果是使用 DM-Ansible 部署，relay log 目录即 `<deploy_dir>/relay_log` 目录。
-    - 如果是使用二进制文件手动部署，relay log 目录即 relay-dir 参数设置的目录。
-
-4. 清理掉下游已同步的数据。
-
-5. 使用 DM-Ansible [启动整个 DM 集群](deploy-a-dm-cluster-using-ansible.md#第-9-步部署-dm-集群)。
-
-6. 以新的任务名重启数据同步任务，或设置 `remove-meta` 为 `true` 且 `task-mode` 为 `all`。
+    - 修改任务配置文件以指定新的任务名，然后使用 `start-task {task-config-file}` 重启同步任务。
+    - 使用 `start-task --remove-meta {task-config-file}` 重启数据同步任务。
 
 ## 设置了 `online-ddl-scheme: "gh-ost"`， gh-ost 表相关的 DDL 报错该如何处理？
 
