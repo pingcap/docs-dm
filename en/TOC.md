@@ -61,4 +61,5 @@
     - [1.0.3](releases/1.0.3.md)
     - [1.0.4](releases/1.0.4.md)
     - [1.0.5](releases/1.0.5.md)
+    - [1.0.6](releases/1.0.6.md)
 - [TiDB DM Glossary](glossary.md)
