@@ -87,7 +87,7 @@ DM-worker 每次启动时（或在 DM-worker 暂停后 relay log 恢复同步）
 
 ## 数据清理
 
-因为存在文件读写的检测机制，所以 DM-worker 不会清理正在使用的 relay log，也不会清理当前已有数据迁移任务稍后会使用到的 relay log。
+因为存在文件读写的检测机制，所以 DM-worker 不会清理正在使用的 relay log，也不会清理当前已有数据迁移任务之后会使用到的 relay log。
 
 Relay log 的数据清理包括自动清理和手动清理这两种方法。
 
