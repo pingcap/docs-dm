@@ -74,6 +74,7 @@
 + [术语表](glossary.md)
 + 版本发布历史
   + v1.0
+    - [1.0.6](releases/1.0.6.md)
     - [1.0.5](releases/1.0.5.md)
     - [1.0.4](releases/1.0.4.md)
     - [1.0.3](releases/1.0.3.md)
