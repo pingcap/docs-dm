@@ -167,7 +167,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/troubleshoot-dm/', '/docs-cn/tidb-da
 
 * 推荐在 DM 的 dump 处理单元提供的配置 `extra-args` 中设置 `statement-size`:
 
-    依据默认的 `--statement-size` 设置，DM 的 dump 处理单元默认生成的 `Insert Statement` 大小会尽量接近在 `1M` 左右，使用默认值就可以确保绝大部分情况不会出现该问题。
+    依据默认的 `--statement-size` 设置，DM 的 dump 处理单元默认生成的 `Insert Statement` 大小一般会在 `1M` 左右，使用默认值就可以确保绝大部分情况 load 处理单元不会报错 `packet for query is too large. Try adjusting the 'max_allowed_packet' variable`。
 
     有时候在 dump 过程中会出现下面的 `WARN` log。这个 `WARN` log 不影响 dump 的过程，只是说明 dump 的表可能是宽表。
 
