@@ -165,18 +165,18 @@ aliases: ['/docs-cn/tidb-data-migration/dev/troubleshoot-dm/', '/docs-cn/tidb-da
 
 #### 解决方案
 
-* 依据上面的原因，在代码层面不能简单的解决这个困扰，我们推荐的方式是：在 DM dump 处理单元提供的配置 `extra-args` 中设置 `statement-size`:
+* 推荐在 DM 的 dump 处理单元提供的配置 `extra-args` 中设置 `statement-size`:
 
     依据默认的 `--statement-size` 设置，DM 的 dump 处理单元默认生成的 `Insert Statement` 大小会尽量接近在 `1M` 左右，使用默认值就可以确保绝大部分情况不会出现该问题。
 
-    有时候在 dump 过程中会出现下面的 `WARN` log，但是这个报错不影响 dump 的过程，只是表达了 dump 的表可能是宽表。
+    有时候在 dump 过程中会出现下面的 `WARN` log。这个 `WARN` log 不影响 dump 的过程，只是说明 dump 的表可能是宽表。
 
     ```
     Row bigger than statement_size for xxx
     ```
 
-* 如果宽表的单行超过了 `64M`，那么需要修改以下两项配置，并且使之生效。
+* 如果宽表的单行超过了 `64M`，需要修改以下两项配置，并且确保其生效。
 
     * 在 TiDB Server 执行 `set @@global.max_allowed_packet=134217728` （`134217728 = 128M`）
 
-    * 根据实际情况为 DM 的任务配置文件中的 `target-database` 增加配置 `max-allowed-packet: 134217728`(128M)，然后 `stop-task` 后再重新 `start-task`。
+    * 根据实际情况为 DM 的任务配置文件中的 `target-database` 增加配置 `max-allowed-packet: 134217728`(128M)，执行 `stop-task` 后再重新 `start-task`。
