@@ -477,6 +477,10 @@ dm-worker2 ansible_host=172.16.10.73 source_id="mysql-replica-02" server_id=102 
     ```bash
     ansible-playbook deploy.yml
     ```
+   
+   > **注意：**
+   >
+   > 目前 DM 和 TiDB 在部署与滚动升级时，均会覆盖监控组件原有的运行配置。因此，强烈建议为 DM 和 TiDB 部署独立的监控组件。
 
 3. 启动 DM 集群。
 
