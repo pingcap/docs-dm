@@ -31,13 +31,13 @@ summary: 了解 TiDB Data Migration 用户文档。
 </NavColumn>
 
 <NavColumn>
-<ColumnTitle>部署集群</ColumnTitle>
+<ColumnTitle>部署使用</ColumnTitle>
 
 - [软硬件要求](hardware-and-software-requirements.md)
 - [使用 DM-Ansible 部署集群](deploy-a-dm-cluster-using-ansible.md)
 - [使用 Binary 部署集群](deploy-a-dm-cluster-using-binary.md)
+- [使用 DM 同步数据](replicate-data-using-dm.md)
 - [监控与告警设置](monitor-a-dm-cluster.md)
-- [测试验证](create-task-and-verify.md)
 - [性能测试](performance-test.md)
 
 </NavColumn>
