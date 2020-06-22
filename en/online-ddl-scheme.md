@@ -6,7 +6,7 @@ category: reference
 
 # DM Online DDL Scheme
 
-This document introduces the `online-ddl-scheme` feature of DM.
+This document introduces the `online-ddl-scheme` feature of DM. 
 
 ## Overview
 
