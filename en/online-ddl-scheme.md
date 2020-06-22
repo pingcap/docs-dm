@@ -1,12 +1,12 @@
 ---
-title: DM online-ddl-scheme
+title: DM Online DDL Scheme
 summary: This document introduces the online-ddl-scheme feature of DM.
 category: reference
 ---
 
-# DM online-ddl-scheme
+# DM Online DDL Scheme
 
-This document introduces the online-ddl-scheme feature of DM.
+This document introduces the `online-ddl-scheme` feature of DM. 
 
 ## Overview
 
