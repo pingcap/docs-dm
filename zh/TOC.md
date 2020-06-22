@@ -44,7 +44,6 @@
   - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
   - [告警处理](handle-alerts.md)
   - [日常巡检](daily-check.md)
-+ [DM Portal](dm-portal.md)
 + 故障处理
   - [故障及处理方法](error-handling.md)
   - [性能问题及处理方法](handle-performance-issues.md)
@@ -68,6 +67,7 @@
     - [DM-worker 配置](dm-worker-configuration-file.md)
     - [上游数据库配置](source-configuration-file.md)
     - [任务配置](task-configuration-file.md)
+    - [使用 DM Portal 生成任务配置](dm-portal.md)
   - [监控指标](monitor-a-dm-cluster.md)
   - [告警信息](alert-rules.md)
   - [错误码](error-handling.md#常见故障处理方法)
