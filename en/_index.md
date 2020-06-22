@@ -7,72 +7,68 @@ summary: Learn about TiDB Data Migration documentation.
 
 [TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data replication task management platform that supports the full data migration and the incremental data migration from MySQL/MariaDB into TiDB. It can help to reduce the operations cost and simplify the troubleshooting process.
 
-> **Note:**
->
-> DM replicates data to TiDB in the form of SQL statements, so each version of DM is compatible with **all versions** of TiDB. In the production environment, it is recommended to use the latest released version of DM. To install DM, see [DM download link](https://pingcap.com/docs/stable/reference/tools/download/#tidb-dm-data-migration).
+<NavColumns>
+<NavColumn>
+<ColumnTitle>About TiDB Data Migration</ColumnTitle>
 
-## Architecture
+- [Performance](benchmark-v1.0-ga.md)
+- [Table routing](feature-overview.md#table-routing)
+- [Black & White Lists](feature-overview.md#black-and-white-table-lists)
+- [Binlog Event Filter](feature-overview.md#binlog-event-filter)
+- [Replication delay monitoring](feature-overview.md#replication-delay-monitoring)
+- [Online DDL Scheme](online-ddl-scheme.md)
+- [Shard Merge](feature-shard-merge.md)
 
-The Data Migration tool includes three components: DM-master, DM-worker, and dmctl.
+</NavColumn>
 
-![Data Migration architecture](/media/dm-architecture.png)
+<NavColumn>
+<ColumnTitle>Quick Start</ColumnTitle>
 
-### DM-master
+- [Usage Scenarios](usage-scenario-shard-merge.md)
+- [Quick Start with DM](get-started.md)
+- [Replicate Data Using DM](replicate-data-using-dm.md)
 
-DM-master manages and schedules the operation of data replication tasks.
+</NavColumn>
 
-- Storing the topology information of the DM cluster
-- Monitoring the running state of DM-worker processes
-- Monitoring the running state of data replication tasks
-- Providing a unified portal for the management of data replication tasks
-- Coordinating the DDL replication of sharded tables in each instance under the sharding scenario
+<NavColumn>
+<ColumnTitle>Deploy and Use</ColumnTitle>
 
-### DM-worker
+- [Deploy DM Using DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
+- [Deploy DM Using Binary](deploy-a-dm-cluster-using-binary.md)
+- [Use DM to Replicate Data](replicate-data-using-dm.md)
+- [Monitor and Alert](monitor-a-dm-cluster.md)
 
-DM-worker executes specific data replication tasks.
+</NavColumn>
 
-- Persisting the binlog data to the local storage
-- Storing the configuration information of the data replication subtasks
-- Orchestrating the operation of the data replication subtasks
-- Monitoring the running state of the data replication subtasks
+<NavColumn>
+<ColumnTitle>Maintain</ColumnTitle>
 
-After DM-worker is started, it automatically replicates the upstream binlog to the local configuration directory (the default replication directory is `<deploy_dir>/relay_log` if DM is deployed using `DM-Ansible`). For details about DM-worker, see [DM-worker Introduction](dm-worker-intro.md). For details about the relay log, see [Relay Log](relay-log.md).
+- [Upgrade DM](dm-upgrade.md)
+- [DM Cluster Operations](cluster-operations.md)
+- [Manage Replication Tasks](manage-replication-tasks.md)
+- [Manually Handle Sharding DDL Locks](feature-manually-handling-sharding-ddl-locks.md)
 
-### dmctl
+</NavColumn>
 
-dmctl is the command line tool used to control the DM cluster.
+<NavColumn>
+<ColumnTitle>Tutorials</ColumnTitle>
 
-- Creating/Updating/Dropping data replication tasks
-- Checking the state of data replication tasks
-- Handling the errors during data replication tasks
-- Verifying the configuration correctness of data replication tasks
+- [Simple Usage Scenario](usage-scenario-simple-replication.md)
+- [Shard Merge Scenario](usage-scenario-shard-merge.md)
+- [Migrate from MySQL (Amazon Aurora)](migrate-from-mysql-aurora.md)
+- [Shard Merge Scenario Best Practices](shard-merge-best-practices.md)
+- [Switch DM-worker connection](cluster-operations.md#switch-dm-worker-connection-between-upstream-mysql-instances)
 
-## Data replication features
+</NavColumn>
 
-This section describes the data replication features provided by the Data Migration tool.
+<NavColumn>
+<ColumnTitle>Reference</ColumnTitle>
 
-### Schema and table routing
+- [DM Architecture](overview.md)
+- [Configuration File Overview](config-overview.md)
+- [Monitoring Metrics and Alerts](monitor-a-dm-cluster.md)
+- [Error Handling](error-handling.md)
 
-The schema and table routing feature means that DM can replicate a certain table of the upstream MySQL or MariaDB instance to the specified table in the downstream, which can be used to merge or replicate the sharding data.
+</NavColumn>
 
-### Black and white lists replication at the schema and table levels
-
-The black and white lists filtering rule of the upstream database instance tables is similar to MySQL `replication-rules-db`/`replication-rules-table`, which can be used to filter or only replicate all operations of some databases or some tables.
-
-### Binlog event filtering
-
-Binlog event filtering is a more fine-grained filtering rule than the black and white lists filtering rule. You can use statements like `INSERT` or `TRUNCATE TABLE` to specify the binlog events of `schema/table` that you need to replicate or filter out.
-
-### Sharding support
-
-DM supports merging the original sharded instances and tables into TiDB, but with some restrictions.
-
-## Usage restrictions
-
-Before using the DM tool, note the following restrictions:
-
-+ Database version
-+ DDL syntax
-+ Sharding
-+ Operations
-+ Switching DM-worker connection to another MySQL instance
+</NavColumns>

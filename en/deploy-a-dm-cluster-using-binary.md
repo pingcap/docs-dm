@@ -1,10 +1,10 @@
 ---
-title: Deploy Data Migration Cluster Using DM Binary
-summary: Learn how to deploy the Data Migration cluster using DM binary.
+title: Deploy Data Migration Using DM Binary
+summary: Learn how to deploy a Data Migration cluster using DM binary.
 category: how-to
 ---
 
-# Deploy Data Migration Cluster Using DM Binary
+# Deploy Data Migration Using DM Binary
 
 This document introduces how to quickly deploy the Data Migration (DM) cluster using DM binary.
 
