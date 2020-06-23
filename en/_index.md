@@ -25,7 +25,7 @@ summary: Learn about TiDB Data Migration documentation.
 <ColumnTitle>Quick Start</ColumnTitle>
 
 - [Usage Scenarios](usage-scenario-shard-merge.md)
-- [Quick Start with DM](get-started.md)
+- [Quick Start with DM](quick-start-with-dm.md)
 - [Replicate Data Using DM](replicate-data-using-dm.md)
 
 </NavColumn>
