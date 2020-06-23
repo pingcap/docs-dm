@@ -10,7 +10,7 @@ DM-worker is a tool used to replicate data from MySQL/MariaDB to TiDB.
 
 It has the following features:
 
-- Acts as a slave of any MySQL or MariaDB instance
+- Acts as a secondary of any MySQL or MariaDB instance
 - Reads the binlog events from MySQL/MariaDB and persists them to the local storage
 - A single DM-worker supports replicating the data of one MySQL/MariaDB instance to multiple TiDB instances
 - Multiple DM-workers support replicating the data of multiple MySQL/MariaDB instances to one TiDB instance
@@ -23,7 +23,7 @@ A DM-worker task contains multiple logic units, including relay log, Dumper, Loa
 
 The relay log persistently stores the binlog data from the upstream MySQL/MariaDB and provides the feature of accessing binlog events for the binlog replication.
 
-Its rationale and features are similar to the slave relay log of MySQL. For details, see [The Slave Relay Log](https://dev.mysql.com/doc/refman/5.7/en/slave-logs-relaylog.html).
+Its rationale and features are similar to the secondary relay log of MySQL. For details, see [The Secondary Relay Log](https://dev.mysql.com/doc/refman/5.7/en/slave-logs-relaylog.html).
 
 ### Dumper
 

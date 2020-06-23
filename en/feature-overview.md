@@ -514,8 +514,8 @@ enable-heartbeat: true
 
 - DM-worker creates the `dm_heartbeat` (currently unconfigurable) schema in the corresponding upstream MySQL or MariaDB.
 - DM-worker creates the `heartbeat` (currently unconfigurable) table in the corresponding upstream MySQL or MariaDB.
-- DM-worker uses `replace statement` to update the current `TS_master` timestamp every second (currently unconfigurable) in the corresponding upstream MySQL or MariaDB `dm_heartbeat`.`heartbeat` tables.
-- DM-worker updates the `TS_slave_task` replication time after each replication task obtains the `dm_heartbeat`.`heartbeat` binlog.
-- DM-worker queries the current `TS_master` timestamp in the corresponding upstream MySQL or MariaDB `dm_heartbeat`.`heartbeat` tables every 10 seconds, and calculates `task_lag` = `TS_master` - `TS_slave_task` for each task.
+- DM-worker uses `replace statement` to update the current `TS_primary` timestamp every second (currently unconfigurable) in the corresponding upstream MySQL or MariaDB `dm_heartbeat`.`heartbeat` tables.
+- DM-worker updates the `TS_secondary_task` replication time after each replication task obtains the `dm_heartbeat`.`heartbeat` binlog.
+- DM-worker queries the current `TS_primary` timestamp in the corresponding upstream MySQL or MariaDB `dm_heartbeat`.`heartbeat` tables every 10 seconds, and calculates `task_lag` = `TS_primary` - `TS_secondary_task` for each task.
 
 See the `replicate lag` in the [binlog replication](monitor-a-dm-cluster.md#binlog-replication) processing unit of DM monitoring metrics.

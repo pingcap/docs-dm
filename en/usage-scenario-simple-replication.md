@@ -138,7 +138,7 @@ Assume that the schemas replicated to the downstream are as follows:
 The complete replication task configuration is shown below. For more details, see [configuration explanations](task-configuration-file.md).
 
 ```yaml
-name: "one-tidb-slave"
+name: "one-tidb-secondary"
 task-mode: all
 meta-schema: "dm_meta"
 remove-meta: false

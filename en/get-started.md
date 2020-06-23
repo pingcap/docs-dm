@@ -8,7 +8,7 @@ category: how-to
 
 TiDB DM (Data Migration) is a platform that supports migrating large, complex, production data sets from MySQL or MariaDB to TiDB.
 
-DM supports creating and importing an initial dump of data, as well as keeping data replicated during migration by reading and applying binary logs from the source data store. DM can migrate sharded topologies from in-production databases by merging tables from multiple separate upstream MySQL/MariaDB instances/clusters. In addition to its use for migrations, DM is often used on an ongoing basis by existing MySQL or MariaDB users who deploy a TiDB cluster as a slave, to either provide improved horizontal scalability or run real-time analytical workloads on TiDB without needing to manage an ETL pipeline.
+DM supports creating and importing an initial dump of data, as well as keeping data replicated during migration by reading and applying binary logs from the source data store. DM can migrate sharded topologies from in-production databases by merging tables from multiple separate upstream MySQL/MariaDB instances/clusters. In addition to its use for migrations, DM is often used on an ongoing basis by existing MySQL or MariaDB users who deploy a TiDB cluster as a secondary library, to either provide improved horizontal scalability or run real-time analytical workloads on TiDB without needing to manage an ETL pipeline.
 
 In this tutorial, we'll see how to migrate a sharded table from multiple upstream MySQL instances. We'll do this a couple of different ways. First, we'll merge several tables/shards that do not conflict; that is, they're partitioned using a scheme that does not result in conflicting unique key values. Then, we'll merge several tables that **do** have conflicting unique key values.
 
@@ -447,7 +447,7 @@ To start dmtask1, execute `start-task dm-cnf/dmtask1.yaml`:
 }
 ```
 
-Starting the task will kick off the actions defined in the task configuration file. That includes executing instances of Mydumper and loader, and connecting the workers to the upstream MySQL servers as replication slaves after the initial data dump has been loaded.
+Starting the task will kick off the actions defined in the task configuration file. That includes executing instances of Mydumper and loader, and connecting the workers to the upstream MySQL servers as replication secondaries after the initial data dump has been loaded.
 
 We can see that all rows have been migrated to the TiDB server:
 
@@ -471,7 +471,7 @@ Expect this output:
 1858    d7fd118e6f226a71b5f1ffe10efd0a78        3309
 ```
 
-DM is now acting as a slave to each of the MySQL servers, reading their binary logs to apply updates in realtime to the downstream TiDB server:
+DM is now acting as a secondary to each of the MySQL servers, reading their binary logs to apply updates in realtime to the downstream TiDB server:
 
 ```bash
 for i in 1 2 3
