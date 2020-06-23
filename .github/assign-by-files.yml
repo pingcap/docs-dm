@@ -1,12 +1,10 @@
 ---
 # Changing all md files should request a language review in case of format failures.
-# toutdesuite is the repo administrator.
 
 # you can use glob pattern
-
 # You can set multiple reviewers
 
-# All other file pattern will match the following:
+# Changing all md files will request the following reviewers automatically.
 
 '**/*.md':
   - csuzhangxc
