@@ -1,0 +1,15 @@
+---
+# Changing all md files should request a language review in case of format failures.
+# TomShawn is the repo administrator.
+
+# you can use glob pattern
+
+# You can set multiple reviewers
+
+# All other file pattern will match the following:
+
+'**/*':
+  - toutdesuite
+  - yikeke
+  - csuzhangxc
+  - WangXiangUSTC
