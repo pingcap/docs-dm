@@ -19,7 +19,7 @@ If you know in advance that an unsupported SQL statement is going to be replicat
 ## Restrictions
 
 - The skip or replace operation is a one-time operation that is only used to skip or replace the SQL statement unsupported by the downstream TiDB. Do not handle other replication errors with this approach.
-    - For other replication errors, try to handle them using [Black and white table lists](feature-overview.md#black-and-white-table-lists) or [Binlog event filtering](feature-overview.md#binlog-event-filter).
+    - For other replication errors, try to handle them using [Block and allow table lists](feature-overview.md#block-and-allow-table-lists) or [Binlog event filtering](feature-overview.md#binlog-event-filter).
 
 - If it is unacceptable in the actual production environment that the abnormal DDL statement is skipped in the downstream TiDB and it cannot be replaced with other DDL statements, then do not use this approach.
     - For example: `DROP PRIMARY KEY`

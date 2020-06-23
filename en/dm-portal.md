@@ -6,7 +6,7 @@ category: reference
 
 # DM Portal Overview
 
-Data Migration (DM) provides a variety of features, including [table routing](feature-overview.md#table-routing), [black & white table lists](feature-overview.md#black-white-table-lists), and [binlog event filter](feature-overview.md#binlog-event-filter). However, these features also increase the complexity of using DM, especially when users are modifying [DM task configurations](task-configuration-file.md).
+Data Migration (DM) provides a variety of features, including [table routing](feature-overview.md#table-routing), [block & allow table lists](feature-overview.md#block-allow-table-lists), and [binlog event filter](feature-overview.md#binlog-event-filter). However, these features also increase the complexity of using DM, especially when users are modifying [DM task configurations](task-configuration-file.md).
 
 To address this problem, DM provides a simple web application, DM Portal. DM Portal enables users to visually configure the required replication tasks, and generates a `task.yaml` file that can be directly executed by DM.
 

@@ -360,18 +360,18 @@ target-database:
 
 mysql-instances:
   - source-id: "mysql-replica-01"
-    black-white-list: "instance"
+    block-allow-list: "instance"  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
     loader-config-name: "loader1"
 
   - source-id: "mysql-replica-02"
-    black-white-list: "instance"
+    block-allow-list: "instance"  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
     loader-config-name: "loader2"
 
   - source-id: "mysql-replica-03"
-    black-white-list: "instance"
+    block-allow-list: "instance"  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
     loader-config-name: "loader3"
 
-black-white-list:
+block-allow-list:  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
   instance:
     do-dbs: ["dmtest1"]
 
@@ -396,7 +396,7 @@ There are a number of global options, and several groups of options that define 
 
 * The `target-database` section defines the information of the connected target database. If `password` is not an empty string, you need to use dmctl to encrypt the password. Refer to [Encrypt the upstream MySQL user password using dmctl](deploy-a-dm-cluster-using-ansible.md#encrypt-the-upstream-mysql-user-password-using-dmctl) for detailed steps.
 
-* We use `black-white-list` to limit the scope of this task to database `dmtest`.
+* We use `block-allow-list` to limit the scope of this task to database `dmtest`.
 
 * The `loaders` section defines where to find the output of each instance of Mydumper that has been executed by the respective MySQL source.
 
