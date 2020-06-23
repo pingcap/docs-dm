@@ -1,6 +1,6 @@
 ---
 # Changing all md files should request a language review in case of format failures.
-# TomShawn is the repo administrator.
+# toutdesuite is the repo administrator.
 
 # you can use glob pattern
 
@@ -8,8 +8,8 @@
 
 # All other file pattern will match the following:
 
-'**/*':
-  - toutdesuite
-  - yikeke
+'**/*.md':
   - csuzhangxc
   - WangXiangUSTC
+  - toutdesuite
+  - yikeke
