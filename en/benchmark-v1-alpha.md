@@ -4,7 +4,7 @@ summary: Learn about the DM 1.0-alpha benchmark report.
 category: benchmark
 ---
 
-# DM 1.0-alpha Benchmark Report
+# DM 1.0-alpha Benchmark Report 
 
 This DM benchmark report describes the test purpose, environment, scenario, and result.
 
