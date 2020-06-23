@@ -4,6 +4,7 @@ summary: 了解如何快速上手部署试用 TiDB Data Migration 工具。
 category: how-to
 aliases: ['/docs-cn/tidb-data-migration/dev/get-started/']
 ---
+
 # TiDB Data Migration 快速上手指南
 
 本文将介绍如何快速上手体验数据迁移工具 [TiDB Data Migration](https://github.com/pingcap/dm) (DM)。体验方式为使用 binary 包部署 DM。
