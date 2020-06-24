@@ -532,7 +532,7 @@ update-task [-s "mysql-replica-01"] ./task.yaml
 #### Returned results
 
 ```bash
-update-task task_all_block.yaml
+update-task task.yaml
 ```
 
 ```bash
