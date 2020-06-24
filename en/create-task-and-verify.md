@@ -164,4 +164,4 @@ Now, you have successfully created a task to replicate the sharded tables from t
 
 ## Verify whether the cluster works well
 
-You can modify data in the upstream MySQL sharded tables. Then use [sync-diff-inspector](https://docs.pingcap.com/tidb/v4.0/shard-diff) to check whether the upstream and downstream data are consistent. Consistent data means that the replication task works well.
+You can modify data in the upstream MySQL sharded tables. Then use [sync-diff-inspector](https://docs.pingcap.com/tidb/v4.0/shard-diff) to check whether the upstream and downstream data are consistent. Consistent data means that the replication task works well (this also indicates that the cluster works well).
