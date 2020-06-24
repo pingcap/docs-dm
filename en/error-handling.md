@@ -1,14 +1,94 @@
 ---
-title: Data Migration Error Handling
-summary: Learn how to deal with errors when you use TiDB Data Migration.
+title: Handle Errors
+summary: Learn the error system and the error handling when you use DM.
 category: reference
+aliases: ['/docs/tidb-data-migration/dev/troubleshoot-dm/', '/docs/tidb-data-migration/dev/error-system/']
 ---
 
-# Data Migration Error Handling
+# Handle Errors
 
-This document introduces common errors that you might encounter and solutions to these errors when you use TiDB Data Migration.
+This document introduces the error system and solutions to handle errors when you use DM.
 
-## Common error description and handling method
+## Error system
+
+In the error system, usually, the details of a specific error are as follows:
+
+- `code`: error code.
+
+    DM uses the same error code for the same error type. An error code does not change as DM version changes.
+
+    Some errors might be removed during the DM iteration, while the error codes are not removed. DM uses a new error code instead of an existing one for a new error.
+
+- `class`: error type.
+
+    It is used to mark the component where an error occurs (error source).
+
+    The following table displays all error types, sources and error samples.
+
+    |  Error type    |   Error source            | Error sample                                                     |
+    | :-------------- | :------------------------------ | :------------------------------------------------------------ |
+    | `database`       |  Database operations         | `[code=10003:class=database:scope=downstream:level=medium] database driver: invalid connection` |
+    | `functional`     |  Underlying functions of DM           | `[code=11005:class=functional:scope=internal:level=high] not allowed operation: alter multiple tables in one statement` |
+    | `config`         |  Incorrect configuration                      | `[code=20005:class=config:scope=internal:level=medium] empty source-id not valid` |
+    | `binlog-op`      |  Binlog operations          | `[code=22001:class=binlog-op:scope=internal:level=high] empty UUIDs not valid` |
+    | `checkpoint`     |  checkpoint operations  | `[code=24002:class=checkpoint:scope=internal:level=high] save point bin.1234 is older than current pos bin.1371` |
+    | `task-check`     |  Performing task check       | `[code=26003:class=task-check:scope=internal:level=medium] new table router error` |
+    | `relay-event-lib`|  Executing the basic functions of the relay module | `[code=28001:class=relay-event-lib:scope=internal:level=high] parse server-uuid.index` |
+    | `relay-unit`     |  relay processing unit    | `[code=30015:class=relay-unit:scope=upstream:level=high] TCPReader get event: ERROR 1236 (HY000): Could not open log file` |
+    | `dump-unit`      |   dump processing unit    | `[code=32001:class=dump-unit:scope=internal:level=high] mydumper runs with error: CRITICAL **: 15:12:17.559: Error connecting to database: Access denied for user 'root'@'172.17.0.1' (using password: NO)` |
+    | `load-unit`      |  load processing unit    | `[code=34002:class=load-unit:scope=internal:level=high] corresponding ending of sql: ')' not found` |
+    | `sync-unit`      |  sync processing unit     | `[code=36027:class=sync-unit:scope=internal:level=high] Column count doesn't match value count: 9 (columns) vs 10 (values)` |
+    | `dm-master`      |   DM-master service | `[code=38008:class=dm-master:scope=internal:level=high] grpc request error: rpc error: code = Unavailable desc = all SubConns are in TransientFailure, latest connection error: connection error: desc = "transport: Error while dialing dial tcp 172.17.0.2:8262: connect: connection refused"` |
+    | `dm-worker`      |  DM-worker service  | `[code=40066:class=dm-worker:scope=internal:level=high] ExecuteDDL timeout, try use query-status to query whether the DDL is still blocking` |
+    | `dm-tracer`      |  DM-tracer service  | `[code=42004:class=dm-tracer:scope=internal:level=medium] trace event test.1 not found` |
+    | `schema-tracker` | schema-tracker (during incremental data replication)   | `ErrSchemaTrackerCannotExecDDL,[code=44006:class=schema-tracker:scope=internal:level=high],"cannot track DDL: ALTER TABLE test DROP COLUMN col1"` |
+    | `scheduler`      | Scheduling operations (of data replication tasks)   | `ErrSchedulerNotStarted,[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
+
+- `scope`: Error scope.
+
+    It is used to identify the scope and source of DM objects when an error occurs. `scope` includes four types: `not-set`, `upstream`, `downstream`, and `internal`.
+
+    If the logic of the error directly involves requests between upstream and downstream databases, the scope is set to `upstream` or `downstream`. Other error scenarios are currently set to `internal`.
+
+- `level`: Error level.
+
+    The severity level of the error, including `low`, `medium`, and `high`.
+
+    - The `low` level error usually relates to user operations and incorrect inputs. It does not affect replication tasks.
+    - The `medium` level error usually relates to user configurations. It affects some newly started services; however, it does not affect the existing DM replication status.
+    - The `high` level error usually requires attention; otherwise, the replication task is at the risk of interruption that you need to address.
+
+- `message`: Error descriptions.
+
+    Detailed descriptions of the error. To wrap and store every additional layer of error message on the error call chain, the [errors.Wrap](https://godoc.org/github.com/pkg/errors#hdr-Adding_context_to_an_error) mode adopted. The message description wrapped at the outermost layer indicates the error in DM and the message description wrapped at the innermost layer indicates the error source.
+
+- Error stack information (optional)
+
+    Whether DM outputs the error stack information depends on the error severity and the necessity. The error stack records the complete stack call information when the error occurred. If you cannot figure out the error cause based on the basic information and the error message, you can trace the execution path of the code when the error occurred using the error stack.
+
+For the complete list of error codes, refer to the [error code lists] (https://github.com/pingcap/dm/blob/master/_utils/terror_gen/errors_release.txt).
+
+## Troubleshooting
+
+If you encounter errors while running DM, you can take the following steps to troubleshoot problems:
+
+1. Execute the `query-status` command to check the task running status and the error output.
+
+2. Check the log files related to the error. The log files are on the DM-master and DM-worker nodes. To get key information about the error, refer to [common errors](error-system.md). Then check [error handling](#handle-common-errors) to find the solution.
+
+3. If the error has not been covered in this document, and you cannot solve the problem by checking the log or monitoring metrics, you can contact the R&D.
+
+4. After the error is resolved, restart the task using dmctl.
+
+    {{< copyable "shell-regular" >}}
+
+    ```bash
+    resume-task ${task name}
+    ```
+
+However, you need to reset the data replication task in some cases. For details, refer to [Reset the data replication task](faq.md#reset-the-data-replication-task).
+
+## Handle common errors
 
 | Error code       | Error description                                                     |  Handling method                                                    |
 | :----------- | :------------------------------------------------------------ | :----------------------------------------------------------- |
@@ -24,7 +104,7 @@ This document introduces common errors that you might encounter and solutions to
 | `code=32001` |   Abnormal dump processing unit                                            |  If the error message contains `mydumper: argument list too long.`, configure the table to be exported by manually adding the `--regex` regular expression in the Mydumper argument `extra-args` in the `task.yaml` file according to the black-white list. For example, to export all tables named `hello`, add `--regex '.*\\.hello$'`; to export all tables, add `--regex '.*'`. |
 | `code=38008` |  An error occurs in the gRPC communication among DM components.                                     |   Check `class`. Find out the error occurs in the interaction of which components. Determine the type of communication error. If the error occurs when establishing gRPC connection, check whether the communication server is working normally. |
 
-## What can I do when a replication task is interrupted with the `invalid connection` error returned?
+### What can I do when a replication task is interrupted with the `invalid connection` error returned?
 
 The `invalid connection` error indicates that anomalies have occurred in the connection between DM and the downstream TiDB database (such as network failure, TiDB restart, TiKV busy and so on) and that a part of the data for the current request has been sent to TiDB.
 
@@ -33,13 +113,13 @@ Because DM has the feature of concurrently replicating data to the downstream in
 - If only the `invalid connection` error occurs during the incremental replication process, DM retries the task automatically.
 - If DM does not or fails to retry automatically because of version problems, use `stop-task` to stop the task and then use `start-task` to restart the task.
 
-## A replication task is interrupted with the `driver: bad connection` error returned
+### A replication task is interrupted with the `driver: bad connection` error returned
 
 The `driver: bad connection` error indicates that anomalies have occurred in the connection between DM and the upstream TiDB database (such as network failure, TiDB restart and so on) and that the data of the current request has not yet been sent to TiDB at that moment.
 
 When this type of error occurs in the current version, use `stop-task` to stop the task and then use `start-task` to restart the task. The automatic retry mechanism of DM will be improved later.
 
-## The relay unit throws error `event from * in * diff from passed-in event *` or a replication task is interrupted with failing to get or parse binlog errors like `get binlog error ERROR 1236 (HY000)` and `binlog checksum mismatch, data may be corrupted` returned
+### The relay unit throws error `event from * in * diff from passed-in event *` or a replication task is interrupted with failing to get or parse binlog errors like `get binlog error ERROR 1236 (HY000)` and `binlog checksum mismatch, data may be corrupted` returned
 
 During the DM process of relay log pulling or incremental replication, this two errors might occur if the size of the upstream binlog file exceeds **4 GB**.
 
