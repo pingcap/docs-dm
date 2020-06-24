@@ -103,18 +103,18 @@ You need to replicate these sharded tables to the `db_target.t_target` table in 
 
     mysql-instances:
     - source-id: "mysql-replica-01"
-        black-white-list:  "instance"
+        block-allow-list:  "instance"
         route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
         mydumper-thread: 4
         loader-thread: 16
         syncer-thread: 16
     - source-id: "mysql-replica-02"
-        black-white-list:  "instance"
+        block-allow-list:  "instance"
         route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
         mydumper-thread: 4
         loader-thread: 16
         syncer-thread: 16
-    black-white-list:
+    block-allow-list:
     instance:
         do-dbs: ["~^sharding[\\d]+"]
         do-tables:
