@@ -6,7 +6,7 @@ category: how-to
 
 # Create and Verify a Data Replication Task
 
-This document describes how to create a simple data replication task to verify whether the cluster work well after the DM cluster is successfully deployed.
+This document describes how to create a simple data replication task to verify whether the cluster works well after the DM cluster is successfully deployed.
 
 ## Sample scenario
 
@@ -25,11 +25,11 @@ The descriptions of each node are as follows.
 | TiDB       | 192.168.0.3 | 4000 |
 | DM-master  | 192.168.0.4 | 8261 |
 
-Based on this scenario, the following sections describe how to create the data replication task.
+Based on this scenario, the following sections describe how to create a data replication task.
 
 ## Configure the MySQL data source
 
-Before running the data replication task, you need to configure the MySQL data source.
+Before starting a data replication task, you need to configure the MySQL data source.
 
 ### Encrypt the password
 
@@ -45,7 +45,7 @@ For safety reasons, it is recommended to configure and use encrypted passwords. 
 fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
 ```
 
-Record this encrypted value, which can be used for creating MySQL data source in the following steps.
+Record this encrypted value, which can be used for creating a MySQL data source in the following steps.
 
 ### Edit the source configuration file
 
