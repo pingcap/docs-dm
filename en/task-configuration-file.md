@@ -2,6 +2,7 @@
 title: Data Migration Task Configuration File
 summary: This document introduces the task configuration file of Data Migration.
 category: reference
+aliases: ['/docs/tidb-data-migration/dev/task-configuration-file/']
 ---
 
 # Data Migration Task Configuration File

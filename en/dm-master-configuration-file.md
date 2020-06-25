@@ -2,6 +2,7 @@
 title: DM-master Configuration File
 summary: Learn the configuration file of DM-master.
 category: reference
+aliases: ['/docs/tidb-data-migration/dev/dm-master-configuration-file/']
 ---
 
 # DM-master Configuration File
