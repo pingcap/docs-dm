@@ -2,6 +2,7 @@
 title: DM online-ddl-scheme
 summary: This document introduces the online-ddl-scheme feature of DM.
 category: reference
+aliases: ['/docs/tidb-data-migration/v1.0/online-ddl-scheme/']
 ---
 
 # DM online-ddl-scheme

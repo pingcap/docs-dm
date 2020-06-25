@@ -2,7 +2,7 @@
 title: Data Migration Error Message Description
 summary: Learn the system and description of error messages in Data Migration.
 category: reference
-aliases: ['/docs/dev/reference/tools/data-migration/error-system/','/docs/dev/reference/tools/data-migration/troubleshoot/error-system/','/docs/v3.1/reference/tools/data-migration/troubleshoot/error-system/','/docs/v3.0/reference/tools/data-migration/troubleshoot/error-system/','/docs/v2.1/reference/tools/data-migration/troubleshoot/error-system/']
+aliases: ['/docs/tidb-data-migration/v1.0/error-system/','/docs/dev/reference/tools/data-migration/error-system/','/docs/dev/reference/tools/data-migration/troubleshoot/error-system/','/docs/v3.1/reference/tools/data-migration/troubleshoot/error-system/','/docs/v3.0/reference/tools/data-migration/troubleshoot/error-system/','/docs/v2.1/reference/tools/data-migration/troubleshoot/error-system/']
 ---
 
 # Data Migration Error Message Description

@@ -1,6 +1,7 @@
 ---
 title: TiDB Data Migration Documentation
 summary: Learn about TiDB Data Migration documentation.
+aliases: ['/docs/tidb-data-migration/v1.0/_index/']
 ---
 
 # TiDB Data Migration Documentation

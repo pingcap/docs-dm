@@ -2,7 +2,7 @@
 title: TiDB DM (Data Migration) Tutorial
 summary: Learn the basics of the TiDB DM (Data Migration) platform, to migrate a simple sharded schema from MySQL to TiDB.
 category: how-to
-aliases: ['/docs/dev/how-to/get-started/data-migration/','/docs/v3.0/how-to/get-started/data-migration/','/docs/v3.1/how-to/get-started/data-migration/','/docs/v2.1/how-to/get-started/data-migration/']
+aliases: ['/docs/tidb-data-migration/v1.0/get-started/','/docs/dev/how-to/get-started/data-migration/','/docs/v3.0/how-to/get-started/data-migration/','/docs/v3.1/how-to/get-started/data-migration/','/docs/v2.1/how-to/get-started/data-migration/']
 ---
 
 # TiDB DM (Data Migration) Tutorial
