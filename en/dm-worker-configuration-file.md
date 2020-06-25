@@ -2,7 +2,7 @@
 title: DM-worker Configuration File
 summary: Learn the configuration file of DM-worker.
 category: reference
-aliases: ['/docs/tidb-data-migration/dev/dm-worker-configuration-file-full/']
+aliases: ['/docs/tidb-data-migration/dev/dm-worker-configuration-file/','/docs/tidb-data-migration/dev/dm-worker-configuration-file-full/']
 ---
 
 # DM-worker Configuration File

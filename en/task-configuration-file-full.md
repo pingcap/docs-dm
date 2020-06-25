@@ -1,6 +1,7 @@
 ---
 title: DM Advanced Task Configuration File
 category: reference
+aliases: ['/docs/tidb-data-migration/dev/task-configuration-file-full/']
 ---
 
 # DM Advanced Task Configuration File
