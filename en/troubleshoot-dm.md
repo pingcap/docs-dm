@@ -2,7 +2,7 @@
 title: Data Migration Troubleshooting
 summary: Learn how to diagnose and resolve issues when you use Data Migration.
 category: reference
-aliases: ['/docs/tidb-data-migration/v1.0/troubleshoot-dm/','/docs/dev/how-to/troubleshoot/data-migration/','/docs/dev/reference/tools/data-migration/troubleshoot/dm/','/docs/v3.1/reference/tools/data-migration/troubleshoot/dm/','/docs/v3.0/reference/tools/data-migration/troubleshoot/dm/','/docs/v2.1/reference/tools/data-migration/troubleshoot/dm/']
+aliases: ['/docs/tidb-data-migration/stable/troubleshoot-dm/','/docs/tidb-data-migration/v1.0/troubleshoot-dm/','/docs/dev/how-to/troubleshoot/data-migration/','/docs/dev/reference/tools/data-migration/troubleshoot/dm/','/docs/v3.1/reference/tools/data-migration/troubleshoot/dm/','/docs/v3.0/reference/tools/data-migration/troubleshoot/dm/','/docs/v2.1/reference/tools/data-migration/troubleshoot/dm/']
 ---
 
 # Data Migration Troubleshooting
