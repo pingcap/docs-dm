@@ -2,7 +2,7 @@
 title: Manage the Data Replication Task
 summary: Use dmctl to manage the data replication task.
 category: reference
-aliases: ['/docs/dev/reference/tools/data-migration/manage-tasks/','/docs/v3.1/reference/tools/data-migration/manage-tasks/','/docs/v3.0/reference/tools/data-migration/manage-tasks/','/docs/v2.1/reference/tools/data-migration/manage-tasks/']
+aliases: ['/docs/tidb-data-migration/v1.0/manage-replication-tasks/','/docs/dev/reference/tools/data-migration/manage-tasks/','/docs/v3.1/reference/tools/data-migration/manage-tasks/','/docs/v3.0/reference/tools/data-migration/manage-tasks/','/docs/v2.1/reference/tools/data-migration/manage-tasks/']
 ---
 
 # Manage the Data Replication Task

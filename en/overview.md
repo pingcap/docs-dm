@@ -2,7 +2,7 @@
 title: Data Migration Overview
 summary: Learn about the Data Migration tool, the architecture, the key components and features.
 category: reference
-aliases: ['/docs/dev/reference/tools/data-migration/overview/','/docs/v3.1/reference/tools/data-migration/overview/','/docs/v3.0/reference/tools/data-migration/overview/','/docs/v2.1/reference/tools/data-migration/overview/']
+aliases: ['/docs/tidb-data-migration/v1.0/overview/','/docs/dev/reference/tools/data-migration/overview/','/docs/v3.1/reference/tools/data-migration/overview/','/docs/v3.0/reference/tools/data-migration/overview/','/docs/v2.1/reference/tools/data-migration/overview/']
 ---
 
 <!-- markdownlint-disable MD007 -->

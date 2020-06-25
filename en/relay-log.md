@@ -2,7 +2,7 @@
 title: Data Migration Relay Log
 summary: Learn the directory structure, initial replication rules and data purge of DM relay logs.
 category: reference
-aliases: ['/docs/dev/reference/tools/data-migration/relay-log/','/docs/v3.1/reference/tools/data-migration/relay-log/','/docs/v3.0/reference/tools/data-migration/relay-log/','/docs/v2.1/reference/tools/data-migration/relay-log/']
+aliases: ['/docs/tidb-data-migration/v1.0/relay-log/','/docs/dev/reference/tools/data-migration/relay-log/','/docs/v3.1/reference/tools/data-migration/relay-log/','/docs/v3.0/reference/tools/data-migration/relay-log/','/docs/v2.1/reference/tools/data-migration/relay-log/']
 ---
 
 # Data Migration Relay Log

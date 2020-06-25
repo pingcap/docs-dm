@@ -2,7 +2,7 @@
 title: Upgrade Data Migration
 summary: Learn how to upgrade a Data Migration version to an incompatible version.
 category: how-to
-aliases: ['/docs/dev/how-to/upgrade/data-migration/','/docs/dev/reference/tools/data-migration/upgrade/','/docs/v3.1/reference/tools/data-migration/upgrade/','/docs/v3.0/reference/tools/data-migration/upgrade/','/docs/v2.1/reference/tools/data-migration/upgrade/']
+aliases: ['/docs/tidb-data-migration/v1.0/dm-upgrade/','/docs/dev/how-to/upgrade/data-migration/','/docs/dev/reference/tools/data-migration/upgrade/','/docs/v3.1/reference/tools/data-migration/upgrade/','/docs/v3.0/reference/tools/data-migration/upgrade/','/docs/v2.1/reference/tools/data-migration/upgrade/']
 ---
 
 # Upgrade Data Migration
