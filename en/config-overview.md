@@ -25,9 +25,9 @@ This document gives an overview of configuration files of DM (Data Migration).
 
 You can take the following steps to create a data replication task:
 
-1. [Load the data source configuration into the DM cluster using dmctl](manage-replication-tasks.md#load-the-data-source-configuration).
+1. [Load the data source configuration into the DM cluster using dmctl](create-task.md#load-the-data-source-configurations).
 2. Refer to the description in the [Task Configuration File](task-configuration-file.md) and create the configuration file `your_task.yaml`.
-3. [Create the data replication task using dmctl](manage-replication-tasks.md#create-the-data-replication-task).
+3. [Create the data replication task using dmctl](create-task.md).
 
 ### Important concepts
 

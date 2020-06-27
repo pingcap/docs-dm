@@ -43,9 +43,15 @@
   - [Cluster Operations](cluster-operations.md)
   - [Cluster Upgrade](dm-upgrade.md)
 + Manage Replication Tasks
-  - [Manage Tasks](manage-replication-tasks.md)
-  - [Precheck Tasks](precheck.md)
-  - [Query Task Status](query-status.md)
+  - [Introdution to dmctl](dmctl-introduction.md)
+  - [Manage Upstream Instances](manage-source.md)
+  - [Precheck the Task](precheck.md)
+  - [Create a Task](create-task.md)
+  - [Query Status](query-status.md)
+  - [Query Error](query-error.md)
+  - [Pause a Task](pause-task.md)
+  - [Resume a Task](resume-task.md)
+  - [Stop a Task](stop-task.md)
   - [Skip or Replace Abnormal SQL Statements](skip-or-replace-abnormal-sql-statements.md)
 - [Monitor](monitor-a-dm-cluster.md)
 + Migrate from MySQL compatible database
