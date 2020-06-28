@@ -1,6 +1,7 @@
 ---
 title: TiDB Data Migration Documentation
 summary: Learn about TiDB Data Migration documentation.
+aliases: ['/docs/tidb-data-migration/dev/']
 ---
 
 # TiDB Data Migration Documentation
@@ -13,7 +14,7 @@ summary: Learn about TiDB Data Migration documentation.
 
 - [Performance](benchmark-v1.0-ga.md)
 - [Table routing](feature-overview.md#table-routing)
-- [Black & White Lists](feature-overview.md#black-and-white-table-lists)
+- [Block & Allow Lists](feature-overview.md#block-and-allow-table-lists)
 - [Binlog Event Filter](feature-overview.md#binlog-event-filter)
 - [Replication delay monitoring](feature-overview.md#replication-delay-monitoring)
 - [Online DDL Scheme](online-ddl-scheme.md)

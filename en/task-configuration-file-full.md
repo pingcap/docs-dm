@@ -1,6 +1,7 @@
 ---
 title: DM Advanced Task Configuration File
 category: reference
+aliases: ['/docs/tidb-data-migration/dev/task-configuration-file-full/']
 ---
 
 # DM Advanced Task Configuration File
@@ -71,17 +72,17 @@ filters:
     events: ["all dml"]
     action: Do
 
-# The filter rule set of the black white list of the matched table of the upstream database instance.
-black-white-list:
-  bw-rule-1:                         # The name of the black white list rule.
-    do-dbs: ["~^test.*", "user"]     # The white list of upstream schemas needs to be replicated.
-    ignore-dbs: ["mysql", "account"] # The black list of upstream schemas needs to be replicated.
-    do-tables:                       # The white list of upstream tables needs to be replicated.
+# The filter rule set of the block allow list of the matched table of the upstream database instance.
+block-allow-list:                    # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+  bw-rule-1:                         # The name of the block allow list rule.
+    do-dbs: ["~^test.*", "user"]     # The allow list of upstream schemas needs to be replicated.
+    ignore-dbs: ["mysql", "account"] # The block list of upstream schemas needs to be replicated.
+    do-tables:                       # The allow list of upstream tables needs to be replicated.
     - db-name: "~^test.*"
       tbl-name: "~^t.*"
     - db-name: "user"
       tbl-name: "information"
-    ignore-tables:                   # The black list of upstream tables needs to be replicated.
+    ignore-tables:                   # The block list of upstream tables needs to be replicated.
     - db-name: "user"
       tbl-name: "log"
 
@@ -118,7 +119,7 @@ mysql-instances:
 
     route-rules: ["route-rule-1", "route-rule-2"]   # The name of the mapping rule between the table matching the upstream database instance and the downstream database.
     filter-rules: ["filter-rule-1"]                 # The name of the binlog event filtering rule of the table matching the upstream database instance.
-    black-white-list:  "bw-rule-1"                  # The name of the black and white lists filtering rule of the table matching the upstream database instance.
+    block-allow-list:  "bw-rule-1"                  # The name of the block and allow lists filtering rule of the table matching the upstream database instance. Use black-white-list if the DM's version <= v2.0.0-beta.2.
 
     mydumper-config-name: "global"                  # The configuration name of the Mydumper processing unit.
     loader-config-name: "global"                    # The configuration name of the Loader processing unit.
@@ -156,7 +157,7 @@ Arguments in each feature configuration set are explained in the comments in the
 | :------------ | :--------------------------------------- |
 | `routes` | The routing mapping rule set between the upstream and downstream tables. If the names of the upstream and downstream schemas and tables are the same, this item does not need to be configured. See [Table Routing](feature-overview.md#table-routing) for usage scenarios and sample configurations. |
 | `filters` | The binlog event filter rule set of the matched table of the upstream database instance. If binlog filtering is not required, this item does not need to be configured. See [Binlog Event Filter](feature-overview.md#binlog-event-filter) for usage scenarios and sample configurations. |
-| `black-white-list` | The filter rule set of the black white list of the matched table of the upstream database instance. It is recommended to specify the schemas and tables that need to be replicated through this item, otherwise all schemas and tables are replicated. See [Binlog Event Filter](feature-overview.md#binlog-event-filter)[Black & White Lists](feature-overview.md#black--white-table-lists) for usage scenarios and sample configurations. |
+| `block-allow-list` | The filter rule set of the block allow list of the matched table of the upstream database instance. It is recommended to specify the schemas and tables that need to be replicated through this item, otherwise all schemas and tables are replicated. See [Binlog Event Filter](feature-overview.md#binlog-event-filter)[Block & Allow Lists](feature-overview.md#block-allow-table-lists) for usage scenarios and sample configurations. |
 | `mydumpers` | Configuration arguments of Mydumper processing unit. If the default configuration is sufficient for your needs, this item does not need to be configured. Or you can configure `thread` only using `mydumper-thread`. |
 | `loaders` | Configuration arguments of Loader processing unit. If the default configuration is sufficient for your needs, this item does not need to be configured. Or you can configure `pool-size` only using `loader-thread`. |
 | `syncers` | Configuration arguments of Syncer processing unit. If the default configuration is sufficient for your needs, this item does not need to be configured. Or you can configure `worker-count` only using `syncer-thread`. |
@@ -171,7 +172,7 @@ For the configuration details of the above options, see the corresponding part i
 | :------ | :------------------ |
 | `route-rules` | `routes` |
 | `filter-rules` | `filters` |
-| `black-white-list` | `black-white-list` |
+| `block-allow-list` | `block-allow-list` |
 | `mydumper-config-name` | `mydumpers` |
 | `loader-config-name` | `loaders` |
 | `syncer-config-name` | `syncers`  |
