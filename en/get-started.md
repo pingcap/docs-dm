@@ -365,14 +365,14 @@ mysql-instances:
     loader-config-name: "loader1"
 
   - source-id: "mysql-replica-02"
-    block-allow-list: "instance"  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list: "instance"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     loader-config-name: "loader2"
 
   - source-id: "mysql-replica-03"
-    block-allow-list: "instance"  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list: "instance"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     loader-config-name: "loader3"
 
-block-allow-list:  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
   instance:
     do-dbs: ["dmtest1"]
 

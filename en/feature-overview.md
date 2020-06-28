@@ -108,7 +108,7 @@ The block and allow lists filtering rule of the upstream database instance table
 ### Parameter configuration
 
 ```yaml
-block-allow-list:             # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:             # Use black-white-list if the DM's version <= v2.0.0-beta.2.
   rule-1:
     do-dbs: ["test*"]         # Starting with characters other than "~" indicates that it is a wildcard;
                               # v1.0.5 or later versions support the regular expression rules.
@@ -203,7 +203,7 @@ Assume that the upstream MySQL instances include the following tables:
 The configuration is as follows:
 
 ```yaml
-block-allow-list:  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
   bw-rule:
     do-dbs: ["forum_backup_2018", "forum"]
     ignore-dbs: ["~^forum_backup_"]

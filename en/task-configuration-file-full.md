@@ -73,7 +73,7 @@ filters:
     action: Do
 
 # The filter rule set of the block allow list of the matched table of the upstream database instance.
-block-allow-list:                    # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:                    # Use black-white-list if the DM's version <= v2.0.0-beta.2.
   bw-rule-1:                         # The name of the block allow list rule.
     do-dbs: ["~^test.*", "user"]     # The allow list of upstream schemas needs to be replicated.
     ignore-dbs: ["mysql", "account"] # The block list of upstream schemas needs to be replicated.
@@ -119,7 +119,7 @@ mysql-instances:
 
     route-rules: ["route-rule-1", "route-rule-2"]   # The name of the mapping rule between the table matching the upstream database instance and the downstream database.
     filter-rules: ["filter-rule-1"]                 # The name of the binlog event filtering rule of the table matching the upstream database instance.
-    block-allow-list:  "bw-rule-1"                  # The name of the block and allow lists filtering rule of the table matching the upstream database instance. Using black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "bw-rule-1"                  # The name of the block and allow lists filtering rule of the table matching the upstream database instance. Use black-white-list if the DM's version <= v2.0.0-beta.2.
 
     mydumper-config-name: "global"                  # The configuration name of the Mydumper processing unit.
     loader-config-name: "global"                    # The configuration name of the Loader processing unit.

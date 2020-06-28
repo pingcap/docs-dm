@@ -129,7 +129,7 @@ Assume that the schemas replicated to the downstream are as follows:
 - To satisfy the replication Requirement #3, configure the [block and allow lists](feature-overview.md#block-and-allow-table-lists) as follows:
 
     ```yaml
-    block-allow-list:  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
       log-ignored:
         ignore-dbs: ["log"]
     ```
@@ -155,7 +155,7 @@ mysql-instances:
     source-id: "instance-1"
     route-rules: ["instance-1-user-rule"]
     filter-rules: ["log-filter-rule", "user-filter-rule", "store-filter-rule"]
-    block-allow-list:  "log-ignored"  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "log-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -163,7 +163,7 @@ mysql-instances:
     source-id: "instance-2"
     route-rules: ["instance-2-user-rule", instance-2-store-rule]
     filter-rules: ["log-filter-rule", "user-filter-rule", "store-filter-rule"]
-    block-allow-list:  "log-ignored"  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "log-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -171,7 +171,7 @@ mysql-instances:
     source-id: "instance-3"
     route-rules: ["instance-3-user-rule", instance-3-store-rule]
     filter-rules: ["log-filter-rule", "user-filter-rule", "store-filter-rule"]
-    block-allow-list:  "log-ignored"  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "log-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -214,7 +214,7 @@ filters:
     events: ["drop database", "truncate table", "drop table", "delete"]
     action: Ignore
 
-block-allow-list:  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
   log-ignored:
     ignore-dbs: ["log"]
 

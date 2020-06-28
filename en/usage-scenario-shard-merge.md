@@ -155,7 +155,7 @@ mysql-instances:
     source-id: "instance-1"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule" , "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -164,7 +164,7 @@ mysql-instances:
     source-id: "instance-2"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule" , "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -172,7 +172,7 @@ mysql-instances:
     source-id: "instance-3"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule" , "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -207,7 +207,7 @@ filters:
     events: ["drop database"]
     action: Ignore
 
-block-allow-list:  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
   log-bak-ignored:
     ignore-tales:
     - db-name: "user"
