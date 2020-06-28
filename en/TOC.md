@@ -12,7 +12,7 @@
   - [DM Relay Log](relay-log.md)
 + Features
   - [Table Routing](feature-overview.md#table-routing)
-  - [Black and White Lists](feature-overview.md#black-and-white-table-lists)
+  - [Block and Allow Lists](feature-overview.md#block-and-allow-table-lists)
   - [Binlog Event Filter](feature-overview.md#binlog-event-filter)
   - [Replication Delay Monitoring](feature-overview.md#replication-delay-monitoring)
   - [Online-ddl-scheme](online-ddl-scheme.md)
@@ -29,6 +29,7 @@
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
 - [Quick Start with DM](quick-start-with-dm.md)
 + Deploy
+  + [Software and Hardware Requirements](hardware-and-software-requirements.md)
   + Deploy a DM Cluster
     - [Use DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)

@@ -2,6 +2,7 @@
 title: Data Migration Monitoring Metrics
 summary: Learn about the monitoring metrics when you use Data Migration to replicate data.
 category: reference
+aliases: ['/docs/tidb-data-migration/dev/monitor-a-dm-cluster/']
 ---
 
 # Data Migration Monitoring Metrics
