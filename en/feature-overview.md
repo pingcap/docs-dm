@@ -2,6 +2,7 @@
 title: Data Replication Features
 summary: Learn about the data replication features provided by the Data Migration tool.
 category: reference
+aliases: ['/docs/tidb-data-migration/dev/feature-overview/']
 ---
 
 # Data Replication Features
