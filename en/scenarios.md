@@ -32,7 +32,7 @@ For such scenarios, please refer to [Data Migration Simple Use Scenario] (usage-
 
 ## 合库合表 scene
 
-If the data in the upstream MySQL/MariaDB exists in the form of sub-library and table, it is usually expected to merge it when migrating to TiDB. At this time, the library name in the upstream data can be configured by configuring `route-rules` , Table names, etc. are renamed and merged into the same downstream library or table. For details, please refer to [DM Sub-database Sub-table Merging Scenario] (usage-scenario-shard-merge.md) and [Sub-table Merging Data Migration Best Practices ](shard-merge-best-practices.md).
+If the data in the upstream MySQL/MariaDB exists in the form of sub-library and table, it is usually expected to merge it when migrating to TiDB. At this time, the library name in the upstream data can be configured by configuring `route-rules` , Table names, etc. are renamed and merged into the same downstream library or table. For details, please refer to [DM Sub-database Sub-table Merging Scenario] (usage-scenario-shard-merge.md) and [Sub-table Merging Data Migration Best Practices](shard-merge-best-practices.md).
 
 For the migration of DDL, DM provides special support. For details, please refer to [Sub-database sub-table merge synchronization] (feature-shard-merge.md).
 
