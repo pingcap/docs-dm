@@ -44,4 +44,4 @@ In MySQL's ecosystem, tools such as pt-osc or gh-ost are often used to perform o
 
 ## Change upstream MySQL instance of DM connection
 
-When using MySQL/MariaDB, a primary-secondary cluster is often built to improve read performance and ensure data security. If the upstream MySQL/MariaDB instance connected by DM-worker is unavailable for some reason when using DM to migration data, you need to connect DM-worker to another instance in the upstream primary-secondary cluster. For such scenarios, DM provides nice support, but there are still some limitations. For details, please refer to [Switching the connection between DM-worker and the upstream MySQL instance] (usage-scenario-master-slave-switch.md).
+When using MySQL/MariaDB, a primary-secondary cluster is often built to improve read performance and ensure data security. If the upstream MySQL/MariaDB instance connected by DM-worker is unavailable for some reason when using DM to migration data, you need to connect DM-worker to another instance in the upstream primary-secondary cluster. For such scenarios, DM provides nice support, but there are still some limitations.
