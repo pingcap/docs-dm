@@ -2,6 +2,7 @@
 title: Data Migration Configuration File Overview
 summary: This document gives an overview of Data Migration configuration files.
 category: reference
+aliases: ['/docs/tidb-data-migration/dev/config-overview/']
 ---
 
 # Data Migration Configuration File Overview
@@ -34,6 +35,6 @@ This section shows description of some important concepts.
 
 | Concept  | Description  | Configuration File  |
 | :------ | :--------- | :------------- |
-| `source-id`  | Uniquely represents a MySQL or MariaDB instance, or a replication group with the master-slave structure. The maximum length of `source-id` is 32. | `source_id` of `source.toml`;<br/> `source-id` of `task.yaml` |
+| `source-id`  | Uniquely represents a MySQL or MariaDB instance, or a replication group with the primary-secondary structure. The maximum length of `source-id` is 32. | `source_id` of `source.toml`;<br/> `source-id` of `task.yaml` |
 | DM-master ID | Uniquely represents a DM-master (by the `master-addr` parameter of `dm-master.toml`) | `master-addr` of `dm-master.toml` |
 | DM-worker ID | Uniquely represents a DM-worker (by the `worker-addr` parameter of `dm-worker.toml`) | `worker-addr` of `dm-worker.toml` |
