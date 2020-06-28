@@ -40,7 +40,7 @@ If you only need to migrate part of the business data or filter some specific op
 
 ## online DDL scene
 
-In the MySQL ecosystem, tools such as pt-osc or gh-ost are often used to perform online DDL operations. DM provides special support for such scenarios, which can be enabled by configuring the `online-ddl-scheme` parameter. For details, please refer to [DM online-ddl-scheme](feature-online-ddl-scheme.md).
+In the MySQL ecosystem, tools such as pt-osc or gh-ost are often used to perform online DDL operations. DM provides special support for such scenarios, which can be enabled by configuring the `online-ddl-scheme` parameter. For details, please refer to [DM online-ddl-scheme](online-ddl-scheme.md).
 
 ## Change upstream MySQL instance of DM connection
 
