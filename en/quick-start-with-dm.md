@@ -1,17 +1,17 @@
 ---
-title: Quick Start Guide
+title: Quick Start Guide for TiDB Data Migration
 summary: Learn how to quickly deploy a DM cluster using binary packages.
 category: how-to
 aliases: ['/docs/tidb-data-migration/dev/get-started/']
 ---
 
-# Quick Start Guide
+# Quick Start Guide for TiDB Data Migration
 
 This document describes how to quickly deploy a [TiDB Data Migration](https://github.com/pingcap/dm) (DM) cluster using binary packages.
 
 ## Deploy instances locally
 
-Deploy MySQL, TiDB, DM-master and DM-worker instances locally. The descriptions of each instance is as follows:
+Deploy MySQL, TiDB, DM-master, and DM-worker instances locally. The detailed information of each instance is as follows:
 
 | Instance        | Server Address   | Port |
 | :---------- | :----------- | :----------- |
@@ -80,7 +80,7 @@ docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=tru
 
 ### Run downstream TiDB
 
-To run a TiDB server with mocktikv mode, execute the following commands:
+To run a TiDB server in the mocktikv mode, execute the following commands:
 
 {{< copyable "shell-regular" >}}
 
@@ -93,7 +93,7 @@ mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
 
 ## Deploy DM-master
 
-1. Create three directories, master1, master2, and master3.
+1. Create three directories: master1, master2, and master3.
 2. Create a DM-master configuration file in each directory. The configuration files are as follows:
 
     `master1/dm-master1.toml`:
@@ -129,7 +129,7 @@ mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
     initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,master3=http://127.0.0.1:8293"
     ```
 
-3. Enter the directories master1, master2, and master3, and execute the following commands to start each DM-master:
+3. Enter the directories of master1, master2, and master3 respectively, and execute the following commands to start each DM-master:
 
     {{< copyable "shell-regular" >}}
 
@@ -141,7 +141,7 @@ mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
 
 ## Deploy DM-worker
 
-1. Create three directories, worker1, worker2, and worker3.
+1. Create three directories: worker1, worker2, and worker3.
 2. Create a DM-worker configuration file in each directory. The configuration files are as follows:
 
     `worker1/dm-worker1.toml`:
@@ -174,7 +174,7 @@ mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
     join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
     ```
 
-3. Enter the directories of worker1, worker2, and worker3, and execute the following commands to start each DM-worker:
+3. Enter the directories of worker1, worker2, and worker3 respectively, and execute the following commands to start each DM-worker:
 
     {{< copyable "shell-regular" >}}
 
@@ -197,7 +197,7 @@ dmctl --master-addr=127.0.0.1:8261 list-member
 You need to check the following information in the returned result:
 
 - Whether there is a `leader` item;
-- Whether the `master` and the `worker` items include all topology information about DM-master and DM-worker.
+- Whether the `master` and the `worker` items include all topology information of DM-master and DM-worker.
 
 A normal DM cluster returns the following information:
 
