@@ -34,7 +34,7 @@ For such scenarios, please refer to [Data Migration Simple Use Scenario](usage-s
 
 If there are multiple sharding tables in the upstream MySQL/MariaDB, it is usually expected to merge them into only one table when migrating to TiDB. The schema name or the table name in the upstream data can be renamed by configuring `route-rules`, and then these tables will be merged into the same downstream schema or table. For details, please refer to [Data Migration Shard Merge Scenario](usage-scenario-shard-merge.md) and [Best Practices of Data Migration in the Shard Merge Scenario](shard-merge-best-practices.md).
 
-DM supports the migration of DDL specifically. For details, please refer to [Merge shard table](feature-shard-merge.md).
+DM supports the migration of DDL specifically. For details, please refer to [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md).
 
 If you only need to migrate part of the business data or filter some specific operations, you can directly refer to [Migrating some business data in MySQL/MariaDB](#migrating-some-business-data-in-mysql/mariadb) in part `Non-merging sharding table scenario`.
 
