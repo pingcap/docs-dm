@@ -63,7 +63,7 @@ DM_PATH=`pwd` && export PATH=$PATH:$DM_PATH/bin
 
 ### Run upstream MySQL
 
-Run two MySQL client services. To start MySQL services using Docker, execute the following commands:
+Run two MySQL client services. To start MySQL services using Docker, execute the following commands: 
 
 {{< copyable "shell-regular" >}}
 
