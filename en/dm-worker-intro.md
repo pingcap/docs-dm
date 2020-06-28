@@ -11,7 +11,7 @@ DM-worker is a tool used to replicate data from MySQL/MariaDB to TiDB.
 
 It has the following features:
 
-- Acts as a secondary of any MySQL or MariaDB instance
+- Acts as a secondary library of any MySQL or MariaDB instance
 - Reads the binlog events from MySQL/MariaDB and persists them to the local storage
 - A single DM-worker supports replicating the data of one MySQL/MariaDB instance to multiple TiDB instances
 - Multiple DM-workers support replicating the data of multiple MySQL/MariaDB instances to one TiDB instance

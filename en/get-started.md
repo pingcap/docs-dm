@@ -472,7 +472,7 @@ Expect this output:
 1858    d7fd118e6f226a71b5f1ffe10efd0a78        3309
 ```
 
-DM is now acting as a secondary to each of the MySQL servers, reading their binary logs to apply updates in realtime to the downstream TiDB server:
+DM is now acting as a secondary library to each of the MySQL servers, reading their binary logs to apply updates in realtime to the downstream TiDB server:
 
 ```bash
 for i in 1 2 3
