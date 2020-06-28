@@ -361,7 +361,7 @@ target-database:
 
 mysql-instances:
   - source-id: "mysql-replica-01"
-    block-allow-list: "instance"  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list: "instance"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     loader-config-name: "loader1"
 
   - source-id: "mysql-replica-02"
