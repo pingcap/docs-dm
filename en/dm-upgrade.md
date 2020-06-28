@@ -16,6 +16,61 @@ This document introduces how to upgrade your Data Migration (DM) version to an i
 > - Unless otherwise stated, all the following upgrade examples assume that all the data replication tasks have been stopped before the upgrade and all the replication tasks are restarted manually after DM upgrade is finished.
 > - The following shows the upgrade procedure of DM versions in reverse chronological order.
 
+## Upgrade to v1.0.5
+
+### Version information
+
+```bash
+Release Version: v1.0.5
+Git Commit Hash: a8e9f53f91e29756b09a22cdc37a6a6efcdfe55b
+Git Branch: release-1.0
+UTC Build Time: 2020-04-27 06:56:31
+Go Version: go version go1.13 linux/amd64
+```
+
+### Main changes
+
+- Optimized the incremental synchronization speed when the column corresponding to `UNIQUE KEY` contains `NULL` value
+- Added retry for the error of `Write conflict` (9007 and 8005) returned by TiDB
+- Fixed the issue that may cause `Duplicate entry` errors during the full data import process
+- Fixed the issue where `stop-task`/`pause-task` may not work when there is no data written upstream after the full import is completed
+- Fixen the issue that there is still data display in the monitoring metrics after `stop-task`
+
+### Upgrade operation example
+
+1. Download the new version of DM-Ansible, and confirm that there is `dm_version = v1.0.5` in the `inventory.ini` file.
+2. Run `ansible-playbook local_prepare.yml` to download the new DM binary file to the local disk.
+3. Run `ansible-playbook rolling_update.yml` to perform a rolling update for the DM cluster components.
+4. Run `ansible-playbook rolling_update_monitor.yml` to perform a rolling update for the DM monitoring components.
+
+## Upgrade to v1.0.4
+
+### Version information
+
+```bash
+Release Version: v1.0.4-1-gd681c67
+Git Commit Hash: d681c6731d3432f4d8f38ea651f44d49d6860269
+Git Branch: release-1.0
+UTC Build Time: 2020-03-16 09:45:29
+Go Version: go version go1.13 linux/amd64
+```
+
+### Main changes
+
+- Added support for English UI in DM Portal
+- Added `--more` parameter to `query-status` command to display complete synchronization status information
+- Fixed the issue where resume-task may not be able to resume synchronization normally after synchronization to the downstream TiDB connection is abnormal
+- Fixed the issue where the online DDL meta information was cleaned up incorrectly after the online DDL failed to execute, and the online DDL synchronization cannot be processed correctly after restarting the task
+- Fixed the issue where `start-task` abnormally returned `query-error` may cause DM-worker panic
+- Fixed the issue where the DM-worker process stopped abnormally before writing to `relay.meta`, resulting in the problem that the relay log file and `relay.meta` may not be restored correctly when restarting the DM-worker
+
+### Upgrade operation example
+
+1. Download the new version of DM-Ansible, and confirm that there is `dm_version = v1.0.4` in the `inventory.ini` file.
+2. Run `ansible-playbook local_prepare.yml` to download the new DM binary file to the local disk.
+3. Run `ansible-playbook rolling_update.yml` to perform a rolling update for the DM cluster components.
+4. Run `ansible-playbook rolling_update_monitor.yml` to perform a rolling update for the DM monitoring components.
+
 ## Upgrade to v1.0.3
 
 ### Version information
