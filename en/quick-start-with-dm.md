@@ -1,11 +1,11 @@
 ---
-title: Quick Start Guide
+title: Quick Start Guide for TiDB Data Migration
 summary: Learn how to quickly deploy a DM cluster using binary packages.
 category: how-to
 aliases: ['/docs/tidb-data-migration/dev/get-started/']
 ---
 
-# Quick Start Guide
+# Quick Start Guide for TiDB Data Migration
 
 This document describes how to quickly deploy a [TiDB Data Migration](https://github.com/pingcap/dm) (DM) cluster using binary packages.
 
