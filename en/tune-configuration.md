@@ -22,7 +22,7 @@ The value of  `rows` can be set to 10000, and the specific value of setting can 
 
 DM full backup will split the data of each table into multiple chunks according to the value of the `chunk-filesize` parameter, and each chunk is saved in a file with a size of about `chunk-filesize`.  According to this parameter, the data is splitted into multiple files, so that the parallel processing logic of the DM Load processing unit can be used to increase the import speed. The default value of this parameter is 64 (the unit is MB). Under normal situation, it does not need to be set. Also can make appropriate adjustments according to the size of the entire size of data.
 
-> **Attention：**
+> **Note：**
 >
 > - The parameter value of `mydumpers` does not support updating after the synchronization task is created, so need to determine the value of each parameter before creating the task. If need to update, need to use dmctl stop the task to update the configuration file, and then re-create the task.
 
@@ -38,7 +38,7 @@ The configuration item related to full import is `loaders`. The following descri
 
 `pool-size`  is the setting of  the number of threads in the DM load phase. The default value is 16. Normally, there is no need to set it.  Also can make appropriate adjustments based on the size of full size of data and the performance of the database.
 
-> **Attention：**
+> **Note：**
 >
 > - The parameter value of `loaders` does not support updating after the synchronization task is created, so need to define the value of each parameter before creating the task. If need to update, so need to use dmctl stop the task to update the configuration file, and then re-create the task.
 
@@ -56,7 +56,7 @@ The configuration related to incremental synchronization is `syncers`. The follo
 
 `batch` is the number of DML included in each transaction when the data is synchronized to the  downstream database in the DM sync phase. The default value is 100. Normally, no adjustment is required.
 
-> **Attention：**
+> **Note：**
 >
 > - The parameter value of `syncers` does not support updating after the synchronization task is created, so need to define the value of each parameter before creating the task. If need to update, so need to use dmctl stop the task to update the configuration file, and then re-create the task.
 > - `syncers`.`worker-count` can be replaced with the configuration item `syncer-thread` to simplify configuration.
