@@ -16,7 +16,7 @@ Suppose that you create a data replication task based on this sample scenario:
 - TiDB clusters are deployed on several servers, with the TiDB service exposed on one of the servers.
 - A DM-master of the DM cluster provides service.
 
-The descriptions of each node are as follows.
+The information of each node is as follows.
 
 | Instance   | Server Address  | Port  |
 | :---------- | :----------- | :--- |
@@ -45,7 +45,7 @@ For safety reasons, it is recommended to configure and use encrypted passwords. 
 fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
 ```
 
-Record this encrypted value, which can be used for creating a MySQL data source in the following steps.
+Save this encrypted value, and use it for creating a MySQL data source in the following steps.
 
 ### Edit the source configuration file
 
@@ -82,9 +82,9 @@ For MySQL2, replace the configuration file in the above command with that of MyS
 
 ## Create a data replication task
 
-Suppose that there are several sharded tables on both MySQL1 and MySQL2 instances. In these tables, their structures are identical; the prefix “t” is in their table names; the databases where they are located are named with the same prefix “sharding”; there is no conflict between the primary keys or the unique keys (in each sharded table, the primary keys or the unique keys are different from those of other tables). 
+Suppose that there are several sharded tables on both MySQL1 and MySQL2 instances. These tables have identical structure and the same prefix “t” in the table names; the databases where these tables are located are all prefixed with "sharding"; and there is no conflict between the primary keys or the unique keys (in each sharded table, the primary keys or the unique keys are different from those of other tables). 
 
-You need to replicate these sharded tables to the `db_target.t_target` table in TiDB.
+Now, suppose that you need to replicate these sharded tables to the `db_target.t_target` table in TiDB. The steps are as follows.
 
 1. Create the configuration file of the task:
 
@@ -103,18 +103,18 @@ You need to replicate these sharded tables to the `db_target.t_target` table in 
 
     mysql-instances:
     - source-id: "mysql-replica-01"
-        block-allow-list:  "instance"  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+        block-allow-list:  "instance"  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
         route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
         mydumper-thread: 4
         loader-thread: 16
         syncer-thread: 16
     - source-id: "mysql-replica-02"
-        block-allow-list:  "instance"  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+        block-allow-list:  "instance"  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
         route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
         mydumper-thread: 4
         loader-thread: 16
         syncer-thread: 16
-    block-allow-list:  # Using black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
     instance:
         do-dbs: ["~^sharding[\\d]+"]
         do-tables:
@@ -164,4 +164,4 @@ Now, you have successfully created a task to replicate the sharded tables from t
 
 ## Verify whether the cluster works well
 
-You can modify data in the upstream MySQL sharded tables. Then use [sync-diff-inspector](https://docs.pingcap.com/tidb/v4.0/shard-diff) to check whether the upstream and downstream data are consistent. Consistent data means that the replication task works well (this also indicates that the cluster works well).
+You can modify data in the upstream MySQL sharded tables. Then use [sync-diff-inspector](https://docs.pingcap.com/tidb/v4.0/shard-diff) to check whether the upstream and downstream data are consistent. Consistent data means that the replication task works well, which also indicates that the cluster works well.
