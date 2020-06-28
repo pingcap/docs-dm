@@ -29,6 +29,7 @@
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
 - [Quick Start](get-started.md)
 + Deploy
+  + [Software and Hardware Requirements](hardware-and-software-requirements.md)
   + Deploy a DM Cluster
     - [Use DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
