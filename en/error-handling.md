@@ -11,7 +11,7 @@ This document introduces common errors that you might encounter and solutions to
 
 ## Common error description and handling method
 
-| Error code       | Error description                                                     |  Handling method                                                    |
+| <div style="width: 100px;">Error code</div>       | Error description                                                     |  Handling method                                                    |
 | :----------- | :------------------------------------------------------------ | :----------------------------------------------------------- |
 | `code=10001` |  Abnormal database operation.                                              |  Further analyze the error message and error stack.                                |
 | `code=10002` | The `bad connection` error from the underlying database. It usually indicates that the connection between DM and the downstream TiDB instance is abnormal (possibly caused by network failure, TiDB restart and so on) and the currently requested data is not sent to TiDB. |  DM provides automatic recovery for such error. If the recovery is not successful for a long time, check the network or TiDB status. |

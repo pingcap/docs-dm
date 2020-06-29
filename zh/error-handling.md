@@ -25,7 +25,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/troubleshoot-dm/', '/docs-cn/tidb-da
 
     下表展示所有的错误类别、错误对应的系统子模块、错误样例：
 
-    |  错误类别    | 错误对应的系统子模块             | 错误样例                                                     |
+    |  <div style="width: 100px;">错误类别</div>    | 错误对应的系统子模块             | 错误样例                                                     |
     | :-------------- | :------------------------------ | :------------------------------------------------------------ |
     | `database`       | 执行数据库操作出现错误         | `[code=10003:class=database:scope=downstream:level=medium] database driver: invalid connection` |
     | `functional`     | 系统底层的基础函数错误           | `[code=11005:class=functional:scope=internal:level=high] not allowed operation: alter multiple tables in one statement` |
