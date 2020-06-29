@@ -25,7 +25,7 @@ aliases: ['/docs-cn/tidb-data-migration/v1.0/troubleshoot-dm/', '/docs-cn/tidb-d
 
     下表展示所有的错误类别、错误对应的系统子模块、错误样例：
 
-    |  错误类别    | 错误对应的系统子模块             | 错误样例                                                     |
+    |  <div style="width: 100px;">错误类别</div>    | 错误对应的系统子模块             | 错误样例                                                     |
     | :-------------- | :------------------------------ | :------------------------------------------------------------ |
     | `database`       | 执行数据库操作出现错误         | `[code=10003:class=database:scope=downstream:level=medium] database driver: invalid connection` |
     | `functional`     | 系统底层的基础函数错误           | `[code=11005:class=functional:scope=internal:level=high] not allowed operation: alter multiple tables in one statement` |
@@ -88,7 +88,7 @@ aliases: ['/docs-cn/tidb-data-migration/v1.0/troubleshoot-dm/', '/docs-cn/tidb-d
 
 ## 常见故障处理方法
 
-| 错误码       | 错误说明                                                     | 解决方法                                                     |
+| <div style="width: 100px;">错误码</div>       | 错误说明                                                     | 解决方法                                                     |
 | :----------- | :------------------------------------------------------------ | :----------------------------------------------------------- |
 | `code=10001` | 数据库操作异常                                               | 进一步分析错误信息和错误堆栈                                 |
 | `code=10002` | 数据库底层的 `bad connection` 错误，通常表示 DM 到下游 TiDB 的数据库连接出现了异常（如网络故障、TiDB 重启等）且当前请求的数据暂时未能发送到 TiDB。 | DM 提供针对此类错误的自动恢复。如果长时间未恢复，需要用户检查网络或 TiDB 状态。 |
