@@ -39,20 +39,20 @@ target-database:                # Configuration of the downstream database insta
   password: ""                  # The dmctl encryption is needed when the password is not empty.
 
 ## ******** Feature configuration set **********
-# The filter rule set of the black white list of the matched table of the upstream database instance.
-black-white-list:
-  bw-rule-1:             # # The name of the black and white lists filtering rule of the table matching the upstream database instance.
-    do-dbs: ["all_mode"] # white list of upstream tables needs to be replicated
+# The filter rule set of the block allow list of the matched table of the upstream database instance.
+block-allow-list:        # Use black-white-list if the DM's version <= v1.0.6.
+  bw-rule-1:             # The name of the block and allow lists filtering rule of the table matching the upstream database instance.
+    do-dbs: ["all_mode"] # Allow list of upstream tables needs to be replicated
 # ----------- Instance configuration -----------
 mysql-instances:
   # The ID of the upstream instance or replication group. It can be configured by referring to the `source-id` in the `dm-master.toml` file.
   - source-id: "mysql-replica-01"
-    black-white-list:  "bw-rule-1"
+    block-allow-list:  "bw-rule-1"     # Use black-white-list if the DM's version <= v1.0.6.
         mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data, new in v1.0.2 and later versions
         loader-thread: 16              # The number of threads that Loader uses for loading data, new in v1.0.2 and later versions
         syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data, new in v1.0.2 and later versions
   - source-id: "mysql-replica-02"
-    black-white-list:  "bw-rule-1"
+    block-allow-list:  "bw-rule-1"     # Use black-white-list if the DM's version <= v1.0.6.
     mydumper-thread: 4
     loader-thread: 16
     syncer-thread: 16
@@ -77,7 +77,7 @@ Refer to the comments in the [template](#task-configuration-file-template-basic)
 
 ### Feature configuration set
 
-For basic applications, you only need to modify the black and white lists filtering rule. Refer to the comments about `black-white-list` in the [template](#task-configuration-file-template-basic) or [Black & white table lists](feature-overview.md#black--white-table-lists) to see more details.
+For basic applications, you only need to modify the block and allow lists filtering rule. Refer to the comments about `block-allow-list` in the [template](#task-configuration-file-template-basic) or [Block & allow table lists](feature-overview.md#block-allow-table-lists) to see more details.
 
 ## Instance configuration
 
