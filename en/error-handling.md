@@ -74,7 +74,7 @@ If you encounter an error while running DM, take the following steps to troubles
 
 1. Execute the `query-status` command to check the task running status and the error output.
 
-2. Check the log files related to the error. The log files are on the DM-master and DM-worker nodes. To get key information about the error, refer to the [error system](error-system.md). Then check the [Handle Common Errors](#handle-common-errors) section to find the solution.
+2. Check the log files related to the error. The log files are on the DM-master and DM-worker nodes. To get key information about the error, refer to the [error system](#error-system). Then check the [Handle Common Errors](#handle-common-errors) section to find the solution.
 
 3. If the error is not covered in this document, and you cannot solve the problem by checking the log or monitoring metrics, you can contact the R&D.
 
