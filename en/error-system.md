@@ -59,7 +59,7 @@ All error messages in DM have the following three components:
 
     The table below displays all error types, the corresponding sources and error samples.
 
-    |  Error type    |   Error source            | Error sample                                                     |
+    |  <div style="width: 100px;">Error type</div>    |   Error source            | Error sample                                                     |
     | :-------------- | :------------------------------ | :------------------------------------------------------------ |
     | `database`       |  Database operations         | `[code=10003:class=database:scope=downstream:level=medium] database driver: invalid connection` |
     | `functional`     |  Underlying functions of DM           | `[code=11005:class=functional:scope=internal:level=high] not allowed operation: alter multiple tables in one statement` |
