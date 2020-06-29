@@ -25,7 +25,7 @@ In the error system, usually, the information of a specific error is as follows:
 
     The following table displays all error types, error sources, and error samples.
 
-    |  Error Type    |   Error Source            | Error sample                                                     |
+    |  <div style="width: 100px;">Error Type</div>    |   Error Source            | Error Sample                                                     |
     | :-------------- | :------------------------------ | :------------------------------------------------------------ |
     | `database`       |  Database operations         | `[code=10003:class=database:scope=downstream:level=medium] database driver: invalid connection` |
     | `functional`     |  Underlying functions of DM           | `[code=11005:class=functional:scope=internal:level=high] not allowed operation: alter multiple tables in one statement` |
@@ -90,7 +90,7 @@ However, you need to reset the data replication task in some cases. For details,
 
 ## Handle common errors
 
-| Error code       | Error description                                                     |  Handling method                                                    |
+| <div style="width: 100px;">Error Code</div>       | Error Description                                                     |  How to Handle                                                    |
 | :----------- | :------------------------------------------------------------ | :----------------------------------------------------------- |
 | `code=10001` |  Abnormal database operation.                                              |  Further analyze the error message and error stack.                                |
 | `code=10002` | The `bad connection` error from the underlying database. It usually indicates that the connection between DM and the downstream TiDB instance is abnormal (possibly caused by network failure, TiDB restart and so on) and the currently requested data is not sent to TiDB. |  DM provides automatic recovery for such error. If the recovery is not successful for a long time, check the network or TiDB status. |
