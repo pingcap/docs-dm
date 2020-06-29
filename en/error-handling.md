@@ -1,31 +1,31 @@
 ---
 title: Handle Errors
-summary: Learn the error system and the error handling when you use DM.
+summary: Learn about the error system and how to handle common errors when you use DM.
 category: reference
 aliases: ['/docs/tidb-data-migration/dev/troubleshoot-dm/', '/docs/tidb-data-migration/dev/error-system/']
 ---
 
 # Handle Errors
 
-This document introduces the error system and solutions to handle errors when you use DM.
+This document introduces the error system and how to handle common errors when you use DM.
 
 ## Error system
 
-In the error system, usually, the details of a specific error are as follows:
+In the error system, usually, the information of a specific error is as follows:
 
 - `code`: error code.
 
     DM uses the same error code for the same error type. An error code does not change as DM version changes.
 
-    Some errors might be removed during the DM iteration, while the error codes are not removed. DM uses a new error code instead of an existing one for a new error.
+    Some errors might be removed during the DM iteration, while the error codes are not. DM uses a new error code instead of an existing one for a new error.
 
 - `class`: error type.
 
     It is used to mark the component where an error occurs (error source).
 
-    The following table displays all error types, sources and error samples.
+    The following table displays all error types, error sources, and error samples.
 
-    |  Error type    |   Error source            | Error sample                                                     |
+    |  Error Type    |   Error Source            | Error sample                                                     |
     | :-------------- | :------------------------------ | :------------------------------------------------------------ |
     | `database`       |  Database operations         | `[code=10003:class=database:scope=downstream:level=medium] database driver: invalid connection` |
     | `functional`     |  Underlying functions of DM           | `[code=11005:class=functional:scope=internal:level=high] not allowed operation: alter multiple tables in one statement` |
@@ -46,9 +46,9 @@ In the error system, usually, the details of a specific error are as follows:
 
 - `scope`: Error scope.
 
-    It is used to identify the scope and source of DM objects when an error occurs. `scope` includes four types: `not-set`, `upstream`, `downstream`, and `internal`.
+    It is used to mark the scope and source of DM objects when an error occurs. `scope` includes four types: `not-set`, `upstream`, `downstream`, and `internal`.
 
-    If the logic of the error directly involves requests between upstream and downstream databases, the scope is set to `upstream` or `downstream`. Other error scenarios are currently set to `internal`.
+    If the logic of the error directly involves requests between upstream and downstream databases, the scope is set to `upstream` or `downstream`; otherwise, it is currently set to `internal`.
 
 - `level`: Error level.
 
@@ -56,27 +56,27 @@ In the error system, usually, the details of a specific error are as follows:
 
     - The `low` level error usually relates to user operations and incorrect inputs. It does not affect replication tasks.
     - The `medium` level error usually relates to user configurations. It affects some newly started services; however, it does not affect the existing DM replication status.
-    - The `high` level error usually requires attention; otherwise, the replication task is at the risk of interruption that you need to address.
+    - The `high` level error usually needs your attention, since you need to resolve it to avoid the possible interruption of a replication task.
 
 - `message`: Error descriptions.
 
-    Detailed descriptions of the error. To wrap and store every additional layer of error message on the error call chain, the [errors.Wrap](https://godoc.org/github.com/pkg/errors#hdr-Adding_context_to_an_error) mode adopted. The message description wrapped at the outermost layer indicates the error in DM and the message description wrapped at the innermost layer indicates the error source.
+    Detailed descriptions of the error. To wrap and store every additional layer of error message on the error call chain, the [errors.Wrap](https://godoc.org/github.com/pkg/errors#hdr-Adding_context_to_an_error) mode is adopted. The message description wrapped at the outermost layer indicates the error in DM and the message description wrapped at the innermost layer indicates the error source.
 
 - Error stack information (optional)
 
-    Whether DM outputs the error stack information depends on the error severity and the necessity. The error stack records the complete stack call information when the error occurred. If you cannot figure out the error cause based on the basic information and the error message, you can trace the execution path of the code when the error occurred using the error stack.
+    Whether DM outputs the error stack information depends on the error severity and the necessity. The error stack records the complete stack call information when the error occurs. If you cannot figure out the error cause based on the basic information and the error message, you can trace the execution path of the code when the error occurs using the error stack.
 
 For the complete list of error codes, refer to the [error code lists] (https://github.com/pingcap/dm/blob/master/_utils/terror_gen/errors_release.txt).
 
 ## Troubleshooting
 
-If you encounter errors while running DM, you can take the following steps to troubleshoot problems:
+If you encounter an error while running DM, take the following steps to troubleshoot this error:
 
 1. Execute the `query-status` command to check the task running status and the error output.
 
-2. Check the log files related to the error. The log files are on the DM-master and DM-worker nodes. To get key information about the error, refer to [common errors](error-system.md). Then check [error handling](#handle-common-errors) to find the solution.
+2. Check the log files related to the error. The log files are on the DM-master and DM-worker nodes. To get key information about the error, refer to the [error system](error-system.md). Then check the [Handle Common Errors](#handle-common-errors) section to find the solution.
 
-3. If the error has not been covered in this document, and you cannot solve the problem by checking the log or monitoring metrics, you can contact the R&D.
+3. If the error is not covered in this document, and you cannot solve the problem by checking the log or monitoring metrics, you can contact the R&D.
 
 4. After the error is resolved, restart the task using dmctl.
 
@@ -86,7 +86,7 @@ If you encounter errors while running DM, you can take the following steps to tr
     resume-task ${task name}
     ```
 
-However, you need to reset the data replication task in some cases. For details, refer to [Reset the data replication task](faq.md#reset-the-data-replication-task).
+However, you need to reset the data replication task in some cases. For details, refer to [Reset the Data Replication Task](faq.md#reset-the-data-replication-task).
 
 ## Handle common errors
 
@@ -117,7 +117,7 @@ Because DM has the feature of concurrently replicating data to the downstream in
 
 The `driver: bad connection` error indicates that anomalies have occurred in the connection between DM and the upstream TiDB database (such as network failure, TiDB restart and so on) and that the data of the current request has not yet been sent to TiDB at that moment.
 
-When this type of error occurs in the current version, use `stop-task` to stop the task and then use `start-task` to restart the task. The automatic retry mechanism of DM will be improved later.
+The current version of DM automatically retries on error. If you use the previous version which does not support automatically retry, you can execute the `stop-task` command to stop the task. Then execute `start-task` to restart the task.
 
 ### The relay unit throws error `event from * in * diff from passed-in event *` or a replication task is interrupted with failing to get or parse binlog errors like `get binlog error ERROR 1236 (HY000)` and `binlog checksum mismatch, data may be corrupted` returned
 
