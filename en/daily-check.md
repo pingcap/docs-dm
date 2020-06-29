@@ -1,6 +1,6 @@
 ---
 title: TiDB Data Migration daily inspection
-summary: Understand the daily inspection of DM tools.
+summary: Understand the daily inspection of DM.
 category: reference
 ---
 
