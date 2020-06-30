@@ -67,9 +67,9 @@ filters:
     events: ["all dml"]
     action: Do
 
-# The filter rule set of the block allow list of the matched table of the upstream database instance.
+# The filter rule set of the block and allow list of the matched table of the upstream database instance.
 block-allow-list:                    # Use black-white-list if the DM's version <= v1.0.6.
-  bw-rule-1:                         # The name of the block allow list rule
+  bw-rule-1:                         # The name of the block and allow list rule
     do-dbs: ["~^test.*", "user"]     # The allow list of upstream schemas needs to be replicated
     ignore-dbs: ["mysql", "account"] # The block list of upstream schemas needs to be replicated
     do-tables:                       # The allow list of upstream tables needs to be replicated
@@ -154,7 +154,7 @@ Arguments in each feature configuration set are explained in the comments in the
 | :------------ | :--------------------------------------- |
 | `routes` | The routing mapping rule set between the upstream and downstream tables. If the names of the upstream and downstream schemas and tables are the same, this item does not need to be configured. See [Table Routing](feature-overview.md#table-routing) for usage scenarios and sample configurations. |
 | `filters` | The binlog event filter rule set of the matched table of the upstream database instance. If binlog filtering is not required, this item does not need to be configured. See [Binlog Event Filter](feature-overview.md#binlog-event-filter) for usage scenarios and sample configurations. |
-| `block-allow-list` | The filter rule set of the block allow list of the matched table of the upstream database instance. It is recommended to specify the schemas and tables that need to be replicated through this item, otherwise all schemas and tables are replicated. See [Binlog Event Filter](feature-overview.md#binlog-event-filter)[Block & Allow Lists](feature-overview.md#block-allow-table-lists) for usage scenarios and sample configurations. |
+| `block-allow-list` | The filter rule set of the block and allow list of the matched table of the upstream database instance. It is recommended to specify the schemas and tables that need to be replicated through this item, otherwise all schemas and tables are replicated. See [Binlog Event Filter](feature-overview.md#binlog-event-filter)[Block & Allow Lists](feature-overview.md#block-allow-table-lists) for usage scenarios and sample configurations. |
 | `mydumpers` | Configuration arguments of Mydumper processing unit. If the default configuration is sufficient for your needs, this item does not need to be configured. Or you can configure `thread` only using `mydumper-thread`. |
 | `loaders` | Configuration arguments of Loader processing unit. If the default configuration is sufficient for your needs, this item does not need to be configured. Or you can configure `pool-size` only using `loader-thread`. |
 | `syncers` | Configuration arguments of Syncer processing unit. If the default configuration is sufficient for your needs, this item does not need to be configured. Or you can configure `worker-count` only using `syncer-thread`. |

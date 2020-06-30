@@ -39,7 +39,7 @@ target-database:                # Configuration of the downstream database insta
   password: ""                  # The dmctl encryption is needed when the password is not empty.
 
 ## ******** Feature configuration set **********
-# The filter rule set of the block allow list of the matched table of the upstream database instance.
+# The filter rule set of the block and allow list of the matched table of the upstream database instance.
 block-allow-list:        # Use black-white-list if the DM's version <= v1.0.6.
   bw-rule-1:             # The name of the block and allow lists filtering rule of the table matching the upstream database instance.
     do-dbs: ["all_mode"] # Allow list of upstream tables needs to be replicated
