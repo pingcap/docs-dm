@@ -14,5 +14,5 @@ This document summarizes the daily inspection methods of the TiDB Data Migration
 
 + Method 3: Check the DM running status and related errors through the log file.
 
-    -DM-master's log directory: set by the DM-master's parameter `--log-file`. If DM-Ansible is used to deploy DM, the log directory is located in `{ansible deploy}/log/dm-master.log` of DM-master node.
-    -DM-worker's log directory: set by DM-worker's parameter `--log-file`. If DM-Ansible is used to deploy DM, the log directory is located in `{ansible deploy}/log/dm-worker.log` of the DM-worker node.
+    - DM-master's log directory: set by the DM-master's parameter `--log-file`. If DM-Ansible is used to deploy DM, the log directory is located in `{ansible deploy}/log/dm-master.log` of DM-master node.
+    - DM-worker's log directory: set by DM-worker's parameter `--log-file`. If DM-Ansible is used to deploy DM, the log directory is located in `{ansible deploy}/log/dm-worker.log` of the DM-worker node.
