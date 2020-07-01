@@ -469,6 +469,10 @@ The following example uses `tidb` as the user who runs the service.
     ```bash
     ansible-playbook deploy.yml
     ```
+    
+    > **Note:**
+    >
+    > Currently, both DM and TiDB overwrite the original running configuration of the monitoring components during deployment and rolling upgrade. Therefore, it is highly recommended to deploy independent monitoring components for DM and TiDB.
 
 3. Start the DM cluster.
 
