@@ -54,7 +54,7 @@ Available Commands:
   unlock-ddl-lock      forcefully unlock DDL lock
   update-master-config update the config of the DM-master
   update-relay         update the relay unit config of the DM-worker
-  update-task          update a task's config for routes, filters, or black-white-list
+  update-task          update a task's config for routes, filters, or block-allow-list
 Flags:
   -h, --help             help for dmctl
   -s, --source strings   MySQL Source ID
