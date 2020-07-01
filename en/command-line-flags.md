@@ -58,7 +58,7 @@ This document introduces DM's command-line flags.
 - The default value is `"info"`
 - Optional parameter
 
-### `--master-addr
+### `--master-addr`
 
 - The address on which DM-master listens to the client's requests
 - The default value is `""`
