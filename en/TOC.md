@@ -43,6 +43,7 @@
   - [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md)
 + Troubleshoot
   - [Handle Errors](error-handling.md)
+  - [Handle Performance Issues](handle-performance-issues.md)
 + Tutorials
   - [Simple Scenario](usage-scenario-simple-replication.md)
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
@@ -53,6 +54,7 @@
     - [DM Overview](overview.md)
     - [DM-worker](dm-worker-intro.md)
     - [DM Relay Log](relay-log.md)
+  - [Command-line Flags](command-line-flags.md)
   + Configure
     - [Overview](config-overview.md)
     - [DM-master Configuration](dm-master-configuration-file.md)
