@@ -545,7 +545,7 @@ online-ddl-scheme: "gh-ost"
 online-ddl-scheme: "pt"
 ```
 
-For more information about online DDL tools, refer to [online-ddl-scheme](online-ddl-scheme.md).
+For more information about online DDL tools, refer to [Online DDL Scheme](online-ddl-scheme.md).
 
 ## Shard merge
 
