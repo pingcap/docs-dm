@@ -16,21 +16,21 @@ When diagnosing and handling performance issues, make sure that:
 - You can view [monitoring metrics](monitor-a-dm-cluster.md#task) on the Grafana monitoring dashboard.
 - The component you diagnose works well; otherwise, possible monitoring metrics exceptions might interfere with the diagnosis of performance issues.
 
-In the case of a large latency in the data migration, to quickly figure out whether the bottleneck is inside the DM component or in the TiDB cluster, you can first check `DML queue remain length` in [Write SQL statements to Downstream](#write-sql-statements-to-downstream).
+In the case of a large latency in the data migration, to quickly figure out whether the bottleneck is inside the DM component or in the TiDB cluster, you can first check `DML queue remain length` in [Write SQL Statements to Downstream](#write-sql-statements-to-downstream).
 
 ## relay log unit
 
-To diagnose performance issues in the relay log unit, you can check the `binlog file gap between master and relay` monitoring metric. For more information about this item, refer to [monitoring metrics of the relay log](monitor-a-dm-cluster.md#relay-log). If this metric is greater than 1 for a long time, it usually indicates that there is a performance issue; if this metric is 0, it usually indicates that there is no performance issue.
+To diagnose performance issues in the relay log unit, you can check the `binlog file gap between master and relay` monitoring metric. For more information about this metric, refer to [monitoring metrics of the relay log](monitor-a-dm-cluster.md#relay-log). If this metric is greater than 1 for a long time, it usually indicates that there is a performance issue; if this metric is 0, it usually indicates that there is no performance issue.
 
 If the value of `binlog file gap between master and relay` is 0, but you suspect that there is a performance issue, you can check `binlog pos`. If `master` in this metric is much larger than the `relay`, a performance issue might exist. In this case, diagnose and handle this issue accordingly.
 
 ### Read binlog data
 
-`read binlog event duration` refers to the duration that the relay log reads binlog from the upstream database (MySQL/MariaDB). Ideally, this metric is close to the network delay between DM-worker and MySQL/MariaDB instances.
+`read binlog event duration` refers to the duration that the relay log reads binlog from the upstream database (MySQL/MariaDB). Ideally, this metric is close to the network latency between DM-worker and MySQL/MariaDB instances.
 
-For data migration in one machine room, reading binlog data is not a performance bottleneck. If the value of `read binlog event duration` is too large, you need to check the network connection between DM-worker and MySQL/MariaDB.
+For data migration in one machine room, reading binlog data is not a performance bottleneck. If the value of `read binlog event duration` is too large, check the network connection between DM-worker and MySQL/MariaDB.
 
-For data migration in the geo-distributed environment, you can try to deploy DM-worker and MySQL/MariaDB in one machine room, while deploying the TiDB cluster in the target machine room.
+For data migration in the geo-distributed environment, try to deploy DM-worker and MySQL/MariaDB in one machine room, while deploying the TiDB cluster in the target machine room.
 
 The process of reading binlog data from the upstream database includes the following sub-processes:
 
@@ -48,16 +48,16 @@ After reading the binlog event into the DM memory, DM's relay processing unit de
 
 ### Write relay log files
 
-When writing a binlog event to a relay log file, the relevant performance metric is `write relay log duration`. This value should be microseconds when `binlog event size` is not too large. If `write relay log duration` is too large, you need to check the write performance of the disk. To avoid low write performance, use local SSDs for DM-worker.
+When writing a binlog event to a relay log file, the relevant performance metric is `write relay log duration`. This value should be microseconds when `binlog event size` is not too large. If `write relay log duration` is too large, check the write performance of the disk. To avoid low write performance, use local SSDs for DM-worker.
 
 ## Load unit
 
-The main operation of the Load unit is to read the SQL file data from the local and write it to the downstream. The related performance metric is `transaction execution latency`. If this value is too large, you need to check the downstream performance by checking the monitoring of the downstream database. You can also check whether there is a large latency in the network between DM and the downstream database.
+The main operations of the Load unit are to read the SQL file data from the local and write it to the downstream. The related performance metric is `transaction execution latency`. If this value is too large, check the downstream performance by checking the monitoring of the downstream database. You can also check whether there is a large latency in the network between DM and the downstream database.
 
 ## Binlog replication unit
 
 To diagnose performance issues in the Binlog replication unit
-, you can check the `binlog file gap between master and syncer` monitoring metric. For more information about this item, refer to [monitoring metrics of the Binlog replication](monitor-a-dm-cluster.md#binlog-replication). If this metric is greater than 1 for a long time, it usually indicates that there is a performance issue; if this metric is 0, it usually indicates that there is no performance issue.
+, you can check the `binlog file gap between master and syncer` monitoring metric. For more information about this metric, refer to [monitoring metrics of the Binlog replication](monitor-a-dm-cluster.md#binlog-replication). If this metric is greater than 1 for a long time, it usually indicates that there is a performance issue; if this metric is 0, it usually indicates that there is no performance issue.
 
 If `binlog file gap between master and syncer` is greater than 1 for a long time, check `binlog file gap between relay and syncer` to figure out which unit the latency mainly exists in. If this value is also greater than 1 for a long time, the latency might exist in the relay log uni. Then you can refer to [relay log unit](#relay-log-unit) to resolve this issue; otherwise, continue checking the Binlog replication unit.
 
@@ -65,9 +65,9 @@ If `binlog file gap between master and syncer` is greater than 1 for a long time
 
 The Binlog replication unit decides whether to read the binlog event from the upstream MySQL/MariaDB or from the relay log file according to the configuration. The related performance metric is `read binlog event duration`, which generally ranges from a few microseconds to tens of microseconds.
 
-- If DM's Binlog replication processing unit reads the binlog event from upstream MySQL/MariaDB, to locate and resolve the issue, you can refer to [read binlog data](#read-binlog-data) under the "relay log unit" section.
+- If DM's Binlog replication processing unit reads the binlog event from upstream MySQL/MariaDB, to locate and resolve the issue, refer to [read binlog data](#read-binlog-data) under the "relay log unit" section.
 
-- If DM's Binlog replication processing unit reads the binlog event from the relay log file, when `binlog event size` is not too large, the value of `write relay log duration` should be microseconds. If `read binlog event duration` is too large, you need to check the write performance of the disk. To avoid low write performance, use local SSDs for DM-worker.
+- If DM's Binlog replication processing unit reads the binlog event from the relay log file, when `binlog event size` is not too large, the value of `write relay log duration` should be microseconds. If `read binlog event duration` is too large, check the write performance of the disk. To avoid low write performance, use local SSDs for DM-worker.
 
 ### binlog event conversion
 
@@ -93,4 +93,4 @@ If the corresponding curve of `DML queue remain length` is not 0 (the maximum is
 
 `transaction execution latency` is usually tens of milliseconds. If this value is too large, check the downstream performance based on the monitoring of the downstream database. You can also check whether there is a large network latency between DM and the downstream database.
 
-To view the time consumed to write a single statement such as `BEGIN`, `INSERT`, `UPDATE`, `DELETE`, or `COMMIT` to the downstream, you can check `statement execution latency`.
+To view the time consumed to write a single statement such as `BEGIN`, `INSERT`, `UPDATE`, `DELETE`, or `COMMIT` to the downstream, check `statement execution latency`.
