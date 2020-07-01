@@ -1,13 +1,13 @@
 ---
 title: Key Features
-summary: Learn about the key features of DM and related configuration options.
+summary: Learn about the key features of DM and appropriate parameter configurations.
 category: reference
 aliases: ['/docs/tidb-data-migration/dev/feature-overview/']
 ---
 
 # Key Features
 
-This document describes the data replication features provided by TiDB Data Migration (DM) and introduces the configuration of corresponding parameters.
+This document describes the data replication features provided by TiDB Data Migration (DM) and introduces appropriate parameter configurations.
 
 For different DM versions, pay attention to the different match rules of schema or table names in the table routing, block & allow lists, and binlog event filter features:
 
@@ -108,7 +108,7 @@ The block and allow lists filtering rule of the upstream database instance table
 ### Parameter configuration
 
 ```yaml
-block-allow-list:             # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:             # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
   rule-1:
     do-dbs: ["test*"]         # Starting with characters other than "~" indicates that it is a wildcard;
                               # v1.0.5 or later versions support the regular expression rules.
@@ -203,7 +203,7 @@ Assume that the upstream MySQL instances include the following tables:
 The configuration is as follows:
 
 ```yaml
-block-allow-list:  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
   bw-rule:
     do-dbs: ["forum_backup_2018", "forum"]
     ignore-dbs: ["~^forum_backup_"]
