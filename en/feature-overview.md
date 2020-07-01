@@ -9,10 +9,10 @@ aliases: ['/docs/tidb-data-migration/stable/feature-overview/','/docs/tidb-data-
 
 This document describes the data replication features provided by the Data Migration tool and explains the configuration of corresponding parameters.
 
-For different DM versions, pay attention to the different match rules of schema or table names in the table routing, black & white lists, and binlog event filter features:
+For different DM versions, pay attention to the different match rules of schema or table names in the table routing, block & allow lists, and binlog event filter features:
 
 + For DM v1.0.5 or later versions, all the above features support the [wildcard match](https://en.wikipedia.org/wiki/Glob_(programming)#Syntax). For all versions of DM, note that there can be **only one** `*` in the wildcard expression, and `*` **must be placed at the end**.
-+ For DM versions earlier than v1.0.5, table routing and binlog event filter support the wildcard but do not support the `[...]` and `[!...]` expressions. The black & white lists only supports the regular expression.
++ For DM versions earlier than v1.0.5, table routing and binlog event filter support the wildcard but do not support the `[...]` and `[!...]` expressions. The block & allow lists only supports the regular expression.
 
 It is recommended that you use the wildcard for matching in simple scenarios.
 
@@ -101,14 +101,14 @@ Assuming that the following two routing rules are configured and `test_1_bak`.`t
     target-table: "t_bak"
 ```
 
-## Black and white table lists
+## Block and allow table lists
 
-The black and white lists filtering rule of the upstream database instance tables is similar to MySQL replication-rules-db/tables, which can be used to filter or only replicate all operations of some databases or some tables.
+The block and allow lists filtering rule of the upstream database instance tables is similar to MySQL replication-rules-db/tables, which can be used to filter or only replicate all operations of some databases or some tables.
 
 ### Parameter configuration
 
 ```yaml
-black-white-list:
+block-allow-list:             # Use black-white-list if the DM's version <= v1.0.6.
   rule-1:
     do-dbs: ["test*"]         # Starting with characters other than "~" indicates that it is a wildcard;
                               # v1.0.5 or later versions support the regular expression rules.
@@ -132,10 +132,10 @@ black-white-list:
 
 ### Parameter explanation
 
-- `do-dbs`: white lists of the schemas to be replicated, similar to [`replicate-do-db`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-do-db) in MySQL
-- `ignore-dbs`: black lists of the schemas to be replicated, similar to [`replicate-ignore-db`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-ignore-db) in MySQL
-- `do-tables`: white lists of the tables to be replicated, similar to [`replicate-do-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-do-table) in MySQL
-- `ignore-tables`: black lists of the tables to be replicated, similar to [`replicate-ignore-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-ignore-table) in MySQl
+- `do-dbs`: allow lists of the schemas to be replicated, similar to [`replicate-do-db`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-do-db) in MySQL
+- `ignore-dbs`: block lists of the schemas to be replicated, similar to [`replicate-ignore-db`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-ignore-db) in MySQL
+- `do-tables`: allow lists of the tables to be replicated, similar to [`replicate-do-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-do-table) in MySQL
+- `ignore-tables`: block lists of the tables to be replicated, similar to [`replicate-ignore-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-ignore-table) in MySQl
 
 If a value of the above parameters starts with the `~` character, the subsequent characters of this value are treated as a [regular expression](https://golang.org/pkg/regexp/syntax/#hdr-syntax). You can use this parameter to match schema or table names.
 
@@ -145,7 +145,7 @@ The filtering rules corresponding to `do-dbs` and `ignore-dbs` are similar to th
 
 > **Note:**
 >
-> In DM and in MySQL, the white and black lists filtering rules are different in the following ways:
+> In DM and in MySQL, the allow and block lists filtering rules are different in the following ways:
 >
 > - In MySQL, [`replicate-wild-do-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-wild-do-table) and [`replicate-wild-ignore-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-wild-ignore-table) support wildcard characters. In DM, some parameter values directly supports regular expressions that start with the `~` character.
 > - DM currently only supports binlogs in the `ROW` format, and does not support those in the `STATEMENT` or `MIXED` format. Therefore, the filtering rules in DM correspond to those in the `ROW` format in MySQL.
@@ -203,7 +203,7 @@ Assume that the upstream MySQL instances include the following tables:
 The configuration is as follows:
 
 ```yaml
-black-white-list:
+block-allow-list:  # Use black-white-list if the DM's version <= v1.0.6.
   bw-rule:
     do-dbs: ["forum_backup_2018", "forum"]
     ignore-dbs: ["~^forum_backup_"]
@@ -232,11 +232,11 @@ After using the `bw-rule` rule:
 
 ## Binlog event filter
 
-Binlog event filter is a more fine-grained filtering rule than the black and white lists filtering rule. You can use statements like `INSERT` or `TRUNCATE TABLE` to specify the binlog events of `schema/table` that you need to replicate or filter out.
+Binlog event filter is a more fine-grained filtering rule than the block and allow lists filtering rule. You can use statements like `INSERT` or `TRUNCATE TABLE` to specify the binlog events of `schema/table` that you need to replicate or filter out.
 
 > **Note:**
 >
-> If a same table matches multiple rules, these rules are applied in order and the black list has priority over the white list. This means if both the `Ignore` and `Do` rules are applied to a single table, the `Ignore` rule takes effect.
+> If a same table matches multiple rules, these rules are applied in order and the block list has priority over the allow list. This means if both the `Ignore` and `Do` rules are applied to a single table, the `Ignore` rule takes effect.
 
 ### Parameter configuration
 
@@ -281,10 +281,10 @@ filters:
 
 - `action`: the string (`Do`/`Ignore`). Based on the following rules, it judges whether to filter. If either of the two rules is satisfied, the binlog will be filtered; otherwise, the binlog will not be filtered.
 
-    - `Do`: the white list. The binlog will be filtered in either of the following two conditions:
+    - `Do`: the allow list. The binlog will be filtered in either of the following two conditions:
         - The type of the event is not in the `event` list of the rule.
         - The SQL statement of the event cannot be matched by `sql-pattern` of the rule.
-    - `Ignore`: the black list. The binlog will be filtered in either of the following two conditions:
+    - `Ignore`: the block list. The binlog will be filtered in either of the following two conditions:
         - The type of the event is in the `event` list of the rule.
         - The SQL statement of the event can be matched by `sql-pattern` of the rule.
 
@@ -515,8 +515,8 @@ enable-heartbeat: true
 
 - DM-worker creates the `dm_heartbeat` (currently unconfigurable) schema in the corresponding upstream MySQL or MariaDB.
 - DM-worker creates the `heartbeat` (currently unconfigurable) table in the corresponding upstream MySQL or MariaDB.
-- DM-worker uses `replace statement` to update the current `TS_master` timestamp every second (currently unconfigurable) in the corresponding upstream MySQL or MariaDB `dm_heartbeat`.`heartbeat` tables.
-- DM-worker updates the `TS_slave_task` replication time after each replication task obtains the `dm_heartbeat`.`heartbeat` binlog.
-- DM-worker queries the current `TS_master` timestamp in the corresponding upstream MySQL or MariaDB `dm_heartbeat`.`heartbeat` tables every 10 seconds, and calculates `task_lag` = `TS_master` - `TS_slave_task` for each task.
+- DM-worker uses `replace statement` to update the current `TS_primary` timestamp every second (currently unconfigurable) in the corresponding upstream MySQL or MariaDB `dm_heartbeat`.`heartbeat` tables.
+- DM-worker updates the `TS_secondary_task` replication time after each replication task obtains the `dm_heartbeat`.`heartbeat` binlog.
+- DM-worker queries the current `TS_primary` timestamp in the corresponding upstream MySQL or MariaDB `dm_heartbeat`.`heartbeat` tables every 10 seconds, and calculates `task_lag` = `TS_primary` - `TS_secondary_task` for each task.
 
 See the `replicate lag` in the [binlog replication](monitor-a-dm-cluster.md#binlog-replication) processing unit of DM monitoring metrics.

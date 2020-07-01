@@ -56,13 +56,13 @@ This section describes the data replication features provided by the Data Migrat
 
 The schema and table routing feature means that DM can replicate a certain table of the upstream MySQL or MariaDB instance to the specified table in the downstream, which can be used to merge or replicate the sharding data.
 
-### Black and white lists replication at the schema and table levels
+### Block and allow lists replication at the schema and table levels
 
-The black and white lists filtering rule of the upstream database instance tables is similar to MySQL `replication-rules-db`/`replication-rules-table`, which can be used to filter or only replicate all operations of some databases or some tables.
+The block and allow lists filtering rule of the upstream database instance tables is similar to MySQL `replication-rules-db`/`replication-rules-table`, which can be used to filter or only replicate all operations of some databases or some tables.
 
 ### Binlog event filtering
 
-Binlog event filtering is a more fine-grained filtering rule than the black and white lists filtering rule. You can use statements like `INSERT` or `TRUNCATE TABLE` to specify the binlog events of `schema/table` that you need to replicate or filter out.
+Binlog event filtering is a more fine-grained filtering rule than the block and allow lists filtering rule. You can use statements like `INSERT` or `TRUNCATE TABLE` to specify the binlog events of `schema/table` that you need to replicate or filter out.
 
 ### Sharding support
 

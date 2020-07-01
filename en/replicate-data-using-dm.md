@@ -82,23 +82,23 @@ mysql-instances:
 -
   # The ID of upstream instances or the replication group. You can refer to the configuration of `source_id` in the "inventory.ini" file or in the "dm-master.toml" file.
   source-id: "mysql-replica-01"
-  # The configuration item name of the black and white lists of the name of the
-  # database/table to be replicated, used to quote the global black and white
-  # lists configuration that is set in the global black-white-list below.
-  black-white-list: "global"
+  # The configuration item name of the block and allow lists of the name of the
+  # database/table to be replicated, used to quote the global block and allow
+  # lists configuration that is set in the global block-allow-list below.
+  block-allow-list: "global"  # Use black-white-list if the DM's version <= v1.0.6.
   # The configuration item name of Mydumper, used to quote the global Mydumper configuration.
   mydumper-config-name: "global"
 
 -
   source-id: "mysql-replica-02"
-  black-white-list: "global"
+  block-allow-list: "global"  # Use black-white-list if the DM's version <= v1.0.6.
   mydumper-config-name: "global"
 
-# The global configuration of black and white lists. Each instance can quote it by the
+# The global configuration of block and allow lists. Each instance can quote it by the
 # configuration item name.
-black-white-list:
+block-allow-list:                     # Use black-white-list if the DM's version <= v1.0.6.
   global:
-    do-tables:                        # The white list of upstream tables to be replicated.
+    do-tables:                        # The allow list of upstream tables to be replicated.
     - db-name: "test_db"              # The database name of the table to be replicated.
       tbl-name: "test_table"          # The name of the table to be replicated.
 

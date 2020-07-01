@@ -13,7 +13,7 @@ This document collects the frequently asked questions (FAQs) about TiDB Data Mig
 
 Currently, DM only supports decoding the standard version of MySQL or MariaDB binlog. It has not been tested for Alibaba Cloud RDS or other cloud databases. If you are confirmed that its binlog is in standard format, then it is supported.
 
-## Does the regular expression of the black and white list in the task configuration support `non-capturing (?!)`?
+## Does the regular expression of the block and allow list in the task configuration support `non-capturing (?!)`?
 
 Currently, DM does not support it and only supports the regular expressions of the Golang standard library. See regular expressions supported by Golang via [re2-syntax](https://github.com/google/re2/wiki/Syntax).
 
@@ -70,8 +70,8 @@ You can avoid this error by the following steps:
 
 1. Remove the `online-ddl-scheme` configuration of the task.
 
-2. Configure `_{table_name}_gho`, `_{table_name}_ghc`, and `_{table_name}_del` in `black-white-list.ignore-tables`.
+2. Configure `_{table_name}_gho`, `_{table_name}_ghc`, and `_{table_name}_del` in `block-allow-list.ignore-tables`.
 
 3. Execute the upstream DDL in the downstream TiDB manually.
 
-4. After the Pos is replicated to the position after the gh-ost process, re-enable the `online-ddl-scheme` and comment out `black-white-list.ignore-tables`.
+4. After the Pos is replicated to the position after the gh-ost process, re-enable the `online-ddl-scheme` and comment out `block-allow-list.ignore-tables`.
