@@ -45,5 +45,5 @@ Each DM-worker must be configured in separate `[deploy]` sections.
 
 | Name        | Description                                    |
 | :------------ | :--------------------------------------- |
-| `source-id` | Uniquely identifies a MySQL or MariaDB instance, or a replication group with the master-slave structure, which needs to be consistent with the `source-id` of DM-worker. |
+| `source-id` | Uniquely identifies a MySQL or MariaDB instance, or a replication group with the primary-secondary structure, which needs to be consistent with the `source-id` of DM-worker. |
 | `dm-worker` | The service address of DM-worker. |
