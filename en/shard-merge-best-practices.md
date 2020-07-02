@@ -65,9 +65,11 @@ Then you can perform the following steps to fix the `ERROR 1062 (23000): Duplica
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1
     ```
 
-2. Start the full and incremental data migration task.
+2. Add configuration in `task.yaml` to skip auto increment primary keys conflict checking: `ignore-checking-items: ["auto_increment_ID"]`.
 
-3. Run `query-status` to verify whether the data migration task is successfully processed and whether the data from the upstream has already been merged and replicated to the downstream database.
+3. Start the full and incremental data migration task.
+
+4. Run `query-status` to verify whether the data migration task is successfully processed and whether the data from the upstream has already been merged and replicated to the downstream database.
 
 ### Use a composite primary key
 
