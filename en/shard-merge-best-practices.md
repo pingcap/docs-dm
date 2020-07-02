@@ -65,7 +65,11 @@ Then you can perform the following steps to fix the `ERROR 1062 (23000): Duplica
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1
     ```
 
-2. Add configuration in `task.yaml` to skip auto increment primary keys conflict checking: `ignore-checking-items: ["auto_increment_ID"]`.
+2. Add the following configuration in `task.yaml` to skip auto increment primary keys conflict checking: 
+  
+    ```yaml
+    ignore-checking-items: ["auto_increment_ID"]
+    ```
 
 3. Start the full and incremental data migration task.
 
