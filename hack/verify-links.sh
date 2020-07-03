@@ -4,8 +4,6 @@
 #
 # See https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally if you meet permission problems when executing npm install.
 
-set -euo pipefail
-
 ROOT=$(unset CDPATH && cd $(dirname "${BASH_SOURCE[0]}")/.. && pwd)
 cd $ROOT
 
@@ -16,17 +14,6 @@ CONFIG_TMP=$(mktemp)
 ERROR_REPORT=$(mktemp)
 
 trap 'rm -f $CONFIG_TMP $ERROR_REPORT' EXIT
-
-function in_array() {
-    local i=$1
-    shift
-    local a=("${@}")
-    local e
-    for e in "${a[@]}"; do
-        [[ "$e" == "$i" ]] && return 0;
-    done
-    return 1
-}
 
 # Check all directories starting with 'v\d.*' and dev.
 for d in zh en; do
