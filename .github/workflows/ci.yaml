@@ -9,6 +9,12 @@ jobs:
     steps:
     - name: Check out 
       uses: actions/checkout@v2
+    - name: Set up npm local
+      run: |
+        mkdir ~/.npm-global
+        npm config set prefix '~/.npm-global'
+        echo "::set-env name=PATH::~/.npm-global/bin:$PATH"
+        echo "::set-env name=NODE_PATH::~/.npm-global/lib/node_modules:$NODE_PATH"
     - name: Verify links
       run: ./hack/verify-links.sh
     - name: Verify link anchors
