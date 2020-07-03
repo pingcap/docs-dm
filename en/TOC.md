@@ -34,6 +34,7 @@
     - [Use DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
   + [Replicate Data Using DM](replicate-data-using-dm.md)
+  + [Create and Verify a Replication Task](create-task-and-verify.md)
 + Configure
   - [Overview](config-overview.md)
   - [DM-master Configuration](dm-master-configuration-file.md)
