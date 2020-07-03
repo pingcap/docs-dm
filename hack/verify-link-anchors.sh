@@ -9,8 +9,8 @@ set -euo pipefail
 ROOT=$(unset CDPATH && cd $(dirname "${BASH_SOURCE[0]}")/.. && pwd)
 cd $ROOT
 
-npm install -g remark-cli remark-lint breeswish/remark-lint-pingcap-docs-anchor
+npm install remark-cli remark-lint breeswish/remark-lint-pingcap-docs-anchor
 
 echo "info: checking links anchors under $ROOT directory..."
 
-remark --ignore-path .gitignore -u lint -u remark-lint-pingcap-docs-anchor . --frail --quiet
+npx remark --ignore-path .gitignore -u lint -u remark-lint-pingcap-docs-anchor . --frail --quiet

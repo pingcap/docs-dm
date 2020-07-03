@@ -7,7 +7,7 @@
 ROOT=$(unset CDPATH && cd $(dirname "${BASH_SOURCE[0]}")/.. && pwd)
 cd $ROOT
 
-npm install -g markdown-link-check@3.8.1
+npm install markdown-link-check@3.8.1
 
 VERBOSE=${VERBOSE:-}
 CONFIG_TMP=$(mktemp)
@@ -27,7 +27,7 @@ for d in zh en; do
     while read -r tasks; do
         for task in $tasks; do
             (
-                output=$(markdown-link-check --config "$CONFIG_TMP" "$task" -q)
+                output=$(npx markdown-link-check --config "$CONFIG_TMP" "$task" -q)
                 if [ $? -ne 0 ]; then
                     printf "$output" >> $ERROR_REPORT
                 fi
