@@ -63,7 +63,7 @@ DM_PATH=`pwd` && export PATH=$PATH:$DM_PATH/bin
 
 ### 运行上游 MySQL
 
-运行两个 MySQL 客户端的服务，使用 Docker 启动 MySQL，命令如下：
+运行两个 MySQL 服务，使用 Docker 启动 MySQL，命令如下：
 
 {{< copyable "shell-regular" >}}
 
