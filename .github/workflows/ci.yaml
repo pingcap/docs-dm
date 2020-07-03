@@ -9,6 +9,9 @@ jobs:
     steps:
     - name: Check out 
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12'
     - name: Set up npm local
       run: |
         mkdir ~/.npm-global
