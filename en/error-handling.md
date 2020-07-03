@@ -1,7 +1,7 @@
 ---
 title: Handle Errors
 summary: Learn about the error system and how to handle common errors when you use DM.
-category: reference
+category: troubleshoot
 aliases: ['/docs/tidb-data-migration/dev/error-handling/','/docs/tidb-data-migration/dev/troubleshoot-dm/','/docs/tidb-data-migration/dev/error-system/']
 ---
 
@@ -15,7 +15,7 @@ In the error system, usually, the information of a specific error is as follows:
 
 - `code`: error code.
 
-    DM uses the same error code for the same error type. An error code does not change as DM version changes.
+    DM uses the same error code for the same error type. An error code does not change as the DM version changes.
 
     Some errors might be removed during the DM iteration, while the error codes are not. DM uses a new error code instead of an existing one for a new error.
 
