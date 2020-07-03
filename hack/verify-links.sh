@@ -2,13 +2,12 @@
 #
 # This script is used to verify links in markdown docs.
 #
+# See https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally if you meet permission problems when executing npm install.
 
 ROOT=$(unset CDPATH && cd $(dirname "${BASH_SOURCE[0]}")/.. && pwd)
 cd $ROOT
 
-if ! which markdown-link-check &>/dev/null; then
-    sudo npm install -g markdown-link-check@3.8.0
-fi
+npm install -g markdown-link-check@3.8.1
 
 VERBOSE=${VERBOSE:-}
 CONFIG_TMP=$(mktemp)
@@ -39,7 +38,7 @@ for d in zh en; do
     while read -r tasks; do
         for task in $tasks; do
             (
-                output=$(markdown-link-check --color --config "$CONFIG_TMP" "$task" -q)
+                output=$(markdown-link-check --config "$CONFIG_TMP" "$task" -q)
                 if [ $? -ne 0 ]; then
                     printf "$output" >> $ERROR_REPORT
                 fi
