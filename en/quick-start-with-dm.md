@@ -31,7 +31,7 @@ Before deploying DM, you need to download the binary package, run the upstream a
 
 ### Download DM binary package
 
-Download the latest (DM v2.0) version of the binary package or compile the package manually.
+Download DM v2.0 binary package or compile the package manually.
 
 #### Method 1: Download the latest version of binary package
 
@@ -63,7 +63,7 @@ DM_PATH=`pwd` && export PATH=$PATH:$DM_PATH/bin
 
 ### Run upstream MySQL
 
-Run two MySQL client services. To start MySQL services using Docker, execute the following commands:
+Run two MySQL services. To start MySQL services using Docker, execute the following commands:
 
 {{< copyable "shell-regular" >}}
 
