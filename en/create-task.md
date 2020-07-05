@@ -1,6 +1,6 @@
 ---
 title: Create a Data Replication Task
-summary: Learn how to create a data replication task.
+summary: Learn how to create a data replication task in TiDB Data Migration.
 category: reference
 ---
 
@@ -34,7 +34,7 @@ start-task [ -s "mysql-replica-01"] ./task.yaml
 
 ## Flags description
 
-- `-s`: (Optional) Specifies the MySQL source to execute `task.yaml`. If it is set, only subtasks of the specified task on the MySQL source are started.
+- `-s`: (Optional) Specifies the MySQL source to execute `task.yaml`. If it is set, the command only starts the subtasks of the specified task on the MySQL source.
 - `config-file`: (Required) Specifies the file path of `task.yaml`.
 
 ## Returned results

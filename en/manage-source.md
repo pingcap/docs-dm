@@ -1,6 +1,6 @@
 ---
 title: Manage Upstream MySQL Instances
-summary: Learn how to manage upstream MySQL instances.
+summary: Learn how to manage upstream MySQL instances in TiDB Data Migration.
 category: reference
 ---
 
@@ -34,10 +34,13 @@ help operate-source
 
 ```
 create/update/stop upstream MySQL/MariaDB source
+
 Usage:
   dmctl operate-source <operate-type> <config-file> [flags]
+
 Flags:
   -h, --help   help for operate-source
+
 Global Flags:
   -s, --source strings   MySQL Source ID
 ```

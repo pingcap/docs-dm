@@ -16,10 +16,13 @@ help resume-task
 
 ```
 resume a specified paused task
+
 Usage:
  dmctl resume-task [-s source ...] <task-name> [flags]
+
 Flags:
  -h, --help   help for resume-task
+
 Global Flags:
  -s, --source strings   MySQL Source ID
 ```
@@ -34,7 +37,7 @@ resume-task [-s "mysql-replica-01"] task-name
 
 ## Flags description
 
-- `-s`: (Optional) Specifies the MySQL source where the subtasks of the replication task (that you want to restart) run. If it is set, only subtasks on the specified MySQL source are restarted.
+- `-s`: (Optional) Specifies the MySQL source where you want to resume the subtask of the replication task. If it is set, the command resumes only the subtasks on the specified MySQL source.
 - `task-name`: (Required) Specifies the task name.
 
 ## Returned results

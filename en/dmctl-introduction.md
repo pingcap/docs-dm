@@ -27,10 +27,13 @@ Git Commit Hash: e63c6cdebea0edcf2ef8c91d84cff4aaa5fc2df7
 Git Branch: release-1.0
 UTC Build Time: 2019-09-10 06:15:05
 Go Version: go version go1.12 linux/amd64
+
 » help
 DM control
+
 Usage:
   dmctl [command]
+
 Available Commands:
   check-task           check the config file of the task
   help                 help about any command
@@ -55,9 +58,11 @@ Available Commands:
   update-master-config update the config of the DM-master
   update-relay         update the relay unit config of the DM-worker
   update-task          update a task's config for routes, filters, or block-allow-list
+
 Flags:
   -h, --help             help for dmctl
   -s, --source strings   MySQL Source ID
+
 Use `dmctl [command] --help` to get more information about a command.
 ```
 

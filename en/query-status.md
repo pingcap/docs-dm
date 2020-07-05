@@ -25,7 +25,7 @@ This document introduces how to use the `query-status` command to query the task
         {
             "taskName": "test",         # The task name.
             "taskStatus": "Running",    # The status of the task.
-            "sources": [                # The MySQL list.
+            "sources": [                # The upstream MySQL list.
                 "mysql-replica-01",
                 "mysql-replica-02"
             ]
@@ -76,7 +76,7 @@ The status of a DM migration task depends on the status of each subtask assigned
 {
     "result": true,     # Whether the query is successful.
     "msg": "",          # Describes the cause for the unsuccessful query.
-    "sources": [                            # The MySQL list.
+    "sources": [                            # The upstream MySQL list.
         {
             "result": true,
             "msg": "",

@@ -1,12 +1,12 @@
 ---
-title: Stop a data replication task
+title: Stop a Data Replication Task
 summary: Learn how to stop a data replication task.
 category: reference
 ---
 
-# Stop a data replication task
+# Stop a Data Replication Task
 
-You can use the `stop-task` command to stop a data replication task. For differences between `stop-task` and `pause-task`, refer to [Pause a Data Replication Task](#pause-a-data-replication-task).
+You can use the `stop-task` command to stop a data replication task. For differences between `stop-task` and `pause-task`, refer to [Pause a Data Replication Task](pause-task.md).
 
 {{< copyable "" >}}
 
@@ -16,10 +16,13 @@ help stop-task
 
 ```
 stop a specified task
+
 Usage:
  dmctl stop-task [-s source ...] <task-name> [flags]
+
 Flags:
  -h, --help   help for stop-task
+
 Global Flags:
  -s, --source strings   MySQL Source ID
 ```

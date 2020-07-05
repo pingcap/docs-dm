@@ -149,12 +149,12 @@ When you use dmctl to manually handle the SQL statements unsupported by TiDB, th
 sql-skip <--source mysql-replica-01> [--binlog-pos=mysql-bin|000001.000003:3270] [--sql-pattern=~(?i)ALTER\s+TABLE\s+`db1`.`tbl1`\s+ADD\s+COLUMN\s+col1\s+INT] [--sharding] <task-name>
 ```
 
-#### Arguments description
+#### Flags description
 
 + `source`:
     - Flag parameter, string, `--source`
     - If `--sharding` is not specified, `source` is required; if `--sharding` is specified, `source` is forbidden to use.
-    - `source` specifies the MySQL instance in which the presetted operation is to be executed.
+    - `source` specifies the MySQL instance in which the preset operation is to be executed.
 
 + `binlog-pos`:
     - Flag parameter, string, `--binlog-pos`
