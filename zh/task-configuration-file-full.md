@@ -8,7 +8,11 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/configure/task-configurat
 
 本文档主要介绍 Data Migration (DM) 的任务完整的配置文件 [`task_advanced.yaml`](https://github.com/pingcap/dm/blob/master/dm/master/task_advanced.yaml)，包含[全局配置](#全局配置) 和[实例配置](#实例配置) 两部分。
 
+<<<<<<< HEAD
 关于各配置项的功能和配置，请参阅[数据同步功能](feature-overview.md#同步功能介绍)。
+=======
+关于各配置项的功能和配置，请参阅[数据同步功能](overview.md#同步功能介绍)。
+>>>>>>> a153192... Add scripts to verify anchors (#146)
 
 ## 关键概念
 
