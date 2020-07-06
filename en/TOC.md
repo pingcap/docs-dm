@@ -12,7 +12,7 @@
   - [DM Relay Log](relay-log.md)
 + Features
   - [Table Routing](feature-overview.md#table-routing)
-  - [Black and White Lists](feature-overview.md#black-and-white-table-lists)
+  - [Block and Allow Lists](feature-overview.md#block-and-allow-table-lists)
   - [Binlog Event Filter](feature-overview.md#binlog-event-filter)
   - [Replication Delay Monitoring](feature-overview.md#replication-delay-monitoring)
   - [Online-ddl-scheme](online-ddl-scheme.md)
@@ -27,12 +27,14 @@
   - [Simple Scenario](usage-scenario-simple-replication.md)
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
-- [Quick Start](get-started.md)
+- [Quick Start with DM](quick-start-with-dm.md)
 + Deploy
+  + [Software and Hardware Requirements](hardware-and-software-requirements.md)
   + Deploy a DM Cluster
     - [Use DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
   + [Replicate Data Using DM](replicate-data-using-dm.md)
+  + [Create and Verify a Replication Task](create-task-and-verify.md)
 + Configure
   - [Overview](config-overview.md)
   - [DM-master Configuration](dm-master-configuration-file.md)
@@ -47,7 +49,10 @@
   - [Precheck Tasks](precheck.md)
   - [Query Task Status](query-status.md)
   - [Skip or Replace Abnormal SQL Statements](skip-or-replace-abnormal-sql-statements.md)
+  - [Daily Check](daily-check.md)
 - [Monitor](monitor-a-dm-cluster.md)
++ Performance tuning
+  - [Configuration tuning](tune-configuration.md)
 + Migrate from MySQL compatible database
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
 + [DM Portal](dm-portal.md)
