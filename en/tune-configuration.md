@@ -1,6 +1,6 @@
 ---
-title: DM configuration optimization
-summary: Introduce how to optimize the configuration to improve the performance of data synchronize
+title: Optimize Configuration of DM
+summary: Learn how to optimize the configuration of DM to improve the performance of data replication
 category: reference
 ---
 
