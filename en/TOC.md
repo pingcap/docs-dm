@@ -27,7 +27,7 @@
   - [Simple Scenario](usage-scenario-simple-replication.md)
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
-- [Quick Start](get-started.md)
+- [Quick Start with DM](quick-start-with-dm.md)
 + Deploy
   + [Software and Hardware Requirements](hardware-and-software-requirements.md)
   + Deploy a DM Cluster
