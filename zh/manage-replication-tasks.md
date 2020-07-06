@@ -637,7 +637,7 @@ check-task task-test.yaml
 
 relay 处理单元在 DM-worker 进程启动后即开始自动运行。通过使用 `pause-relay` 命令，我们可以暂停 relay 处理单元的运行。
 
-当需要切换 DM-worker 通过虚拟 IP 连接的上游 MySQL 时，我们需要使用 `pause-relay` 对 DM 执行变更。具体变更步骤请参考[虚拟 IP 环境下的上游主从切换](usage-scenario-master-slave-switch.md#虚拟-IP-环境下的上游主从切换)。
+当需要切换 DM-worker 通过虚拟 IP 连接的上游 MySQL 时，我们需要使用 `pause-relay` 对 DM 执行变更。具体变更步骤请参考[虚拟 IP 环境下切换 DM-worker 与 MySQL 实例的连接](usage-scenario-master-slave-switch.md#虚拟-ip-环境下切换-dm-worker-与-mysql-实例的连接)。
 
 {{< copyable "" >}}
 
@@ -700,7 +700,7 @@ pause-relay -w "172.16.30.15:8262"
 
 `resume-relay` 用于恢复处于 `Paused` 状态的 relay 处理单元。
 
-当需要切换 DM-worker 通过虚拟 IP 连接的上游 MySQL 时，我们需要使用 `resume-relay` 对 DM 执行变更。具体变更步骤请参考[虚拟 IP 环境下的上游主从切换](usage-scenario-master-slave-switch.md#虚拟-IP-环境下的上游主从切换)。
+当需要切换 DM-worker 通过虚拟 IP 连接的上游 MySQL 时，我们需要使用 `resume-relay` 对 DM 执行变更。具体变更步骤请参考[虚拟 IP 环境下切换 DM-worker 与 MySQL 实例的连接](usage-scenario-master-slave-switch.md#虚拟-ip-环境下切换-dm-worker-与-mysql-实例的连接)。
 
 {{< copyable "" >}}
 
@@ -763,7 +763,7 @@ resume-relay -w "172.16.30.15:8262"
 
 relay 处理单元通过使用不同的子目录来存储来自上游不同 MySQL 实例的 binlog 数据。通过使用 `switch-relay-master` 命令，我们可以变更 relay 处理单元以开始使用一个新的子目录。
 
-当需要切换 DM-worker 通过虚拟 IP 连接的上游 MySQL 时，我们需要使用 `switch-relay-master` 对 DM 执行变更。具体变更步骤请参考[虚拟 IP 环境下的上游主从切换](usage-scenario-master-slave-switch.md#虚拟-IP-环境下的上游主从切换)。
+当需要切换 DM-worker 通过虚拟 IP 连接的上游 MySQL 时，我们需要使用 `switch-relay-master` 对 DM 执行变更。具体变更步骤请参考[虚拟 IP 环境下切换 DM-worker 与 MySQL 实例的连接](usage-scenario-master-slave-switch.md#虚拟-ip-环境下切换-dm-worker-与-mysql-实例的连接)。
 
 {{< copyable "" >}}
 
