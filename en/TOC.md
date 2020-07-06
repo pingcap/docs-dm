@@ -49,6 +49,7 @@
   - [Precheck Tasks](precheck.md)
   - [Query Task Status](query-status.md)
   - [Skip or Replace Abnormal SQL Statements](skip-or-replace-abnormal-sql-statements.md)
+  - [Daily Check](daily-check.md)
 - [Monitor](monitor-a-dm-cluster.md)
 + Migrate from MySQL compatible database
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
