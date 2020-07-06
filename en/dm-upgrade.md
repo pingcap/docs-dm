@@ -30,11 +30,11 @@ Go Version: go version go1.13 linux/amd64
 
 ### Main changes
 
-- Optimized the incremental synchronization speed when the column corresponding to `UNIQUE KEY` contains `NULL` value
-- Added retry for the error of `Write conflict` (9007 and 8005) returned by TiDB
-- Fixed the issue that may cause `Duplicate entry` errors during the full data import process
-- Fixed the issue where `stop-task`/`pause-task` may not work when there is no data written upstream after the full import is completed
-- Fixen the issue that there is still data display in the monitoring metrics after `stop-task`
+- Improve the incremental replication speed when the `UNIQUE KEY` column has the `NULL` value
+- Add retry for the `Write conflict` (9007 and 8005) error returned by TiDB
+- Fix the issue that the `Duplicate entry` error might occur during the full data import
+- Fix the issue that the `stop-task`/`pause-task` command may not work when no data written upstream after the full import is completed
+- Fix the issue that the monitoring metrics still display data after the replication task is stopped
 
 ### Upgrade operation example
 
@@ -57,12 +57,12 @@ Go Version: go version go1.13 linux/amd64
 
 ### Main changes
 
-- Added support for English UI in DM Portal
-- Added `--more` parameter to `query-status` command to display complete synchronization status information
-- Fixed the issue where resume-task may not be able to resume synchronization normally after synchronization to the downstream TiDB connection is abnormal
-- Fixed the issue where the online DDL meta information was cleaned up incorrectly after the online DDL failed to execute, and the online DDL synchronization cannot be processed correctly after restarting the task
-- Fixed the issue where `start-task` abnormally returned `query-error` may cause DM-worker panic
-- Fixed the issue where the DM-worker process stopped abnormally before writing to `relay.meta`, resulting in the problem that the relay log file and `relay.meta` may not be restored correctly when restarting the DM-worker
+- Add support for English UI in DM Portal
+- Add `--more` parameter to `query-status` command to display complete synchronization status information
+- Fix the issue that the resume-task may not be able to resume synchronization normally after synchronization to the downstream TiDB connection is abnormal
+- Fix the issue that the online DDL meta information was cleaned up incorrectly after the online DDL failed to execute, and the online DDL synchronization cannot be processed correctly after restarting the task
+- Fix the issue that `start-task` abnormally returned `query-error` may cause DM-worker panic
+- Fix the issue that the DM-worker process stopped abnormally before writing to `relay.meta`, resulting in the problem that the relay log file and `relay.meta` may not be restored correctly when restarting the DM-worker
 
 ### Upgrade operation example
 
