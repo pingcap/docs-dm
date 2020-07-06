@@ -20,4 +20,4 @@ jobs:
     - name: Verify links
       run: ./hack/verify-links.sh
     - name: Verify link anchors
-      run: ./hack/verify-link-anchors.sh
+      run: ./hack/verify-link-anchors.sh 
