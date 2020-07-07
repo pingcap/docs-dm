@@ -23,4 +23,4 @@ If you encounter errors while running Data Migration, take the following steps t
     resume-task ${task name}
     ```
 
-However, you need to reset the data replication task in some cases. For details about when to reset and how to reset, see [Reset the data replication task](faq.md#reset-the-data-replication-task).
+However, you need to reset the data replication task in some cases. For details about when to reset and how to reset, see [Reset the data replication task](faq.md#how-to-reset-the-data-replication-task).
