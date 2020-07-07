@@ -2,7 +2,7 @@
 title: Handle Errors
 summary: Learn about the error system and how to handle common errors when you use DM.
 category: reference
-aliases: ['/docs/tidb-data-migration/dev/error-handling/','/docs/tidb-data-migration/dev/troubleshoot-dm/','/docs/tidb-data-migration/dev/error-system/']
+aliases: ['/docs/tidb-data-migration/dev/error-handling/','/docs/tidb-data-migration/dev/troubleshoot-dm/','/docs/tidb-data-migration/dev/error-system/','/tidb-data-migration/dev/error-system/']
 ---
 
 # Handle Errors
