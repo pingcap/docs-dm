@@ -15,7 +15,7 @@ In the error system, usually, the information of a specific error is as follows:
 
 - `code`: error code.
 
-    DM uses the same error code for the same error type. An error code does not change as DM version changes.
+    DM uses the same error code for the same error type. An error code does not change as the DM version changes.
 
     Some errors might be removed during the DM iteration, while the error codes are not. DM uses a new error code instead of an existing one for a new error.
 
