@@ -95,7 +95,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/troubleshoot-dm/','/docs-cn/tidb-dat
 | `code=10003` | 数据库底层 `invalid connection` 错误，通常表示 DM 到下游 TiDB 的数据库连接出现了异常（如网络故障、TiDB 重启、TiKV busy 等）且当前请求已有部分数据发送到了 TiDB。 | DM 提供针对此类错误的自动恢复。如果未能正常恢复，需要用户进一步检查错误信息并根据具体场景进行分析。 |
 | `code=10005` | 数据库查询类语句出错                                         |                                                              |
 | `code=10006` | 数据库 `EXECUTE` 类型语句出错，包括 DDL 和 `INSERT`/`UPDATE`/`DELETE` 类型的 DML。更详细的错误信息可通过错误 message 获取。错误 message 中通常包含操作数据库所返回的错误码和错误信息。 |                                                              |
-| `code=11006` |  DM 内置的 parser 解析不兼容的 DDL 时出错              |  可参考 [Data Migration 故障诊断-处理不兼容的 DDL 语句](faq.md#处理不兼容的-ddl-语句) 提供的解决方案 |
+| `code=11006` |  DM 内置的 parser 解析不兼容的 DDL 时出错              |  可参考 [Data Migration 故障诊断-处理不兼容的 DDL 语句](faq.md#如何处理不兼容的-ddl-语句) 提供的解决方案 |
 | `code=20010` | 处理任务配置时，解密数据库的密码出错                             |  检查任务配置中提供的下游数据库密码是否有[使用 dmctl 正确加密](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码) |
 | `code=26002` | 任务检查创建数据库连接失败。更详细的错误信息可通过错误 message 获取。错误 message 中包含操作数据库所返回的错误码和错误信息。 |  检查 DM-master 所在的机器是否有权限访问上游 |
 | `code=32001` | dump 处理单元异常                                            | 如果报错 `msg` 包含 `mydumper: argument list too long.`，则需要用户根据 black-white list，在 `task.yaml` 的 mydumper `extra-args` 参数中手动加上 `--regex` 正则表达式设置要导出的库表。例如，如果要导出所有库中表名字为 `hello` 的表，可加上 `--regex '.*\\.hello$'`，如果要导出所有表，可加上 `--regex '.*'`。 |
