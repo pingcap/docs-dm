@@ -17,7 +17,7 @@
 + [应用场景](scenarios.md)
 + 快速上手
   - [部署集群](quick-start-with-dm.md)
-  - [同步任务](replicate-data-using-dm.md)
+  - [同步任务](quick-start-create-task.md)
 + 部署使用
   - [软硬件要求](hardware-and-software-requirements.md)
   + 部署 DM 集群
@@ -25,7 +25,6 @@
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
   + [使用 DM 同步数据](replicate-data-using-dm.md)
   + [监控与告警设置](monitor-a-dm-cluster.md)
-  + [测试验证](create-task-and-verify.md)
   + [性能测试](performance-test.md)
 + 运维操作
   - [版本升级](dm-upgrade.md)
