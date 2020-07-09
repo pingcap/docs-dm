@@ -77,7 +77,7 @@ Refer to the comments in the [template](#task-configuration-file-template-basic)
 
 ### Feature configuration set
 
-For basic applications, you only need to modify the block and allow lists filtering rule. Refer to the comments about `block-allow-list` in the [template](#task-configuration-file-template-basic) or [Block & allow table lists](key-features.md#block-allow-table-lists) to see more details.
+For basic applications, you only need to modify the block and allow lists filtering rule. Refer to the comments about `block-allow-list` in the [template](#task-configuration-file-template-basic) or [Block & allow table lists](key-features.md#block-and-allow-table-lists) to see more details.
 
 ## Instance configuration
 
