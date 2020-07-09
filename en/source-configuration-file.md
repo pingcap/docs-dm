@@ -35,7 +35,7 @@ This section describes each configuration parameter in the configuration file.
 | Parameter | Description |
 | :------------ | :--------------------------------------- |
 | `source-id` | Represents a MySQL instance ID. |
-| `enable-gtid` | Determines whether to pull binlog from the upstream using GTID. The default value is `false`. In general, you do not need to configure `enable-gtid` manually. However, if GTID is enabled in the upstream database, and the master/slave switch is required, you need to set `enable-gtid` to `true`. |
+| `enable-gtid` | Determines whether to pull binlog from the upstream using GTID. The default value is `false`. In general, you do not need to configure `enable-gtid` manually. However, if GTID is enabled in the upstream database, and the primary/secondary switch is required, you need to set `enable-gtid` to `true`. |
 | `host` | Specifies the host of the upstream database. |
 | `port` | Specifies the port of the upstream database. |
 | `user` | Specifies the username of the upstream database. |

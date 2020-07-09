@@ -114,7 +114,7 @@ Available Commands:
   unlock-ddl-lock      forcefully unlock DDL lock
   update-master-config update the config of the DM-master
   update-relay         update the relay unit config of the DM-worker
-  update-task          update a task's config for routes, filters, or black-white-list
+  update-task          update a task's config for routes, filters, or block-allow-list
 
 Flags:
   -h, --help             help for dmctl
@@ -471,7 +471,7 @@ stop-task test
 You can use the `update-task` command to update the data replication task. The following items support online update, while all other items do not support online update.
 
 - table route rules
-- black white list
+- block allow list
 - binlog filter rules
 
 > **Note:**
@@ -507,7 +507,7 @@ help update-task
 ```
 
 ```
-update a task's config for routes, filters, black-white-list
+update a task's config for routes, filters, block-allow-list
 
 Usage:
   dmctl update-task [-s source ...] <config-file> [flags]
@@ -533,7 +533,7 @@ update-task [-s "mysql-replica-01"] ./task.yaml
 #### Returned results
 
 ```bash
-update-task task_all_black.yaml
+update-task task.yaml
 ```
 
 ```bash

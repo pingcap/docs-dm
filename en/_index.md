@@ -14,7 +14,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 
 - [Performance](benchmark-v1.0-ga.md)
 - [Table routing](feature-overview.md#table-routing)
-- [Black & White Lists](feature-overview.md#black-and-white-table-lists)
+- [Block & Allow Lists](feature-overview.md#block-and-allow-table-lists)
 - [Binlog Event Filter](feature-overview.md#binlog-event-filter)
 - [Replication delay monitoring](feature-overview.md#replication-delay-monitoring)
 - [Online DDL Scheme](online-ddl-scheme.md)
@@ -26,7 +26,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 <ColumnTitle>Quick Start</ColumnTitle>
 
 - [Usage Scenarios](usage-scenario-shard-merge.md)
-- [Quick Start with DM](get-started.md)
+- [Quick Start with DM](quick-start-with-dm.md)
 - [Replicate Data Using DM](replicate-data-using-dm.md)
 
 </NavColumn>
