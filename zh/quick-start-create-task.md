@@ -87,7 +87,7 @@ MySQL1 的配置文件：
 source-id = "mysql-replica-01"
 
 # 是否开启 GTID
-enable-gtid = false
+enable-gtid = true
  
 [from]
 host = "127.0.0.1"
