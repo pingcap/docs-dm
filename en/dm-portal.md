@@ -7,7 +7,7 @@ aliases: ['/docs/tidb-data-migration/dev/dm-portal/']
 
 # DM Portal Overview
 
-Data Migration (DM) provides a variety of features, including [table routing](key-features.md#table-routing), [block & allow table lists](key-features.md#block-allow-table-lists), and [binlog event filter](key-features.md#binlog-event-filter). However, these features also increase the complexity when using DM, especially when you modify [DM task configurations](task-configuration-file.md).
+Data Migration (DM) provides a variety of features, including [table routing](key-features.md#table-routing), [block & allow table lists](key-features.md#block-and-allow-table-lists), and [binlog event filter](key-features.md#binlog-event-filter). However, these features also increase the complexity when using DM, especially when you modify [DM task configurations](task-configuration-file.md).
 
 To address this problem, DM provides a simple web application, DM Portal. DM Portal allows you to visually configure the required replication tasks, and generates a `task.yaml` file that can be directly executed by DM.
 
