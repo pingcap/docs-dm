@@ -11,13 +11,10 @@ aliases: ['/docs-cn/tidb-data-migration/dev/get-started/']
 
 ## 使用样例
 
-在本地部署 MySQL、TiDB、DM-master 与 DM-worker 实例。各个节点的信息如下：
+在本地部署 DM-master 与 DM-worker 实例。各个节点的信息如下：
 
 | 实例        | 服务器地址   | 端口使用 |
 | :---------- | :----------- | :----------- |
-| MySQL1     | 127.0.0.1 | 3306 |
-| MySQL2     | 127.0.0.1 | 3307 |
-| TiDB       | 127.0.0.1 | 4000, 10080 |
 | DM-master1 | 127.0.0.1 | 8261, 8291 |
 | DM-master2 | 127.0.0.1 | 8361, 8292 |
 | DM-master3 | 127.0.0.1 | 8461, 8293 |
@@ -59,36 +56,6 @@ make
 
 ```bash
 DM_PATH=`pwd` && export PATH=$PATH:$DM_PATH/bin
-```
-
-### 运行上游 MySQL
-
-运行两个 MySQL 服务，使用 Docker 启动 MySQL，命令如下：
-
-{{< copyable "shell-regular" >}}
-
-```bash
-docker run --rm --name mysql-3306 -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql:5.7.22 --log-bin=mysql-bin --port=3306 --bind-address=0.0.0.0 --binlog-format=ROW --server-id=1 --gtid_mode=ON --enforce-gtid-consistency=true > mysql.3306.log 2>&1 &
-docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql:5.7.22 --log-bin=mysql-bin --port=3307 --bind-address=0.0.0.0 --binlog-format=ROW --server-id=1 --gtid_mode=ON --enforce-gtid-consistency=true > mysql.3307.log 2>&1 &
-```
-
-### 准备数据
-
-向 mysql-3306 写入[示例数据](https://github.com/pingcap/dm/blob/52205177910024c8b66c7a6ef05b1f9501c5901b/tests/ha/data/db1.prepare.sql)
-
-向 mysql-3307 写入[示例数据](https://github.com/pingcap/dm/blob/52205177910024c8b66c7a6ef05b1f9501c5901b/tests/ha/data/db2.prepare.sql)
-
-### 运行下游 TiDB
-
-使用以下命令运行一个 mocktikv 模式的 TiDB server：
-
-{{< copyable "shell-regular" >}}
-
-```bash
-wget https://download.pingcap.org/tidb-v4.0.0-rc.2-linux-amd64.tar.gz
-tar -xzvf tidb-v4.0.0-rc.2-linux-amd64.tar.gz
-mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
-./tidb-server -P 4000 --store mocktikv --log-file "./tidb.log" &
 ```
 
 ## 部署 DM-master
