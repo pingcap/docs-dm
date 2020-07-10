@@ -2,6 +2,7 @@
 title: Daily Check
 summary: Learn about the daily check of TiDB Data Migration (DM).
 category: reference
+aliases: ['/docs/tidb-data-migration/dev/daily-check/']
 ---
 
 # Daily Check
