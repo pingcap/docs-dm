@@ -6,7 +6,7 @@ category: reference
 
 # Manage Upstream MySQL Instances
 
-This document introduces how to manage upstream MySQL instances, including encrypting the MySQL password and managing data source configurations using [dmctl](overview.md#dmctl).
+This document introduces how to manage upstream MySQL instances, including encrypting the MySQL password and managing data source configurations using [dmctl](dmctl-introduction.md).
 
 ## Encrypt the MySQL password
 
