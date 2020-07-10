@@ -24,7 +24,7 @@ If you know in advance that an unsupported SQL statement is going to be replicat
 ## Restrictions
 
 - The skip or replace operation is a one-time operation that is only used to skip or replace the SQL statement unsupported by the downstream TiDB. Do not handle other replication errors with this approach.
-    - For other replication errors, try to handle them using [Black and white table lists](feature-overview.md#black-and-white-table-lists) or [Binlog event filtering](feature-overview.md#binlog-event-filter).
+    - For other replication errors, try to handle them using [Block and allow table lists](feature-overview.md#block-and-allow-table-lists) or [Binlog event filtering](feature-overview.md#binlog-event-filter).
 
 - If it is unacceptable in the actual production environment that the abnormal DDL statement is skipped in the downstream TiDB and it cannot be replaced with other DDL statements, then do not use this approach.
     - For example: `DROP PRIMARY KEY`
@@ -79,7 +79,7 @@ In the scenario of merging and replicating data from sharded tables, if you need
 
 In DM, simplified procedures of incremental data replication can be described as follows:
 
-1. The relay unit is used as a slave of the upstream MySQL to fetch the binlog that is persisted in the local storage as the relay log.
+1. The relay unit is used as a secondary library of the upstream MySQL to fetch the binlog that is persisted in the local storage as the relay log.
 
 2. The binlog replication unit (sync) reads the local relay log to obtain the binlog event.
 
