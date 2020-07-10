@@ -63,7 +63,7 @@ Others:
 
 You can refer to the test scenario described in the [performance test](performance-test.md), namely, MySQL1 (172.16.4.40) -> DM-worker -> TiDB (172.16.4.41).
 
-#### Full import benchmark case
+### Full import benchmark case
 
 For details, see [Full Import Benchmark Case](performance-test.md#full-import-benchmark-case).
 
