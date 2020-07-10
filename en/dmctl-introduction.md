@@ -2,6 +2,7 @@
 title: Introduction to dmctl
 summary: Learn how to manage the data replication task using dmctl.
 category: reference
+aliases: ['/docs/tidb-data-migration/dev/manage-replication-tasks/','/tidb-data-migration/dev/manage-replication-tasks/']
 ---
 
 # Introduction to dmctl
