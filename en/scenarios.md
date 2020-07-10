@@ -22,7 +22,7 @@ If you want to use TiDB as the upstream MySQL/MariaDB's secondary library, that 
 
 ### Migrate some application data from MySQL/MariaDB
 
-If there are multiple application data in MySQL/MariaDB, but only part of the data needs to be migrated to TiDB, you can configure the migration task by referring to [Use TiDB as a secondary library of MySQL/MariaDB](#tidb-as-mysql/mariadb's-secondary-library). Then configure `black-white-list` as needed.
+If there are multiple application data in MySQL/MariaDB, but only part of the data needs to be migrated to TiDB, you can configure the migration task by referring to [Use TiDB as a secondary library of MySQL/MariaDB](#use-tidb-as-mysqlmariadbs-secondary-database). Then configure `black-white-list` as needed.
 
 To migrate upstream data to a schema or table with a different name in the downstream database, you can configure `route-rules`.
 
