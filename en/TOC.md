@@ -51,8 +51,6 @@
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
 + [DM Portal](dm-portal.md)
 + Troubleshoot
-  - [DM Troubleshooting](troubleshoot-dm.md)
-  - [Error Description](error-system.md)
   - [Error Handling](error-handling.md)
 - [FAQ](faq.md)
 + Releases
