@@ -4,44 +4,44 @@ summary: Understand the main usage scenarios supported by TiDB Data Migration.
 category: reference
 ---
 
-# Usage scenarios
+# Usage Scenarios
 
-This document introduces the main usage scenarios supported by TiDB Data Migration (DM) and related usage suggestions.
+This document introduces the main usage scenarios of TiDB Data Migration (DM) and the usage suggestions.
 
 ## Non-shard-merge scenario
 
-### TiDB as MySQL/MariaDB's secondary library
+### Use TiDB as MySQL/MariaDB's secondary database
 
-If you want to use TiDB as the upstream MySQL/MariaDB's secondary library, that is, import all the data in the upstream instance to TiDB in full mode, and then replicate the changes data to TiDB in the incremental mode in real-time, simply configure the data migration task according to the following rules:
+If you want to use TiDB as the upstream MySQL/MariaDB's secondary library, that is, import the full data of the upstream instance to TiDB, and replicate the incremental data to TiDB in real-time once data changes are made, you can configure the data migration task according to the following rules:
 
--Specify `task-mode` as `all`.
--Configure `target-database` as downstream TiDB's connection information.
--Configure the `source-id` for upstream MySQL/MariaDB in `mysql-instances`.
--Use default concurrency control parameters or configure `mydumper-thread`, `loader-thread`, and `syncer-thread` as needed.
--No need to configure `route-rules`, `filter-rules` and `black-white-list` etc.
+- Specify `task-mode` as `all`.
+- Configure `target-database` based on the connection information of the downstream TiDB.
+- Configure `source-id` in `mysql-instances` based on the ID information of the upstream MySQL/MariaDB instances.
+- Use the default setting of concurrency control parameters or configure `mydumper-thread`, `loader-thread`, and `syncer-thread` as needed.
+- No need to configure `route-rules`, `filter-rules` and `black-white-list`.
 
-### Migrating some business data in MySQL/MariaDB
+### Migrate some application data from MySQL/MariaDB
 
-If there are multiple business data in the original MySQL/MariaDB, but only part of the data needs to be migrated to TiDB, you can configure the migration task according to [Use TiDB as a secondary library of MySQL/MariaDB](#tidb-as-mysql/mariadb's-secondary-library), and then configure `black-white-list` as needed.
+If there are multiple application data in MySQL/MariaDB, but only part of the data needs to be migrated to TiDB, you can configure the migration task by referring to [Use TiDB as a secondary library of MySQL/MariaDB](#tidb-as-mysql/mariadb's-secondary-library). Then configure `black-white-list` as needed.
 
-If you want to migrate upstream data to a schema or table with a different name in downstream, you can additionally configure `route-rules`.
+To migrate upstream data to a schema or table with a different name in the downstream database, you can configure `route-rules`.
 
-For some archiving scenarios, some data may be periodically cleaned up through `TRUNCATE TABLE`/`DROP TABLE` or other methods in the upstream, but it is expected that all data will be kept in the downstream TiDB, then additional configuration `filter-rules` can be used to filter out these operations.
+For some archiving scenarios, some data may be periodically cleaned up by executing the `TRUNCATE TABLE`/`DROP TABLE` command  in the upstream or through other means. To make sure all data are retained in the downstream TiDB, you can disable these data clearing operations by configuring `filter-rules`.
 
-For such scenarios, please refer to [Data Migration Simple Use Scenario](usage-scenario-simple-replication.md).
+For more information, refer to [Data Migration Simple Usage Scenario](usage-scenario-simple-replication.md).
 
-## Shard-merge scenario
+## Shard Merge scenario
 
-If there are multiple sharding tables in the upstream MySQL/MariaDB, it is usually expected to merge them into only one table when migrating to TiDB. The schema name or the table name in the upstream data can be renamed by configuring `route-rules`, and then these tables will be merged into the same downstream schema or table. For details, please refer to [Data Migration Shard Merge Scenario](usage-scenario-shard-merge.md) and [Best Practices of Data Migration in the Shard Merge Scenario](shard-merge-best-practices.md).
+If there are multiple sharded tables in multiple sharded schemas in the upstream MySQL/MariaDB, to merge them into one table or schema when migrating to TiDB, you can rename the table name or the schema name in the upstream database by configuring `route-rules`, and then these tables can be merged into the same downstream schema or table. For details, refer to [Data Migration Shard Merge Scenario](usage-scenario-shard-merge.md) and [Best Practices of Data Migration in the Shard Merge Scenario](shard-merge-best-practices.md).
 
-DM supports the migration of DDL specifically. For details, please refer to [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md).
+Specifically, DM supports the migration of DDL. For details, refer to [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md).
 
-If you only need to migrate part of the business data or filter some specific operations, you can directly refer to [Migrating some business data in MySQL/MariaDB](#migrating-some-business-data-in-mysql/mariadb) in part `Non-merging sharding table scenario`.
+If you only need to migrate some application data or filter out some operations, refer to [Migrating some business data in MySQL/MariaDB](#migrating-some-business-data-in-mysql/mariadb) in part `Non-merging sharding table scenario`.
 
 ## Online DDL scenario
 
-In MySQL's ecosystem, tools such as pt-osc or gh-ost are often used to perform online DDL operations. DM provides special support for such scenarios, which can be enabled by configuring the `online-ddl-scheme` parameter. For details, please refer to [DM online-ddl-scheme](online-ddl-scheme.md).
+In MySQL ecosystem, tools such as pt-osc or gh-ost are often used to perform online DDL operations. DM also supports such scenarios. You can enable pt-osc and gh-ost by configuring the `online-ddl-scheme` parameter. For details, refer to [DM Online DDL Scheme](online-ddl-scheme.md).
 
-## Change upstream MySQL instance of DM connection
+## Switch the DM-worker connection to another instance
 
-When using MySQL/MariaDB, a primary-secondary cluster is often built to improve read performance and ensure data security. If the upstream MySQL/MariaDB instance connected by DM-worker is unavailable for some reason when using DM to migration data, you need to connect DM-worker to another instance in the upstream primary-secondary cluster. For such scenarios, DM provides nice support, but there are still some limitations.
+When you use MySQL/MariaDB, a primary-secondary cluster can be built to improve the read performance and to ensure data safety. If the upstream MySQL/MariaDB instance connected by DM-worker is unavailable for some reason when you use DM to migrate data, you need to switch the DM-worker connection to another MySQL/MariaDB instance in the upstream primary-secondary cluster. For such scenarios, DM provides good support, but there are some limitations.
