@@ -2,6 +2,7 @@
 title: Precheck the upstream MySQL instance configuration
 summary: Use the precheck feature provided by DM to detect errors in the upstream MySQL instance configuration.
 category: reference
+aliases: ['/docs/tidb-data-migration/dev/precheck/']
 ---
 
 # Precheck the upstream MySQL instance configuration

@@ -1,0 +1,13 @@
+---
+# Changing all md files should request a language review in case of format failures.
+
+# you can use glob pattern
+# You can set multiple reviewers
+
+# Changing all md files will request the following reviewers automatically.
+
+'**/*.md':
+  - csuzhangxc
+  - WangXiangUSTC
+  - toutdesuite
+  - yikeke
