@@ -190,7 +190,7 @@ sql-skip <--source mysql-replica-01> [--binlog-pos=mysql-bin|000001.000003:3270]
 sql-replace <--source mysql-replica-01> [--binlog-pos=mysql-bin|000001.000003:3270] [--sql-pattern=~(?i)ALTER\s+TABLE\s+`db1`.`tbl1`\s+ADD\s+COLUMN\s+col1\s+INT] [--sharding] <task-name> <SQL-1;SQL-2>
 ```
 
-#### Arguments description
+#### Flags description
 
 + `source`:
     - same with `--source` of `sql-skip`
