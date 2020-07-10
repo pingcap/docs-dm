@@ -6,7 +6,7 @@ category: reference
 
 # DM Cluster Performance Test
 
-This document describes how to build a test scenario to do a performance test on the DM cluster, including the speed test and latency test in terms of the data replication.
+This document describes how to build a test scenario to do a performance test on the DM cluster, including the speed test and latency test regarding data replication.
 
 ## Replication data flow
 
@@ -66,16 +66,19 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
     port: 4000
     user: "root"
     password: ""
+
   mysql-instances:
     -
     source-id: "source-1"
-      black-white-list:  "instance"
+      block-allow-list:  "instance"
       mydumper-config-name: "global"
       loader-thread: 16
+
   # Configure the name of the library where sysbench generates data.
-  black-white-list:
+  block-allow-list:
     instance:
       do-dbs: ["dm_benchmark"]
+
   mydumpers:
     global:
       rows: 32000
@@ -116,21 +119,25 @@ Use `sysbench` to create test tables upstream.
   name: test-all
   task-mode: all
   enable-heartbeat: true
+
   # Configure the replication task using the TiDB information of your actual test environment.
   target-database:
     host: "192.168.0.1"
     port: 4000
     user: "root"
     password: ""
+
   mysql-instances:
     -
       source-id: "source-1"
-      black-white-list:  "instance"
+      block-allow-list:  "instance"
       syncer-config-name: "global"
+
   # Configure the name of the library where sysbench generates data.
-  black-white-list:
+  block-allow-list:
     instance:
       do-dbs: ["dm_benchmark"]
+
   syncers:
     global:
       worker-count: 16
