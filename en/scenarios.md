@@ -36,7 +36,7 @@ If there are multiple sharded tables in multiple sharded schemas in the upstream
 
 Specifically, DM supports the migration of DDL. For details, refer to [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md).
 
-If you only need to migrate some application data or filter out some operations, refer to [Migrating some business data in MySQL/MariaDB](#migrating-some-business-data-in-mysql/mariadb) in part `Non-merging sharding table scenario`.
+If you only need to migrate some application data or filter out some operations, refer to [Migrate some applicationb data from MySQL/MariaDB](#migrate-some-application-data-from-mysqlmariadb) in part `Non-merging sharding table scenario`.
 
 ## Online DDL scenario
 
