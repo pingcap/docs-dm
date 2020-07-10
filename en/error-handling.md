@@ -1,15 +1,8 @@
 ---
-<<<<<<< HEAD
 title: Data Migration Error Handling
 summary: Learn how to deal with errors when you use TiDB Data Migration.
 category: reference
-aliases: ['/docs/tidb-data-migration/stable/error-handling/','/docs/tidb-data-migration/v1.0/error-handling/','/docs/dev/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v3.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v3.0/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v2.1/reference/tools/data-migration/troubleshoot/error-handling/']
-=======
-title: Handle Errors
-summary: Learn about the error system and how to handle common errors when you use DM.
-category: troubleshoot
-aliases: ['/docs/tidb-data-migration/dev/error-handling/','/docs/tidb-data-migration/dev/troubleshoot-dm/','/docs/tidb-data-migration/dev/error-system/','/tidb-data-migration/dev/error-system/','/tidb-data-migration/dev/error-handling/']
->>>>>>> f27fe67... en: add error-handling.md (#124)
+aliases: ['/tidb-data-migration/stable/error-system/','/tidb-data-migration/stable/error-handling/''/docs/tidb-data-migration/stable/error-handling/','/docs/tidb-data-migration/stable/error-handling/','/docs/tidb-data-migration/v1.0/error-handling/','/docs/dev/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v3.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v3.0/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v2.1/reference/tools/data-migration/troubleshoot/error-handling/']
 ---
 
 # Handle Errors
