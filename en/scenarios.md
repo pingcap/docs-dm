@@ -1,6 +1,6 @@
 ---
-title: Usage scenario
-summary: Understand the main usage scenarios supported by TiDB Data Migration.
+title: Usage Scenarios
+summary: Understand the main usage scenarios of TiDB Data Migration.
 category: reference
 ---
 
