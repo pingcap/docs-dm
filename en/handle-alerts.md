@@ -14,7 +14,7 @@ This document introduces how to deal with the alert information in DM.
 
 When the sub-task of DM-worker is in the `Paused` status for over 20 minutes, an alert is triggered. You need to refer to [Troubleshoot DM](error-handling.md#troubleshooting).
 
-## The alert of relay log
+## Alert rules related to relay log
 
 ### `DM_relay_process_exits_with_error`
 
