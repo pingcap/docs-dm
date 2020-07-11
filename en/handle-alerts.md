@@ -12,7 +12,7 @@ This document introduces how to deal with the alert information in DM.
 
 ### `DM_task_state`
 
-The alert triggered when the DM-worker has sub-task in `Paused` status for over 20 minutes. You need to refer to [DM error handling](error-handling.md#Data-Migration-Error-Handling).
+When the sub-task of DM-worker is in the `Paused` status for over 20 minutes, an alert is triggered. You need to refer to [Troubleshoot DM](error-handling.md#troubleshooting).
 
 ## The alert of relay log
 
