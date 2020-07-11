@@ -8,7 +8,7 @@ category: reference
 
 This document introduces how to deal with the alert information in DM.
 
-## The alert of task status
+## Alert rules related to task status
 
 ### `DM_task_state`
 
