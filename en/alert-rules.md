@@ -14,4 +14,4 @@ The [alert system](replicate-data-using-dm.md#step-7-monitor-the-task-and-check-
 
 For more information about DM alert rules and the solutions, refer to [handle alerts](handle-alerts.md).
 
-The DM alert information and monitor metrics based on Prometheus. The relationship between alert rules and monitor metrics can be referred to [DM monitor metrics](monitor-a-dm-cluster.md).
+Both DM alert information and monitoring metrics are based on Prometheus. For more information about their relationship, refer to [DM monitoring metrics](monitor-a-dm-cluster.md).
