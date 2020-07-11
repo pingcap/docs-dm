@@ -35,7 +35,7 @@ In the Grafana dashboard, the default name of DM is `DM-task`.
 
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
-| task state | The state of subtasks | An alert occurs when the subtask has been paused for more than 10 minutes | critical |
+| task state | The state of subtasks | An alert occurs when the subtask has been `paused` for more than 20 minutes | critical |
 
 ### Relay log
 
