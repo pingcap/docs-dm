@@ -6,7 +6,7 @@ category: reference
 
 # Alert Handling
 
-This document introduces how to deal with the major alert information in DM.
+This document introduces how to deal with the alert information in DM.
 
 ## The alert of task status
 
