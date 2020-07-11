@@ -6,7 +6,7 @@ category: reference
 
 # DM Alert Information
 
-The [alarm system](replicate-data-using-dm.md#Step 7: Monitor the task and check logs) is deployed when using DM-Ansible to deploy the DM cluster in default.
+The [alert system](replicate-data-using-dm.md#step-7-monitor-the-task-and-check-logs) is deployed by default when you deploy a DM cluster using DM-Ansible.
 
 > **Note:**
 >
