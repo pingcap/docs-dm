@@ -1,6 +1,6 @@
 ---
 title: Alert Handling
-summary: Understand the handling methods of major alert information in DM.
+summary: Understand the handling methods of alert information in DM.
 category: reference
 ---
 
