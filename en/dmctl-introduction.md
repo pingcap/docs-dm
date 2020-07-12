@@ -1,19 +1,19 @@
 ---
-title: dmctl 简介
-summary: 了解如何使用 dmctl 管理数据同步任务。
+title: Introduction to dmctl
+summary: Learn how to manage the data replication task using dmctl.
 category: reference
-aliases: ['/docs-cn/tidb-data-migration/dev/manage-replication-tasks/']
+aliases: ['/docs/tidb-data-migration/dev/manage-replication-tasks/','/tidb-data-migration/dev/manage-replication-tasks/']
 ---
 
-# dmctl 简介
+# Introduction to dmctl
 
-dmctl 是用来控制 DM 集群的命令行工具。对于用 DM-Ansible 部署的 DM 集群，dmctl 二进制文件路径为 `dm-ansible/dmctl`。
+dmctl is a command line tool used to manage the data replication task. For DM clusters deployed using DM-Ansible, the binary file path of dmctl is `dm-ansible/dmctl`.
 
-dmctl 同时支持交互模式和命令模式。
+The dmctl component supports the interactive mode and the command mode.
 
-## dmctl 交互模式
+## Interactive mode
 
-进入交互模式，与 DM-master 进行交互：
+Enter the interactive mode to interact with DM-master:
 
 {{< copyable "shell-regular" >}}
 
@@ -58,7 +58,7 @@ Available Commands:
   unlock-ddl-lock      forcefully unlock DDL lock
   update-master-config update the config of the DM-master
   update-relay         update the relay unit config of the DM-worker
-  update-task          update a task's config for routes, filters, or black-white-list
+  update-task          update a task's config for routes, filters, or block-allow-list
 
 Flags:
   -h, --help             help for dmctl
@@ -67,14 +67,14 @@ Flags:
 Use `dmctl [command] --help` to get more information about a command.
 ```
 
-## dmctl 命令模式
+## Command mode
 
-命令模式跟交互模式的区别是，执行命令时只需要在 dmctl 命令后紧接着执行任务操作，任务操作同交互模式的参数一致。
+The command mode differs from the interactive mode in that you need to append the task operation right after the dmctl command. The parameters of the task operation in the command mode are the same as those in the interactive mode.
 
-> **注意：**
+> **Note:**
 >
-> + 一条 dmctl 命令只能跟一个任务操作
-> + 任务操作只能放在 dmctl 命令的最后
+> + A dmctl command must be followed by only one task operation.
+> + The task operation can be placed only at the end of the dmctl command.
 
 {{< copyable "shell-regular" >}}
 
