@@ -20,6 +20,7 @@
   - [Deploy a DM cluster](quick-start-with-dm.md)
   - [Replicate Data Using DM](replicate-data-using-dm.md)
 + Deploy
+  + [Software and Hardware Requirements](hardware-and-software-requirements.md)
   + Deploy a DM Cluster
     - [Use DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)

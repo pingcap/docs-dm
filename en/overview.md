@@ -59,13 +59,13 @@ This section describes the data replication features provided by the Data Migrat
 
 The [schema and table routing](feature-overview.md#table-routing) feature means that DM can replicate a certain table of the upstream MySQL or MariaDB instance to the specified table in the downstream, which can be used to merge or replicate the sharding data.
 
-### Black and white lists replication at the schema and table levels
+### Block and allow lists replication at the schema and table levels
 
-The [black and white lists filtering rule](feature-overview.md#black-and-white-table-lists) of the upstream database instance tables is similar to MySQL `replication-rules-db`/`replication-rules-table`, which can be used to filter or only replicate all operations of some databases or some tables.
+The [block and allow lists filtering rule](feature-overview.md#block-and-allow-table-lists) of the upstream database instance tables is similar to MySQL `replication-rules-db`/`replication-rules-table`, which can be used to filter or only replicate all operations of some databases or some tables.
 
 ### Binlog event filtering
 
-[Binlog event filtering](feature-overview.md#binlog-event-filter) is a more fine-grained filtering rule than the black and white lists filtering rule. You can use statements like `INSERT` or `TRUNCATE TABLE` to specify the binlog events of `schema/table` that you need to replicate or filter out.
+[Binlog event filtering](feature-overview.md#binlog-event-filter) is a more fine-grained filtering rule than the block and allow lists filtering rule. You can use statements like `INSERT` or `TRUNCATE TABLE` to specify the binlog events of `schema/table` that you need to replicate or filter out.
 
 ### Sharding support
 
@@ -82,7 +82,7 @@ Before using the DM tool, note the following restrictions:
 
     > **Note:**
     >
-    > If there is a master-slave replication structure between the upstream MySQL/MariaDB servers, then choose the following version.
+    > If there is a primary-secondary replication structure between the upstream MySQL/MariaDB servers, then choose the following version.
     >
     > - 5.7.1 < MySQL version < 8.0
     > - MariaDB version >= 10.1.3
@@ -103,7 +103,7 @@ Before using the DM tool, note the following restrictions:
 
 + Operations
 
-    - After DM-worker is restarted, the data replication task cannot be automatically restored. You need to manually run `start-task`. For details, see [Manage the Data Replication Task](manage-replication-tasks.md).
+    - After DM-worker is restarted, the data replication task cannot be automatically restored. You need to manually run `start-task`. For details, see [Create a Data Replication Task](create-task.md).
 
     - After DM-worker is restarted, the DDL lock replication cannot be automatically restored in some conditions. You need to manually handle it. For details, see [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md).
 
