@@ -563,6 +563,6 @@ Set `is-sharding` to `true` in the task configuration file:
 is-sharding: true
 ```
 
-### Handle Sharding DDL Locks Manually
+### Handle sharding DDL locks manually
 
 In some abnormal scenarios, you need to [handle sharding DDL Locks manually](feature-manually-handling-sharding-ddl-locks.md).
