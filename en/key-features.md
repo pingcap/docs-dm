@@ -2,7 +2,7 @@
 title: Key Features
 summary: Learn about the key features of DM and appropriate parameter configurations.
 category: reference
-aliases: ['/docs/tidb-data-migration/dev/feature-overview/']
+aliases: ['/docs/tidb-data-migration/dev/feature-overview/','/tidb-data-migration/dev/feature-overview']
 ---
 
 # Key Features
@@ -524,7 +524,7 @@ See the `replicate lag` in the [binlog replication](monitor-a-dm-cluster.md#binl
 
 ## Online DDL tools
 
-In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM supports these tools to avoid unnecessary intermediate data replication.
+In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM provides supports for these tools to avoid replicating unnecessary intermediate data.
 
 ### Restrictions
 
@@ -549,7 +549,7 @@ For more information about online DDL tools, refer to [Online DDL Scheme](online
 
 ## Shard merge
 
-DM supports merging the DML and DDL data in the upstream MySQL/MariaDB sharded tables and replicating the data to the downstream TiDB tables.
+DM supports merging the DML and DDL data in the upstream MySQL/MariaDB sharded tables and replicating the merged data to the downstream TiDB tables.
 
 ### Restrictions
 
