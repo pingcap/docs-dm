@@ -14,8 +14,9 @@
     - [Block and Allow Lists](key-features.md#black-and-white-table-lists)
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
     - [Replication Delay Monitoring](key-features.md#replication-delay-monitoring)
-    - [Online-ddl-scheme](online-ddl-scheme.md)
+    - [Online DDL Scheme](online-ddl-scheme.md)
     - [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md)
++ [Usage Scenarios](scenarios.md)
 + Quick Start
   - [Deploy a DM cluster](quick-start-with-dm.md)
   - [Replicate Data Using DM](replicate-data-using-dm.md)
@@ -26,6 +27,7 @@
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
   - [Replicate Data Using DM](replicate-data-using-dm.md)
   - [Monitor](monitor-a-dm-cluster.md)
+  - [Create and Verify a Task](create-task-and-verify.md)
   - [Performance Test](performance-test.md)
 + Maintain
   - [Cluster Upgrade](dm-upgrade.md)
@@ -42,6 +44,7 @@
     - [Stop a Task](stop-task.md)
     - [Skip or Replace Abnormal SQL Statements](skip-or-replace-abnormal-sql-statements.md)
   - [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md)
+  - [Daily Check](daily-check.md)
 + Troubleshoot
   - [Handle Errors](error-handling.md)
   - [Handle Performance Issues](handle-performance-issues.md)
