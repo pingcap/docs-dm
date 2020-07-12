@@ -14,7 +14,7 @@ This document introduces DM's command-line flags.
 
 - The external address of DM-master used to receive client requests
 - The default value is `"{master-addr}"`
-- Optional parameter. It can be in the form of `"domain name:port"`
+- Optional flag. It can be in the form of `"domain name:port"`
 
 ### `--advertise-peer-urls`
 
@@ -38,7 +38,7 @@ This document introduces DM's command-line flags.
 
 - The `"{node name}={external address}"` list used to bootstrap DM-master cluster
 - The default value is `"{name}={advertise-peer-urls}"`
-- This parameter needs to be specified if the `join` parameter is not specified. A configuration example of a 3 node cluster is `"dm-master-1=http://172.16.15.11:8291,dm-master-2-=http://172.16.15.12:8291,dm-master-3=http://172.16.15.13:8291"`
+- This flag needs to be specified if the `join` flag is not specified. A configuration example of a 3-node cluster is `"dm-master-1=http://172.16.15.11:8291,dm-master-2-=http://172.16.15.12:8291,dm-master-3=http://172.16.15.13:8291"`
 
 ### `--join`
 
@@ -94,7 +94,7 @@ This document introduces DM's command-line flags.
 
 - The `{advertise-addr}` list of DM-master nodes in a cluster when a DM-worker registers to this cluster
 - The default value is `""`
-- Required parameter. A configuration example of 3 node (DM-master node) cluster is `"172.16.15.11:8261,172.16.15.12:8261,172.16.15.13:8261"`
+- Required parameter. A configuration example of a 3-node (DM-master node) cluster is `"172.16.15.11:8261,172.16.15.12:8261,172.16.15.13:8261"`
 
 ### `--log-file`
 
