@@ -94,7 +94,7 @@ This document introduces DM's command-line flags.
 
 - The `{advertise-addr}` list of DM-master nodes in a cluster when a DM-worker registers to this cluster
 - The default value is `""`
-- Required flag. A configuration example of 3 node (DM-master node) cluster is `"172.16.15.11:8261,172.16.15.12:8261,172.16.15.13:8261"`
+- Required flag. A configuration example of 3-node (DM-master node) cluster is `"172.16.15.11:8261,172.16.15.12:8261,172.16.15.13:8261"`
 
 ### `--log-file`
 
