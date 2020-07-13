@@ -56,32 +56,32 @@ category: reference
 
 ## 第 3 步：创建数据源
 
-将 MySQL-1 的相关信息写入到 `conf/source1.toml` 中：
+1. 将 MySQL-1 的相关信息写入到 `conf/source1.toml` 中：
 
-```toml
-# MySQL1 Configuration.
- 
-source-id = "mysql-replica-01"
+    ```toml
+    # MySQL1 Configuration.
+    
+    source-id = "mysql-replica-01"
 
-# 是否开启 GTID
-enable-gtid = true
- 
-[from]
-host = "172.16.10.81"
-user = "root"
-password = "VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU="
-port = 3306
-```
+    # 是否开启 GTID
+    enable-gtid = true
+    
+    [from]
+    host = "172.16.10.81"
+    user = "root"
+    password = "VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU="
+    port = 3306
+    ```
 
-在终端中执行下面的命令，使用 dmctl 将 MySQL-1 的数据源配置加载到 DM 集群中：
+2. 在终端中执行下面的命令，使用 dmctl 将 MySQL-1 的数据源配置加载到 DM 集群中：
 
-{{< copyable "shell-regular" >}}
+    {{< copyable "shell-regular" >}}
 
-```bash
-./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create conf/source1.toml
-```
+    ```bash
+    ./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create conf/source1.toml
+    ```
 
-对于 MySQL-2，修改配置文件中的相关信息，并执行相同的 dmctl 命令。
+3. 对于 MySQL-2，修改配置文件中的相关信息，并执行相同的 dmctl 命令。
 
 ## 第 4 步：配置任务
 
