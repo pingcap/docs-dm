@@ -30,6 +30,7 @@ meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
 remove-meta: false              # 是否在任务同步开始前移除该任务名对应的 `meta`（`checkpoint` 和 `onlineddl` 等）。
 enable-heartbeat: false         # 是否开启 `heartbeat` 功能
 online-ddl-scheme: "gh-ost"     # 目前仅支持 "gh-ost" 、"pt"
+case-sensitive: false           # schema/table 是否大小写敏感
 
 target-database:                # 下游数据库实例配置
   host: "192.168.0.1"
