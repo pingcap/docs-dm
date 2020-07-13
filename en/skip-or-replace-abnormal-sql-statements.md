@@ -75,7 +75,7 @@ In the scenario of merging and replicating data from sharded tables, if you need
 
 In DM, simplified procedures of incremental data replication can be described as follows:
 
-1. The relay unit is used as a secondary library of the upstream MySQL to fetch the binlog that is persisted in the local storage as the relay log.
+1. The relay unit is used as a secondary database of the upstream MySQL to fetch the binlog that is persisted in the local storage as the relay log.
 
 2. The binlog replication unit (sync) reads the local relay log to obtain the binlog event.
 
