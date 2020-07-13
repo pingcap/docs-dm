@@ -65,7 +65,7 @@ Then you can perform the following steps to fix the `ERROR 1062 (23000): Duplica
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1
     ```
 
-2. Add the following configuration in `task.yaml` to skip auto increment primary keys conflict checking: 
+2. Add the following configuration in `task.yaml` to skip the check of auto-increment primary key conflict: 
   
     ```yaml
     ignore-checking-items: ["auto_increment_ID"]
