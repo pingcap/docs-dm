@@ -575,7 +575,7 @@ DM 支持将上游 MySQL/MariaDB 各分库分表中的 DML、DDL 数据合并后
 
 ### 使用限制
 
-目前分库分表合并功能仅支持有限的场景，使用该功能前，请仔细阅读[分库分表合并同步使用限制](feature-shard-merge-pessimistic.md#使用限制)。
+目前分库分表合并功能仅支持有限的场景，使用该功能前，请仔细阅读[悲观模式分库分表合并同步使用限制](feature-shard-merge-pessimistic.md#使用限制)和[乐观模式分库分表合并同步使用限制](feature-shard-merge-optimistic.md#使用限制)。
 
 ### 参数配置
 

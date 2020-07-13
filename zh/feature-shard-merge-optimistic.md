@@ -162,16 +162,6 @@ ALTER TABLE `tbl00` ADD COLUMN `Age` INT DEFAULT -1;
 - TiDB 不支持的 DDL、在 DM 也不支持。
 - 新增列的默認值不能包含 current_timestamp、rand()、uuid() 等，因為對舊的行會造成上下游不一致
 
-## 乐观协调模式与悲观协调模式的对比
-
-| :----------- | :----------- |
-| 悲观协调模式   | 乐观协调模式   |
-| :----------- | :----------- |
-| 发起 DDL 的分表会暂停 DML 同步 | 发起 DDL 的分表会继续 DML 同步 |
-| 每个分表的 DDL 执行次序和语句必须相同 | 每个分表只需保持表结构互相兼容即可 |
-| DDL 在整个分表群达成一致后才同步到下游 | 每个分表的 DDL 会即时影响下游 |
-| 错误的 DDL 操作在侦测到后可以被拦截 | 错误的 DDL 操作会也被同步到下游，可能在侦测到之前已使部分上下游数据不一致 |
-
-## 乐观协调模式的使用
+## 乐观协调模式 的配置
 
 在任务的配置文件中指定 `shard-mode` 为 `optimistic` 则使用“乐观协调”模式，示例配置文件可以参考 [dm-task.yaml](https://github.com/pingcap/dm/blob/95d37b4f8cf36c5da84714f9c25d7502028bc835/tests/sequence_sharding_optimistic/conf/dm-task.yaml)。
