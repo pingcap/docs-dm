@@ -42,7 +42,7 @@ ALTER TABLE `tbl00` ADD COLUMN `Level` INT;
 
 ![optimistic-ddl-example-3](/media/optimistic-ddl-example-3.png)
 
-这时候各种 DML 无需修改都可以同步到下游。
+这时候各种 DML 无需修改都可以同步到下游：
 
 ```SQL
 UPDATE `tbl00` SET `Level` = 9 WHERE `ID` = 1;
@@ -51,7 +51,7 @@ INSERT INTO `tbl02` (`ID`, `Name`) VALUES (27, 'Tony');
 
 ![optimistic-ddl-example-4](/media/optimistic-ddl-example-4.png)
 
-在 tbl01 同样增加一列 Level。
+在 tbl01 同样增加一列 Level：
 
 ```SQL
 ALTER TABLE `tbl01` ADD COLUMN `Level` INT;
@@ -59,9 +59,7 @@ ALTER TABLE `tbl01` ADD COLUMN `Level` INT;
 
 ![optimistic-ddl-example-5](/media/optimistic-ddl-example-5.png)
 
-此时下游已经有相同的 Level 列了，所以 DM master 比较之后不做任何动作。
-
-在 tbl01 刪除一列 Name。
+此时下游已经有相同的 Level 列了，所以 DM master 比较之后不做任何动作。在 tbl01 刪除一列 Name：
 
 ```SQL
 ALTER TABLE `tbl01` DROP COLUMN `Name`;
@@ -71,7 +69,7 @@ ALTER TABLE `tbl01` DROP COLUMN `Name`;
 
 此时下游仍需要接收来自 tbl00 和 tbl02 含 Name 的 DMLs，因此不会立刻删除该列。
 
-同样，各种 DML 仍可直接同步到下游。
+同样，各种 DML 仍可直接同步到下游：
 
 ```SQL
 INSERT INTO `tbl01` (`ID`, `Level`) VALUES (15, 7);
@@ -80,7 +78,7 @@ UPDATE `tbl00` SET `Level` = 5 WHERE `ID` = 5;
 
 ![optimistic-ddl-example-7](/media/optimistic-ddl-example-7.png)
 
-在 tbl02 增加一列 Level。
+在 tbl02 增加一列 Level：
 
 ```SQL
 ALTER TABLE `tbl02` ADD COLUMN `Level` INT;
@@ -90,7 +88,7 @@ ALTER TABLE `tbl02` ADD COLUMN `Level` INT;
 
 此时所有分表都已有 Level 列。
 
-在 tbl00 和 tbl02 各刪除一列 Name。
+在 tbl00 和 tbl02 各刪除一列 Name：
 
 ```SQL
 ALTER TABLE `tbl00` DROP COLUMN `Name`;
@@ -99,7 +97,7 @@ ALTER TABLE `tbl02` DROP COLUMN `Name`;
 
 ![optimistic-ddl-example-9](/media/optimistic-ddl-example-9.png)
 
-到此步 Name 列也从所有分表消失了，所以可以安全从下游移除。
+到此步 Name 列也从所有分表消失了，所以可以安全从下游移除：
 
 ```SQL
 ALTER TABLE `tbl` DROP COLUMN `Name`;
@@ -109,7 +107,7 @@ ALTER TABLE `tbl` DROP COLUMN `Name`;
 
 ## 风险 
 
-使用乐观同步时，由于 DDL 会即时同步到下游，若使用不当，可能导致上下游数据不一致，并使整体结构重整期间的 DML 完全无效。
+使用乐观同步时，由于 DDL 会即时同步到下游，若使用不当，可能导致上下游数据不一致。
 
 ### 例子
 
@@ -117,7 +115,7 @@ ALTER TABLE `tbl` DROP COLUMN `Name`;
 
 ![optimistic-ddl-fail-example-1](/media/optimistic-ddl-fail-example-1.png)
 
-在 tbl01 新增一列 Age，默认值定为 0。
+在 tbl01 新增一列 Age，默认值定为 0：
 
 ```SQL
 ALTER TABLE `tbl01` ADD COLUMN `Age` INT DEFAULT 0;
@@ -125,7 +123,7 @@ ALTER TABLE `tbl01` ADD COLUMN `Age` INT DEFAULT 0;
 
 ![optimistic-ddl-fail-example-2](/media/optimistic-ddl-fail-example-2.png)
 
- 在 tbl00 新增一列 Age，但默认值定为 -1。
+ 在 tbl00 新增一列 Age，但默认值定为 -1：
 
 ```SQL 
 ALTER TABLE `tbl00` ADD COLUMN `Age` INT DEFAULT -1;
