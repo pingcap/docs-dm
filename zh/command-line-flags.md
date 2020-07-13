@@ -1,7 +1,6 @@
 ---
 title: DM 命令行参数
 summary: 介绍 DM 各组件的主要命令行参数。
-category: reference
 ---
 
 # DM 命令行参数

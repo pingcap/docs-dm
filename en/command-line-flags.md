@@ -1,7 +1,6 @@
 ---
 title: Command-line Flags
 summary: Learn about the command-line flags in DM.
-category: reference
 ---
 
 # Command-line Flags

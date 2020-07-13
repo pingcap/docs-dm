@@ -1,7 +1,6 @@
 ---
 title: DM Portal Overview
 summary: Learn the features of DM Portal and how to use it.
-category: reference
 aliases: ['/docs/tidb-data-migration/dev/dm-portal/']
 ---
 

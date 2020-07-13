@@ -1,6 +1,5 @@
 ---
 title: DM-worker 简介
-category: reference
 ---
 
 # DM-worker 简介
