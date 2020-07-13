@@ -142,6 +142,6 @@ This document introduces DM's command-line flags.
 
 ### `--decrypt`
 
-- Decrypt ciphertext encrypted with dmctl into plaintext
+- Decrypts ciphertext encrypted with dmctl into plaintext
 - The default value is `""`
 - When this flag is specified, it is only used to decrypt the ciphertext without interacting with the DM-master
