@@ -1,7 +1,6 @@
 ---
 title: Handle Performance Issues
 summary: Learn about common performance issues that might exist in DM and how to deal with them.
-category: reference
 ---
 
 # Handle Performance Issues
@@ -22,7 +21,7 @@ In the case of a large latency in the data migration, to quickly figure out whet
 
 To diagnose performance issues in the relay log unit, you can check the `binlog file gap between master and relay` monitoring metric. For more information about this metric, refer to [monitoring metrics of the relay log](monitor-a-dm-cluster.md#relay-log). If this metric is greater than 1 for a long time, it usually indicates that there is a performance issue; if this metric is 0, it usually indicates that there is no performance issue.
 
-If the value of `binlog file gap between master and relay` is 0, but you suspect that there is a performance issue, you can check `binlog pos`. If `master` in this metric is much larger than the `relay`, a performance issue might exist. In this case, diagnose and handle this issue accordingly.
+If the value of `binlog file gap between master and relay` is 0, but you suspect that there is a performance issue, you can check `binlog pos`. If `master` in this metric is much larger than `relay`, a performance issue might exist. In this case, diagnose and handle this issue accordingly.
 
 ### Read binlog data
 
@@ -81,7 +80,7 @@ The duration is mainly affected by the write operations upstream. Take the `INSE
 
 When the Binlog replication unit writes the converted SQL statements to the downstream, the related performance metrics are `DML queue remain length` and `transaction execution latency`.
 
-After constructing SQL statements from binlog event, DM uses `worker-count` queues to concurrently write these statements to the downstream. However, to avoid too many monitoring entries, DM performs the modulo `8` operation on the number of concurrent queues. This means that all concurrent queues correspond to items from `q_0` to `q_7`.
+After constructing SQL statements from binlog event, DM uses `worker-count` queues to concurrently write these statements to the downstream. However, to avoid too many monitoring entries, DM performs the modulo `8` operation on the IDs of concurrent queues. This means that all concurrent queues correspond to one item from `q_0` to `q_7`.
 
 `DML queue remain length` indicates in the concurrent processing queue, the number of DML statements that have not been consumed and start to be written downstream. Ideally, the curves corresponding to each `q_*` are almost the same. If not, it indicates that the concurrent load is extremely unbalanced.
 
