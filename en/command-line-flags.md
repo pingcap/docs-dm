@@ -136,7 +136,7 @@ This document introduces DM's command-line flags.
 
 ### `--encrypt`
 
-- Encrypt the plaintext database password into ciphertext
+- Encrypts the plaintext database password into ciphertext
 - The default value is `""`
 - When this flag is specified, it is only used to encrypt the plaintext without interacting with the DM-master
 
