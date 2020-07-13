@@ -95,11 +95,11 @@ DM-worker 内部用于从上游拉取 Binlog 并写入数据到 Relay log 的处
 
 ### Shard DDL lock
 
-用于协调 Shard DDL 迁移的锁机制，具体原理可查看[分库分表合并同步实现原理](feature-shard-merge.md#实现原理)。在当前文档中，有时也称作 Sharding DDL lock。
+用于协调 Shard DDL 迁移的锁机制，具体原理可查看[悲观模式下分库分表合并同步实现原理](feature-shard-merge-pessimistic.md#实现原理)。在当前文档中，有时也称作 Sharding DDL lock。
 
 ### Shard group
 
-指合库合表迁移过程中，需要合并迁移到下游同一张表的所有上游分表 (shard)，TiDB DM 内部具体实现时使用了两级抽象的 Shard group，具体可查看[分库分表合并同步实现原理](feature-shard-merge.md#实现原理)。在当前文档中，有时也称作 Sharding group。
+指合库合表迁移过程中，需要合并迁移到下游同一张表的所有上游分表 (shard)，TiDB DM 内部具体实现时使用了两级抽象的 Shard group，具体可查看[悲观模式下分库分表合并同步实现原理](feature-shard-merge-pessimistic.md#实现原理)。在当前文档中，有时也称作 Sharding group。
 
 ### Subtask
 
