@@ -1,7 +1,6 @@
 ---
 title: Skip or Replace Abnormal SQL Statements
 summary: Learn how to skip or replace abnormal SQL statements when you use Data Migration.
-category: reference
 aliases: ['/docs/tidb-data-migration/stable/skip-or-replace-abnormal-sql-statements/','/docs/tidb-data-migration/v1.0/skip-or-replace-abnormal-sql-statements/','/docs/dev/reference/tools/data-migration/skip-replace-sqls/','/docs/v3.1/reference/tools/data-migration/skip-replace-sqls/','/docs/v3.0/reference/tools/data-migration/skip-replace-sqls/','/docs/v2.1/reference/tools/data-migration/skip-replace-sqls/']
 ---
 

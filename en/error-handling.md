@@ -1,7 +1,6 @@
 ---
 title: Data Migration Error Handling
 summary: Learn how to deal with errors when you use TiDB Data Migration.
-category: reference
 aliases: ['/docs/tidb-data-migration/stable/troubleshoot-dm/','/docs/tidb-data-migration/stable/error-system/','/tidb-data-migration/stable/error-system/','/tidb-data-migration/stable/error-handling/''/docs/tidb-data-migration/stable/error-handling/','/docs/tidb-data-migration/stable/error-handling/','/docs/tidb-data-migration/v1.0/error-handling/','/docs/dev/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v3.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v3.0/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v2.1/reference/tools/data-migration/troubleshoot/error-handling/']
 ---
 

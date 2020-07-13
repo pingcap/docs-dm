@@ -1,7 +1,6 @@
 ---
 title: Data Migration Configuration File Overview
 summary: This document gives an overview of Data Migration configuration files.
-category: reference
 aliases: ['/docs/tidb-data-migration/stable/config-overview/','/docs/tidb-data-migration/v1.0/config-overview/','/docs/dev/reference/tools/data-migration/configure/overview/','/docs/v3.1/reference/tools/data-migration/configure/overview/','/docs/v3.0/reference/tools/data-migration/configure/overview/','/docs/v2.1/reference/tools/data-migration/configure/overview/']
 ---
 
