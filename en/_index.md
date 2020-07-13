@@ -26,7 +26,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 <ColumnTitle>Quick Start</ColumnTitle>
 
 - [Usage Scenarios](usage-scenario-shard-merge.md)
-- [Quick Start with DM](get-started.md)
+- [Quick Start with DM](quick-start-with-dm.md)
 - [Replicate Data Using DM](replicate-data-using-dm.md)
 
 </NavColumn>
@@ -46,7 +46,10 @@ aliases: ['/docs/tidb-data-migration/dev/']
 
 - [Upgrade DM](dm-upgrade.md)
 - [DM Cluster Operations](cluster-operations.md)
-- [Manage Replication Tasks](manage-replication-tasks.md)
+- [Create a Task](create-task.md)
+- [Pause a Task](pause-task.md)
+- [Resume a Task](resume-task.md)
+- [Stop a Task](stop-task.md)
 - [Manually Handle Sharding DDL Locks](feature-manually-handling-sharding-ddl-locks.md)
 
 </NavColumn>

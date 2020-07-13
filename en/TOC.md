@@ -27,7 +27,7 @@
   - [Simple Scenario](usage-scenario-simple-replication.md)
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
-- [Quick Start](get-started.md)
+- [Quick Start with DM](quick-start-with-dm.md)
 + Deploy
   + [Software and Hardware Requirements](hardware-and-software-requirements.md)
   + Deploy a DM Cluster
@@ -45,17 +45,22 @@
   - [Cluster Operations](cluster-operations.md)
   - [Cluster Upgrade](dm-upgrade.md)
 + Manage Replication Tasks
-  - [Manage Tasks](manage-replication-tasks.md)
-  - [Precheck Tasks](precheck.md)
-  - [Query Task Status](query-status.md)
+  - [Introdution to dmctl](dmctl-introduction.md)
+  - [Manage Upstream Instances](manage-source.md)
+  - [Precheck the Task](precheck.md)
+  - [Create a Task](create-task.md)
+  - [Query Status](query-status.md)
+  - [Query Error](query-error.md)
+  - [Pause a Task](pause-task.md)
+  - [Resume a Task](resume-task.md)
+  - [Stop a Task](stop-task.md)
   - [Skip or Replace Abnormal SQL Statements](skip-or-replace-abnormal-sql-statements.md)
+  - [Daily Check](daily-check.md)
 - [Monitor](monitor-a-dm-cluster.md)
 + Migrate from MySQL compatible database
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
 + [DM Portal](dm-portal.md)
 + Troubleshoot
-  - [DM Troubleshooting](troubleshoot-dm.md)
-  - [Error Description](error-system.md)
   - [Error Handling](error-handling.md)
 - [FAQ](faq.md)
 + Releases

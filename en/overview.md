@@ -103,7 +103,7 @@ Before using the DM tool, note the following restrictions:
 
 + Operations
 
-    - After DM-worker is restarted, the data replication task cannot be automatically restored. You need to manually run `start-task`. For details, see [Manage the Data Replication Task](manage-replication-tasks.md).
+    - After DM-worker is restarted, the data replication task cannot be automatically restored. You need to manually run `start-task`. For details, see [Create a Data Replication Task](create-task.md).
 
     - After DM-worker is restarted, the DDL lock replication cannot be automatically restored in some conditions. You need to manually handle it. For details, see [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md).
 
