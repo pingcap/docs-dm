@@ -57,7 +57,7 @@ Go Version: go version go1.13 linux/amd64
 
 ### Main changes
 
-- Add support for English UI in DM Portal
+- Add English UI for DM Portal
 - Add `--more` parameter to `query-status` command to display complete synchronization status information
 - Fix the issue that `resume-task` might fail to resume the replication task which is interrupted by the abnormal connection to the downstream TiDB server
 - Fix the issue that the online DDL operation cannot be properly replicated after a failed replication task is restarted because the online DDL meta information has been cleared after the DDL operation failure
