@@ -89,7 +89,7 @@ For details about how to create a replication task, see [Create a Data Replicati
 
 > **Note:**
 >
-> - To enable concurrently exporting single-table using multi-thread, you can use the `rows` option in the `mydumpers` configuration item. This speeds up data export.
+> - To enable concurrently exporting data from a single table using multi-thread, you can use the `rows` option in the `mydumpers` configuration item. This speeds up data export.
 > - To test the performance under different configurations, you can tune `loader-thread` in the `mysql-instances` configuration, as well as `rows` and `threads` in the `mydumpers` configuration item.
 
 #### Get test results
