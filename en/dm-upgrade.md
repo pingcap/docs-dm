@@ -59,7 +59,7 @@ Go Version: go version go1.13 linux/amd64
 
 - Add support for English UI in DM Portal
 - Add `--more` parameter to `query-status` command to display complete synchronization status information
-- Fix the issue that the resume-task may not be able to resume synchronization normally after synchronization to the downstream TiDB connection is abnormal
+- Fix the issue that `resume-task` might fail to resume the replication task which is interrupted by the abnormal connection to the downstream TiDB server
 - Fix the issue that the online DDL operation cannot be properly replicated after a failed replication task is restarted because the online DDL meta information has been cleared after the DDL operation failure
 - Fix the issue that `query-error` might cause the DM-worker to panic after `start-task` goes into error
 - Fix the issue that the relay log file and `relay.meta` cannot be correctly recovered when restarting an abnormally stopped DM-worker process before `relay.meta` is successfully written
