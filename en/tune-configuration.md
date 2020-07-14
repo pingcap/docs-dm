@@ -4,7 +4,7 @@ summary: Learn how to optimize the configuration of the data replication task to
 category: reference
 ---
 
-# DM configuration optimization
+# Optimize Configuration of DM
 
 The document describes how to optimize the configuration of replication tasks, to improve the data replication performance of DM.
 
