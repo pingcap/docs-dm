@@ -1,7 +1,6 @@
 ---
 title: DM Cluster Performance Test
 summary: Learn how to test the performance of DM clusters.
-category: reference
 ---
 
 # DM Cluster Performance Test
@@ -106,7 +105,7 @@ According to the size of the test data and the time consumed to import data, you
 
 #### Initialize tables
 
-Use `sysbench` to create test tables upstream.
+Use `sysbench` to create test tables in the upstream.
 
 #### Create a data replication task
 
@@ -152,7 +151,7 @@ For details about how to create a data replication task, see [Create a Data Repl
 
 #### Generate incremental data
 
-Run the `sysbench` command to continuously generate incremental data upstream:
+To continuously generate incremental data in the upstream, run the `sysbench` command:
 
 {{< copyable "shell-regular" >}}
 
