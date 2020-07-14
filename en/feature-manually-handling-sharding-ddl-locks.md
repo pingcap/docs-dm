@@ -7,7 +7,7 @@ aliases: ['/docs/tidb-data-migration/stable/feature-manually-handling-sharding-d
 
 # Handle Sharding DDL Locks Manually in DM
 
-DM uses the sharding DDL lock to ensure operations are performed in the correct order. This locking mechanism resolves sharding DDL locks automatically in most cases, but you need to use the `unlock-ddl-lock` or `break-ddl-lock` command to manually handle the abnormal DDL locks in some abnormal scenarios.
+DM uses the sharding DDL lock to ensure operations are performed in the correct order. This locking mechanism resolves sharding DDL locks automatically in most cases, but you need to use the `unlock-ddl-lock` or `break-ddl-lock` command to manually handle the abnormal DDL locks in some abnormal scenarios. 
 
 > **Warning:**
 >
