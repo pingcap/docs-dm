@@ -69,7 +69,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 
   mysql-instances:
     -
-    source-id: "source-1"
+      source-id: "source-1"
       block-allow-list:  "instance"
       mydumper-config-name: "global"
       loader-thread: 16
