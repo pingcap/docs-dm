@@ -62,7 +62,7 @@ Go Version: go version go1.13 linux/amd64
 - Fix the issue that the resume-task may not be able to resume synchronization normally after synchronization to the downstream TiDB connection is abnormal
 - Fix the issue that the online DDL meta information was cleaned up incorrectly after the online DDL failed to execute, and the online DDL synchronization cannot be processed correctly after restarting the task
 - Fix the issue that `start-task` abnormally returned `query-error` may cause DM-worker panic
-- Fix the issue that the DM-worker process stopped abnormally before writing to `relay.meta`, resulting in the problem that the relay log file and `relay.meta` may not be restored correctly when restarting the DM-worker
+- Fix the issue that the relay log file and `relay.meta` cannot be correctly recovered when restarting an abnormally stopped DM-worker process before `relay.meta` is successfully written
 
 ### Upgrade operation example
 
