@@ -6,7 +6,7 @@ category: reference
 
 # DM configuration optimization
 
-The document describes how to optimize the configuration of synchronization tasks, to improve the data synchronization performance of DM.
+The document describes how to optimize the configuration of replication tasks, to improve the data replication performance of DM.
 
 ## Full export
 
@@ -24,7 +24,7 @@ DM full backup will split the data of each table into multiple chunks according 
 
 > **Note：**
 >
-> - The parameter value of `mydumpers` does not support updating after the synchronization task is created, so need to determine the value of each parameter before creating the task. If need to update, need to use dmctl stop the task to update the configuration file, and then re-create the task.
+> - The parameter value of `mydumpers` does not support updating after the replication task is created, so need to determine the value of each parameter before creating the task. If need to update, need to use dmctl stop the task to update the configuration file, and then re-create the task.
 
 > - `mydumpers`.`threads` can be replaced with the configuration item `mydumper-thread` to simplify configuration.
 
@@ -40,24 +40,24 @@ The configuration item related to full import is `loaders`. The following descri
 
 > **Note：**
 >
-> - The parameter value of `loaders` does not support updating after the synchronization task is created, so need to define the value of each parameter before creating the task. If need to update, so need to use dmctl stop the task to update the configuration file, and then re-create the task.
+> - The parameter value of `loaders` does not support updating after the replication task is created, so need to define the value of each parameter before creating the task. If need to update, so need to use dmctl stop the task to update the configuration file, and then re-create the task.
 
 > - `loaders`.`pool-size` can be replaced with the configuration item `loader-thread` to simplify configuration.
 
-## Incremental synchronization
+## Incremental replication
 
-The configuration related to incremental synchronization is `syncers`. The following describes how to configure the parameters related to performance.
+The configuration related to incremental replication is `syncers`. The following describes how to configure the parameters related to performance.
 
 ### `worker-count`
 
-`worker-count`  is the number of threads for concurrent synchronization DML in the DM sync phase. The default value is 16. If there is a high requirement for synchronization speed, the value the parameter can be adjusted appropriately.
+`worker-count`  is the number of threads for concurrent replication DML in the DM sync phase. The default value is 16. If there is a high requirement for replication speed, the value the parameter can be adjusted appropriately.
 
 ### batch
 
-`batch` is the number of DML included in each transaction when the data is synchronized to the  downstream database in the DM sync phase. The default value is 100. Normally, no adjustment is required.
+`batch` is the number of DML included in each transaction when the data is replicated to the downstream database in the DM sync phase. The default value is 100. Normally, no adjustment is required.
 
 > **Note：**
 >
-> - The parameter value of `syncers` does not support updating after the synchronization task is created, so need to define the value of each parameter before creating the task. If need to update, so need to use dmctl stop the task to update the configuration file, and then re-create the task.
+> - The parameter value of `syncers` does not support updating after the replication task is created, so need to define the value of each parameter before creating the task. If need to update, so need to use dmctl stop the task to update the configuration file, and then re-create the task.
 > - `syncers`.`worker-count` can be replaced with the configuration item `syncer-thread` to simplify configuration.
 > - The settings of `worker-count` and `batch` need to be adjusted according to the actual situation, for example: the network delay from the DM to the downstream database is high, can appropriately increase the `worker-count` and lower the `batch`.
