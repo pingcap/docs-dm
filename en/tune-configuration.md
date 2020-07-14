@@ -1,6 +1,6 @@
 ---
 title: Optimize Configuration of DM
-summary: Learn how to optimize the configuration of DM to improve the performance of data replication
+summary: Learn how to optimize the configuration of the data replication task to improve the performance of data replication.
 category: reference
 ---
 
