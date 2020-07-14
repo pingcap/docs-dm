@@ -7,7 +7,7 @@ aliases: ['/docs/tidb-data-migration/stable/feature-manually-handling-sharding-d
 
 # Handle Sharding DDL Locks Manually in DM
 
-DM uses the sharding DDL lock to ensure operations are performed in the correct order. This locking mechanism resolves sharding DDL locks automatically in most cases, but you need to use the `unlock-ddl-lock` or `break-ddl-lock` command to manually handle the abnormal DDL locks in some abnormal scenarios.
+DM uses the sharding DDL lock to ensure operations are performed in the correct order. This locking mechanism resolves sharding DDL locks automatically in most cases, but you need to use the `unlock-ddl-lock` or `break-ddl-lock` command to manually handle the abnormal DDL locks in some abnormal scenarios. 
 
 > **Warning:**
 >
@@ -400,7 +400,7 @@ After manually unlocking the lock, the following sharding DDL can be replicated 
 
 #### The reason for the abnormal lock
 
-This scenario has the similar reason for the abnormal lock in [Scenario 3: Some DM-workers restart during the DDL unlocking process](#scenario-2-some-dm-workers-restart-during-the-ddl-unlocking-process). If the DM-worker is temporarily unreachable when you request the DM-worker to skip the DDL statement, this DM-worker might fail to skip the DDL statement. At this point, the lock information is removed from `DM-master`, but the DM-worker will continue to be waiting for a DDL lock which is no longer existing.
+This scenario has the similar reason for the abnormal lock in [Scenario 2: Some DM-workers restart during the DDL unlocking process](#scenario-2-some-dm-workers-restart-during-the-ddl-unlocking-process). If the DM-worker is temporarily unreachable when you request the DM-worker to skip the DDL statement, this DM-worker might fail to skip the DDL statement. At this point, the lock information is removed from `DM-master`, but the DM-worker will continue to be waiting for a DDL lock which is no longer existing.
 
 The difference between Scenario 3 and [Scenario 2: Some DM-workers restart during the DDL unlocking process](#scenario-2-some-dm-workers-restart-during-the-ddl-unlocking-process) is that the DM-master does not have a lock in Scenario 3, but the DM-master has a new lock in Scenario 2.
 
