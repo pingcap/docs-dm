@@ -30,7 +30,7 @@ Instead, you can:
 
 ## Handle conflicts of auto-increment primary key
 
-DM offers the [column mapping](feature-overview.md#column-mapping) feature to handle conflicts that might occur in merging the `bigint` type of auto-increment primary key. However, it is **strongly discouraged** to choose this approach. If it is acceptable in the production environment, the following two alternatives are recommended.
+DM offers the [column mapping](key-features.md#column-mapping) feature to handle conflicts that might occur in merging the `bigint` type of auto-increment primary key. However, it is **strongly discouraged** to choose this approach. If it is acceptable in the production environment, the following two alternatives are recommended.
 
 ### Remove the `PRIMARY KEY` attribute from the column
 
