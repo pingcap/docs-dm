@@ -1,13 +1,13 @@
 ---
-title: Data Replication Features
-summary: Learn about the data replication features provided by the Data Migration tool.
+title: Key Features
+summary: Learn about the key features of DM and appropriate parameter configurations.
 category: reference
-aliases: ['/docs/tidb-data-migration/dev/feature-overview/']
+aliases: ['/docs/tidb-data-migration/dev/feature-overview/','/tidb-data-migration/dev/feature-overview']
 ---
 
-# Data Replication Features
+# Key Features
 
-This document describes the data replication features provided by the Data Migration tool and explains the configuration of corresponding parameters.
+This document describes the data replication features provided by TiDB Data Migration (DM) and introduces appropriate parameter configurations.
 
 For different DM versions, pay attention to the different match rules of schema or table names in the table routing, block & allow lists, and binlog event filter features:
 
@@ -23,7 +23,7 @@ The table routing feature enables DM to replicate a certain table of the upstrea
 > **Note:**
 >
 > - Configuring multiple different routing rules for a single table is not supported.
-> - The match rule of schema needs to be configured separately, which is used to replicate `create/drop schema xx`, as shown in `rule-2` of the [parameter configuration](#parameter-configuration).
+> - The match rule of schema needs to be configured separately, which is used to replicate `CREATE/DROP SCHEMA xx`, as shown in `rule-2` of the [parameter configuration](#parameter-configuration).
 
 ### Parameter configuration
 
@@ -45,20 +45,20 @@ DM replicates the upstream MySQL or MariaDB instance table that matches the [`sc
 
 ### Usage examples
 
-This sections shows the usage examples in different scenarios.
+This section shows the usage examples in different scenarios.
 
 #### Merge sharded schemas and tables
 
 Assuming in the scenario of sharded schemas and tables, you want to replicate the `test_{1,2,3...}`.`t_{1,2,3...}` tables in two upstream MySQL instances to the `test`.`t` table in the downstream TiDB instance.
 
-To replicate the upstream instances to the downstream `test`.`t`, you must create two routing rules:
+To replicate the upstream instances to the downstream `test`.`t`, you must create the following routing rules:
 
 - `rule-1` is used to replicate DML or DDL statements of the table that matches `schema-pattern: "test_*"` and `table-pattern: "t_*"` to the downstream `test`.`t`.
-- `rule-2` is used to replicate DDL statements of the schema that matches `schema-pattern: "test_*"`, such as `create/drop schema xx`.
+- `rule-2` is used to replicate DDL statements of the schema that matches `schema-pattern: "test_*"`, such as `CREATE/DROP SCHEMA xx`.
 
 > **Note:**
 >
-> - If the downstream `schema: test` already exists and will not be deleted, you can omit `rule-2`.
+> - If the downstream `schema: test` already exists and is not to be deleted, you can omit `rule-2`.
 > - If the downstream `schema: test` does not exist and only `rule-1` is configured, then it reports the `schema test doesn't exist` error during replication.
 
 ```yaml
@@ -108,7 +108,7 @@ The block and allow lists filtering rule of the upstream database instance table
 ### Parameter configuration
 
 ```yaml
-block-allow-list:             # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:             # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
   rule-1:
     do-dbs: ["test*"]         # Starting with characters other than "~" indicates that it is a wildcard;
                               # v1.0.5 or later versions support the regular expression rules.
@@ -135,7 +135,7 @@ block-allow-list:             # Use black-white-list if the DM's version <= v2.0
 - `do-dbs`: allow lists of the schemas to be replicated, similar to [`replicate-do-db`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-do-db) in MySQL
 - `ignore-dbs`: block lists of the schemas to be replicated, similar to [`replicate-ignore-db`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-ignore-db) in MySQL
 - `do-tables`: allow lists of the tables to be replicated, similar to [`replicate-do-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-do-table) in MySQL
-- `ignore-tables`: block lists of the tables to be replicated, similar to [`replicate-ignore-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-ignore-table) in MySQl
+- `ignore-tables`: block lists of the tables to be replicated, similar to [`replicate-ignore-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-ignore-table) in MySQL
 
 If a value of the above parameters starts with the `~` character, the subsequent characters of this value are treated as a [regular expression](https://golang.org/pkg/regexp/syntax/#hdr-syntax). You can use this parameter to match schema or table names.
 
@@ -149,7 +149,7 @@ The filtering rules corresponding to `do-dbs` and `ignore-dbs` are similar to th
 >
 > - In MySQL, [`replicate-wild-do-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-wild-do-table) and [`replicate-wild-ignore-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-wild-ignore-table) support wildcard characters. In DM, some parameter values directly supports regular expressions that start with the `~` character.
 > - DM currently only supports binlogs in the `ROW` format, and does not support those in the `STATEMENT` or `MIXED` format. Therefore, the filtering rules in DM correspond to those in the `ROW` format in MySQL.
-> - MySQL determines a DDL statement only by the database name explicitly specified in the `USE` section of the statement. DM determines a statement first based on the database name section in the DDL statement. If the DDL statement does not contain such section, DM determines the statement by the `USE` section. Suppose that the SQL statement to be determined is `USE test_db_2; CREATE TABLE test_db_1.test_table (c1 INT PRIMARY KEY)`; that `replicate-do-db=test_db_1` is configured in MySQL and `do-dbs: ["test_db_1"]` is configured in DM. Then this rule only applies to DM and not to MySQL.
+> - MySQL determines a DDL statement only by the database name explicitly specified in the `USE` section of the statement. DM determines a statement first based on the database name section in the DDL statement. If the DDL statement does not contain such a section, DM determines the statement by the `USE` section. Suppose that the SQL statement to be determined is `USE test_db_2; CREATE TABLE test_db_1.test_table (c1 INT PRIMARY KEY)`; that `replicate-do-db=test_db_1` is configured in MySQL and `do-dbs: ["test_db_1"]` is configured in DM. Then this rule only applies to DM and not to MySQL.
 
 The filtering process is as follows:
 
@@ -183,7 +183,7 @@ The filtering process is as follows:
 
 > **Note:**
 >
-> To judge whether the schema `test` is filtered, you only need to filter at the schema level.
+> To judge whether the schema `test` should be filtered, you only need to filter at the schema level.
 
 ### Usage example
 
@@ -203,7 +203,7 @@ Assume that the upstream MySQL instances include the following tables:
 The configuration is as follows:
 
 ```yaml
-block-allow-list:  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
   bw-rule:
     do-dbs: ["forum_backup_2018", "forum"]
     ignore-dbs: ["~^forum_backup_"]
@@ -236,7 +236,7 @@ Binlog event filter is a more fine-grained filtering rule than the block and all
 
 > **Note:**
 >
-> If a same table matches multiple rules, these rules are applied in order and the block list has priority over the allow list. This means if both the `Ignore` and `Do` rules are applied to a single table, the `Ignore` rule takes effect.
+> If the same table matches multiple rules, these rules are applied in order and the block list has priority over the allow list. This means if both the `Ignore` and `Do` rules are applied to a single table, the `Ignore` rule takes effect.
 
 ### Parameter configuration
 
@@ -254,7 +254,7 @@ filters:
 
 - [`schema-pattern`/`table-pattern`](table-selector.md): the binlog events or DDL SQL statements of upstream MySQL or MariaDB instance tables that match `schema-pattern`/`table-pattern` are filtered by the rules below.
 
-- `events`: the binlog event array.
+- `events`: the binlog event array. You can only select one or more `Event`s from the following table:
 
     | Events            | Type | Description                   |
     | ---------------   | ---- | ----------------------------- |
@@ -279,18 +279,18 @@ filters:
 
 - `sql-pattern`: it is used to filter specified DDL SQL statements. The matching rule supports using a regular expression. For example, `"^DROP\\s+PROCEDURE"`.
 
-- `action`: the string (`Do`/`Ignore`). Based on the following rules, it judges whether to filter. If either of the two rules is satisfied, the binlog will be filtered; otherwise, the binlog will not be filtered.
+- `action`: the string (`Do`/`Ignore`). Based on the following rules, it judges whether to filter. If either of the two rules is satisfied, the binlog is filtered; otherwise, the binlog is not filtered.
 
-    - `Do`: the allow list. The binlog will be filtered in either of the following two conditions:
+    - `Do`: the allow list. The binlog is filtered in either of the following two conditions:
         - The type of the event is not in the `event` list of the rule.
         - The SQL statement of the event cannot be matched by `sql-pattern` of the rule.
-    - `Ignore`: the block list. The binlog will be filtered in either of the following two conditions:
+    - `Ignore`: the block list. The binlog is filtered in either of the following two conditions:
         - The type of the event is in the `event` list of the rule.
         - The SQL statement of the event can be matched by `sql-pattern` of the rule.
 
 ### Usage examples
 
-This sections shows the usage examples in the scenario of sharding (sharded schemas and tables).
+This section shows the usage examples in the scenario of sharding (sharded schemas and tables).
 
 #### Filter all sharding deletion operations
 
@@ -357,9 +357,9 @@ For the SQL statements that the TiDB parser does not support, DM cannot parse th
 
 > **Note:**
 >
-> To avoid unexpectedly filtering out data that need to be replicated, you must configure the global filtering rule as strictly as possible.
+> To avoid filtering out data that need to be replicated, you must configure the global filtering rule as strictly as possible.
 
-To filter out the `PARTITION` statements that the TiDB parser does not support, configure the following filtering rule:
+To filter out the `PARTITION` statements that the TiDB parser (of some version) does not support, configure the following filtering rule:
 
 ```yaml
 filters:
@@ -380,7 +380,7 @@ The column mapping feature supports modifying the value of table columns. You ca
 > **Note:**
 >
 > - It does not support modifying the column type and the table schema.
-> - It does not support configuring multiple different column mapping rules for a same table.
+> - It does not support configuring multiple different column mapping rules for the same table.
 
 ### Parameter configuration
 
@@ -435,9 +435,9 @@ Configure the following three or four arguments in order:
 - `instance_id`: the ID of the upstream sharded MySQL or MariaDB instance (0 <= instance ID <= 15)
 - `schema prefix`: used to parse the schema name and get the `schema ID`
 - `table prefix`: used to parse the table name and get the `table ID`
-- The separator: used to separate between the prefix and the IDs, and can be omitted to use an empty string as separator
+- The separator: used to separate between the prefix and the IDs, and can be omitted to use an empty string as a separator
 
-Any of `instance_id`, `schema prefix` and `table prefix` can be set to an empty string (`""`) to indicate that the corresponding parts will not be encoded into the partition ID.
+Any of `instance_id`, `schema prefix` and `table prefix` can be set to an empty string (`""`) to indicate that the corresponding parts are not encoded into the partition ID.
 
 **`partition id` expression rules**
 
@@ -488,12 +488,13 @@ column-mappings:
 
 ## Replication delay monitoring
 
-The heartbeat feature supports calculating the real-time replication delay between each replication task and MySQL or MariaDB based on real replication data.
+DM supports writing data related to `heartbeat` on MySQL/MariaDB; when the data is replicated to DM, DM supports calculating the real-time replication delay between each replication task and MySQL/MariaDB.
 
 > **Note:**
 >
+> - After `heartbeat` is enabled, write operations are performed on the upstream MySQL instances connected by DM-worker. If these upstream MySQL instances form a primary-secondary cluster, make sure that DM-worker connects to the primary instance; otherwise, the data of primary and secondary MySQL instances are inconsistent.
 > - The estimation accuracy of the replication delay is at the second level.
-> - The heartbeat related binlog will not be replicated into the downstream, which is discarded after calculating the replication delay.
+> - The heartbeat related binlog is not replicated into the downstream, which is discarded after calculating the replication delay.
 
 ### System privileges
 
@@ -520,3 +521,48 @@ enable-heartbeat: true
 - DM-worker queries the current `TS_primary` timestamp in the corresponding upstream MySQL or MariaDB `dm_heartbeat`.`heartbeat` tables every 10 seconds, and calculates `task_lag` = `TS_primary` - `TS_secondary_task` for each task.
 
 See the `replicate lag` in the [binlog replication](monitor-a-dm-cluster.md#binlog-replication) processing unit of DM monitoring metrics.
+
+## Online DDL tools
+
+In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM provides supports for these tools to avoid replicating unnecessary intermediate data.
+
+### Restrictions
+
+- DM only supports gh-ost and pt-osc.
+- When `online-ddl-scheme` is enabled, the checkpoint corresponding to incremental replication should not be in the process of online DDL execution. For example, if an upstream online DDL operation starts at `position-A` and ends at `position-B` of the binlog, the starting point of incremental replication should be earlier than `position-A` or later than `position-B`; otherwise, an error occurs. For details, refer to [FAQ](faq.md#how-to-handle-the-error-returned-by-the-ddl-operation-related-to-the-gh-ost-table-after-online-ddl-scheme-gh-ost-is-set).
+
+### Parameter configuration
+
+- If the upstream MySQL/MariaDB uses gh-ost, set `online-ddl-scheme` to `"gh-ost"` in the task configuration file:
+
+```
+online-ddl-scheme: "gh-ost"
+```
+
+- If the upstream MySQL/MariaDB uses pt-osc, set `online-ddl-scheme` to `"pt"` in the task configuration file:
+
+```
+online-ddl-scheme: "pt"
+```
+
+For more information about online DDL tools, refer to [Online DDL Scheme](online-ddl-scheme.md).
+
+## Shard merge
+
+DM supports merging the DML and DDL data in the upstream MySQL/MariaDB sharded tables and replicating the merged data to the downstream TiDB tables.
+
+### Restrictions
+
+Currently, the shard merge feature is supported only in limited scenarios. For details, refer to [Sharding DDL usage Restrictions](feature-shard-merge.md#restrictions).
+
+### Parameter configuration
+
+Set `is-sharding` to `true` in the task configuration file:
+
+```
+is-sharding: true
+```
+
+### Handle sharding DDL locks manually
+
+In some abnormal scenarios, you need to [handle sharding DDL Locks manually](feature-manually-handling-sharding-ddl-locks.md).
