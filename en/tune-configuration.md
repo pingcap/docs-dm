@@ -10,17 +10,17 @@ The document describes how to optimize the configuration of replication tasks, t
 
 ## Full export
 
-The configuration item related  to full export is `mydumpers`. The following describes how to configure the parameters  related to performance.
+The configuration item related to full export is `mydumpers`. The following describes how to configure the parameters related to performance.
 
 ### `rows`
 
-Setting the `rows` option enables single-table multi-thread concurrent export, the values is the maximum number of rows contained in each chunk exported. After opening, DM will first select a column as the split benchmark when the single table of MySQL is concurrently exported.  The selected priortiy is  primary key> unique index> normal index. Then selecting the target column, need to ensure that the column is an integer type  (such as `INT`, `MEDIUMINT`, `BIGINT`, etc.). 
+Setting the `rows` option enables single-table multi-thread concurrent export, the values is the maximum number of rows contained in each chunk exported. After opening, DM will first select a column as the split benchmark when the single table of MySQL is concurrently exported. The selected priortiy is primary key> unique index> normal index. Then selecting the target column, need to ensure that the column is an integer type (such as `INT`, `MEDIUMINT`, `BIGINT`, etc.). 
 
-The value of  `rows` can be set to 10000, and the specific value of setting can be changed according to the total number of rows in the table and the performance of the database. In  addition , need to set `threads` to control the number of  concurrent threads, the default value is 4, can be adjusted appropriately.
+The value of `rows` can be set to 10000, and the specific value of setting can be changed according to the total number of rows in the table and the performance of the database. In addition , need to set `threads` to control the number of concurrent threads, the default value is 4, can be adjusted appropriately.
 
 ### `chunk-filesize`
 
-DM full backup will split the data of each table into multiple chunks according to the value of the `chunk-filesize` parameter, and each chunk is saved in a file with a size of about `chunk-filesize`.  According to this parameter, the data is splitted into multiple files, so that the parallel processing logic of the DM Load processing unit can be used to increase the import speed. The default value of this parameter is 64 (the unit is MB). Under normal situation, it does not need to be set. Also can make appropriate adjustments according to the size of the entire size of data.
+DM full backup will split the data of each table into multiple chunks according to the value of the `chunk-filesize` parameter, and each chunk is saved in a file with a size of about `chunk-filesize`. According to this parameter, the data is splitted into multiple files, so that the parallel processing logic of the DM Load processing unit can be used to increase the import speed. The default value of this parameter is 64 (the unit is MB). Under normal situation, it does not need to be set. Also can make appropriate adjustments according to the size of the entire size of data.
 
 > **Note：**
 >
@@ -36,7 +36,7 @@ The configuration item related to full import is `loaders`. The following descri
 
 ### `pool-size`
 
-`pool-size`  is the setting of  the number of threads in the DM load phase. The default value is 16. Normally, there is no need to set it.  Also can make appropriate adjustments based on the size of full size of data and the performance of the database.
+`pool-size` is the setting of the number of threads in the DM load phase. The default value is 16. Normally, there is no need to set it. Also can make appropriate adjustments based on the size of full size of data and the performance of the database.
 
 > **Note：**
 >
@@ -50,7 +50,7 @@ The configuration related to incremental replication is `syncers`. The following
 
 ### `worker-count`
 
-`worker-count`  is the number of threads for concurrent replication DML in the DM sync phase. The default value is 16. If there is a high requirement for replication speed, the value the parameter can be adjusted appropriately.
+`worker-count` is the number of threads for concurrent replication DML in the DM sync phase. The default value is 16. If there is a high requirement for replication speed, the value the parameter can be adjusted appropriately.
 
 ### batch
 
