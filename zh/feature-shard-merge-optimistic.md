@@ -165,4 +165,4 @@ ALTER TABLE `tbl00` ADD COLUMN `Age` INT DEFAULT -1;
 
 ## 乐观协调模式的配置
 
-在任务的配置文件中指定 `shard-mode` 为 `optimistic` 则使用“乐观协调”模式，示例配置文件可以参考 [dm-task.yaml](https://github.com/pingcap/dm/blob/95d37b4f8cf36c5da84714f9c25d7502028bc835/tests/sequence_sharding_optimistic/conf/dm-task.yaml)。
+在任务的配置文件中指定 `shard-mode` 为 `optimistic` 则使用“乐观协调”模式，示例配置文件可以参考 [DM 任务完整配置文件介绍](https://docs.pingcap.com/zh/tidb-data-migration/dev/task-configuration-file-full)。
