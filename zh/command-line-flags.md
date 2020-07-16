@@ -12,7 +12,7 @@ category: reference
 
 ### `--advertise-addr`
 
-- DM-master 用于接受客户端请求的外部地址
+- DM-master 用于接收客户端请求的外部地址
 - 默认值为 `"{master-addr}"`
 - 可选参数，可以为 `"域名:port"` 的形式
 
