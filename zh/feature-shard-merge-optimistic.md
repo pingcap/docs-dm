@@ -99,7 +99,7 @@ ALTER TABLE `tbl02` DROP COLUMN `Name`;
 
 ![optimistic-ddl-example-9](/media/optimistic-ddl-example-9.png)
 
-到此步 Name 列也从所有分表消失了，所以可以安全从下游移除：
+到此步 `Name` 列也从所有分表消失了，所以可以安全从下游移除：
 
 ```SQL
 ALTER TABLE `tbl` DROP COLUMN `Name`;

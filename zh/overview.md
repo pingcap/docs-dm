@@ -66,7 +66,7 @@ dmctl 是用来控制 DM 集群的命令行工具。
 
 ### Shard support
 
-DM 支持对原分库分表进行合库合表操作，但需要满足一些使用限制，详细信息请参考 [悲观模式分库分表合并同步使用限制](feature-shard-merge-pessimistic.md#使用限制)和[乐观模式分库分表合并同步使用限制](feature-shard-merge-optimistic.md#使用限制)。
+DM 支持对原分库分表进行合库合表操作，但需要满足一些使用限制，详细信息请参考[悲观模式分库分表合并同步使用限制](feature-shard-merge-pessimistic.md#使用限制)和[乐观模式分库分表合并同步使用限制](feature-shard-merge-optimistic.md#使用限制)。
 
 ## 使用限制
 
