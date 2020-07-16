@@ -1,7 +1,6 @@
 ---
 title: DM-worker Introduction
 summary: Learn the features of DM-worker.
-category: reference
 aliases: ['/docs/tidb-data-migration/dev/dm-worker-intro/']
 ---
 

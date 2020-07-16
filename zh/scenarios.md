@@ -1,7 +1,6 @@
 ---
 title: 应用场景
 summary: 了解 TiDB Data Migration 支持的主要应用场景。
-category: reference
 ---
 
 # 应用场景

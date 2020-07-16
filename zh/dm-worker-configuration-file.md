@@ -1,6 +1,5 @@
 ---
 title: DM-worker 配置文件介绍
-category: reference
 ---
 
 # DM-worker 配置文件介绍

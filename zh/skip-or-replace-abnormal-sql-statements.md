@@ -1,7 +1,6 @@
 ---
 title: 跳过或替代执行异常的 SQL 语句
 summary: 了解 TiDB Data Migration 如何跳过或替代执行异常的 SQL 语句。
-category: reference
 ---
 
 # 跳过或替代执行异常的 SQL 语句

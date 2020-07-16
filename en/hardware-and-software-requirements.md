@@ -1,7 +1,6 @@
 ---
 title: Software and Hardware Requirements
 summary: Learn the software and hardware requirements for DM cluster.
-category: how-to
 aliases: ['/docs/tidb-data-migration/dev/hardware-and-software-requirements/']
 ---
 

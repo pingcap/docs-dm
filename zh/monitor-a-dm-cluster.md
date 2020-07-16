@@ -1,7 +1,6 @@
 ---
 title: DM 监控指标
 summary: 介绍 DM 的监控指标
-category: reference
 ---
 
 # DM 监控指标

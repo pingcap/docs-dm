@@ -1,7 +1,6 @@
 ---
 title: Replicate Data Using Data Migration
 summary: Use the Data Migration tool to replicate the full data and the incremental data.
-category: reference
 aliases: ['/docs/tidb-data-migration/dev/replicate-data-using-dm/']
 ---
 
