@@ -14,7 +14,7 @@ category: reference
 ## 背景
 
 DM 支持在线上执行分库分表的 DDL 语句（通称 Sharding DDL），默认使用“悲观模式”，即当上游一个分表执行某一 DDL 后，这个分表的同步会暂停，等待其他所有分表都执行了同样的 DDL 才在下游执行该 DDL 并继续数据同步。
-这种“悲观协调”模式的优点是可以保证同步到下游的数据不会出错，问题是会中断同步进行不利于灰度。有些用户可能会花较长时间在单一分表执行 DDL，验证一定时间后后才会更改其他分表的结构。在悲观模式同步的设定下，这些 DDL 会阻塞同步，binlog 事件会大量积压。
+这种“悲观协调”模式的优点是可以保证同步到下游的数据不会出错，缺点是会暂停数据同步而不利于对上游进行灰度变更。有些用户可能会花较长时间在单一分表执行 DDL，验证一定时间后才会更改其他分表的结构。在悲观模式同步的设定下，这些 DDL 会阻塞同步，binlog 事件会大量积压。
 
 因此，需要提供一种新的“乐观协调”模式，在一个分表上执行的 DDL，自动修改成兼容其他分表的语句后，立即同步到下游，不会阻挡任何分表 DML 的同步。
 
@@ -26,7 +26,7 @@ DM 支持在线上执行分库分表的 DDL 语句（通称 Sharding DDL），�
 
 ### 例子
 
-例如上游 MySQL 有三个分表，使用 DM 同步到下游 TiDB，如下图所示：
+例如上游 MySQL 有三个分表（`tbl00`, `tbl01` 以及 `tbl02`），使用 DM 同步到下游 TiDB 的 `tbl` 表中，如下图所示：
 
 ![optimistic-ddl-example-1](/media/optimistic-ddl-example-1.png)
 
@@ -38,7 +38,7 @@ ALTER TABLE `tbl00` ADD COLUMN `Level` INT;
 
 ![optimistic-ddl-example-2](/media/optimistic-ddl-example-2.png)
 
-此时下游 TiDB 要准备接受来自 tbl00 有 Level 的 DML、以及来自 tbl01 和 tbl02 没有 Level 的 DML。
+此时下游 TiDB 要准备接受来自 `tbl00` 有 `Level` 的 DML、以及来自 `tbl01` 和 `tbl02` 没有 `Level` 的 DML。
 
 ![optimistic-ddl-example-3](/media/optimistic-ddl-example-3.png)
 
@@ -51,7 +51,7 @@ INSERT INTO `tbl02` (`ID`, `Name`) VALUES (27, 'Tony');
 
 ![optimistic-ddl-example-4](/media/optimistic-ddl-example-4.png)
 
-在 tbl01 同样增加一列 Level：
+在 `tbl01` 同样增加一列 `Level`：
 
 ```SQL
 ALTER TABLE `tbl01` ADD COLUMN `Level` INT;
@@ -61,7 +61,7 @@ ALTER TABLE `tbl01` ADD COLUMN `Level` INT;
 
 此时下游已经有相同的 Level 列了，所以 DM-master 比较表结构之后不做任何操作。
 
-在 tbl01 刪除一列 Name：
+在 `tbl01` 刪除一列 `Name`：
 
 ```SQL
 ALTER TABLE `tbl01` DROP COLUMN `Name`;
@@ -69,7 +69,7 @@ ALTER TABLE `tbl01` DROP COLUMN `Name`;
 
 ![optimistic-ddl-example-6](/media/optimistic-ddl-example-6.png)
 
-此时下游仍需要接收来自 tbl00 和 tbl02 含 Name 的 DMLs，因此不会立刻删除该列。
+此时下游仍需要接收来自 `tbl00` 和 `tbl02` 含 `Name` 的 DMLs，因此不会立刻删除该列。
 
 同样，各种 DML 仍可直接同步到下游：
 
@@ -88,9 +88,9 @@ ALTER TABLE `tbl02` ADD COLUMN `Level` INT;
 
 ![optimistic-ddl-example-8](/media/optimistic-ddl-example-8.png)
 
-此时所有分表都已有 Level 列。
+此时所有分表都已有 `Level` 列。
 
-在 tbl00 和 tbl02 各刪除一列 Name：
+在 `tbl00` 和 `tbl02` 各刪除一列 `Name`：
 
 ```SQL
 ALTER TABLE `tbl00` DROP COLUMN `Name`;
@@ -109,7 +109,7 @@ ALTER TABLE `tbl` DROP COLUMN `Name`;
 
 ## 风险 
 
-使用乐观同步时，由于 DDL 会即时同步到下游，若使用不当，可能导致上下游数据不一致。
+使用乐观模式同步时，由于 DDL 会即时同步到下游，若使用不当，可能导致上下游数据不一致。
 
 ### 例子
 
@@ -117,7 +117,7 @@ ALTER TABLE `tbl` DROP COLUMN `Name`;
 
 ![optimistic-ddl-fail-example-1](/media/optimistic-ddl-fail-example-1.png)
 
-在 tbl01 新增一列 Age，默认值定为 0：
+在 `tbl01` 新增一列 `Age`，默认值定为 `0`：
 
 ```SQL
 ALTER TABLE `tbl01` ADD COLUMN `Age` INT DEFAULT 0;
@@ -125,7 +125,7 @@ ALTER TABLE `tbl01` ADD COLUMN `Age` INT DEFAULT 0;
 
 ![optimistic-ddl-fail-example-2](/media/optimistic-ddl-fail-example-2.png)
 
- 在 tbl00 新增一列 Age，但默认值定为 -1：
+ 在 `tbl00` 新增一列 `Age`，但默认值定为 `-1`：
 
 ```SQL 
 ALTER TABLE `tbl00` ADD COLUMN `Age` INT DEFAULT -1;
@@ -133,7 +133,7 @@ ALTER TABLE `tbl00` ADD COLUMN `Age` INT DEFAULT -1;
 
 ![optimistic-ddl-fail-example-3](/media/optimistic-ddl-fail-example-3.png)
 
-此时所有来自 tbl00 的 Age 都不一致了。这是由于 `DEFAULT 0` 和 `DEFAULT -1` 互不兼容。虽然 DM 遇到这种情况会报错，但上下游不一致的问题就需要手动去解决。
+此时所有来自 `tbl00` 的 `Age` 都不一致了。这是由于 `DEFAULT 0` 和 `DEFAULT -1` 互不兼容。虽然 DM 遇到这种情况会报错，但上下游不一致的问题就需要手动去解决。
 
 ### 使数据不一致的操作
 
@@ -158,11 +158,11 @@ ALTER TABLE `tbl00` ADD COLUMN `Age` INT DEFAULT -1;
 
 此外，不论是使用“乐观协调”或“悲观协调”，DM 仍是有以下限制：
 
-- 增量同步任务需要确认开始同步的 binlog position 对应的各分表的表结构必须一致。
+- 增量同步任务需要确保开始同步的 binlog position 对应的各分表的表结构必须一致。
 - 进入 sharding group 的新表必须与其他成员的表结构一致（正在执行一个 DDL 批次时禁止 `CREATE/RENAME TABLE`）。
 - 不支持 `DROP TABLE` / `DROP DATABASE`。
 - TiDB 不支持的 DDL 语句在 DM 也不支持。
-- 新增列的默认值不能包含 current_timestamp、rand()、uuid() 等，会造成上下游数据不一致。
+- 新增列的默认值不能包含 `current_timestamp`、`rand()`、`uuid()` 等，否则会造成上下游数据不一致。
 
 ## 乐观协调模式的配置
 
