@@ -12,21 +12,21 @@ This document introduces the main usage scenarios of TiDB Data Migration (DM) an
 
 ### Use TiDB as MySQL/MariaDB's secondary database
 
-If you want to use TiDB as the upstream MySQL/MariaDB's secondary library, that is, import the full data of the upstream instance to TiDB, and replicate the incremental data to TiDB in real-time once data changes are made, you can configure the data migration task according to the following rules:
+If you want to use TiDB as the upstream MySQL/MariaDB's secondary database, that is, import the full data of the upstream instance to TiDB, and replicate the incremental data to TiDB in real-time once data changes are made, you can configure the data migration task according to the following rules:
 
 - Specify `task-mode` as `all`.
 - Configure `target-database` based on the connection information of the downstream TiDB.
 - Configure `source-id` in `mysql-instances` based on the ID information of the upstream MySQL/MariaDB instances.
 - Use the default setting of concurrency control parameters or configure `mydumper-thread`, `loader-thread`, and `syncer-thread` as needed.
-- No need to configure `route-rules`, `filter-rules` and `black-white-list`.
+- No need to configure `route-rules`, `filter-rules` and `block-allow-list`.
 
 ### Migrate some application data from MySQL/MariaDB
 
-If there are multiple application data in MySQL/MariaDB, but only part of the data needs to be migrated to TiDB, you can configure the migration task by referring to [Use TiDB as a secondary library of MySQL/MariaDB](#use-tidb-as-mysqlmariadbs-secondary-database). Then configure `black-white-list` as needed.
+If there are multiple application data in MySQL/MariaDB, but only part of the data needs to be migrated to TiDB, you can configure the migration task by referring to [Use TiDB as a secondary database of MySQL/MariaDB](#use-tidb-as-mysqlmariadbs-secondary-database). Then configure `block-allow-list` as needed.
 
 To migrate upstream data to a schema or table with a different name in the downstream database, you can configure `route-rules`.
 
-For some archiving scenarios, some data may be periodically cleaned up by executing the `TRUNCATE TABLE`/`DROP TABLE` command  in the upstream or through other means. To make sure all data are retained in the downstream TiDB, you can disable these data clearing operations by configuring `filter-rules`.
+For some archiving scenarios, some data may be periodically cleaned up by executing the `TRUNCATE TABLE`/`DROP TABLE` command in the upstream or through other means. To make sure all data are retained in the downstream TiDB, you can disable these data clearing operations by configuring `filter-rules`.
 
 For more information, refer to [Data Migration Simple Usage Scenario](usage-scenario-simple-replication.md).
 
@@ -40,7 +40,7 @@ If you only need to migrate some application data or filter out some operations,
 
 ## Online DDL scenario
 
-In MySQL ecosystem, tools such as pt-osc or gh-ost are often used to perform online DDL operations. DM also supports such scenarios. You can enable pt-osc and gh-ost by configuring the `online-ddl-scheme` parameter. For details, refer to [DM Online DDL Scheme](online-ddl-scheme.md).
+In MySQL ecosystem, tools such as pt-osc or gh-ost are often used to perform online DDL operations. DM also supports such scenarios. You can enable support for pt-osc or gh-ost by configuring the `online-ddl-scheme` parameter. For details, refer to [DM Online DDL Scheme](online-ddl-scheme.md).
 
 ## Switch the DM-worker connection to another instance
 
