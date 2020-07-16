@@ -92,7 +92,7 @@ DM 支持对原分库分表进行合库合表操作，但需要满足一些使�
 + 分库分表
 
     - 如果业务分库分表之间存在数据冲突，可以参考[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)来解决；否则不推荐使用 DM 进行同步，如果进行同步则有冲突的数据会相互覆盖造成数据丢失。
-    - 关于分库分表合并场景的其它限制，参见[使用限制](feature-shard-merge-pessimistic.md#使用限制)。
+    - 关于分库分表合并场景的其它限制，参见[悲观模式下分库分表合并同步使用限制](feature-shard-merge-pessimistic.md#使用限制)以及[乐观模式下分库分表合并同步使用限制](feature-shard-merge-optimistic.md#使用限制)。
 
 + 操作限制
 
