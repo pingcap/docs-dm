@@ -80,7 +80,7 @@ UPDATE `tbl00` SET `Level` = 5 WHERE `ID` = 5;
 
 ![optimistic-ddl-example-7](/media/optimistic-ddl-example-7.png)
 
-在 tbl02 增加一列 Level：
+在 `tbl02` 增加一列 `Level`：
 
 ```SQL
 ALTER TABLE `tbl02` ADD COLUMN `Level` INT;
