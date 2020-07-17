@@ -19,7 +19,7 @@ You can use a simple replication data flow, that is, MySQL -> DM -> TiDB, to tes
 
 ## Performance test
 
-### Table structure
+### Table schema
 
 Use tables with the following structure for the performance test:
 
