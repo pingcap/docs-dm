@@ -1,6 +1,5 @@
 ---
 title: DM 1.0-GA 性能测试报告
-category: benchmark
 aliases: ['/docs-cn/dev/benchmark/dm-v1.0-ga/','/docs-cn/v3.0/benchmark/dm-v1.0-ga/','/docs-cn/v3.1/benchmark/dm-v1.0-ga/']
 ---
 

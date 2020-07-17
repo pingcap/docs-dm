@@ -1,7 +1,6 @@
 ---
 title: 切换 DM-worker 与上游 MySQL 实例的连接
 summary: 了解如何切换 DM-worker 与上游 MySQL 实例的连接。
-category: reference
 aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/master-slave-switch/','/docs-cn/v3.1/reference/tools/data-migration/usage-scenarios/master-slave-switch/','/docs-cn/v3.0/reference/tools/data-migration/usage-scenarios/master-slave-switch/','/docs-cn/v2.1/reference/tools/data-migration/usage-scenarios/master-slave-switch/']
 ---
 

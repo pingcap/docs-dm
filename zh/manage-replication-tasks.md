@@ -1,6 +1,5 @@
 ---
 title: 管理数据同步任务
-category: reference
 aliases: ['/docs-cn/dev/reference/tools/data-migration/manage-tasks/','/docs-cn/v3.1/reference/tools/data-migration/manage-tasks/','/docs-cn/v3.0/reference/tools/data-migration/manage-tasks/','/docs-cn/v2.1/reference/tools/data-migration/manage-tasks/']
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: 分表合并数据迁移最佳实践
 summary: 使用 DM 对分库分表进行合并迁移时的最佳实践。
-category: reference
 aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/best-practice-dm-shard/','/docs-cn/v3.1/reference/tools/data-migration/usage-scenarios/best-practice-dm-shard/','/docs-cn/v3.0/reference/tools/data-migration/usage-scenarios/best-practice-dm-shard/','/docs-cn/v2.1/reference/tools/data-migration/usage-scenarios/best-practice-dm-shard/']
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: TiDB Data Migration 教程
-category: how-to
 aliases: ['/docs-cn/dev/how-to/get-started/data-migration/','/docs-cn/v3.0/how-to/get-started/data-migration/','/docs-cn/v3.1/how-to/get-started/data-migration/','/docs-cn/v2.1/how-to/get-started/data-migration/']
 ---
 
