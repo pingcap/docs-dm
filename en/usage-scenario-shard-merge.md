@@ -1,7 +1,6 @@
 ---
 title: Data Migration Shard Merge Scenario
 summary: Learn how to use Data Migration to replicate data in the shard merge scenario.
-category: reference
 aliases: ['/docs/tidb-data-migration/dev/usage-scenario-shard-merge/']
 ---
 
@@ -59,7 +58,7 @@ Assume that the downstream schema after replication is as follows:
 
 ## Replication solution
 
-- To satisfy the replication Requirements #1 and #2, configure the [table routing rule](feature-overview.md#table-routing) as follows:
+- To satisfy the replication Requirements #1 and #2, configure the [table routing rule](key-features.md#table-routing) as follows:
 
     ```yaml
     routes:
@@ -69,7 +68,7 @@ Assume that the downstream schema after replication is as follows:
         target-schema: "user"
     ```
 
-- To satisfy the replication Requirement #3, configure the [table routing rule](feature-overview.md#table-routing) as follows:
+- To satisfy the replication Requirement #3, configure the [table routing rule](key-features.md#table-routing) as follows:
 
     ```yaml
     routes:
@@ -84,7 +83,7 @@ Assume that the downstream schema after replication is as follows:
         target-table:  "sale"
     ```
 
-- To satisfy the replication Requirements #4 and #5, configure the [binlog event filtering rule](feature-overview.md#binlog-event-filter) as follows:
+- To satisfy the replication Requirements #4 and #5, configure the [binlog event filtering rule](key-features.md#binlog-event-filter) as follows:
 
     ```yaml
     filters:
@@ -99,7 +98,7 @@ Assume that the downstream schema after replication is as follows:
     >
     > The replication Requirements #4, #5 and #7 indicate that all the deletion operations in the `user` schema are filtered out, so a schema level filtering rule is configured here. However, the deletion operations of future tables in the `user` schema will also be filtered out.
 
-- To satisfy the replication Requirement #6, configure the [binlog event filter rule](feature-overview.md#binlog-event-filter) as follows:
+- To satisfy the replication Requirement #6, configure the [binlog event filter rule](key-features.md#binlog-event-filter) as follows:
 
     ```yaml
     filters:
@@ -115,10 +114,10 @@ Assume that the downstream schema after replication is as follows:
         action: Ignore
     ```
 
-- To satisfy the replication Requirement #7, configure the [black and white table lists](feature-overview.md#black-and-white-table-lists) as follows:
+- To satisfy the replication Requirement #7, configure the [block and allow table lists](key-features.md#block-and-allow-table-lists) as follows:
 
     ```yaml
-    black-white-list:
+    block-allow-list:
       log-bak-ignored:
         ignore-tales:
         - db-name: "user"
@@ -155,7 +154,7 @@ mysql-instances:
     source-id: "instance-1"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule" , "sale-filter-rule"]
-    black-white-list:  "log-bak-ignored"
+    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -164,7 +163,7 @@ mysql-instances:
     source-id: "instance-2"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule" , "sale-filter-rule"]
-    black-white-list:  "log-bak-ignored"
+    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -172,7 +171,7 @@ mysql-instances:
     source-id: "instance-3"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule" , "sale-filter-rule"]
-    black-white-list:  "log-bak-ignored"
+    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -207,7 +206,7 @@ filters:
     events: ["drop database"]
     action: Ignore
 
-black-white-list:
+block-allow-list:  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
   log-bak-ignored:
     ignore-tales:
     - db-name: "user"

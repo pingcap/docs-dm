@@ -1,13 +1,12 @@
 ---
-title: Data Migration Query Status
-summary: Learn the DM query result and subtask status.
-category: reference
+title: Query Status
+summary: Learn how to query the status of a data replication task.
 aliases: ['/docs/tidb-data-migration/dev/query-status/']
 ---
 
-# Data Migration Query Status
+# Query Status
 
-This document introduces the query result, task status, and subtask status of Data Migration (DM).
+This document introduces how to use the `query-status` command to query the task status, and the subtask status of DM.
 
 ## Query result
 
@@ -19,30 +18,23 @@ This document introduces the query result, task status, and subtask status of Da
 
 ```
 {
-    "result": true, # Whether the query is successful.
-    "msg": "",      # Describes the cause of the unsuccessful query.
-    "tasks": [      # Migration task list.
+    "result": true,     # Whether the query is successful.
+    "msg": "",          # Describes the reason for the unsuccessful query.
+    "tasks": [          # Migration task list.
         {
-            "taskName": "test-1",           # The task name
-            "taskStatus": "Running",        # The status of the task, including "New", "Running", "Paused", "Stopped", "Finished", and "Error".
-            "workers": [                    # The list of DM-workers that are used by the task.
-                "127.0.0.1:8262"
+            "taskName": "test",         # The task name.
+            "taskStatus": "Running",    # The status of the task.
+            "sources": [                # The upstream MySQL list.
+                "mysql-replica-01",
+                "mysql-replica-02"
             ]
         },
         {
-            "taskName": "test-2",
-            "taskStatus": "Error - Some error occurred in subtask", # A subtask encounters an error and is paused.
-            "workers": [
-                "127.0.0.1:8262",
-                "127.0.0.1:8263"
-            ]
-        },
-        {
-            "taskName": "test-3",
-            "taskStatus": "Error - Relay status is Error",  # An error occurs in the Relay processing unit corresponding to a subtask that is in the Sync phase.
-            "workers": [
-                "127.0.0.1:8263",
-                "127.0.0.1:8264"
+            "taskName": "test2",
+            "taskStatus": "Paused",
+            "sources": [
+                "mysql-replica-01",
+                "mysql-replica-02"
             ]
         }
     ]
@@ -83,12 +75,17 @@ The status of a DM migration task depends on the status of each subtask assigned
 {
     "result": true,     # Whether the query is successful.
     "msg": "",          # Describes the cause for the unsuccessful query.
-    "workers": [                            # DM-worker list.
+    "sources": [                            # The upstream MySQL list.
         {
             "result": true,
-            "worker": "172.17.0.2:8262",   # The `host:port` information of the DM-worker.
             "msg": "",
-            "subTaskStatus": [              # The information of all the subtasks of the DM-worker.
+            "sourceStatus": {                   # The information of the upstream MySQL databases.
+                "source": "mysql-replica-01",
+                "worker": "worker1",
+                "result": null,
+                "relayStatus": null
+            },
+            "subTaskStatus": [              # The information of all subtasks of upstream MySQL databases.
                 {
                     "name": "test",         # The name of the subtask.
                     "stage": "Running",     # The running status of the subtask, including "New", "Running", "Paused", "Stopped", and "Finished".
@@ -105,8 +102,7 @@ The status of a DM migration task depends on the status of each subtask assigned
                         "masterBinlogGtid": "c0149e17-dff1-11e8-b6a8-0242ac110004:1-14",    # The GTID information in the upstream database.
                         "syncerBinlog": "(bin.000001, 2525)",                               # The position of the binlog that has been replicated
                                                                                             # in the `Sync` processing unit.
-                        "syncerBinlogGtid": "",                                             # It is always empty because `Sync` does not use GTID to
-                                                                                            # replicate data.
+                        "syncerBinlogGtid": "",                                             # The binlog position replicated using GTID.
                         "blockingDDLs": [       # The DDL list that is blocked currently. It is not empty only when all the upstream tables of this
                                                 # DM-worker are in the "synced" status. In this case, it indicates the sharding DDL statements to be executed or that are skipped.
                             "USE `test`; ALTER TABLE `test`.`t_target` DROP COLUMN `age`;"
@@ -134,25 +130,17 @@ The status of a DM migration task depends on the status of each subtask assigned
                                                 # does not always mean a replication delay exits.
                     }
                 }
-            ],
-            "relayStatus": {    # The replication status of the relay log.
-                "masterBinlog": "(bin.000001, 3234)",                               # The binlog position of the upstream database.
-                "masterBinlogGtid": "c0149e17-dff1-11e8-b6a8-0242ac110004:1-14",    # The binlog GTID information of the upstream database.
-                "relaySubDir": "c0149e17-dff1-11e8-b6a8-0242ac110004.000001",       # The currently used subdirectory of the relay log.
-                "relayBinlog": "(bin.000001, 3234)",                                # The position of the binlog that has been pulled to the local storage.
-                "relayBinlogGtid": "c0149e17-dff1-11e8-b6a8-0242ac110004:1-14",     # The GTID information of the binlog that has been pulled to the local
-                                                                                    # storage.
-                "relayCatchUpMaster": true,     # Whether the progress of replicating the relay log in the local storage has been the same as that in
-                                                # the upstream.
-                "stage": "Running",             # The status of the `Sync` processing unit of the relay log.
-                "result": null
-            },
-            "sourceID": "172.17.0.2:3306"        # ID of the upstream instance or replication group
+            ]
         },
         {
             "result": true,
-            "worker": "172.17.0.3:8262",
             "msg": "",
+            "sourceStatus": {
+                "source": "mysql-replica-02",
+                "worker": "worker2",
+                "result": null,
+                "relayStatus": null
+            },
             "subTaskStatus": [
                 {
                     "name": "test",
@@ -166,23 +154,16 @@ The status of a DM migration task depends on the status of each subtask assigned
                         "progress": "25.44 %"   # The progress of the loading process.
                     }
                 }
-            ],
-            "relayStatus": {
-                "masterBinlog": "(bin.000001, 28507)",
-                "masterBinlogGtid": "c0149e17-dff1-11e8-b6a8-0242ac110004:1-96",
-                "relaySubDir": "c0149e17-dff1-11e8-b6a8-0242ac110004.000001",
-                "relayBinlog": "(bin.000001, 28507)",
-                "relayBinlogGtid": "c0149e17-dff1-11e8-b6a8-0242ac110004:1-96",
-                "relayCatchUpMaster": true,
-                "stage": "Running",
-                "result": null
-            },
-            "sourceID": "172.17.0.3:3306"
+            ]
         },
         {
             "result": true,
-            "worker": "172.17.0.6:8262",
-            "msg": "",
+            "sourceStatus": {
+                "source": "mysql-replica-03",
+                "worker": "worker3",
+                "result": null,
+                "relayStatus": null
+            },
             "subTaskStatus": [
                 {
                     "name": "test",
@@ -205,27 +186,16 @@ The status of a DM migration task depends on the status of each subtask assigned
                         "progress": "0.00 %"
                     }
                 }
-            ],
-            "relayStatus": {
-                "masterBinlog": "(bin.000001, 1691)",
-                "masterBinlogGtid": "97b5142f-e19c-11e8-808c-0242ac110005:1-9",
-                "relaySubDir": "97b5142f-e19c-11e8-808c-0242ac110005.000001",
-                "relayBinlog": "(bin.000001, 1691)",
-                "relayBinlogGtid": "97b5142f-e19c-11e8-808c-0242ac110005:1-9",
-                "relayCatchUpMaster": true,
-                "stage": "Running",
-                "result": null,
-                "sourceID": "172.17.0.6:3306"
-            }
+            ]
         }
     ]
 }
 
 ```
 
-For the status description and status switch relationship of "stage" of "subTaskStatus" of "workers", see [Subtask status](#subtask-status).
+For the status description and status switch relationship of "stage" of "subTaskStatus" of "sources", see the [subtask status](#subtask-status).
 
-For operation details of "unresolvedDDLLockID" of "subTaskStatus" of "workers", see [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md).
+For operation details of "unresolvedDDLLockID" of "subTaskStatus" of "sources", see [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md).
 
 ## Subtask status
 

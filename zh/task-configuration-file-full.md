@@ -1,13 +1,12 @@
 ---
 title: DM 任务完整配置文件介绍
-category: reference
 ---
 
 # DM 任务完整配置文件介绍
 
 本文档主要介绍 Data Migration (DM) 的任务完整的配置文件，包含[全局配置](#全局配置) 和[实例配置](#实例配置) 两部分。
 
-关于各配置项的功能和配置，请参阅[数据同步功能](key-features.md#同步功能介绍)。
+关于各配置项的功能和配置，请参阅[数据同步功能](overview.md#同步功能介绍)。
 
 ## 关键概念
 
@@ -99,6 +98,7 @@ syncers:                             # syncer 处理单元运行配置参数
     worker-count: 16                 # syncer 并发同步 binlog event 的线程数量，默认值为 16
     batch: 100                       # syncer 同步到下游数据库的一个事务批次 SQL 语句数，默认值为 100
     enable-ansi-quotes: true         # 若 `session` 中设置 `sql-mode: "ANSI_QUOTES"`，则需开启此项
+    safe-mode: false                 # 设置为 true，则将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下同步数据时可以重复导入 DML。在启动或恢复增量迁移任务的前 5 分钟内 TiDB DM 会自动启动 safe mode
 
 # ----------- 实例配置 -----------
 mysql-instances:

@@ -1,7 +1,6 @@
 ---
 title: TiDB Data Migration Glossary
 summary: Learn the terms used in TiDB Data Migration.
-category: glossary
 aliases: ['/docs/tidb-data-migration/dev/glossary/']
 ---
 
@@ -21,7 +20,7 @@ Binlog events are information about data modification made to a MySQL or MariaDB
 
 ### Binlog event filter
 
-[Binlog event filter](feature-overview.md#binlog-event-filter) is a more fine-grained filtering feature than the black and white lists filtering rule. Refer to [binlog event filter](overview.md#binlog-event-filtering) for details.
+[Binlog event filter](key-features.md#binlog-event-filter) is a more fine-grained filtering feature than the block and allow lists filtering rule. Refer to [binlog event filter](overview.md#binlog-event-filtering) for details.
 
 ### Binlog position
 
@@ -31,9 +30,9 @@ The binlog position is the offset information of a binlog event in a binlog file
 
 Binlog replication processing unit is the processing unit used in DM-worker to read upstream binlogs or local relay logs, and to replicate these logs to the downstream. Each subtask corresponds to a binlog replication processing unit. In the current documentation, the binlog replication processing unit is also referred to as the sync processing unit.
 
-### Black & white table list
+### Block & allow table list
 
-Black & white table list is the feature that filters or only replicates all operations of some databases or some tables. Refer to [black & white table lists](overview.md#black-and-white-lists-replication-at-the-schema-and-table-levels) for details. This feature is similar to [MySQL Replication Filtering](https://dev.mysql.com/doc/refman/5.6/en/replication-rules.html) and [MariaDB Replication Filters](https://mariadb.com/kb/en/library/replication-filters/).
+Block & allow table list is the feature that filters or only replicates all operations of some databases or some tables. Refer to [block & allow table lists](overview.md#block-and-allow-lists-replication-at-the-schema-and-table-levels) for details. This feature is similar to [MySQL Replication Filtering](https://dev.mysql.com/doc/refman/5.6/en/replication-rules.html) and [MariaDB Replication Filters](https://mariadb.com/kb/en/library/replication-filters/).
 
 ## C
 
@@ -62,7 +61,7 @@ The GTID is the global transaction ID of MySQL or MariaDB. With this feature ena
 
 ### Heartbeat
 
-The heartbeat is a mechanism that calculates the delay from the time data is written in the upstream to the time data is processed by the binlog replication processing unit. Refer to [replication delay monitoring](feature-overview.md#replication-delay-monitoring) for details.
+The heartbeat is a mechanism that calculates the delay from the time data is written in the upstream to the time data is processed by the binlog replication processing unit. Refer to [replication delay monitoring](key-features.md#replication-delay-monitoring) for details.
 
 ## L
 
@@ -114,7 +113,7 @@ The subtask status is the status of a data replication subtask. The current stat
 
 ### Table routing
 
-The table routing feature enables DM to replicate a certain table of the upstream MySQL or MariaDB instance to the specified table in the downstream, which can be used to merge and replicate sharded tables. Refer to [table routing](feature-overview.md#table-routing) for details.
+The table routing feature enables DM to replicate a certain table of the upstream MySQL or MariaDB instance to the specified table in the downstream, which can be used to merge and replicate sharded tables. Refer to [table routing](key-features.md#table-routing) for details.
 
 ### Task
 

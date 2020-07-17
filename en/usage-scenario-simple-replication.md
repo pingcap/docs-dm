@@ -1,7 +1,6 @@
 ---
 title: Data Migration Simple Usage Scenario
 summary: Learn how to use Data Migration to replicate data in a simple scenario.
-category: reference
 aliases: ['/docs/tidb-data-migration/dev/usage-scenario-simple-replication/']
 ---
 
@@ -62,7 +61,7 @@ Assume that the schemas replicated to the downstream are as follows:
 
 ## Replication solution
 
-- To satisfy replication Requirements #1-i, #1-ii and #1-iii, configure the [table routing rules](feature-overview.md#table-routing) as follows:
+- To satisfy replication Requirements #1-i, #1-ii and #1-iii, configure the [table routing rules](key-features.md#table-routing) as follows:
 
     ```yaml
     routes:
@@ -78,7 +77,7 @@ Assume that the schemas replicated to the downstream are as follows:
         target-schema: "user_south"
     ```
 
-- To satisfy the replication Requirement #2-i, configure the [table routing rules](feature-overview.md#table-routing) as follows:
+- To satisfy the replication Requirement #2-i, configure the [table routing rules](key-features.md#table-routing) as follows:
 
     ```yaml
     routes:
@@ -95,7 +94,7 @@ Assume that the schemas replicated to the downstream are as follows:
         target-table:  "store_shenzhen"
     ```
 
-- To satisfy the replication Requirement #1-iv, configure the [binlog filtering rules](feature-overview.md#binlog-event-filter) as follows:
+- To satisfy the replication Requirement #1-iv, configure the [binlog filtering rules](key-features.md#binlog-event-filter) as follows:
 
     ```yaml
     filters:
@@ -111,7 +110,7 @@ Assume that the schemas replicated to the downstream are as follows:
         action: Ignore
     ```
 
-- To satisfy the replication Requirement #2-ii, configure the [binlog filtering rule](feature-overview.md#binlog-event-filter) as follows:
+- To satisfy the replication Requirement #2-ii, configure the [binlog filtering rule](key-features.md#binlog-event-filter) as follows:
 
     ```yaml
     filters:
@@ -126,10 +125,10 @@ Assume that the schemas replicated to the downstream are as follows:
     >
     > `store-filter-rule` is different from `log-filter-rule & user-filter-rule`. `store-filter-rule` is a rule for the whole `store` schema, while `log-filter-rule` and `user-filter-rule` are rules for the `log` table in the `user` schema.
 
-- To satisfy the replication Requirement #3, configure the [black and white lists](feature-overview.md#black-and-white-table-lists) as follows:
+- To satisfy the replication Requirement #3, configure the [block and allow lists](key-features.md#block-and-allow-table-lists) as follows:
 
     ```yaml
-    black-white-list:
+    block-allow-list:  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
       log-ignored:
         ignore-dbs: ["log"]
     ```
@@ -139,7 +138,7 @@ Assume that the schemas replicated to the downstream are as follows:
 The complete replication task configuration is shown below. For more details, see [configuration explanations](task-configuration-file.md).
 
 ```yaml
-name: "one-tidb-slave"
+name: "one-tidb-secondary"
 task-mode: all
 meta-schema: "dm_meta"
 remove-meta: false
@@ -155,7 +154,7 @@ mysql-instances:
     source-id: "instance-1"
     route-rules: ["instance-1-user-rule"]
     filter-rules: ["log-filter-rule", "user-filter-rule", "store-filter-rule"]
-    black-white-list:  "log-ignored"
+    block-allow-list:  "log-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -163,7 +162,7 @@ mysql-instances:
     source-id: "instance-2"
     route-rules: ["instance-2-user-rule", instance-2-store-rule]
     filter-rules: ["log-filter-rule", "user-filter-rule", "store-filter-rule"]
-    black-white-list:  "log-ignored"
+    block-allow-list:  "log-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -171,7 +170,7 @@ mysql-instances:
     source-id: "instance-3"
     route-rules: ["instance-3-user-rule", instance-3-store-rule]
     filter-rules: ["log-filter-rule", "user-filter-rule", "store-filter-rule"]
-    black-white-list:  "log-ignored"
+    block-allow-list:  "log-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -214,7 +213,7 @@ filters:
     events: ["drop database", "truncate table", "drop table", "delete"]
     action: Ignore
 
-black-white-list:
+block-allow-list:  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
   log-ignored:
     ignore-dbs: ["log"]
 

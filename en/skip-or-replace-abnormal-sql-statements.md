@@ -1,13 +1,16 @@
 ---
 title: Skip or Replace Abnormal SQL Statements
-summary: Learn how to skip or replace abnormal SQL statements when you use Data Migration.
-category: reference
+summary: Learn how to skip or replace abnormal SQL statements when you use DM.
 aliases: ['/docs/tidb-data-migration/dev/skip-or-replace-abnormal-sql-statements/']
 ---
 
 # Skip or Replace Abnormal SQL Statements
 
-This document introduces how to handle abnormal SQL statements using Data Migration (DM).
+This document introduces how to handle abnormal SQL statements using DM.
+
+> **Note:**
+>
+> The `sql-skip` and `sql-replace` commands are currently not supported.
 
 Currently, TiDB is not completely compatible with all MySQL syntax (see [the DDL statements supported by TiDB](https://pingcap.com/docs/dev/reference/mysql-compatibility/#ddl)). Therefore, when DM is replicating data from MySQL to TiDB and TiDB does not support the corresponding SQL statement, an error might occur and break the replication process. In this case, there are two ways to resume the replication:
 
@@ -20,7 +23,7 @@ If you know in advance that an unsupported SQL statement is going to be replicat
 ## Restrictions
 
 - The skip or replace operation is a one-time operation that is only used to skip or replace the SQL statement unsupported by the downstream TiDB. Do not handle other replication errors with this approach.
-    - For other replication errors, try to handle them using [Black and white table lists](feature-overview.md#black-and-white-table-lists) or [Binlog event filtering](feature-overview.md#binlog-event-filter).
+    - For other replication errors, try to handle them using [Block and allow table lists](key-features.md#block-and-allow-table-lists) or [Binlog event filtering](key-features.md#binlog-event-filter).
 
 - If it is unacceptable in the actual production environment that the abnormal DDL statement is skipped in the downstream TiDB and it cannot be replaced with other DDL statements, then do not use this approach.
     - For example: `DROP PRIMARY KEY`
@@ -75,7 +78,7 @@ In the scenario of merging and replicating data from sharded tables, if you need
 
 In DM, simplified procedures of incremental data replication can be described as follows:
 
-1. The relay unit is used as a slave of the upstream MySQL to fetch the binlog that is persisted in the local storage as the relay log.
+1. The relay unit is used as a secondary database of the upstream MySQL to fetch the binlog that is persisted in the local storage as the relay log.
 
 2. The binlog replication unit (sync) reads the local relay log to obtain the binlog event.
 
@@ -133,62 +136,7 @@ When you use dmctl to manually handle the SQL statements unsupported by TiDB, th
 
 ### query-error
 
-`query-error` allows you to query the existing errors of the running subtask and relay unit in DM-workers.
-
-#### Command usage
-
-```bash
-query-error [--worker=127.0.0.1:8262] [task-name]
-```
-
-#### Arguments description
-
-+ `worker`:
-    - Flag parameter, string, `--worker`, optional
-    - If it is not specified, this command queries the errors in all DM-workers; if it is specified, this command queries the error of the specified DM-worker.
-
-+ `task-name`:
-    - Non-flag parameter, string, optional
-    - If it is not specified, this command queries the errors of all tasks; if it is specified, this command queries the error of the specified task.
-
-#### Example of results
-
-```bash
-» query-error test
-{
-    "result": true,                              # The result of the error query.
-    "msg": "",                                   # The additional message for the failure to the error query.
-    "workers": [                                 # The information list of DM-workers.
-        {
-            "result": true,                      # The result of the error query in this DM-worker.
-            "worker": "127.0.0.1:8262",          # The IP:port (worker-id) of this DM-worker.
-            "msg": "",                           # The additional message for the failure to the error query in this DM-worker.
-            "subTaskError": [                    # The error information of the running subtask in this DM-worker.
-                {
-                    "name": "test",              # The task name.
-                    "stage": "Paused",           # The status of the current task.
-                    "unit": "Sync",              # The current processing unit of the running task.
-                    "sync": {                    # The error information of the binlog replication unit (sync).
-                        "errors": [              # The error information list of the current processing unit.
-                            {
-                                // The error information description.
-                                "msg": "exec sqls[[USE `db1`; ALTER TABLE `db1`.`tbl1` CHANGE COLUMN `c2` `c2` decimal(10,3);]] failed, err:Error 1105: unsupported modify column length 10 is less than origin 11",
-                                // The position of the failed binlog event.
-                                "failedBinlogPosition": "mysql-bin|000001.000003:34642",
-                                // The SQL statement that raises an error.
-                                "errorSQL": "[USE `db1`; ALTER TABLE `db1`.`tbl1` CHANGE COLUMN `c2` `c2` decimal(10,3);]"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "RelayError": {                      # The error information of the relay processing unit in this DM-worker.
-                "msg": ""                        # The error information description.
-            }
-        }
-    ]
-}
-```
+`query-error` allows you to query errors that occur during the running of MySQL instance subtasks. For details, see [Query Error](query-error.md).
 
 ### sql-skip
 
@@ -197,15 +145,15 @@ query-error [--worker=127.0.0.1:8262] [task-name]
 #### Command usage
 
 ```bash
-sql-skip <--worker=127.0.0.1:8262> [--binlog-pos=mysql-bin|000001.000003:3270] [--sql-pattern=~(?i)ALTER\s+TABLE\s+`db1`.`tbl1`\s+ADD\s+COLUMN\s+col1\s+INT] [--sharding] <task-name>
+sql-skip <--source mysql-replica-01> [--binlog-pos=mysql-bin|000001.000003:3270] [--sql-pattern=~(?i)ALTER\s+TABLE\s+`db1`.`tbl1`\s+ADD\s+COLUMN\s+col1\s+INT] [--sharding] <task-name>
 ```
 
-#### Arguments description
+#### Flags description
 
-+ `worker`:
-    - Flag parameter, string, `--worker`
-    - If `--sharding` is not specified, `worker` is required; if `--sharding` is specified, `worker` is forbidden to use.
-    - `worker` specifies the DM-worker in which the presetted operation is going to be executed.
++ `source`:
+    - Flag parameter, string, `--source`
+    - If `--sharding` is not specified, `source` is required; if `--sharding` is specified, `source` is forbidden to use.
+    - `source` specifies the MySQL instance in which the preset operation is to be executed.
 
 + `binlog-pos`:
     - Flag parameter, string, `--binlog-pos`
@@ -238,13 +186,13 @@ sql-skip <--worker=127.0.0.1:8262> [--binlog-pos=mysql-bin|000001.000003:3270] [
 #### Command usage
 
 ```bash
-sql-replace <--worker=127.0.0.1:8262> [--binlog-pos=mysql-bin|000001.000003:3270] [--sql-pattern=~(?i)ALTER\s+TABLE\s+`db1`.`tbl1`\s+ADD\s+COLUMN\s+col1\s+INT] [--sharding] <task-name> <SQL-1;SQL-2>
+sql-replace <--source mysql-replica-01> [--binlog-pos=mysql-bin|000001.000003:3270] [--sql-pattern=~(?i)ALTER\s+TABLE\s+`db1`.`tbl1`\s+ADD\s+COLUMN\s+col1\s+INT] [--sharding] <task-name> <SQL-1;SQL-2>
 ```
 
-#### Arguments description
+#### Flags description
 
-+ `worker`:
-    - same with `--worker` of `sql-skip`
++ `source`:
+    - same with `--source` of `sql-skip`
 
 + `binlog-pos`:
     - same with `--binlog-pos` of `sql-skip`
@@ -311,21 +259,22 @@ Assume that it is acceptable in the actual production environment that this DDL 
 2. Use `sql-skip` to preset a skip operation that is to be executed when DM replicates this binlog event to the downstream after using `resume-task`.
 
     ```bash
-    » sql-skip --worker=127.0.0.1:8262 --binlog-pos=mysql-bin|000001.000003:34642 test
+    » sql-skip --source=mysql-replica-01 --binlog-pos=mysql-bin|000001.000003:34642 test
     {
         "result": true,
         "msg": "",
-        "workers": [
+        "sources": [
             {
                 "result": true,
-                "worker": "",
-                "msg": ""
+                "msg": "",
+                "source": "",
+                "worker": ""
             }
         ]
     }
     ```
 
-    You can also view the following log in the corresponding DM-worker node:
+    You can also view the following log in the DM-worker node corresponding to the source:
 
     ```bash
     2018/12/28 11:17:51 operator.go:121: [info] [sql-operator] set a new operator
@@ -336,23 +285,23 @@ Assume that it is acceptable in the actual production environment that this DDL 
 3. Use `resume-task` to resume the replication task
 
     ```bash
-    » resume-task --worker=127.0.0.1:8262 test
+    » resume-task --source=mysql-replica-01 test
     {
         "op": "Resume",
         "result": true,
         "msg": "",
-        "workers": [
+        "sources": [
             {
-                "op": "Resume",
                 "result": true,
-                "worker": "127.0.0.1:8262",
-                "msg": ""
+                "msg": "",
+                "source": "mysql-replica-01",
+                "worker": "worker1"
             }
         ]
     }
     ```
 
-    You can also view the following log in the corresponding DM-worker node:
+    You can also view the following log in the DM-worker node corresponding to the source:
 
     ```bash
     2018/12/28 11:27:46 operator.go:158: [info] [sql-operator] binlog-pos (mysql-bin|000001.000003, 34642) matched,
@@ -419,21 +368,22 @@ For this particular DDL statement, because dropping columns with the index is no
 3. Use `sql-replace` to preset a replace operation that is to be executed when DM replicates the corresponding binlog event to the downstream.
 
     ```bash
-    » sql-replace --worker=127.0.0.1:8262 --sql-pattern=~(?i)ALTER\s+TABLE\s+`db2`.`tbl2`\s+DROP\s+COLUMN\s+`c2` test ALTER TABLE `db2`.`tbl2` DROP INDEX idx_c2;ALTER TABLE `db2`.`tbl2` DROP COLUMN `c2`
+    » sql-replace --source=mysql-replica-01 --sql-pattern=~(?i)ALTER\s+TABLE\s+`db2`.`tbl2`\s+DROP\s+COLUMN\s+`c2` test ALTER TABLE `db2`.`tbl2` DROP INDEX idx_c2;ALTER TABLE `db2`.`tbl2` DROP COLUMN `c2`
     {
         "result": true,
         "msg": "",
-        "workers": [
+        "sources": [
             {
                 "result": true,
-                "worker": "",
-                "msg": ""
+                "msg": "",
+                "source": "",
+                "worker": ""
             }
         ]
     }
     ```
 
-    You can also view the following log in the corresponding DM-worker node:
+    You can also view the following log in the DM-worker node corresponding to the source:
 
     ```bash
     2018/12/28 15:33:13 operator.go:121: [info] [sql-operator] set a new operator
@@ -541,12 +491,12 @@ For this particular DDL statement, because dropping columns with the index is no
 
     ```bash
     » sql-replace --sharding --sql-pattern=~(?i)ALTER\s+TABLE\s+`shard_db`.`shard_table`\s+DROP\s+COLUMN\s+`c2` test ALTER TABLE `shard_db`.`shard_table` DROP INDEX idx_c2;ALTER TABLE `shard_db`.`shard_table` DROP COLUMN `c2`
-     {
-         "result": true,
-         "msg": "request with --sharding saved and will be sent to DDL lock's owner when resolving DDL lock",
-         "workers": [
-         ]
-     }
+    {
+        "result": true,
+        "msg": "request with --sharding saved and will be sent to DDL lock's owner when resolving DDL lock",
+        "sources": [
+        ]
+    }
     ```
 
     You can also view the following log in the **DM-master** node:

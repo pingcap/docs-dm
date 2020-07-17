@@ -1,7 +1,6 @@
 ---
 title: DM 集群软硬件环境需求
 summary: 了解部署 DM 集群的软件和硬件要求。
-category: reference
 ---
 
 # DM 集群软硬件环境需求

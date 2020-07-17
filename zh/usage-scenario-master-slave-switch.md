@@ -1,7 +1,6 @@
 ---
 title: 切换 DM-worker 与上游 MySQL 实例的连接
 summary: 了解如何切换 DM-worker 与上游 MySQL 实例的连接。
-category: reference
 ---
 
 # 切换 DM-worker 与上游 MySQL 实例的连接

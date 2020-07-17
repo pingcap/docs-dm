@@ -1,6 +1,5 @@
 ---
 title: DM 任务配置文件介绍
-category: reference
 ---
 
 # DM 任务配置文件介绍
