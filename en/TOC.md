@@ -44,6 +44,7 @@
     - [Stop a Task](stop-task.md)
     - [Skip or Replace Abnormal SQL Statements](skip-or-replace-abnormal-sql-statements.md)
   - [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md)
+  - [Handle Alerts](handle-alerts.md)
   - [Daily Check](daily-check.md)
 + Troubleshoot
   - [Handle Errors](error-handling.md)
@@ -67,6 +68,7 @@
     - [Task Configuration](task-configuration-file.md)
     - [Use DM Portal](dm-portal.md)
   - [Monitoring Metrics](monitor-a-dm-cluster.md)
+  - [Alert Information](alert-rules.md)
   - [Error Code](error-handling.md#handle-common-errors)
 + [FAQ](faq.md)
 + [Glossary](glossary.md)
