@@ -1,13 +1,13 @@
 ---
-title: TiDB Data Migration 查询运行错误
-summary: 深入了解 TiDB Data Migration 如何查询数据同步任务运行错误。
+title: Query Error
+summary: Learn how to query error that occurs in the running of a data replication task and subtasks.
 ---
 
-# TiDB Data Migration 查询运行错误
+# Query Error
 
-本文介绍 TiDB Data Migration (DM) `query-error` 命令的查询错误与子任务错误。
+You can use `query-error` to query error that occurs in the running of a data replication task and subtasks.
 
-## 查询结果
+## `query-error`
 
 {{< copyable "" >}}
 
@@ -17,19 +17,19 @@ summary: 深入了解 TiDB Data Migration 如何查询数据同步任务运行�
 
 ```
 {
-    "result": true,                              # query-error 操作本身是否成功
-    "msg": "",                                   # query-error 操作失败的说明信息
-    "sources": [                                 # source 信息列表
+    "result": true,                              # Whether query-error is executed successfully.
+    "msg": "",                                   # The description of why query-error fails.
+    "sources": [                                 # The source information list.
         {
-            "result": true,                      # 该 source 上 query-error 操作是否成功
-            "msg": "",                           # 该 source 上 query-error 操作失败的说明信息
-            "SourceError": {                     # 该 source 信息
+            "result": true,                      # Whether query-error is executed successfully on this source.
+            "msg": "",                           # The description of why query-error fails on this source.
+            "SourceError": {                     # The source information.
                 "source": "mysql-replica-01",
                 "worker": "worker1",
                 "SourceError": "",
                 "RelayError": null
             },
-            "subTaskError": [                    # 该 source 上运行的所有子任务的错误信息
+            "subTaskError": [                    # The error messages of all subtasks running on the source.
                 {
                     "name": "test",
                     "stage": "Running",
@@ -84,7 +84,7 @@ summary: 深入了解 TiDB Data Migration 如何查询数据同步任务运行�
 }
 ```
 
-## 查询子任务错误
+## Query subtask errors
 
 {{< copyable "" >}}
 
@@ -94,31 +94,31 @@ summary: 深入了解 TiDB Data Migration 如何查询数据同步任务运行�
 
 ```
 {
-    "result": true,                              # query-error 操作本身是否成功
-    "msg": "",                                   # query-error 操作失败的说明信息
-    "sources": [                                 # source 信息列表
+    "result": true,                              # Whether query-error is executed successfully.
+    "msg": "",                                   # The description of why query-error fails.
+    "sources": [                                 # The source information list.
         {
-            "result": true,                      # 该 source 上 query-error 操作是否成功
-            "msg": "",                           # 该 source 上 query-error 操作失败的说明信息
-            "SourceError": {                     # 该 source 信息
+            "result": true,                      # Whether query-error is executed successfully on this source.
+            "msg": "",                           # The description of why query-error fails on this source.
+            "SourceError": {                     # The source information.
                 "source": "mysql-replica-01",
                 "worker": "worker1",
                 "SourceError": "",
                 "RelayError": null
             },
-            "subTaskError": [                    # 该 source 上运行子任务的错误信息
+            "subTaskError": [                    # The error information of subtasks running on this source.
                 {
-                    "name": "test",              # 任务名
-                    "stage": "Paused",           # 当前任务的状态
-                    "unit": "Sync",              # 当前正在处理任务的处理单元
-                    "sync": {                    # binlog 同步单元（sync）的错误信息
-                        "errors": [              # 当前处理单元的错误信息列表
+                    "name": "test",              # The task name.
+                    "stage": "Paused",           # The current task status.
+                    "unit": "Sync",              # The unit currently processing the task.
+                    "sync": {                    # The error message of the binlog replication unit (Sync).
+                        "errors": [              # The list of error messages of the current processing unit.
                             {
-                                // 错误信息描述
+                                // The description of the error message.
                                 "msg": "exec sqls[[USE `db1`; ALTER TABLE `db1`.`tbl1` CHANGE COLUMN `c2` `c2` decimal(10,3);]] failed, err:Error 1105: unsupported modify column length 10 is less than origin 11",
-                                // 发生错误的 binlog event 的 position
+                                // The position of the binlog event where the error occurs.
                                 "failedBinlogPosition": "mysql-bin|000001.000003:34642",
-                                // 发生错误的 SQL 语句
+                                // The SQL statement with error.
                                 "errorSQL": "[USE `db1`; ALTER TABLE `db1`.`tbl1` CHANGE COLUMN `c2` `c2` decimal(10,3);]"
                             }
                         ]

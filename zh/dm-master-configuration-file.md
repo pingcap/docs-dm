@@ -1,6 +1,5 @@
 ---
 title: DM-master 配置文件介绍
-category: reference
 ---
 
 # DM-master 配置文件介绍

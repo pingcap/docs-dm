@@ -1,7 +1,6 @@
 ---
 title: Data Migration Simple Usage Scenario
 summary: Learn how to use Data Migration to replicate data in a simple scenario.
-category: reference
 aliases: ['/docs/tidb-data-migration/dev/usage-scenario-simple-replication/']
 ---
 
@@ -62,7 +61,7 @@ Assume that the schemas replicated to the downstream are as follows:
 
 ## Replication solution
 
-- To satisfy replication Requirements #1-i, #1-ii and #1-iii, configure the [table routing rules](feature-overview.md#table-routing) as follows:
+- To satisfy replication Requirements #1-i, #1-ii and #1-iii, configure the [table routing rules](key-features.md#table-routing) as follows:
 
     ```yaml
     routes:
@@ -78,7 +77,7 @@ Assume that the schemas replicated to the downstream are as follows:
         target-schema: "user_south"
     ```
 
-- To satisfy the replication Requirement #2-i, configure the [table routing rules](feature-overview.md#table-routing) as follows:
+- To satisfy the replication Requirement #2-i, configure the [table routing rules](key-features.md#table-routing) as follows:
 
     ```yaml
     routes:
@@ -95,7 +94,7 @@ Assume that the schemas replicated to the downstream are as follows:
         target-table:  "store_shenzhen"
     ```
 
-- To satisfy the replication Requirement #1-iv, configure the [binlog filtering rules](feature-overview.md#binlog-event-filter) as follows:
+- To satisfy the replication Requirement #1-iv, configure the [binlog filtering rules](key-features.md#binlog-event-filter) as follows:
 
     ```yaml
     filters:
@@ -111,7 +110,7 @@ Assume that the schemas replicated to the downstream are as follows:
         action: Ignore
     ```
 
-- To satisfy the replication Requirement #2-ii, configure the [binlog filtering rule](feature-overview.md#binlog-event-filter) as follows:
+- To satisfy the replication Requirement #2-ii, configure the [binlog filtering rule](key-features.md#binlog-event-filter) as follows:
 
     ```yaml
     filters:
@@ -126,7 +125,7 @@ Assume that the schemas replicated to the downstream are as follows:
     >
     > `store-filter-rule` is different from `log-filter-rule & user-filter-rule`. `store-filter-rule` is a rule for the whole `store` schema, while `log-filter-rule` and `user-filter-rule` are rules for the `log` table in the `user` schema.
 
-- To satisfy the replication Requirement #3, configure the [block and allow lists](feature-overview.md#block-and-allow-table-lists) as follows:
+- To satisfy the replication Requirement #3, configure the [block and allow lists](key-features.md#block-and-allow-table-lists) as follows:
 
     ```yaml
     block-allow-list:  # Use black-white-list if the DM's version <= v2.0.0-beta.2.

@@ -1,7 +1,7 @@
 ---
 title: Create and Verify a Data Replication Task
 summary: Learn how to create a replication task to verify whether the cluster works well after the DM cluster is deployed.
-category: how-to
+aliases: ['/docs/tidb-data-migration/dev/create-task-and-verify/']
 ---
 
 # Create and Verify a Data Replication Task

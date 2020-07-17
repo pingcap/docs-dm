@@ -1,7 +1,6 @@
 ---
 title: Data Migration Task Configuration File
 summary: This document introduces the task configuration file of Data Migration.
-category: reference
 aliases: ['/docs/tidb-data-migration/dev/task-configuration-file/']
 ---
 
@@ -11,7 +10,7 @@ This document introduces the basic task configuration file of Data Migration (DM
 
 DM also implements [an advanced task configuration file](task-configuration-file-full.md) which provides greater flexibility and more control over DM.
 
-For the feature and configuration of each configuration item, see [Data replication features](feature-overview.md).
+For the feature and configuration of each configuration item, see [Data replication features](key-features.md).
 
 ## Important concepts
 
@@ -77,7 +76,7 @@ Refer to the comments in the [template](#task-configuration-file-template-basic)
 
 ### Feature configuration set
 
-For basic applications, you only need to modify the block and allow lists filtering rule. Refer to the comments about `block-allow-list` in the [template](#task-configuration-file-template-basic) or [Block & allow table lists](feature-overview.md#block-and-allow-table-lists) to see more details.
+For basic applications, you only need to modify the block and allow lists filtering rule. Refer to the comments about `block-allow-list` in the [template](#task-configuration-file-template-basic) or [Block & allow table lists](key-features.md#block-and-allow-table-lists) to see more details.
 
 ## Instance configuration
 
