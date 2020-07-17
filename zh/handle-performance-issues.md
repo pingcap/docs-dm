@@ -59,7 +59,7 @@ Load 模块主要操作为从本地读取 SQL 文件数据并写入到下游，�
 
 在 [Binlog replication 的监控部分](monitor-a-dm-cluster.md#binlog-replication)，可以主要通过 `binlog file gap between master and syncer` 监控项确认是否存在性能问题，如果该指标长时间大于 1，则通常表明存在性能问题；如果该指标基本为 0，则一般表明没有性能问题。
 
-如果 `binlog file gap between master and syncer` 长时间大于 1，则可以再通过 `binlog file gap between relay and syncer` 判断延迟主要存在于哪个模块，如果该值基本不大于 1，则延迟可能存在于 relay log 模块，请先参考 [relay log 模块的性能问题及处理方法](#relay-log-模块的性能问题及处理方法) 进行处理；否则继续对 Binlog replication 进行排查。
+如果 `binlog file gap between master and syncer` 长时间大于 1，则可以再通过 `binlog file gap between relay and syncer` 判断延迟主要存在于哪个模块，如果该值基本为 0，则延迟可能存在于 relay log 模块，请先参考 [relay log 模块的性能问题及处理方法](#relay-log-模块的性能问题及处理方法) 进行处理；否则继续对 Binlog replication 进行排查。
 
 ### 读取 binlog 数据
 
