@@ -78,7 +78,7 @@ For details, see [Full Import Benchmark Case](performance-test.md#full-import-be
 | :-------: | :--------------------------------: | :-----------------------: | :------------: | :------: | :-----------------: |
 | load data | 1.737                              | 4878                      | 38.14          | 2346.9   | 16.64               |
 
-#### Benchmark result with different pool size in load unit
+#### Benchmark results with different pool sizes in load unit
 
 In this test, the size of data imported using `sysbench` is 3.78 GB. The following is detailed information of the test data:
 
