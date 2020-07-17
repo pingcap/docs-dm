@@ -73,7 +73,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
       mydumper-config-name: "global"
       loader-thread: 16
 
-  # Configure the name of the library where sysbench generates data.
+  # Configure the name of the database where sysbench generates data.
   block-allow-list:
     instance:
       do-dbs: ["dm_benchmark"]
@@ -132,7 +132,7 @@ Use `sysbench` to create test tables in the upstream.
       block-allow-list:  "instance"
       syncer-config-name: "global"
 
-  # Configure the name of the library where sysbench generates data.
+  # Configure the name of the database where sysbench generates data.
   block-allow-list:
     instance:
       do-dbs: ["dm_benchmark"]
