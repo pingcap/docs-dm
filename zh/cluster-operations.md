@@ -1,6 +1,5 @@
 ---
 title: DM 集群操作
-category: reference
 ---
 
 # DM 集群操作

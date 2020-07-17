@@ -1,6 +1,5 @@
 ---
 title: 分库分表合并同步
-category: reference
 ---
 
 # 分库分表合并同步

@@ -1,7 +1,6 @@
 ---
 title: Stop a Data Replication Task
 summary: Learn how to stop a data replication task.
-category: reference
 ---
 
 # Stop a Data Replication Task

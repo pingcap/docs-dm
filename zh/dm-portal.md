@@ -1,6 +1,5 @@
 ---
 title: DM Portal 简介
-category: reference
 ---
 
 # DM Portal 简介

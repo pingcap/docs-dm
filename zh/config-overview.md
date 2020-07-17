@@ -1,6 +1,5 @@
 ---
 title: DM 配置简介
-category: reference
 ---
 
 # DM 配置简介
