@@ -6,17 +6,17 @@ category: reference
 
 # Optimize Configuration of DM
 
-The document describes how to optimize the configuration of replication tasks, to improve the data replication performance of DM.
+This document introduces how to optimize the configuration of the data replication task to improve the performance of data replication.
 
-## Full export
+## Full data export
 
-The configuration item related to full export is `mydumpers`. The following describes how to configure the parameters related to performance.
+`mydumpers` is a configuration item related to full data export. This section describes how to configure performance-related options.
 
 ### `rows`
 
-Setting the `rows` option enables single-table multi-thread concurrent export, the values is the maximum number of rows contained in each chunk exported. After opening, DM will first select a column as the split benchmark when the single table of MySQL is concurrently exported. The selected priortiy is primary key> unique index> normal index. Then selecting the target column, need to ensure that the column is an integer type (such as `INT`, `MEDIUMINT`, `BIGINT`, etc.). 
+Setting the `rows` option enables concurrently exporting data from a single table using multi-thread. The value of `rows` is the maximum number of rows contained in each exported chunk. After this option is enabled, DM selects a column as the split benchmark when the data of a MySQL single table is concurrently exported. This column can be one of the following collumns: the primary key column, the unique index column, and the normal index column (ordered from highest priority to lowest). Make sure this column is of integer type (for example, `INT`, `MEDIUMINT`, `BIGINT`). 
 
-The value of `rows` can be set to 10000, and the specific value of setting can be changed according to the total number of rows in the table and the performance of the database. In addition , need to set `threads` to control the number of concurrent threads, the default value is 4, can be adjusted appropriately.
+The value of `rows` can be set to 10000. You can change this value according to the total number of rows in the table and the performance of the database. In addition , need to set `threads` to control the number of concurrent threads, the default value is 4, can be adjusted appropriately.
 
 ### `chunk-filesize`
 
