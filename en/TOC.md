@@ -34,7 +34,7 @@
   - [Cluster Operations](cluster-operations.md)
   + Manage Replication Tasks
     - [dmctl Introduction](dmctl-introduction.md)
-    - [Manage Upstream Instances](manage-source.md)
+    - [Manage Upstream Data Source](manage-source.md)
     - [Precheck a Task](precheck.md)
     - [Create a Task](create-task.md)
     - [Query Status](query-status.md)
@@ -43,14 +43,14 @@
     - [Resume a Task](resume-task.md)
     - [Stop a Task](stop-task.md)
     - [Skip or Replace Abnormal SQL Statements](skip-or-replace-abnormal-sql-statements.md)
-  - [Handle Sharding DDL Locks Manually](feature-manually-handling-sharding-ddl-locks.md)
+  - [Manually Handle Sharding DDL Locks](feature-manually-handling-sharding-ddl-locks.md)
   - [Handle Alerts](handle-alerts.md)
   - [Daily Check](daily-check.md)
 + Troubleshoot
   - [Handle Errors](error-handling.md)
   - [Handle Performance Issues](handle-performance-issues.md)
 + Tutorials
-  - [Simple Scenario](usage-scenario-simple-replication.md)
+  - [Simple Replication Scenario](usage-scenario-simple-replication.md)
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
@@ -60,7 +60,7 @@
     - [DM-worker](dm-worker-intro.md)
     - [DM Relay Log](relay-log.md)
   - [Command-line Flags](command-line-flags.md)
-  + Configure
+  + Configuration
     - [Overview](config-overview.md)
     - [DM-master Configuration](dm-master-configuration-file.md)
     - [DM-worker Configuration](dm-worker-configuration-file.md)
@@ -68,8 +68,8 @@
     - [Task Configuration](task-configuration-file.md)
     - [Use DM Portal](dm-portal.md)
   - [Monitoring Metrics](monitor-a-dm-cluster.md)
-  - [Alert Information](alert-rules.md)
-  - [Error Code](error-handling.md#handle-common-errors)
+  - [Alert Rules](alert-rules.md)
+  - [Error Codes](error-handling.md#handle-common-errors)
 + [FAQ](faq.md)
 + [Glossary](glossary.md)
 + Release Notes
