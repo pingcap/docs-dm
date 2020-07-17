@@ -1,7 +1,6 @@
 ---
 title: DM 监控指标
 summary: 介绍 DM 的监控指标
-category: reference
 aliases: ['/docs-cn/dev/reference/tools/data-migration/monitor/','/docs-cn/v3.1/reference/tools/data-migration/monitor/','/docs-cn/v3.0/reference/tools/data-migration/monitor/','/docs-cn/v2.1/reference/tools/data-migration/monitor/']
 ---
 
