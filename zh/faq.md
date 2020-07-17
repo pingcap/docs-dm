@@ -1,6 +1,5 @@
 ---
 title: Data Migration 常见问题
-category: reference
 ---
 
 # Data Migration 常见问题

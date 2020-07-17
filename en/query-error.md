@@ -1,7 +1,6 @@
 ---
 title: Query Error
 summary: Learn how to query error that occurs in the running of a data replication task and subtasks.
-category: reference
 ---
 
 # Query Error

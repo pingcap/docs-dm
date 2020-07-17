@@ -1,7 +1,6 @@
 ---
 title: Create a Data Replication Task
 summary: Learn how to create a data replication task in TiDB Data Migration.
-category: reference
 ---
 
 # Create a Data Replication Task

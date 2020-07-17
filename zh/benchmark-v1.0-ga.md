@@ -1,6 +1,5 @@
 ---
 title: DM 1.0-GA 性能测试报告
-category: benchmark
 ---
 
 # DM 1.0-GA 性能测试报告

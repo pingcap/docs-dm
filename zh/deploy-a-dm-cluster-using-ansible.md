@@ -1,6 +1,5 @@
 ---
 title: 使用 DM-Ansible 部署 DM 集群
-category: how-to
 ---
 
 # 使用 DM-Ansible 部署 DM 集群
