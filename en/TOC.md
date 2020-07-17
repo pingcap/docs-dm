@@ -57,8 +57,6 @@
   - [Skip or Replace Abnormal SQL Statements](skip-or-replace-abnormal-sql-statements.md)
   - [Daily Check](daily-check.md)
 - [Monitor](monitor-a-dm-cluster.md)
-+ Performance tuning
-  - [Configuration tuning](tune-configuration.md)
 + Migrate from MySQL compatible database
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
 + [DM Portal](dm-portal.md)
