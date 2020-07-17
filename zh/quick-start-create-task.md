@@ -10,7 +10,7 @@ category: how-to
 
 ## 使用样例
 
-在本地部署两个开启 binlog 的 MySQL 实例和一个 mocktkv 模式的 TiDB；通用 DM 集群的一个 DM-master 来管理集群和数据同步任务。各个节点的信息如下：
+在本地部署两个开启 binlog 的 MySQL 实例和一个 mocktkv 模式的 TiDB；使用 DM 集群的一个 DM-master 来管理集群和数据同步任务。各个节点的信息如下：
 
 | 实例        | 服务器地址   | 端口   |
 | :---------- | :----------- | :--- |
@@ -23,7 +23,7 @@ category: how-to
 
 ### 运行上游 MySQL
 
-运行两个 MySQL 服务，使用 Docker 启动 MySQL，示例命令如下：
+准备 2 个可运行的 MySQL 实例，也可以使用 Docker 快速启动 MySQL，示例命令如下：
 
 {{< copyable "shell-regular" >}}
 
@@ -34,9 +34,9 @@ docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=tru
 
 ### 准备数据
 
-向 mysql-3306 写入[示例数据](https://github.com/pingcap/dm/blob/bc1094a6b7388ad934279898b4e308cd3d58f7a9/tests/sharding/data/db1.prepare.sql)。
+- 向 mysql-3306 写入[示例数据](https://github.com/pingcap/dm/blob/bc1094a6b7388ad934279898b4e308cd3d58f7a9/tests/sharding/data/db1.prepare.sql)。
 
-向 mysql-3307 写入[示例数据](https://github.com/pingcap/dm/blob/bc1094a6b7388ad934279898b4e308cd3d58f7a9/tests/sharding/data/db2.prepare.sql)。
+- 向 mysql-3307 写入[示例数据](https://github.com/pingcap/dm/blob/bc1094a6b7388ad934279898b4e308cd3d58f7a9/tests/sharding/data/db2.prepare.sql)。
 
 ### 运行下游 TiDB
 
@@ -73,7 +73,7 @@ fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
 
 > **注意：**
 >
-> 如果数据库没有设置密码，这可以跳过该步骤。
+> 如果数据库没有设置密码，则可以跳过该步骤。
 
 ### 编写 source 配置文件
 
