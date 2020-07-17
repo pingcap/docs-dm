@@ -10,7 +10,7 @@ category: how-to
 
 ## 使用样例
 
-在本地部署两个开启 binlog 的 MySQL 实例和一个 mocktkv 模式的 TiDB；使用 DM 集群的一个 DM-master 来管理集群和数据同步任务。各个节点的信息如下：
+在本地部署两个开启 binlog 的 MySQL 实例和一个 TiDB 实例；使用 DM 集群的一个 DM-master 来管理集群和数据同步任务。各个节点的信息如下：
 
 | 实例        | 服务器地址   | 端口   |
 | :---------- | :----------- | :--- |
@@ -40,7 +40,7 @@ docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=tru
 
 ### 运行下游 TiDB
 
-使用以下命令运行一个 mocktikv 模式的 TiDB server：
+使用以下命令运行一个 TiDB server：
 
 {{< copyable "shell-regular" >}}
 
@@ -50,6 +50,10 @@ tar -xzvf tidb-v4.0.0-rc.2-linux-amd64.tar.gz
 mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
 ./tidb-server -P 4000 --store mocktikv --log-file "./tidb.log" &
 ```
+
+> **警告：**
+>
+> 本文档中 TiDB 的部署方法并**不适用**于生产或开发环境。
 
 ## 配置 MySQL 数据源
 
