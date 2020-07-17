@@ -27,9 +27,9 @@ If the value of `binlog file gap between master and relay` is 0, but you suspect
 
 `read binlog event duration` refers to the duration that the relay log reads binlog from the upstream database (MySQL/MariaDB). Ideally, this metric is close to the network latency between DM-worker and MySQL/MariaDB instances.
 
-- For data migration in one machine room, reading binlog data is not a performance bottleneck. If the value of `read binlog event duration` is too large, check the network connection between DM-worker and MySQL/MariaDB.
+- For data migration in one data center, reading binlog data is not a performance bottleneck. If the value of `read binlog event duration` is too large, check the network connection between DM-worker and MySQL/MariaDB.
 
-- For data migration in the geo-distributed environment, try to deploy DM-worker and MySQL/MariaDB in one machine room, while deploying the TiDB cluster in the target machine room.
+- For data migration in the geo-distributed environment, try to deploy DM-worker and MySQL/MariaDB in one data center, while deploying the TiDB cluster in the target data center.
 
 The process of reading binlog data from the upstream database includes the following sub-processes:
 
@@ -43,7 +43,7 @@ The process of reading binlog data from the upstream database includes the follo
 
 ### binlog data decoding and verification
 
-After reading the binlog event into the DM memory, DM's relay processing unit decodes and verifies data. This usually does not lead to performance bottleneck; therefore, there is no related performance metric on the monitoring dashboard by default. If you need to view this metric, you can manually add `dm_relay_read_transform_duration` in Prometheus.
+After reading the binlog event into the DM memory, DM's relay processing unit decodes and verifies data. This usually does not lead to performance bottleneck; therefore, there is no related performance metric on the monitoring dashboard by default. If you need to view this metric, you can manually add a monitoring item in Grafana. This monitoring item corresponds to `dm_relay_read_transform_duration`, a metric from Prometheus.
 
 ### Write relay log files
 
@@ -60,7 +60,7 @@ To diagnose performance issues in the Binlog replication unit, you can check the
 - If this metric is greater than 1 for a long time, it usually indicates that there is a performance issue.
 - If this metric is 0, it usually indicates that there is no performance issue.
 
-When `binlog file gap between master and syncer` is greater than 1 for a long time, check `binlog file gap between relay and syncer` to figure out which unit the latency mainly exists in. If this value is also greater than 1 for a long time, the latency might exist in the relay log unit. Then you can refer to [relay log unit](#relay-log-unit) to resolve this issue; otherwise, continue checking the Binlog replication unit.
+When `binlog file gap between master and syncer` is greater than 1 for a long time, check `binlog file gap between relay and syncer` to figure out which unit the latency mainly exists in. If this value is usually 0, the latency might exist in the relay log unit. Then you can refer to [relay log unit](#relay-log-unit) to resolve this issue; otherwise, continue checking the Binlog replication unit.
 
 ### Read binlog data
 
@@ -68,7 +68,7 @@ The Binlog replication unit decides whether to read the binlog event from the up
 
 - If DM's Binlog replication processing unit reads the binlog event from upstream MySQL/MariaDB, to locate and resolve the issue, refer to [read binlog data](#read-binlog-data) in the "relay log unit" section.
 
-- If DM's Binlog replication processing unit reads the binlog event from the relay log file, when `binlog event size` is not too large, the value of `write relay log duration` should be microseconds. If `read binlog event duration` is too large, check the write performance of the disk. To avoid low write performance, use local SSDs for DM-worker.
+- If DM's Binlog replication processing unit reads the binlog event from the relay log file, when `binlog event size` is not too large, the value of `read binlog event duration` should be microseconds. If `read binlog event duration` is too large, check the read performance of the disk. To avoid low write performance, use local SSDs for DM-worker.
 
 ### binlog event conversion
 
