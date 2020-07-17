@@ -1,7 +1,6 @@
 ---
 title: 告警处理
 summary: 了解 DM 中各主要告警信息的处理方法。
-category: reference
 ---
 
 # 告警处理

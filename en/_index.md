@@ -13,10 +13,10 @@ aliases: ['/docs/tidb-data-migration/dev/']
 <ColumnTitle>About TiDB Data Migration</ColumnTitle>
 
 - [Performance](benchmark-v1.0-ga.md)
-- [Table routing](feature-overview.md#table-routing)
-- [Block & Allow Lists](feature-overview.md#block-and-allow-table-lists)
-- [Binlog Event Filter](feature-overview.md#binlog-event-filter)
-- [Replication delay monitoring](feature-overview.md#replication-delay-monitoring)
+- [Table routing](key-features.md#table-routing)
+- [Block & Allow Lists](key-features.md#block-and-allow-table-lists)
+- [Binlog Event Filter](key-features.md#binlog-event-filter)
+- [Replication delay monitoring](key-features.md#replication-delay-monitoring)
 - [Online DDL Scheme](online-ddl-scheme.md)
 - [Shard Merge](feature-shard-merge.md)
 
@@ -46,7 +46,10 @@ aliases: ['/docs/tidb-data-migration/dev/']
 
 - [Upgrade DM](dm-upgrade.md)
 - [DM Cluster Operations](cluster-operations.md)
-- [Manage Replication Tasks](manage-replication-tasks.md)
+- [Create a Task](create-task.md)
+- [Pause a Task](pause-task.md)
+- [Resume a Task](resume-task.md)
+- [Stop a Task](stop-task.md)
 - [Manually Handle Sharding DDL Locks](feature-manually-handling-sharding-ddl-locks.md)
 
 </NavColumn>

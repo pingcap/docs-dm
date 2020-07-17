@@ -1,6 +1,5 @@
 ---
 title: 使用 DM 同步数据
-category: reference
 ---
 
 # 使用 DM 同步数据

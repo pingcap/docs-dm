@@ -1,7 +1,6 @@
 ---
 title: DM 告警信息
 summary: 介绍 DM 的告警信息。
-category: reference
 ---
 
 # DM 告警信息
