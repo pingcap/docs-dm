@@ -1,7 +1,6 @@
 ---
 title: DM Alert Information
 summary: Introduce the alert information of DM.
-category: reference
 ---
 
 # DM Alert Information
@@ -10,7 +9,7 @@ The [alert system](replicate-data-using-dm.md#step-7-monitor-the-task-and-check-
 
 > **Note:**
 >
-> There are alert rules provided with DM-worker only. But it does not include DM-master currently.
+> There are alert rules provided with DM-worker only.
 
 For more information about DM alert rules and the solutions, refer to [handle alerts](handle-alerts.md).
 
