@@ -10,54 +10,51 @@ This document introduces how to optimize the configuration of the data replicati
 
 ## Full data export
 
-`mydumpers` is a configuration item related to full data export. This section describes how to configure performance-related options.
+`mydumpers` is the configuration item related to full data export. This section describes how to configure performance-related options.
 
 ### `rows`
 
-Setting the `rows` option enables concurrently exporting data from a single table using multi-thread. The value of `rows` is the maximum number of rows contained in each exported chunk. After this option is enabled, DM selects a column as the split benchmark when the data of a MySQL single table is concurrently exported. This column can be one of the following collumns: the primary key column, the unique index column, and the normal index column (ordered from highest priority to lowest). Make sure this column is of integer type (for example, `INT`, `MEDIUMINT`, `BIGINT`). 
+Setting the `rows` option enables concurrently exporting data from a single table using multi-thread. The value of `rows` is the maximum number of rows contained in each exported chunk. After this option is enabled, DM selects a column as the split benchmark when the data of a MySQL single table is concurrently exported. This column can be one of the following columns: the primary key column, the unique index column, and the normal index column (ordered from highest priority to lowest). Make sure this column is of integer type (for example, `INT`, `MEDIUMINT`, `BIGINT`).
 
-The value of `rows` can be set to 10000. You can change this value according to the total number of rows in the table and the performance of the database. In addition , need to set `threads` to control the number of concurrent threads, the default value is 4, can be adjusted appropriately.
+The value of `rows` can be set to 10000. You can change this value according to the total number of rows in the table and the performance of the database. In addition, you need to set `threads` to control the number of concurrent threads. By default, the value of `threads` is 4. You can adjust this value as needed.
 
 ### `chunk-filesize`
 
-DM full backup will split the data of each table into multiple chunks according to the value of the `chunk-filesize` parameter, and each chunk is saved in a file with a size of about `chunk-filesize`. According to this parameter, the data is splitted into multiple files, so that the parallel processing logic of the DM Load processing unit can be used to increase the import speed. The default value of this parameter is 64 (the unit is MB). Under normal situation, it does not need to be set. Also can make appropriate adjustments according to the size of the entire size of data.
+During full backup, DM splits the data of each table into multiple chunks according to the value of the `chunk-filesize` option. Each chunk is saved in a file with a size of about `chunk-filesize`. In this way, data is split into multiple files and you can use the parallel processing of the DM Load unit to improve the import speed. The default value of this option is 64 (in MB). Normally, you do not need to set this option. If you set it, adjust the value of this option according to the size of the full data.
 
-> **Note：**
+> **Note:**
 >
-> - The parameter value of `mydumpers` does not support updating after the replication task is created, so need to determine the value of each parameter before creating the task. If need to update, need to use dmctl stop the task to update the configuration file, and then re-create the task.
+> -  You cannot update the value of `mydumpers` after the replication task is created. Be sure about the value of each option before creating the task. If you need to update the value, stop the task using dmctl, update the configuration file, and re-create the task.
+> - `mydumpers`.`threads` can be replaced with the `mydumper-thread` configuration item for simplicity.
+> - If `rows` is set，DM ignores the value of `chunk-filesize`.
 
-> - `mydumpers`.`threads` can be replaced with the configuration item `mydumper-thread` to simplify configuration.
+## Full data import
 
-> - If `rows` is set，DM will ingore the vaue of `chunk-filesize`. 
-
-## Full import 
-
-The configuration item related to full import is `loaders`. The following describes how to configure the parameters related to performance.
+`loaders` is the configuration item related to full data import. This section describes how to configure performance-related options.
 
 ### `pool-size`
 
-`pool-size` is the setting of the number of threads in the DM load phase. The default value is 16. Normally, there is no need to set it. Also can make appropriate adjustments based on the size of full size of data and the performance of the database.
+The `pool-size` option determines the number of threads in the DM Load phase. The default value is 16. Normally, you do not need to set this option. If you set it, adjust the value of this option according to the size of the full data and the performance of the database.
 
-> **Note：**
+> **Note:**
 >
-> - The parameter value of `loaders` does not support updating after the replication task is created, so need to define the value of each parameter before creating the task. If need to update, so need to use dmctl stop the task to update the configuration file, and then re-create the task.
+> -  You cannot update the value of `loaders` after the replication task is created. Be sure about the value of each option before creating the task. If you need to update the value, stop the task using dmctl, update the configuration file, and re-create the task.
+> - `loaders`.`pool-size` can be replaced with the `loader-thread` configuration item for simplicity.
 
-> - `loaders`.`pool-size` can be replaced with the configuration item `loader-thread` to simplify configuration.
+## Incremental data replication
 
-## Incremental replication
-
-The configuration related to incremental replication is `syncers`. The following describes how to configure the parameters related to performance.
+`syncers` is the configuration item related to incremental data replication. This section describes how to configure performance-related options.
 
 ### `worker-count`
 
-`worker-count` is the number of threads for concurrent replication DML in the DM sync phase. The default value is 16. If there is a high requirement for replication speed, the value the parameter can be adjusted appropriately.
+`worker-count` determines the number of threads for concurrent replication of DMLs in the DM Sync phase. The default value is 16. To speed up data replication, increase the value of this option appropriately.
 
-### batch
+### `batch`
 
-`batch` is the number of DML included in each transaction when the data is replicated to the downstream database in the DM sync phase. The default value is 100. Normally, no adjustment is required.
+`batch` determines the number of DMLs included in each transaction when the data is replicated to the downstream database during the DM Sync phase. The default value is 100. Normally, you do not need to change the value of this option.
 
-> **Note：**
+> **Note:**
 >
-> - The parameter value of `syncers` does not support updating after the replication task is created, so need to define the value of each parameter before creating the task. If need to update, so need to use dmctl stop the task to update the configuration file, and then re-create the task.
-> - `syncers`.`worker-count` can be replaced with the configuration item `syncer-thread` to simplify configuration.
-> - The settings of `worker-count` and `batch` need to be adjusted according to the actual situation, for example: the network delay from the DM to the downstream database is high, can appropriately increase the `worker-count` and lower the `batch`.
+> -  You cannot update the value of `syncers` after the replication task is created. Be sure about the value of each option before creating the task. If you need to update the value, stop the task using dmctl, update the configuration file, and re-create the task.
+> - `syncers`.`worker-count` can be replaced with the `syncer-thread` configuration item for simplicity.
+> - You can change the values of `worker-count` and `batch` according to the actual scenario. For example, if there is a high network delay between DM and the downstream database, you can increase the value of `worker-count` and decrease the value of `batch` appropriately.
