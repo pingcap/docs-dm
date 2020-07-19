@@ -1,7 +1,6 @@
 ---
 title: Pause a Data Replication Task
 summary: Learn how to pause a data replication task in TiDB Data Migration.
-category: reference
 ---
 
 # Pause a Data Replication Task

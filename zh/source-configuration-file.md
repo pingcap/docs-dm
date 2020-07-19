@@ -1,6 +1,5 @@
 ---
 title: 上游数据库配置文件介绍
-category: reference
 ---
 
 # 上游数据库配置文件介绍

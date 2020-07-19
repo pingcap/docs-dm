@@ -1,7 +1,6 @@
 ---
 title: Deploy Data Migration Using DM-Ansible
 summary: Use DM-Ansible to deploy the Data Migration cluster.
-category: how-to
 aliases: ['/docs/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible/','/docs/tools/dm/deployment/']
 ---
 
@@ -469,6 +468,10 @@ The following example uses `tidb` as the user who runs the service.
     ```bash
     ansible-playbook deploy.yml
     ```
+    
+    > **Note:**
+    >
+    > Currently, both DM and TiDB overwrite the original running configuration of the monitoring components during deployment and rolling upgrade. Therefore, it is highly recommended to deploy independent monitoring components for DM and TiDB.
 
 3. Start the DM cluster.
 

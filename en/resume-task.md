@@ -1,7 +1,6 @@
 ---
 title: Resume a Data Replication Task
 summary: Learn how to resume a data replication task.
-category: reference
 ---
 
 # Resume a Data Replication Task

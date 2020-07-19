@@ -1,7 +1,6 @@
 ---
 title: Skip or Replace Abnormal SQL Statements
 summary: Learn how to skip or replace abnormal SQL statements when you use DM.
-category: reference
 aliases: ['/docs/tidb-data-migration/dev/skip-or-replace-abnormal-sql-statements/']
 ---
 

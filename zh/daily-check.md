@@ -1,7 +1,6 @@
 ---
 title: TiDB Data Migration 日常巡检
 summary: 了解 DM 工具的日常巡检。
-category: reference
 ---
 
 # TiDB Data Migration 日常巡检
