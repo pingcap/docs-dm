@@ -50,6 +50,9 @@
 + Migrate from MySQL compatible database
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
 + [DM Portal](dm-portal.md)
++ Alert
+  - [Alert Rules](alert-rules.md)
+  - [Handle Alerts](handle-alerts.md)
 + Troubleshoot
   - [Error Handling](error-handling.md)
 - [FAQ](faq.md)
