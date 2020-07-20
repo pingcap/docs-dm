@@ -34,7 +34,7 @@ During full backup, DM splits the data of each table into multiple chunks accord
 
 ### `pool-size`
 
-The `pool-size` option determines the number of threads in the DM Load phase. The default value is 16. Normally, you do not need to set this option. If you set it, adjust the value of this option according to the size of the full data and the performance of the database.
+The `pool-size` option determines the number of threads in the DM Load unit. The default value is 16. Normally, you do not need to set this option. If you set it, adjust the value of this option according to the size of the full data and the performance of the database.
 
 > **Note:**
 >
@@ -47,11 +47,11 @@ The `pool-size` option determines the number of threads in the DM Load phase. Th
 
 ### `worker-count`
 
-`worker-count` determines the number of threads for concurrent replication of DMLs in the DM Sync phase. The default value is 16. To speed up data replication, increase the value of this option appropriately.
+`worker-count` determines the number of threads for concurrent replication of DMLs in the DM Sync unit. The default value is 16. To speed up data replication, increase the value of this option appropriately.
 
 ### `batch`
 
-`batch` determines the number of DMLs included in each transaction when the data is replicated to the downstream database during the DM Sync phase. The default value is 100. Normally, you do not need to change the value of this option.
+`batch` determines the number of DMLs included in each transaction when the data is replicated to the downstream database during the DM Sync unit. The default value is 100. Normally, you do not need to change the value of this option.
 
 > **Note:**
 >
