@@ -1,7 +1,6 @@
 ---
 title: 分表合并数据迁移最佳实践
 summary: 使用 DM 对分库分表进行合并迁移时的最佳实践。
-category: reference
 ---
 
 # 分表合并数据迁移最佳实践
@@ -61,8 +60,15 @@ CREATE TABLE `tbl_no_pk` (
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1
     ```
 
-2. 启动数据迁移任务，执行全量与增量数据迁移。
-3. 通过 `query-status` 验证数据迁移任务是否正常，在下游数据库中验证合表中是否已经存在了来自上游的数据。
+2. 在 `task.yaml` 文件中增加如下配置跳过自增主键冲突检查：
+    
+    ```yaml
+    ignore-checking-items: ["auto_increment_ID"]
+    ```
+    
+3. 启动数据迁移任务，执行全量与增量数据迁移。
+
+4. 通过 `query-status` 验证数据迁移任务是否正常，在下游数据库中验证合表中是否已经存在了来自上游的数据。
 
 ### 使用联合主键
 

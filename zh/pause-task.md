@@ -1,7 +1,6 @@
 ---
 title: 暂停数据同步任务
 summary: 了解 TiDB Data Migration 如何暂停数据同步任务。
-category: reference
 ---
 
 # 暂停数据同步任务

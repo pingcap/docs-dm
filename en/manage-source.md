@@ -1,7 +1,6 @@
 ---
 title: Manage Upstream MySQL Instances
 summary: Learn how to manage upstream MySQL instances in TiDB Data Migration.
-category: reference
 ---
 
 # Manage Upstream MySQL Instances

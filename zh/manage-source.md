@@ -1,7 +1,6 @@
 ---
 title: 管理上游 MySQL 实例
 summary: 了解如何管理上游 MySQL 实例。
-category: reference
 ---
 
 # 管理上游 MySQL 实例

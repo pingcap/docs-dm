@@ -1,6 +1,5 @@
 ---
 title: Data Migration 简单使用场景
-category: reference
 ---
 
 # Data Migration 简单使用场景
