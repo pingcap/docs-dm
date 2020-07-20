@@ -11,7 +11,7 @@
     - [DM 1.0-alpha Benchmark Report](benchmark-v1-alpha.md)
   + Features
     - [Table Routing](key-features.md#table-routing)
-    - [Block and Allow Lists](key-features.md#black-and-white-table-lists)
+    - [Block and Allow Lists](key-features.md#block-and-allow-table-lists)
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
     - [Replication Delay Monitoring](key-features.md#replication-delay-monitoring)
     - [Online DDL Scheme](online-ddl-scheme.md)
