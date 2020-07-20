@@ -44,7 +44,7 @@ docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=tru
 {{< copyable "shell-regular" >}}
 
 ```bash
-wget https://download.pingcap.org/tidb-v4.0.0-rc.2-linux-amd64.tar.gz
+wget https://download.pingcap.org/tidb-v4.0.0-linux-amd64.tar.gz
 tar -xzvf tidb-v4.0.0-rc.2-linux-amd64.tar.gz
 mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
 ./tidb-server -P 4000 --store mocktikv --log-file "./tidb.log" &
