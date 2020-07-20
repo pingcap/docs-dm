@@ -1,7 +1,6 @@
 ---
 title: Optimize Configuration of DM
 summary: Learn how to optimize the configuration of the data replication task to improve the performance of data replication.
-category: reference
 ---
 
 # Optimize Configuration of DM
@@ -24,7 +23,7 @@ During full backup, DM splits the data of each table into multiple chunks accord
 
 > **Note:**
 >
-> -  You cannot update the value of `mydumpers` after the replication task is created. Be sure about the value of each option before creating the task. If you need to update the value, stop the task using dmctl, update the configuration file, and re-create the task.
+> - You cannot update the value of `mydumpers` after the replication task is created. Be sure about the value of each option before creating the task. If you need to update the value, stop the task using dmctl, update the configuration file, and re-create the task.
 > - `mydumpers`.`threads` can be replaced with the `mydumper-thread` configuration item for simplicity.
 > - If `rows` is set，DM ignores the value of `chunk-filesize`.
 
@@ -38,7 +37,7 @@ The `pool-size` option determines the number of threads in the DM Load unit. The
 
 > **Note:**
 >
-> -  You cannot update the value of `loaders` after the replication task is created. Be sure about the value of each option before creating the task. If you need to update the value, stop the task using dmctl, update the configuration file, and re-create the task.
+> - You cannot update the value of `loaders` after the replication task is created. Be sure about the value of each option before creating the task. If you need to update the value, stop the task using dmctl, update the configuration file, and re-create the task.
 > - `loaders`.`pool-size` can be replaced with the `loader-thread` configuration item for simplicity.
 
 ## Incremental data replication
@@ -55,6 +54,6 @@ The `pool-size` option determines the number of threads in the DM Load unit. The
 
 > **Note:**
 >
-> -  You cannot update the value of `syncers` after the replication task is created. Be sure about the value of each option before creating the task. If you need to update the value, stop the task using dmctl, update the configuration file, and re-create the task.
+> - You cannot update the value of `syncers` after the replication task is created. Be sure about the value of each option before creating the task. If you need to update the value, stop the task using dmctl, update the configuration file, and re-create the task.
 > - `syncers`.`worker-count` can be replaced with the `syncer-thread` configuration item for simplicity.
 > - You can change the values of `worker-count` and `batch` according to the actual scenario. For example, if there is a high network delay between DM and the downstream database, you can increase the value of `worker-count` and decrease the value of `batch` appropriately.

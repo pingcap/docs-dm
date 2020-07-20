@@ -54,6 +54,8 @@
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
++ Performance Tuning
+  - [Optimize Configuration](tune-configuration.md)
 + Reference
   + Architecture
     - [DM Overview](overview.md)
