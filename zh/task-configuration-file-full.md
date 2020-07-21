@@ -30,6 +30,7 @@ remove-meta: false              # 是否在任务同步开始前移除该任务�
 enable-heartbeat: false         # 是否开启 `heartbeat` 功能
 online-ddl-scheme: "gh-ost"     # 目前仅支持 "gh-ost" 、"pt"
 case-sensitive: false           # schema/table 是否大小写敏感
+clean-dump-file: true           # 是否清理 dump 阶段产生的文件，包括 metadata 文件、建库建表 SQL 文件以及数据导入 SQL 文件。v1.0.7 新增
 
 target-database:                # 下游数据库实例配置
   host: "192.168.0.1"
