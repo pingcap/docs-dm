@@ -67,6 +67,7 @@
     - [上游数据库配置](source-configuration-file.md)
     - [任务配置](task-configuration-file.md)
     - [使用 DM Portal 生成任务配置](dm-portal.md)
+    - [DM 任务完整配置文件介绍](task-configuration-file-full.md)
   - [监控指标](monitor-a-dm-cluster.md)
   - [告警信息](alert-rules.md)
   - [错误码](error-handling.md#常见故障处理方法)
