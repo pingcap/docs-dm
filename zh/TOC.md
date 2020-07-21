@@ -38,7 +38,9 @@
   - [概述](config-overview.md)
   - [DM-master 配置](dm-master-configuration-file.md)
   - [DM-worker 配置](dm-worker-configuration-file.md)
+  - [完整 DM-worker 配置](dm-worker-configuration-file-full.md)
   - [任务配置](task-configuration-file.md)
+  - [完整任务配置](task-configuration-file-full.md)
 + DM 集群管理
   - [集群操作](cluster-operations.md)
   - [集群升级](dm-upgrade.md)
@@ -57,37 +59,7 @@
 + 故障处理
   - [故障及处理方法](error-handling.md)
   - [性能问题及处理方法](handle-performance-issues.md)
-<<<<<<< HEAD
 - [DM FAQ](faq.md)
-=======
-+ 教程
-  - [简单的从库同步场景](usage-scenario-simple-replication.md)
-  - [分库分表合并场景](usage-scenario-shard-merge.md)
-  - [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
-  - [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
-  - [DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
-+ 性能调优
-  - [配置调优](tune-configuration.md)
-+ 参考指南
-  + 架构
-    - [DM 简介](overview.md)
-    - [DM-worker 简介](dm-worker-intro.md)
-    - [DM Relay Log](relay-log.md)
-  - [DM 命令行参数](command-line-flags.md)
-  + 配置
-    - [概述](config-overview.md)
-    - [DM-master 配置](dm-master-configuration-file.md)
-    - [DM-worker 配置](dm-worker-configuration-file.md)
-    - [上游数据库配置](source-configuration-file.md)
-    - [任务配置](task-configuration-file.md)
-    - [完整任务配置](task-configuration-file-full.md)
-    - [使用 DM Portal 生成任务配置](dm-portal.md)
-  - [监控指标](monitor-a-dm-cluster.md)
-  - [告警信息](alert-rules.md)
-  - [错误码](error-handling.md#常见故障处理方法)
-+ [常见问题](faq.md)
-+ [术语表](glossary.md)
->>>>>>> e3ebca3... zh,en: add task-configuration-file-full to TOC (#172)
 + 版本发布历史
   + v1.0
     - [1.0.6](releases/1.0.6.md)
