@@ -68,6 +68,7 @@
     - [DM-worker Configuration](dm-worker-configuration-file.md)
     - [Upstream Database Configuration](source-configuration-file.md)
     - [Task Configuration](task-configuration-file.md)
+    - [Full Task Configuration](task-configuration-file-full.md)
     - [Use DM Portal](dm-portal.md)
   - [Monitoring Metrics](monitor-a-dm-cluster.md)
   - [Alert Rules](alert-rules.md)
