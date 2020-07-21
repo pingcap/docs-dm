@@ -1,6 +1,7 @@
 ---
 title: 创建数据同步任务
 summary: 了解在部署 DM 集群后，如何快速创建数据同步任务。
+aliases: ['/zh/tidb-data-migration/dev/create-task-and-verify']
 ---
 
 # 创建数据同步任务

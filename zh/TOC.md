@@ -17,7 +17,7 @@
 + [应用场景](scenarios.md)
 + 快速上手
   - [部署集群](quick-start-with-dm.md)
-  - [同步任务](quick-start-create-task.md)
+  - [创建数据同步任务](quick-start-create-task.md)
 + 部署使用
   - [软硬件要求](hardware-and-software-requirements.md)
   + 部署 DM 集群
