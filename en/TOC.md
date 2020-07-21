@@ -49,8 +49,29 @@
 - [Monitor](monitor-a-dm-cluster.md)
 + Migrate from MySQL compatible database
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
+<<<<<<< HEAD
 + [DM Portal](dm-portal.md)
 + Alert
+=======
+  - [Shard Merge Best Practices](shard-merge-best-practices.md)
++ Performance Tuning
+  - [Optimize Configuration](tune-configuration.md)
++ Reference
+  + Architecture
+    - [DM Overview](overview.md)
+    - [DM-worker](dm-worker-intro.md)
+    - [DM Relay Log](relay-log.md)
+  - [Command-line Flags](command-line-flags.md)
+  + Configuration
+    - [Overview](config-overview.md)
+    - [DM-master Configuration](dm-master-configuration-file.md)
+    - [DM-worker Configuration](dm-worker-configuration-file.md)
+    - [Upstream Database Configuration](source-configuration-file.md)
+    - [Task Configuration](task-configuration-file.md)
+    - [Full Task Configuration](task-configuration-file-full.md)
+    - [Use DM Portal](dm-portal.md)
+  - [Monitoring Metrics](monitor-a-dm-cluster.md)
+>>>>>>> e3ebca3... zh,en: add task-configuration-file-full to TOC (#172)
   - [Alert Rules](alert-rules.md)
   - [Handle Alerts](handle-alerts.md)
 + Troubleshoot
