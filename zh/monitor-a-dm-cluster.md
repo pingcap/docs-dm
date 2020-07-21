@@ -5,7 +5,7 @@ summary: 介绍 DM 的监控指标
 
 # DM 监控指标
 
-使用 DM-Ansible 部署 DM 集群的时候，会默认部署一套[监控系统](replicate-data-using-dm.md#第-7-步监控任务与查看日志)。
+使用 DM-Ansible 部署 DM 集群的时候，会默认部署一套[监控系统](replicate-data-using-dm.md#第-8-步监控任务与查看日志)。
 
 > **注意：**
 >
