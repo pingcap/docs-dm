@@ -1,6 +1,6 @@
 ---
 title: 乐观模式下分库分表合并同步
-category: reference
+summary: 介绍 DM 提供的乐观模式下分库分表的合并同步功能。
 ---
 
 # 乐观模式下分库分表合并同步
@@ -15,7 +15,7 @@ category: reference
 
 DM 支持在线上执行分库分表的 DDL 语句（通称 Sharding DDL），默认使用“悲观模式”，即当上游一个分表执行某一 DDL 后，这个分表的同步会暂停，等待其他所有分表都执行了同样的 DDL 才在下游执行该 DDL 并继续数据同步。这种“悲观协调”模式的优点是可以保证同步到下游的数据不会出错，缺点是会暂停数据同步而不利于对上游进行灰度变更。有些用户可能会花较长时间在单一分表执行 DDL，验证一定时间后才会更改其他分表的结构。在悲观模式同步的设定下，这些 DDL 会阻塞同步，binlog 事件会大量积压。
 
-因此，需要提供一种新的“乐观协调”模式，在一个分表上执行的 DDL，自动修改成兼容其他分表的语句后，立即同步到下游，不会阻挡任何分表 DML 的同步。
+因此，需要提供一种新的“乐观协调”模式，在一个分表上执行的 DDL，自动修改成兼容其他分表的语句后，立即同步到下游，不会阻挡任何分表执行的 DML 的同步。
 
 ## 原理
 
@@ -68,7 +68,7 @@ ALTER TABLE `tbl01` DROP COLUMN `Name`;
 
 ![optimistic-ddl-example-6](/media/optimistic-ddl-example-6.png)
 
-此时下游仍需要接收来自 `tbl00` 和 `tbl02` 含 `Name` 的 DMLs，因此不会立刻删除该列。
+此时下游仍需要接收来自 `tbl00` 和 `tbl02` 含 `Name` 的 DML 语句，因此不会立刻删除该列。
 
 同样，各种 DML 仍可直接同步到下游：
 
@@ -165,4 +165,4 @@ ALTER TABLE `tbl00` ADD COLUMN `Age` INT DEFAULT -1;
 
 ## 乐观协调模式的配置
 
-在任务的配置文件中指定 `shard-mode` 为 `optimistic` 则使用“乐观协调”模式，示例配置文件可以参考 [DM 任务完整配置文件介绍](https://docs.pingcap.com/zh/tidb-data-migration/dev/task-configuration-file-full)。
+在任务的配置文件中指定 `shard-mode` 为 `optimistic` 则使用“乐观协调”模式，示例配置文件可以参考 [DM 任务完整配置文件介绍](/task-configuration-file-full.md)。
