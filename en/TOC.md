@@ -37,7 +37,9 @@
   - [Overview](config-overview.md)
   - [DM-master Configuration](dm-master-configuration-file.md)
   - [DM-worker Configuration](dm-worker-configuration-file.md)
+  - [Full DM-worker Configuration](dm-worker-configuration-file-full.md)
   - [Task Configuration](task-configuration-file.md)
+  - [Full Task Configuration](task-configuration-file-full.md)
 + Manage the DM Cluster
   - [Cluster Operations](cluster-operations.md)
   - [Cluster Upgrade](dm-upgrade.md)
@@ -54,7 +56,8 @@
   - [Alert Rules](alert-rules.md)
   - [Handle Alerts](handle-alerts.md)
 + Troubleshoot
-  - [Error Handling](error-handling.md)
+  - [Handle Errors](error-handling.md)
+  - [Handle Performance Issues](handle-performance-issues.md)
 - [FAQ](faq.md)
 + Releases
   + v1.0

@@ -38,7 +38,9 @@
   - [概述](config-overview.md)
   - [DM-master 配置](dm-master-configuration-file.md)
   - [DM-worker 配置](dm-worker-configuration-file.md)
+  - [完整 DM-worker 配置](dm-worker-configuration-file-full.md)
   - [任务配置](task-configuration-file.md)
+  - [完整任务配置](task-configuration-file-full.md)
 + DM 集群管理
   - [集群操作](cluster-operations.md)
   - [集群升级](dm-upgrade.md)
