@@ -21,7 +21,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/configure/overview/','/do
 
 ### 创建数据同步任务
 
-你可以基于 `task.yaml.example` 文件来创建数据同步任务，具体步骤如下：
+用户可以基于 `task.yaml.example` 文件来创建数据同步任务，具体步骤如下：
 
 1. 复制 `task.yaml.example` 为 `your_task.yaml`。
 2. 参考[任务配置文件](task-configuration-file.md)来修改 `your_task.yaml` 文件。
@@ -35,3 +35,19 @@ DM 配置的关键概念如下：
 | :------------ | :------------ | :------------------ |
 | source-id  | 唯一确定一个 MySQL 或 MariaDB 实例，或者一个具有主从结构的复制组，字符串长度不大于 32 | `inventory.ini` 的 `source_id`；<br/> `dm-master.toml` 的 `source-id`；<br/> `task.yaml` 的 `source-id` |
 | DM-worker ID | 唯一确定一个 DM-worker（取值于 `dm-worker.toml` 的 `worker-addr` 参数） | `dm-worker.toml` 的 `worker-addr`；<br/> dmctl 命令行的 `-worker` / `-w` flag |
+
+### 关闭检查项
+
+DM 默认会对不同任务进行若干检查，用户可以在任务配置文件中使用`ignore-checking-items`配置关闭检查。`ignore-checking-items`是一个列表，其中可能的取值包括：
+| 取值   | 含义   |
+| :----  | :-----|
+| all | 关闭所有检查 |
+| dump_privilege | 关闭检查数据库用户是否具有 dump 相关权限 |
+| replication_privilege | 关闭检查数据库用户是否具有 replication 相关权限 |
+| version | 关闭检查上游数据库版本是否在支持范围内 |
+| binlog_enable | 关闭检查上游数据库是否已启用 binlog |
+| binlog_format | 关闭检查上游数据库 binlog 格式是否为 row |
+| binlog_row_image | 关闭检查上游数据库 binlog_row_image 是否为 FULL|
+| table_schema | 关闭检查上游表结构是否支持 |
+| schema_of_shard_tables | 关闭检查上游各分表表结构是否一致 |
+| auto_increment_ID | 关闭检查上游各分表是否具有自增 ID |
