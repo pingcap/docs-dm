@@ -582,7 +582,7 @@ DM 支持将上游 MySQL/MariaDB 各分库分表中的 DML、DDL 数据合并后
 在 task 的配置文件中设置：
 
 ```
-is-sharding: true
+shard-mode: "pessimistic" # 如果为分库分表合并任务则需要配置该项。默认使用悲观协调模式 "pessimistic"，在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
 ```
 
 ### 手动处理 Sharding DDL Lock

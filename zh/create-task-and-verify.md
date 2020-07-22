@@ -88,7 +88,7 @@ port = 3306
 ---
 name: test
 task-mode: all
-is-sharding: true
+shard-mode: "pessimistic"
 
 target-database:
   host: "192.168.0.3"

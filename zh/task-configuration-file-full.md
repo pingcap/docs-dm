@@ -23,8 +23,7 @@ title: DM 任务完整配置文件介绍
 ## ********* 基本信息配置 *********
 name: test                      # 任务名称，需要全局唯一
 task-mode: all                  # 任务模式，可设为 "full"、"incremental"、"all"
-is-sharding: true               # 是否为分库分表合并任务
-shard-mode: "optimistic"        # shard DDL 同步模式，可设为 ""、"pessimistic"、"optimistic"
+shard-mode: "pessimistic"       # 如果为分库分表合并任务则需要配置该项。默认使用悲观协调模式 "pessimistic"，在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
 ignore-checking-items: []       # 忽略的检测项，可包含 "all"、"dump_privilege"、"replication_privilege"、"version"、"binlog_enable"、"binlog_format"、"binlog_row_image"、"table_schema"、"schema_of_shard_tables"、"auto_increment_ID"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
 remove-meta: false              # 是否在任务同步开始前移除该任务名对应的 `meta`（`checkpoint` 和 `onlineddl` 等）。
