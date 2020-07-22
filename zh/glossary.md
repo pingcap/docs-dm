@@ -1,7 +1,6 @@
 ---
 title: TiDB Data Migration 术语表
 summary: 学习 TiDB Data Migration 相关术语
-category: glossary
 ---
 
 # TiDB Data Migration 术语表

@@ -1,7 +1,6 @@
 ---
 title: Best Practices of Data Migration in the Shard Merge Scenario
 summary: Learn the best practices of data migration in the shard merge scenario.
-category: reference
 aliases: ['/docs/tidb-data-migration/dev/shard-merge-best-practices/']
 ---
 
@@ -30,7 +29,7 @@ Instead, you can:
 
 ## Handle conflicts of auto-increment primary key
 
-DM offers the [column mapping](feature-overview.md#column-mapping) feature to handle conflicts that might occur in merging the `bigint` type of auto-increment primary key. However, it is **strongly discouraged** to choose this approach. If it is acceptable in the production environment, the following two alternatives are recommended.
+DM offers the [column mapping](key-features.md#column-mapping) feature to handle conflicts that might occur in merging the `bigint` type of auto-increment primary key. However, it is **strongly discouraged** to choose this approach. If it is acceptable in the production environment, the following two alternatives are recommended.
 
 ### Remove the `PRIMARY KEY` attribute from the column
 
@@ -65,9 +64,15 @@ Then you can perform the following steps to fix the `ERROR 1062 (23000): Duplica
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1
     ```
 
-2. Start the full and incremental data migration task.
+2. Add the following configuration in `task.yaml` to skip the check of auto-increment primary key conflict: 
+  
+    ```yaml
+    ignore-checking-items: ["auto_increment_ID"]
+    ```
 
-3. Run `query-status` to verify whether the data migration task is successfully processed and whether the data from the upstream has already been merged and replicated to the downstream database.
+3. Start the full and incremental data migration task.
+
+4. Run `query-status` to verify whether the data migration task is successfully processed and whether the data from the upstream has already been merged and replicated to the downstream database.
 
 ### Use a composite primary key
 

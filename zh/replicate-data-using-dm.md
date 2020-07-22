@@ -1,6 +1,5 @@
 ---
 title: 使用 DM 同步数据
-category: reference
 ---
 
 # 使用 DM 同步数据
@@ -54,7 +53,36 @@ category: reference
     >
     > `{ansible deploy}/conf/dm-master.toml` 中的 `{ansible deploy}` 表示使用 DM-Ansible 部署 DM 时通过 `deploy_dir` 参数指定的目录。
 
-## 第 3 步：配置任务
+## 第 3 步：创建数据源
+
+1. 将 MySQL-1 的相关信息写入到 `conf/source1.toml` 中：
+
+    ```toml
+    # MySQL1 Configuration.
+    
+    source-id = "mysql-replica-01"
+
+    # 是否开启 GTID
+    enable-gtid = true
+    
+    [from]
+    host = "172.16.10.81"
+    user = "root"
+    password = "VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU="
+    port = 3306
+    ```
+
+2. 在终端中执行下面的命令，使用 dmctl 将 MySQL-1 的数据源配置加载到 DM 集群中：
+
+    {{< copyable "shell-regular" >}}
+
+    ```bash
+    ./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create conf/source1.toml
+    ```
+
+3. 对于 MySQL-2，修改配置文件中的相关信息，并执行相同的 dmctl 命令。
+
+## 第 4 步：配置任务
 
 假设需要将 MySQL-1 和 MySQL-2 实例的 `test_db` 库的 `test_table` 表以**全量+增量**的模式同步到下游 TiDB 的 `test_db` 库的 `test_table` 表。
 
@@ -100,7 +128,7 @@ mydumpers:
     extra-args: "-B test_db -T test_table"  # mydumper 的其他参数，从 DM 1.0.2 版本开始，DM 会自动生成 table-list 配置，在其之前的版本仍然需要人工配置。
 ```
 
-## 第 4 步：启动任务
+## 第 5 步：启动任务
 
 为了提前发现数据同步任务的一些配置错误，DM 中增加了[前置检查](precheck.md)功能：
 
@@ -152,7 +180,7 @@ mydumpers:
 
     - 如果任务启动失败，可根据返回结果的提示进行配置变更后执行 `start-task task.yaml` 命令重新启动任务。
 
-## 第 5 步：查询任务
+## 第 6 步：查询任务
 
 如需了解 DM 集群中是否存在正在运行的同步任务及任务状态等信息，可在 dmctl 内使用以下命令进行查询：
 
@@ -162,7 +190,7 @@ mydumpers:
 » query-status
 ```
 
-## 第 6 步：停止任务
+## 第 7 步：停止任务
 
 如果不再需要进行数据同步，可以在 dmctl 内使用以下命令停止同步任务：
 
@@ -174,7 +202,7 @@ mydumpers:
 
 其中的 `test` 是 `task.yaml` 配置文件中 `name` 配置项设置的任务名。
 
-## 第 7 步：监控任务与查看日志
+## 第 8 步：监控任务与查看日志
 
 如果使用 DM-Ansible 部署 DM 集群时，正确部署了 Prometheus、Alertmanager 与 Grafana，且其地址均为 `172.16.10.71`。可在浏览器中打开 <http://172.16.10.71:9093> 进入 Alertmanager 查看 DM 告警信息；可在浏览器中打开 <http://172.16.10.71:3000> 进入 Grafana，选择 DM 的 dashboard 查看 DM 相关监控项。
 

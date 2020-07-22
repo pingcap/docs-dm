@@ -33,6 +33,7 @@ heartbeat-report-interval: 10   # DM 估算延迟 lag 的间隔
 timezone: "Asia/Shanghai"       # 时区
 case-sensitive: false           # schema/table 是否大小写敏感
 online-ddl-scheme: "gh-ost"     # 目前仅支持 "gh-ost" 、"pt"
+clean-dump-file: true           # 是否清理 dump 阶段产生的文件，包括 metadata 文件、建库建表 SQL 文件以及数据导入 SQL 文件
 
 target-database:                # 下游数据库实例配置
   host: "192.168.0.1"

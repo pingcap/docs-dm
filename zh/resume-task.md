@@ -1,7 +1,6 @@
 ---
 title: 恢复数据同步任务
 summary: 了解 TiDB Data Migration 如何恢复数据同步任务。
-category: reference
 ---
 
 # 恢复数据同步任务

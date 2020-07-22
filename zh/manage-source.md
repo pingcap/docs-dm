@@ -1,12 +1,11 @@
 ---
 title: 管理上游 MySQL 实例
 summary: 了解如何管理上游 MySQL 实例。
-category: reference
 ---
 
 # 管理上游 MySQL 实例
 
-本文介绍了如何使用 [dmctl](overview.md#dmctl) 组件来加密数据库密码和管理数据源配置。
+本文介绍了如何使用 [dmctl](dmctl-introduction.md) 组件来加密数据库密码和管理数据源配置。
 
 ## 加密数据库密码
 
@@ -36,7 +35,7 @@ help operate-source
 create/update/stop upstream MySQL/MariaDB source
 
 Usage:
-  dmctl operate-source <operate-type> <config-file> [flags]
+  dmctl operate-source <operate-type> <config-file> [config-file ...] [flags]
 
 Flags:
   -h, --help   help for operate-source
@@ -53,17 +52,20 @@ Global Flags:
 operate-source create ./source.toml
 ```
 
+其中 `source.toml` 的配置参考[上游数据库配置文件介绍](source-configuration-file.md)。
+
 ## 参数解释
 
-+ `create`：创建一个上游的数据库源
++ `create`：创建一个或多个上游的数据库源。创建多个数据源失败时，会尝试回滚到执行命令之前的状态
 
 + `update`：更新一个上游的数据库源
 
-+ `stop`：停止一个上游的数据库源
++ `stop`：停止一个或多个上游的数据库源。停止多个数据源失败时，可能有部分数据源已成功停止
 
 + `config-file`：
     - 必选
     - 指定 `source.toml` 的文件路径
+    - 可传递多个文件路径
 
 ## 返回结果示例
 

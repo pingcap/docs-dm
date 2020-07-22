@@ -1,7 +1,6 @@
 ---
 title: 主要特性
 summary: 了解 DM 的各主要功能特性或相关的配置选项。
-category: reference
 aliases: ['/docs-cn/tidb-data-migration/dev/feature-overview/']
 ---
 
@@ -60,7 +59,7 @@ routes:
 
 > **注意：**
 >
-> - 如果下游 TiDB `schema: test` 已经存在， 并且不会被删除，则可以省略 `rule-2`。
+> - 如果下游 TiDB `schema: test` 已经存在，并且不会被删除，则可以省略 `rule-2`。
 > - 如果下游 TiDB `schema: test` 不存在，只设置了 `rule_1`，则同步会报错 `schema test doesn't exist`。
 
 {{< copyable "" >}}

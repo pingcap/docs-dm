@@ -1,6 +1,5 @@
 ---
 title: online-ddl-scheme 功能介绍
-category: reference
 ---
 
 # DM online-ddl-scheme

@@ -1,6 +1,5 @@
 ---
 title: 手动处理 Sharding DDL Lock
-category: reference
 aliases: ['/docs-cn/tidb-data-migration/dev/feature-manually-handling-sharding-ddl-locks/']
 ---
 

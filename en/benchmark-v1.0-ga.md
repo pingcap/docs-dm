@@ -1,7 +1,6 @@
 ---
 title: DM 1.0-GA Benchmark Report
 summary: Learn about the DM 1.0-GA benchmark report.
-category: benchmark
 aliases: ['/docs/tidb-data-migration/dev/benchmark-v1.0-ga/']
 ---
 
@@ -61,46 +60,11 @@ Others:
 
 ## Test scenario
 
-### Data flow
-
-MySQL1 (172.16.4.40) -> DM-worker1 (172.16.4.39) -> TiDB (172.16.4.41)
-
-### Public configuration or data
-
-#### Database table structure used for the test
-
-{{< copyable "sql" >}}
-
-```sql
-CREATE TABLE `sbtest` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `k` int(11) NOT NULL DEFAULT '0',
-  `c` char(120) CHARSET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-  `pad` char(60) CHARSET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `k_1` (`k`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin
-```
-
-#### Database configuration
-
-We use TiDB Ansible to deploy the TiDB cluster, and use default configuration provided in TiDB Ansible.
+You can refer to the test scenario described in the [performance test](performance-test.md), namely, MySQL1 (172.16.4.40) -> DM-worker -> TiDB (172.16.4.41).
 
 ### Full import benchmark case
 
-#### Test procedure
-
-- Set up environment
-- Use sysbench to create the table and generate the initial data in upstream MySQL
-- Start DM-task in the `full` mode
-
-Sysbench test script used for preparing initial data:
-
-{{< copyable "shell-regular" >}}
-
-```bash
-sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=3306 --mysql-user=root --mysql-db=dm_benchmark --db-driver=mysql --table-size=50000000 prepare
-```
+For details, see [Full Import Benchmark Case](performance-test.md#full-import-benchmark-case).
 
 #### Full import benchmark result
 
@@ -113,15 +77,9 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 | :-------: | :--------------------------------: | :-----------------------: | :------------: | :------: | :-----------------: |
 | load data | 1.737                              | 4878                      | 38.14          | 2346.9   | 16.64               |
 
-#### Benchmark result with different pool size in load unit
+#### Benchmark results with different pool sizes in load unit
 
-Full import data size in benchmark case is 3.78 GB, which is generated from sysbench by the following script:
-
-{{< copyable "shell-regular" >}}
-
-```bash
-sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=3306 --mysql-user=root --mysql-db=dm_benchmark --db-driver=mysql --table-size=5000000 prepare
-```
+In this test, the size of data imported using `sysbench` is 3.78 GB. The following is detailed information of the test data:
 
 | load pool size | latency of execution txn (s) | import time (s) | import speed (MB/s) | TiDB 99 duration (s) |
 | :------------: | :--------------------------: | :-------------: | :-----------------: | :------------------: |
@@ -145,24 +103,11 @@ Full import data size in this benchmark case is 3.78 GB, load unit pool size use
 |            618             | -s 125000 -r 320000  |            0.683             |  299.9          |     12.9            |         0.73         |
 |            310             |  -s 62500 -r 320000  |            0.413             |  322.6          |     12.0            |         0.49         |
 
-### Increase replication benchmark case
+### Incremental replication benchmark case
 
-#### Test procedure
-
-- Set up environment
-- Use sysbench to create the table and generate the initial data in upstream MySQL
-- Start DM-task in the `all` mode, and wait until the task enters `sync` unit
-- Use sysbench to generate incremental data in upstream MySQL, use `query-status` to watch the DM replication status, and observe the monitoring metrics of DM and TiDB on Grafana
+For details about the test method, see [Incremental Replication Benchmark Case](performance-test.md#incremental-replication-benchmark-case).
 
 #### Benchmark result for incremental replication
-
-Upstream sysbench test script:
-
-{{< copyable "shell-regular" >}}
-
-```bash
-sysbench --test=oltp_insert --tables=4 --num-threads=32 --mysql-host=172.17.4.40 --mysql-port=3306 --mysql-user=root --mysql-db=dm_benchmark --db-driver=mysql --report-interval=10 --time=1800 run
-```
 
 DM sync unit `worker-count` is 32, and `batch` size is 100 in this benchmark case.
 
