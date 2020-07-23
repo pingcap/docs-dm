@@ -21,7 +21,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/configure/overview/','/do
 
 ### 创建数据同步任务
 
-用户可以基于 `task.yaml.example` 文件来创建数据同步任务，具体步骤如下：
+你可以基于 `task.yaml.example` 文件来创建数据同步任务，具体步骤如下：
 
 1. 复制 `task.yaml.example` 为 `your_task.yaml`。
 2. 参考[任务配置文件](task-configuration-file.md)来修改 `your_task.yaml` 文件。
