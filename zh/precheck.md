@@ -61,3 +61,19 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/precheck/','/docs-cn/v3.1
             - 分表存在自增主键，自增主键 column 类型为 bigint，但没有为其配置列值转换
 
         - 其他情况下检查将成功
+
+### 关闭检查项
+
+DM 会根据任务类型进行相应检查，用户可以在任务配置文件中使用`ignore-checking-items`配置关闭检查。`ignore-checking-items`是一个列表，其中可能的取值包括：
+| 取值   | 含义   |
+| :----  | :-----|
+| all | 关闭所有检查 |
+| dump_privilege | 关闭检查上游 MySQL 实例用户的 dump 相关权限 |
+| replication_privilege | 关闭检查上游 MySQL 实例用户的 replication 相关权限 |
+| version | 关闭检查上游数据库版本 |
+| binlog_enable | 关闭检查上游数据库是否已启用 binlog |
+| binlog_format | 关闭检查上游数据库 binlog 格式是否为 row |
+| binlog_row_image | 关闭检查上游数据库 binlog_row_image 是否为 FULL|
+| table_schema | 关闭检查上游 MySQL 表结构的兼容性 |
+| schema_of_shard_tables | 关闭检查上游 MySQL 多实例分库分表的表结构一致性 |
+| auto_increment_ID | 关闭检查上游 MySQL 多实例分库分表的自增主键冲突 |
