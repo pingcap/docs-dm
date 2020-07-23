@@ -11,11 +11,11 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/configure/task-configurat
 
 ## 关键概念
 
-关于包括 `source-id` 和 DM-worker ID 在内的关键概念的介绍，请参阅[关键概念](precheck.md#关键概念)。
+关于包括 `source-id` 和 DM-worker ID 在内的关键概念的介绍，请参阅[关键概念](config-overview.md#关键概念)。
 
 ## 关闭检查项
 
-DM 会根据任务类型进行相应检查，用户可以在任务配置文件中使用`ignore-checking-items`配置关闭检查，请参阅[关闭检查项](config-overview.md#关闭检查项)
+DM 会根据任务类型进行相应检查，用户可以在任务配置文件中使用`ignore-checking-items`配置关闭检查，请参阅[关闭检查项](precheck.md#关闭检查项)
 
 ## 完整配置文件示例
 
