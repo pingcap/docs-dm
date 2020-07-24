@@ -105,7 +105,11 @@ However, you need to reset the data replication task in some cases. For details,
 
 ### What can I do when a replication task is interrupted with the `invalid connection` error returned?
 
+#### Reason
+
 The `invalid connection` error indicates that anomalies have occurred in the connection between DM and the downstream TiDB database (such as network failure, TiDB restart, TiKV busy and so on) and that a part of the data for the current request has been sent to TiDB.
+
+#### Solutions
 
 Because DM has the feature of concurrently replicating data to the downstream in replication tasks, several errors might occur when a task is interrupted. You can check these errors by using `query-status` or `query-error`.
 
@@ -114,15 +118,23 @@ Because DM has the feature of concurrently replicating data to the downstream in
 
 ### A replication task is interrupted with the `driver: bad connection` error returned
 
+#### Reason
+
 The `driver: bad connection` error indicates that anomalies have occurred in the connection between DM and the upstream TiDB database (such as network failure, TiDB restart and so on) and that the data of the current request has not yet been sent to TiDB at that moment.
+
+#### Solution
 
 The current version of DM automatically retries on error. If you use the previous version which does not support automatically retry, you can execute the `stop-task` command to stop the task. Then execute `start-task` to restart the task.
 
 ### The relay unit throws error `event from * in * diff from passed-in event *` or a replication task is interrupted with failing to get or parse binlog errors like `get binlog error ERROR 1236 (HY000)` and `binlog checksum mismatch, data may be corrupted` returned
 
+#### Reason
+
 During the DM process of relay log pulling or incremental replication, this two errors might occur if the size of the upstream binlog file exceeds **4 GB**.
 
 **Cause:** When writing relay logs, DM needs to perform event verification based on binlog positions and the size of the binlog file, and store the replicated binlog positions as checkpoints. However, the official MySQL uses `uint32` to store binlog positions. This means the binlog position for a binlog file over 4 GB overflows, and then the errors above occur.
+
+#### Solutions
 
 For relay units, manually recover replication using the following solution:
 
@@ -166,54 +178,15 @@ For database related passwords in all the DM configuration files, use the passwo
 
 In addition, the user of the upstream and downstream databases must have the corresponding read and write privileges. Data Migration also [prechecks the corresponding privileges automatically](precheck.md) while starting the data replication task.
 
-### The replication task is interrupted and contains a `driver: bad connection` error
-
-When a `driver: bad connection` error occurs, it usually means that the database connection between the DM and the downstream TiDB is abnormal (such as network failure, TiDB restart, etc.) and the currently requested data cannot be sent to TiDB temporarily.
-
-The current version of DM will automatically retry. If it is not automatically retried due to version problems, etc., you can use `stop-task` to stop the task and then use `start-task` to restart the task.
-
-### The relay processing unit reports an error `event from * in * diff from passed-in event *` or the replication task is interrupted and contains binlogs such as `get binlog error ERROR 1236 (HY000)`, `binlog checksum mismatch, data may be corrupted`, etc. Get or parse failed error
-
-In the process of DM's relay log pull and incremental replication, if you encounter an upstream binlog file exceeding 4GB, these two errors may occur.
-
-The reason is that the DM needs to verify the event based on the binlog position and file size when writing the relay log, and needs to save the synchronized binlog position information as a checkpoint. However, the official definition of MySQL binlog position uses uint32 storage, so the offset value of binlog position exceeding 4G will overflow, and the above error will occur.
-
-For the relay processing unit, you can manually restore it through the following steps:
-
-1. The size of the corresponding binlog file when the error is confirmed upstream exceeds 4GB.
-2. Stop DM-worker.
-3. Copy the binlog file corresponding to the upstream to the relay log directory as the relay log file.
-4. Update the corresponding `relay.meta` file in the relay log directory to start pulling from the next binlog. If DM worker has enabled `enable_gtid`, then when modifying the `relay.meta` file, you also need to modify the GTID corresponding to the next binlog. If `enable_gtid` is not enabled, there is no need to modify the GTID.
-
-    For example: when the error is reported, there are `binlog-name = "mysql-bin.004451"` and `binlog-pos = 2453`, then update them to `binlog-name = "mysql-bin.004452"` and `binlog- respectively pos = 4`, and update `binlog-gtid = "f0e914ef-54cf-11e7-813d-6c92bf2fa791:1-138218058"` at the same time.
-5. Restart DM-worker.
-
-For the binlog replication processing unit, you can manually restore it through the following steps:
-
-1. The size of the corresponding binlog file when the error is confirmed upstream exceeds 4GB.
-2. Stop the replication task by `stop-task`.
-3. Update the global checkpoint in the downstream `dm_meta` database and the `binlog_name` in the checkpoint of each table to the error binlog file, and update the `binlog_pos` to a synchronized legal position value, such as 4.
-
-    For example: the error task name is `dm_test`, the corresponding `source-id` is `replica-1`, and the corresponding binlog file is `mysql-bin|000001.004451` when the error occurs, then execute `UPDATE dm_test_syncer_checkpoint SET binlog_name='mysql- bin|000001.004451', binlog_pos = 4 WHERE id='replica-1';`.
-4. Set `safe-mode: true` for the `syncers` part in the replication task configuration to ensure reentrant execution.
-5. Start the replication task with `start-task`.
-6. Observe the status of the replication task through `query-status`. When the relay log file that caused the error is synchronized, you can restore the `safe-mode` to the original value and restart the replication task.
-
-### When executing `query-status` or viewing the log, `Access denied for user'root'@'172.31.43.27' (using password: YES)`
-
-In all DM configuration files, database-related passwords must use ciphertext encrypted by dmctl (if the database password is empty, no encryption is required). For details on how to use dmctl to encrypt plaintext passwords, see [Use dmctl to encrypt upstream MySQL user password](deploy-a-dm-cluster-using-ansible.md#Use -dmctl-encrypt upstream-mysql-user password).
-
-In addition, during DM operation, users of upstream and downstream databases must have corresponding read and write permissions. In the process of starting the replication task, the DM will automatically perform the pre-check of the corresponding permissions. For details, see [Upstream MySQL instance configuration pre-check](precheck.md).
-
 ### The load processing unit reports the error `packet for query is too large. Try adjusting the 'max_allowed_packet' variable`
 
-#### Reasons:
+#### Reasons
 
 * Both MySQL client and MySQL/TiDB Server have the quota limit for `max_allowed_packet`. If any `max_allowed_packet` is outside the normal range, the client receives the error message. Currently, for the latest version of DM and TiDB Server, the default value of `max_allowed_packet` is `64M`.
 
 * The full data import processing unit in DM does not support splitting the SQL file exported by the Dump processing unit in DM.
 
-#### Solutions:
+#### Solutions
 
 * It is recommended to set the `statement-size` option of `extra-args` for the Dump processing unit:
 
