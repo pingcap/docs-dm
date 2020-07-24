@@ -4,7 +4,7 @@ title: DM 分库分表合并场景
 
 # DM 分库分表合并场景
 
-本文介绍如何在分库分表合并场景中使用 Data Migration (DM)。使用场景中，三个上游 MySQL 实例的分库和分表数据需要同步至下游 TiDB 集群。
+本文介绍如何在分库分表合并场景中使用 Data Migration (DM)。使用场景中，三个上游 MySQL 实例的分库和分表数据需要迁移至下游 TiDB 集群。
 
 ## 上游实例
 
@@ -34,7 +34,7 @@ title: DM 分库分表合并场景
     | store_01 | sale_01, sale_02 |
     | store_02 | sale_01, sale_02 |
 
-## 同步需求
+## 迁移需求
 
 1. 合并三个实例中的 `user`.`information` 表至下游 TiDB 中的 `user`.`information` 表。
 2. 合并三个实例中的 `user`.`log_{north|south|east}` 表至下游TiDB中的 `user`.`log_{north|south|east}` 表。
@@ -47,16 +47,16 @@ title: DM 分库分表合并场景
 
 ## 下游实例
 
-假设同步后下游库结构如下：
+假设迁移后下游库结构如下：
 
 | Schema | Tables |
 |:------|:------|
 | user | information, log_north, log_east, log_south|
 | store | sale |
 
-## 同步方案
+## 迁移方案
 
-- 要满足同步需求 #1 和 #2，配置 [Table routing 规则](key-features.md#table-routing) 如下：
+- 要满足迁移需求 #1 和 #2，配置 [Table routing 规则](key-features.md#table-routing) 如下：
 
     {{< copyable "" >}}
 
@@ -68,7 +68,7 @@ title: DM 分库分表合并场景
         target-schema: "user"
     ```
 
-- 要满足同步需求 #3，配置 [table routing 规则](key-features.md#table-routing) 如下：
+- 要满足迁移需求 #3，配置 [table routing 规则](key-features.md#table-routing) 如下：
 
     {{< copyable "" >}}
 
@@ -85,7 +85,7 @@ title: DM 分库分表合并场景
         target-table:  "sale"
     ```
 
-- 要满足同步需求 #4 和 #5，配置 [Binlog event filter 规则](key-features.md#binlog-event-filter) 如下：
+- 要满足迁移需求 #4 和 #5，配置 [Binlog event filter 规则](key-features.md#binlog-event-filter) 如下：
 
     {{< copyable "" >}}
 
@@ -100,9 +100,9 @@ title: DM 分库分表合并场景
 
     > **注意：**
     >
-    > 同步需求 #4、#5 和 #7 的操作意味着过滤掉所有对 `user` 库的删除操作，所以此处配置了库级别的过滤规则。但是 `user` 库以后加入表的删除操作也都会被过滤。
+    > 迁移需求 #4、#5 和 #7 的操作意味着过滤掉所有对 `user` 库的删除操作，所以此处配置了库级别的过滤规则。但是 `user` 库以后加入表的删除操作也都会被过滤。
 
-- 要满足同步需求 #6，配置 [Binlog event filter 规则](key-features.md#binlog-event-filter) 如下：
+- 要满足迁移需求 #6，配置 [Binlog event filter 规则](key-features.md#binlog-event-filter) 如下：
 
     {{< copyable "" >}}
 
@@ -120,7 +120,7 @@ title: DM 分库分表合并场景
         action: Ignore
     ```
 
-- 要满足同步需求 #7，配置 [Black & white table lists](key-features.md#black--white-table-lists) 如下：
+- 要满足迁移需求 #7，配置 [Black & white table lists](key-features.md#black--white-table-lists) 如下：
 
     {{< copyable "" >}}
 
@@ -132,7 +132,7 @@ title: DM 分库分表合并场景
           tbl-name: "log_bak"
     ```
 
-- 要满足同步需求 #8，首先参考[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)来解决冲突，保证在同步到下游时不会因为分表中有相同的主键值而使同步出现异常；然后需要配置 `ignore-checking-items` 来跳过自增主键冲突的检查：
+- 要满足迁移需求 #8，首先参考[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)来解决冲突，保证在迁移到下游时不会因为分表中有相同的主键值而使迁移出现异常；然后需要配置 `ignore-checking-items` 来跳过自增主键冲突的检查：
 
     {{< copyable "" >}}
 
@@ -140,9 +140,9 @@ title: DM 分库分表合并场景
     ignore-checking-items: ["auto_increment_ID"]
     ```
 
-## 同步任务配置
+## 迁移任务配置
 
-同步任务的完整配置如下。详情请参阅 [Data Migration 任务配置文件](task-configuration-file.md)。
+迁移任务的完整配置如下。详情请参阅 [Data Migration 任务配置文件](task-configuration-file.md)。
 
 {{< copyable "" >}}
 

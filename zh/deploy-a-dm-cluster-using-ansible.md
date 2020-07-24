@@ -374,7 +374,7 @@ MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 
 ## 第 8 步：编辑 `inventory.ini` 文件中的变量
 
-此步介绍如何编辑部署目录中的变量，如何配置 relay log 同步位置以及 relay log GTID 的同步模式。此外，还会描述 `inventory.ini` 中的全局变量。
+此步介绍如何编辑部署目录中的变量，如何配置 relay log 迁移位置以及 relay log GTID 的迁移模式。此外，还会描述 `inventory.ini` 中的全局变量。
 
 ### 配置部署目录
 
@@ -394,7 +394,7 @@ MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
     dm-master ansible_host=172.16.10.71 deploy_dir=/data1/deploy
     ```
 
-### 配置 relay log 同步位置
+### 配置 relay log 迁移位置
 
 首次启动 DM-worker 时，您需要配置 `relay_binlog_name` 变量以指定 DM-worker 拉取上游 MySQL 或 MariaDB binlog 的起始位置。
 
@@ -407,15 +407,15 @@ dm-worker2 ansible_host=172.16.10.73 source_id="mysql-replica-02" server_id=102 
 
 > **注意：**
 >
-> 如未设定 `relay_binlog_name`，v1.0.2 之前版本的 DM-worker 将从上游 MySQL 或 MariaDB 现有最早时间点的 binlog 文件开始拉取 binlog，拉取到数据同步任务需要的最新 binlog 可能需要很长时间；v1.0.2 及之后版本的 DM-worker 将从最新时间点的 binlog 文件开始拉取 binlog，一般情况下不需要手动配置。
+> 如未设定 `relay_binlog_name`，v1.0.2 之前版本的 DM-worker 将从上游 MySQL 或 MariaDB 现有最早时间点的 binlog 文件开始拉取 binlog，拉取到数据迁移任务需要的最新 binlog 可能需要很长时间；v1.0.2 及之后版本的 DM-worker 将从最新时间点的 binlog 文件开始拉取 binlog，一般情况下不需要手动配置。
 
-### 开启 relay log GTID 同步模式
+### 开启 relay log GTID 迁移模式
 
 在 DM 集群中，DM-worker 的 relay log 处理单元负责与上游 MySQL 或 MariaDB 通信，从而将 binlog 拉取至本地文件系统。
 
-DM 目前支持 MySQL GTID 和 MariaDB GTID。您可以通过配置以下项目开启 relay log GTID 同步模式：
+DM 目前支持 MySQL GTID 和 MariaDB GTID。您可以通过配置以下项目开启 relay log GTID 迁移模式：
 
-- `enable_gtid`：打开 relay log GTID 同步模式以处理 master 和 slave 易位的场景
+- `enable_gtid`：打开 relay log GTID 迁移模式以处理 master 和 slave 易位的场景
 
 - `relay_binlog_gtid`：指定 DM-worker 开始拉取对应上游 MySQL 或 MariaDB binlog 的起始位置
 

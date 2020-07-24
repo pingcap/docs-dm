@@ -6,23 +6,23 @@ title: DM Portal 简介
 
 当前版本的 DM 提供了丰富多样的功能特性，包括 [Table routing](key-features.md#table-routing)，[Black & white table lists](key-features.md#black--white-table-lists)，[Binlog event filter](key-features.md#binlog-event-filter) 等。但这些功能特性同时也增加了用户使用 DM 的复杂度，尤其在进行 [DM 任务配置](task-configuration-file.md)的过程中。
 
-针对这个问题，DM 提供了一个精简的网页程序 DM Portal，用于帮助用户以可视化的方式来配置所需的同步任务，并且生成可以让 DM 直接执行的 `task.yaml` 文件。
+针对这个问题，DM 提供了一个精简的网页程序 DM Portal，用于帮助用户以可视化的方式来配置所需的迁移任务，并且生成可以让 DM 直接执行的 `task.yaml` 文件。
 
 ## 功能描述
 
 本节简要介绍 DM Portal 的各项功能。
 
-### 同步模式配置
+### 迁移模式配置
 
-支持 DM 的三种同步模式：
+支持 DM 的三种迁移模式：
 
-- 全量同步
-- 增量同步
+- 全量迁移
+- 增量迁移
 - All（全量+增量）
 
 ### 实例信息配置
 
-支持配置库表同步路由方式，并支持 DM 中分库分表合并的配置方式。
+支持配置库表迁移路由方式，并支持 DM 中分库分表合并的配置方式。
 
 ### binlog 过滤配置
 
@@ -78,7 +78,7 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 
 #### 前置条件
 
-已选择**新建同步规则**。
+已选择**新建迁移规则**。
 
 #### 操作步骤
 
@@ -140,7 +140,7 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 
 #### 功能描述
 
-可以选择需要同步的数据库和数据表，并且进行修改名称、合并库、合并表等操作。可以对上一步操作进行撤销，可以对库表路由配置进行全部重置。在完成任务配置后，DM Portal 可以生成对应的 `task.yaml` 文件。
+可以选择需要迁移的数据库和数据表，并且进行修改名称、合并库、合并表等操作。可以对上一步操作进行撤销，可以对库表路由配置进行全部重置。在完成任务配置后，DM Portal 可以生成对应的 `task.yaml` 文件。
 
 #### 前置条件
 
@@ -153,11 +153,11 @@ DM Portal 的 binary 可以在对应版本的 DM 安装包中找到，通过 `./
 
 #### 操作步骤
 
-1. 在**上游实例**处，选择需要同步的数据库和数据表。
+1. 在**上游实例**处，选择需要迁移的数据库和数据表。
 
     ![DM Portal TableRoute 1](/media/zh/dm-portal-tableroute-1-zh.png)
 
-2. 点击移动按钮，将需要同步的库表移动至**下游实例**处。
+2. 点击移动按钮，将需要迁移的库表移动至**下游实例**处。
 
     ![DM Portal TableRoute 2](/media/zh/dm-portal-tableroute-2-zh.png)
 

@@ -1,6 +1,6 @@
 ---
 title: TiDB Data Migration 查询运行错误
-summary: 深入了解 TiDB Data Migration 如何查询数据同步任务运行错误。
+summary: 深入了解 TiDB Data Migration 如何查询数据迁移任务运行错误。
 ---
 
 # TiDB Data Migration 查询运行错误
@@ -111,7 +111,7 @@ summary: 深入了解 TiDB Data Migration 如何查询数据同步任务运行�
                     "name": "test",              # 任务名
                     "stage": "Paused",           # 当前任务的状态
                     "unit": "Sync",              # 当前正在处理任务的处理单元
-                    "sync": {                    # binlog 同步单元（sync）的错误信息
+                    "sync": {                    # binlog 迁移单元（sync）的错误信息
                         "errors": [              # 当前处理单元的错误信息列表
                             {
                                 // 错误信息描述

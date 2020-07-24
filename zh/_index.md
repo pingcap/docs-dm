@@ -5,7 +5,7 @@ summary: 了解 TiDB Data Migration 用户文档。
 
 # TiDB Data Migration 用户文档
 
-[TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据同步任务管理平台，支持从 MySQL 或 MariaDB 到 TiDB 的全量数据迁移和增量数据同步。使用 DM 工具有利于简化错误处理流程，降低运维成本。
+[TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据迁移任务管理平台，支持从 MySQL 或 MariaDB 到 TiDB 的全量数据迁移和增量数据迁移。使用 DM 工具有利于简化错误处理流程，降低运维成本。
 
 <NavColumns>
 <NavColumn>
@@ -15,9 +15,9 @@ summary: 了解 TiDB Data Migration 用户文档。
 - [Table routing](key-features.md#table-routing)
 - [Black & White Lists](key-features.md#black--white-table-lists)
 - [Binlog Event Filter](key-features.md#binlog-event-filter)
-- [同步延迟监控](key-features.md#同步延迟监控)
+- [迁移延迟监控](key-features.md#迁移延迟监控)
 - [Online-ddl-scheme](feature-online-ddl-scheme.md)
-- [分库分表合并同步](feature-shard-merge.md)
+- [分库分表合并迁移](feature-shard-merge.md)
 
 </NavColumn>
 
@@ -26,7 +26,7 @@ summary: 了解 TiDB Data Migration 用户文档。
 
 - [应用场景](scenarios.md)
 - [部署集群](quick-start-with-dm.md)
-- [同步任务](replicate-data-using-dm.md)
+- [迁移任务](replicate-data-using-dm.md)
 
 </NavColumn>
 
@@ -36,7 +36,7 @@ summary: 了解 TiDB Data Migration 用户文档。
 - [软硬件要求](hardware-and-software-requirements.md)
 - [使用 DM-Ansible 部署集群](deploy-a-dm-cluster-using-ansible.md)
 - [使用 Binary 部署集群](deploy-a-dm-cluster-using-binary.md)
-- [使用 DM 同步数据](replicate-data-using-dm.md)
+- [使用 DM 迁移数据](replicate-data-using-dm.md)
 - [监控与告警设置](monitor-a-dm-cluster.md)
 - [性能测试](performance-test.md)
 
@@ -57,7 +57,7 @@ summary: 了解 TiDB Data Migration 用户文档。
 <NavColumn>
 <ColumnTitle>教程</ColumnTitle>
 
-- [简单的从库同步场景](usage-scenario-simple-replication.md)
+- [简单的从库迁移场景](usage-scenario-simple-replication.md)
 - [分库分表合并场景](usage-scenario-shard-merge.md)
 - [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
 - [分表合并数据迁移最佳实践](shard-merge-best-practices.md)

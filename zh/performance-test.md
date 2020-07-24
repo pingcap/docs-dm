@@ -5,11 +5,11 @@ summary: 了解如何测试 DM 集群的性能。
 
 # DM 集群性能测试
 
-本文档介绍如何构建测试场景对 DM 集群进行性能测试，包括数据同步速度、延迟等。
+本文档介绍如何构建测试场景对 DM 集群进行性能测试，包括数据迁移速度、延迟等。
 
-## 同步数据流
+## 迁移数据流
 
-可以使用简单的同步数据流来测试 DM 集群的数据同步性能，即单个 MySQL 实例到 TiDB 的数据同步：MySQL -> DM -> TiDB。
+可以使用简单的迁移数据流来测试 DM 集群的数据迁移性能，即单个 MySQL 实例到 TiDB 的数据迁移：MySQL -> DM -> TiDB。
 
 ## 部署测试环境
 
@@ -19,7 +19,7 @@ summary: 了解如何测试 DM 集群的性能。
 
 ## 性能测试
 
-### 同步数据表结构
+### 迁移数据表结构
 
 使用如下结构的表进行性能测试：
 
@@ -48,11 +48,11 @@ CREATE TABLE `sbtest` (
 sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=3306 --mysql-user=root --mysql-db=dm_benchmark --db-driver=mysql --table-size=50000000 prepare
 ```
 
-#### 创建数据同步任务
+#### 创建数据迁移任务
 
 1. 创建上游 MySQL 的 source，将 `source-id` 配置为 `source-1`。详细操作方法参考：[加载数据源配置](manage-source.md#加载数据源配置)。
 
-2. 创建 `full` 模式的 DM 同步任务，示例任务配置文件如下：
+2. 创建 `full` 模式的 DM 迁移任务，示例任务配置文件如下：
 
   ```yaml
   ---
@@ -84,7 +84,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
       threads: 32
   ```
 
-创建数据同步任务的详细操作参考[创建数据同步任务](create-task.md#创建数据同步任务)。
+创建数据迁移任务的详细操作参考[创建数据迁移任务](create-task.md#创建数据迁移任务)。
 
 > **注意：**
 >
@@ -99,19 +99,19 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
  [INFO] [loader.go:604] ["all data files have been finished"] [task=test] [unit=load] ["cost time"=52.439796ms]
 ```
 
-根据测试数据的数据量和导入消耗时间，可以算出全量数据的同步速度。
+根据测试数据的数据量和导入消耗时间，可以算出全量数据的迁移速度。
 
-### 增量同步性能测试用例
+### 增量迁移性能测试用例
 
 #### 初始化表 
 
 使用 `sysbench` 在上游创建测试表。
 
-#### 创建数据同步任务
+#### 创建数据迁移任务
 
-1. 创建上游 MySQL 的 source, source-id 配置为 `source-1`（如果在全量同步性能测试中已经创建，则不需要再次创建）。详细操作方法参考：[加载数据源配置](manage-source.md#加载数据源配置)。
+1. 创建上游 MySQL 的 source, source-id 配置为 `source-1`（如果在全量迁移性能测试中已经创建，则不需要再次创建）。详细操作方法参考：[加载数据源配置](manage-source.md#加载数据源配置)。
 
-2. 创建 `all` 模式的 DM 同步任务，示例任务配置文件如下：
+2. 创建 `all` 模式的 DM 迁移任务，示例任务配置文件如下：
 
   ```yaml
   ---
@@ -143,7 +143,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
       batch: 100
   ```
 
-创建数据同步任务的详细操作参考[创建数据同步任务](create-task.md#创建数据同步任务)。
+创建数据迁移任务的详细操作参考[创建数据迁移任务](create-task.md#创建数据迁移任务)。
 
 > **注意：**
 >
@@ -161,8 +161,8 @@ sysbench --test=oltp_insert --tables=4 --num-threads=32 --mysql-host=172.17.4.40
 
 > **注意：**
 >
-> 可以通过调整 `sysbench` 的语句类型，测试在不同业务场景下 DM 的数据同步性能。
+> 可以通过调整 `sysbench` 的语句类型，测试在不同业务场景下 DM 的数据迁移性能。
 
 #### 获取测试结果
 
-通过 `query-status` 命令观测 DM 的同步状态，通过 Grafana 观测 DM 的监控指标。主要包括同步延迟 `replicate lag`，单位时间内完成的 job 数量 `finished sqls jobs` 等，详细的监控指标说明参考[Binlog replication 监控指标](monitor-a-dm-cluster.md#binlog-replication)。
+通过 `query-status` 命令观测 DM 的迁移状态，通过 Grafana 观测 DM 的监控指标。主要包括迁移延迟 `replicate lag`，单位时间内完成的 job 数量 `finished sqls jobs` 等，详细的监控指标说明参考[Binlog replication 监控指标](monitor-a-dm-cluster.md#binlog-replication)。

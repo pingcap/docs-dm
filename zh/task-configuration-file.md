@@ -6,7 +6,7 @@ title: DM 任务配置文件介绍
 
 本文档主要介绍 Data Migration (DM) 的任务基础配置文件，包含[全局配置](#全局配置)和[实例配置](#实例配置)两部分。
 
-完整的任务配置参见 [DM 任务完整配置文件介绍](task-configuration-file-full.md)。关于各配置项的功能和配置，请参阅[数据同步功能](key-features.md)。
+完整的任务配置参见 [DM 任务完整配置文件介绍](task-configuration-file-full.md)。关于各配置项的功能和配置，请参阅[数据迁移功能](key-features.md)。
 
 ## 关键概念
 
@@ -14,7 +14,7 @@ title: DM 任务配置文件介绍
 
 ## 基础配置文件示例
 
-下面是一个基础的配置文件示例，通过该示例可以完成简单的数据同步功能。
+下面是一个基础的配置文件示例，通过该示例可以完成简单的数据迁移功能。
 
 ```yaml
 ---
@@ -33,7 +33,7 @@ target-database:       # 下游数据库实例配置
 ## ******** 功能配置集 **********
 black-white-list:        # 上游数据库实例匹配的表的 black & white list 过滤规则集
   bw-rule-1:             # 黑白名单配置的名称
-    do-dbs: ["all_mode"] # 同步哪些库
+    do-dbs: ["all_mode"] # 迁移哪些库
 
 # ----------- 实例配置 -----------
 mysql-instances:
@@ -41,13 +41,13 @@ mysql-instances:
     black-white-list:  "bw-rule-1" # 黑白名单配置名称
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量
     loader-thread: 16              # loader 用于导入数据的线程数量
-    syncer-thread: 16              # syncer 用于同步增量数据的线程数量
+    syncer-thread: 16              # syncer 用于迁移增量数据的线程数量
 
   - source-id: "mysql-replica-02" # 上游实例或者复制组 ID，参考 `dm-master.toml` 的 `source-id` 配置
     black-white-list:  "bw-rule-1" # 黑白名单配置名称
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量
     loader-thread: 16              # loader 用于导入数据的线程数量
-    syncer-thread: 16              # syncer 用于同步增量数据的线程数量
+    syncer-thread: 16              # syncer 用于迁移增量数据的线程数量
 ```
 
 ## 配置顺序
@@ -66,8 +66,8 @@ mysql-instances:
 - 描述：任务模式，可以通过任务模式来指定需要执行的数据迁移工作。
 - 值为字符串（`full`，`incremental` 或 `all`）。
     - `full`：只全量备份上游数据库，然后将数据全量导入到下游数据库。
-    - `incremental`：只通过 binlog 把上游数据库的增量修改同步到下游数据库, 可以设置实例配置的 `meta` 配置项来指定增量同步开始的位置。
-    - `all`：`full` + `incremental`。先全量备份上游数据库，将数据全量导入到下游数据库，然后从全量数据备份时导出的位置信息 (binlog position) 开始通过 binlog 增量同步数据到下游数据库。
+    - `incremental`：只通过 binlog 把上游数据库的增量修改迁移到下游数据库, 可以设置实例配置的 `meta` 配置项来指定增量迁移开始的位置。
+    - `all`：`full` + `incremental`。先全量备份上游数据库，将数据全量导入到下游数据库，然后从全量数据备份时导出的位置信息 (binlog position) 开始通过 binlog 增量迁移数据到下游数据库。
 
 ### 功能配置集
 
@@ -75,12 +75,12 @@ mysql-instances:
 
 ## 实例配置
 
-本小节定义具体的数据同步子任务，DM 支持从单个或者多个上游 MySQL 实例同步数据到同一个下游数据库实例。
+本小节定义具体的数据迁移子任务，DM 支持从单个或者多个上游 MySQL 实例迁移数据到同一个下游数据库实例。
 配置项说明参见以上示例配置文件中 `mysql-instances` 的注释。
 
 ## 修改任务配置
 
-在某些情况下需要更新任务配置内容，比如重置数据同步任务时设置了 `remove-meta` 为 `true` 和 `task-mode` 为 `all`，当数据同步任务重置完成后，需要更新任务配置文件中的 `remove-meta` 设置为 `false`，防止下一次启动任务的时候重新同步任务。
+在某些情况下需要更新任务配置内容，比如重置数据迁移任务时设置了 `remove-meta` 为 `true` 和 `task-mode` 为 `all`，当数据迁移任务重置完成后，需要更新任务配置文件中的 `remove-meta` 设置为 `false`，防止下一次启动任务的时候重新迁移任务。
 
 因为 DM 集群会持久化保存任务配置，所以修改任务配置需要通过 `stop-task`、`start-task` 将修改后的配置更新到 DM 集群中，如果直接修改任务配置文件，但是不重启任务，配置变更不会生效，DM 集群重启时仍然会读取之前保存的任务配置。
 

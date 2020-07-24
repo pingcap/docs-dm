@@ -9,7 +9,7 @@ summary: 使用 DM 对分库分表进行合并迁移时的最佳实践。
 
 ## 独立的数据迁移任务
 
-在[分库分表合并同步的实现原理部分](feature-shard-merge-pessimistic.md#实现原理)，我们介绍了 sharding group 的概念，简单来说可以理解为需要合并到下游同一个表的所有上游表即组成一个 sharding group。
+在[分库分表合并迁移的实现原理部分](feature-shard-merge-pessimistic.md#实现原理)，我们介绍了 sharding group 的概念，简单来说可以理解为需要合并到下游同一个表的所有上游表即组成一个 sharding group。
 
 当前的 sharding DDL 算法为了能协调在不同分表执行 DDL 对 schema 变更的影响，加入了一些[使用限制](feature-shard-merge-pessimistic.md#使用限制)。而当这些使用限制由于某些异常原因被打破时，我们需要[手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md) 甚至是完整重做整个数据迁移任务。
 
@@ -17,7 +17,7 @@ summary: 使用 DM 对分库分表进行合并迁移时的最佳实践。
 
 ## 手动处理 sharding DDL lock
 
-从[分库分表合并同步的实现原理部分](feature-shard-merge-pessimistic.md#实现原理)我们可以知道，DM 中的 sharding DDL lock 是用于协调不同上游分表向下游执行 DDL 的一种机制，本身并不是异常。
+从[分库分表合并迁移的实现原理部分](feature-shard-merge-pessimistic.md#实现原理)我们可以知道，DM 中的 sharding DDL lock 是用于协调不同上游分表向下游执行 DDL 的一种机制，本身并不是异常。
 
 因此，当通过 `show-ddl-locks` 查看到 DM-master 上存在 sharding DDL lock 时，或通过 `query-status` 查看到某些 DM-worker 有 `unresolvedGroups` 或 `blockingDDLs` 时，并不要急于使用 `unlock-ddl-lock` 或 `break-ddl-lock` 尝试去手动解除 sharding DDL lock。
 
@@ -108,13 +108,13 @@ CREATE TABLE `tbl_multi_pk` (
 
 ## 合表迁移过程中在上游增/删表
 
-从[分库分表合并同步的实现原理部分](feature-shard-merge-pessimistic.md#实现原理)我们可以知道，sharding DDL lock 的协调依赖于是否已收到上游已有各分表对应的 DDL，且当前 DM 在合表迁移过程中暂时**不支持**在上游动态增加或删除分表。如果需要在合表迁移过程中，对上游执行增、删分表操作，推荐按以下方式进行处理。
+从[分库分表合并迁移的实现原理部分](feature-shard-merge-pessimistic.md#实现原理)我们可以知道，sharding DDL lock 的协调依赖于是否已收到上游已有各分表对应的 DDL，且当前 DM 在合表迁移过程中暂时**不支持**在上游动态增加或删除分表。如果需要在合表迁移过程中，对上游执行增、删分表操作，推荐按以下方式进行处理。
 
 ### 在上游增加分表
 
 如果需要在上游增加新的分表，推荐按以下顺序执行操作：
 
-1. 等待在上游分表上执行过的所有 sharding DDL 协调同步完成。
+1. 等待在上游分表上执行过的所有 sharding DDL 协调迁移完成。
 2. 通过 `stop-task` 停止任务。
 3. 在上游添加新的分表。
 4. 确保 `task.yaml` 配置能使新添加的分表与其他已有的分表能合并到同一个下游表。
@@ -127,7 +127,7 @@ CREATE TABLE `tbl_multi_pk` (
 
 1. 在上游删除原有的分表，并通过 [`SHOW BINLOG EVENTS`](https://dev.mysql.com/doc/refman/5.7/en/show-binlog-events.html) 获取该 `DROP TABLE` 语句在 binlog 中对应的 `End_log_pos`，记为 _Pos-M_。
 2. 通过 `query-status` 获取当前 DM 已经处理完成的 binlog event 对应的 position（`syncerBinlog`），记为 _Pos-S_。
-3. 当 _Pos-S_ 比 _Pos-M_ 更大后，则说明 DM 已经处理完 `DROP TABLE` 语句，且该表在被删除前的数据都已经同步到下游，可以进行后续操作；否则，继续等待 DM 进行数据同步。
+3. 当 _Pos-S_ 比 _Pos-M_ 更大后，则说明 DM 已经处理完 `DROP TABLE` 语句，且该表在被删除前的数据都已经迁移到下游，可以进行后续操作；否则，继续等待 DM 进行数据迁移。
 4. 通过 `stop-task` 停止任务。
 5. 确保 `task.yaml` 配置能忽略上游已删除的分表。
 6. 通过 `start-task` 启动任务。
