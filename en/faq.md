@@ -28,25 +28,18 @@ When you encounter a DDL statement unsupported by TiDB, you need to manually han
 >
 > Currently, TiDB is not compatible with all the DDL statements that MySQL supports. See [MySQL Compatibility](https://pingcap.com/docs/dev/reference/mysql-compatibility/#ddl).
 
-## How to reset the data replication task?
+## How to reset the data migration task?
 
-You need to reset the entire data replication task in the following cases:
+When an exception occurs during data migration and the data migration task cannot be resumed, you need to reset the task and re-migrate the data:
 
-- `RESET MASTER` is accidentally executed in the upstream database.
-- The relay log or the upstream binlog is corrupted or lost.
+1. Execute the `stop-task` command to stop the abnormal data migration task.
 
-Generally, at this time, the relay unit exits with an error and cannot be automatically restored gracefully. You need to manually restore the data replication and the steps are as follows:
+2. Purge the data replicated to the downstream.
 
-1. Use the `stop-task` command to stop all the replication tasks that are currently running.
-2. Use DM-Ansible to [stop the entire DM cluster](deploy-a-dm-cluster-using-ansible.md#step-10-stop-the-dm-cluster).
-3. Manually clean up the relay log directory of the DM-worker corresponding to the MySQL master whose binlog is reset.
+3. Use one of the following ways to restart the data migration task.
 
-    - If the cluster is deployed using DM-Ansible, the relay log is in the `<deploy_dir>/relay_log` directory.
-    - If the cluster is manually deployed using the binary, the relay log is in the directory set in the `relay-dir` parameter.
-
-4. Clean up downstream replicated data.
-5. Use DM-Ansible to [start the entire DM cluster](deploy-a-dm-cluster-using-ansible.md#step-9-deploy-the-dm-cluster).
-6. Restart data replication with the new task name, or set `remove-meta` to `true` and `task-mode` to `all`.
+- Specify a new task name in the task configuration file. Then execute `start-task {task-config-file}`.
+- Execute `start-task --remove-meta {task-config-file}`.
 
 ## How to handle the error returned by the DDL operation related to the gh-ost table, after `online-ddl-scheme: "gh-ost"` is set?
 
