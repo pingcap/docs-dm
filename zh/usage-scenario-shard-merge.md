@@ -120,12 +120,12 @@ title: DM 分库分表合并场景
         action: Ignore
     ```
 
-- 要满足同步需求 #7，配置 [Black & white table lists](key-features.md#black--white-table-lists) 如下：
+- 要满足同步需求 #7，配置 [Block & Allow Lists](key-features.md#block-allow-table-list) 如下：
 
     {{< copyable "" >}}
 
     ```yaml
-    black-white-list:
+    block-allow-list:    # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
       log-bak-ignored:
         ignore-tables:
         - db-name: "user"
@@ -164,7 +164,7 @@ mysql-instances:
     source-id: "instance-1"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
-    black-white-list:  "log-bak-ignored"
+    block-allow-list:  "log-bak-ignored"     # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -173,7 +173,7 @@ mysql-instances:
     source-id: "instance-2"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
-    black-white-list:  "log-bak-ignored"
+    block-allow-list:  "log-bak-ignored"    # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -181,7 +181,7 @@ mysql-instances:
     source-id: "instance-3"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
-    black-white-list:  "log-bak-ignored"
+    block-allow-list:  "log-bak-ignored"    # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -216,7 +216,7 @@ filters:
     events: ["drop database"]
     action: Ignore
 
-black-white-list:
+block-allow-list:      # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
   log-bak-ignored:
     ignore-tables:
     - db-name: "user"

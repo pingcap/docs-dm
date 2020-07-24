@@ -9,7 +9,7 @@
   + [性能数据](benchmark-v1.0-ga.md)
   + 主要特性
     - [Table routing](key-features.md#table-routing)
-    - [Black & White Lists](key-features.md#black--white-table-lists)
+    - [Block & Allow Lists](key-features.md#block-allow-table-list)
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
     - [同步延迟监控](key-features.md#同步延迟监控)
     - [Online-ddl-scheme](feature-online-ddl-scheme.md)

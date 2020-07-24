@@ -8,10 +8,10 @@ aliases: ['/docs-cn/tidb-data-migration/dev/feature-overview/']
 
 本文档介绍 DM 提供的数据同步功能以及相关的配置选项与使用示例。
 
-Table Routing、Black & White Lists、Binlog Event Filter 在匹配库表名时，有以下版本差异：
+Table Routing、Block & Allow Lists、Binlog Event Filter 在匹配库表名时，有以下版本差异：
 
 + 对于 v1.0.5 版及后续版本，以上功能均支持[通配符匹配](https://en.wikipedia.org/wiki/Glob_(programming)#Syntax)。但注意所有版本中通配符匹配中的 `*` 符号 **只能有一个且必须在末尾**。
-+ 对于 v1.0.5 以前的版本，Table Routing 和 Binlog Event Filter 支持通配符，但不支持 `[...]` 与 `[!...]` 表达式。Black & White Lists 仅支持正则表达式。
++ 对于 v1.0.5 以前的版本，Table Routing 和 Binlog Event Filter 支持通配符，但不支持 `[...]` 与 `[!...]` 表达式。Block & Allow Lists 仅支持正则表达式。
 
 在简单任务场景下推荐使用通配符匹配。
 
@@ -109,7 +109,7 @@ routes:
     target-table: "t_bak"
 ```
 
-## Black & white table lists
+## Blaok & Allow Table Lists
 
 上游数据库实例表的黑白名单过滤规则，可以用来过滤或者只同步某些 `database/table` 的所有操作。
 
@@ -118,7 +118,7 @@ routes:
 {{< copyable "" >}}
 
 ```yaml
-black-white-list:
+block-allow-list:             # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
   rule-1:
     do-dbs: ["test*"]         # 非 ~ 字符开头，表示规则是通配符；v1.0.5 及后续版本支持通配符规则。
 ​    do-tables:
@@ -214,7 +214,7 @@ black-white-list:
 {{< copyable "" >}}
 
 ```yaml
-black-white-list:
+block-allow-list:  # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
   bw-rule:
     do-dbs: ["forum_backup_2018", "forum"]
     ignore-dbs: ["~^forum_backup_"]
