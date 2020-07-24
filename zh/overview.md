@@ -57,7 +57,7 @@ dmctl 是用来控制 DM 集群的命令行工具。
 
 ### Block & allow table lists
 
-[Block & Allow Lists](key-features.md#block-allow-table-list) 是指上游数据库实例表的黑白名单过滤规则。其过滤规则类似于 MySQL `replication-rules-db`/`replication-rules-table`，可以用来过滤或只同步某些数据库或某些表的所有操作。
+[Block & Allow Lists](key-features.md#block--allow-table-lists) 是指上游数据库实例表的黑白名单过滤规则。其过滤规则类似于 MySQL `replication-rules-db`/`replication-rules-table`，可以用来过滤或只同步某些数据库或某些表的所有操作。
 
 ### Binlog event filter
 

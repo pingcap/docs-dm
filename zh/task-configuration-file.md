@@ -71,7 +71,7 @@ mysql-instances:
 
 ### 功能配置集
 
-对于一般的业务场景，只需要配置黑白名单过滤规则集，配置说明参见以上示例配置文件中 `block-allow-list` 的注释以及 [Block & Allow Lists](key-features.md#block-allow-table-lists)
+对于一般的业务场景，只需要配置黑白名单过滤规则集，配置说明参见以上示例配置文件中 `block-allow-list` 的注释以及 [Block & Allow Lists](key-features.md#block--allow-table-lists)
 
 ## 实例配置
 

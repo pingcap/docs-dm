@@ -25,7 +25,7 @@ summary: 了解 TiDB Data Migration 如何跳过或替代执行异常的 SQL 语
 
 - 跳过/替代执行操作只适合用于一次性跳过/替代执行**下游 TiDB 不支持执行的 SQL 语句**，其它同步错误请不要使用此方式进行处理。
 
-    - 其它同步错误可尝试使用 [Block & Allow Lists](key-features.md#block-allow-table-list) 或 [Binlog Event Filter](key-features.md#binlog-event-filter)。
+    - 其它同步错误可尝试使用 [Block & Allow Lists](key-features.md#block--allow-table-lists) 或 [Binlog Event Filter](key-features.md#binlog-event-filter)。
 
 - 如果业务不能接受下游 TiDB 跳过异常的 DDL 语句，也不接受使用其他 DDL 语句作为替代，则不适合使用此方式进行处理。
 

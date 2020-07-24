@@ -120,7 +120,7 @@ title: DM 分库分表合并场景
         action: Ignore
     ```
 
-- 要满足同步需求 #7，配置 [Block & Allow Lists](key-features.md#block-allow-table-list) 如下：
+- 要满足同步需求 #7，配置 [Block & Allow Lists](key-features.md#block--allow-table-lists) 如下：
 
     {{< copyable "" >}}
 
