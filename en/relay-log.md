@@ -94,7 +94,7 @@ Method 1: Use the command-line options.
     - "3600" by default, indicating a background purge task is performed every 3600 seconds.
 
 + `purge-expires`
-    - The number of hours for which the relay log (that has not been written to the relay processing unit, and that is not being used or will not be used later by the currently running data migration task) can be retained before being purged in the automatic background purge.
+    - The number of hours for which the relay log (that has not been written to the relay processing unit, and that is not being used or will not be read later by the currently running data migration task) can be retained before being purged in the automatic background purge.
     - "0" by default, indicating data purge is not performed according to the update time of the relay log.
 
 + `purge-remain-space`
