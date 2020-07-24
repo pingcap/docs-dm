@@ -109,7 +109,7 @@ routes:
     target-table: "t_bak"
 ```
 
-## Blaok & Allow Table Lists
+## Block & Allow Table Lists
 
 上游数据库实例表的黑白名单过滤规则，可以用来过滤或者只同步某些 `database/table` 的所有操作。
 
