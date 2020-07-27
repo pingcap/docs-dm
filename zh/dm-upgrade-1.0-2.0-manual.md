@@ -12,8 +12,8 @@ summary: 了解 TiDB Data Migration 工具从 1.0.x 到 2.0.2 的手动升级操
 > - DM 当前不支持在数据迁移任务处于全量导出或全量导入过程中从 v1.0.x 升级到 v2.0.x。
 > - 由于 DM 各组件间用于交互的 gRPC 协议进行了较大变更，因此需确保升级前后 DM 集群各组件（包括 dmctl）使用相同的版本。
 > - 由于 DM 集群的元数据存储（如 checkpoint、shard DDL lock 状态及 online DDL 元信息等）发生了较大变更，升级到 v2.0.x 后无法自动复用 v1.0.x 的元数据，因此在执行升级操作前需要确保：
->   - 所有数据迁移任务不处于 shard DDL 协调过程中。
->   - 所有数据迁移任务不处于 online DDL 协调过程中。
+>     - 所有数据迁移任务不处于 shard DDL 协调过程中。
+>     - 所有数据迁移任务不处于 online DDL 协调过程中。
 
 ## 第 1 步：准备 v2.0.x 的配置文件
 
@@ -112,6 +112,7 @@ from:
 
     - 假设 v1.0.x 的数据迁移配置中未额外指定 `meta-schema`（或指定其值为默认的`dm_meta`），且对应的任务名为 `task_v1`，则对应的 checkpoint 信息在下游 TiDB 的 ``` `dm_meta`.`task_v1_syncer_checkpoint` ``` 表中。
     - 使用以下 SQL 语句分别获取该数据迁移任务对应的所有上游数据库 source 的全局 checkpoint 信息。
+
         ```sql
         > SELECT `id`, `binlog_name`, `binlog_pos` FROM `dm_meta`.`task_v1_syncer_checkpoint` WHERE `is_global`=1;
         +------------------+-------------------------+------------+
@@ -129,6 +130,7 @@ from:
         - 将 `name` 修改为一个新的、不存在的名称，如 `task_v2`
         - 将 `task-mode` 修改为 `incremental`
         - 为各 source 设置在 step.2 中获取的全局 checkpoint 作为增量迁移的起始点，如：
+
             ```yaml
             mysql-instances:
               - source-id: "mysql-replica-01"
