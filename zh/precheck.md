@@ -73,7 +73,7 @@ DM 会根据任务类型进行相应检查，用户可以在任务配置文件�
 | replication_privilege | 关闭检查上游 MySQL 实例用户的 replication 相关权限 |
 | version | 关闭检查上游数据库版本 |
 | binlog_enable | 关闭检查上游数据库是否已启用 binlog |
-| binlog_format | 关闭检查上游数据库 binlog 格式是否为 row |
+| binlog_format | 关闭检查上游数据库 binlog 格式是否为 ROW |
 | binlog_row_image | 关闭检查上游数据库 binlog_row_image 是否为 FULL|
 | table_schema | 关闭检查上游 MySQL 表结构的兼容性 |
 | schema_of_shard_tables | 关闭检查上游 MySQL 多实例分库分表的表结构一致性 |
