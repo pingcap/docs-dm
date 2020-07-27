@@ -228,20 +228,20 @@ target-database:
 
 mysql-instances:
   - source-id: "mysql-replica-01"
-    black-white-list:  "instance"
+    block-allow-list:  "instance"  # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
     route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量，在 v1.0.2 版本引入
     loader-thread: 16              # loader 用于导入数据的线程数量，在 v1.0.2 版本引入
     syncer-thread: 16              # syncer 用于同步增量数据的线程数量，在 v1.0.2 版本引入
 
   - source-id: "mysql-replica-02"
-    black-white-list:  "instance"
+    block-allow-list:  "instance"  # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
     route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量，在 v1.0.2 版本引入
     loader-thread: 16              # loader 用于导入数据的线程数量，在 v1.0.2 版本引入
     syncer-thread: 16              # syncer 用于同步增量数据的线程数量，在 v1.0.2 版本引入
 
-black-white-list:
+block-allow-list:                  # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
   instance:
     do-dbs: ["~^sharding[\\d]+"]
     do-tables:

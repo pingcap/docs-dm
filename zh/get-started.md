@@ -314,18 +314,18 @@ target-database:
 mysql-instances:
   - source-id: "mysql1"
     server-id: 1
-    black-white-list: "dmtest1"
+    block-allow-list: "dmtest1"     # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
     loader-config-name: "loader1"
   - source-id: "mysql2"
     server-id: 2
-    black-white-list: "dmtest1"
+    block-allow-list: "dmtest1"     # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
     loader-config-name: "loader2"
   - source-id: "mysql3"
     server-id: 3
-    black-white-list: "dmtest1"
+    block-allow-list: "dmtest1"     # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
     loader-config-name: "loader3"
 
-black-white-list:
+block-allow-list:                   # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
   dmtest1:
     do-dbs: ["dmtest1"]
 
@@ -348,7 +348,7 @@ loaders:
 
 * `ignore-checking-items: ["auto_increment_ID"]`：关闭 DM 对上游实例中潜在的自增 ID 冲突的检测。DM 能检测出上游表结构相同、并包含自增列的分片间潜在的列值冲突。通过配置 `auto-increment-increment` 和 `auto-increment-offset` 可使每个 MySQL Server 的 ID 都不重叠，从而避免不同表之间冲突的产生。因此，可以让 DM 关闭对自增 ID 冲突的检测。
 
-* `black-white-list`：将一个任务限制在数据库 `dmtest` 中。
+* `block-allow-list`：将一个任务限制在数据库 `dmtest` 中。
 
 * `loaders`：定义由各个 DM-worker 实例执行的每个 mydumper 实例的输出地址。
 

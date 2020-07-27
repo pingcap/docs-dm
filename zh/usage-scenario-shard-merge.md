@@ -57,7 +57,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/shard-mer
 
 ## 同步方案
 
-- 要满足同步需求 #1 和 #2，配置 [Table routing 规则](feature-overview.md#table-routing) 如下：
+- 要满足同步需求 #1 和 #2，配置 [Table Routing 规则](feature-overview.md#table-routing) 如下：
 
     {{< copyable "" >}}
 
@@ -69,7 +69,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/shard-mer
         target-schema: "user"
     ```
 
-- 要满足同步需求 #3，配置 [table routing 规则](feature-overview.md#table-routing) 如下：
+- 要满足同步需求 #3，配置 [Table Routing 规则](feature-overview.md#table-routing) 如下：
 
     {{< copyable "" >}}
 
@@ -86,7 +86,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/shard-mer
         target-table:  "sale"
     ```
 
-- 要满足同步需求 #4 和 #5，配置 [Binlog event filter 规则](feature-overview.md#binlog-event-filter) 如下：
+- 要满足同步需求 #4 和 #5，配置 [Binlog Event Filter 规则](feature-overview.md#binlog-event-filter) 如下：
 
     {{< copyable "" >}}
 
@@ -103,7 +103,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/shard-mer
     >
     > 同步需求 #4、#5 和 #7 的操作意味着过滤掉所有对 `user` 库的删除操作，所以此处配置了库级别的过滤规则。但是 `user` 库以后加入表的删除操作也都会被过滤。
 
-- 要满足同步需求 #6，配置 [Binlog event filter 规则](feature-overview.md#binlog-event-filter) 如下：
+- 要满足同步需求 #6，配置 [Binlog Event Filter 规则](feature-overview.md#binlog-event-filter) 如下：
 
     {{< copyable "" >}}
 
@@ -121,12 +121,12 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/shard-mer
         action: Ignore
     ```
 
-- 要满足同步需求 #7，配置 [Black & white table lists](feature-overview.md#black--white-table-lists) 如下：
+- 要满足同步需求 #7，配置 [Block & Allow Table Lists](feature-overview.md#block--allow-table-lists) 如下：
 
     {{< copyable "" >}}
 
     ```yaml
-    black-white-list:
+    block-allow-list:     # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
       log-bak-ignored:
         ignore-tables:
         - db-name: "user"
@@ -165,7 +165,7 @@ mysql-instances:
     source-id: "instance-1"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
-    black-white-list:  "log-bak-ignored"
+    block-allow-list:  "log-bak-ignored"    # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -174,7 +174,7 @@ mysql-instances:
     source-id: "instance-2"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
-    black-white-list:  "log-bak-ignored"
+    block-allow-list:  "log-bak-ignored"    # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -182,7 +182,7 @@ mysql-instances:
     source-id: "instance-3"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
-    black-white-list:  "log-bak-ignored"
+    block-allow-list:  "log-bak-ignored"    # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -217,7 +217,7 @@ filters:
     events: ["drop database"]
     action: Ignore
 
-black-white-list:
+block-allow-list:       # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
   log-bak-ignored:
     ignore-tables:
     - db-name: "user"

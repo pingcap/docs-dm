@@ -13,7 +13,7 @@
   - [DM Relay Log](relay-log.md)
 + 核心特性
   - [Table Routing](feature-overview.md#table-routing)
-  - [Black & White Lists](feature-overview.md#black--white-table-lists)
+  - [Block & Allow Lists](feature-overview.md#block--allow-table-lists)
   - [Binlog Event Filter](feature-overview.md#binlog-event-filter)
   - [同步延迟监控](feature-overview.md#同步延迟监控)
   - [Online-ddl-scheme](feature-online-ddl-scheme.md)
