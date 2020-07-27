@@ -5,6 +5,7 @@
 
 ## 文档目录
 
+<<<<<<< HEAD
 + 概述
   - [DM 架构](overview.md)
   - [同步功能介绍](overview.md#同步功能介绍)
@@ -30,6 +31,23 @@
   - [DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
 - [快速上手](get-started.md)
 + 部署
+=======
++ 关于 DM
+  + [性能数据](benchmark-v1.0-ga.md)
+  + 主要特性
+    - [Table routing](key-features.md#table-routing)
+    - [Block & Allow Lists](key-features.md#block--allow-table-lists)
+    - [Binlog Event Filter](key-features.md#binlog-event-filter)
+    - [同步延迟监控](key-features.md#同步延迟监控)
+    - [Online-ddl-scheme](feature-online-ddl-scheme.md)
+    - [分库分表合并同步](feature-shard-merge.md)
++ [应用场景](scenarios.md)
++ 快速上手
+  - [部署集群](quick-start-with-dm.md)
+  - [创建数据同步任务](quick-start-create-task.md)
++ 部署使用
+  - [软硬件要求](hardware-and-software-requirements.md)
+>>>>>>> 41c06fa... zh: update black-white-list to block-allow-list (#179)
   + 部署 DM 集群
     - [使用 DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)

@@ -11,7 +11,17 @@ summary: 了解 TiDB Data Migration 用户文档。
 >
 > DM 以 SQL 语句的形式将数据同步到 TiDB 中，因此各个版本的 DM 都分别兼容**所有版本**的 TiDB。在生产环境中，推荐使用 DM 的最新已发布版本。已发布版本的下载方式参见 [DM 下载链接](https://pingcap.com/docs-cn/stable/reference/tools/download/#tidb-dm-data-migration)。
 
+<<<<<<< HEAD
 ## DM 架构
+=======
+- [性能数据](benchmark-v1.0-ga.md)
+- [Table routing](key-features.md#table-routing)
+- [Block & Allow Lists](key-features.md#block--allow-table-lists)
+- [Binlog Event Filter](key-features.md#binlog-event-filter)
+- [同步延迟监控](key-features.md#同步延迟监控)
+- [Online-ddl-scheme](feature-online-ddl-scheme.md)
+- [分库分表合并同步](feature-shard-merge.md)
+>>>>>>> 41c06fa... zh: update black-white-list to block-allow-list (#179)
 
 DM 主要包括三个组件：DM-master，DM-worker 和 dmctl。
 
