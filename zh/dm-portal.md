@@ -4,7 +4,7 @@ title: DM Portal 简介
 
 # DM Portal 简介
 
-当前版本的 DM 提供了丰富多样的功能特性，包括 [Table routing](key-features.md#table-routing)，[Black & white table lists](key-features.md#black--white-table-lists)，[Binlog event filter](key-features.md#binlog-event-filter) 等。但这些功能特性同时也增加了用户使用 DM 的复杂度，尤其在进行 [DM 任务配置](task-configuration-file.md)的过程中。
+当前版本的 DM 提供了丰富多样的功能特性，包括 [Table Routing](key-features.md#table-routing)，[Block & Allow Lists](key-features.md#block--allow-table-lists)，[Binlog Event Filter](key-features.md#binlog-event-filter) 等。但这些功能特性同时也增加了用户使用 DM 的复杂度，尤其在进行 [DM 任务配置](task-configuration-file.md)的过程中。
 
 针对这个问题，DM 提供了一个精简的网页程序 DM Portal，用于帮助用户以可视化的方式来配置所需的同步任务，并且生成可以让 DM 直接执行的 `task.yaml` 文件。
 

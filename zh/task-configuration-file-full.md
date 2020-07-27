@@ -68,7 +68,7 @@ filters:                                        # 上游数据库实例匹配的
     events: ["all dml"]
     action: Do
 
-black-white-list:                    # 上游数据库实例匹配的表的 black & white list 过滤规则集
+block-allow-list:                    # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
   bw-rule-1:                         # 配置名称
     do-dbs: ["~^test.*", "user"]     # 同步哪些库
     ignore-dbs: ["mysql", "account"] # 忽略哪些库
@@ -110,7 +110,7 @@ mysql-instances:
 
     route-rules: ["route-rule-1", "route-rule-2"]  # 该上游数据库实例匹配的表到下游数据库的 table routing 规则名称
     filter-rules: ["filter-rule-1"]                # 该上游数据库实例匹配的表的 binlog event filter 规则名称
-    black-white-list:  "bw-rule-1"                 # 该上游数据库实例匹配的表的 black & white list 过滤规则名称
+    block-allow-list:  "bw-rule-1"                 # 该上游数据库实例匹配的表的 block-allow-list 过滤规则名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
 
     mydumper-config-name: "global"          # mydumper 配置名称
     loader-config-name: "global"            # loader 配置名称
@@ -152,7 +152,7 @@ mysql-instances:
 | :------------ | :--------------------------------------- |
 | `routes` | 上游和下游表之间的路由 table routing 规则集。如果上游与下游的库名、表名一致，则不需要配置该项。使用场景及示例配置参见 [Table Routing](key-features.md#table-routing) |
 | `filters` | 上游数据库实例匹配的表的 binlog event filter 规则集。如果不需要对 binlog 进行过滤，则不需要配置该项。使用场景及示例配置参见 [Binlog Event Filter](key-features.md#binlog-event-filter) |
-| `black-white-list` | 该上游数据库实例匹配的表的 black & white list 过滤规则集。建议通过该项指定需要同步的库和表，否则会同步所有的库和表。使用场景及示例配置参见 [Black & White Lists](key-features.md#black--white-table-lists) |
+| `block-allow-list` | 该上游数据库实例匹配的表的 block & allow lists 过滤规则集。建议通过该项指定需要同步的库和表，否则会同步所有的库和表。使用场景及示例配置参见 [Block & Allow Lists](key-features.md#block--allow-table-lists) |
 | `mydumpers` | mydumper 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `mydumper-thread` 对 `thread` 配置项单独进行配置。 |
 | `loaders` | loader 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `loader-thread` 对 `pool-size` 配置项单独进行配置。 |
 | `syncers` | syncer 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `syncer-thread` 对 `worker-count` 配置项单独进行配置。 |
@@ -169,7 +169,7 @@ mysql-instances:
 | :------ | :------------------ |
 | `route-rules` | `routes` |
 | `filter-rules` | `filters` |
-| `black-white-list` | `black-white-list` |
+| `block-allow-list` | `block-allow-list` |
 | `mydumper-config-name` | `mydumpers` |
 | `loader-config-name` | `loaders` |
 | `syncer-config-name` | `syncers`  |
