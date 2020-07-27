@@ -64,7 +64,8 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/precheck/','/docs-cn/v3.1
 
 ### 关闭检查项
 
-DM 会根据任务类型进行相应检查，用户可以在任务配置文件中使用`ignore-checking-items`配置关闭检查。`ignore-checking-items`是一个列表，其中可能的取值包括：
+DM 会根据任务类型进行相应检查，用户可以在任务配置文件中使用 `ignore-checking-items` 配置关闭检查。`ignore-checking-items` 是一个列表，其中可能的取值包括：
+
 | 取值   | 含义   |
 | :----  | :-----|
 | all | 关闭所有检查 |
