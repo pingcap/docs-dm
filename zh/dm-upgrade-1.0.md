@@ -1,11 +1,11 @@
 ---
-title: TiDB Data Migration 版本升级
-summary: 了解 TiDB Data Migration 工具的版本变更和升级操作。
+title: TiDB Data Migration 1.0.x 版本间升级
+summary: 了解 TiDB Data Migration 工具的 1.0.x 版本变更和升级操作。
 ---
 
-# TiDB Data Migration 版本升级
+# TiDB Data Migration 1.0.x 版本间升级
 
-本文档主要介绍各 TiDB Data Migration (DM) 版本间的升级操作步骤以及各版本的版本信息和主要变更。
+本文档主要介绍各 TiDB Data Migration (DM) 1.0.x 版本间的升级操作步骤以及各版本的版本信息和主要变更。
 
 > **注意：**
 >
