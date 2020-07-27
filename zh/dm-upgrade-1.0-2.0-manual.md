@@ -1,6 +1,6 @@
 ---
 title: TiDB Data Migration 1.0.x 到 2.0.x 手动升级
-summary: 了解 TiDB Data Migration 工具从 1.0.x 到 2.0.2 的手动升级操作。
+summary: 了解 TiDB Data Migration 工具从 1.0.x 到 2.0.x 的手动升级操作。
 ---
 
 # TiDB Data Migration 1.0.x 到 2.0.x 手动升级
@@ -94,7 +94,7 @@ from:
 
 ### 数据迁移任务配置文件
 
-对于[数据迁移任务配置文件](task-configuration-file.md)，v2.0.x 基本与 v1.0.x 保持兼容，后续可简单修改后进行使用。
+对于[数据迁移任务配置文件](task-configuration-file.md)，v2.0.x 基本与 v1.0.x 保持兼容，可直接复制 v1.0.x 的配置。
 
 ## 第 2 步：部署 v2.0.x 集群
 
@@ -103,6 +103,8 @@ from:
 ## 第 3 步：下线 v1.0.x 集群
 
 如果原 v1.0.x 集群是使用 DM-Ansible 部署的，则[使用 DM-Ansible 下线 v1.0.x 集群](https://docs.pingcap.com/zh/tidb-data-migration/stable/cluster-operations#%E4%B8%8B%E7%BA%BF%E9%9B%86%E7%BE%A4) 。
+
+如果原 v1.0.x 集群是使用 Binary 部署，则直接停止 DM-worker 与 DM-master 进程。
 
 ## 第 4 步：升级数据迁移任务
 
@@ -123,7 +125,7 @@ from:
         +------------------+-------------------------+------------+
         ```
 
-3. 更新 v1.0.x 的数据迁移任务以用于启动新的 v2.0.x 的数据迁移任务。
+3. 更新 v1.0.x 的数据迁移任务配置文件以用于启动新的 v2.0.x 的数据迁移任务。
 
     - 如 v1.0.x 的数据迁移任务配置文件为 `task_v1.yaml`，则将其复制一份为 `task_v2.yaml`。
     - 对 `task_v2.yaml` 进行以下修改：
@@ -133,7 +135,7 @@ from:
 
             ```yaml
             mysql-instances:
-              - source-id: "mysql-replica-01"
+              - source-id: "mysql-replica-01"        # 对应 checkpoint 信息所属的 `id`
                 meta:
                   binlog-name: "mysql-bin.000123"    # 对应 checkpoint 信息中的 `binlog_name`，但不包含 `|000001` 部分
                   binlog-pos: 15847                  # 对应 checkpoint 信息中的 `binlog_pos`
