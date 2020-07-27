@@ -17,11 +17,11 @@ summary: 了解 TiDB Data Migration 支持的主要应用场景。
 - 配置 `target-database` 为下游 TiDB 相关连接信息。
 - 在 `mysql-instances` 中为上游 MySQL/MariaDB 配置对应的 `source-id`。
 - 使用默认的并发控制参数或按需配置 `mydumper-thread`、`loader-thread` 与 `syncer-thread`。
-- 无需配置 `route-rules`、`filter-rules` 及 `black-white-list` 等。
+- 无需配置 `route-rules`、`filter-rules` 及 `block-allow-list` 等。
 
 ### 迁移 MySQL/MariaDB 中部分业务数据
 
-如果原 MySQL/MariaDB 中有多个业务的数据，但暂时只需要迁移其中的部分业务数据到 TiDB，则按照[将 TiDB 作为 MySQL/MariaDB 的从库](#将-tidb-作为-mysqlmariadb-的从库)对迁移任务进行配置后，再按需配置 `black-white-list` 即可。
+如果原 MySQL/MariaDB 中有多个业务的数据，但暂时只需要迁移其中的部分业务数据到 TiDB，则按照[将 TiDB 作为 MySQL/MariaDB 的从库](#将-tidb-作为-mysqlmariadb-的从库)对迁移任务进行配置后，再按需配置 `block-allow-list` 即可。
 
 如期望上游数据迁移到下游不同名的库或表中，则可额外配置 `route-rules`。
 
