@@ -15,7 +15,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/configure/task-configurat
 
 ## 关闭检查项
 
-DM 会根据任务类型进行相应检查，用户可以在任务配置文件中使用`ignore-checking-items`配置关闭检查，请参阅[关闭检查项](precheck.md#关闭检查项)
+DM 会根据任务类型进行相应检查。可以参考[关闭检查项](precheck.md#关闭检查项)，在任务配置文件中使用 `ignore-checking-items` 配置关闭相应检查。
 
 ## 完整配置文件示例
 
