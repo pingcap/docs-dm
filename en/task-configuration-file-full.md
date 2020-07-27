@@ -31,6 +31,7 @@ remove-meta: false              # Whether to remove the `meta` information (`che
 enable-heartbeat: false         # Whether to enable the heartbeat feature.
 online-ddl-scheme: "gh-ost"     # Only "gh-ost" and "pt" are currently supported.
 case-sensitive: false           # Whether schema/table is case-sensitive.
+clean-dump-file: true           # Whether to clean up the files generated during data dump. Note that these include `metadata` files. New in v1.0.7.
 
 target-database:                # Configuration of the downstream database instance.
   host: "192.168.0.1"
