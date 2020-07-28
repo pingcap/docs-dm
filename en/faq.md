@@ -38,8 +38,8 @@ When an exception occurs during data migration and the data migration task canno
 
 3. Use one of the following ways to restart the data migration task.
 
-- Specify a new task name in the task configuration file. Then execute `start-task {task-config-file}`.
-- Execute `start-task --remove-meta {task-config-file}`.
+   - Specify a new task name in the task configuration file. Then execute `start-task {task-config-file}`.
+   - Execute `start-task --remove-meta {task-config-file}`.
 
 ## How to handle the error returned by the DDL operation related to the gh-ost table, after `online-ddl-scheme: "gh-ost"` is set?
 
