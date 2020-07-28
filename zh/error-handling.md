@@ -166,13 +166,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/troubleshoot-dm/','/docs-cn/tidb-dat
 
 * MySQL client 和 MySQL/TiDB Server 都有 `max_allowed_packet` 配额的限制，如果在使用过程中违反其中任何一个 `max_allowed_packet` 配额，客户端程序就会收到对应的报错。目前最新版本的 DM 和 TiDB Server 的默认 `max_allowed_packet` 配额都为 `64M`。
 
-* DM 的全量数据导入处理模块不支持对 dump 处理模块导出的 SQL 文件进行切分。因为 DM 的 dump 处理单元采用了最简单的编码实现，如果在 DM 实现文件切分，需要在 `TiDB Parser` 基础上实现一个完备的解析器才能正确的处理数据切分。但是随之会带来以下的问题：
-
-    * 工作量大
-
-    * 复杂度高，不容易保证正确性
-
-    * 性能的极大降低
+* DM 的全量数据导入处理模块不支持对 dump 处理模块导出的 SQL 文件进行切分。
 
 #### 解决方案
 
