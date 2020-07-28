@@ -182,7 +182,7 @@ In addition, the user of the upstream and downstream databases must have the cor
 
 #### Reasons
 
-* Both MySQL client and MySQL/TiDB Server have the quota limit for `max_allowed_packet`. If any `max_allowed_packet` is outside the normal range, the client receives the error message. Currently, for the latest version of DM and TiDB Server, the default value of `max_allowed_packet` is `64M`.
+* Both MySQL client and MySQL/TiDB server have the quota limits for `max_allowed_packet`. If any `max_allowed_packet` exceeds a limit, the client receives the error message. Currently, for the latest version of DM and TiDB server, the default value of `max_allowed_packet` is `64M`.
 
 * The full data import processing unit in DM does not support splitting the SQL file exported by the Dump processing unit in DM.
 
