@@ -140,12 +140,12 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/simple-sy
     >
     > `store-filter-rule` 不同于 `log-filter-rule` 和 `user-filter-rule`。`store-filter-rule` 是针对整个 `store` 库的规则，而 `log-filter-rule` 和 `user-filter-rule` 是针对 `user` 库中 `log` 表的规则。
 
-- 为了满足[同步要求](#同步要求)中的第三点要求，需要配置以下 [black & white table lists 规则](feature-overview.md#black--white-table-lists)：
+- 为了满足[同步要求](#同步要求)中的第三点要求，需要配置以下 [block & Allow Table Lists 规则](feature-overview.md#block--allow-table-lists)：
 
     {{< copyable "" >}}
 
     ```yaml
-    black-white-list:
+    block-allow-list:    # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
       log-ignored:
         ignore-dbs: ["log"]
     ```
@@ -173,7 +173,7 @@ mysql-instances:
     source-id: "instance-1"
     route-rules: ["instance-1-user-rule"]
     filter-rules: ["log-filter-rule", "user-filter-rule" , "store-filter-rule"]
-    black-white-list:  "log-ignored"
+    block-allow-list:  "log-ignored"   # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -181,7 +181,7 @@ mysql-instances:
     source-id: "instance-2"
     route-rules: ["instance-2-user-rule", instance-2-store-rule]
     filter-rules: ["log-filter-rule", "user-filter-rule" , "store-filter-rule"]
-    black-white-list:  "log-ignored"
+    block-allow-list:  "log-ignored"   # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -189,7 +189,7 @@ mysql-instances:
     source-id: "instance-3"
     route-rules: ["instance-3-user-rule", instance-3-store-rule]
     filter-rules: ["log-filter-rule", "user-filter-rule" , "store-filter-rule"]
-    black-white-list:  "log-ignored"
+    block-allow-list:  "log-ignored"   # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -232,7 +232,7 @@ filters:
     events: ["drop database", "truncate table", "drop table", "delete"]
     action: Ignore
 
-black-white-list:
+block-allow-list:     # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
   log-ignored:
     ignore-dbs: ["log"]
 

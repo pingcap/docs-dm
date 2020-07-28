@@ -77,18 +77,18 @@ mysql-instances:
 -
   # 上游实例或者复制组 ID，参考 `inventory.ini` 的 `source_id` 或者 `dm-master.toml` 的 `source-id 配置`。
   source-id: "mysql-replica-01"
-  # 需要同步的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `black-white-list` 的配置。
-  black-white-list: "global"
+  # 需要同步的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置。
+  block-allow-list: "global"          # 如果 DM 版本 <= v1.0.6 则使用 black-white-list。
   # Mydumper 的配置项名称，用于引用全局的 Mydumper 配置。
   mydumper-config-name: "global"
 
 -
   source-id: "mysql-replica-02"
-  black-white-list: "global"
+  block-allow-list: "global"          # 如果 DM 版本 <= v1.0.6 则使用 black-white-list。
   mydumper-config-name: "global"
 
 # 黑白名单全局配置，各实例通过配置项名引用。
-black-white-list:
+block-allow-list:                     # 如果 DM 版本 <= v1.0.6 则使用 black-white-list。
   global:
     do-tables:                        # 需要同步的上游表的白名单。
     - db-name: "test_db"              # 需要同步的表的库名。

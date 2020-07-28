@@ -97,7 +97,7 @@ Available Commands:
   unlock-ddl-lock      forcefully unlock DDL lock
   update-master-config update the config of the DM-master
   update-relay         update the relay unit config of the DM-worker
-  update-task          update a task's config for routes, filters, or black-white-list
+  update-task          update a task's config for routes, filters, or block-allow-list
 
 Flags:
   -h, --help             help for dmctl
@@ -475,7 +475,7 @@ stop-task test
 支持的更新项包括：
 
 - Table routing 规则
-- Black & white table lists 规则
+- Block & allow table lists 规则
 - Binlog event filter 规则
 
 其余项均不支持更新。
@@ -513,7 +513,7 @@ help update-task
 ```
 
 ```
-update a task's config for routes, filters, or black-white-list
+update a task's config for routes, filters, or block-allow-list
 
 Usage:
   dmctl update-task [-w worker ...] <config-file> [flags]
@@ -548,7 +548,7 @@ update-task [-w "127.0.0.1:8262"] ./task.yaml
 {{< copyable "" >}}
 
 ```bash
-update-task task_all_black.yaml
+update-task task.yaml
 ```
 
 ```
