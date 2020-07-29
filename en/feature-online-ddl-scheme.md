@@ -1,12 +1,12 @@
 ---
 title: DM online-ddl-scheme
 summary: This document introduces the online-ddl-scheme feature of DM.
-aliases: ['/docs/tidb-data-migration/stable/online-ddl-scheme/','/docs/tidb-data-migration/v1.0/online-ddl-scheme/']
+aliases: ['/docs/tidb-data-migration/stable/online-ddl-scheme/','/docs/tidb-data-migration/v1.0/online-ddl-scheme/','tidb-data-migration/stable/online-ddl-scheme']
 ---
 
 # DM online-ddl-scheme
 
-This document introduces the online-ddl-scheme feature of DM.
+This document introduces the `online-ddl-scheme` feature of DM.
 
 ## Overview
 
@@ -122,9 +122,9 @@ The SQL statements mostly used by gh-ost and the corresponding operation of DM a
         rename test.test4 to test._test4_del;
         rename test._test4_gho to test.test4;
         ```
-    
+
     * DM does not execute `rename to _test4_del`. When executing `rename ghost_table to origin table`, DM takes the following steps:
-    
+
         - Read the DDL recorded in memory in Step 3
         - Replace `ghost_table` and `ghost_schema` with `origin_table` and its corresponding schema
         - Execute the DDL that has been replaced
@@ -212,7 +212,7 @@ The SQL statements mostly used by pt-osc and the corresponding operation of DM a
          rename test.test4 to test._test4_old; 
          rename test._test4_new to test.test4;
          ```
-    
+
     * DM does not execute `rename to _test4_old`. When executing `rename ghost_table to origin table`, DM takes the following steps:
 
         - Read the DDL recorded in memory in Step 2
