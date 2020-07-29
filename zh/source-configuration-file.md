@@ -10,17 +10,17 @@ title: 上游数据库配置文件介绍
 
 上游数据库的示例配置文件如下所示：
 
-```toml
-source-id = "mysql-replica-01"
+```yaml
+source-id: "mysql-replica-01"
 
 # 开启 GTID
-enable-gtid = false
+enable-gtid: false
 
-[from]
-host = "127.0.0.1"
-port = 3306
-user = "root"
-password = "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # 使用 dmctl 对上游数据库的用户密码加密之后的密码
+from:
+  host: "127.0.0.1"
+  port: 3306
+  user: "root"
+  password: "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # 使用 dmctl 对上游数据库的用户密码加密之后的密码
 ```
 
 ## 配置项说明
