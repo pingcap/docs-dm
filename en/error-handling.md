@@ -85,7 +85,7 @@ If you encounter an error while running DM, take the following steps to troubles
     resume-task ${task name}
     ```
 
-However, you need to reset the data replication task in some cases. For details, refer to [Reset the Data Replication Task](faq.md#how-to-reset-the-data-migration-task).
+However, you need to reset the data replication task in some cases. For details, refer to [Reset the Data Replication Task](faq.md#how-to-reset-the-data-replication-task).
 
 ## Handle common errors
 
