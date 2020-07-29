@@ -135,7 +135,7 @@ from:
     - 对 `task_v2.yaml` 进行以下修改：
         - 将 `name` 修改为一个新的、不存在的名称，如 `task_v2`
         - 将 `task-mode` 修改为 `incremental`
-        - 为各 source 设置在 step.2 中获取的全局 checkpoint 作为增量迁移的起始点，如：
+        - 根据 step.2 中获取的全局 checkpoint 信息，为各 source 设置增量迁移的起始点，如：
 
             ```yaml
             mysql-instances:

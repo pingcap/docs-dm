@@ -28,8 +28,8 @@
   + [性能测试](performance-test.md)
 + 运维操作
   + 版本升级
-    - [1.0.x 到 2.0.x 手动升级](dm-upgrade-1.0-2.0-manual.md)
-    - [1.0.x 版本间升级](dm-upgrade-1.0.md)
+    - [1.0.x 到 2.0.x 手动升级](manually-upgrade-dm-1.0-to-2.0.md)
+    - [1.0.x 版本间升级](upgrade-dm-1.0.md)
   - [集群操作](cluster-operations.md)
   + 任务管理
     - [dmctl 简介](dmctl-introduction.md)
