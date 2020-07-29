@@ -1,12 +1,20 @@
 ---
 title: DM online-ddl-scheme
 summary: This document introduces the online-ddl-scheme feature of DM.
+<<<<<<< HEAD:en/online-ddl-scheme.md
 aliases: ['/docs/tidb-data-migration/stable/online-ddl-scheme/','/docs/tidb-data-migration/v1.0/online-ddl-scheme/']
+=======
+aliases: ['/docs/tidb-data-migration/dev/online-ddl-scheme/','/tidb-data-migration/dev/online-ddl-scheme/']
+>>>>>>> 6cc2748... *: rename a doc (#193):en/feature-online-ddl-scheme.md
 ---
 
 # DM online-ddl-scheme
 
+<<<<<<< HEAD:en/online-ddl-scheme.md
 This document introduces the online-ddl-scheme feature of DM.
+=======
+This document introduces the `online-ddl-scheme` feature of DM.
+>>>>>>> 6cc2748... *: rename a doc (#193):en/feature-online-ddl-scheme.md
 
 ## Overview
 

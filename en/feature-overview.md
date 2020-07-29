@@ -519,3 +519,51 @@ enable-heartbeat: true
 - DM-worker queries the current `TS_primary` timestamp in the corresponding upstream MySQL or MariaDB `dm_heartbeat`.`heartbeat` tables every 10 seconds, and calculates `task_lag` = `TS_primary` - `TS_secondary_task` for each task.
 
 See the `replicate lag` in the [binlog replication](monitor-a-dm-cluster.md#binlog-replication) processing unit of DM monitoring metrics.
+<<<<<<< HEAD:en/feature-overview.md
+=======
+
+## Online DDL tools
+
+In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM provides supports for these tools to avoid replicating unnecessary intermediate data.
+
+### Restrictions
+
+- DM only supports gh-ost and pt-osc.
+- When `online-ddl-scheme` is enabled, the checkpoint corresponding to incremental replication should not be in the process of online DDL execution. For example, if an upstream online DDL operation starts at `position-A` and ends at `position-B` of the binlog, the starting point of incremental replication should be earlier than `position-A` or later than `position-B`; otherwise, an error occurs. For details, refer to [FAQ](faq.md#how-to-handle-the-error-returned-by-the-ddl-operation-related-to-the-gh-ost-table-after-online-ddl-scheme-gh-ost-is-set).
+
+### Parameter configuration
+
+- If the upstream MySQL/MariaDB uses gh-ost, set `online-ddl-scheme` to `"gh-ost"` in the task configuration file:
+
+```
+online-ddl-scheme: "gh-ost"
+```
+
+- If the upstream MySQL/MariaDB uses pt-osc, set `online-ddl-scheme` to `"pt"` in the task configuration file:
+
+```
+online-ddl-scheme: "pt"
+```
+
+For more information about online DDL tools, refer to [Online DDL Scheme](feature-online-ddl-scheme.md).
+
+## Shard merge
+
+DM supports merging the DML and DDL data in the upstream MySQL/MariaDB sharded tables and replicating the merged data to the downstream TiDB tables.
+
+### Restrictions
+
+Currently, the shard merge feature is supported only in limited scenarios. For details, refer to [Sharding DDL usage Restrictions](feature-shard-merge.md#restrictions).
+
+### Parameter configuration
+
+Set `is-sharding` to `true` in the task configuration file:
+
+```
+is-sharding: true
+```
+
+### Handle sharding DDL locks manually
+
+In some abnormal scenarios, you need to [handle sharding DDL Locks manually](feature-manually-handling-sharding-ddl-locks.md).
+>>>>>>> 6cc2748... *: rename a doc (#193):en/key-features.md
