@@ -12,17 +12,7 @@ aliases: ['/docs/tidb-data-migration/','/docs/tidb-data-migration/stable/','/doc
 >
 > DM replicates data to TiDB in the form of SQL statements, so each version of DM is compatible with **all versions** of TiDB. In the production environment, it is recommended to use the latest released version of DM. To install DM, see [DM download link](https://pingcap.com/docs/stable/reference/tools/download/#tidb-dm-data-migration).
 
-<<<<<<< HEAD
 ## Architecture
-=======
-- [Performance](benchmark-v1.0-ga.md)
-- [Table routing](key-features.md#table-routing)
-- [Block & Allow Lists](key-features.md#block-and-allow-table-lists)
-- [Binlog Event Filter](key-features.md#binlog-event-filter)
-- [Replication delay monitoring](key-features.md#replication-delay-monitoring)
-- [Online DDL Scheme](feature-online-ddl-scheme.md)
-- [Shard Merge](feature-shard-merge.md)
->>>>>>> 6cc2748... *: rename a doc (#193)
 
 The Data Migration tool includes three components: DM-master, DM-worker, and dmctl.
 
