@@ -157,3 +157,5 @@ from:
 4. 使用 [`start-task`](create-task.md) 命令以 v2.0.x 的数据迁移任务配置文件启动升级后的数据迁移任务。
 
 5. 使用 [`query-status`](query-status.md) 命令确认数据迁移任务是否运行正常。
+
+如果数据迁移任务运行正常，则表明 DM 升级到 v2.0.x 的操作成功。
