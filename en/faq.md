@@ -28,15 +28,15 @@ When you encounter a DDL statement unsupported by TiDB, you need to manually han
 >
 > Currently, TiDB is not compatible with all the DDL statements that MySQL supports. See [MySQL Compatibility](https://pingcap.com/docs/dev/reference/mysql-compatibility/#ddl).
 
-## How to reset the data migration task?
+## How to reset the data replication task?
 
-When an exception occurs during data migration and the data migration task cannot be resumed, you need to reset the task and re-migrate the data:
+When an exception occurs during data replication and the data replication task cannot be resumed, you need to reset the task and re-migrate the data:
 
-1. Execute the `stop-task` command to stop the abnormal data migration task.
+1. Execute the `stop-task` command to stop the abnormal data replication task.
 
 2. Purge the data replicated to the downstream.
 
-3. Use one of the following ways to restart the data migration task.
+3. Use one of the following ways to restart the data replication task.
 
    - Specify a new task name in the task configuration file. Then execute `start-task {task-config-file}`.
    - Execute `start-task --remove-meta {task-config-file}`.
