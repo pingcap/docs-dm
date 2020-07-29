@@ -5,7 +5,6 @@
 
 ## TOC
 
-<<<<<<< HEAD
 + Overview
   - [DM Overview](overview.md)
   - [Restrictions](overview.md#usage-restrictions)
@@ -16,7 +15,7 @@
   - [Block and Allow Lists](feature-overview.md#block-and-allow-table-lists)
   - [Binlog Event Filter](feature-overview.md#binlog-event-filter)
   - [Replication Delay Monitoring](feature-overview.md#replication-delay-monitoring)
-  - [Online-ddl-scheme](online-ddl-scheme.md)
+  - [Online-ddl-scheme](feature-online-ddl-scheme.md)
   + Sharding Support
     - [Introduction](feature-shard-merge.md)
     - [Restrictions](feature-shard-merge.md#restrictions)
@@ -29,23 +28,6 @@
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
 - [Quick Start](get-started.md)
-=======
-+ About DM
-  + Benchmarks
-    - [DM 1.0-GA Benchmark Report](benchmark-v1.0-ga.md)
-    - [DM 1.0-alpha Benchmark Report](benchmark-v1-alpha.md)
-  + Features
-    - [Table Routing](key-features.md#table-routing)
-    - [Block and Allow Lists](key-features.md#block-and-allow-table-lists)
-    - [Binlog Event Filter](key-features.md#binlog-event-filter)
-    - [Replication Delay Monitoring](key-features.md#replication-delay-monitoring)
-    - [Online DDL Scheme](feature-online-ddl-scheme.md)
-    - [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md)
-+ [Usage Scenarios](scenarios.md)
-+ Quick Start
-  - [Deploy a DM cluster](quick-start-with-dm.md)
-  - [Replicate Data Using DM](replicate-data-using-dm.md)
->>>>>>> 6cc2748... *: rename a doc (#193)
 + Deploy
   + Deploy a DM Cluster
     - [Use DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
