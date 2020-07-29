@@ -17,6 +17,8 @@ summary: 了解如何从 TiDB Data Migration 1.0.x 手动升级到 2.0.x。
 
 ## 第 1 步：准备 v2.0.x 的配置文件
 
+准备的 v2.0.x 的配置文件包括上游数据库的配置文件以及数据迁移任务的配置文件。
+
 ### 上游数据库配置文件
 
 在 v2.0.x 中将[上游数据库 source 相关的配置](source-configuration-file.md)从 DM-worker 的进程配置中独立了出来，因此需要根据 [v1.0.x 的 DM-worker 配置](https://docs.pingcap.com/zh/tidb-data-migration/stable/dm-worker-configuration-file)拆分得到 source 配置。
