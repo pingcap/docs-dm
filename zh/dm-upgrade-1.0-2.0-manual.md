@@ -110,7 +110,7 @@ from:
 
 1. 使用 [operate-source](manage-source.md#加载数据源配置) 命令将 [准备 v2.0.x 的配置文件](#第-1-步准备-v20x-的配置文件) 中得到的上游数据库 source 配置加载到 v2.0.x 集群中。
 
-2. 在下游 TiDB 中，从 v1.0.x 的数据迁移任务对应的增量 checkpoint 表中获取到对应的全局 checkpoint 信息。
+2. 在下游 TiDB 中，从 v1.0.x 的数据迁移任务对应的增量 checkpoint 表中获取对应的全局 checkpoint 信息。
 
     - 假设 v1.0.x 的数据迁移配置中未额外指定 `meta-schema`（或指定其值为默认的`dm_meta`），且对应的任务名为 `task_v1`，则对应的 checkpoint 信息在下游 TiDB 的 ``` `dm_meta`.`task_v1_syncer_checkpoint` ``` 表中。
     - 使用以下 SQL 语句分别获取该数据迁移任务对应的所有上游数据库 source 的全局 checkpoint 信息。
