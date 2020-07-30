@@ -107,7 +107,7 @@ syncers:
     worker-count: 16                 # The number of threads that replicate binlog events concurrently in Syncer.
     batch: 100                       # The number of SQL statements in a transaction batch that Syncer replicates to the downstream database (100 by default).
     enable-ansi-quotes: true         # Enable this argument if `sql-mode: "ANSI_QUOTES"` is set in the `session`
-    safe-mode: false                 # If set to true, the `INSERT` from upstream is rewrote to `REPLACE`, and `UPDATE` is rewrote to `DELETE` and `REPLACE`. This ensures that DML can be imported repeatedly when data is migrated under the condition that a primary key or a unique index is in the table schema. TiDB DM automatically enables safe mode within the first 5 minutes after starting or resuming replication tasks.
+    safe-mode: false                 # If set to true, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. This ensures that DML statements can be imported repeatedly during data replication when there is any primary key or unique index in the table schema. TiDB DM automatically enables safe mode within the first 5 minutes after starting or resuming replication tasks.
 
 # ----------- Instance configuration -----------
 mysql-instances:
