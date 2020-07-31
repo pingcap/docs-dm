@@ -115,4 +115,4 @@ Record the position information in the global checkpoint (`is_global=1`) corresp
 
 4. Start the migration task using `start-task`.
 
-5. Observe the migration task status through `query-status`. When `syncerBinlog` exceeds the larger value of `checkpoint-T` and `checkpoint-S`, restore `safe-mode` to the original value and restart the migration task. (In this example, it is `(mysql-bin.000100, 1234)`.)
+5. Observe the migration task status through `query-status`. When `syncerBinlog` exceeds the larger value of `checkpoint-T` and `checkpoint-S`, restore `safe-mode` to the original value and restart the migration task. In this example, it is `(mysql-bin.000100, 1234)`.
