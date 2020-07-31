@@ -14,7 +14,7 @@
     - [Block and Allow Lists](key-features.md#block-and-allow-table-lists)
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
     - [Replication Delay Monitoring](key-features.md#replication-delay-monitoring)
-    - [Online DDL Scheme](online-ddl-scheme.md)
+    - [Online DDL Scheme](feature-online-ddl-scheme.md)
     - [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md)
 + [Usage Scenarios](scenarios.md)
 + Quick Start
@@ -68,6 +68,7 @@
     - [DM-worker Configuration](dm-worker-configuration-file.md)
     - [Upstream Database Configuration](source-configuration-file.md)
     - [Task Configuration](task-configuration-file.md)
+    - [Full Task Configuration](task-configuration-file-full.md)
     - [Use DM Portal](dm-portal.md)
   - [Monitoring Metrics](monitor-a-dm-cluster.md)
   - [Alert Rules](alert-rules.md)

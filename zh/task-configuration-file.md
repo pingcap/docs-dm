@@ -31,20 +31,20 @@ target-database:       # 下游数据库实例配置
   password: ""         # 如果不为空则需经过 dmctl 加密
 
 ## ******** 功能配置集 **********
-black-white-list:        # 上游数据库实例匹配的表的 black & white list 过滤规则集
+block-allow-list:        # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
   bw-rule-1:             # 黑白名单配置的名称
     do-dbs: ["all_mode"] # 同步哪些库
 
 # ----------- 实例配置 -----------
 mysql-instances:
   - source-id: "mysql-replica-01"  # 上游实例或者复制组 ID，参考 `dm-master.toml` 的 `source-id` 配置
-    black-white-list:  "bw-rule-1" # 黑白名单配置名称
+    block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量
     loader-thread: 16              # loader 用于导入数据的线程数量
     syncer-thread: 16              # syncer 用于同步增量数据的线程数量
 
   - source-id: "mysql-replica-02" # 上游实例或者复制组 ID，参考 `dm-master.toml` 的 `source-id` 配置
-    black-white-list:  "bw-rule-1" # 黑白名单配置名称
+    block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量
     loader-thread: 16              # loader 用于导入数据的线程数量
     syncer-thread: 16              # syncer 用于同步增量数据的线程数量
@@ -71,7 +71,7 @@ mysql-instances:
 
 ### 功能配置集
 
-对于一般的业务场景，只需要配置黑白名单过滤规则集，配置说明参见以上示例配置文件中 `black-white-list` 的注释以及 [Black & white table lists](key-features.md#black--white-table-lists)
+对于一般的业务场景，只需要配置黑白名单过滤规则集，配置说明参见以上示例配置文件中 `block-allow-list` 的注释以及 [Block & Allow Lists](key-features.md#block--allow-table-lists)
 
 ## 实例配置
 

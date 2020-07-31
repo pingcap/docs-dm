@@ -81,26 +81,26 @@ fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
 
 ### 编写 source 配置文件
 
-把以下配置文件内容写入到 `conf/source1.toml` 中。
+把以下配置文件内容写入到 `conf/source1.yaml` 中。
 
 MySQL1 的配置文件：
 
-```toml
+```yaml
 # MySQL1 Configuration.
  
-source-id = "mysql-replica-01"
+source-id: "mysql-replica-01"
 
 # 是否开启 GTID
-enable-gtid = true
+enable-gtid: true
  
-[from]
-host = "127.0.0.1"
-user = "root"
-password = "fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg="
-port = 3306
+from:
+  host: "127.0.0.1"
+  user: "root"
+  password: "fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg="
+  port: 3306
 ```
 
-对于 MySQL2 数据源，将以上内容复制到文件 `conf/source2.toml` 中，将 `conf/source2.toml` 配置文件中的 `name` 修改为 `mysql-replica-02`，并将 `password` 和 `port` 改为相应的值。
+对于 MySQL2 数据源，将以上内容复制到文件 `conf/source2.yaml` 中，将 `conf/source2.yaml` 配置文件中的 `name` 修改为 `mysql-replica-02`，并将 `password` 和 `port` 改为相应的值。
 
 ### 创建 source
 
@@ -109,7 +109,7 @@ port = 3306
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create conf/source1.toml
+./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create conf/source1.yaml
 ```
 
 对于 MySQL2，将上面命令中的配置文件替换成 MySQL2 对应的配置文件。
@@ -126,7 +126,7 @@ port = 3306
 ---
 name: test
 task-mode: all
-is-sharding: true
+shard-mode: "pessimistic"
 
 target-database:
   host: "127.0.0.1"
@@ -136,20 +136,20 @@ target-database:
 
 mysql-instances:
   - source-id: "mysql-replica-01"
-    black-white-list:  "instance"
+    block-allow-list:  "instance"   # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
     route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
     mydumper-thread: 4
     loader-thread: 16
     syncer-thread: 16
 
   - source-id: "mysql-replica-02"
-    black-white-list:  "instance"
+    block-allow-list:  "instance"  # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
     route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
     mydumper-thread: 4
     loader-thread: 16
     syncer-thread: 16
 
-black-white-list:
+block-allow-list:                  # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
   instance:
     do-dbs: ["~^sharding[\\d]+"]
     do-tables:

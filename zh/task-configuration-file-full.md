@@ -12,6 +12,10 @@ title: DM 任务完整配置文件介绍
 
 关于包括 `source-id` 和 DM-worker ID 在内的关键概念的介绍，请参阅[关键概念](config-overview.md#关键概念)。
 
+## 关闭检查项
+
+DM 会根据任务类型进行相应检查。可以参考[关闭检查项](precheck.md#关闭检查项)，在任务配置文件中使用 `ignore-checking-items` 配置关闭相应检查。
+
 ## 完整配置文件示例
 
 下面是一个完整的配置文件示例，通过该示例可以完成复杂的数据同步功能。
@@ -23,8 +27,7 @@ title: DM 任务完整配置文件介绍
 ## ********* 基本信息配置 *********
 name: test                      # 任务名称，需要全局唯一
 task-mode: all                  # 任务模式，可设为 "full"、"incremental"、"all"
-is-sharding: true               # 是否为分库分表合并任务
-shard-mode: "optimistic"        # shard DDL 同步模式，可设为 ""、"pessimistic"、"optimistic"
+shard-mode: "pessimistic"       # 如果为分库分表合并任务则需要配置该项。默认使用悲观协调模式 "pessimistic"，在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
 ignore-checking-items: []       # 忽略的检测项，可包含 "all"、"dump_privilege"、"replication_privilege"、"version"、"binlog_enable"、"binlog_format"、"binlog_row_image"、"table_schema"、"schema_of_shard_tables"、"auto_increment_ID"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
 remove-meta: false              # 是否在任务同步开始前移除该任务名对应的 `meta`（`checkpoint` 和 `onlineddl` 等）。
@@ -34,6 +37,7 @@ heartbeat-report-interval: 10   # DM 估算延迟 lag 的间隔
 timezone: "Asia/Shanghai"       # 时区
 case-sensitive: false           # schema/table 是否大小写敏感
 online-ddl-scheme: "gh-ost"     # 目前仅支持 "gh-ost" 、"pt"
+ignore-checking-items: []       # 不关闭任何检查项
 clean-dump-file: true           # 是否清理 dump 阶段产生的文件，包括 metadata 文件、建库建表 SQL 文件以及数据导入 SQL 文件
 
 target-database:                # 下游数据库实例配置
@@ -41,7 +45,7 @@ target-database:                # 下游数据库实例配置
   port: 4000
   user: "root"
   password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # 推荐使用经 dmctl 加密后的密码
-  session:                                      # 设置 TiDB 的 session 变量，在 v1.0.6 版本引入。更多变量及解释参见 https://docs.pingcap.com/zh/tidb/stable/tidb-specific-system-variables
+  session:                                      # 设置 TiDB 的 session 变量，在 v1.0.6 版本引入。更多变量及解释参见 `https://docs.pingcap.com/zh/tidb/stable/system-variables`
     sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE"
     tidb_skip_utf8_check: 1
     tidb_constraint_check_in_place: 0
@@ -69,7 +73,7 @@ filters:                                        # 上游数据库实例匹配的
     events: ["all dml"]
     action: Do
 
-black-white-list:                    # 上游数据库实例匹配的表的 black & white list 过滤规则集
+block-allow-list:                    # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
   bw-rule-1:                         # 配置名称
     do-dbs: ["~^test.*", "user"]     # 同步哪些库
     ignore-dbs: ["mysql", "account"] # 忽略哪些库
@@ -111,7 +115,7 @@ mysql-instances:
 
     route-rules: ["route-rule-1", "route-rule-2"]  # 该上游数据库实例匹配的表到下游数据库的 table routing 规则名称
     filter-rules: ["filter-rule-1"]                # 该上游数据库实例匹配的表的 binlog event filter 规则名称
-    black-white-list:  "bw-rule-1"                 # 该上游数据库实例匹配的表的 black & white list 过滤规则名称
+    block-allow-list:  "bw-rule-1"                 # 该上游数据库实例匹配的表的 block-allow-list 过滤规则名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
 
     mydumper-config-name: "global"          # mydumper 配置名称
     loader-config-name: "global"            # loader 配置名称
@@ -153,7 +157,7 @@ mysql-instances:
 | :------------ | :--------------------------------------- |
 | `routes` | 上游和下游表之间的路由 table routing 规则集。如果上游与下游的库名、表名一致，则不需要配置该项。使用场景及示例配置参见 [Table Routing](key-features.md#table-routing) |
 | `filters` | 上游数据库实例匹配的表的 binlog event filter 规则集。如果不需要对 binlog 进行过滤，则不需要配置该项。使用场景及示例配置参见 [Binlog Event Filter](key-features.md#binlog-event-filter) |
-| `black-white-list` | 该上游数据库实例匹配的表的 black & white list 过滤规则集。建议通过该项指定需要同步的库和表，否则会同步所有的库和表。使用场景及示例配置参见 [Black & White Lists](key-features.md#black--white-table-lists) |
+| `block-allow-list` | 该上游数据库实例匹配的表的 block & allow lists 过滤规则集。建议通过该项指定需要同步的库和表，否则会同步所有的库和表。使用场景及示例配置参见 [Block & Allow Lists](key-features.md#block--allow-table-lists) |
 | `mydumpers` | mydumper 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `mydumper-thread` 对 `thread` 配置项单独进行配置。 |
 | `loaders` | loader 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `loader-thread` 对 `pool-size` 配置项单独进行配置。 |
 | `syncers` | syncer 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `syncer-thread` 对 `worker-count` 配置项单独进行配置。 |
@@ -170,7 +174,7 @@ mysql-instances:
 | :------ | :------------------ |
 | `route-rules` | `routes` |
 | `filter-rules` | `filters` |
-| `black-white-list` | `black-white-list` |
+| `block-allow-list` | `block-allow-list` |
 | `mydumper-config-name` | `mydumpers` |
 | `loader-config-name` | `loaders` |
 | `syncer-config-name` | `syncers`  |

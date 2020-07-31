@@ -360,11 +360,11 @@ Assuming that the upstream MySQL user password is `123456`, configure the genera
 
 ```bash
 cd /home/tidb/dm-ansible/resources/bin &&
-./dmctl -encrypt 123456
+./dmctl -encrypt 'abc!@#123'
 ```
 
 ```
-VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU=
+MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
 
 ## Step 8: Edit variables in the `inventory.ini` file

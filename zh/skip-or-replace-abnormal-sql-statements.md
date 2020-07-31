@@ -25,7 +25,7 @@ summary: 了解 TiDB Data Migration 如何跳过或替代执行异常的 SQL 语
 
 - 跳过/替代执行操作只适合用于一次性跳过/替代执行**下游 TiDB 不支持执行的 SQL 语句**，其它同步错误请不要使用此方式进行处理。
 
-    - 其它同步错误可尝试使用 [black & white table lists](key-features.md#black--white-table-lists) 或 [binlog event filter](key-features.md#binlog-event-filter)。
+    - 其它同步错误可尝试使用 [Block & Allow Lists](key-features.md#block--allow-table-lists) 或 [Binlog Event Filter](key-features.md#binlog-event-filter)。
 
 - 如果业务不能接受下游 TiDB 跳过异常的 DDL 语句，也不接受使用其他 DDL 语句作为替代，则不适合使用此方式进行处理。
 
@@ -37,7 +37,7 @@ summary: 了解 TiDB Data Migration 如何跳过或替代执行异常的 SQL 语
 - `--sharding` 仅用于对 sharding group 预设一些操作，并且必须在 DDL 语句执行之前预设，不能在 DDL 语句已经执行后预设。
 
     - `--sharding` 模式下只支持预设，并只能使用 `--sql-pattern` 来匹配 binlog event。
-    - 有关使用 DM 处理 sharding DDL 同步的原理，请参阅[分库分表合并同步原理](feature-shard-merge.md#实现原理)。
+    - 有关使用 DM 处理 sharding DDL 同步的原理，请参阅[悲观模式分库分表合并同步原理](feature-shard-merge-pessimistic.md#实现原理)和[乐观模式分库分表合并同步原理](feature-shard-merge-optimistic.md#原理)。
 
 #### 匹配 binlog event
 

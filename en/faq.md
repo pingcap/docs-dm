@@ -60,7 +60,7 @@ In the last `rename ghost_table to origin table` step, DM reads the DDL informat
 
 However, the DDL information in memory is obtained in either of the two ways: 
     
-- DM [processes the gh-ost table during the `alter ghost_table` operation](online-ddl-scheme.md#online-schema-change-gh-ost) and records the DDL information of `ghost_table`;
+- DM [processes the gh-ost table during the `alter ghost_table` operation](feature-online-ddl-scheme.md#online-schema-change-gh-ost) and records the DDL information of `ghost_table`;
 - When DM-worker is restarted to start the task, DM reads the DDL from `dm_meta.{task_name}_onlineddl`.
 
 Therefore, in the process of incremental replication, if the specified Pos has skipped the `alter ghost_table` DDL but the Pos is still in the online-ddl process of gh-ost, the ghost_table is not written into memory or `dm_meta.{task_name}_onlineddl` correctly. In such cases, the above error is returned.

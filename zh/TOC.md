@@ -9,7 +9,7 @@
   + [性能数据](benchmark-v1.0-ga.md)
   + 主要特性
     - [Table routing](key-features.md#table-routing)
-    - [Black & White Lists](key-features.md#black--white-table-lists)
+    - [Block & Allow Lists](key-features.md#block--allow-table-lists)
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
     - [同步延迟监控](key-features.md#同步延迟监控)
     - [Online-ddl-scheme](feature-online-ddl-scheme.md)
@@ -27,7 +27,9 @@
   + [监控与告警设置](monitor-a-dm-cluster.md)
   + [性能测试](performance-test.md)
 + 运维操作
-  - [版本升级](dm-upgrade.md)
+  + 版本升级
+    - [1.0.x 到 2.0.x 手动升级](manually-upgrade-dm-1.0-to-2.0.md)
+    - [1.0.x 版本间升级](upgrade-dm-1.0.md)
   - [集群操作](cluster-operations.md)
   + 任务管理
     - [dmctl 简介](dmctl-introduction.md)
@@ -66,6 +68,7 @@
     - [DM-worker 配置](dm-worker-configuration-file.md)
     - [上游数据库配置](source-configuration-file.md)
     - [任务配置](task-configuration-file.md)
+    - [完整任务配置](task-configuration-file-full.md)
     - [使用 DM Portal 生成任务配置](dm-portal.md)
   - [监控指标](monitor-a-dm-cluster.md)
   - [告警信息](alert-rules.md)

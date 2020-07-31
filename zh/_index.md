@@ -13,7 +13,7 @@ summary: 了解 TiDB Data Migration 用户文档。
 
 - [性能数据](benchmark-v1.0-ga.md)
 - [Table routing](key-features.md#table-routing)
-- [Black & White Lists](key-features.md#black--white-table-lists)
+- [Block & Allow Lists](key-features.md#block--allow-table-lists)
 - [Binlog Event Filter](key-features.md#binlog-event-filter)
 - [同步延迟监控](key-features.md#同步延迟监控)
 - [Online-ddl-scheme](feature-online-ddl-scheme.md)
@@ -45,7 +45,7 @@ summary: 了解 TiDB Data Migration 用户文档。
 <NavColumn>
 <ColumnTitle>运维操作</ColumnTitle>
 
-- [版本升级](dm-upgrade.md)
+- [版本升级](manually-upgrade-dm-1.0-to-2.0.md)
 - [集群操作](cluster-operations.md)
 - [任务管理](dmctl-introduction.md)
 - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)

@@ -19,7 +19,7 @@ MySQL/MariaDB 生成的 Binlog 文件中的数据变更信息，具体请参考 
 
 ### Binlog event filter
 
-比 Black & white table list 更加细粒度的过滤功能，具体可参考 [Binlog event filter](overview.md#binlog-event-filter)。
+比 Block & allow table list 更加细粒度的过滤功能，具体可参考 [Binlog Event Filter](overview.md#binlog-event-filter)。
 
 ### Binlog position
 
@@ -29,9 +29,9 @@ MySQL/MariaDB 生成的 Binlog 文件中的数据变更信息，具体请参考 
 
 DM-worker 内部用于读取上游 Binlog 或本地 Relay log 并迁移到下游的处理单元，每个 Subtask 对应一个 Binlog replication 处理单元。在当前文档中，有时也称作 Sync 处理单元。
 
-### Black & white table list
+### Block & allow table list
 
-针对上游数据库实例表的黑白名单过滤功能，具体可参考 [Black & white table lists](overview.md#black--white-table-lists)。该功能与 [MySQL Replication Filtering](https://dev.mysql.com/doc/refman/5.6/en/replication-rules.html) 及 [MariaDB Replication Filters](https://mariadb.com/kb/en/library/replication-filters/) 类似。
+针对上游数据库实例表的黑白名单过滤功能，具体可参考 [Block & Allow Table Lists](overview.md#block--allow-table-lists)。该功能与 [MySQL Replication Filtering](https://dev.mysql.com/doc/refman/5.6/en/replication-rules.html) 及 [MariaDB Replication Filters](https://mariadb.com/kb/en/library/replication-filters/) 类似。
 
 ## C
 
@@ -94,11 +94,11 @@ DM-worker 内部用于从上游拉取 Binlog 并写入数据到 Relay log 的处
 
 ### Shard DDL lock
 
-用于协调 Shard DDL 迁移的锁机制，具体原理可查看[分库分表合并同步实现原理](feature-shard-merge.md#实现原理)。在当前文档中，有时也称作 Sharding DDL lock。
+用于协调 Shard DDL 迁移的锁机制，具体原理可查看[悲观模式下分库分表合并同步实现原理](feature-shard-merge-pessimistic.md#实现原理)。在当前文档中，有时也称作 Sharding DDL lock。
 
 ### Shard group
 
-指合库合表迁移过程中，需要合并迁移到下游同一张表的所有上游分表 (shard)，TiDB DM 内部具体实现时使用了两级抽象的 Shard group，具体可查看[分库分表合并同步实现原理](feature-shard-merge.md#实现原理)。在当前文档中，有时也称作 Sharding group。
+指合库合表迁移过程中，需要合并迁移到下游同一张表的所有上游分表 (shard)，TiDB DM 内部具体实现时使用了两级抽象的 Shard group，具体可查看[悲观模式下分库分表合并同步实现原理](feature-shard-merge-pessimistic.md#实现原理)。在当前文档中，有时也称作 Sharding group。
 
 ### Subtask
 
