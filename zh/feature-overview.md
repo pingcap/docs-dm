@@ -523,6 +523,7 @@ DM 支持通过 heartbeat 真实同步数据来计算每个同步任务与 MySQL
 - SELECT
 - INSERT
 - CREATE (databases, tables)
+- DELETE
 
 ### 参数配置
 
