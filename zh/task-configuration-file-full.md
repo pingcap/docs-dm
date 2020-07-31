@@ -12,6 +12,10 @@ title: DM 任务完整配置文件介绍
 
 关于包括 `source-id` 和 DM-worker ID 在内的关键概念的介绍，请参阅[关键概念](config-overview.md#关键概念)。
 
+## 关闭检查项
+
+DM 会根据任务类型进行相应检查。可以参考[关闭检查项](precheck.md#关闭检查项)，在任务配置文件中使用 `ignore-checking-items` 配置关闭相应检查。
+
 ## 完整配置文件示例
 
 下面是一个完整的配置文件示例，通过该示例可以完成复杂的数据同步功能。
@@ -33,6 +37,7 @@ heartbeat-report-interval: 10   # DM 估算延迟 lag 的间隔
 timezone: "Asia/Shanghai"       # 时区
 case-sensitive: false           # schema/table 是否大小写敏感
 online-ddl-scheme: "gh-ost"     # 目前仅支持 "gh-ost" 、"pt"
+ignore-checking-items: []       # 不关闭任何检查项
 clean-dump-file: true           # 是否清理 dump 阶段产生的文件，包括 metadata 文件、建库建表 SQL 文件以及数据导入 SQL 文件
 
 target-database:                # 下游数据库实例配置
@@ -40,7 +45,7 @@ target-database:                # 下游数据库实例配置
   port: 4000
   user: "root"
   password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # 推荐使用经 dmctl 加密后的密码
-  session:                                      # 设置 TiDB 的 session 变量，在 v1.0.6 版本引入。更多变量及解释参见 https://docs.pingcap.com/zh/tidb/stable/tidb-specific-system-variables
+  session:                                      # 设置 TiDB 的 session 变量，在 v1.0.6 版本引入。更多变量及解释参见 `https://docs.pingcap.com/zh/tidb/stable/system-variables`
     sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE"
     tidb_skip_utf8_check: 1
     tidb_constraint_check_in_place: 0
