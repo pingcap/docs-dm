@@ -77,42 +77,42 @@ You can avoid this error by the following steps:
 
 ## How to add tables to the existing data migration tasks?
 
-If you need to add tables to a data migration task that is running, you can address it in the following ways according to the stage of migration tasks.
+If you need to add tables to a data migration task that is running, you can address it in the following ways according to the stage of the migration task.
 
 > **Note:**
 >
-> Because adding tables to an existing data migration task is complex, do it only when you have a strong demand.
+> Because adding tables to an existing data migration task is complex, it is recommended that you perform this operation only when necessary.
 
 ### In the `Dump` stage
 
-Since MySQL can not specify a snapshot for export, it does not support updating data migration tasks. And MySQL restarts to continue the export through the breakpoint. So it can not dynamically increase the tables that need to be migrated at this stage.
+Since MySQL cannot specify a snapshot for export, it does not support updating data migration tasks during the export and then restarting to resume the export through the breakpoint. Therefore, you cannot dynamically increase the tables that need to be migrated at the `Dump` stage.
 
 If you really need to add tables for migration, it is recommended to restart the migration task directly using the new configuration file.
 
 ### In the `Load` stage
 
-When exporting multiple data migration tasks, usually different binlog positions cannot be consistent. Therefore, it is not recommended to add tables to a data migration task in the `Load` stage.
+During the export, multiple data migration tasks usually have different binlog positions. If you merge the tasks in the `Load` stage, they might not be able to reach consensus on binlog positions. Therefore, it is not recommended to add tables to a data migration task in the `Load` stage.
 
 ### In the `Sync` stage
 
 When the data migration task is in the `Sync` stage, add additional tables to the configuration file and restart the task. DM does not re-execute full export and import for the newly added tables. Instead, DM will continue incremental synchronization from the previous breakpoint.
 
-Therefore, if the full data corresponding to the table has not been imported to the downstream, you need to use a separate data migration task to export and import the full data to the downstream.
+Therefore, if the full data of the newly added table has not been imported to the downstream, you need to use a separate data migration task to export and import the full data to the downstream.
 
 Record the position information in the global checkpoint (`is_global=1`) corresponding to the existing migration task as `checkpoint-T`, such as `(mysql-bin.000100, 1234)`. Record the position information of the full export `metedata` (or the checkpoint of another data migration task in the `Sync` stage) of the table to be added to the migration task as `checkpoint-S`, such as `(mysql-bin.000099, 5678)`. You can add the table to the migration task by the following steps:
 
-1. Use `stop-task` to stop an existing migration task.If the table to be added belongs to another running migration task, stop the task as well.
+1. Use `stop-task` to stop an existing migration task. If the table to be added belongs to another running migration task, stop that task as well.
 
-2. Use a MySQL client to connect the downstream TiDB database and manually update the information in the checkpoint table corresponding to the existing migration task to the smaller value of `checkpoint-T` and `checkpoint-S`. (In this example, it is `(mysql- bin.000099, 5678)`.)
+2. Use a MySQL client to connect the downstream TiDB database and manually update the information in the checkpoint table corresponding to the existing migration task to the smaller value between `checkpoint-T` and `checkpoint-S`. In this example, it is `(mysql- bin.000099, 5678)`.
 
-    - The checkpoint table that needs to be updated is `{task-name}_syncer_checkpoint` in the `{dm_meta}` schema.
+    - The checkpoint table to be updated is `{task-name}_syncer_checkpoint` in the `{dm_meta}` schema.
 
-    - The checkpoint behaviors that need to be updated are `id=(source-id)` and `is_global=1`.
+    - The checkpoint rows to be updated match `id=(source-id)` and `is_global=1`.
 
-    - The checkpoint columns that need to be updated are  `binlog_name` and `binlog_pos`.
+    - The checkpoint columns to be updated are  `binlog_name` and `binlog_pos`.
 
 3. Set `safe-mode: true` for the `syncers` in the migration task to ensure reentrant execution.
 
-4. Start the migration task with `start-task`.
+4. Start the migration task using `start-task`.
 
 5. Observe the migration task status through `query-status`. When `syncerBinlog` exceeds the larger value of `checkpoint-T` and `checkpoint-S`, restore `safe-mode` to the original value and restart the migration task. (In this example, it is `(mysql-bin.000100, 1234)`.)
