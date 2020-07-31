@@ -1,39 +1,72 @@
 ---
-title: Create and Verify a Data Replication Task
-summary: Learn how to create a replication task to verify whether the cluster works well after the DM cluster is deployed.
-aliases: ['/docs/tidb-data-migration/dev/create-task-and-verify/']
+title: Create a Data Migration Task
+summary: Learn how to create a migration task after the DM cluster is deployed.
+aliases: ['/zh/tidb-data-migration/dev/create-task-and-verify']
 ---
 
-# Create and Verify a Data Replication Task
+# Create a Data Migration Task
 
-This document describes how to create a simple data replication task to verify whether the cluster works well after the DM cluster is successfully deployed.
+This document describes how to create a simple data migration task after the DM cluster is successfully deployed.
 
 ## Sample scenario
 
-Suppose that you create a data replication task based on this sample scenario:
+Suppose that you create a data migration task based on this sample scenario:
 
-- Upstream MySQL instances (MySQL1 and MySQL2) are deployed on two servers, with binlog enabled in both instances.
-- TiDB clusters are deployed on several servers, with the TiDB service exposed on one of the servers.
-- A DM-master of the DM cluster provides service.
+- Deploy two MySQL instances with binlog enabled and one TiDB instance locally
+- Use a DM-master of the DM cluster to manage the cluster and data migration tasks.
 
 The information of each node is as follows.
 
 | Instance   | Server Address  | Port  |
 | :---------- | :----------- | :--- |
-| MySQL1     | 192.168.0.1 | 3306 |
-| MySQL2     | 192.168.0.2 | 3306 |
-| TiDB       | 192.168.0.3 | 4000 |
-| DM-master  | 192.168.0.4 | 8261 |
+| MySQL1     | 127.0.0.1 | 3306 |
+| MySQL2     | 127.0.0.1 | 3307 |
+| TiDB       | 127.0.0.1 | 4000 |
+| DM-master  | 127.0.0.1 | 8261 |
 
-Based on this scenario, the following sections describe how to create a data replication task.
+Based on this scenario, the following sections describe how to create a data migration task.
+
+### Start upstream MySQL
+
+Prepare 2 runnable MySQL instances. You can also use Docker to quickly start MySQL. The commands are as follows:
+
+{{< copyable "shell-regular" >}}
+
+```bash
+docker run --rm --name mysql-3306 -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql:5.7.22 --log-bin=mysql-bin --port=3306 --bind-address=0.0.0.0 --binlog-format=ROW --server-id=1 --gtid_mode=ON --enforce-gtid-consistency=true > mysql.3306.log 2>&1 &
+docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql:5.7.22 --log-bin=mysql-bin --port=3307 --bind-address=0.0.0.0 --binlog-format=ROW --server-id=1 --gtid_mode=ON --enforce-gtid-consistency=true > mysql.3307.log 2>&1 &
+```
+
+### Prepare data
+
+- Write [example data](https://github.com/pingcap/dm/blob/bc1094a6b7388ad934279898b4e308cd3d58f7a9/tests/sharding/data/db1.prepare.sql) into mysql-3306.
+
+- Write [example data](https://github.com/pingcap/dm/blob/bc1094a6b7388ad934279898b4e308cd3d58f7a9/tests/sharding/data/db2.prepare.sql) into mysql-3307. 
+
+### Start downstream MySQL
+
+To run a TiDB server, use the following command:
+
+{{< copyable "shell-regular" >}}
+
+```bash
+wget https://download.pingcap.org/tidb-v4.0.0-linux-amd64.tar.gz
+tar -xzvf tidb-v4.0.0-rc.2-linux-amd64.tar.gz
+mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
+./tidb-server 
+```
+
+> **Warning:**
+>
+> The deployment method of TiDB in this document **do not apply** to production or development environments.
 
 ## Configure the MySQL data source
 
-Before starting a data replication task, you need to configure the MySQL data source.
+Before starting a data migration task, you need to configure the MySQL data source.
 
 ### Encrypt the password
 
-For safety reasons, it is recommended to configure and use encrypted passwords. You can use dmctl to encrypt the MySQL password. Suppose the password is "123456":
+For safety reasons, it is recommended to configure and use encrypted passwords. You can use dmctl to encrypt the MySQL/TiDB password. Suppose the password is "123456":
 
 {{< copyable "shell-regular" >}}
 
@@ -47,26 +80,30 @@ fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
 
 Save this encrypted value, and use it for creating a MySQL data source in the following steps.
 
+> **Warning:**
+>
+> You can skip this step if the database does not have a password.
+
 ### Edit the source configuration file
 
-Write the following configurations to `conf/source1.toml`.
+Write the following configurations to `conf/source1.yaml`.
 
-```toml
+```yaml
 # MySQL1 Configuration.
- 
-source-id = "mysql-replica-01"
+
+source-id: "mysql-replica-01"
 
 # Indicates whether GTID is enabled
-enable-gtid = false
- 
-[from]
-host = "192.168.0.1"
-user = "root"
-password = "fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg="
-port = 3306
+enable-gtid = true
+
+from:
+  host: "127.0.0.1"
+  user: "root"
+  password: "fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg="
+  port: 3306
 ```
 
-In MySQL2 data source, copy the above configurations to `conf/source2.toml`. You need to change `name` to `mysql-replica-02`, `host` to `192.168.0.2`, and change `password` and `port` to appropriate values.
+In MySQL2 data source, copy the above configurations to `conf/source2.yaml`. You need to change `password` and `port` to appropriate values.
 
 ### Create a source
 
@@ -75,14 +112,14 @@ To load the data source configurations of MySQL1 into the DM cluster using dmctl
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl --master-addr=192.168.0.4:8261 operate-source create conf/source1.toml
+./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create conf/source1.yaml
 ```
 
 For MySQL2, replace the configuration file in the above command with that of MySQL2.
 
-## Create a data replication task
+## Create a data migration task
 
-Suppose that there are several sharded tables on both MySQL1 and MySQL2 instances. These tables have identical structure and the same prefix “t” in the table names; the databases where these tables are located are all prefixed with "sharding"; and there is no conflict between the primary keys or the unique keys (in each sharded table, the primary keys or the unique keys are different from those of other tables). 
+After importing [prepare data](#Prepare data),there are several sharded tables on both MySQL1 and MySQL2 instances. These tables have identical structure and the same prefix “t” in the table names; the databases where these tables are located are all prefixed with "sharding"; and there is no conflict between the primary keys or the unique keys (in each sharded table, the primary keys or the unique keys are different from those of other tables). 
 
 Now, suppose that you need to replicate these sharded tables to the `db_target.t_target` table in TiDB. The steps are as follows.
 
@@ -96,7 +133,7 @@ Now, suppose that you need to replicate these sharded tables to the `db_target.t
     task-mode: all
     is-sharding: true
     target-database:
-    host: "192.168.0.3"
+    host: "127.0.0.1"
     port: 4000
     user: "root"
     password: "" # If the password is not empty, you need to configure the encrypted password using dmctl.
@@ -136,7 +173,7 @@ Now, suppose that you need to replicate these sharded tables to the `db_target.t
     {{< copyable "shell-regular" >}}
 
     ```bash
-    ./bin/dmctl -master-addr 192.168.0.4:8261 start-task conf/task.yaml
+    ./bin/dmctl -master-addr 127.0.0.1:8261 start-task conf/task.yaml
     ```
 
     ```
@@ -162,6 +199,6 @@ Now, suppose that you need to replicate these sharded tables to the `db_target.t
 
 Now, you have successfully created a task to replicate the sharded tables from the MySQL1 and MySQL2 instances to TiDB.
 
-## Verify whether the cluster works well
+## Verify data
 
-You can modify data in the upstream MySQL sharded tables. Then use [sync-diff-inspector](https://docs.pingcap.com/tidb/v4.0/shard-diff) to check whether the upstream and downstream data are consistent. Consistent data means that the replication task works well, which also indicates that the cluster works well.
+You can modify data in the upstream MySQL sharded tables. Then use [sync-diff-inspector](https://docs.pingcap.com/tidb/v4.0/shard-diff) to check whether the upstream and downstream data are consistent. Consistent data means that the migration task works well, which also indicates that the cluster works well.

@@ -52,6 +52,8 @@ Global Flags:
 operate-source create ./source.toml
 ```
 
+For the configuration of `source.toml`, refer to [Upstream Database Configuration File Introduction](source-configuration-file.md).
+
 ## Flags description
 
 + `create`: Creates an upstream database source.
