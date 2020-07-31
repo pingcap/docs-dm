@@ -502,6 +502,7 @@ If the heartbeat feature is enabled, the upstream MySQL or MariaDB instances mus
 - SELECT
 - INSERT
 - CREATE (databases, tables)
+- DELETE
 
 ### Parameter configuration
 
