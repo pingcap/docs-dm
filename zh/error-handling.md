@@ -102,7 +102,11 @@ aliases: ['/docs-cn/tidb-data-migration/dev/troubleshoot-dm/','/docs-cn/tidb-dat
 
 ### 同步任务中断并包含 `invalid connection` 错误
 
+#### 原因
+
 发生 `invalid connection` 错误时，通常表示 DM 到下游 TiDB 的数据库连接出现了异常（如网络故障、TiDB 重启、TiKV busy 等）且当前请求已有部分数据发送到了 TiDB。
+
+#### 解决方案
 
 由于 DM 中存在同步任务并发向下游复制数据的特性，因此在任务中断时可能同时包含多个错误（可通过 `query-status` 或 `query-error` 查询当前错误）。
 
@@ -111,15 +115,23 @@ aliases: ['/docs-cn/tidb-data-migration/dev/troubleshoot-dm/','/docs-cn/tidb-dat
 
 ### 同步任务中断并包含 `driver: bad connection` 错误
 
+#### 原因
+
 发生 `driver: bad connection` 错误时，通常表示 DM 到下游 TiDB 的数据库连接出现了异常（如网络故障、TiDB 重启等）且当前请求的数据暂时未能发送到 TiDB。
+
+#### 解决方案
 
 当前版本 DM 会自动进行重试，如果由于版本问题等未自动重试，可先使用 `stop-task` 停止任务后再使用 `start-task` 重启任务。
 
 ### relay 处理单元报错 `event from * in * diff from passed-in event *` 或同步任务中断并包含 `get binlog error ERROR 1236 (HY000)`、`binlog checksum mismatch, data may be corrupted` 等 binlog 获取或解析失败错误
 
+#### 原因
+
 在 DM 进行 relay log 拉取与增量同步过程中，如果遇到了上游超过 4GB 的 binlog 文件，就可能出现这两个错误。
 
 原因是 DM 在写 relay log 时需要依据 binlog position 及文件大小对 event 进行验证，且需要保存同步的 binlog position 信息作为 checkpoint。但是 MySQL binlog position 官方定义使用 uint32 存储，所以超过 4G 部分的 binlog position 的 offset 值会溢出，进而出现上面的错误。
+
+#### 解决方案
 
 对于 relay 处理单元，可通过以下步骤手动恢复：
 
@@ -150,19 +162,13 @@ aliases: ['/docs-cn/tidb-data-migration/dev/troubleshoot-dm/','/docs-cn/tidb-dat
 
 ### load 处理单元报错 `packet for query is too large. Try adjusting the 'max_allowed_packet' variable`
 
-出现该报错的主要原因包括以下两点：
+#### 原因
 
 * MySQL client 和 MySQL/TiDB Server 都有 `max_allowed_packet` 配额的限制，如果在使用过程中违反其中任何一个 `max_allowed_packet` 配额，客户端程序就会收到对应的报错。目前最新版本的 DM 和 TiDB Server 的默认 `max_allowed_packet` 配额都为 `64M`。
 
-* DM 的全量数据导入处理模块不支持对 dump 处理模块导出的 SQL 文件进行切分。因为 DM 的 dump 处理单元采用了最简单的编码实现，如果在 DM 实现文件切分，需要在 `TiDB Parser` 基础上实现一个完备的解析器才能正确的处理数据切分。但是随之会带来以下的问题：
+* DM 的全量数据导入处理模块不支持对 dump 处理模块导出的 SQL 文件进行切分。
 
-    * 工作量大
-
-    * 复杂度高，不容易保证正确性
-
-    * 性能的极大降低
-
-解决方案为：
+#### 解决方案
 
 * 推荐在 DM 的 dump 处理单元提供的配置 `extra-args` 中设置 `statement-size`:
 
@@ -178,4 +184,4 @@ aliases: ['/docs-cn/tidb-data-migration/dev/troubleshoot-dm/','/docs-cn/tidb-dat
 
     * 在 TiDB Server 执行 `set @@global.max_allowed_packet=134217728` （`134217728 = 128M`）
 
-    * 根据实际情况为 DM 的任务配置文件中的 `target-database` 增加配置 `max-allowed-packet: 134217728`(128M)，执行 `stop-task` 后再重新 `start-task`。
+    * 根据实际情况为 DM 的任务配置文件中的 `target-database` 增加配置 `max-allowed-packet: 134217728` (128M)，执行 `stop-task` 后再重新 `start-task`。
