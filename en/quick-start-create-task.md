@@ -43,7 +43,7 @@ docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=tru
 
 - Write [example data](https://github.com/pingcap/dm/blob/bc1094a6b7388ad934279898b4e308cd3d58f7a9/tests/sharding/data/db2.prepare.sql) into mysql-3307. 
 
-### Start downstream MySQL
+### Start downstream TiDB
 
 To run a TiDB server, use the following command:
 
