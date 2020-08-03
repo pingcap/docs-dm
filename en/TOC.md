@@ -27,6 +27,7 @@
   - [Simple Scenario](usage-scenario-simple-replication.md)
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
+  - [Switch DM-worker Connection between MySQL Instances](usage-scenario-master-slave-switch.md)
 - [Quick Start](get-started.md)
 + Deploy
   + Deploy a DM Cluster
@@ -58,39 +59,8 @@
 + Troubleshoot
   - [Handle Errors](error-handling.md)
   - [Handle Performance Issues](handle-performance-issues.md)
-<<<<<<< HEAD
 - [FAQ](faq.md)
 + Releases
-=======
-+ Tutorials
-  - [Simple Replication Scenario](usage-scenario-simple-replication.md)
-  - [Shard Merge Scenario](usage-scenario-shard-merge.md)
-  - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
-  - [Shard Merge Best Practices](shard-merge-best-practices.md)
-  - [Switch DM-worker Connection between MySQL Instances](usage-scenario-master-slave-switch.md)
-+ Performance Tuning
-  - [Optimize Configuration](tune-configuration.md)
-+ Reference
-  + Architecture
-    - [DM Overview](overview.md)
-    - [DM-worker](dm-worker-intro.md)
-    - [DM Relay Log](relay-log.md)
-  - [Command-line Flags](command-line-flags.md)
-  + Configuration
-    - [Overview](config-overview.md)
-    - [DM-master Configuration](dm-master-configuration-file.md)
-    - [DM-worker Configuration](dm-worker-configuration-file.md)
-    - [Upstream Database Configuration](source-configuration-file.md)
-    - [Task Configuration](task-configuration-file.md)
-    - [Full Task Configuration](task-configuration-file-full.md)
-    - [Use DM Portal](dm-portal.md)
-  - [Monitoring Metrics](monitor-a-dm-cluster.md)
-  - [Alert Rules](alert-rules.md)
-  - [Error Codes](error-handling.md#handle-common-errors)
-+ [FAQ](faq.md)
-+ [Glossary](glossary.md)
-+ Release Notes
->>>>>>> 268491e... en: add usage-scenario-master-slave-switch.md (#192)
   + v1.0
     - [1.0.2](releases/1.0.2.md)
     - [1.0.3](releases/1.0.3.md)
