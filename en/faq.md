@@ -95,7 +95,7 @@ During the export, multiple data migration tasks usually have different binlog p
 
 ### In the `Sync` stage
 
-When the data migration is in the `Sync` stage, if you add additional tables to the configuration file and restart the task, DM does not re-execute full export and import for the newly added tables. Instead, DM continues incremental replication from the previous breakpoint.
+When the data migration task is in the `Sync` stage, if you add additional tables to the configuration file and restart the task, DM does not re-execute full export and import for the newly added tables. Instead, DM continues incremental replication from the previous breakpoint.
 
 Therefore, if the full data of the newly added table has not been imported to the downstream, you need to use a separate data migration task to export and import the full data to the downstream.
 
