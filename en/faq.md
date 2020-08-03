@@ -77,7 +77,7 @@ You can avoid this error by the following steps:
 
 ## How to add tables to the existing data migration tasks?
 
-If you need to add tables to a data migration task that is running, you can address it in the following ways according to the stage of the ask.
+If you need to add tables to a data migration task that is running, you can address it in the following ways according to the stage of the task.
 
 > **Note:**
 >
