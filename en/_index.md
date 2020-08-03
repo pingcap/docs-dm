@@ -43,18 +43,10 @@ After DM-worker is started, it automatically replicates the upstream binlog to t
 
 dmctl is the command line tool used to control the DM cluster.
 
-<<<<<<< HEAD
 - Creating/Updating/Dropping data replication tasks
 - Checking the state of data replication tasks
 - Handling the errors during data replication tasks
 - Verifying the configuration correctness of data replication tasks
-=======
-- [Simple Usage Scenario](usage-scenario-simple-replication.md)
-- [Shard Merge Scenario](usage-scenario-shard-merge.md)
-- [Migrate from MySQL (Amazon Aurora)](migrate-from-mysql-aurora.md)
-- [Shard Merge Scenario Best Practices](shard-merge-best-practices.md)
-- [Switch DM-worker connection](usage-scenario-master-slave-switch.md)
->>>>>>> 268491e... en: add usage-scenario-master-slave-switch.md (#192)
 
 ## Data replication features
 
