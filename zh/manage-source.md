@@ -49,7 +49,7 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-operate-source create ./source.toml
+operate-source create ./source.yaml
 ```
 
 其中 `source.toml` 的配置参考[上游数据库配置文件介绍](source-configuration-file.md)。
@@ -64,7 +64,7 @@ operate-source create ./source.toml
 
 + `config-file`：
     - 必选
-    - 指定 `source.toml` 的文件路径
+    - 指定 `source.yaml` 的文件路径
     - 可传递多个文件路径
 
 ## 返回结果示例
@@ -72,7 +72,7 @@ operate-source create ./source.toml
 {{< copyable "" >}}
 
 ```bash
-operate-source create ./source.toml
+operate-source create ./source.yaml
 ```
 
 ```

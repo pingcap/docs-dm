@@ -17,7 +17,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 - [Block & Allow Lists](key-features.md#block-and-allow-table-lists)
 - [Binlog Event Filter](key-features.md#binlog-event-filter)
 - [Replication delay monitoring](key-features.md#replication-delay-monitoring)
-- [Online DDL Scheme](online-ddl-scheme.md)
+- [Online DDL Scheme](feature-online-ddl-scheme.md)
 - [Shard Merge](feature-shard-merge.md)
 
 </NavColumn>
