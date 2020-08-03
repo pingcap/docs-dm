@@ -111,7 +111,7 @@ Record the position information in the global checkpoint (`is_global=1`) corresp
 
     - The checkpoint columns to be updated are  `binlog_name` and `binlog_pos`.
 
-3. Set `safe-mode: true` for the `syncers` in the replication task to ensure reentrant execution.
+3. Set `safe-mode: true` for the `syncers` in the task to ensure reentrant execution.
 
 4. Start the task using `start-task`.
 
