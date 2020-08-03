@@ -52,7 +52,7 @@ Global Flags:
 operate-source create ./source.toml
 ```
 
-For the configuration of `source.toml`, refer to [Upstream Database Configuration File Introduction](source-configuration-file.md).
+For the configuration of `source.yaml`, refer to [Upstream Database Configuration File Introduction](source-configuration-file.md).
 
 ## Flags description
 
