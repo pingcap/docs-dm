@@ -85,7 +85,7 @@ If you need to add tables to a data migration task that is running, you can addr
 
 ### In the `Dump` stage
 
-Since MySQL cannot specify a snapshot for export, it does not support updating data migration tasks during the export and then restarting to resume the export through the breakpoint. Therefore, you cannot dynamically increase the tables that need to be migrated at the `Dump` stage.
+Since MySQL cannot specify a snapshot for export, it does not support updating data migration tasks during the export and then restarting to resume the export through the checkpoint. Therefore, you cannot dynamically add tables that need to be migrated at the `Dump` stage.
 
 If you really need to add tables for migration, it is recommended to restart the migration task directly using the new configuration file.
 
