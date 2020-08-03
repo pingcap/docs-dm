@@ -75,31 +75,31 @@ You can avoid this error by the following steps:
 
 4. After the Pos is replicated to the position after the gh-ost process, re-enable the `online-ddl-scheme` and comment out `block-allow-list.ignore-tables`.
 
-## How to add tables to the existing data replication tasks?
+## How to add tables to the existing data migration tasks?
 
-If you need to add tables to a data replication task that is running, you can address it in the following ways according to the stage of the ask.
+If you need to add tables to a data migration task that is running, you can address it in the following ways according to the stage of the ask.
 
 > **Note:**
 >
-> Because adding tables to an existing data replication task is complex, it is recommended that you perform this operation only when necessary.
+> Because adding tables to an existing data migration task is complex, it is recommended that you perform this operation only when necessary.
 
 ### In the `Dump` stage
 
-Since MySQL cannot specify a snapshot for export, it does not support updating data replication tasks during the export and then restarting to resume the export through the checkpoint. Therefore, you cannot dynamically add tables that need to be migrated at the `Dump` stage.
+Since MySQL cannot specify a snapshot for export, it does not support updating data migration tasks during the export and then restarting to resume the export through the checkpoint. Therefore, you cannot dynamically add tables that need to be migrated at the `Dump` stage.
 
-If you really need to add tables for replication, it is recommended to restart the task directly using the new configuration file.
+If you really need to add tables for migration, it is recommended to restart the task directly using the new configuration file.
 
 ### In the `Load` stage
 
-During the export, multiple data replication tasks usually have different binlog positions. If you merge the tasks in the `Load` stage, they might not be able to reach consensus on binlog positions. Therefore, it is not recommended to add tables to a data replication task in the `Load` stage.
+During the export, multiple data migration tasks usually have different binlog positions. If you merge the tasks in the `Load` stage, they might not be able to reach consensus on binlog positions. Therefore, it is not recommended to add tables to a data migration task in the `Load` stage.
 
 ### In the `Sync` stage
 
-When the data replication task is in the `Sync` stage, if you add additional tables to the configuration file and restart the task, DM does not re-execute full export and import for the newly added tables. Instead, DM continues incremental replication from the previous breakpoint.
+When the data migration is in the `Sync` stage, if you add additional tables to the configuration file and restart the task, DM does not re-execute full export and import for the newly added tables. Instead, DM continues incremental replication from the previous breakpoint.
 
 Therefore, if the full data of the newly added table has not been imported to the downstream, you need to use a separate data migration task to export and import the full data to the downstream.
 
-Record the position information in the global checkpoint (`is_global=1`) corresponding to the existing migration task as `checkpoint-T`, such as `(mysql-bin.000100, 1234)`. Record the position information of the full export `metedata` (or the checkpoint of another data migration task in the `Sync` stage) of the table to be added to the replication task as `checkpoint-S`, such as `(mysql-bin.000099, 5678)`. You can add the table to the replication task by the following steps:
+Record the position information in the global checkpoint (`is_global=1`) corresponding to the existing migration task as `checkpoint-T`, such as `(mysql-bin.000100, 1234)`. Record the position information of the full export `metedata` (or the checkpoint of another data migration task in the `Sync` stage) of the table to be added to the migration task as `checkpoint-S`, such as `(mysql-bin.000099, 5678)`. You can add the table to the migration task by the following steps:
 
 1. Use `stop-task` to stop an existing migration task. If the table to be added belongs to another running migration task, stop that task as well.
 
