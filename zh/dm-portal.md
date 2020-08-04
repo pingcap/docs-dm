@@ -1,5 +1,6 @@
 ---
 title: DM Portal 简介
+aliases: ['/docs-cn/tidb-data-migration/dev/dm-portal/']
 ---
 
 # DM Portal 简介

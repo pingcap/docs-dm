@@ -1,5 +1,6 @@
 ---
 title: 分库分表合并同步
+aliases: ['/docs-cn/tidb-data-migration/dev/feature-shard-merge/']
 ---
 
 # 分库分表合并同步

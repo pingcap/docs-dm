@@ -1,5 +1,6 @@
 ---
 title: 使用 DM-Ansible 部署 DM 集群
+aliases: ['/docs-cn/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible/']
 ---
 
 # 使用 DM-Ansible 部署 DM 集群
