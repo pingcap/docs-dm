@@ -59,20 +59,20 @@ After the DM cluster is deployed using DM-Ansible, the configuration information
 
 ## Step 3: Create data source
 
-1. Write MySQL-1 related information to `conf/source1.toml`:
+1. Write MySQL-1 related information to `conf/source1.yaml`:
 
-    ```toml
+    ```yaml
     # MySQL1 Configuration.
     
-    source-id = "mysql-replica-01"
+    source-id: "mysql-replica-01"
     # Indicates whether GTID is enabled.
-    enable-gtid = true
+    enable-gtid: true
     
-    [from]
-    host = "172.16.10.81"
-    user = "root"
-    password = "VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU="
-    port = 3306
+    from:
+      host: "172.16.10.81"
+      user: "root"
+      password: "VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU="
+      port: 3306
     ```
 
 2. Execute the following command in the terminal, and use `dmctl` to load the MySQL-1 data source configuration to the DM cluster:
@@ -80,7 +80,7 @@ After the DM cluster is deployed using DM-Ansible, the configuration information
     {{< copyable "shell-regular" >}}
 
     ```bash
-    ./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create conf/source1.toml
+    ./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create conf/source1.yaml
     ```
 
 3. For MySQL-2, modify the relevant information in the configuration file and execute the same `dmctl` command.

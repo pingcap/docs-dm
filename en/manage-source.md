@@ -49,7 +49,7 @@ Global Flags:
 {{< copyable "" >}}
 
 ```bash
-operate-source create ./source.toml
+operate-source create ./source.yaml
 ```
 
 For the configuration of `source.yaml`, refer to [Upstream Database Configuration File Introduction](source-configuration-file.md).
@@ -62,14 +62,14 @@ For the configuration of `source.yaml`, refer to [Upstream Database Configuratio
 
 + `stop`: Stops an upstream database source.
 
-+ `config-file`: (Required) Specifies the file path of `source.toml`.
++ `config-file`: (Required) Specifies the file path of `source.yaml`.
 
 ## Returned results
 
 {{< copyable "" >}}
 
 ```bash
-operate-source create ./source.toml
+operate-source create ./source.yaml
 ```
 
 ```
