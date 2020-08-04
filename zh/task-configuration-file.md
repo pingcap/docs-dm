@@ -1,5 +1,6 @@
 ---
 title: DM 任务配置文件介绍
+aliases: ['/docs-cn/tidb-data-migration/dev/task-configuration-file/']
 ---
 
 # DM 任务配置文件介绍

@@ -1,6 +1,7 @@
 ---
 title: 悲观模式下分库分表合并同步
 summary: 介绍 DM 提供的悲观模式（默认模式）下分库分表的合并同步功能。
+aliases: ['/docs-cn/tidb-data-migration/dev/feature-shard-merge-pessimistic/']
 ---
 
 # 悲观模式下分库分表合并同步

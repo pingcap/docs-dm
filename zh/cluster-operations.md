@@ -1,5 +1,6 @@
 ---
 title: DM 集群操作
+aliases: ['/docs-cn/tidb-data-migration/dev/cluster-operations/']
 ---
 
 # DM 集群操作

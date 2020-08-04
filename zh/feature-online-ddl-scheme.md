@@ -1,5 +1,6 @@
 ---
 title: online-ddl-scheme 功能介绍
+aliases: ['/docs-cn/tidb-data-migration/dev/feature-online-ddl-scheme/']
 ---
 
 # DM online-ddl-scheme

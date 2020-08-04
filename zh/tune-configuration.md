@@ -1,6 +1,7 @@
 ---
 title: DM 配置优化
 summary: 介绍如何通过优化配置来提高数据同步性能。
+aliases: ['/docs-cn/tidb-data-migration/dev/tune-configuration/']
 ---
 
 # DM 配置优化

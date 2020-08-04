@@ -1,6 +1,7 @@
 ---
 title: 乐观模式下分库分表合并同步
 summary: 介绍 DM 提供的乐观模式下分库分表的合并同步功能。
+aliases: ['/docs-cn/tidb-data-migration/dev/feature-shard-merge-optimistic/']
 ---
 
 # 乐观模式下分库分表合并同步
