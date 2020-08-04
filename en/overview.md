@@ -1,6 +1,6 @@
 ---
 title: Data Migration Overview
-summary: Learn about the Data Migration tool, the architecture, the key components and features.
+summary: Learn about the Data Migration tool, the architecture, the key components, and features.
 aliases: ['/docs/tidb-data-migration/dev/overview/']
 ---
 
@@ -108,4 +108,4 @@ Before using the DM tool, note the following restrictions:
 
 + Switching DM-worker connection to another MySQL instance
 
-    When DM-worker connects the upstream MySQL instance via a virtual IP (VIP), if you switch the VIP connection to another MySQL instance, DM might connect to the new and old MySQL instances at the same time in different connections. In this situation, the binlog replicated to DM is not consistent with other upstream status that DM receives, causing unpredictable anomalies and even data damage. To make necessary changes to DM manually, refer to [Switch DM-worker connection via virtual IP](cluster-operations.md#switch-dm-worker-connection-via-virtual-ip).
+    When DM-worker connects the upstream MySQL instance via a virtual IP (VIP), if you switch the VIP connection to another MySQL instance, DM might connect to the new and old MySQL instances at the same time in different connections. In this situation, the binlog replicated to DM is not consistent with other upstream status that DM receives, causing unpredictable anomalies and even data damage. To make necessary changes to DM manually, refer to [Switch DM-worker connection via virtual IP](usage-scenario-master-slave-switch.md#switch-dm-worker-connection-via-virtual-ip).
