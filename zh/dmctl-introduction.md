@@ -1,7 +1,7 @@
 ---
 title: dmctl 简介
 summary: 了解如何使用 dmctl 管理数据同步任务。
-aliases: ['/docs-cn/tidb-data-migration/dev/manage-replication-tasks/']
+aliases: ['/docs-cn/tidb-data-migration/dev/dmctl-introduction/','/docs-cn/tidb-data-migration/dev/manage-replication-tasks/']
 ---
 
 # dmctl 简介

@@ -1,5 +1,6 @@
 ---
 title: 上游数据库配置文件介绍
+aliases: ['/docs-cn/tidb-data-migration/dev/source-configuration-file/']
 ---
 
 # 上游数据库配置文件介绍
