@@ -1,6 +1,6 @@
 ---
 title: 使用 DM binary 部署 DM 集群
-aliases: ['/docs-cn/dev/how-to/deploy/data-migration-with-binary/','/docs-cn/v3.1/how-to/deploy/data-migration-with-binary/','/docs-cn/v3.0/how-to/deploy/data-migration-with-binary/','/docs-cn/v2.1/how-to/deploy/data-migration-with-binary/']
+aliases: ['/docs-cn/tidb-data-migration/stable/deploy-a-dm-cluster-using-binary/','/docs-cn/tidb-data-migration/v1.0/deploy-a-dm-cluster-using-binary/','/docs-cn/dev/how-to/deploy/data-migration-with-binary/','/docs-cn/v3.1/how-to/deploy/data-migration-with-binary/','/docs-cn/v3.0/how-to/deploy/data-migration-with-binary/','/docs-cn/v2.1/how-to/deploy/data-migration-with-binary/']
 ---
 
 # 使用 DM binary 部署 DM 集群

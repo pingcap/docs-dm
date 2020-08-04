@@ -1,6 +1,7 @@
 ---
 title: 性能问题及处理方法
 summary: 了解 DM 可能存在的常见性能问题及其处理方法。
+aliases: ['/docs-cn/tidb-data-migration/stable/handle-performance-issues/','/docs-cn/tidb-data-migration/v1.0/handle-performance-issues/']
 ---
 
 # 性能问题及处理方法
