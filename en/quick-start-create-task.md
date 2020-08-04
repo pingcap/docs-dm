@@ -1,7 +1,7 @@
 ---
 title: Create a Data Migration Task
 summary: Learn how to create a migration task after the DM cluster is deployed.
-aliases: ['/en/tidb-data-migration/dev/create-task-and-verify']
+aliases: ['/docs/tidb-data-migration/dev/create-task-and-verify/','/tidb-data-migration/dev/create-task-and-verify']
 ---
 
 # Create a Data Migration Task
@@ -80,7 +80,7 @@ fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
 
 Save this encrypted value, and use it for creating a MySQL data source in the following steps.
 
-> **Warning:**
+> **Note:**
 >
 > You can skip this step if the database does not have a password.
 
@@ -103,7 +103,7 @@ from:
   port: 3306
 ```
 
-In MySQL2 data source, copy the above configurations to `conf/source2.yaml`. You need to change `password` and `port` to appropriate values.
+In MySQL2 data source, copy the above configurations to `conf/source2.yaml`. You need to change `name` to `mysql-replica-02` and change `password` and `port` to appropriate values.
 
 ### Create a source
 
@@ -119,7 +119,7 @@ For MySQL2, replace the configuration file in the above command with that of MyS
 
 ## Create a data migration task
 
-After importing [prepare data](#Prepare data),there are several sharded tables on both MySQL1 and MySQL2 instances. These tables have identical structure and the same prefix “t” in the table names; the databases where these tables are located are all prefixed with "sharding"; and there is no conflict between the primary keys or the unique keys (in each sharded table, the primary keys or the unique keys are different from those of other tables). 
+After importing [prepared data](#prepare-data), there are several sharded tables on both MySQL1 and MySQL2 instances. These tables have identical structure and the same prefix “t” in the table names; the databases where these tables are located are all prefixed with "sharding"; and there is no conflict between the primary keys or the unique keys (in each sharded table, the primary keys or the unique keys are different from those of other tables). 
 
 Now, suppose that you need to replicate these sharded tables to the `db_target.t_target` table in TiDB. The steps are as follows.
 
