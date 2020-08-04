@@ -1,7 +1,7 @@
 ---
 title: 数据同步功能
 summary: DM 提供的功能及其配置介绍
-aliases: ['/docs-cn/dev/reference/tools/data-migration/features/overview/','/docs-cn/v3.1/reference/tools/data-migration/features/overview/','/docs-cn/v3.0/reference/tools/data-migration/features/overview/','/docs-cn/v2.1/reference/tools/data-migration/features/overview/']
+aliases: ['/docs-cn/tidb-data-migration/stable/feature-overview/','/docs-cn/tidb-data-migration/v1.0/feature-overview/','/docs-cn/dev/reference/tools/data-migration/features/overview/','/docs-cn/v3.1/reference/tools/data-migration/features/overview/','/docs-cn/v3.0/reference/tools/data-migration/features/overview/','/docs-cn/v2.1/reference/tools/data-migration/features/overview/']
 ---
 
 # 数据同步功能

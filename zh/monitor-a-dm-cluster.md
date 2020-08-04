@@ -1,7 +1,7 @@
 ---
 title: DM 监控指标
 summary: 介绍 DM 的监控指标
-aliases: ['/docs-cn/dev/reference/tools/data-migration/monitor/','/docs-cn/v3.1/reference/tools/data-migration/monitor/','/docs-cn/v3.0/reference/tools/data-migration/monitor/','/docs-cn/v2.1/reference/tools/data-migration/monitor/']
+aliases: ['/docs-cn/tidb-data-migration/stable/monitor-a-dm-cluster/','/docs-cn/tidb-data-migration/v1.0/monitor-a-dm-cluster/','/docs-cn/dev/reference/tools/data-migration/monitor/','/docs-cn/v3.1/reference/tools/data-migration/monitor/','/docs-cn/v3.0/reference/tools/data-migration/monitor/','/docs-cn/v2.1/reference/tools/data-migration/monitor/']
 ---
 
 # DM 监控指标
