@@ -524,6 +524,7 @@ DM 支持通过在 MySQL/MariaDB 上写 `heartbeat` 相关的数据，并在数�
 - SELECT
 - INSERT
 - CREATE (databases, tables)
+- DELETE
 
 ### 参数配置
 

@@ -502,6 +502,7 @@ If the heartbeat feature is enabled, the upstream MySQL or MariaDB instances mus
 - SELECT
 - INSERT
 - CREATE (databases, tables)
+- DELETE
 
 ### Parameter configuration
 
@@ -544,7 +545,7 @@ online-ddl-scheme: "gh-ost"
 online-ddl-scheme: "pt"
 ```
 
-For more information about online DDL tools, refer to [Online DDL Scheme](online-ddl-scheme.md).
+For more information about online DDL tools, refer to [Online DDL Scheme](feature-online-ddl-scheme.md).
 
 ## Shard merge
 

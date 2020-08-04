@@ -17,7 +17,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 - [Block & Allow Lists](key-features.md#block-and-allow-table-lists)
 - [Binlog Event Filter](key-features.md#binlog-event-filter)
 - [Replication delay monitoring](key-features.md#replication-delay-monitoring)
-- [Online DDL Scheme](online-ddl-scheme.md)
+- [Online DDL Scheme](feature-online-ddl-scheme.md)
 - [Shard Merge](feature-shard-merge.md)
 
 </NavColumn>
@@ -61,7 +61,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 - [Shard Merge Scenario](usage-scenario-shard-merge.md)
 - [Migrate from MySQL (Amazon Aurora)](migrate-from-mysql-aurora.md)
 - [Shard Merge Scenario Best Practices](shard-merge-best-practices.md)
-- [Switch DM-worker connection](cluster-operations.md#switch-dm-worker-connection-between-upstream-mysql-instances)
+- [Switch DM-worker connection](usage-scenario-master-slave-switch.md)
 
 </NavColumn>
 

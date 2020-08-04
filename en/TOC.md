@@ -14,7 +14,7 @@
     - [Block and Allow Lists](key-features.md#block-and-allow-table-lists)
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
     - [Replication Delay Monitoring](key-features.md#replication-delay-monitoring)
-    - [Online DDL Scheme](online-ddl-scheme.md)
+    - [Online DDL Scheme](feature-online-ddl-scheme.md)
     - [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md)
 + [Usage Scenarios](scenarios.md)
 + Quick Start
@@ -54,6 +54,7 @@
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
+  - [Switch DM-worker Connection between MySQL Instances](usage-scenario-master-slave-switch.md)
 + Performance Tuning
   - [Optimize Configuration](tune-configuration.md)
 + Reference

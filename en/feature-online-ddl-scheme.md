@@ -1,12 +1,12 @@
 ---
 title: DM Online DDL Scheme
 summary: This document introduces the online-ddl-scheme feature of DM.
-aliases: ['/docs/tidb-data-migration/dev/online-ddl-scheme/']
+aliases: ['/docs/tidb-data-migration/dev/online-ddl-scheme/','/tidb-data-migration/dev/online-ddl-scheme/']
 ---
 
 # DM Online DDL Scheme
 
-This document introduces the `online-ddl-scheme` feature of DM. 
+This document introduces the `online-ddl-scheme` feature of DM.
 
 ## Overview
 
