@@ -1,7 +1,7 @@
 ---
 title: TiDB Data Migration 用户文档
 summary: 了解 TiDB Data Migration 用户文档。
-aliases: ['/docs-cn/tidb-data-migration/stable/_index/','/docs-cn/tidb-data-migration/v1.0/_index/']
+aliases: ['/docs-cn/tidb-data-migration/stable/','/docs-cn/tidb-data-migration/v1.0/']
 ---
 
 # TiDB Data Migration 用户文档
