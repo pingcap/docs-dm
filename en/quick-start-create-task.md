@@ -94,7 +94,7 @@ Write the following configurations to `conf/source1.yaml`.
 source-id: "mysql-replica-01"
 
 # Indicates whether GTID is enabled
-enable-gtid = true
+enable-gtid: true
 
 from:
   host: "127.0.0.1"
