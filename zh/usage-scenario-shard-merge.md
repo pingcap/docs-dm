@@ -101,7 +101,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
     > **注意：**
     >
-    > 同步需求 #4、#5 的操作意味着过滤掉所有对 `user` 库的删除操作，所以此处配置了库级别的过滤规则，同时意味着 `user` 库以后参与复制的表的所有删除操作也都会被过滤。
+    > 同步需求 #4、#5 的操作意味着过滤掉所有对 `user` 库的删除操作，所以此处配置了库级别的过滤规则，`user` 库以后参与复制的表的所有删除操作也都会被过滤。
 
 - 要满足同步需求 #6，配置 [Binlog event filter 规则](key-features.md#binlog-event-filter) 如下：
 
@@ -133,7 +133,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
           tbl-name: "log_bak"
     ```
 
-- 要满足同步需求 #8，首先参考[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)来解决冲突，保证在同步到下游时不会因为分表中有相同的主键值而使同步出现异常；然后需要配置 `ignore-checking-items` 来跳过自增主键冲突的检查：
+- 要满足同步需求 #8，首先参考[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)来解决冲突，保证在同步到下游时不会因为分表中有相同的主键值而使同步出现异常，然后需要配置 `ignore-checking-items` 来跳过自增主键冲突的检查：
 
     {{< copyable "" >}}
 
