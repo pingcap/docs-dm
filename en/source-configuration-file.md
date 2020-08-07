@@ -19,10 +19,10 @@ source-id: "mysql-replica-01"
 enable-gtid: false
 
 from:
-host: "127.0.0.1"
-port: 3306
-user: "root"
-password: "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # The user password of the upstream database. Note that the password must be encrypted using dmctl.
+  host: "127.0.0.1"
+  port: 3306
+  user: "root"
+  password: "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # The user password of the upstream database. Note that the password must be encrypted using dmctl.
 ```
 
 ## Configuration parameters
