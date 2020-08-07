@@ -37,14 +37,14 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
 ## 同步需求
 
-1. 合并三个实例中的 `user`.`information` 表至下游 TiDB 中的 `user`.`information` 表。
-2. 合并三个实例中的 `user`.`log_{north|south|east}` 表至下游TiDB中的 `user`.`log_{north|south|east}` 表。
-3. 合并三个实例中的 `store_{01|02}`.`sale_{01|02}` 表至下游TiDB中的 `store`.`sale` 表。
-4. 过滤掉三个实例的 `user`.`log_{north|south|east}` 表的所有删除操作。
-5. 过滤掉三个实例的 `user`.`information` 表的所有删除操作。
-6. 过滤掉三个实例的 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作。
-7. 过滤掉三个实例的 `user`.`log_bak` 表。
-8. 因为 `store_{01|02}`.`sale_{01|02}` 表带有 bigint 型的自增主键，将其合并至 TiDB 时会引发冲突。你需要有相应的方案来避免冲突。
+1. 同名表合并场景，三个实例中的 `user`.`information` 表合并至下游 TiDB 中的 `user`.`information` 表。
+2. 不同名表合并场景，三个实例中的 `user`.`log_{north|south|east}` 表合并至下游TiDB中的 `user`.`log_{north|south|east}` 表。
+3. 分片表合并场景，三个实例中的 `store_{01|02}`.`sale_{01|02}` 表合并至下游TiDB中的 `store`.`sale` 表。
+4. 删除操作过滤场景，过滤掉三个实例的 `user`.`log_{north|south|east}` 表的所有删除操作。
+5. 删除操作过滤场景，过滤掉三个实例的 `user`.`information` 表的所有删除操作。
+6. 删除操作过滤场景，过滤掉三个实例的 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作。
+7. 表名通配符选中后的过滤场景，`user`.`log_*` 过滤掉三个实例的 `user`.`log_bak` 表。
+8. 主键冲突处理场景，假设 `store_{01|02}`.`sale_{01|02}` 表带有 bigint 型的自增主键，将其合并至 TiDB 时会引发冲突，使用相应的方案来避免冲突。
 
 ## 下游实例
 
@@ -101,7 +101,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
     > **注意：**
     >
-    > 同步需求 #4、#5 和 #7 的操作意味着过滤掉所有对 `user` 库的删除操作，所以此处配置了库级别的过滤规则。但是 `user` 库以后加入表的删除操作也都会被过滤。
+    > 同步需求 #4、#5 的操作意味着过滤掉所有对 `user` 库的删除操作，所以此处配置了库级别的过滤规则。但是 `user` 库以后加入表的删除操作也都会被过滤。
 
 - 要满足同步需求 #6，配置 [Binlog event filter 规则](key-features.md#binlog-event-filter) 如下：
 
