@@ -57,7 +57,35 @@ After the DM cluster is deployed using DM-Ansible, the configuration information
     >
     > The `{ansible deploy}` in `{ansible deploy}/conf/dm-master.toml` indicates the directory where DM-Ansible is deployed. It is the directory configured in the `deploy_dir` parameter.
 
-## Step 3: Configure the data replication task
+## Step 3: Create data source
+
+1. Write MySQL-1 related information to `conf/source1.yaml`:
+
+    ```yaml
+    # MySQL1 Configuration.
+    
+    source-id: "mysql-replica-01"
+    # Indicates whether GTID is enabled.
+    enable-gtid: true
+    
+    from:
+      host: "172.16.10.81"
+      user: "root"
+      password: "VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU="
+      port: 3306
+    ```
+
+2. Execute the following command in the terminal, and use `dmctl` to load the MySQL-1 data source configuration to the DM cluster:
+
+    {{< copyable "shell-regular" >}}
+
+    ```bash
+    ./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create conf/source1.yaml
+    ```
+
+3. For MySQL-2, modify the relevant information in the configuration file and execute the same `dmctl` command.
+
+## Step 4: Configure the data migration task
 
 The following example assumes that you need to replicate all the `test_table` table data in the `test_db` database of both the upstream MySQL-1 and MySQL-2 instances, to the downstream `test_table` table in the `test_db` database of TiDB, in the full data plus incremental data mode.
 
@@ -76,10 +104,10 @@ target-database:
   user: "root"
   password: ""
 
-# Configuration of all the upstream MySQL instances required by the current data replication task.
+# Configuration of all the upstream MySQL instances required by the current data migration task.
 mysql-instances:
 -
-  # The ID of upstream instances or the replication group. You can refer to the configuration of `source_id` in the "inventory.ini" file or in the "dm-master.toml" file.
+  # The ID of upstream instances or the migration group. You can refer to the configuration of `source_id` in the "inventory.ini" file or in the "dm-master.toml" file.
   source-id: "mysql-replica-01"
   # The configuration item name of the block and allow lists of the name of the
   # database/table to be replicated, used to quote the global block and allow
@@ -107,18 +135,18 @@ mydumpers:
     extra-args: "-B test_db -T test_table"  # The extra Mydumper argument. Since DM 1.0.2, DM automatically generates the "--tables-list" configuration. For versions earlier than 1.0.2, you need to configure this option manually.
 ```
 
-## Step 4: Start the data replication task
+## Step 5: Start the data migration task
 
-To detect possible errors of data replication configuration in advance, DM provides the precheck feature:
+To detect possible errors of data migration configuration in advance, DM provides the precheck feature:
 
-- DM automatically checks the corresponding privileges and configuration while starting the data replication task.
+- DM automatically checks the corresponding privileges and configuration while starting the data migration task.
 - You can also use the `check-task` command to manually precheck whether the upstream MySQL instance configuration satisfies the DM requirements.
 
 For details about the precheck feature, see [Precheck the upstream MySQL instance configuration](precheck.md).
 
 > **Note:**
 >
-> Before starting the data replication task for the first time, you should have got the upstream configured. Otherwise, an error is reported while you start the task.
+> Before starting the data migration task for the first time, you should have got the upstream configured. Otherwise, an error is reported while you start the task.
 
 1. Come to the dmctl directory `/home/tidb/dm-ansible/resources/bin/`.
 
@@ -128,7 +156,7 @@ For details about the precheck feature, see [Precheck the upstream MySQL instanc
     ./dmctl --master-addr 172.16.10.71:8261
     ```
 
-3. Run the following command to start the data replication tasks.
+3. Run the following command to start the data migration tasks.
 
     ```bash
     # `task.yaml` is the configuration file that is edited above.
@@ -156,19 +184,19 @@ For details about the precheck feature, see [Precheck the upstream MySQL instanc
         }
         ```
 
-    - If you fail to start the data replication task, modify the configuration according to the returned prompt and then run the `start-task task.yaml` command to restart the task.
+    - If you fail to start the data migration task, modify the configuration according to the returned prompt and then run the `start-task task.yaml` command to restart the task.
 
-## Step 5: Check the data replication task
+## Step 5: Check the data migration task
 
-If you need to check the task state or whether a certain data replication task is running in the DM cluster, run the following command in dmctl:
+If you need to check the task state or whether a certain data migration task is running in the DM cluster, run the following command in dmctl:
 
 ```bash
 query-status
 ```
 
-## Step 6: Stop the data replication task
+## Step 7: Stop the data migration task
 
-If you do not need to replicate data any more, run the following command in dmctl to stop the task:
+If you do not need to migrate data any more, run the following command in dmctl to stop the task:
 
 ```bash
 # `test` is the task name that you set in the `name` configuration item of
@@ -176,7 +204,7 @@ If you do not need to replicate data any more, run the following command in dmct
 stop-task test
 ```
 
-## Step 7: Monitor the task and check logs
+## Step 8: Monitor the task and check logs
 
 Assuming that Prometheus, Alertmanager, and Grafana are successfully deployed along with the DM cluster deployment using DM-Ansible, and the Grafana address is `172.16.10.71`. To view the alert information related to DM, you can open <http://172.16.10.71:9093> in a browser and enter into Alertmanager; to check monitoring metrics, go to <http://172.16.10.71:3000>, and choose the DM dashboard.
 
