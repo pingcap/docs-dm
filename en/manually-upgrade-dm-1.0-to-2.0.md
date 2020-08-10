@@ -53,7 +53,7 @@ from:
 ```
 
 ```yaml
-# The source configuration corresponding to the original dm_worker2. For example, it is named as source2.yaml
+# The source configuration corresponding to the original dm_worker2. For example, it is named as source2.yaml.
 server-id: 102                                   # Corresponds to the original `server_id`.
 source-id: "mysql-replica-02"                    # Corresponds to the original `source_id`.
 from:
@@ -84,14 +84,14 @@ port = 3306
 Then you can convert, and obtain the following source configuration file:
 
 ```yaml
-server-id: 101                                   # Corresponds to the original `server-id`
-source-id: "mysql-replica-01"                    # Corresponds to the original `source-id`
-flavor: "mysql"                                  # Corresponds to the original `flavor`
+server-id: 101                                   # Corresponds to the original `server-id`.
+source-id: "mysql-replica-01"                    # Corresponds to the original `source-id`.
+flavor: "mysql"                                  # Corresponds to the original `flavor`.
 from:
-  host: "172.16.10.81"                           # Corresponds to the original `from.host`
-  port: 3306                                     # Corresponds to the original `from.port`
-  user: "root"                                   # Corresponds to the original `from.user`
-  password: "VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU="   # Corresponds to the original `from.password`
+  host: "172.16.10.81"                           # Corresponds to the original `from.host`.
+  port: 3306                                     # Corresponds to the original `from.port`.
+  user: "root"                                   # Corresponds to the original `from.user`.
+  password: "VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU="   # Corresponds to the original `from.password`.
 ```
 
 ### Data migration task configuration file
@@ -136,10 +136,10 @@ If the original v1.0.x cluster is deployed by Binary, you can stop the DM-worker
 
             ```yaml
             mysql-instances:
-              - source-id: "mysql-replica-01"        # Corresponds to the `id` of the checkpoint information
+              - source-id: "mysql-replica-01"        # Corresponds to the `id` of the checkpoint information.
                 meta:
                   binlog-name: "mysql-bin.000123"    # Corresponds to the `binlog_name` in the checkpoint information, excluding the part of `|000001`. 
-                  binlog-pos: 15847                  # Corresponds to `binlog_pos` in the checkpoint information
+                  binlog-pos: 15847                  # Corresponds to `binlog_pos` in the checkpoint information.
             
               - source-id: "mysql-replica-02"
                 meta:
