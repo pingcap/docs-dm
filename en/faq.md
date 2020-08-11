@@ -28,25 +28,67 @@ When you encounter a DDL statement unsupported by TiDB, you need to manually han
 >
 > Currently, TiDB is not compatible with all the DDL statements that MySQL supports. See [MySQL Compatibility](https://pingcap.com/docs/dev/reference/mysql-compatibility/#ddl).
 
-## How to reset the data replication task?
+## How to reset the data migration task?
 
-You need to reset the entire data replication task in the following cases:
+### Reset the data migration task when the relay log is in the normal state
 
-- `RESET MASTER` is accidentally executed in the upstream database.
-- The relay log or the upstream binlog is corrupted or lost.
+If the relay log required by the data migration task is normal, you can use the following steps to restore the data migration task:
 
-Generally, at this time, the relay unit exits with an error and cannot be automatically restored gracefully. You need to manually restore the data replication and the steps are as follows:
+1. Use `stop-task` to stop abnormal data migration tasks.
 
-1. Use the `stop-task` command to stop all the replication tasks that are currently running.
+2. Clean up the downstream migrated data. 
+
+3. Choose one of the following methods to restart the data migration task:
+
+    - Modify the task configuration file to specify a new task name, and then use `start-task` to restart the migration task. 
+    - Modify the task configuration file to set `remove-meta` to `true`, and then use `start-task` to restart the migration task.
+
+### Reset the data migration task when the relay log is in the abnormal state
+
+#### The required relay log exists in upstream MySQL
+
+If the relay log required by the migration task is abnormal in the DM-worker, but is normal in the upstream MySQL, you can use the following steps to restore the data migration task:
+
+1. Use the `stop-task` command to stop all the migration tasks that are currently running. 
+
+2. Refer to [restart DM-worker](cluster-operations.md#restart-dm-worker) to **stop** the abnormal DM-worker node.
+
+3. Copy the normal binlog file from the upstream MySQL to replace the corresponding file in the [relay log directory](relay-log.md#directory-structure) of DM-worker.
+
+    - If the cluster is deployed using DM-Ansible, the relay log is in the `<deploy_dir>/relay_log` directory.
+    - If the cluster is manually deployed using the binary, the relay log is in the directory set of the `relay-dir` parameter.
+
+4. Modify the information of `relay.meta` in the relay log directory of DM-worker to the information corresponding to the next binlog file.
+
+    - If `enable-gtid` is not enabled, set `binlog-name` to the file name of the next binlog file, and set `binlog-pos` to `4`. If you copy `mysq-bin.000100` from the upstream MySQL to the relay directory, and want to continue to pull binlog from `mysql-bin.000101` later, set `binlog-name` to `mysql-bin.000101` `. 
+
+    - If `enable-gtid` is enabled, set `binlog-gtid` to the value corresponding to `Previous_gtids` at the beginning of the next binlog file. You can obtain the value by executing [SHOW BINLOG EVENTS](https:// dev.mysql.com/doc/refman/5.7/en/show-binlog-events.html).
+
+5. Refer to [restart DM-worker](cluster-operations.md#restart-dm-worker) to **start** the abnormal DM-worker node.
+
+6. Use `start-task` to resume a stopped migration task.
+
+#### The required relay log has been cleaned up in upstream MySQL
+
+If the relay log required by the migration task is abnormal in the DM-worker, and has been cleaned up in the upstream MySQL, you can use the following steps to restore the data migration task:
+
+1. Use the `stop-task` command to stop all the migration tasks that are currently running.
+
 2. Use DM-Ansible to [stop the entire DM cluster](deploy-a-dm-cluster-using-ansible.md#step-10-stop-the-dm-cluster).
+
 3. Manually clean up the relay log directory of the DM-worker corresponding to the MySQL master whose binlog is reset.
 
     - If the cluster is deployed using DM-Ansible, the relay log is in the `<deploy_dir>/relay_log` directory.
-    - If the cluster is manually deployed using the binary, the relay log is in the directory set in the `relay-dir` parameter.
+    - If the cluster is manually deployed using the binary, the relay log is in the directory set of the `relay-dir` parameter.
 
-4. Clean up downstream replicated data.
+4. Clean up downstream migrated data.
+
 5. Use DM-Ansible to [start the entire DM cluster](deploy-a-dm-cluster-using-ansible.md#step-9-deploy-the-dm-cluster).
-6. Restart data replication with the new task name, or set `remove-meta` to `true` and `task-mode` to `all`.
+
+6. Choose one of the following methods to restart the data migration task:
+
+    - Modify the task configuration file to specify a new task name, and then use `start-task` to restart the migration task. 
+    - Modify the task configuration file to set `remove-meta` to `true`, and then use `start-task` to restart the migration task.
 
 ## How to handle the error returned by the DDL operation related to the gh-ost table, after `online-ddl-scheme: "gh-ost"` is set?
 
