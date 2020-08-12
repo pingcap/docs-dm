@@ -40,9 +40,9 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 1. 同名表合并场景，比如将三个实例中的 `user`.`information` 表合并至下游 TiDB 中的 `user`.`information` 表。
 2. 不同名表合并场景，比如将三个实例中的 `user`.`log_{north|south|east}` 表合并至下游 TiDB 中的 `user`.`log_{north|south|east}` 表。
 3. 分片表合并场景，比如将三个实例中的 `store_{01|02}`.`sale_{01|02}` 表合并至下游 TiDB 中的 `store`.`sale` 表。
-4. 删除操作过滤场景，过滤掉三个实例的 `user`.`log_{north|south|east}` 表的所有删除操作。
-5. 删除操作过滤场景，过滤掉三个实例的 `user`.`information` 表的所有删除操作。
-6. 删除操作过滤场景，过滤掉三个实例的 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作。
+4. 过滤删除操作场景，比如过滤掉三个实例中 `user`.`log_{north|south|east}` 表的所有删除操作。
+5. 过滤删除操作场景，比如过滤掉三个实例中 `user`.`information` 表的所有删除操作。
+6. 过滤删除操作场景，比如过滤掉三个实例中 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作。
 7. 使用通配符过滤特定表的场景，比如使用通配符 `user`.`log_*` 过滤掉三个实例的 `user`.`log_bak` 表。
 8. 主键冲突处理场景，假设 `store_{01|02}`.`sale_{01|02}` 表带有 bigint 型的自增主键，将其合并至 TiDB 时会引发冲突，可以使用相应的方案来避免冲突。
 
