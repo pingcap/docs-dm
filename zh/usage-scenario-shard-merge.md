@@ -38,7 +38,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 ## 同步需求
 
 1. 同名表合并场景，三个实例中的 `user`.`information` 表合并至下游 TiDB 中的 `user`.`information` 表。
-2. 不同名表合并场景，三个实例中的 `user`.`log_{north|south|east}` 表合并至下游TiDB中的 `user`.`log_{north|south|east}` 表。
+2. 不同名表合并场景，比如将三个实例中的 `user`.`log_{north|south|east}` 表合并至下游 TiDB 中的 `user`.`log_{north|south|east}` 表。
 3. 分片表合并场景，三个实例中的 `store_{01|02}`.`sale_{01|02}` 表合并至下游TiDB中的 `store`.`sale` 表。
 4. 删除操作过滤场景，过滤掉三个实例的 `user`.`log_{north|south|east}` 表的所有删除操作。
 5. 删除操作过滤场景，过滤掉三个实例的 `user`.`information` 表的所有删除操作。
