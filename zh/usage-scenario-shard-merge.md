@@ -44,7 +44,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 5. 删除操作过滤场景，过滤掉三个实例的 `user`.`information` 表的所有删除操作。
 6. 删除操作过滤场景，过滤掉三个实例的 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作。
 7. 表名通配符选中后的过滤场景，`user`.`log_*` 过滤掉三个实例的 `user`.`log_bak` 表。
-8. 主键冲突处理场景，假设 `store_{01|02}`.`sale_{01|02}` 表带有 bigint 型的自增主键，将其合并至 TiDB 时会引发冲突，使用相应的方案来避免冲突。
+8. 主键冲突处理场景，假设 `store_{01|02}`.`sale_{01|02}` 表带有 bigint 型的自增主键，将其合并至 TiDB 时会引发冲突，可以使用相应的方案来避免冲突。
 
 ## 下游实例
 
