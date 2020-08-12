@@ -10,13 +10,10 @@ This document describes how to quickly deploy a [TiDB Data Migration](https://gi
 
 ## Deploy instances locally
 
-Deploy MySQL, TiDB, DM-master, and DM-worker instances locally. The detailed information of each instance is as follows:
+Deploy DM-master, and DM-worker instances locally. The detailed information of each instance is as follows:
 
 | Instance        | Server Address   | Port |
 | :---------- | :----------- | :----------- |
-| MySQL1     | 127.0.0.1 | 3306 |
-| MySQL2     | 127.0.0.1 | 3307 |
-| TiDB       | 127.0.0.1 | 4000, 10080 |
 | DM-master1 | 127.0.0.1 | 8261, 8291 |
 | DM-master2 | 127.0.0.1 | 8361, 8292 |
 | DM-master3 | 127.0.0.1 | 8461, 8293 |
@@ -58,36 +55,6 @@ make
 
 ```bash
 DM_PATH=`pwd` && export PATH=$PATH:$DM_PATH/bin
-```
-
-### Run upstream MySQL
-
-Run two MySQL services. To start MySQL services using Docker, execute the following commands:
-
-{{< copyable "shell-regular" >}}
-
-```bash
-docker run --rm --name mysql-3306 -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql:5.7.22 --log-bin=mysql-bin --port=3306 --bind-address=0.0.0.0 --binlog-format=ROW --server-id=1 --gtid_mode=ON --enforce-gtid-consistency=true > mysql.3306.log 2>&1 &
-docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql:5.7.22 --log-bin=mysql-bin --port=3307 --bind-address=0.0.0.0 --binlog-format=ROW --server-id=1 --gtid_mode=ON --enforce-gtid-consistency=true > mysql.3307.log 2>&1 &
-```
-
-### Prepare data
-
-- Write [sample data](https://github.com/pingcap/dm/blob/52205177910024c8b66c7a6ef05b1f9501c5901b/tests/ha/data/db1.prepare.sql) to `mysql-3306`.
-
-- Write [sample data](https://github.com/pingcap/dm/blob/52205177910024c8b66c7a6ef05b1f9501c5901b/tests/ha/data/db2.prepare.sql) to `mysql-3307`.
-
-### Run downstream TiDB
-
-To run a TiDB server in the mocktikv mode, execute the following commands:
-
-{{< copyable "shell-regular" >}}
-
-```bash
-wget https://download.pingcap.org/tidb-v4.0.0-rc.2-linux-amd64.tar.gz
-tar -xzvf tidb-v4.0.0-rc.2-linux-amd64.tar.gz
-mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
-./tidb-server -P 4000 --store mocktikv --log-file "./tidb.log" &
 ```
 
 ## Deploy DM-master

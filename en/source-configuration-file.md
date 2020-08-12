@@ -12,17 +12,17 @@ This document introduces the configuration file of the upstream database, includ
 
 The following is a configuration file template of the upstream database:
 
-```toml
-source-id = "mysql-replica-01"
+```yaml
+source-id: "mysql-replica-01"
 
 # Enables GTID.
-enable-gtid = false
+enable-gtid: false
 
-[from]
-host = "127.0.0.1"
-port = 3306
-user = "root"
-password = "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # The user password of the upstream database. Note that the password must be encrypted using dmctl.
+from:
+  host: "127.0.0.1"
+  port: 3306
+  user: "root"
+  password: "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # The user password of the upstream database. Note that the password must be encrypted using dmctl.
 ```
 
 ## Configuration parameters

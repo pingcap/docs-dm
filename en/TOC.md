@@ -19,7 +19,7 @@
 + [Usage Scenarios](scenarios.md)
 + Quick Start
   - [Deploy a DM cluster](quick-start-with-dm.md)
-  - [Replicate Data Using DM](replicate-data-using-dm.md)
+  - [Create Data Migration Task](quick-start-create-task.md)
 + Deploy
   + [Software and Hardware Requirements](hardware-and-software-requirements.md)
   + Deploy a DM Cluster
@@ -27,7 +27,6 @@
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
   - [Replicate Data Using DM](replicate-data-using-dm.md)
   - [Monitor](monitor-a-dm-cluster.md)
-  - [Create and Verify a Task](create-task-and-verify.md)
   - [Performance Test](performance-test.md)
 + Maintain
   - [Cluster Upgrade](dm-upgrade.md)

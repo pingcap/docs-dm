@@ -12,7 +12,7 @@ This document gives an overview of configuration files of DM (Data Migration).
 
 - `dm-master.toml`: The configuration file of running the DM-master process, including the topology information and the logs of the DM-master. For more details, refer to [DM-master Configuration File](dm-master-configuration-file.md).
 - `dm-worker.toml`: The configuration file of running the DM-worker process, including the topology information and the logs of the DM-worker. For more details, refer to [DM-worker Configuration File](dm-worker-configuration-file.md).
-- `source.toml`: The configuration of the upstream database such as MySQL and MariaDB. For more details, refer to [Upstream Database Configuration File](source-configuration-file.md).
+- `source.yaml`: The configuration of the upstream database such as MySQL and MariaDB. For more details, refer to [Upstream Database Configuration File](source-configuration-file.md).
 
 ## DM replication task configuration
 
@@ -34,6 +34,6 @@ This section shows description of some important concepts.
 
 | Concept  | Description  | Configuration File  |
 | :------ | :--------- | :------------- |
-| `source-id`  | Uniquely represents a MySQL or MariaDB instance, or a replication group with the primary-secondary structure. The maximum length of `source-id` is 32. | `source_id` of `source.toml`;<br/> `source-id` of `task.yaml` |
+| `source-id`  | Uniquely represents a MySQL or MariaDB instance, or a replication group with the primary-secondary structure. The maximum length of `source-id` is 32. | `source_id` of `source.yaml`;<br/> `source-id` of `task.yaml` |
 | DM-master ID | Uniquely represents a DM-master (by the `master-addr` parameter of `dm-master.toml`) | `master-addr` of `dm-master.toml` |
 | DM-worker ID | Uniquely represents a DM-worker (by the `worker-addr` parameter of `dm-worker.toml`) | `worker-addr` of `dm-worker.toml` |
