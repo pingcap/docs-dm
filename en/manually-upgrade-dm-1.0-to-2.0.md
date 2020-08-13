@@ -23,7 +23,7 @@ The prepared configuration files of v2.0.x include the configuration files of th
 
 ### Upstream database configuration file
 
-In v2.0.x, the [upstream database configuration file](source-configuration-file.md) is separated from the process configuration of the DM-worker, so you need to obtain the source configuration based on the [v1.0.x DM-worker configuration](https://docs.pingcap.com/zh/tidb-data-migration/stable/dm-worker-configuration-file).
+In v2.0.x, the [upstream database configuration file](source-configuration-file.md) is separated from the process configuration of the DM-worker, so you need to obtain the source configuration based on the [v1.0.x DM-worker configuration](https://docs.pingcap.com/tidb-data-migration/stable/dm-worker-configuration-file).
 
 > **Note:**
 >
@@ -104,7 +104,7 @@ Use TiUP to deploy a new v2.0.x cluster according to the required number of node
 
 ## Step 3：Stop the v1.0.x cluster
 
-If the original v1.0.x cluster is deployed by DM-Ansible, you need to [use DM-Ansible to stop the v1.0.x cluster](https://docs.pingcap.com/zh/tidb-data-migration/stable/cluster-operations#%E4%B8%8B%E7%BA%BF%E9%9B%86%E7%BE%A4).
+If the original v1.0.x cluster is deployed by DM-Ansible, you need to [use DM-Ansible to stop the v1.0.x cluster](https://docs.pingcap.com/tidb-data-migration/stable/cluster-operations#stop-a-cluster).
 If the original v1.0.x cluster is deployed by Binary, you can stop the DM-worker and DM-master processes directly.
 
 ## Step 4: Upgrade data migration task
