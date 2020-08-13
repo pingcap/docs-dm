@@ -95,13 +95,13 @@ Available Commands:
   query-error           query-error [-s source ...] [task-name]
   query-status          query-status [-s source ...] [task-name] [--more]
   resume-relay          resume-relay <-s source ...>
-  resume-task           resume-task [-s source ...] <task-name>
+  resume-task           resume-task [-s source ...] <task-name | task-file>
   show-ddl-locks        show-ddl-locks [-s source ...] [task-name]
   sql-inject            sql-inject <-s source> <task-name> <sql1;sql2;>
   sql-replace           sql-replace <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name> <sql1;sql2;>
   sql-skip              sql-skip <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name>
   start-task            start-task [-s source ...] <config-file>
-  stop-task             stop-task [-s source ...] <task-name>
+  stop-task             stop-task [-s source ...] <task-name | task-file>
   switch-relay-master   switch-relay-master <-s source ...>
   unlock-ddl-lock       unlock-ddl-lock [-s source ...] <lock-ID>
   update-master-config  update-master-config <config-file>
