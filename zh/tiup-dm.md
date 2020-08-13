@@ -1,8 +1,8 @@
 ---
-title: 使用 TiUP 部署运维 DM 线上集群
+title: 使用 TiUp 部署运维 DM 线上集群
 ---
 
-本文介绍如何使用 TiUP 的 dm 组件，如果需要线上部署的完整步骤，可参考[使用 TiUP 部署 DM 集群](/tiup-dm.md)。
+本文介绍如何使用 TiUp 的 dm 组件，如果需要线上部署的完整步骤，可参考[使用 TiUp 部署 DM 集群](/tiup-dm.md)。
 
 dm 组件的帮助信息如下：
 
@@ -14,8 +14,8 @@ tiup dm --help
 Deploy a DM cluster for production
 
 Usage:
-  tiup-dm [flags]
-  tiup-dm [command]
+  tiup dm [flags]
+  tiup dm [command]
 
 Available Commands:
   deploy      Deploy a DM cluster for production
@@ -59,7 +59,7 @@ tiup dm deploy <cluster-name> <version> <topology.yaml> [flags]
 
 > **注意：**
 >
-> TiUP DM 组件的部署和扩容拓扑是使用 [yaml](https://yaml.org/spec/1.2/spec.html) 语法编写，所以需要注意缩进。
+> TiUp DM 组件的部署和扩容拓扑是使用 [yaml](https://yaml.org/spec/1.2/spec.html) 语法编写，所以需要注意缩进。
 
 ```yaml
 ---
@@ -156,7 +156,7 @@ tiup start start prod-cluster
 
 ## 检查集群状态
 
-如果想查看集群中每个组件的运行状态，逐一登录到各个机器上查看显然很低效。因此，TiUP 提供了 `tiup dm display` 命令，用法如下：
+如果想查看集群中每个组件的运行状态，逐一登录到各个机器上查看显然很低效。因此，TiUp 提供了 `tiup dm display` 命令，用法如下：
 
 {{< copyable "shell-root" >}}
 
@@ -211,9 +211,9 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
 
 ## 扩容节点
 
-扩容的内部逻辑与部署类似，TiUP dm 组件会先保证节点的 SSH 连接，在目标节点上创建必要的目录，然后执行部署并且启动服务。
+扩容的内部逻辑与部署类似，TiUp dm 组件会先保证节点的 SSH 连接，在目标节点上创建必要的目录，然后执行部署并且启动服务。
 
-例如，在集群 `dm-test` 中扩容一个 worker 节点：
+例如，在集群 `prod-cluster` 中扩容一个 worker 节点：
 
 1. 新建 scale.yaml 文件，添加新增的 woker 节点 信息：
 
@@ -229,15 +229,15 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
 
     ```
     
-2. 执行扩容操作。TiUP dm 根据 scale.yaml 文件中声明的端口、目录等信息在集群中添加相应的节点：
+2. 执行扩容操作。TiUp dm 根据 scale.yaml 文件中声明的端口、目录等信息在集群中添加相应的节点：
 
     {{< copyable "shell-regular" >}}
 
     ```shell
-    tiup dm scale-out tidb-test scale.yaml
+    tiup dm scale-out prod-cluster scale.yaml
     ```
 
-    执行完成之后可以通过 `tiup dm display tidb-test` 命令检查扩容后的集群状态。
+    执行完成之后可以通过 `tiup dm display prod-cluster` 命令检查扩容后的集群状态。
 
 ## 滚动升级
 
@@ -256,12 +256,12 @@ tiup dm upgrade <cluster-name> <version> [flags]
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dm upgrade dm-test v2.0.1
+tiup dm upgrade prod-cluster v2.0.1
 ```
 
 ## 更新配置
 
-如果想要动态更新组件的配置，TiUP dm 组件为每个集群保存了一份当前的配置，如果想要编辑这份配置，则执行 `tiup dm edit-config <cluster-name>` 命令。例如：
+如果想要动态更新组件的配置，TiUp dm 组件为每个集群保存了一份当前的配置，如果想要编辑这份配置，则执行 `tiup dm edit-config <cluster-name>` 命令。例如：
 
 {{< copyable "shell-regular" >}}
 
@@ -269,7 +269,7 @@ tiup dm upgrade dm-test v2.0.1
 tiup dm edit-config prod-cluster
 ```
 
-然后 TiUP cluster 组件会使用 vi 打开配置文件供编辑（如果你想要使用其他编辑器，请使用 `EDITOR` 环境变量自定义编辑器，例如 `export EDITOR=nano`），编辑完之后保存即可。此时的配置并没有应用到集群，如果想要让它生效，还需要执行：
+然后 TiUp cluster 组件会使用 vi 打开配置文件供编辑（如果你想要使用其他编辑器，请使用 `EDITOR` 环境变量自定义编辑器，例如 `export EDITOR=nano`），编辑完之后保存即可。此时的配置并没有应用到集群，如果想要让它生效，还需要执行：
 
 {{< copyable "shell-regular" >}}
 
@@ -293,7 +293,7 @@ tiup dm patch --help
 Replace the remote package with a specified package and restart the service
 
 Usage:
-  tiup-dm patch <cluster-name> <package-path> [flags]
+  tiup dm patch <cluster-name> <package-path> [flags]
 
 Flags:
   -h, --help                   help for patch
@@ -314,7 +314,7 @@ Global Flags:
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dm patch test-cluster /tmp/dm-master-hotfix.tar.gz -R dm-master
+tiup dm patch prod-cluster /tmp/dm-master-hotfix.tar.gz -R dm-master
 ```
 
 或者只替换其中一个 master：
@@ -322,12 +322,12 @@ tiup dm patch test-cluster /tmp/dm-master-hotfix.tar.gz -R dm-master
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dm patch test-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
+tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 ```
 
 ## 导入 DM-Ansible 部署的 DM 1.0 集群并升级
 
-在 TiUP 之前，一般使用 DM Ansible 部署 DM 集群，import 命令用于根据 Ansible 部署的 1.0 集群生成 TiUp 对应的 `topology.yaml`, 并根据拓扑部署 2.0 的集群。
+在 TiUp 之前，一般使用 DM Ansible 部署 DM 集群，import 命令用于根据 Ansible 部署的 1.0 集群生成 TiUp 对应的 `topology.yaml`, 并根据拓扑部署 2.0 的集群。
 
 例如，导入一个 DM Ansible 集群：
 
@@ -367,9 +367,9 @@ tiup dm audit
 ```
 ID      Time                  Command
 --      ----                  -------
-4D5kQY  2020-08-13T05:38:19Z  tiup-dm display test
-4D5kNv  2020-08-13T05:36:13Z  tiup-dm list
-4D5kNr  2020-08-13T05:36:10Z  tiup-dm deploy -p prod-cluster v2.0.0 ./examples/dm/minimal.yaml
+4D5kQY  2020-08-13T05:38:19Z  tiup dm display test
+4D5kNv  2020-08-13T05:36:13Z  tiup dm list
+4D5kNr  2020-08-13T05:36:10Z  tiup dm deploy -p prod-cluster v2.0.0 ./examples/dm/minimal.yaml
 ```
 
 第一列为 audit-id，如果想看某个命令的执行日志，则传入这个 audit-id：
@@ -386,7 +386,7 @@ tiup dm audit 4D5kQY
 
 ```bash
 Usage:
-  tiup-dm exec <cluster-name> [flags]
+  tiup dm exec <cluster-name> [flags]
 
 Flags:
       --command string   the command run on cluster host (default "ls")
@@ -401,12 +401,12 @@ Flags:
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dm exec test-cluster --command='ls /tmp'
+tiup dm exec prod-cluster --command='ls /tmp'
 ```
 
 ## 集群控制工具 (dmctl)
 
-TiUP 集成了 DM 的控制工具 `dmctl`：
+TiUp 集成了 DM 的控制工具 `dmctl`：
 
 如下运行：
 
@@ -420,7 +420,7 @@ tiup dmctl [args]
 tiup dmctl:v2.0.0 [args]
 ```
 
-例如，以前添加 source 命令为 `dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml`，集成到 TiUP 中的命令为：
+例如，以前添加 source 命令为 `dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml`，集成到 TiUp 中的命令为：
 
 {{< copyable "shell-regular" >}}
 
@@ -430,7 +430,7 @@ tiup dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml
 
 ## 使用中控机系统自带的 SSH 客户端连接集群
 
-在以上所有操作中，涉及到对集群机器的操作都是通过 TiUP 内置的 SSH 客户端连接集群执行命令，但是在某些场景下，需要使用系统自带的 SSH 客户端来对集群执行操作，比如：
+在以上所有操作中，涉及到对集群机器的操作都是通过 TiUp 内置的 SSH 客户端连接集群执行命令，但是在某些场景下，需要使用系统自带的 SSH 客户端来对集群执行操作，比如：
 
 - 使用 SSH 插件来做认证
 - 使用定制的 SSH 客户端
