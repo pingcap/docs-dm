@@ -88,7 +88,7 @@ Available Commands:
   check-task            check-task <config-file>
   migrate-relay         migrate-relay <source> <binlogName> <binlogPos>
   offline-worker        offline-worker <name> <address>
-  operate-source        operate-source <operate-type> <config-file>
+  operate-source        operate-source <operate-type> [config-file ...] [--print-sample-config]
   pause-relay           pause-relay <-s source ...>
   pause-task            pause-task [-s source ...] <task-name>
   purge-relay           purge-relay <-s source> [--filename] [--sub-dir]
