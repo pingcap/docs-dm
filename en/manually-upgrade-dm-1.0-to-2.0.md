@@ -104,7 +104,7 @@ Use TiUP to deploy a new v2.0.x cluster according to the required number of node
 
 ## Step 3：Stop the v1.0.x cluster
 
-If the original v1.0.x cluster is deployed by DM-Ansible, you need to [use DM-Ansible to stop the v1.0.x cluster](https://docs.pingcap.com/tidb-data-migration/stable/cluster-operations#stop-a-cluster).
+If the original v1.0.x cluster is deployed by DM-Ansible, you need to use [DM-Ansible to stop the v1.0.x cluster](https://docs.pingcap.com/tidb-data-migration/stable/cluster-operations#stop-a-cluster).
 If the original v1.0.x cluster is deployed by Binary, you can stop the DM-worker and DM-master processes directly.
 
 ## Step 4: Upgrade data migration task
