@@ -60,17 +60,17 @@ If the relay log required by the migration task is abnormal in the DM-worker, bu
 
 4. Modify the information of `relay.meta` in the relay log directory of DM-worker to the information corresponding to the next binlog file.
 
-    - If `enable-gtid` is not enabled, set `binlog-name` to the file name of the next binlog file, and set `binlog-pos` to `4`. If you copy `mysq-bin.000100` from the upstream MySQL to the relay directory, and want to continue to pull binlog from `mysql-bin.000101` later, set `binlog-name` to `mysql-bin.000101` `. 
+    - If `enable-gtid` is not enabled, set `binlog-name` to the file name of the next binlog file, and set `binlog-pos` to `4`. If you copy `mysq-bin.000100` from the upstream MySQL to the relay directory, and want to continue to pull binlog from `mysql-bin.000101` later, set `binlog-name` to `mysql-bin.000101`. 
 
-    - If `enable-gtid` is enabled, set `binlog-gtid` to the value corresponding to `Previous_gtids` at the beginning of the next binlog file. You can obtain the value by executing [SHOW BINLOG EVENTS](https:// dev.mysql.com/doc/refman/5.7/en/show-binlog-events.html).
+    - If `enable-gtid` is enabled, set `binlog-gtid` to the value corresponding to `Previous_gtids` at the beginning of the next binlog file. You can obtain the value by executing [SHOW BINLOG EVENTS](https://dev.mysql.com/doc/refman/5.7/en/show-binlog-events.html).
 
 5. Refer to [restart DM-worker](cluster-operations.md#restart-dm-worker) to **start** the abnormal DM-worker node.
 
-6. Use `start-task` to resume a stopped migration task.
+6. Use `start-task` to resume all stopped migration tasks.
 
-#### The required relay log has been cleaned up in upstream MySQL
+#### The required relay log has been purged in upstream MySQL
 
-If the relay log required by the migration task is abnormal in the DM-worker, and has been cleaned up in the upstream MySQL, you can use the following steps to restore the data migration task:
+If the relay log required by the migration task is abnormal in the DM-worker, and has been purged in the upstream MySQL, you can use the following steps to restore the data migration task:
 
 1. Use the `stop-task` command to stop all the migration tasks that are currently running.
 
