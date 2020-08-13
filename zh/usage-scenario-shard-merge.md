@@ -1,6 +1,6 @@
 ---
 title: DM 分库分表合并场景
-aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/shard-merge','/docs-cn/v3.1/reference/tools/data-migration/usage-scenarios/shard-merge','/docs-cn/v3.0/reference/tools/data-migration/usage-scenarios/shard-merge','/docs-cn/v2.1/reference/tools/data-migration/usage-scenarios/shard-merge']
+aliases: ['/docs-cn/tidb-data-migration/stable/usage-scenario-shard-merge/','/docs-cn/tidb-data-migration/v1.0/usage-scenario-shard-merge/','/docs-cn/dev/reference/tools/data-migration/usage-scenarios/shard-merge','/docs-cn/v3.1/reference/tools/data-migration/usage-scenarios/shard-merge','/docs-cn/v3.0/reference/tools/data-migration/usage-scenarios/shard-merge','/docs-cn/v2.1/reference/tools/data-migration/usage-scenarios/shard-merge','/docs-cn/stable/reference/tools/data-migration/usage-scenarios/shard-merge/']
 ---
 
 # DM 分库分表合并场景

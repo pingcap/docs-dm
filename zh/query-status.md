@@ -1,6 +1,6 @@
 ---
 title: DM 查询状态
-aliases: ['/docs-cn/dev/reference/tools/data-migration/query-status/','/docs-cn/v3.1/reference/tools/data-migration/query-status/','/docs-cn/v3.0/reference/tools/data-migration/query-status/','/docs-cn/v2.1/reference/tools/data-migration/query-status/']
+aliases: ['/docs-cn/tidb-data-migration/stable/query-status/','/docs-cn/tidb-data-migration/v1.0/query-status/','/docs-cn/dev/reference/tools/data-migration/query-status/','/docs-cn/v3.1/reference/tools/data-migration/query-status/','/docs-cn/v3.0/reference/tools/data-migration/query-status/','/docs-cn/v2.1/reference/tools/data-migration/query-status/','/docs-cn/stable/reference/tools/data-migration/query-status/']
 ---
 
 # DM 查询状态

@@ -1,6 +1,6 @@
 ---
 title: 上游 MySQL 实例配置前置检查
-aliases: ['/docs-cn/dev/reference/tools/data-migration/precheck/','/docs-cn/v3.1/reference/tools/data-migration/precheck/','/docs-cn/v3.0/reference/tools/data-migration/precheck/','/docs-cn/v2.1/reference/tools/data-migration/precheck/']
+aliases: ['/docs-cn/tidb-data-migration/stable/precheck/','/docs-cn/tidb-data-migration/v1.0/precheck/','/docs-cn/dev/reference/tools/data-migration/precheck/','/docs-cn/v3.1/reference/tools/data-migration/precheck/','/docs-cn/v3.0/reference/tools/data-migration/precheck/','/docs-cn/v2.1/reference/tools/data-migration/precheck/']
 ---
 
 # 上游 MySQL 实例配置前置检查

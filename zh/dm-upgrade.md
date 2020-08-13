@@ -1,7 +1,7 @@
 ---
 title: TiDB Data Migration 版本升级
 summary: 了解 TiDB Data Migration 工具的版本变更和升级操作。
-aliases: ['/docs-cn/dev/reference/tools/data-migration/dm-upgrade/','/docs-cn/v3.1/reference/tools/data-migration/dm-upgrade/','/docs-cn/v3.0/reference/tools/data-migration/dm-upgrade/','/docs-cn/v2.1/reference/tools/data-migration/dm-upgrade/']
+aliases: ['/docs-cn/tidb-data-migration/stable/dm-upgrade/','/docs-cn/tidb-data-migration/v1.0/dm-upgrade/','/docs-cn/dev/reference/tools/data-migration/dm-upgrade/','/docs-cn/v3.1/reference/tools/data-migration/dm-upgrade/','/docs-cn/v3.0/reference/tools/data-migration/dm-upgrade/','/docs-cn/v2.1/reference/tools/data-migration/dm-upgrade/']
 ---
 
 # TiDB Data Migration 版本升级
