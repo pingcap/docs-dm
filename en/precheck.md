@@ -43,6 +43,8 @@ Upstream and downstream database users must have the corresponding read and writ
     - TiDB does not support the foreign key.
     - [Character set compatibility differs](https://pingcap.com/docs/stable/reference/sql/character-set/).
 
+    DM will also check primary/unqiue key exists for all upstream tables, supported since v1.0.7
+
 + The consistency of the sharded tables in the multiple upstream MySQL instances
 
     + The schema consistency of all sharded tables
