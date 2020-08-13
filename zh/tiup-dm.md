@@ -33,7 +33,7 @@ Available Commands:
   patch       Replace the remote package with a specified package and restart the service
   scale-out   Scale out a DM cluster
   scale-in    Scale in a DM cluster
-  import      Import an exist DM 1.0 cluster from tidb-ansible and re-deploy 2.0 version
+  import      Import an exist DM 1.0 cluster from dm-ansible and re-deploy 2.0 version
   help        Help about any command
 
 Flags:
@@ -241,7 +241,7 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
 
 ## 滚动升级
 
-滚动升级过程中尽量保证对前端业务透明、无感知, 其中对不同节点有不同的操作。
+滚动升级过程中尽量保证对前端业务透明、无感知，其中对不同节点有不同的操作。
 
 ### 升级操作
 
@@ -256,7 +256,7 @@ tiup dm upgrade <cluster-name> <version> [flags]
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dm upgrade tidb-test v2.0.1
+tiup dm upgrade dm-test v2.0.1
 ```
 
 ## 更新配置
@@ -325,7 +325,7 @@ tiup dm patch test-cluster /tmp/dm-master-hotfix.tar.gz -R dm-master
 tiup dm patch test-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 ```
 
-## 导入 DM Ansible DM 1.0 集群并升级
+## 导入 DM-Ansible 部署的 DM 1.0 集群并升级
 
 在 TiUP 之前，一般使用 DM Ansible 部署 DM 集群，import 命令用于根据 Ansible 部署的 1.0 集群生成 TiUp 对应的 `topology.yaml`, 并根据拓扑部署 2.0 的集群。
 
@@ -350,7 +350,7 @@ import 工作流程如下：
 
 ```bash
 Usage:
-  tiup d m audit [audit-id] [flags]
+  tiup dm audit [audit-id] [flags]
 
 Flags:
   -h, --help   help for audit
@@ -396,7 +396,7 @@ Flags:
       --sudo             use root permissions (default false)
 ```
 
-例如，如果要到所有的 TiDB 节点上执行 `ls /tmp`：
+例如，如果要到所有的 DM 节点上执行 `ls /tmp`：
 
 {{< copyable "shell-regular" >}}
 
@@ -448,7 +448,7 @@ tiup dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml
 ```sh
 export TIUP_NATIVE_SSH=true
 # 或者
-export TIUP_NATIVE_SSh=1
+export TIUP_NATIVE_SSH=1
 # 或者
 export TIUP_NATIVE_SSH=enable
 ```
