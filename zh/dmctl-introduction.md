@@ -39,7 +39,7 @@ Available Commands:
   help                 help about any command
   migrate-relay        migrate DM-worker's relay unit
   offline-worker       offline worker which has been closed
-  operate-source       create/update/stop upstream MySQL/MariaDB source
+  operate-source       create/update/stop/show upstream MySQL/MariaDB source
   pause-relay          pause DM-worker's relay unit
   pause-task           pause a specified running task
   purge-relay          purge relay log files of the DM-worker according to the specified filename
