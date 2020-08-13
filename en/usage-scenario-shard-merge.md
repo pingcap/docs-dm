@@ -36,29 +36,29 @@ Assume that the upstream schemas are as follows:
     | store_01 | sale_01, sale_02 |
     | store_02 | sale_01, sale_02 |
 
-## Replication requirements
+## Migration requirements scenarios
 
-1. Merge the `user`.`information` table of three upstream instances to the downstream `user`.`information` table in TiDB.
-2. Merge the `user`.`log_{north|south|east}` table of three upstream instances to the downstream `user`.`log_{north|south|east}` table in TiDB.
-3. Merge the `store_{01|02}`.`sale_{01|02}` table of three upstream instances to the downstream `store`.`sale` table in TiDB.
-4. Filter out all the deletion operations in the `user`.`log_{north|south|east}` table of three upstream instances.
-5. Filter out all the deletion operations in the `user`.`information` table of three upstream instances.
-6. Filter out all the deletion operations in the `store_{01|02}`.`sale_{01|02}` table of three upstream instances.
-7. Filter out the `user`.`log_bak` table of three upstream instances.
-8. Because the `store_{01|02}`.`sale_{01|02}` tables have auto-increment primary keys of the `bigint` type, the conflict occurs when these tables are merged into TiDB. The following text will show you solutions to resolve and avoid the conflict.
+1. Merge tables with the same name. For example, merge the `user`.`information` table of three upstream instances to the downstream `user`.`information` table in TiDB.
+2. Merge tables with the different names. For example, merge the `user`.`log_{north|south|east}` table of three upstream instances to the downstream `user`.`log_{north|south|east}` table in TiDB.
+3. Merge sharded tables. For example, merge the `store_{01|02}`.`sale_{01|02}` table of three upstream instances to the downstream `store`.`sale` table in TiDB.
+4. Filter delete operations. For example, filter out all the deletion operations in the `user`.`log_{north|south|east}` table of three upstream instances.
+5. Filter delete operations. For example, filter out all the deletion operations in the `user`.`information` table of three upstream instances.
+6. Filter delete operations. For example, filter out all the deletion operations in the `store_{01|02}`.`sale_{01|02}` table of three upstream instances.
+7. Use wildcards to filter specific tables. For example, filter out the `user`.`log_bak` table of three upstream instances using wildcard `user`.`log_*`.
+8. Troubleshoot primary key conflicts. Because the `store_{01|02}`.`sale_{01|02}` tables have auto-increment primary keys of the `bigint` type, the conflict occurs when these tables are merged into TiDB. The following text will show you solutions to resolve and avoid the conflict.
 
 ## Downstream instances
 
-Assume that the downstream schema after replication is as follows:
+Assume that the downstream schema after migration is as follows:
 
 | Schema | Tables |
 |:------|:------|
 | user | information, log_north, log_east, log_south|
 | store | sale |
 
-## Replication solution
+## Migration solution
 
-- To satisfy the replication Requirements #1 and #2, configure the [table routing rule](key-features.md#table-routing) as follows:
+- To satisfy the migration Requirements #1 and #2, configure the [table routing rule](key-features.md#table-routing) as follows:
 
     ```yaml
     routes:
@@ -68,7 +68,7 @@ Assume that the downstream schema after replication is as follows:
         target-schema: "user"
     ```
 
-- To satisfy the replication Requirement #3, configure the [table routing rule](key-features.md#table-routing) as follows:
+- To satisfy the migration Requirement #3, configure the [table routing rule](key-features.md#table-routing) as follows:
 
     ```yaml
     routes:
@@ -83,7 +83,7 @@ Assume that the downstream schema after replication is as follows:
         target-table:  "sale"
     ```
 
-- To satisfy the replication Requirements #4 and #5, configure the [binlog event filtering rule](key-features.md#binlog-event-filter) as follows:
+- To satisfy the migration Requirements #4 and #5, configure the [binlog event filtering rule](key-features.md#binlog-event-filter) as follows:
 
     ```yaml
     filters:
@@ -96,9 +96,9 @@ Assume that the downstream schema after replication is as follows:
 
     > **Note:**
     >
-    > The replication Requirements #4, #5 and #7 indicate that all the deletion operations in the `user` schema are filtered out, so a schema level filtering rule is configured here. However, the deletion operations of future tables in the `user` schema will also be filtered out.
+    > The migration Requirements #4 and #5 indicate that all the deletion operations in the `user` schema are filtered out, so a schema level filtering rule is configured here. And the deletion operations of tables participating in the future migration after the `user` schema will also be filtered out.
 
-- To satisfy the replication Requirement #6, configure the [binlog event filter rule](key-features.md#binlog-event-filter) as follows:
+- To satisfy the migration Requirement #6, configure the [binlog event filter rule](key-features.md#binlog-event-filter) as follows:
 
     ```yaml
     filters:
@@ -114,7 +114,7 @@ Assume that the downstream schema after replication is as follows:
         action: Ignore
     ```
 
-- To satisfy the replication Requirement #7, configure the [block and allow table lists](key-features.md#block-and-allow-table-lists) as follows:
+- To satisfy the migration Requirement #7, configure the [block and allow table lists](key-features.md#block-and-allow-table-lists) as follows:
 
     ```yaml
     block-allow-list:
@@ -124,7 +124,7 @@ Assume that the downstream schema after replication is as follows:
           tbl-name: "log_bak"
     ```
 
-- To satisfy the replication Requirement #8, first refer to [handling conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key) to solve conflicts. This guarantees that data is successfully replicated to the downstream when the primary key value of one sharded table is duplicate with that of another sharded table. Then, configure `ignore-checking-items` to skip checking the conflict of auto-increment primary key:
+- To satisfy the migration Requirement #8, first refer to [handling conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key) to solve conflicts. This guarantees that data is successfully replicated to the downstream when the primary key value of one sharded table is duplicate with that of another sharded table. Then, configure `ignore-checking-items` to skip checking the conflict of auto-increment primary key:
 
     {{< copyable "" >}}
 
@@ -132,9 +132,9 @@ Assume that the downstream schema after replication is as follows:
     ignore-checking-items: ["auto_increment_ID"]
     ```
 
-## Replication task configuration
+## Migration task configuration
 
-The complete configuration of the replication task is shown as below. For more details, see [Data Migration Task Configuration File](task-configuration-file.md).
+The complete configuration of the migration task is shown as below. For more details, see [Data Migration Task Configuration File](task-configuration-file.md).
 
 ```yaml
 name: "shard_merge"
