@@ -428,8 +428,6 @@ tiup dmctl:v2.0.0 [args]
 tiup dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml
 ```
 
-
-
 ## 使用中控机系统自带的 SSH 客户端连接集群
 
 在以上所有操作中，涉及到对集群机器的操作都是通过 TiUP 内置的 SSH 客户端连接集群执行命令，但是在某些场景下，需要使用系统自带的 SSH 客户端来对集群执行操作，比如：

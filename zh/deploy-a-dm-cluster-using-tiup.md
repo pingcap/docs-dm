@@ -56,7 +56,6 @@ title: 使用 TiUP 部署 DM 集群
 
     预期输出 `“Update successfully!”` 字样。
 
-
 ## 第 2 步：编辑初始化配置文件
 
 请根据不同的集群拓扑，编辑 TiUP 所需的集群初始化配置文件。
