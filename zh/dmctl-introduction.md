@@ -90,7 +90,7 @@ Available Commands:
   offline-worker        offline-worker <name> <address>
   operate-source        operate-source <operate-type> <config-file>
   pause-relay           pause-relay <-s source ...>
-  pause-task            pause-task [-s source ...] <task-name>
+  pause-task            pause-task [-s source ...] <task-name | task-file>
   purge-relay           purge-relay <-s source> [--filename] [--sub-dir]
   query-error           query-error [-s source ...] [task-name]
   query-status          query-status [-s source ...] [task-name] [--more]
