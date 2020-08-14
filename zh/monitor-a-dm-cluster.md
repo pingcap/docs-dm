@@ -14,7 +14,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/monitor-a-dm-cluster/']
 
 ### overview
 
-overview 下包含运行当前选定 task 的所有 DM-worker instance/source 的部分监控指标。当前默认告警规则只针对于单个 DM-worker instance/source。
+overview 下包含运行当前选定 task 的所有 DM-worker/master instance/source 的部分监控指标。当前默认告警规则只针对于单个 DM-worker/master instance/source。
 
 | metric 名称 | 说明 | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
