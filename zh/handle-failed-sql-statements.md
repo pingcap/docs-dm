@@ -412,7 +412,7 @@ ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
 }
 ```
 
-我们将该 DDL 替换成两条等价的 DDL 。操作步骤如下：
+我们将该 DDL 替换成两条等价的 DDL。操作步骤如下：
 
 1. 使用如下命令替换错误的 DDL 语句
 
