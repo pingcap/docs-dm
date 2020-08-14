@@ -8,7 +8,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/handle-error-sql-statements/']
 
 本文介绍了如何使用 DM 来处理出错的 SQL 语句。
 
-目前，TiDB 并不完全兼容所有的 MySQL 语法（详见 [TiDB 已支持的 DDL 语句](https://pingcap.com/docs-cn/dev/reference/mysql-compatibility/#ddl)）。当使用 DM 从 MySQL 同步数据到 TiDB 时，如果 TiDB 不支持对应的 SQL 语句，可能会造成错误并中断同步任务。在这种情况下，DM 提供 `handle-error` 命令来恢复同步：
+目前，TiDB 并不完全兼容所有的 MySQL 语法（详见 [TiDB 已支持的 DDL 语句](https://pingcap.com/docs-cn/dev/reference/mysql-compatibility/#ddl)）。当使用 DM 从 MySQL 同步数据到 TiDB 时，如果 TiDB 不支持对应的 SQL 语句，可能会造成错误并中断同步任务。在这种情况下，DM 提供 `handle-error` 命令来恢复同步。
 
 ## 使用限制
 
