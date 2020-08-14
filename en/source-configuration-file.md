@@ -22,7 +22,11 @@ from:
   host: "127.0.0.1"
   port: 3306
   user: "root"
-  password: "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # The user password of the upstream database. Note that the password must be encrypted using dmctl.
+  password: "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # The user password of the upstream database. It is recommended to use the password encrypted with dmctl. 
+  security:                       # The TLS config of the upstream database
+    ssl-ca: "/path/to/ca.pem"
+    ssl-cert: "/path/to/cert.pem"
+    ssl-key: "/path/to/key.pem"
 ```
 
 ## Configuration parameters
@@ -38,4 +42,5 @@ This section describes each configuration parameter in the configuration file.
 | `host` | Specifies the host of the upstream database. |
 | `port` | Specifies the port of the upstream database. |
 | `user` | Specifies the username of the upstream database. |
-| `password` | Specifies the user password of the upstream database. Note that the password must be encrypted using dmctl. |
+| `password` | Specifies the user password of the upstream database. It is recommended to use the password encrypted with dmctl. |
+| `security` | Specifies the TLS config of the upstream database. |
