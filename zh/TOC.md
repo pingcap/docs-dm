@@ -54,6 +54,7 @@
   - [分库分表合并场景](usage-scenario-shard-merge.md)
   - [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
   - [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
+  - [下游表结构存在更多列的迁移场景](usage-scenario-downstream-more-columns.md)
   - [DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
 + 性能调优
   - [配置调优](tune-configuration.md)
