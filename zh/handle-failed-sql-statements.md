@@ -195,7 +195,6 @@ ERROR 8200 (HY000): Unsupported modify column: can't change decimal column preci
 
     </details>
 
-
     可以看到任务运行正常，错误的 DDL 被跳过。
 
 #### 合库合表场景
