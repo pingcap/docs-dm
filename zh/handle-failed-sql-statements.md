@@ -116,7 +116,7 @@ ERROR 8200 (HY000): Unsupported modify column: can't change decimal column preci
 
 假设业务上可以接受下游 TiDB 不执行此 DDL 语句（即继续保持原有的表结构），则可以通过使用 `handle-error <task-name> skip` 命令跳过该 DDL 语句以恢复同步任务。操作步骤如下：
 
-1. 使用 `handle-error <task-name> skip` 跳过当前错误的 DDL 语句。
+1. 使用 `handle-error <task-name> skip` 跳过当前错误的 DDL 语句
 
     {{< copyable "" >}}
 
@@ -210,7 +210,7 @@ SHOW CREATE TABLE shard_db.shard_table;
 {{< copyable "sql" >}}
 
 ```sql
-ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DANISH_CI
+ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DANISH_CI;
 ```
 
 则会由于 TiDB 不支持该 DDL 语句而导致 DM 同步任务中断，使用 `query-status` 命令可以看到 MySQL 实例 1 的 `shard_db_1`.`shard_table_1` 表和 MySQL 实例 2 的 `shard_db_2`.`shard_table_1` 表报错：
@@ -231,7 +231,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
 
 假设业务上可以接受下游 TiDB 不执行此 DDL 语句（即继续保持原有的表结构），则可以通过使用 `handle-error <task-name> skip` 命令跳过该 DDL 语句以恢复同步任务。操作步骤如下：
 
-1. 使用 `handle-error <task-name> skip` 跳过 MySQL 实例 1 和实例 2 当前错误的 DDL 语句。
+1. 使用 `handle-error <task-name> skip` 跳过 MySQL 实例 1 和实例 2 当前错误的 DDL 语句
 
     {{< copyable "" >}}
 
@@ -276,7 +276,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
     }
     ```
 
-3. 继续使用 `handle-error <task-name> skip` 跳过 MySQL 实例 1 和实例 2 当前错误的 DDL 语句。
+3. 继续使用 `handle-error <task-name> skip` 跳过 MySQL 实例 1 和实例 2 当前错误的 DDL 语句
 
     {{< copyable "" >}}
 
@@ -400,7 +400,7 @@ SHOW CREATE TABLE db1.tbl1;
 {{< copyable "sql" >}}
 
 ```sql
-ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE
+ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
 ```
 
 则会由于 TiDB 不支持该 DDL 语句而导致 DM 同步任务中断，使用 `query-status` 命令可看到如下错误：
@@ -414,7 +414,7 @@ ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE
 
 我们将该 DDL 替换成两条等价的 DDL 。操作步骤如下：
 
-1. 使用如下命令替换错误的 DDL 语句。
+1. 使用如下命令替换错误的 DDL 语句
 
     {{< copyable "" >}}
 
@@ -511,7 +511,7 @@ SHOW CREATE TABLE shard_db.shard_table;
 {{< copyable "sql" >}}
 
 ```sql
-ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE
+ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
 ```
 
 则会由于 TiDB 不支持该 DDL 语句而导致 DM 同步任务中断，使用 `query-status` 命令可以看到 MySQL 实例 1 的 `shard_db_1`.`shard_table_1` 表和 MySQL 实例 2 的 `shard_db_2`.`shard_table_1` 表报错：
@@ -532,7 +532,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE
 
 我们将该 DDL 替换成两条等价的 DDL 。操作步骤如下：
 
-1. 使用如下命令分别替换 MySQL 实例 1 和实例 2 中错误的 DDL 语句。
+1. 使用如下命令分别替换 MySQL 实例 1 和实例 2 中错误的 DDL 语句
 
     {{< copyable "" >}}
 
@@ -576,7 +576,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE
     }
     ```
 
-2. 使用 `query-status <task-name>` 查看任务状态，可以看到 MySQL 实例 1 的 `shard_db_1`.`shard_table_2` 表和 MySQL 实例 2 的 `shard_db_2`.`shard_table_2` 表报错
+2. 使用 `query-status <task-name>` 查看任务状态，可以看到 MySQL 实例 1 的 `shard_db_1`.`shard_table_2` 表和 MySQL 实例 2 的 `shard_db_2`.`shard_table_2` 表报错：
 
     ```
     {
@@ -590,7 +590,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE
     }
     ```
 
-3. 使用如下命令继续分别替换 MySQL 实例 1 和实例 2 中错误的 DDL 语句。
+3. 使用如下命令继续分别替换 MySQL 实例 1 和实例 2 中错误的 DDL 语句
 
     {{< copyable "" >}}
 
