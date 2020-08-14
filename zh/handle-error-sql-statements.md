@@ -532,7 +532,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
 
     可以看到任务运行正常，无错误信息。四条 DDL 全部被跳过。
 
-#### 同步中断执行替代执行操作
+#### 同步中断执行替代操作
 
 ##### 应用场景
 
