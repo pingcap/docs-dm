@@ -182,7 +182,6 @@ ERROR 8200 (HY000): Unsupported modify column: can't change decimal column preci
 
     可以看到任务运行正常，错误的 DDL 被跳过。
 
-
 #### 合库合表场景
 
 假设现在存在如下四个上游表需要合并同步到下游的同一个表 ``` `shard_db`.`shard_table` ```，任务模式为悲观协调模式：
