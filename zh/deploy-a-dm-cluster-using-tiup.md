@@ -170,7 +170,7 @@ tiup dm start dm-test
 
 ## 第 8 步：验证集群运行状态
 
-- 通过 TiUP 检查集群状态
+通过以下 TiUP 命令检查集群状态：
 
 {{< copyable "shell-regular" >}}
 
