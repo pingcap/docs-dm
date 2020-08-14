@@ -10,18 +10,18 @@ aliases: ['/docs-cn/tidb-data-migration/dev/handle-error-sql-statements/']
 
 目前，TiDB 并不完全兼容所有的 MySQL 语法（详见 [TiDB 已支持的 DDL 语句](https://pingcap.com/docs-cn/dev/reference/mysql-compatibility/#ddl)）。当使用 DM 从 MySQL 同步数据到 TiDB 时，如果 TiDB 不支持对应的 SQL 语句，可能会造成错误并中断同步任务。在这种情况下，DM 提供 `handle-error` 命令来恢复同步：
 
-#### 使用限制
+## 使用限制
 
 如果业务不能接受下游 TiDB 跳过异常的 DDL 语句，也不接受使用其他 DDL 语句作为替代，则不适合使用此方式进行处理。
 
- - 比如：`DROP PRIMARY KEY`，这种情况下，只能在下游重建一个（DDL 执行完后的）新表结构对应的表，并将原表的全部数据重新导入该新表。
+- 比如：`DROP PRIMARY KEY`，这种情况下，只能在下游重建一个（DDL 执行完后的）新表结构对应的表，并将原表的全部数据重新导入该新表。
 
 ### 支持场景
 
 同步过程中，上游执行了 TiDB 不支持的 DDL 语句并同步到了 DM，造成同步任务中断。
 
- - 如果业务能接受下游 TiDB 不执行该 DDL 语句，则使用 `handle-error <task-name> skip` 跳过对该 DDL 语句的同步以恢复同步任务。
- - 如果业务能接受下游 TiDB 执行其他 DDL 语句来作为替代，则使用 `handle-error <task-name> replace` 替代该 DDL 的同步以恢复同步任务。
+- 如果业务能接受下游 TiDB 不执行该 DDL 语句，则使用 `handle-error <task-name> skip` 跳过对该 DDL 语句的同步以恢复同步任务。
+- 如果业务能接受下游 TiDB 执行其他 DDL 语句来作为替代，则使用 `handle-error <task-name> replace` 替代该 DDL 的同步以恢复同步任务。
 
 ### 命令介绍
 
@@ -1018,4 +1018,3 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE
     ```
 
     可以看到任务运行正常，无错误信息。四条 DDL 全部被替换。
-
