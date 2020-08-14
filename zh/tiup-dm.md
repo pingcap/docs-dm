@@ -2,7 +2,7 @@
 title: 使用 TiUP 部署运维 DM 线上集群
 ---
 
-本文介绍如何使用 TiUP 的 dm 组件，如果需要线上部署的完整步骤，可参考[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。
+本文介绍如何使用 TiUP 的 DM 组件，如果需要线上部署的完整步骤，可参考[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。
 
 dm 组件的帮助信息如下：
 
@@ -146,7 +146,7 @@ prod-cluster  tidb  v2.0.0  /root/.tiup/storage/dm/clusters/test  /root/.tiup/st
 
 ## 启动集群
 
-集群部署成功后，可以执行以下命令启动该集群。如果忘记了部署的集群的名字，可以使用 `tiup dm list` 命令查看。
+集群部署成功后，可以执行以下命令启动该集群。如果忘记了部署的集群名字，可以使用 `tiup dm list` 命令查看。
 
 {{< copyable "shell-regular" >}}
 
@@ -215,7 +215,7 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
 
 例如，在集群 `prod-cluster` 中扩容一个 worker 节点：
 
-1. 新建 scale.yaml 文件，添加新增的 woker 节点 信息：
+1. 新建 scale.yaml 文件，添加新增的 woker 节点信息：
 
     > **注意：**
     >
@@ -281,7 +281,7 @@ tiup cluster reload prod-cluster
 
 ## 更新组件
 
-常规的升级集群可以使用 upgrade 命令，但是在某些场景下（例如 Debug)，可能需要用一个临时的包替换正在运行的组件，此时可以用 patch 命令：
+常规的升级集群可以使用 `upgrade` 命令，但是在某些场景下（例如 Debug)，可能需要用一个临时的包替换正在运行的组件，此时可以用 `patch` 命令：
 
 {{< copyable "shell-root" >}}
 
@@ -346,7 +346,7 @@ import 工作流程如下：
 
 ## 查看操作日志
 
-操作日志的查看可以借助 audit 命令，其用法如下：
+操作日志的查看可以借助 `audit` 命令，其用法如下：
 
 ```bash
 Usage:
@@ -382,7 +382,7 @@ tiup dm audit 4D5kQY
 
 ## 在集群节点机器上执行命令
 
-`exec` 命令可以很方便地到集群的机器上执行命令，其使用方式如下：
+`exec` 命令可以很方便地到集群的机器上执行命令，使用方式如下：
 
 ```bash
 Usage:
@@ -396,7 +396,7 @@ Flags:
       --sudo             use root permissions (default false)
 ```
 
-例如，如果要到所有的 DM 节点上执行 `ls /tmp`：
+例如，如果要到所有的 DM 节点上执行 `ls /tmp`，则可以执行：
 
 {{< copyable "shell-regular" >}}
 
@@ -408,7 +408,7 @@ tiup dm exec prod-cluster --command='ls /tmp'
 
 TiUP 集成了 DM 的控制工具 `dmctl`：
 
-如下运行：
+运行命令如下：
 
 ```bash
 tiup dmctl [args]
