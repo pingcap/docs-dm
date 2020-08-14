@@ -149,48 +149,47 @@ ERROR 8200 (HY000): Unsupported modify column: can't change decimal column preci
     ```
 
     <details><summary> 执行结果 </summary>
-    ```
-    {
-        "result": true,
-        "msg": "",
-        "sources": [
-            {
-                "result": true,
-                "msg": "",
-                "sourceStatus": {
-                    "source": "mysql-replica-01",
-                    "worker": "worker1",
-                    "result": null,
-                    "relayStatus": null
-                },
-                "subTaskStatus": [
-                    {
-                        "name": "test",
-                        "stage": "Running",
-                        "unit": "Sync",
+
+        {
+            "result": true,
+            "msg": "",
+            "sources": [
+                {
+                    "result": true,
+                    "msg": "",
+                    "sourceStatus": {
+                        "source": "mysql-replica-01",
+                        "worker": "worker1",
                         "result": null,
-                        "unresolvedDDLLockID": "",
-                        "sync": {
-                            "totalEvents": "4",
-                            "totalTps": "0",
-                            "recentTps": "0",
-                            "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
-                            "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
-                            "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
-                            "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
-                            "blockingDDLs": [
-                            ],
-                            "unresolvedGroups": [
-                            ],
-                            "synced": true,
-                            "binlogType": "remote"
+                        "relayStatus": null
+                    },
+                    "subTaskStatus": [
+                        {
+                            "name": "test",
+                            "stage": "Running",
+                            "unit": "Sync",
+                            "result": null,
+                            "unresolvedDDLLockID": "",
+                            "sync": {
+                                "totalEvents": "4",
+                                "totalTps": "0",
+                                "recentTps": "0",
+                                "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                                "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
+                                "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                                "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
+                                "blockingDDLs": [
+                                ],
+                                "unresolvedGroups": [
+                                ],
+                                "synced": true,
+                                "binlogType": "remote"
+                            }
                         }
-                    }
-                ]
-            }
-        ]
-    }
-    ```
+                    ]
+                }
+            ]
+        }
     </details>
 
 
@@ -328,82 +327,81 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
     ```
 
     <details><summary> 执行结果 </summary>
-    ```
-    {
-        "result": true,
-        "msg": "",
-        "sources": [
-            {
-                "result": true,
-                "msg": "",
-                "sourceStatus": {
-                    "source": "mysql-replica-01",
-                    "worker": "worker1",
-                    "result": null,
-                    "relayStatus": null
-                },
-                "subTaskStatus": [
-                    {
-                        "name": "test",
-                        "stage": "Running",
-                        "unit": "Sync",
+
+        {
+            "result": true,
+            "msg": "",
+            "sources": [
+                {
+                    "result": true,
+                    "msg": "",
+                    "sourceStatus": {
+                        "source": "mysql-replica-01",
+                        "worker": "worker1",
                         "result": null,
-                        "unresolvedDDLLockID": "",
-                        "sync": {
-                            "totalEvents": "4",
-                            "totalTps": "0",
-                            "recentTps": "0",
-                            "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
-                            "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
-                            "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
-                            "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
-                            "blockingDDLs": [
-                            ],
-                            "unresolvedGroups": [
-                            ],
-                            "synced": true,
-                            "binlogType": "remote"
+                        "relayStatus": null
+                    },
+                    "subTaskStatus": [
+                        {
+                            "name": "test",
+                            "stage": "Running",
+                            "unit": "Sync",
+                            "result": null,
+                            "unresolvedDDLLockID": "",
+                            "sync": {
+                                "totalEvents": "4",
+                                "totalTps": "0",
+                                "recentTps": "0",
+                                "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                                "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
+                                "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                                "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
+                                "blockingDDLs": [
+                                ],
+                                "unresolvedGroups": [
+                                ],
+                                "synced": true,
+                                "binlogType": "remote"
+                            }
                         }
-                    }
-                ]
-            },
-            {
-                "result": true,
-                "msg": "",
-                "sourceStatus": {
-                    "source": "mysql-replica-02",
-                    "worker": "worker2",
-                    "result": null,
-                    "relayStatus": null
+                    ]
                 },
-                "subTaskStatus": [
-                    {
-                        "name": "test",
-                        "stage": "Running",
-                        "unit": "Sync",
+                {
+                    "result": true,
+                    "msg": "",
+                    "sourceStatus": {
+                        "source": "mysql-replica-02",
+                        "worker": "worker2",
                         "result": null,
-                        "unresolvedDDLLockID": "",
-                        "sync": {
-                            "totalEvents": "4",
-                            "totalTps": "0",
-                            "recentTps": "0",
-                            "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
-                            "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
-                            "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
-                            "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
-                            "blockingDDLs": [
-                            ],
-                            "unresolvedGroups": [
-                            ],
-                            "synced": true,
-                            "binlogType": "remote"
+                        "relayStatus": null
+                    },
+                    "subTaskStatus": [
+                        {
+                            "name": "test",
+                            "stage": "Running",
+                            "unit": "Sync",
+                            "result": null,
+                            "unresolvedDDLLockID": "",
+                            "sync": {
+                                "totalEvents": "4",
+                                "totalTps": "0",
+                                "recentTps": "0",
+                                "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                                "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
+                                "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                                "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
+                                "blockingDDLs": [
+                                ],
+                                "unresolvedGroups": [
+                                ],
+                                "synced": true,
+                                "binlogType": "remote"
+                            }
                         }
-                    }
-                ]
-            }
-        ]
-    }
-    ```
+                    ]
+                }
+            ]
+        }
     </details>
 
     可以看到任务运行正常，无错误信息。四条 DDL 全部被跳过。
@@ -482,48 +480,47 @@ ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
     ```
 
     <details><summary> 执行结果 </summary>
-    ```
-    {
-        "result": true,
-        "msg": "",
-        "sources": [
-            {
-                "result": true,
-                "msg": "",
-                "sourceStatus": {
-                    "source": "mysql-replica-01",
-                    "worker": "worker1",
-                    "result": null,
-                    "relayStatus": null
-                },
-                "subTaskStatus": [
-                    {
-                        "name": "test",
-                        "stage": "Running",
-                        "unit": "Sync",
+
+        {
+            "result": true,
+            "msg": "",
+            "sources": [
+                {
+                    "result": true,
+                    "msg": "",
+                    "sourceStatus": {
+                        "source": "mysql-replica-01",
+                        "worker": "worker1",
                         "result": null,
-                        "unresolvedDDLLockID": "",
-                        "sync": {
-                            "totalEvents": "4",
-                            "totalTps": "0",
-                            "recentTps": "0",
-                            "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
-                            "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
-                            "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
-                            "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
-                            "blockingDDLs": [
-                            ],
-                            "unresolvedGroups": [
-                            ],
-                            "synced": true,
-                            "binlogType": "remote"
+                        "relayStatus": null
+                    },
+                    "subTaskStatus": [
+                        {
+                            "name": "test",
+                            "stage": "Running",
+                            "unit": "Sync",
+                            "result": null,
+                            "unresolvedDDLLockID": "",
+                            "sync": {
+                                "totalEvents": "4",
+                                "totalTps": "0",
+                                "recentTps": "0",
+                                "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                                "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
+                                "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                                "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
+                                "blockingDDLs": [
+                                ],
+                                "unresolvedGroups": [
+                                ],
+                                "synced": true,
+                                "binlogType": "remote"
+                            }
                         }
-                    }
-                ]
-            }
-        ]
-    }
-    ```
+                    ]
+                }
+            ]
+        }
     </details>
 
     可以看到任务运行正常，错误的 DDL 已被替换且执行成功。
@@ -691,86 +688,85 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
     ```
 
     <details><summary> 执行结果 </summary>
-    ```
-    {
-        "result": true,
-        "msg": "",
-        "sources": [
-            {
-                "result": true,
-                "msg": "",
-                "sourceStatus": {
-                    "source": "mysql-replica-01",
-                    "worker": "worker1",
-                    "result": null,
-                    "relayStatus": null
-                },
-                "subTaskStatus": [
-                    {
-                        "name": "test",
-                        "stage": "Running",
-                        "unit": "Sync",
+
+        {
+            "result": true,
+            "msg": "",
+            "sources": [
+                {
+                    "result": true,
+                    "msg": "",
+                    "sourceStatus": {
+                        "source": "mysql-replica-01",
+                        "worker": "worker1",
                         "result": null,
-                        "unresolvedDDLLockID": "",
-                        "sync": {
-                            "totalEvents": "4",
-                            "totalTps": "0",
-                            "recentTps": "0",
-                            "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
-                            "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
-                            "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
-                            "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
-                            "blockingDDLs": [
-                            ],
-                            "unresolvedGroups": [
-                            ],
-                            "unresolvedGroups": [
-                            ],
-                            "synced": true,
-                            "binlogType": "remote"
+                        "relayStatus": null
+                    },
+                    "subTaskStatus": [
+                        {
+                            "name": "test",
+                            "stage": "Running",
+                            "unit": "Sync",
+                            "result": null,
+                            "unresolvedDDLLockID": "",
+                            "sync": {
+                                "totalEvents": "4",
+                                "totalTps": "0",
+                                "recentTps": "0",
+                                "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                                "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
+                                "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                                "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
+                                "blockingDDLs": [
+                                ],
+                                "unresolvedGroups": [
+                                ],
+                                "unresolvedGroups": [
+                                ],
+                                "synced": true,
+                                "binlogType": "remote"
+                            }
                         }
-                    }
-                ]
-            },
-            {
-                "result": true,
-                "msg": "",
-                "sourceStatus": {
-                    "source": "mysql-replica-02",
-                    "worker": "worker2",
-                    "result": null,
-                    "relayStatus": null
+                    ]
                 },
-                "subTaskStatus": [
-                    {
-                        "name": "test",
-                        "stage": "Running",
-                        "unit": "Sync",
+                {
+                    "result": true,
+                    "msg": "",
+                    "sourceStatus": {
+                        "source": "mysql-replica-02",
+                        "worker": "worker2",
                         "result": null,
-                        "unresolvedDDLLockID": "",
-                        "sync": {
-                            "totalEvents": "4",
-                            "totalTps": "0",
-                            "recentTps": "0",
-                            "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
-                            "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
-                            "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
-                            "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
-                            "blockingDDLs": [
-                            ],
-                            "unresolvedGroups": [
-                            ],
-                            "unresolvedGroups": [
-                            ],
-                            "synced": try,
-                            "binlogType": "remote"
+                        "relayStatus": null
+                    },
+                    "subTaskStatus": [
+                        {
+                            "name": "test",
+                            "stage": "Running",
+                            "unit": "Sync",
+                            "result": null,
+                            "unresolvedDDLLockID": "",
+                            "sync": {
+                                "totalEvents": "4",
+                                "totalTps": "0",
+                                "recentTps": "0",
+                                "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                                "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
+                                "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                                "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
+                                "blockingDDLs": [
+                                ],
+                                "unresolvedGroups": [
+                                ],
+                                "unresolvedGroups": [
+                                ],
+                                "synced": try,
+                                "binlogType": "remote"
+                            }
                         }
-                    }
-                ]
-            }
-        ]
-    }
-    ```
+                    ]
+                }
+            ]
+        }
     </details>
 
     可以看到任务运行正常，无错误信息。四条 DDL 全部被替换。
