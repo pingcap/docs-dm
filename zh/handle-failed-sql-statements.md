@@ -530,7 +530,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
 }
 ```
 
-我们将该 DDL 替换成两条等价的 DDL 。操作步骤如下：
+我们将该 DDL 替换成两条等价的 DDL。操作步骤如下：
 
 1. 使用如下命令分别替换 MySQL 实例 1 和实例 2 中错误的 DDL 语句
 
