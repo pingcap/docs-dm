@@ -41,7 +41,7 @@ cert-allowed-cn = ["dm"]
 | `worker-addr` | DM-worker 服务的地址，可以省略 IP 信息，例如：":8262"。|
 | `advertise-addr` | DM-worker 向外界宣告的地址。 |
 | `join` | 对应一个或多个 DM-master 配置中的 [`master-addr`](dm-master-configuration-file.md#global-配置)。 |
-| `ssl-ca` | DM-worker 组件 SSL CA 证书所在的路径  |
-| `ssl-cert` | DM-worker 组件用于连接的 PEM 格式的 X509 证书所在的路径 |
-| `ssl-key` | DM-worker 组件用于连接的 PEM 格式的 X509 密钥所在的路径  |
+| `ssl-ca` | 用于连接 DM-worker 组件的 SSL CA 证书所在的路径  |
+| `ssl-cert` | 用于连接 DM-worker 组件的 PEM 格式的 X509 证书所在的路径 |
+| `ssl-key` | 用于连接 DM-worker 组件的 PEM 格式的 X509 密钥所在的路径  |
 | `cert-allowed-cn` | 证书检查 Common Name 列表 |
