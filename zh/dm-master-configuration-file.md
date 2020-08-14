@@ -30,9 +30,9 @@ advertise-peer-urls = "http://127.0.0.1:8291"
 initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,master3=http://127.0.0.1:8293"
 join = ""
 
-ssl-ca: "/path/to/ca.pem"
-ssl-cert: "/path/to/cert.pem"
-ssl-key: "/path/to/key.pem"
+ssl-ca = "/path/to/ca.pem"
+ssl-cert = "/path/to/cert.pem"
+ssl-key = "/path/to/key.pem"
 cert-allowed-cn = ["dm"] 
 ```
 

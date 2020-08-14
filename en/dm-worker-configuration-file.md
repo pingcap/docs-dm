@@ -25,9 +25,9 @@ worker-addr = ":8262"
 advertise-addr = "127.0.0.1:8262"
 join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
 
-ssl-ca: "/path/to/ca.pem"
-ssl-cert: "/path/to/cert.pem"
-ssl-key: "/path/to/key.pem"
+ssl-ca = "/path/to/ca.pem"
+ssl-cert = "/path/to/cert.pem"
+ssl-key = "/path/to/key.pem"
 cert-allowed-cn = ["dm"] 
 ```
 
