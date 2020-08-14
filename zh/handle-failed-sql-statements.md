@@ -67,10 +67,11 @@ Global Flags:
 
 + `replace`：替代错误的 DDL 语句
 
-+ `revert`：重置该错误先前的 skip/replace 操作
++ `revert`：重置该错误先前的 skip/replace 操作, 仅在先前的操作没有最终生效前执行
 
 + `binlog-pos`：
     - flag 参数，string，`--binlog-pos`；
+    - 若不指定，DM 会自动处理当前出错的 SQL 语句
     - 在指定时表示操作将在 `binlog-pos` 与 binlog event 的 position 匹配时生效，格式为 `binlog-filename:binlog-pos`，如 `mysql-bin|000001.000003:3270`。
     - 在同步执行出错后，binlog position 可直接从 `query-status` 返回的 `startLocation` 中的 `position` 获得。
 
@@ -147,6 +148,7 @@ ERROR 8200 (HY000): Unsupported modify column: can't change decimal column preci
     » query-status test
     ```
 
+    <details><summary> 执行结果 </summary>
     ```
     {
         "result": true,
@@ -169,7 +171,17 @@ ERROR 8200 (HY000): Unsupported modify column: can't change decimal column preci
                         "result": null,
                         "unresolvedDDLLockID": "",
                         "sync": {
-                            ...
+                            "totalEvents": "4",
+                            "totalTps": "0",
+                            "recentTps": "0",
+                            "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                            "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
+                            "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                            "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
+                            "blockingDDLs": [
+                            ],
+                            "unresolvedGroups": [
+                            ],
                             "synced": true,
                             "binlogType": "remote"
                         }
@@ -179,6 +191,8 @@ ERROR 8200 (HY000): Unsupported modify column: can't change decimal column preci
         ]
     }
     ```
+    </details>
+
 
     可以看到任务运行正常，错误的 DDL 被跳过。
 
@@ -313,6 +327,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
     » query-status test
     ```
 
+    <details><summary> 执行结果 </summary>
     ```
     {
         "result": true,
@@ -335,7 +350,17 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
                         "result": null,
                         "unresolvedDDLLockID": "",
                         "sync": {
-                            ...
+                            "totalEvents": "4",
+                            "totalTps": "0",
+                            "recentTps": "0",
+                            "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                            "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
+                            "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                            "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
+                            "blockingDDLs": [
+                            ],
+                            "unresolvedGroups": [
+                            ],
                             "synced": true,
                             "binlogType": "remote"
                         }
@@ -359,7 +384,17 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
                         "result": null,
                         "unresolvedDDLLockID": "",
                         "sync": {
-                            ...
+                            "totalEvents": "4",
+                            "totalTps": "0",
+                            "recentTps": "0",
+                            "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                            "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
+                            "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                            "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
+                            "blockingDDLs": [
+                            ],
+                            "unresolvedGroups": [
+                            ],
                             "synced": true,
                             "binlogType": "remote"
                         }
@@ -369,6 +404,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
         ]
     }
     ```
+    </details>
 
     可以看到任务运行正常，无错误信息。四条 DDL 全部被跳过。
 
@@ -445,6 +481,7 @@ ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
     » query-status test
     ```
 
+    <details><summary> 执行结果 </summary>
     ```
     {
         "result": true,
@@ -467,7 +504,17 @@ ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
                         "result": null,
                         "unresolvedDDLLockID": "",
                         "sync": {
-                            ...
+                            "totalEvents": "4",
+                            "totalTps": "0",
+                            "recentTps": "0",
+                            "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                            "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
+                            "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                            "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
+                            "blockingDDLs": [
+                            ],
+                            "unresolvedGroups": [
+                            ],
                             "synced": true,
                             "binlogType": "remote"
                         }
@@ -477,6 +524,7 @@ ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
         ]
     }
     ```
+    </details>
 
     可以看到任务运行正常，错误的 DDL 已被替换且执行成功。
 
@@ -642,6 +690,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
     » query-status test
     ```
 
+    <details><summary> 执行结果 </summary>
     ```
     {
         "result": true,
@@ -664,7 +713,17 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
                         "result": null,
                         "unresolvedDDLLockID": "",
                         "sync": {
-                            ...
+                            "totalEvents": "4",
+                            "totalTps": "0",
+                            "recentTps": "0",
+                            "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                            "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
+                            "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                            "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
+                            "blockingDDLs": [
+                            ],
+                            "unresolvedGroups": [
+                            ],
                             "unresolvedGroups": [
                             ],
                             "synced": true,
@@ -690,7 +749,17 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
                         "result": null,
                         "unresolvedDDLLockID": "",
                         "sync": {
-                            ...
+                            "totalEvents": "4",
+                            "totalTps": "0",
+                            "recentTps": "0",
+                            "masterBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                            "masterBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-10",
+                            "syncerBinlog": "(DESKTOP-T561TSO-bin.000001, 2388)",
+                            "syncerBinlogGtid": "143bdef3-dd4a-11ea-8b00-00155de45f57:1-4",
+                            "blockingDDLs": [
+                            ],
+                            "unresolvedGroups": [
+                            ],
                             "unresolvedGroups": [
                             ],
                             "synced": try,
@@ -702,5 +771,6 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
         ]
     }
     ```
+    </details>
 
     可以看到任务运行正常，无错误信息。四条 DDL 全部被替换。
