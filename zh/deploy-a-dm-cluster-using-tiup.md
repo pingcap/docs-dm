@@ -104,7 +104,7 @@ alertmanager_servers:
 >
 > - 更多参数说明，请参考 [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml)、[worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml) 
 
-## 第 4 步：执行部署命令
+## 第 3 步：执行部署命令
 
 > **注意：**
 >
@@ -130,7 +130,7 @@ tiup dm deploy dm-test v2.0.0 ./topology.yaml --user root [-p] [-i /home/root/.s
 
 预期日志结尾输出会有 ```Deployed cluster `dm-test` successfully``` 关键词，表示部署成功。
 
-## 第 5 步：查看 TiUP 管理的集群情况
+## 第 4 步：查看 TiUP 管理的集群情况
 
 {{< copyable "shell-regular" >}}
 
@@ -146,7 +146,7 @@ Name  User  Version  Path                                  PrivateKey
 dm-test  tidb  v2.0.0  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/storage/dm/clusters/dm-test/ssh/id_rsa
 ```
 
-## 第 6 步：检查部署的 DM 集群情况
+## 第 5 步：检查部署的 DM 集群情况
 
 例如，执行如下命令检查 `dm-test` 集群情况：
 
@@ -158,7 +158,7 @@ tiup dm display dm-test
 
 预期输出包括 `dm-test` 集群中实例 ID、角色、主机、监听端口和状态（由于还未启动，所以状态为 Down/inactive）、目录信息。
 
-## 第 7 步：启动集群
+## 第 6 步：启动集群
 
 {{< copyable "shell-regular" >}}
 
@@ -168,7 +168,7 @@ tiup dm start dm-test
 
 预期结果输出 ```Started cluster `dm-test` successfully``` 标志启动成功。
 
-## 第 8 步：验证集群运行状态
+## 第 7 步：验证集群运行状态
 
 - 通过 TiUP 检查集群状态
 

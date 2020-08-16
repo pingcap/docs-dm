@@ -21,7 +21,7 @@
 + 部署使用
   - [软硬件要求](hardware-and-software-requirements.md)
   + 部署 DM 集群
-    - [使用 TiUp](deploy-a-dm-cluster-using-tiup.md)
+    - [使用 TiUP](deploy-a-dm-cluster-using-tiup.md)
     - [使用 DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
   + [使用 DM 同步数据](replicate-data-using-dm.md)
