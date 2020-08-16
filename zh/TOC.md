@@ -32,6 +32,7 @@
     - [1.0.x 到 2.0.x 手动升级](manually-upgrade-dm-1.0-to-2.0.md)
     - [1.0.x 版本间升级](upgrade-dm-1.0.md)
   - [集群操作](cluster-operations.md)
+  - [tiup-dm 部署运维生产集群](tiup-dm.md)
   + 任务管理
     - [dmctl 简介](dmctl-introduction.md)
     - [管理上游数据源](manage-source.md)
