@@ -1,5 +1,6 @@
 ---
 title: 使用 TiUP 部署 DM 集群
+summary: 学习如何使用 TiUP DM 组件来部署和运维 TiDB Data Migration 工具。
 ---
 
 # 使用 TiUP 部署 DM 集群
