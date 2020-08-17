@@ -18,6 +18,32 @@ DM 支持在线上执行分库分表的 DDL 语句（通称 Sharding DDL），�
 
 因此，需要提供一种新的“乐观协调”模式，在一个分表上执行的 DDL，自动修改成兼容其他分表的语句后，立即同步到下游，不会阻挡任何分表执行的 DML 的同步。
 
+## 使用限制
+
+使用“乐观协调”模式有一定的风险，需要严格遵照以下方针：
+
+- 执行每个批次的 DDL 前和后，要确保每个分表的结构达成一致。
+- 进行灰度 DDL 时，只集中在一个分表上测试。
+- 灰度完成后，在其他分表上尽量以最简单直接的 DDL 迁移到最终的 schema，而不要重放灰度测试中对或错的每一步。
+    - 例如：在分表执行过 `ADD COLUMN A INT; DROP COLUMN A; ADD COLUMN A FLOAT;`，在其他分表直接执行 `ADD COLUMN A FLOAT` 即可，不需要三条 DDL 都执行一遍。
+- 执行 DDL 时要注意观察 DM 同步状态。当同步报错时，需要判断这个批次的 DDL 是否会造成数据不一致。
+
+“乐观协调”模式暂不支持以下语句：
+
+- `ALTER TABLE table_name ADD COLUMN column_name datatype NOT NULL`（添加无默认值的 not null 的列）。
+- `ALTER TABLE table_name ADD COLUMN column_name datetime DEFAULT NOW()`（增加的列默认值不固定）。
+- `ALTER TABLE table_name RENAME COLUMN column_1 TO column_2;`（重命名列）。
+- `ALTER TABLE table_name RENAME INDEX index_1 TO index_2;`（重命名索引）。
+- 在一个分表上率先执行多个索引的添加或删除操作。
+
+此外，不论是使用“乐观协调”或“悲观协调”，DM 仍是有以下限制：
+
+- 增量同步任务需要确保开始同步的 binlog position 对应的各分表的表结构必须一致。
+- 进入 sharding group 的新表必须与其他成员的表结构一致（正在执行一个 DDL 批次时禁止 `CREATE/RENAME TABLE`）。
+- 不支持 `DROP TABLE` / `DROP DATABASE`。
+- TiDB 不支持的 DDL 语句在 DM 也不支持。
+- 新增列的默认值不能包含 `current_timestamp`、`rand()`、`uuid()` 等，否则会造成上下游数据不一致。
+
 ## 原理
 
 在“乐观协调”模式下，DM-worker 接收到来自上游的 DDL 后，会把更新后的表结构转送给 DM-master。DM-worker 会追踪各分表当前的表结构，DM-master 合并成可兼容来自每个分表 DML 的合成结构，然后把与此对应的 DDL 同步到下游；对于 DML 会直接同步到下游。
@@ -145,24 +171,6 @@ ALTER TABLE `tbl00` ADD COLUMN `Age` INT DEFAULT -1;
     - 其他同名异构的情况。
 - 在分表上执行对数据具有破坏性的 DDL，然后尝试回滚，例：
     - 刪除一列 X，之后又把 X 加回來。
-
-### 使用限制
-
-从上面的例子中可以看出，使用“乐观协调”模式有一定的风险，需要严格遵照以下方针：
-
-- 执行每个批次的 DDL 前和后，要确保每个分表的结构达成一致。
-- 进行灰度 DDL 时，只集中在一个分表上测试。
-- 灰度完成后，在其他分表上尽量以最简单直接的 DDL 迁移到最终的 schema，而不要重放灰度测试中对或错的每一步。
-    - 例如：在分表执行过 `ADD COLUMN A INT; DROP COLUMN A; ADD COLUMN A FLOAT;`，在其他分表直接执行 `ADD COLUMN A FLOAT` 即可，不需要三条 DDL 都执行一遍。
-- 执行 DDL 时要注意观察 DM 同步状态。当同步报错时，需要判断这个批次的 DDL 是否会造成数据不一致。
-
-此外，不论是使用“乐观协调”或“悲观协调”，DM 仍是有以下限制：
-
-- 增量同步任务需要确保开始同步的 binlog position 对应的各分表的表结构必须一致。
-- 进入 sharding group 的新表必须与其他成员的表结构一致（正在执行一个 DDL 批次时禁止 `CREATE/RENAME TABLE`）。
-- 不支持 `DROP TABLE` / `DROP DATABASE`。
-- TiDB 不支持的 DDL 语句在 DM 也不支持。
-- 新增列的默认值不能包含 `current_timestamp`、`rand()`、`uuid()` 等，否则会造成上下游数据不一致。
 
 ## 乐观协调模式的配置
 
