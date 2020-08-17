@@ -32,9 +32,6 @@ shard-mode: "pessimistic"       # 如果为分库分表合并任务则需要配�
 ignore-checking-items: []       # 忽略的检测项，可包含 "all"、"dump_privilege"、"replication_privilege"、"version"、"binlog_enable"、"binlog_format"、"binlog_row_image"、"table_schema"、"schema_of_shard_tables"、"auto_increment_ID"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
 remove-meta: false              # 是否在任务同步开始前移除该任务名对应的 `meta`（`checkpoint` 和 `onlineddl` 等）。
-enable-heartbeat: false         # 若开启 `heartbeat` 功能，DM 会定时更新上游 MySQL heartbeat table，用于估算同步延迟
-heartbeat-update-interval: 1    # DM 更新上游 MySQL heartbeat table 的间隔
-heartbeat-report-interval: 10   # DM 估算延迟 lag 的间隔
 timezone: "Asia/Shanghai"       # 时区
 case-sensitive: false           # schema/table 是否大小写敏感
 online-ddl-scheme: "gh-ost"     # 目前仅支持 "gh-ost" 、"pt"
