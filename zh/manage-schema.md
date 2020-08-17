@@ -1,15 +1,15 @@
 ---
-title: 管理迁移中 table 的表结构
-summary: 了解如何管理通过 DM 迁移的 table 的表结构。
+title: 管理迁移中表的表结构
+summary: 了解如何管理待迁移表在 DM 内部的表结构。
 ---
 
-# 管理迁移中 table 的表结构
+# 管理迁移中表的表结构
 
-本文介绍如何使用 [dmctl](dmctl-introduction.md) 组件来管理通过 DM 迁移的 table 的表结构。
+本文介绍如何使用 [dmctl](dmctl-introduction.md) 组件来管理通过 DM 迁移的表在 DM 内部的表结构。
 
 ## 原理介绍
 
-在使用 DM 迁移 table 时，DM 对于表结构主要包含以下相关处理。
+在使用 DM 迁移数据表时，DM 对于表结构主要包含以下相关处理。
 
 对于全量导出与导入，DM 直接导出当前时刻上游的表结构到 SQL 格式的文件中，并将该表结构直接应用到下游。
 
@@ -70,10 +70,10 @@ Global Flags:
     - 指定任务名称或任务文件路径
 + `-d`:
     - 必选
-    - 指定 table 所属的上游 database 名
+    - 指定数据表所属的上游数据库名
 + `-t`:
     - 必选
-    - 指定 table 对应的上游 table 名
+    - 指定数据表对应的上游表名
 + `schema-file`:
     - `set` 操作时必选，其他操作不需指定
     - 将被设置的表结构文件，文件内容应为一个合法的 `CREATE TABLE` 语句
