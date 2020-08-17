@@ -44,6 +44,6 @@ cert-allowed-cn = ["dm"]
 | `advertise-addr` | Specifies the address that DM-worker advertises to the outside world. |
 | `join` | Corresponds to one or more [`master-addr`s](dm-master-configuration-file.md#global-configuration) in the DM-master configuration file. |
 | `ssl-ca` | Path of file that contains list of trusted SSL CAs for DM-worker to connect with other components. |
-| `ssl-cert` | Path of file that contains X509 certificate in PEM format for DM-worker to connect with other components. |
+| `ssl-cert` | The path of the file that contains X509 certificate in PEM format for DM-worker to connect with other components. |
 | `ssl-key` | The path of the file that contains X509 key in PEM format for DM-worker to connect with other components. |
 | `cert-allowed-cn` | Common Name list. |
