@@ -5,7 +5,7 @@ summary: 了解如何管理通过 DM 迁移的 table 的表结构。
 
 # 管理迁移中 table 的表结构
 
-本文介绍如何使用 [dmct](dmctl-introduction.md) 组件来管理通过 DM 迁移的 table 的表结构。
+本文介绍如何使用 [dmctl](dmctl-introduction.md) 组件来管理通过 DM 迁移的 table 的表结构。
 
 ## 原理介绍
 
