@@ -4,7 +4,7 @@ summary: Learn how to upgrade a TiDB DM cluster from a lower 1.0.x version to a 
 aliases: ['/docs/tidb-data-migration/dev/dm-upgrade/','/tidb-data-migration/dev/dm-upgrade']
 ---
 
-# Upgrade Data Migration in 1.0.x
+# Upgrade TiDB Data Migration Between 1.0.x Versions
 
 This document introduces how to upgrade your Data Migration (DM) in 1.0.x version to an incompatible version.
 
