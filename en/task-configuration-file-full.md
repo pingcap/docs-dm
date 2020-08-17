@@ -46,6 +46,10 @@ target-database:                # Configuration of the downstream database insta
     sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE"
     tidb_skip_utf8_check: 1
     tidb_constraint_check_in_place: 0
+  security:                       # The TLS configuration of the downstream TiDB
+    ssl-ca: "/path/to/ca.pem"
+    ssl-cert: "/path/to/cert.pem"
+    ssl-key: "/path/to/key.pem"
 
 
 ## ******** Feature configuration set **********
