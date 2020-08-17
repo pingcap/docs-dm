@@ -36,15 +36,15 @@ Assume that the upstream schemas are as follows:
     | store_01 | sale_01, sale_02 |
     | store_02 | sale_01, sale_02 |
 
-## Migration requirements scenarios
+## Migration requirements
 
-1. Merge tables with the same name. For example, merge the `user`.`information` table of three upstream instances to the downstream `user`.`information` table in TiDB.
-2. Merge tables with the different names. For example, merge the `user`.`log_{north|south|east}` table of three upstream instances to the downstream `user`.`log_{north|south|east}` table in TiDB.
-3. Merge sharded tables. For example, merge the `store_{01|02}`.`sale_{01|02}` table of three upstream instances to the downstream `store`.`sale` table in TiDB.
-4. Filter delete operations. For example, filter out all the deletion operations in the `user`.`log_{north|south|east}` table of three upstream instances.
-5. Filter delete operations. For example, filter out all the deletion operations in the `user`.`information` table of three upstream instances.
-6. Filter delete operations. For example, filter out all the deletion operations in the `store_{01|02}`.`sale_{01|02}` table of three upstream instances.
-7. Use wildcards to filter specific tables. For example, filter out the `user`.`log_bak` table of three upstream instances using wildcard `user`.`log_*`.
+1. Merge tables with the same name. For example, merge the `user`.`information` tables of three upstream instances to the downstream `user`.`information` table in TiDB.
+2. Merge tables with different names. For example, merge the `user`.`log_{north|south|east}` tables of three upstream instances to the downstream `user`.`log_{north|south|east}` table in TiDB.
+3. Merge sharded tables. For example, merge the `store_{01|02}`.`sale_{01|02}` tables of three upstream instances to the downstream `store`.`sale` table in TiDB.
+4. Filter delete operations. For example, filter out all the delete operations in the `user`.`log_{north|south|east}` table of three upstream instances.
+5. Filter delete operations. For example, filter out all the delete operations in the `user`.`information` table of three upstream instances.
+6. Filter delete operations. For example, filter out all the delete operations in the `store_{01|02}`.`sale_{01|02}` table of three upstream instances.
+7. Use wildcards to filter specific tables. For example, filter out the `user`.`log_bak` tables of three upstream instances using wildcard `user`.`log_*`.
 8. Troubleshoot primary key conflicts. Because the `store_{01|02}`.`sale_{01|02}` tables have auto-increment primary keys of the `bigint` type, the conflict occurs when these tables are merged into TiDB. The following text will show you solutions to resolve and avoid the conflict.
 
 ## Downstream instances
@@ -96,7 +96,7 @@ Assume that the downstream schema after migration is as follows:
 
     > **Note:**
     >
-    > The migration Requirements #4 and #5 indicate that all the deletion operations in the `user` schema are filtered out, so a schema level filtering rule is configured here. And the deletion operations of tables participating in the future migration after the `user` schema will also be filtered out.
+    > The migration Requirements #4 and #5 indicate that all the deletion operations in the `user` schema are filtered out, so a schema level filtering rule is configured here. And the deletion operations of tables in the `user` schema participating in the future migration will also be filtered out.
 
 - To satisfy the migration Requirement #6, configure the [binlog event filter rule](key-features.md#binlog-event-filter) as follows:
 
