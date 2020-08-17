@@ -33,13 +33,14 @@ help operate-source
 ```
 
 ```
-create/update/stop upstream MySQL/MariaDB source
+create/update/stop/show upstream MySQL/MariaDB source
 
 Usage:
-  dmctl operate-source <operate-type> <config-file> [config-file ...] [flags]
+  dmctl operate-source <operate-type> [config-file ...] [--print-sample-config] [flags]
 
 Flags:
-  -h, --help   help for operate-source
+  -h, --help                  help for operate-source
+  -p, --print-sample-config   print sample config file of source
 
 Global Flags:
   -s, --source strings   MySQL Source ID
@@ -63,10 +64,13 @@ operate-source create ./source.yaml
 
 + `stop`：停止一个或多个上游的数据库源。停止多个数据源失败时，可能有部分数据源已成功停止
 
++ `show`：显示已添加的数据源以及对应的 DM-worker
+
 + `config-file`：
-    - 必选
     - 指定 `source.yaml` 的文件路径
     - 可传递多个文件路径
+    
++ `--print-sample-config`：打印示例配置文件。该参数会忽视其余参数
 
 ## 返回结果示例
 
