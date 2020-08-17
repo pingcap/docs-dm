@@ -34,7 +34,7 @@ Loader 读取 dumper 处理单元的数据文件，然后加载到下游 TiDB。
 
 ### Binlog replication/Syncer
 
-Binlog replication/Syncer 读取 relay log 处理单元的 binlog event，将这些 event 转化为 SQL 语句，再将这些 SQL 语句应用到下游 TiDB。
+Binlog replication/Syncer 读取上游 MySQL/MariaDB 的 binlog event 或 relay log 处理单元的 binlog event，将这些 event 转化为 SQL 语句，再将这些 SQL 语句应用到下游 TiDB。
 
 ## DM-worker 所需权限
 
