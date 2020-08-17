@@ -89,6 +89,6 @@ mysql-instances:
 
 1. 修改任务配置文件，将 `remove-meta` 设置为 `false`
 
-2. 通过 `stop-task` 命令停止任务：`stop-task <task-name>`
+2. 通过 `stop-task` 命令停止任务：`stop-task <task-name | task-file>`
 
 3. 通过 `start-task` 命令启动任务：`start-task <config-file>`
