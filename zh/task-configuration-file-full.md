@@ -1,6 +1,6 @@
 ---
 title: DM 任务完整配置文件介绍
-aliases: ['/docs-cn/tidb-data-migration/dev/task-configuration-file-full/']
+aliases: ['/docs-cn/tidb-data-migration/dev/task-configuration-file-full/','/zh/tidb-data-migration/dev/dm-portal']
 ---
 
 # DM 任务完整配置文件介绍
@@ -50,6 +50,10 @@ target-database:                # 下游数据库实例配置
     sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE"
     tidb_skip_utf8_check: 1
     tidb_constraint_check_in_place: 0
+  security:                       # 下游 TiDB TLS 相关配置                             
+    ssl-ca: "/path/to/ca.pem"
+    ssl-cert: "/path/to/cert.pem"
+    ssl-key: "/path/to/key.pem"
 
 ## ******** 功能配置集 **********
 

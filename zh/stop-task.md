@@ -18,7 +18,7 @@ help stop-task
 stop a specified task
 
 Usage:
- dmctl stop-task [-s source ...] <task-name> [flags]
+ dmctl stop-task [-s source ...] <task-name | task-file> [flags]
 
 Flags:
  -h, --help   help for stop-task
@@ -41,9 +41,9 @@ stop-task [-s "mysql-replica-01"]  task-name
     - 可选
     - 指定在特定的一个 MySQL 源上停止数据同步任务的子任务
     - 如果设置，则只停止该任务在指定 MySQL 源上的子任务
-- `task-name`：
+- `task-name | task-file`：
     - 必选
-    - 指定任务名称
+    - 指定任务名称或任务文件路径
 
 ## 返回结果示例
 
