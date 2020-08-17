@@ -44,6 +44,45 @@ DM 支持在线上执行分库分表的 DDL 语句（通称 Sharding DDL），�
 - TiDB 不支持的 DDL 语句在 DM 也不支持。
 - 新增列的默认值不能包含 `current_timestamp`、`rand()`、`uuid()` 等，否则会造成上下游数据不一致。
 
+## 风险 
+
+使用乐观模式同步时，由于 DDL 会即时同步到下游，若使用不当，可能导致上下游数据不一致。
+
+### 例子
+
+例如以下三个分表合并同步到 TiDB：
+
+![optimistic-ddl-fail-example-1](/media/optimistic-ddl-fail-example-1.png)
+
+在 `tbl01` 新增一列 `Age`，默认值定为 `0`：
+
+```SQL
+ALTER TABLE `tbl01` ADD COLUMN `Age` INT DEFAULT 0;
+```
+
+![optimistic-ddl-fail-example-2](/media/optimistic-ddl-fail-example-2.png)
+
+ 在 `tbl00` 新增一列 `Age`，但默认值定为 `-1`：
+
+```SQL 
+ALTER TABLE `tbl00` ADD COLUMN `Age` INT DEFAULT -1;
+```
+
+![optimistic-ddl-fail-example-3](/media/optimistic-ddl-fail-example-3.png)
+
+此时所有来自 `tbl00` 的 `Age` 都不一致了。这是由于 `DEFAULT 0` 和 `DEFAULT -1` 互不兼容。虽然 DM 遇到这种情况会报错，但上下游不一致的问题就需要手动去解决。
+
+### 使数据不一致的操作
+
+- 各分表的表结构不兼容，例：
+    - 两个分表各自添加相同名称的列，但其类型不同。
+    - 两个分表各自添加相同名称的列，但其默认值不同。
+    - 两个分表各自添加相同名称的生成列，但其生成表达式不同。
+    - 两个分表各自添加相同名称的索引，但其键组合不同。
+    - 其他同名异构的情况。
+- 在分表上执行对数据具有破坏性的 DDL，然后尝试回滚，例：
+    - 刪除一列 X，之后又把 X 加回來。
+
 ## 原理
 
 在“乐观协调”模式下，DM-worker 接收到来自上游的 DDL 后，会把更新后的表结构转送给 DM-master。DM-worker 会追踪各分表当前的表结构，DM-master 合并成可兼容来自每个分表 DML 的合成结构，然后把与此对应的 DDL 同步到下游；对于 DML 会直接同步到下游。
@@ -132,45 +171,6 @@ ALTER TABLE `tbl` DROP COLUMN `Name`;
 ```
 
 ![optimistic-ddl-example-10](/media/optimistic-ddl-example-10.png)
-
-## 风险 
-
-使用乐观模式同步时，由于 DDL 会即时同步到下游，若使用不当，可能导致上下游数据不一致。
-
-### 例子
-
-例如以下三个分表合并同步到 TiDB：
-
-![optimistic-ddl-fail-example-1](/media/optimistic-ddl-fail-example-1.png)
-
-在 `tbl01` 新增一列 `Age`，默认值定为 `0`：
-
-```SQL
-ALTER TABLE `tbl01` ADD COLUMN `Age` INT DEFAULT 0;
-```
-
-![optimistic-ddl-fail-example-2](/media/optimistic-ddl-fail-example-2.png)
-
- 在 `tbl00` 新增一列 `Age`，但默认值定为 `-1`：
-
-```SQL 
-ALTER TABLE `tbl00` ADD COLUMN `Age` INT DEFAULT -1;
-```
-
-![optimistic-ddl-fail-example-3](/media/optimistic-ddl-fail-example-3.png)
-
-此时所有来自 `tbl00` 的 `Age` 都不一致了。这是由于 `DEFAULT 0` 和 `DEFAULT -1` 互不兼容。虽然 DM 遇到这种情况会报错，但上下游不一致的问题就需要手动去解决。
-
-### 使数据不一致的操作
-
-- 各分表的表结构不兼容，例：
-    - 两个分表各自添加相同名称的列，但其类型不同。
-    - 两个分表各自添加相同名称的列，但其默认值不同。
-    - 两个分表各自添加相同名称的生成列，但其生成表达式不同。
-    - 两个分表各自添加相同名称的索引，但其键组合不同。
-    - 其他同名异构的情况。
-- 在分表上执行对数据具有破坏性的 DDL，然后尝试回滚，例：
-    - 刪除一列 X，之后又把 X 加回來。
 
 ## 乐观协调模式的配置
 
