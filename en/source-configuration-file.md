@@ -23,7 +23,7 @@ from:
   port: 3306
   user: "root"
   password: "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # The user password of the upstream database. It is recommended to use the password encrypted with dmctl. 
-  security:                       # The TLS config of the upstream database
+  security:                       # The TLS configuration of the upstream database
     ssl-ca: "/path/to/ca.pem"
     ssl-cert: "/path/to/cert.pem"
     ssl-key: "/path/to/key.pem"
