@@ -49,5 +49,5 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-master-slave-switch/'
     - `gtid-E` 包含 `gtid-S`
 5. 使用 `stop-task` 命令停止所有运行中的数据迁移任务。
 6. 使用 `operate-source stop` 命令从 DM 集群中移除原 MySQL 实例地址对应的 source 配置。
-7. 更新 source 配置文件中的 MySQL 实例地址并使用 `operate-source create` 将新的 source 配置重新加载到 DM 集群中 
+7. 更新 source 配置文件中的 MySQL 实例地址并使用 `operate-source create` 将新的 source 配置重新加载到 DM 集群中。
 8. 使用 `start-task` 命令重新启动数据迁移任务。
