@@ -26,7 +26,7 @@ help pause-task
 pause a specified running task
 
 Usage:
- dmctl pause-task [-s source ...] <task-name> [flags]
+ dmctl pause-task [-s source ...] <task-name | task-file> [flags]
 
 Flags:
  -h, --help   help for pause-task
@@ -49,9 +49,9 @@ pause-task [-s "mysql-replica-01"] task-name
     - 可选
     - 指定在特定的一个 MySQL 源上暂停数据同步任务的子任务
     - 如果设置，则只暂停该任务在指定 MySQL 源上的子任务
-- `task-name`：
+- `task-name| task-file`：
     - 必选
-    - 指定任务名称
+    - 指定任务名称或任务文件路径
 
 ## 返回结果示例
 
