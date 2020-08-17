@@ -54,7 +54,7 @@ This section introduces the configuration parameters of DM-master.
 | `advertise-peer-urls` | Specifies the peer URL that DM-master advertises to the outside world. The value of `advertise-peer-urls` is by default the same as that of `peer-urls`. |
 | `initial-cluster` | The value of `initial-cluster` is the combination of the `advertise-peer-urls` value of all DM-master nodes in the initial cluster. |
 | `join` | The value of `join` is the combination of the `advertise-peer-urls` value of the existed DM-master nodes in the cluster. If the DM-master node is newly added, replace `initial-cluster` with `join`. |
-| `ssl-ca` | Path of file that contains list of trusted SSL CAs for DM-master to connect with other components. |
+| `ssl-ca` | The path of the file that contains list of trusted SSL CAs for DM-master to connect with other components. |
 | `ssl-cert` | Path of file that contains X509 certificate in PEM format for DM-master to connect with other components. |
 | `ssl-key` | Path of file that contains X509 key in PEM format for DM-master to connect with other components. |
 | `cert-allowed-cn` | Common Name list. |
