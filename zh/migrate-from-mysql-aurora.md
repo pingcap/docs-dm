@@ -8,6 +8,21 @@ aliases: ['/docs-cn/tidb-data-migration/dev/migrate-from-mysql-aurora/']
 
 本文以 [Amazon Aurora MySQL](https://aws.amazon.com/cn/rds/aurora/details/mysql-details/) 为例介绍如何使用 DM 从 MySQL 兼容的数据库迁移数据到 TiDB。
 
+本文使用的示例 Aurora 集群信息如下：
+
+| 集群 | 终端节点 | 端口 | 角色 | 版本 |
+|:-------- |:--- | :--- | :--- |:---|
+| Aurora-1 | test-dm-2-0.cluster-czrtqco96yc6.us-east-2.rds.amazonaws.com | 3306 | 写入器 | Aurora (MySQL)-5.7.12 |
+| Aurora-1 | test-dm-2-0.cluster-ro-czrtqco96yc6.us-east-2.rds.amazonaws.com | 3306 | 读取器 | Aurora (MySQL)-5.7.12 |
+| Aurora-2 | test-dm-2-0-2.cluster-czrtqco96yc6.us-east-2.rds.amazonaws.com | 3306 | 写入器 | Aurora (MySQL)-5.7.12 |
+| Aurora-2 | test-dm-2-0-2.cluster-ro-czrtqco96yc6.us-east-2.rds.amazonaws.com | 3306 | 读取器 | Aurora (MySQL)-5.7.12 |
+
+本文使用的示例 TiDB 集群部署在 [Cloud TiDB](https://tidbcloud.com/) 上，信息如下：
+
+| 节点 | 端口 | 版本 |
+|:--- | :--- | :--- |
+| tidb.6657c286.23110bc6.us-east-1.prod.aws.tidbcloud.com | 4000 | v4.0.2 |
+
 ## 第 1 步：在 Aurora 集群中启用 binlog
 
 假设有两个 Aurora 集群需要迁移数据到 TiDB，其集群信息如下，其中 Aurora-1 包含一个独立的读取器节点。
