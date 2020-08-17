@@ -56,5 +56,5 @@ This section introduces the configuration parameters of DM-master.
 | `join` | The value of `join` is the combination of the `advertise-peer-urls` value of the existed DM-master nodes in the cluster. If the DM-master node is newly added, replace `initial-cluster` with `join`. |
 | `ssl-ca` | The path of the file that contains list of trusted SSL CAs for DM-master to connect with other components. |
 | `ssl-cert` | Path of file that contains X509 certificate in PEM format for DM-master to connect with other components. |
-| `ssl-key` | Path of file that contains X509 key in PEM format for DM-master to connect with other components. |
+| `ssl-key` | The path of the file that contains X509 key in PEM format for DM-master to connect with other components. |
 | `cert-allowed-cn` | Common Name list. |
