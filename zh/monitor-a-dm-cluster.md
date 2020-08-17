@@ -38,6 +38,10 @@ overview 下包含运行当前选定 task 的所有 DM-worker instance 的部分
 
 ### Relay log
 
+> **注意：**
+>
+> 当前 DM v2.0 版本暂不支持开启 relay log 功能。
+
 | metric 名称 | 说明 | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
 | storage capacity | relay log 占有的磁盘的总容量  | N/A | N/A |
