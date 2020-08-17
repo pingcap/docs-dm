@@ -11,7 +11,6 @@
     - [Table routing](key-features.md#table-routing)
     - [Block & Allow Lists](key-features.md#block--allow-table-lists)
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
-    - [同步延迟监控](key-features.md#同步延迟监控)
     - [Online-ddl-scheme](feature-online-ddl-scheme.md)
     - [分库分表合并同步](feature-shard-merge.md)
 + [应用场景](scenarios.md)
