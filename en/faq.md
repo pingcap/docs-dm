@@ -32,7 +32,7 @@ When you encounter a DDL statement unsupported by TiDB, you need to manually han
 
 ### Reset the data migration task when the relay log is in the normal state
 
-If the relay log required by the data migration task is normal, you can use the following steps to restore the data migration task:
+If the relay log required by the data migration task is normal, you can use the following steps to reset the data migration task:
 
 1. Use `stop-task` to stop abnormal data migration tasks.
 
@@ -56,7 +56,7 @@ If the relay log required by the migration task is abnormal in the DM-worker, bu
 3. Copy the normal binlog file from the upstream MySQL to replace the corresponding file in the [relay log directory](relay-log.md#directory-structure) of DM-worker.
 
     - If the cluster is deployed using DM-Ansible, the relay log is in the `<deploy_dir>/relay_log` directory.
-    - If the cluster is manually deployed using the binary, the relay log is in the directory set of the `relay-dir` parameter.
+    - If the cluster is manually deployed using the binary, the relay log is in the directory set by the `relay-dir` parameter.
 
 4. Modify the information of `relay.meta` in the relay log directory of DM-worker to the information corresponding to the next binlog file.
 
@@ -70,13 +70,13 @@ If the relay log required by the migration task is abnormal in the DM-worker, bu
 
 #### The required relay log has been purged in upstream MySQL
 
-If the relay log required by the migration task is abnormal in the DM-worker, and has been purged in the upstream MySQL, you can use the following steps to restore the data migration task:
+If the relay log required by the migration task is abnormal in the DM-worker, and has been purged in the upstream MySQL, you can use the following steps to reset the data migration task:
 
 1. Use the `stop-task` command to stop all the migration tasks that are currently running.
 
 2. Use DM-Ansible to [stop the entire DM cluster](deploy-a-dm-cluster-using-ansible.md#step-10-stop-the-dm-cluster).
 
-3. Manually clean up the relay log directory of the DM-worker corresponding to the MySQL master whose binlog is reset.
+3. Manually clean up the relay log directory of the DM-worker corresponding to the MySQL cluster whose binlog is reset.
 
     - If the cluster is deployed using DM-Ansible, the relay log is in the `<deploy_dir>/relay_log` directory.
     - If the cluster is manually deployed using the binary, the relay log is in the directory set of the `relay-dir` parameter.
