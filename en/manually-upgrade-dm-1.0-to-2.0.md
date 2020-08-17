@@ -1,21 +1,21 @@
 ---
-title: Manually Upgrade TiDB Data Migration from 1.0.x to 2.0.x
-summary: Learn how to manually upgrade TiDB data migration from 1.0.x to 2.0.x.
+title: Manually Upgrade TiDB Data Migration from v1.0.x to v2.0.x
+summary: Learn how to manually upgrade TiDB data migration from v1.0.x to v2.0.x.
 ---
 
-# Manually Upgrade TiDB Data Migration from 1.0.x to 2.0.x
+# Manually Upgrade TiDB Data Migration from v1.0.x to v2.0.x
 
-This document introduces how to manually upgrade TiDB migration task from v1.0.x to v2.0.x. The main idea is to use the global checkpoint information in v1.0.x to start a new data replication task in the v2.0.x cluster.
+This document introduces how to manually upgrade the TiDB DM tool from v1.0.x to v2.0.x. The main idea is to use the global checkpoint information in v1.0.x to start a new data replication task in the v2.0.x cluster.
 
 > **Note:**
 >
-> - Currently, DM does not support upgrading from v1.0.x to v2.0.x when the data migration task is in the process of full export or full import.
-> - As the gRPC protocol used for interaction between the components of the DM cluster is renewed greatly, you need to make sure that the DM components (including dmctl) use the same version before and after the upgrade.
-> - Because the metadata storage of the DM cluster (such as checkpoint, shard DDL lock status and online DDL metadata, etc.) is renewed greatly, the metadata of v1.0.x cannot be reused automatically in v2.0.x. So you need to make sure the following requirements are satisfied before performing the upgrade operation:
+> - Currently, upgrading DM from v1.0.x to v2.0.x is not supported when the data migration task is in the process of full export or full import.
+> - As the gRPC protocol used for interaction between the components of the DM cluster is updated greatly, you need to make sure that the DM components (including dmctl) use the same version before and after the upgrade.
+> - Because the metadata storage of the DM cluster (such as checkpoint, shard DDL lock status and online DDL metadata, etc.) is updated greatly, the metadata of v1.0.x cannot be reused automatically in v2.0.x. So you need to make sure the following requirements are satisfied before performing the upgrade operation:
 >     - All data migration tasks are not in the process of shard DDL coordination.
 >     - All data migration tasks are not in the process of online DDL coordination.
 
-The steps for manual upgrade are as follow.
+The steps for manual upgrade are as follows.
 
 ## Step 1: Prepare v2.0.x configuration file
 
@@ -29,9 +29,9 @@ In v2.0.x, the [upstream database configuration file](source-configuration-file.
 >
 > If `enable-gtid` in the source configuration is enabled during the upgrade from v1.0.x to v2.0.x, you need to parse the binlog or relay log file to obtain the GTID sets corresponding to the binlog position.
 
-#### Upgrade from v1.0.x deployed by DM-Ansible
+#### Upgrade a v1.0.x cluster deployed by DM-Ansible
 
-Assume that v1.0.x is deployed by DM-Ansible, and the following `dm_worker_servers` configuration is in the `inventory.ini`:
+Assume that the v1.0.x DM cluster is deployed by DM-Ansible, and the following `dm_worker_servers` configuration is in the `inventory.ini` file:
 
 ```ini
 [dm_master_servers]
@@ -39,7 +39,7 @@ dm_worker1 ansible_host=172.16.10.72 server_id=101 source_id="mysql-replica-01" 
 dm_worker2 ansible_host=172.16.10.73 server_id=102 source_id="mysql-replica-02" mysql_host=172.16.10.82 mysql_user=root mysql_password='VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU=' mysql_port=3306
 ```
 
-Then you can convert, and obtain the following two source configuration files:
+Then you can convert it to the following two source configuration files:
 
 ```yaml
 # The source configuration corresponding to the original dm_worker1. For example, it is named as source1.yaml.
@@ -63,9 +63,9 @@ from:
   password: "VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU="   # Corresponds to the original `mysql_password`.
 ```
 
-#### Upgrade from v1.0.x deployed by Binary
+#### Upgrade a v1.0.x cluster deployed by binary
 
-Assume that v1.0.x is deployed by Binary, and the corresponding DM-worker configuration is as follow:
+Assume that the v1.0.x DM cluster is deployed by binary, and the corresponding DM-worker configuration is as follows:
 
 ```toml
 log-level = "info"
@@ -81,7 +81,7 @@ password = "VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU="
 port = 3306
 ```
 
-Then you can convert, and obtain the following source configuration file:
+Then you can convert it to the following source configuration file:
 
 ```yaml
 server-id: 101                                   # Corresponds to the original `server-id`.
@@ -105,15 +105,16 @@ Use TiUP to deploy a new v2.0.x cluster according to the required number of node
 ## Step 3：Stop the v1.0.x cluster
 
 If the original v1.0.x cluster is deployed by DM-Ansible, you need to use [DM-Ansible to stop the v1.0.x cluster](https://docs.pingcap.com/tidb-data-migration/stable/cluster-operations#stop-a-cluster).
-If the original v1.0.x cluster is deployed by Binary, you can stop the DM-worker and DM-master processes directly.
+
+If the original v1.0.x cluster is deployed by binary, you can stop the DM-worker and DM-master processes directly.
 
 ## Step 4: Upgrade data migration task
 
-1. Use the [`operate-source`](manage-source.md#load-the-data-source-configurations) command to load the upstream database source configuration that is obtained in the step 1 of [prepare v2.0.x configuration file](#step-1-prepare-v20x-configuration-file) into the v2.0.x cluster.
+1. Use the [`operate-source`](manage-source.md#load-the-data-source-configurations) command to load the upstream database source configuration from [step 1](#step-1-prepare-v20x-configuration-file) into the v2.0.x cluster.
 
-2. In the downstream of TiDB, obtain the corresponding global checkpoint information from the incremental checkpoint table of the v1.0.x data migration task.
+2. In the downstream TiDB cluster, obtain the corresponding global checkpoint information from the incremental checkpoint table of the v1.0.x data migration task.
 
-    - Assume that the v1.0.x data migration configuration does not specify `meta-schema` (or specify its value as the default `dm_meta`), and the corresponding task name is `task_v1`, the corresponding checkpoint information is in the ``` `dm_meta`.`task_v1_syncer_checkpoint` ``` table of the downstream TiDB 
+    - Assume that the v1.0.x data migration configuration does not specify `meta-schema` (or specify its value as the default `dm_meta`), and the corresponding task name is `task_v1`, the corresponding checkpoint information is in the ``` `dm_meta`.`task_v1_syncer_checkpoint` ``` table of the downstream TiDB.
     - Use the following SQL statements to obtain the global checkpoint information of all upstream database sources corresponding to the data migration task.
 
         ```sql
@@ -128,11 +129,11 @@ If the original v1.0.x cluster is deployed by Binary, you can stop the DM-worker
 
 3. Update the v1.0.x data migration task configuration file to start a new v2.0.x data migration task.
 
-    - If the data migration task configuration file of v1.0.x is `task_v1.yaml`, copy it as `task_v2.yaml`.
+    - If the data migration task configuration file of v1.0.x is `task_v1.yaml`, copy it and rename it to `task_v2.yaml`.
     - Make the following changes to `task_v2.yaml`:
-        - Modify `name` to a non-existent name, such as `task_v2`.
+        - Modify `name` to a new name, such as `task_v2`.
         - Change `task-mode` to `incremental`.
-        - Set the starting point of incremental migration for each source according to the global checkpoint information obtained in step 2. For example:
+        - Set the starting point of incremental replication for each source according to the global checkpoint information obtained in step 2. For example:
 
             ```yaml
             mysql-instances:
