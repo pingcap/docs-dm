@@ -50,7 +50,7 @@ overview 下包含运行当前选定 task 的所有 DM-worker/master instance/so
 | shard ddl error per minute | 每分钟内不同类型的 shard DDL 错误次数 | 发生 shard DDL 错误 | critical |
 | number of pending shard ddl | 未完成的 shard DDL 数目 | 存在未完成的 shard DDL 数目超过一小时 | critical |
 
-### task 状态
+### Task 状态
 
 | metric 名称 | 说明 | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
