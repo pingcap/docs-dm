@@ -184,7 +184,7 @@ dmctl --master-addr=127.0.0.1:8261 list-member
                             "http://127.0.0.1:8291"
                         ],
                         "clientURLs": [
-                            "http://0.0.0.0:8261"
+                            "http://127.0.0.1:8261"
                         ]
                     },
                     {
@@ -195,7 +195,7 @@ dmctl --master-addr=127.0.0.1:8261 list-member
                             "http://127.0.0.1:8292"
                         ],
                         "clientURLs": [
-                            "http://0.0.0.0:8361"
+                            "http://127.0.0.1:8361"
                         ]
                     },
                     {
@@ -206,7 +206,7 @@ dmctl --master-addr=127.0.0.1:8261 list-member
                             "http://127.0.0.1:8293"
                         ],
                         "clientURLs": [
-                            "http://0.0.0.0:8461"
+                            "http://127.0.0.1:8461"
                         ]
                     },
                 ]
