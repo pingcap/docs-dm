@@ -12,7 +12,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/monitor-a-dm-cluster/']
 
 在 Grafana dashboard 中，DM 默认名称为 `DM-task`。
 
-### overview
+### Overview
 
 overview 下包含运行当前选定 task 的所有 DM-worker/master instance/source 的部分监控指标。当前默认告警规则只针对于单个 DM-worker/master instance/source。
 
