@@ -132,7 +132,7 @@ target-database:
   host: "127.0.0.1"
   port: 4000
   user: "root"
-  password: "" # 如果密码不为空，也需要配置 dmctl 加密后的密码
+  password: "" # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
 
 mysql-instances:
   - source-id: "mysql-replica-01"

@@ -24,6 +24,11 @@ log-file = "dm-worker.log"
 worker-addr = ":8262"
 advertise-addr = "127.0.0.1:8262"
 join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
+
+ssl-ca = "/path/to/ca.pem"
+ssl-cert = "/path/to/cert.pem"
+ssl-key = "/path/to/key.pem"
+cert-allowed-cn = ["dm"] 
 ```
 
 ## Configuration parameters
@@ -38,3 +43,7 @@ join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
 | `worker-addr` | Specifies the address of DM-worker which provides services. You can omit the IP address and specify the port number only, such as ":8262". |
 | `advertise-addr` | Specifies the address that DM-worker advertises to the outside world. |
 | `join` | Corresponds to one or more [`master-addr`s](dm-master-configuration-file.md#global-configuration) in the DM-master configuration file. |
+| `ssl-ca` | The path of the file that contains list of trusted SSL CAs for DM-worker to connect with other components. |
+| `ssl-cert` | The path of the file that contains X509 certificate in PEM format for DM-worker to connect with other components. |
+| `ssl-key` | The path of the file that contains X509 key in PEM format for DM-worker to connect with other components. |
+| `cert-allowed-cn` | Common Name list. |
