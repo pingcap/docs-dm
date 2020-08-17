@@ -35,7 +35,7 @@ target-database:                # 下游数据库实例配置
   host: "192.168.0.1"
   port: 4000
   user: "root"
-  password: ""                  # 如果不为空则需经过 dmctl 加密
+  password: ""                  # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
 ```
 
 ## online-schema-change: gh-ost

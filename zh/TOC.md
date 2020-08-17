@@ -59,7 +59,6 @@
   + 架构
     - [DM 简介](overview.md)
     - [DM-worker 简介](dm-worker-intro.md)
-    - [DM Relay Log](relay-log.md)
   - [DM 命令行参数](command-line-flags.md)
   + 配置
     - [概述](config-overview.md)
