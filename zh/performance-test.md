@@ -118,7 +118,6 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
   ---
   name: test-all
   task-mode: all
-  enable-heartbeat: true
 
   # 使用实际测试环境中 TiDB 的信息配置
   target-database:
@@ -166,4 +165,4 @@ sysbench --test=oltp_insert --tables=4 --num-threads=32 --mysql-host=172.17.4.40
 
 #### 获取测试结果
 
-通过 `query-status` 命令观测 DM 的同步状态，通过 Grafana 观测 DM 的监控指标。主要包括同步延迟 `replicate lag`，单位时间内完成的 job 数量 `finished sqls jobs` 等，详细的监控指标说明参考[Binlog replication 监控指标](monitor-a-dm-cluster.md#binlog-replication)。
+通过 `query-status` 命令观测 DM 的同步状态，通过 Grafana 观测 DM 的监控指标。主要包括单位时间内完成的 job 数量 `finished sqls jobs` 等，详细的监控指标说明参考[Binlog replication 监控指标](monitor-a-dm-cluster.md#binlog-replication)。
