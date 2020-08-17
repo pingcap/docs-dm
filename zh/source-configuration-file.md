@@ -21,7 +21,11 @@ from:
   host: "127.0.0.1"
   port: 3306
   user: "root"
-  password: "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # 使用 dmctl 对上游数据库的用户密码加密之后的密码
+  password: "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # 推荐使用 dmctl 对上游数据库的用户密码加密之后的密码
+  security:                       # 上游数据库 TLS 相关配置                             
+    ssl-ca: "/path/to/ca.pem"
+    ssl-cert: "/path/to/cert.pem"
+    ssl-key: "/path/to/key.pem"
 ```
 
 ## 配置项说明
@@ -35,4 +39,5 @@ from:
 | `host` | 上游数据库的 host。|
 | `port` | 上游数据库的端口。|
 | `user` | 上游数据库使用的用户名。|
-| `password` | 上游数据库的用户密码。注意：需要使用 dmctl 加密后的密码。|
+| `password` | 上游数据库的用户密码。推荐使用 dmctl 加密后的密码。|
+| `security` | 上游数据库 TLS 相关配置。|

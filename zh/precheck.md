@@ -43,6 +43,8 @@ aliases: ['/docs-cn/tidb-data-migration/dev/precheck/']
     - TiDB 不支持外键
     - 字符集的兼容性不同，详见 [TiDB 支持的字符集](https://pingcap.com/docs-cn/dev/reference/sql/character-set/)
 
+    DM 还会检查上游表中是否存在主键或唯一键约束，在 v1.0.7 版本引入。
+
 + 上游 MySQL 多实例分库分表的一致性
 
     + 所有分表的表结构是否一致，检查内容包括：
