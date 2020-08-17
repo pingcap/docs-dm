@@ -26,7 +26,7 @@ overview 下包含运行当前选定 task 的所有 DM-worker/master instance/so
 | binlog file gap between master and syncer | 与上游 master 相比 binlog replication unit 落后的 binlog file 个数 | N/A | N/A |
 | shard lock resolving | 当前子任务是否正在等待 shard DDL 同步，大于 0 表示正在等待同步 | N/A | N/A |
 
-### operate error
+### Operate error
 
 | metric 名称 | 说明 | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
