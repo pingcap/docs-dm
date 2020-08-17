@@ -18,6 +18,10 @@ DM 支持在线上执行分库分表的 DDL 语句（通称 Sharding DDL），�
 
 因此，需要提供一种新的“乐观协调”模式，在一个分表上执行的 DDL，自动修改成兼容其他分表的语句后，立即同步到下游，不会阻挡任何分表执行的 DML 的同步。
 
+## 乐观协调模式的配置
+
+在任务的配置文件中指定 `shard-mode` 为 `optimistic` 则使用“乐观协调”模式，示例配置文件可以参考 [DM 任务完整配置文件介绍](task-configuration-file-full.md)。
+
 ## 使用限制
 
 使用“乐观协调”模式有一定的风险，需要严格遵照以下方针：
@@ -171,7 +175,3 @@ ALTER TABLE `tbl` DROP COLUMN `Name`;
 ```
 
 ![optimistic-ddl-example-10](/media/optimistic-ddl-example-10.png)
-
-## 乐观协调模式的配置
-
-在任务的配置文件中指定 `shard-mode` 为 `optimistic` 则使用“乐观协调”模式，示例配置文件可以参考 [DM 任务完整配置文件介绍](task-configuration-file-full.md)。
