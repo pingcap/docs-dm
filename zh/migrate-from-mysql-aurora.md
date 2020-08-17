@@ -6,7 +6,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/migrate-from-mysql-aurora/']
 
 # 从 MySQL 迁移数据 —— 以 Amazon Aurora MySQL 为例
 
-本文以 [Amazon Aurora MySQL](https://aws.amazon.com/cn/rds/aurora/details/mysql-details/) 为例介绍如何使用 DM 从 MySQL 协议数据库迁移数据到 TiDB。
+本文以 [Amazon Aurora MySQL](https://aws.amazon.com/cn/rds/aurora/details/mysql-details/) 为例介绍如何使用 DM 从 MySQL 兼容的数据库迁移数据到 TiDB。
 
 ## 第 1 步：在 Aurora 集群中启用 binlog
 
@@ -18,7 +18,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/migrate-from-mysql-aurora/']
 | Aurora-1 | pingcap-1-us-east-2a.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | 读取器 |
 | Aurora-2 | pingcap-2.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | 写入器 |
 
-DM 在增量同步阶段依赖 `ROW` 格式的 binlog，如果未启用 binlog 及设置正确的 binlog 格式，则不能正常使用 DM 进行数据同步，具体可参见[检查内容](precheck.md#检查内容)。
+DM 在增量同步阶段依赖 `ROW` 格式的 binlog，请按照 [AWS 官网流程](https://aws.amazon.com/cn/premiumsupport/knowledge-center/enable-binary-logging-aurora/)进行配置。如果未启用 binlog 或未设置正确的 binlog 格式，DM 会在检查阶段报错，具体可参见[检查内容](precheck.md#检查内容)。
 
 > **注意：**
 >
