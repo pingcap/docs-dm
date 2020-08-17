@@ -4,7 +4,7 @@ title: 使用 TiUP 部署运维 DM 线上集群
 
 本文介绍如何使用 TiUP 的 DM 组件，如果需要线上部署的完整步骤，可参考[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。
 
-dm 组件的帮助信息如下：
+DM 组件的帮助信息如下：
 
 ```bash
 tiup dm --help
