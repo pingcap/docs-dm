@@ -211,7 +211,7 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
 
 ## 扩容节点
 
-扩容的内部逻辑与部署类似，TiUP dm 组件会先保证节点的 SSH 连接，在目标节点上创建必要的目录，然后执行部署并且启动服务。
+扩容的内部逻辑与部署类似，TiUP DM 组件会先保证节点的 SSH 连接，在目标节点上创建必要的目录，然后执行部署并且启动服务。
 
 例如，在集群 `prod-cluster` 中扩容一个 worker 节点：
 
@@ -229,7 +229,7 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
 
     ```
     
-2. 执行扩容操作。TiUP dm 根据 scale.yaml 文件中声明的端口、目录等信息在集群中添加相应的节点：
+2. 执行扩容操作。TiUP DM 根据 scale.yaml 文件中声明的端口、目录等信息在集群中添加相应的节点：
 
     {{< copyable "shell-regular" >}}
 
@@ -261,7 +261,7 @@ tiup dm upgrade prod-cluster v2.0.1
 
 ## 更新配置
 
-如果想要动态更新组件的配置，TiUP dm 组件为每个集群保存了一份当前的配置，如果想要编辑这份配置，则执行 `tiup dm edit-config <cluster-name>` 命令。例如：
+如果想要动态更新组件的配置，TiUP DM 组件为每个集群保存了一份当前的配置，如果想要编辑这份配置，则执行 `tiup dm edit-config <cluster-name>` 命令。例如：
 
 {{< copyable "shell-regular" >}}
 
