@@ -29,14 +29,13 @@ task-mode: all                  # 任务模式，可设为 "full"、"incremental
 shard-mode: "pessimistic"       # 如果为分库分表合并任务则需要配置该项。默认使用悲观协调模式 "pessimistic"，在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
 remove-meta: false              # 是否在任务同步开始前移除该任务名对应的 `meta`（`checkpoint` 和 `onlineddl` 等）。
-enable-heartbeat: false         # 是否开启 `heartbeat` 功能
 online-ddl-scheme: "gh-ost"     # 目前仅支持 gh-ost 、pt
 
 target-database:                # 下游数据库实例配置
   host: "192.168.0.1"
   port: 4000
   user: "root"
-  password: ""                  # 如果不为空则需经过 dmctl 加密
+  password: ""                  # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
 ```
 
 ## online-schema-change: gh-ost
