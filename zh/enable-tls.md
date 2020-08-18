@@ -43,7 +43,7 @@ Summary: 了解如何为 DM 的连接开启加密传输
 
     - dmctl
     
-        若 DM 集群各个组件间开启加密传输后，在使用 dmctl 工具连接集群时，需要指定 client 证书，示例：
+        若 DM 集群各个组件间开启加密传输后，在使用 dmctl 工具连接集群时，需要指定 client 证书，示例如下：
 
         {{< copyable "shell-regular" >}}
 
