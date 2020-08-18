@@ -45,7 +45,7 @@ Summary: 了解如何为 DM 的连接开启加密传输
 
     - dmctl
     
-        若 DM 集群各个组件间开启加密传输后，在使用 dmctl 工具连接集群时，需要指定 client 证书，示例如下：
+        若 DM 集群各个组件间开启加密传输后，在使用 dmctl 工具连接集群时，需要指定 Client 证书，示例如下：
 
         {{< copyable "shell-regular" >}}
 
@@ -85,9 +85,9 @@ DM-master、DM-worker 和 dmctl 都会在每次新建相互通讯的连接时重
 
 ### 为上游数据库连接开启加密传输
 
-1. 配置上游数据库，启用加密连接支持并设置 server 证书，具体可参考 [Using encrypted connections](https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html)
+1. 配置上游数据库，启用加密连接支持并设置 Server 证书，具体可参考 [Using encrypted connections](https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html)
 
-2. 在 source 配置文件中设置 client 证书：
+2. 在 source 配置文件中设置 Client 证书：
 
     ```yaml
     from:
@@ -101,7 +101,7 @@ DM-master、DM-worker 和 dmctl 都会在每次新建相互通讯的连接时重
 
 1. 配置下游 TiDB 启用加密连接支持，具体可参考 [配置 TiDB 启用加密连接支持](https://docs.pingcap.com/zh/tidb/stable/enable-tls-between-clients-and-servers#%E9%85%8D%E7%BD%AE-tidb-%E5%90%AF%E7%94%A8%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5%E6%94%AF%E6%8C%81)
 
-2. 在 task 配置文件中设置 client 证书：
+2. 在 task 配置文件中设置 Client 证书：
 
     ```yaml
     target-database:
