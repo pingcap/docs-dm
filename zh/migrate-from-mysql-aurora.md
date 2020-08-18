@@ -39,6 +39,12 @@ Aurora 集群中数据与迁移计划如下：
 |:--- | :--- | :--- |
 | tidb.6657c286.23110bc6.us-east-1.prod.aws.tidbcloud.com | 4000 | v4.0.2 |
 
+迁移使用的 TiDB 集群用户如下
+
+| 用户 | 密码 |
+|:---- | :--- |
+| root | 87654321 |
+
 预期迁移后，TiDB 集群中存在``` `migrate_me`.`t1` ```与``` `migrate_me`.`t2` ```，其中数据与 Aurora 集群一致。
 
 > **注意：**
@@ -70,23 +76,93 @@ CHECK
 
 ## 第 2 步：部署 DM 集群
 
-DM 可以通过多种方式进行部署，目前推荐使用 TiUP 部署 DM 集群，具体部署方法参照[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。
+DM 可以通过多种方式进行部署，目前推荐使用 TiUP 部署 DM 集群，具体部署方法参照[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。示例有两个数据源，因此需要至少部署两个 DM-worker 节点。
+
+部署完成后，需要记录任意一台 DM-master 节点的 IP 和服务端口（默认为 `8261`），以供 `dmctl` 连接。本示例使用 `127.0.0.1:8261`。通过 TiUP 使用 `dmctl` 检查 DM 状态：
+
+{{< copyable "shell-regular" >}}
+
+```bash
+./tiup dmctl --master-addr 127.0.0.1:8261 query-status
+```
+
+返回值为
+
+```bash
+{
+    "result": true,
+    "msg": "",
+    "tasks": []
+}
+```
 
 ## 第 3 步：配置数据源
-
-参照[使用 DM 同步数据：创建数据源](https://docs.pingcap.com/zh/tidb-data-migration/dev/replicate-data-using-dm#%E7%AC%AC-3-%E6%AD%A5%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E6%BA%90)，通过 TiUP 使用 `dmctl` 添加两个 Aurora 的数据源。
 
 > **注意：**
 >
 > - DM 所使用的配置文件支持明文数据库密码或密文数据库密码。关于如何获得密文数据库密码，参考[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
 
-根据示例
+根据示例信息保存如下的数据源配置文件：
+
+文件 `source1.yaml`
+
+```yaml
+# Aurora-1
+source-id: "aurora-replica-01"
+
+enable-gtid: false
+
+from:
+  host: "test-dm-2-0.cluster-czrtqco96yc6.us-east-2.rds.amazonaws.com"
+  user: "root"
+  password: "12345678"
+  port: 3306
+```
+
+文件 `source2.yaml`
+
+```yaml
+# Aurora-2
+source-id: "aurora-replica-02"
+
+enable-gtid: false
+
+from:
+  host: "test-dm-2-0-2.cluster-czrtqco96yc6.us-east-2.rds.amazonaws.com"
+  user: "root"
+  password: "12345678"
+  port: 3306
+```
+
+参照[使用 DM 同步数据：创建数据源](https://docs.pingcap.com/zh/tidb-data-migration/dev/replicate-data-using-dm#%E7%AC%AC-3-%E6%AD%A5%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E6%BA%90)，通过 TiUP 使用 `dmctl` 添加两个数据源。
+
+{{< copyable "shell-regular" >}}
+
+```bash
+./tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source1.yaml
+./tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source2.yaml
+```
+
+每个数据源的返回信息中，应当包含了一个与之绑定的 DM-worker。
+
+```bash
+{
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "aurora-replica-01",
+            "worker": "a-dm-worker-ID"
+        }
+    ]
+}
+```
 
 ## 第 4 步：配置任务
 
-假设需要将 Aurora-1 和 Aurora-2 实例的 `test_db` 库的 `test_table` 表以**全量+增量**的模式同步到下游 TiDB 的 `test_db` 库的 `test_table` 表。
-
-复制并编辑 `{ansible deploy}/conf/task.yaml.example`，生成如下任务配置文件 `task.yaml`：
+本示例选择同步 Aurora 已有数据并将新增数据实时同步给 TiDB，即**全量+增量**模式。根据上文中的 TiDB 集群信息、添加数据源 ID、要同步以及忽略的表，保存如下任务配置文件 `task.yaml`：
 
 ```yaml
 # 任务名，多个同时运行的任务不能重名。
@@ -95,37 +171,25 @@ name: "test"
 task-mode: "all"
 # 下游 TiDB 配置信息。
 target-database:
-  host: "172.16.10.83"
+  host: "tidb.6657c286.23110bc6.us-east-1.prod.aws.tidbcloud.com"
   port: 4000
   user: "root"
-  password: ""
+  password: "87654321"
 
 # 当前数据同步任务需要的全部上游 MySQL 实例配置。
 mysql-instances:
--
-  # 上游实例或者复制组 ID，参考 `inventory.ini` 的 `source_id` 或者 `dm-master.toml` 的 `source-id 配置`。
-  source-id: "mysql-replica-01"
+- source-id: "aurora-replica-01"
   # 需要同步的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置。
-  block-allow-list: "global"  # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
-  # Mydumper 的配置项名称，用于引用全局的 Mydumper 配置。
-  mydumper-config-name: "global"
+  block-allow-list: "global"
 
--
-  source-id: "mysql-replica-02"
-  block-allow-list: "global"          # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
-  mydumper-config-name: "global"
+- source-id: "aurora-replica-02"
+  block-allow-list: "global"
 
-# 黑白名单全局配置，各实例通过配置项名引用。
-block-allow-list:                     # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
-  global:
-    do-tables:                        # 需要同步的上游表的白名单。
-    - db-name: "test_db"              # 需要同步的表的库名。
-      tbl-name: "test_table"          # 需要同步的表的名称。
-
-# Mydumper 全局配置，各实例通过配置项名引用。
-mydumpers:
-  global:
-    extra-args: "-B test_db -T test_table"  # mydumper 的其他参数，从 DM 1.0.2 版本开始，DM 会自动生成 table-list 配置，在其之前的版本仍然需要人工配置。
+# 黑白名单配置。
+block-allow-list:
+  global:                             # 被上文 block-allow-list: "global" 所引用
+    do-dbs: ["migrate_me"]            # 需要同步的上游数据库白名单。
+    ignore-dbs: ["ignore_me"]         # 需要同步的表的库名。
 ```
 
 ## 第 5 步：启动任务
