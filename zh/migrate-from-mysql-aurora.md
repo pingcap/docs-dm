@@ -17,7 +17,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/migrate-from-mysql-aurora/']
 | Aurora-2 | test-dm-2-0-2.cluster-czrtqco96yc6.us-east-2.rds.amazonaws.com | 3306 | 写入器 | Aurora (MySQL)-5.7.12 |
 | Aurora-2 | test-dm-2-0-2.cluster-ro-czrtqco96yc6.us-east-2.rds.amazonaws.com | 3306 | 读取器 | Aurora (MySQL)-5.7.12 |
 
-集群中数据与迁移计划如下：
+Aurora 集群中数据与迁移计划如下：
 
 | 集群 | 数据库 | 表 | 是否迁移 |
 |:---- |:---- | :--- | :--- |
@@ -25,6 +25,13 @@ aliases: ['/docs-cn/tidb-data-migration/dev/migrate-from-mysql-aurora/']
 | Aurora-1 | ignore_me | ignore_table | 否 |
 | Aurora-2 | migrate_me | t2 | 是 |
 | Aurora-2 | ignore_me | ignore_table | 否 |
+
+迁移使用的 Aurora 集群用户如下
+
+| 集群 | 用户 | 密码 |
+|:---- |:---- | :--- |
+| Aurora-1 | root | 12345678 |
+| Aurora-2 | root | 12345678 |
 
 示例使用的 TiDB 集群信息如下。该集群使用 [Cloud TiDB](https://tidbcloud.com/) 服务一键部署：
 
@@ -38,7 +45,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/migrate-from-mysql-aurora/']
 >
 > 本次迁移不涉及合库合表，如需使用合库合表请参考 [DM 合库合表场景](https://docs.pingcap.com/zh/tidb-data-migration/dev/scenarios#%E5%90%88%E5%BA%93%E5%90%88%E8%A1%A8%E5%9C%BA%E6%99%AF) 。
 
-## 第 1 步：配置数据迁移前置要求
+## 第 1 步：数据迁移前置条件
 
 ### DM 部署节点
 
@@ -48,6 +55,7 @@ DM 作为数据迁移的核心，需要正常连接上游 Aurora 与下游 TiDB 
 
 DM 在增量同步阶段依赖 `ROW` 格式的 binlog，请按照 [AWS 官网流程](https://aws.amazon.com/cn/premiumsupport/knowledge-center/enable-binary-logging-aurora/)进行配置。
 
+CHECK
 > **注意：**
 >
 > Aurora 读取器不能开启 binlog，因此不能作为 DM 数据迁移时的上游 master server。
@@ -58,50 +66,21 @@ DM 在增量同步阶段依赖 `ROW` 格式的 binlog，请按照 [AWS 官网流
 >
 > 基于 GTID 的数据迁移需要 MySQL 5.7 (Aurora 2.04) 或更高版本。
 
-除这些 Aurora 相关配置以外，上游数据库需要满足通用 MySQL 上游的其他要求，参见[上游 MySQL 实例检查内容](precheck.md#检查内容)。
+除这些 Aurora 特有配置以外，上游数据库需满足权限、表结构等迁移 MySQL 的其他要求，参见[上游 MySQL 实例检查内容](precheck.md#检查内容)。
 
 ## 第 2 步：部署 DM 集群
 
 DM 可以通过多种方式进行部署，目前推荐使用 TiUP 部署 DM 集群，具体部署方法参照[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。
 
+## 第 3 步：配置数据源
+
+参照[使用 DM 同步数据：创建数据源](https://docs.pingcap.com/zh/tidb-data-migration/dev/replicate-data-using-dm#%E7%AC%AC-3-%E6%AD%A5%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E6%BA%90)，通过 TiUP 使用 `dmctl` 添加两个 Aurora 的数据源。
+
 > **注意：**
 >
-> - 在 DM 所有的配置文件中，数据库的密码支持明文或使用 dmctl 加密后的密文。如果数据库密码为空，则不需要加密。关于如何使用 dmctl 加密明文密码，参考[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
-> - 上下游数据库用户必须拥有相应的读写权限。
+> - DM 所使用的配置文件支持明文数据库密码或密文数据库密码。关于如何获得密文数据库密码，参考[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
 
-## 第 3 步：检查集群信息
-
-使用 DM-Ansible 部署 DM 集群后，相关配置信息如下：
-
-- DM 集群相关组件配置信息
-
-    | 组件 | 主机 | 端口 |
-    |:------|:---- |:---- |
-    | dm_worker1 | 172.16.10.72 | 8262 |
-    | dm_worker2 | 172.16.10.73 | 8262 |
-    | dm_master | 172.16.10.71 | 8261 |
-
-- 上下游数据库实例相关信息
-
-    | 数据库实例 | 主机 | 端口 | 用户名 | 加密密码 |
-    |:-------- |:--- | :--- | :--- | :--- |
-    | 上游 Aurora-1 | pingcap-1.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | root | VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU= |
-    | 上游 Aurora-2 | pingcap-2.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | root | VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU= |
-    | 下游 TiDB | 172.16.10.83 | 4000 | root | |
-
-- dm-master 进程配置文件 `{ansible deploy}/conf/dm-master.toml` 中的配置
-
-    ```toml
-    # Master 配置。
-
-    [[deploy]]
-    source-id = "mysql-replica-01"
-    dm-worker = "172.16.10.72:8262"
-
-    [[deploy]]
-    source-id = "mysql-replica-02"
-    dm-worker = "172.16.10.73:8262"
-    ```
+根据示例
 
 ## 第 4 步：配置任务
 
