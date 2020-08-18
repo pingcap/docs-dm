@@ -42,8 +42,9 @@
     - [暂停任务](pause-task.md)
     - [恢复任务](resume-task.md)
     - [停止任务](stop-task.md)
-    - [跳过或替代执行异常的 SQL 语句](skip-or-replace-abnormal-sql-statements.md)
+    - [处理出错的 SQL 语句](handle-failed-sql-statements.md)
   - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
+  - [管理迁移中表的表结构](manage-schema.md)
   - [告警处理](handle-alerts.md)
   - [日常巡检](daily-check.md)
 + 故障处理
@@ -54,6 +55,7 @@
   - [分库分表合并场景](usage-scenario-shard-merge.md)
   - [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
   - [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
+  - [下游表结构存在更多列的迁移场景](usage-scenario-downstream-more-columns.md)
   - [DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
 + 性能调优
   - [配置调优](tune-configuration.md)
