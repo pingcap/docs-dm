@@ -12,7 +12,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/handle-alerts/']
 
 ### `DM_worker_offline`
 
-存在离线的 DM-worker 超过一小时会触发该告警。在高可用架构下，该告警可能不会直接中断任务，但是会提升任务中断的风险。处理告警可以检查对应 DM-worker 节点的工作状态，是否连通，并检查日志排查错误。
+存在离线的 DM-worker 超过一小时会触发该告警。在高可用架构下，该告警可能不会直接中断任务，但是会提升任务中断的风险。处理告警可以查看对应 DM-worker 节点的工作状态，检查是否连通，并通过日志排查错误。
 
 ### `DM_DDL_error`
 
