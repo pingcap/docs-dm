@@ -44,7 +44,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 <NavColumn>
 <ColumnTitle>Maintain</ColumnTitle>
 
-- [Upgrade DM](dm-upgrade.md)
+- [Upgrade DM](manually-upgrade-dm-1.0-to-2.0.md)
 - [DM Cluster Operations](cluster-operations.md)
 - [Create a Task](create-task.md)
 - [Pause a Task](pause-task.md)
