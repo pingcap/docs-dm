@@ -41,10 +41,6 @@ overview 下包含运行当前选定 task 的所有 DM-worker/master instance/so
 
 ### HA 高可用
 
-> **注意：**
->
-> 当前 DM v2.0 版本暂不支持开启 relay log 功能。
-
 | metric 名称 | 说明 | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
 | number of dm-masters start leader components per minute | 每分钟内 DM-master 尝试启用 leader 相关组件次数 | N/A | N/A |
@@ -105,6 +101,10 @@ overview 下包含运行当前选定 task 的所有 DM-worker/master instance/so
 
 ### Relay log
 
+> **注意：**
+>
+> 当前 DM v2.0 版本暂不支持开启 relay log 功能。
+
 | metric 名称 | 说明 | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
 | storage capacity | relay log 占有的磁盘的总容量  | N/A | N/A |
@@ -125,6 +125,10 @@ overview 下包含运行当前选定 task 的所有 DM-worker/master instance/so
 在 Grafana dashboard 中，instance 的默认名称为 `DM-instance`。
 
 ### Relay log
+
+> **注意：**
+>
+> 当前 DM v2.0 版本暂不支持开启 relay log 功能。
 
 | metric 名称 | 说明 | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
