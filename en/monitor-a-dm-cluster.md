@@ -38,6 +38,10 @@ In the Grafana dashboard, the default name of DM is `DM-task`.
 
 ### Relay log
 
+> **Note:**
+>
+> In DM v2.0, the relay log feature is not supported.
+
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
 | storage capacity | The storage capacity of the disk occupied by the relay log | N/A | N/A |

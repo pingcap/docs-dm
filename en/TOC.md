@@ -62,7 +62,6 @@
   + Architecture
     - [DM Overview](overview.md)
     - [DM-worker](dm-worker-intro.md)
-    - [DM Relay Log](relay-log.md)
   - [Command-line Flags](command-line-flags.md)
   + Configuration
     - [Overview](config-overview.md)
