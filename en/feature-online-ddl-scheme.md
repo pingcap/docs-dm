@@ -36,7 +36,7 @@ target-database:                # Configuration of the downstream database insta
   host: "192.168.0.1"
   port: 4000
   user: "root"
-  password: ""                  # The password must be encrypted using dmctl if it is not empty.
+  password: ""                  # It is recommended to use password encrypted with dmctl if the password is not empty.
 ```
 
 For the advanced configuration and the description of each configuration parameter, refer to [DM advanced task configuration file template](task-configuration-file-full.md#task-configuration-file-template-advanced).
