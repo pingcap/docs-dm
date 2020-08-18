@@ -8,17 +8,13 @@ aliases: ['/docs-cn/tidb-data-migration/dev/monitor-a-dm-cluster/']
 
 使用 DM-Ansible 部署 DM 集群的时候，会默认部署一套[监控系统](replicate-data-using-dm.md#第-8-步监控任务与查看日志)。
 
-> **注意：**
->
-> 目前只有 DM-worker 提供了 metrics，DM-master 暂未提供。
-
 ## Task
 
 在 Grafana dashboard 中，DM 默认名称为 `DM-task`。
 
-### overview
+### Overview
 
-overview 下包含运行当前选定 task 的所有 DM-worker instance 的部分监控指标。当前默认告警规则只针对于单个 DM-worker instance。
+overview 下包含运行当前选定 task 的所有 DM-worker/master instance/source 的部分监控指标。当前默认告警规则只针对于单个 DM-worker/master instance/source。
 
 | metric 名称 | 说明 | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
@@ -30,28 +26,39 @@ overview 下包含运行当前选定 task 的所有 DM-worker instance 的部分
 | binlog file gap between master and syncer | 与上游 master 相比 binlog replication unit 落后的 binlog file 个数 | N/A | N/A |
 | shard lock resolving | 当前子任务是否正在等待 shard DDL 同步，大于 0 表示正在等待同步 | N/A | N/A |
 
-### task 状态
+### Operate error
+
+| metric 名称 | 说明 | 告警说明 | 告警级别 |
+|:----|:------------|:----|:----|
+| before any operate error | 在进行操作之前出错的次数 | N/A | N/A |
+| source bound error | 数据源绑定操作出错次数 | N/A | N/A |
+| start error | 子任务启动的出错次数 | N/A | N/A |
+| pause error | 子任务暂停的出错次数 | N/A | N/A |
+| resume error | 子任务恢复的出错次数 | N/A | N/A |
+| auto-resume error | 子任务自动恢复的出错次数 | N/A | N/A |
+| update error | 子任务更新的出错次数 | N/A | N/A |
+| stop error | 子任务停止的出错次数 | N/A | N/A |
+
+### HA 高可用
+
+> **注意：**
+>
+> 当前 DM v2.0 版本暂不支持开启 relay log 功能。
+
+| metric 名称 | 说明 | 告警说明 | 告警级别 |
+|:----|:------------|:----|:----|
+| number of dm-masters start leader components per minute | 每分钟内 DM-master 尝试启用 leader 相关组件次数 | N/A | N/A |
+| number of workers in different state | 不同状态下有多少个 DM-worker | 存在离线的 DM-worker 超过一小时 | critical |
+| workers' state | DM-worker 的状态 | N/A | N/A |
+| number of worker event error | 不同类型的 DM-worker 错误出现次数 | N/A | N/A |
+| shard ddl error per minute | 每分钟内不同类型的 shard DDL 错误次数 | 发生 shard DDL 错误 | critical |
+| number of pending shard ddl | 未完成的 shard DDL 数目 | 存在未完成的 shard DDL 数目超过一小时 | critical |
+
+### Task 状态
 
 | metric 名称 | 说明 | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
 | task state | 同步子任务的状态 | 当子任务状态处于 `Paused` 超过 20 分钟时| critical |
-
-### Relay log
-
-| metric 名称 | 说明 | 告警说明 | 告警级别 |
-|:----|:------------|:----|:----|
-| storage capacity | relay log 占有的磁盘的总容量  | N/A | N/A |
-| storage remain | relay log 占有的磁盘的剩余可用容量  | 小于 10G 的时候需要告警 | critical |
-| process exits with error | relay log 在 DM-worker 内部遇到错误并且退出了  | 立即告警 | critical |
-| relay log data corruption | relay log 文件损坏的个数 | 立即告警 | emergency |
-| fail to read binlog from master | relay 从上游的 MySQL 读取 binlog 时遇到的错误数 | 立即告警 | critical |
-| fail to write relay log | relay 写 binlog 到磁盘时遇到的错误数 | 立即告警 | critical |
-| binlog file index | relay log 最大的文件序列号。如 value = 1 表示 relay-log.000001 | N/A | N/A |
-| binlog file gap between master and relay | relay 与上游 master 相比落后的 binlog file 个数 | 落后 binlog file 个数超过 1 个（不含 1 个）且持续 10 分钟时 | critical |
-| binlog pos | relay log 最新文件的写入 offset  | N/A | N/A |
-| read binlog event duration | relay log 从上游的 MySQL 读取 binlog 的时延，单位：秒 |  N/A | N/A |
-| write relay log duration | relay log 每次写 binlog 到磁盘的时延，单位：秒| N/A | N/A |
-| binlog event size | relay log 写到磁盘的单条 binlog 的大小 | N/A | N/A |
 
 ### Dump/Load unit
 
@@ -95,6 +102,23 @@ overview 下包含运行当前选定 task 的所有 DM-worker instance 的部分
 | skipped event duration | binlog replication unit 跳过 binlog event 的耗时，单位：秒 | N/A | N/A |
 | unsynced tables | 当前子任务内还未收到 shard DDL 的分表数量 | N/A | N/A |
 | shard lock resolving | 当前子任务是否正在等待 shard DDL 同步，大于 0 表示正在等待同步 | N/A | N/A |
+
+### Relay log
+
+| metric 名称 | 说明 | 告警说明 | 告警级别 |
+|:----|:------------|:----|:----|
+| storage capacity | relay log 占有的磁盘的总容量  | N/A | N/A |
+| storage remain | relay log 占有的磁盘的剩余可用容量  | 小于 10G 的时候需要告警 | critical |
+| process exits with error | relay log 在 DM-worker 内部遇到错误并且退出了  | 立即告警 | critical |
+| relay log data corruption | relay log 文件损坏的个数 | 立即告警 | emergency |
+| fail to read binlog from master | relay 从上游的 MySQL 读取 binlog 时遇到的错误数 | 立即告警 | critical |
+| fail to write relay log | relay 写 binlog 到磁盘时遇到的错误数 | 立即告警 | critical |
+| binlog file index | relay log 最大的文件序列号。如 value = 1 表示 relay-log.000001 | N/A | N/A |
+| binlog file gap between master and relay | relay 与上游 master 相比落后的 binlog file 个数 | 落后 binlog file 个数超过 1 个（不含 1 个）且持续 10 分钟时 | critical |
+| binlog pos | relay log 最新文件的写入 offset  | N/A | N/A |
+| read binlog event duration | relay log 从上游的 MySQL 读取 binlog 的时延，单位：秒 |  N/A | N/A |
+| write relay log duration | relay log 每次写 binlog 到磁盘的时延，单位：秒| N/A | N/A |
+| binlog event size | relay log 写到磁盘的单条 binlog 的大小 | N/A | N/A |
 
 ## Instance
 
