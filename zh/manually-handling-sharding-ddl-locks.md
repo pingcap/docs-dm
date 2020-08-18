@@ -305,7 +305,7 @@ MySQL 及 DM 操作与处理流程如下：
 
 1. 使用 `show-ddl-locks` 确认 DM-master 上存在该 DDL 操作对应的 lock。
 
-    应该仅有 `mysql-replica-02` 处于 `syned` 状态：
+    应该仅有 `mysql-replica-02` 处于 `synced` 状态：
 
     {{< copyable "shell-regular" >}}
 
