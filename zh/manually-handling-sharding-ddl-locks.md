@@ -54,7 +54,7 @@ show-ddl-locks test
             "ID": "test-`shard_db`.`shard_table`",         # lock 的 ID 标识，当前由任务名与 DDL 对应的 schema/table 信息组成
             "task": "test",                                # lock 所属的任务名
             "mode": "pessimistic"                          # shard DDL 协调模式，可为悲观模式 "pessimistic" 或乐观模式 "optimistic"
-            "owner": "mysql-replica-01",                     # lock 的 owner（在悲观模式时为第一个遇到该 DDL 的 source ID, 在乐观模式时总为空）
+            "owner": "mysql-replica-01",                   # lock 的 owner（在悲观模式时为第一个遇到该 DDL 的 source ID），在乐观模式时总为空
             "DDLs": [                                      # 在悲观模式时为 lock 对应的 DDL 列表，在乐观模式时总为空
                 "USE `shard_db`; ALTER TABLE `shard_db`.`shard_table` DROP COLUMN `c2`;"
             ],
@@ -75,7 +75,7 @@ show-ddl-locks test
 
 > **注意：**
 >
-> `unlock-ddl-lock` 当前仅对悲观协调模式（`pessimistic`）下产生的 lock 有效。
+> `unlock-ddl-lock` 当前仅对悲观协调模式 (`pessimistic`) 下产生的 lock 有效。
 
 #### 命令示例
 
@@ -123,7 +123,7 @@ unlock-ddl-lock test-`shard_db`.`shard_table`
 
 #### Lock 异常原因
 
-在 DM-master 尝试自动 unlock sharding DDL lock 之前，需要等待所有 MySQL source 的 sharding DDL events 全部到达（详见[分库分表合并同步原理](feature-shard-merge-pessimistic.md#实现原理)）。如果 sharding DDL 已经在同步过程中，且有部分 MySQL source 被移除，并且不再计划重新加载它们（按业务需求移除了这部分 MySQL source），则会由于永远无法等齐所有的 DDL 而造成 lock 无法自动 unlock。
+在 DM-master 尝试自动 unlock sharding DDL lock 之前，需要等待所有 MySQL source 的 sharding DDL events 全部到达（详见[分库分表合并同步原理](feature-shard-merge-pessimistic.md#实现原理)）。如果 sharding DDL 已经在同步过程中，同时有部分 MySQL source 被移除，且不再计划重新加载它们（按业务需求移除了这部分 MySQL source），则会由于永远无法等齐所有的 DDL 而造成 lock 无法自动 unlock。
 
 #### 手动处理示例
 
