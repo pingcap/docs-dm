@@ -43,7 +43,7 @@ DM 支持在线上执行分库分表的 DDL 语句（通称 Sharding DDL），�
 
 - 增量同步任务需要确保开始同步的 binlog position 对应的各分表的表结构必须一致。
 - 进入 sharding group 的新表必须与其他成员的表结构一致（正在执行一个 DDL 批次时禁止 `CREATE/RENAME TABLE`）。
-- 不支持 `DROP TABLE` / `DROP DATABASE`。
+- 不支持 `DROP TABLE`/`DROP DATABASE`。
 - TiDB 不支持的 DDL 语句在 DM 也不支持。
 - 新增列的默认值不能包含 `current_timestamp`、`rand()`、`uuid()` 等，否则会造成上下游数据不一致。
 
