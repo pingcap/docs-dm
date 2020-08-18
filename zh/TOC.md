@@ -40,7 +40,7 @@
     - [暂停任务](pause-task.md)
     - [恢复任务](resume-task.md)
     - [停止任务](stop-task.md)
-    - [跳过或替代执行异常的 SQL 语句](skip-or-replace-abnormal-sql-statements.md)
+    - [处理出错的 SQL 语句](handle-failed-sql-statements.md)
   - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
   - [管理迁移中表的表结构](manage-schema.md)
   - [告警处理](handle-alerts.md)
