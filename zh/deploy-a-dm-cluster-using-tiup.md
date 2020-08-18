@@ -55,7 +55,7 @@ summary: 学习如何使用 TiUP DM 组件来部署 TiDB Data Migration 工具�
     tiup update --self && tiup update dm
     ```
 
-    预期输出 `“Update successfully!”` 字样。
+    预期输出 `Update successfully!` 字样。
 
 ## 第 2 步：编辑初始化配置文件
 
