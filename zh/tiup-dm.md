@@ -7,7 +7,7 @@ summary: 学习如何使用 TiUP 运维 DM 集群。
 
 本文介绍如何使用 TiUP 的 DM 组件运维 DM 集群。使用 TiUP 部署 DM 的完整步骤可参考[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。
 
-DM 组件的帮助信息如下：
+TiUP DM 组件的帮助信息如下：
 
 ```bash
 tiup dm --help
@@ -189,12 +189,11 @@ Status 列用 `Up` 或者 `Down` 表示该服务是否正常。对于 master 组
 
 缩容即下线服务，最终会将指定的节点从集群中移除，并删除遗留的相关数据文件。
 
-- 内部对 master, worker 组件的操作流程
-    1. 停止组件进程
+缩容操作进行时，内部对 dm-master、dm-worker 组件的操作流程为：
 
-    2. 调用 DM master 删除 member 的 API
-
-    3. 清除节点的相关数据文件
+1. 停止组件进程
+2. 调用 DM master 删除 member 的 API
+3. 清除节点的相关数据文件
 
 缩容命令的基本用法：
 
@@ -340,7 +339,7 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 tiup dm import --dir=/path/to/tidb-ansible
 ```
 
-import 工作流程如下：
+import 命令的工作流程如下：
 
 - 根据 ansible 部署的集群生成一个 TiUP 部署使用的拓扑文件 [topology.yml](https://github.com/pingcap/tiup/blob/master/examples/topology.dm.example.yaml)。
 - 确认部署后使用生成的拓扑文件部署 2.0 以上版本的集群。
