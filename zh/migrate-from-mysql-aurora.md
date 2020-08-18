@@ -38,45 +38,35 @@ aliases: ['/docs-cn/tidb-data-migration/dev/migrate-from-mysql-aurora/']
 >
 > 本次迁移不涉及合库合表，如需使用合库合表请参考 [DM 合库合表场景](https://docs.pingcap.com/zh/tidb-data-migration/dev/scenarios#%E5%90%88%E5%BA%93%E5%90%88%E8%A1%A8%E5%9C%BA%E6%99%AF) 。
 
-## 第 1 步：在 Aurora 集群中启用 binlog
+## 第 1 步：配置数据迁移前置要求
 
-假设有两个 Aurora 集群需要迁移数据到 TiDB，其集群信息如下，其中 Aurora-1 包含一个独立的读取器节点。
+### DM 部署节点
 
-| 集群 | 终端节点 | 端口 | 角色 |
-|:-------- |:--- | :--- | :--- |
-| Aurora-1 | pingcap-1.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | 写入器 |
-| Aurora-1 | pingcap-1-us-east-2a.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | 读取器 |
-| Aurora-2 | pingcap-2.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | 写入器 |
+DM 作为数据迁移的核心，需要正常连接上游 Aurora 与下游 TiDB 集群，因此通过 MySQL client 等方式检查部署 DM 的节点能连通上下游。除此以外，DM 对软硬件要求可以参见 [DM 集群软硬件环境需求](hardware-and-software-requirements.md)。
 
-DM 在增量同步阶段依赖 `ROW` 格式的 binlog，请按照 [AWS 官网流程](https://aws.amazon.com/cn/premiumsupport/knowledge-center/enable-binary-logging-aurora/)进行配置。如果未启用 binlog 或未设置正确的 binlog 格式，DM 会在检查阶段报错，具体可参见[检查内容](precheck.md#检查内容)。
+### Aurora
+
+DM 在增量同步阶段依赖 `ROW` 格式的 binlog，请按照 [AWS 官网流程](https://aws.amazon.com/cn/premiumsupport/knowledge-center/enable-binary-logging-aurora/)进行配置。
 
 > **注意：**
 >
 > Aurora 读取器不能开启 binlog，因此不能作为 DM 数据迁移时的上游 master server。
 
-如果需要基于 GTID 进行数据迁移，还需要为 Aurora 集群启用 GTID 支持。
+如果需要基于 GTID 进行数据迁移，需要将 `gtid-mode` 与 `enforce_gtid_consistency` 均设置为 `ON`，请按照[为 Aurora 集群启用 GTID 支持](https://docs.aws.amazon.com/zh_cn/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora)进行配置。
 
 > **注意：**
 >
-> 基于 GTID 的数据迁移需要 MySQL 5.7 (Aurora 2.04.1) 或更高版本。
+> 基于 GTID 的数据迁移需要 MySQL 5.7 (Aurora 2.04) 或更高版本。
 
-### 为 Aurora 集群修改 binlog 相关参数
-
-在 Aurora 集群中，binlog 相关参数是**集群参数组中的集群级参数**，有关如何为 Aurora 集群启用 binlog 支持，请参考[在复制主实例上启用二进制日志记录](https://docs.aws.amazon.com/zh_cn/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Replication.MySQL.html#AuroraMySQL.Replication.MySQL.EnableBinlog)。在使用 DM 进行数据迁移时，需要将 `binlog_format` 参数设置为 `ROW`。
-
-如果需要基于 GTID 进行数据迁移，需要将 `gtid-mode` 与 `enforce_gtid_consistency` 均设置为 `ON`。有关如何为 Aurora 集群启用基于 GTID 的数据迁移支持，请参考 [Configuring GTID-Based Replication for an Aurora MySQL Cluster](https://docs.aws.amazon.com/zh_cn/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora)。
-
-> **注意：**
->
-> 在 Aurora 管理后台中，`gtid_mode` 参数表示为 `gtid-mode`。
+除这些 Aurora 相关配置以外，上游数据库需要满足通用 MySQL 上游的其他要求，参见[上游 MySQL 实例检查内容](precheck.md#检查内容)。
 
 ## 第 2 步：部署 DM 集群
 
-目前推荐使用 DM-Ansible 部署 DM 集群，具体部署方法参照[使用 DM-Ansible 部署 DM 集群](deploy-a-dm-cluster-using-ansible.md)。
+DM 可以通过多种方式进行部署，目前推荐使用 TiUP 部署 DM 集群，具体部署方法参照[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。
 
 > **注意：**
 >
-> - 在 DM 所有的配置文件中，数据库的密码要使用 dmctl 加密后的密文。如果数据库密码为空，则不需要加密。关于如何使用 dmctl 加密明文密码，参考[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
+> - 在 DM 所有的配置文件中，数据库的密码支持明文或使用 dmctl 加密后的密文。如果数据库密码为空，则不需要加密。关于如何使用 dmctl 加密明文密码，参考[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
 > - 上下游数据库用户必须拥有相应的读写权限。
 
 ## 第 3 步：检查集群信息
