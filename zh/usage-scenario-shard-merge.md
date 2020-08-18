@@ -57,11 +57,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/usage-scenario-shard-merge/','/do
 
 ## 迁移方案
 
-<<<<<<< HEAD
-- 要满足同步需求 #1 和 #2，配置 [Table Routing 规则](feature-overview.md#table-routing) 如下：
-=======
 - 要满足迁移需求 #1 和 #2，配置 [Table routing 规则](key-features.md#table-routing) 如下：
->>>>>>> 76504e9... Update usage-scenario-shard-merge.md (#224)
 
     {{< copyable "" >}}
 
@@ -73,11 +69,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/usage-scenario-shard-merge/','/do
         target-schema: "user"
     ```
 
-<<<<<<< HEAD
-- 要满足同步需求 #3，配置 [Table Routing 规则](feature-overview.md#table-routing) 如下：
-=======
 - 要满足迁移需求 #3，配置 [table routing 规则](key-features.md#table-routing) 如下：
->>>>>>> 76504e9... Update usage-scenario-shard-merge.md (#224)
 
     {{< copyable "" >}}
 
@@ -94,11 +86,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/usage-scenario-shard-merge/','/do
         target-table:  "sale"
     ```
 
-<<<<<<< HEAD
-- 要满足同步需求 #4 和 #5，配置 [Binlog Event Filter 规则](feature-overview.md#binlog-event-filter) 如下：
-=======
 - 要满足迁移需求 #4 和 #5，配置 [Binlog event filter 规则](key-features.md#binlog-event-filter) 如下：
->>>>>>> 76504e9... Update usage-scenario-shard-merge.md (#224)
 
     {{< copyable "" >}}
 
@@ -115,11 +103,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/usage-scenario-shard-merge/','/do
     >
     > 迁移需求 #4、#5 的操作意味着过滤掉所有对 `user` 库的删除操作，所以此处配置了库级别的过滤规则，`user` 库以后参与复制的表的所有删除操作也都会被过滤。
 
-<<<<<<< HEAD
-- 要满足同步需求 #6，配置 [Binlog Event Filter 规则](feature-overview.md#binlog-event-filter) 如下：
-=======
 - 要满足迁移需求 #6，配置 [Binlog event filter 规则](key-features.md#binlog-event-filter) 如下：
->>>>>>> 76504e9... Update usage-scenario-shard-merge.md (#224)
 
     {{< copyable "" >}}
 
@@ -137,11 +121,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/usage-scenario-shard-merge/','/do
         action: Ignore
     ```
 
-<<<<<<< HEAD
-- 要满足同步需求 #7，配置 [Block & Allow Table Lists](feature-overview.md#block--allow-table-lists) 如下：
-=======
 - 要满足迁移需求 #7，配置 [Block & Allow Lists](key-features.md#block--allow-table-lists) 如下：
->>>>>>> 76504e9... Update usage-scenario-shard-merge.md (#224)
 
     {{< copyable "" >}}
 
