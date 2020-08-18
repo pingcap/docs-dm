@@ -17,13 +17,26 @@ aliases: ['/docs-cn/tidb-data-migration/dev/migrate-from-mysql-aurora/']
 | Aurora-2 | test-dm-2-0-2.cluster-czrtqco96yc6.us-east-2.rds.amazonaws.com | 3306 | 写入器 | Aurora (MySQL)-5.7.12 |
 | Aurora-2 | test-dm-2-0-2.cluster-ro-czrtqco96yc6.us-east-2.rds.amazonaws.com | 3306 | 读取器 | Aurora (MySQL)-5.7.12 |
 
-集群数据如下
+集群中数据与迁移计划如下：
+
+| 集群 | 数据库 | 表 | 是否迁移 |
+|:---- |:---- | :--- | :--- |
+| Aurora-1 | migrate_me | t1 | 是 |
+| Aurora-1 | ignore_me | ignore_table | 否 |
+| Aurora-2 | migrate_me | t2 | 是 |
+| Aurora-2 | ignore_me | ignore_table | 否 |
 
 示例使用的 TiDB 集群信息如下。该集群使用 [Cloud TiDB](https://tidbcloud.com/) 服务一键部署：
 
 | 节点 | 端口 | 版本 |
 |:--- | :--- | :--- |
 | tidb.6657c286.23110bc6.us-east-1.prod.aws.tidbcloud.com | 4000 | v4.0.2 |
+
+预期迁移后，TiDB 集群中存在``` `migrate_me`.`t1` ```与``` `migrate_me`.`t2` ```，其中数据与 Aurora 集群一致。
+
+> **注意：**
+>
+> 本次迁移不涉及合库合表，如需使用合库合表请参考 [DM 合库合表场景](https://docs.pingcap.com/zh/tidb-data-migration/dev/scenarios#%E5%90%88%E5%BA%93%E5%90%88%E8%A1%A8%E5%9C%BA%E6%99%AF) 。
 
 ## 第 1 步：在 Aurora 集群中启用 binlog
 
