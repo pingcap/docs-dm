@@ -70,6 +70,7 @@
     - [任务配置](task-configuration-file.md)
     - [完整任务配置](task-configuration-file-full.md)
     - [使用 DM Portal 生成任务配置](dm-portal.md)
+    - [为 DM 的连接开启加密传输](enable-tls.md)
   - [监控指标](monitor-a-dm-cluster.md)
   - [告警信息](alert-rules.md)
   - [错误码](error-handling.md#常见故障处理方法)
