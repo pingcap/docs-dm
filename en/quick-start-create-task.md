@@ -136,7 +136,7 @@ Now, suppose that you need to replicate these sharded tables to the `db_target.t
     host: "127.0.0.1"
     port: 4000
     user: "root"
-    password: "" # If the password is not empty, you need to configure the encrypted password using dmctl.
+    password: "" # It is recommended to use password encrypted with dmctl if the password is not empty.
 
     mysql-instances:
     - source-id: "mysql-replica-01"

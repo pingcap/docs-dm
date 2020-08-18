@@ -34,7 +34,7 @@ target-database:                # Configuration of the downstream database insta
   host: "127.0.0.1"
   port: 4000
   user: "root"
-  password: ""                  # The dmctl encryption is needed when the password is not empty.
+  password: ""                  # It is recommended to use password encrypted with dmctl if the password is not empty.
 
 ## ******** Feature configuration set **********
 # The filter rule set of the block allow list of the matched table of the upstream database instance.
