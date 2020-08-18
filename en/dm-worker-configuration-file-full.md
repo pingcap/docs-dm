@@ -95,7 +95,7 @@ Generally, there is no need to manually configure these parameters unless there 
 | Parameter        | Description                           | Default value |
 | :------------ | :--------------------------------------- | :-------------|
 | `interval` | Sets the time interval at which relay logs are regularly checked for expiration, in seconds. | `3600`  |
-| `expires` | Sets the expiration time for relay logs, in hours. Expired relay logs are deleted by DM. If this parameter is not specified, the automatic purge is not performed. | `0` |
+| `expires` | Sets the expiration time for relay logs, in hours. The relay log that is not written by the relay processing unit, or does not need to be read by the existing data migration task will be deleted by DM if it exceeds the expiration time. If this parameter is not specified, the automatic purge is not performed. | `0` |
 | `remain-space` | Sets the minimum amount of free disk space, in gigabytes. When the available disk space is smaller than this value, DM-worker tries to delete relay logs. | `15` |
 
 > **Note:**

@@ -79,7 +79,7 @@ For each start of DM-worker (or the relay log resuming replication after a pause
 
 ## Data purge
 
-Through the detection mechanism of reading and writing files, DM-worker does not purge the relay log that is being used or will be used later by the currently running task.
+Through the detection mechanism of reading and writing files, DM-worker does not purge the relay log that is being used or will be used later by the existing data migration tasks.
 
 The data purge methods for the relay log include automatic purge and manual purge.
 
@@ -94,7 +94,7 @@ Method 1: Use the command-line options.
     - "3600" by default, indicating a background purge task is performed every 3600 seconds.
 
 + `purge-expires`
-    - The number of hours that a non-updated relay log can be retained for before being purged in the automatic background purge.
+    - The number of hours that a relay log that is not written by the relay processing unit, or that does not need to be read by the existing data migration task, can be retained for before being purged in the automatic background purge.
     - "0" by default, indicating data purge is not performed according to the update time of the relay log.
 
 + `purge-remain-space`
