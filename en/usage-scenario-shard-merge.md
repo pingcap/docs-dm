@@ -58,7 +58,7 @@ Assume that the downstream schema after migration is as follows:
 
 ## Migration solution
 
-- To satisfy the migration Requirements #1 and #2, configure the [table routing rule](key-features.md#table-routing) as follows:
+- To satisfy the migration Requirements #1 and #2, configure the [table routing rule](feature-overview.md#table-routing) as follows:
 
     ```yaml
     routes:
@@ -68,7 +68,7 @@ Assume that the downstream schema after migration is as follows:
         target-schema: "user"
     ```
 
-- To satisfy the migration Requirement #3, configure the [table routing rule](key-features.md#table-routing) as follows:
+- To satisfy the migration Requirement #3, configure the [table routing rule](feature-overview.md#table-routing) as follows:
 
     ```yaml
     routes:
@@ -83,7 +83,7 @@ Assume that the downstream schema after migration is as follows:
         target-table:  "sale"
     ```
 
-- To satisfy the migration Requirements #4 and #5, configure the [binlog event filtering rule](key-features.md#binlog-event-filter) as follows:
+- To satisfy the migration Requirements #4 and #5, configure the [binlog event filtering rule](feature-overview.md#binlog-event-filter) as follows:
 
     ```yaml
     filters:
@@ -98,7 +98,7 @@ Assume that the downstream schema after migration is as follows:
     >
     > The migration Requirements #4 and #5 indicate that all the deletion operations in the `user` schema are filtered out, so a schema level filtering rule is configured here. And the deletion operations of tables in the `user` schema participating in the future migration will also be filtered out.
 
-- To satisfy the migration Requirement #6, configure the [binlog event filter rule](key-features.md#binlog-event-filter) as follows:
+- To satisfy the migration Requirement #6, configure the [binlog event filter rule](feature-overview.md#binlog-event-filter) as follows:
 
     ```yaml
     filters:
@@ -114,7 +114,7 @@ Assume that the downstream schema after migration is as follows:
         action: Ignore
     ```
 
-- To satisfy the migration Requirement #7, configure the [block and allow table lists](key-features.md#block-and-allow-table-lists) as follows:
+- To satisfy the migration Requirement #7, configure the [block and allow table lists](feature-overview.md#block-and-allow-table-lists) as follows:
 
     ```yaml
     block-allow-list:  # Use black-white-list if the DM's version <= v1.0.6.
