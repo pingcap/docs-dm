@@ -29,7 +29,9 @@
   - [Monitor](monitor-a-dm-cluster.md)
   - [Performance Test](performance-test.md)
 + Maintain
-  - [Cluster Upgrade](dm-upgrade.md)
+  + Cluster Upgrade
+    - [Manually Upgrade from v1.0.x to v2.0.x](manually-upgrade-dm-1.0-to-2.0.md)
+    - [Upgrade Between v1.0.x](upgrade-dm-1.0.md)
   - [Cluster Operations](cluster-operations.md)
   + Manage Replication Tasks
     - [dmctl Introduction](dmctl-introduction.md)
