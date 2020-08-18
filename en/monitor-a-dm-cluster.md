@@ -8,17 +8,13 @@ aliases: ['/docs/tidb-data-migration/dev/monitor-a-dm-cluster/']
 
 If your DM cluster is deployed using DM-Ansible, the [monitoring system](replicate-data-using-dm.md#step-8-monitor-the-task-and-check-logs) is also deployed at the same time. This document describes the monitoring metrics provided by DM-worker.
 
-> **Note:**
->
-> Currently, DM-master does not provide monitoring metrics yet.
-
 ## Task
 
 In the Grafana dashboard, the default name of DM is `DM-task`.
 
 ### `overview`
 
-`overview` contains some monitoring metrics of all the DM-worker instances in the currently selected task. The current default alert rule is only for a single DM-worker instance.
+`Overview` contains some monitoring metrics of all the DM-worker and DM-master instances or sources in the currently selected task. The current default alert rule is only for a single DM-worker/DM-master instance/source.
 
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
@@ -30,28 +26,35 @@ In the Grafana dashboard, the default name of DM is `DM-task`.
 | binlog file gap between master and syncer | The number of binlog files by which the binlog replication unit is behind the upstream master | N/A | N/A |
 | shard lock resolving | Whether the current subtask is waiting for sharding DDL replication. A value greater than 0 means that the current subtask is waiting for sharding DDL replication | N/A | N/A |
 
+### Operation errors
+
+| Metric name | Description | Alert | Severity level |
+|:----|:------------|:----|:----|
+| before any operate error | The number of errors before any operation | N/A | N/A |
+| source bound error | The number of data source binding operations | N/A | N/A |
+| start error | The number of errors during the start of a subtask | N/A | N/A |
+| pause error | The number of errors during the pause of a subtask | N/A | N/A |
+| resume error | The number of errors during the resuming of a subtask | N/A | N/A |
+| auto-resume error | The number of errors during the auto-resuming of a subtask | N/A | N/A |
+| update error | The number of errors during the update of a subtask | N/A | N/A |
+| stop error | The number of errors during the stop of a subtask | N/A | N/A |
+
+### High availability
+
+| Metric name | Description | Alert | Severity level |
+|:----|:------------|:----|:----|
+| number of dm-masters start leader components per minute | The number of DM-master attempts to enable leader related components per minute | N/A | N/A |
+| number of workers in different state | The number of DM-workers in different states | Some DM-worker(s) has (have) been offline for more than one hour | critical |
+| workers' state | The state of the DM-worker | N/A | N/A |
+| number of worker event error | The number of different types of DM-worker errors | N/A | N/A |
+| shard ddl error per minute | The number of different types of sharding DDL errors per minute | A sharding DDL error occurs | critical |
+| number of pending shard ddl | The number of pending sharding DDL operations | The number of pending sharding DDL operations has existed for more than one hour | critical |
+
 ### Task state
 
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
-| task state | The state of subtasks | An alert occurs when the subtask has been paused for more than 20 minutes | critical |
-
-### Relay log
-
-| Metric name | Description | Alert | Severity level |
-|:----|:------------|:----|:----|
-| storage capacity | The storage capacity of the disk occupied by the relay log | N/A | N/A |
-| storage remain | The remaining storage capacity of the disk occupied by the relay log | An alert is needed once the value is smaller than 10G | critical |
-| process exits with error | The relay log encounters an error within the DM-worker and exits | Immediate alerts | critical |
-| relay log data corruption | The number of corrupted relay log files | Immediate alerts | emergency |
-| fail to read binlog from master | The number of errors encountered when the relay log reads the binlog from the upstream MySQL | Immediate alerts | critical |
-| fail to write relay log | The number of errors encountered when the relay log writes the binlog to disks | Immediate alerts | critical |
-| binlog file index | The largest index number of relay log files. For example, "value = 1" indicates "relay-log.000001" | N/A | N/A |
-| binlog file gap between master and relay | The number of binlog files in the relay log that are behind the upstream master | An alert occurs when the number of binlog files by which the `relay` processing unit is behind the upstream master exceeds one (>1) and the condition lasts over 10 minutes | critical |
-| binlog pos | The write offset of the latest relay log file | N/A | N/A |
-| read binlog event duration | The duration that the relay log reads binlog from the upstream MySQL (in seconds) | N/A | N/A |
-| write relay log duration | The duration that the relay log writes binlog into the disks each time (in seconds) | N/A | N/A |
-| binlog event size | The size of a single binlog event that the relay log writes into the disks | N/A | N/A |
+| task state | The state of subtasks | An alert occurs when the subtask has been in the `Paused` state for more than 20 minutes | critical |
 
 ### Dump/Load unit
 
@@ -96,11 +99,36 @@ The following metrics show only when `task-mode` is in the `incremental` or `all
 | unsynced tables | The number of tables that have not received the shard DDL statement in the current subtask | N/A | N/A |
 | shard lock resolving | Whether the current subtask is waiting for the shard DDL lock to be resolved. A value greater than 0 indicates that it is waiting for the shard DDL lock to be resolved | N/A | N/A |
 
+### Relay log
+
+> **Note:**
+>
+> Currently, DM v2.0 does not support enabling the relay log feature.
+
+| Metric name | Description | Alert | Severity level |
+|:----|:------------|:----|:----|
+| storage capacity | The storage capacity of the disk occupied by the relay log | N/A | N/A |
+| storage remain | The remaining storage capacity of the disk occupied by the relay log | An alert is needed once the value is smaller than 10G | critical |
+| process exits with error | The relay log encounters an error within the DM-worker and exits | Immediate alerts | critical |
+| relay log data corruption | The number of corrupted relay log files | Immediate alerts | emergency |
+| fail to read binlog from master | The number of errors encountered when the relay log reads the binlog from the upstream MySQL | Immediate alerts | critical |
+| fail to write relay log | The number of errors encountered when the relay log writes the binlog to disks | Immediate alerts | critical |
+| binlog file index | The largest index number of relay log files. For example, "value = 1" indicates "relay-log.000001" | N/A | N/A |
+| binlog file gap between master and relay | The number of binlog files in the relay log that are behind the upstream master | An alert occurs when the number of binlog files by which the `relay` processing unit is behind the upstream master exceeds one (>1) and the condition lasts over 10 minutes | critical |
+| binlog pos | The write offset of the latest relay log file | N/A | N/A |
+| read binlog event duration | The duration that the relay log reads binlog from the upstream MySQL (in seconds) | N/A | N/A |
+| write relay log duration | The duration that the relay log writes binlog into the disks each time (in seconds) | N/A | N/A |
+| binlog event size | The size of a single binlog event that the relay log writes into the disks | N/A | N/A |
+
 ## Instance
 
 In the Grafana dashboard, the default name of an instance is `DM-instance`.
 
 ### Relay log
+
+> **Note:**
+>
+> Currently, DM v2.0 does not support enabling the relay log feature.
 
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
