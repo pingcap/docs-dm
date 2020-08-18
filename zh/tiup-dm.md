@@ -1,6 +1,6 @@
 ---
-title: 使用 TiUP 运维 DM 生产集群
-summary: 学习如何使用 TiUP 运维 DM 生产集群。
+title: 使用 TiUP 运维 DM 集群
+summary: 学习如何使用 TiUP 运维 DM 集群。
 ---
 
 本文介绍如何使用 TiUP 的 DM 组件运维 DM 生产集群。如果需要生产部署的完整步骤，可参考[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。
