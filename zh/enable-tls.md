@@ -99,7 +99,7 @@ DM-master、DM-worker 和 dmctl 都会在每次新建相互通讯的连接时重
 
 ### 为下游 TiDB 连接开启加密传输
 
-1. 配置下游 TiDB 启用加密连接支持，具体可参考 [配置 TiDB 启用加密连接支持](https://docs.pingcap.com/zh/tidb/stable/enable-tls-between-clients-and-servers#%E9%85%8D%E7%BD%AE-tidb-%E5%90%AF%E7%94%A8%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5%E6%94%AF%E6%8C%81)
+1. 配置下游 TiDB 启用加密连接支持，具体可参考 [配置 TiDB 启用加密连接支持](https://docs.pingcap.com/zh/tidb/stable/enable-tls-between-clients-and-servers#配置-tidb-启用加密连接支持)
 
 2. 在 task 配置文件中设置 Client 证书：
 
