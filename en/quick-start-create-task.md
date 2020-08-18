@@ -39,9 +39,33 @@ docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=tru
 
 ### Prepare data
 
-- Write [example data](https://github.com/pingcap/dm/blob/bc1094a6b7388ad934279898b4e308cd3d58f7a9/tests/sharding/data/db1.prepare.sql) into mysql-3306.
+- Write example data into mysql-3306:
 
-- Write [example data](https://github.com/pingcap/dm/blob/bc1094a6b7388ad934279898b4e308cd3d58f7a9/tests/sharding/data/db2.prepare.sql) into mysql-3307. 
+    {{< copyable "sql" >}}
+
+    ```sql
+    drop database if exists `sharding1`;
+    create database `sharding1`;
+    use `sharding1`;
+    create table t1 (id bigint, uid int, name varchar(80), info varchar(100), primary key (`id`), unique key(`uid`)) DEFAULT CHARSET=utf8mb4;
+    create table t2 (id bigint, uid int, name varchar(80), info varchar(100), primary key (`id`), unique key(`uid`)) DEFAULT CHARSET=utf8mb4;
+    insert into t1 (uid, name) values (10001, 'Gabriel García Márquez'), (10002, 'Cien años de soledad');
+    insert into t2 (uid, name) values (20001, 'José Arcadio Buendía'), (20002, 'Úrsula Iguarán'), (20003, 'José Arcadio');
+    ```
+
+- Write example data into mysql-3307:
+
+    {{< copyable "sql" >}}
+
+    ```sql
+    drop database if exists `sharding2`;
+    create database `sharding2`;
+    use `sharding2`;
+    create table t2 (id bigint, uid int, name varchar(80), info varchar(100), primary key (`id`), unique key(`uid`)) DEFAULT CHARSET=utf8mb4;
+    create table t3 (id bigint, uid int, name varchar(80), info varchar(100), primary key (`id`), unique key(`uid`)) DEFAULT CHARSET=utf8mb4;
+    insert into t2 (uid, name, info) values (40000, 'Remedios Moscote', '{}');
+    insert into t3 (uid, name, info) values (30001, 'Aureliano José', '{}'), (30002, 'Santa Sofía de la Piedad', '{}'), (30003, '17 Aurelianos', NULL);
+    ```
 
 ### Start downstream TiDB
 
@@ -53,7 +77,7 @@ To run a TiDB server, use the following command:
 wget https://download.pingcap.org/tidb-v4.0.0-linux-amd64.tar.gz
 tar -xzvf tidb-v4.0.0-rc.2-linux-amd64.tar.gz
 mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
-./tidb-server 
+./tidb-server
 ```
 
 > **Warning:**
@@ -65,6 +89,10 @@ mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
 Before starting a data migration task, you need to configure the MySQL data source.
 
 ### Encrypt the password
+
+> **Note:**
+>
+> You can skip this step if the database does not have a password.
 
 For safety reasons, it is recommended to configure and use encrypted passwords. You can use dmctl to encrypt the MySQL/TiDB password. Suppose the password is "123456":
 
@@ -79,10 +107,6 @@ fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
 ```
 
 Save this encrypted value, and use it for creating a MySQL data source in the following steps.
-
-> **Note:**
->
-> You can skip this step if the database does not have a password.
 
 ### Edit the source configuration file
 
