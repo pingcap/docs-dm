@@ -37,14 +37,14 @@ aliases: ['/docs-cn/tidb-data-migration/stable/usage-scenario-shard-merge/','/do
 
 ## 同步需求
 
-1. 合并三个实例中的 `user`.`information` 表至下游 TiDB 中的 `user`.`information` 表。
-2. 合并三个实例中的 `user`.`log_{north|south|east}` 表至下游TiDB中的 `user`.`log_{north|south|east}` 表。
-3. 合并三个实例中的 `store_{01|02}`.`sale_{01|02}` 表至下游TiDB中的 `store`.`sale` 表。
-4. 过滤掉三个实例的 `user`.`log_{north|south|east}` 表的所有删除操作。
-5. 过滤掉三个实例的 `user`.`information` 表的所有删除操作。
-6. 过滤掉三个实例的 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作。
-7. 过滤掉三个实例的 `user`.`log_bak` 表。
-8. 因为 `store_{01|02}`.`sale_{01|02}` 表带有 bigint 型的自增主键，将其合并至 TiDB 时会引发冲突。你需要有相应的方案来避免冲突。
+1. 同名表合并场景，比如将三个实例中的 `user`.`information` 表合并至下游 TiDB 中的 `user`.`information` 表。
+2. 不同名表合并场景，比如将三个实例中的 `user`.`log_{north|south|east}` 表合并至下游 TiDB 中的 `user`.`log_{north|south|east}` 表。
+3. 分片表合并场景，比如将三个实例中的 `store_{01|02}`.`sale_{01|02}` 表合并至下游 TiDB 中的 `store`.`sale` 表。
+4. 过滤删除操作场景，比如过滤掉三个实例中 `user`.`log_{north|south|east}` 表的所有删除操作。
+5. 过滤删除操作场景，比如过滤掉三个实例中 `user`.`information` 表的所有删除操作。
+6. 过滤删除操作场景，比如过滤掉三个实例中 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作。
+7. 使用通配符过滤特定表的场景，比如使用通配符 `user`.`log_*` 过滤掉三个实例的 `user`.`log_bak` 表。
+8. 主键冲突处理场景，假设 `store_{01|02}`.`sale_{01|02}` 表带有 bigint 型的自增主键，将其合并至 TiDB 时会引发冲突，可以使用相应的方案来避免冲突。
 
 ## 下游实例
 
@@ -101,7 +101,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/usage-scenario-shard-merge/','/do
 
     > **注意：**
     >
-    > 同步需求 #4、#5 和 #7 的操作意味着过滤掉所有对 `user` 库的删除操作，所以此处配置了库级别的过滤规则。但是 `user` 库以后加入表的删除操作也都会被过滤。
+    > 同步需求 #4、#5 的操作意味着过滤掉所有对 `user` 库的删除操作，所以此处配置了库级别的过滤规则，`user` 库以后参与复制的表的所有删除操作也都会被过滤。
 
 - 要满足同步需求 #6，配置 [Binlog Event Filter 规则](feature-overview.md#binlog-event-filter) 如下：
 
@@ -133,7 +133,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/usage-scenario-shard-merge/','/do
           tbl-name: "log_bak"
     ```
 
-- 要满足同步需求 #8，首先参考[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)来解决冲突，保证在同步到下游时不会因为分表中有相同的主键值而使同步出现异常；然后需要配置 `ignore-checking-items` 来跳过自增主键冲突的检查：
+- 要满足同步需求 #8，首先参考[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)来解决冲突，保证在同步到下游时不会因为分表中有相同的主键值而使同步出现异常，然后需要配置 `ignore-checking-items` 来跳过自增主键冲突的检查：
 
     {{< copyable "" >}}
 
