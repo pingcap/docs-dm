@@ -1,12 +1,12 @@
 ---
 title: Data Migration Shard Merge Scenario
-summary: Learn how to use Data Migration to replicate data in the shard merge scenario.
+summary: Learn how to use Data Migration to migrate data in the shard merge scenario.
 aliases: ['/docs/tidb-data-migration/dev/usage-scenario-shard-merge/']
 ---
 
 # Data Migration Shard Merge Scenario
 
-This document shows how to use Data Migration (DM) in the shard merge scenario where the sharded schemas and sharded tables data of three upstream MySQL instances need to be replicated to a downstream TiDB cluster.
+This document shows how to use Data Migration (DM) in the shard merge scenario where the sharded schemas and sharded tables of three upstream MySQL instances need to be migrated to a downstream TiDB cluster.
 
 ## Upstream instances
 
@@ -124,7 +124,7 @@ Assume that the downstream schema after migration is as follows:
           tbl-name: "log_bak"
     ```
 
-- To satisfy the migration Requirement #8, first refer to [handling conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key) to solve conflicts. This guarantees that data is successfully replicated to the downstream when the primary key value of one sharded table is duplicate with that of another sharded table. Then, configure `ignore-checking-items` to skip checking the conflict of auto-increment primary key:
+- To satisfy the migration Requirement #8, first refer to [handling conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key) to solve conflicts. This guarantees that data is successfully migrated to the downstream when the primary key value of one sharded table is duplicate with that of another sharded table. Then, configure `ignore-checking-items` to skip checking the conflict of auto-increment primary key:
 
     {{< copyable "" >}}
 
