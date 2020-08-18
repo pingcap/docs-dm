@@ -1,7 +1,7 @@
 ---
 title: Data Migration Shard Merge Scenario
 summary: Learn how to use Data Migration to migrate data in the shard merge scenario.
-aliases: ['/docs/tidb-data-migration/dev/usage-scenario-shard-merge/']
+aliases: ['/docs/tidb-data-migration/stable/usage-scenario-shard-merge/','/docs/tidb-data-migration/v1.0/usage-scenario-shard-merge/','/docs/dev/reference/tools/data-migration/usage-scenarios/shard-merge','/docs/v3.1/reference/tools/data-migration/usage-scenarios/shard-merge','/docs/v3.0/reference/tools/data-migration/usage-scenarios/shard-merge','/docs/v2.1/reference/tools/data-migration/usage-scenarios/shard-merge','/docs/stable/reference/tools/data-migration/usage-scenarios/shard-merge/']
 ---
 
 # Data Migration Shard Merge Scenario
