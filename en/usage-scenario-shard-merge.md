@@ -1,12 +1,7 @@
 ---
 title: Data Migration Shard Merge Scenario
-<<<<<<< HEAD
-summary: Learn how to use Data Migration to replicate data in the shard merge scenario.
-aliases: ['/docs/tidb-data-migration/stable/usage-scenario-shard-merge/','/docs/tidb-data-migration/v1.0/usage-scenario-shard-merge/','/docs/dev/reference/tools/data-migration/usage-scenarios/shard-merge','/docs/v3.1/reference/tools/data-migration/usage-scenarios/shard-merge','/docs/v3.0/reference/tools/data-migration/usage-scenarios/shard-merge','/docs/v2.1/reference/tools/data-migration/usage-scenarios/shard-merge','/docs/stable/reference/tools/data-migration/usage-scenarios/shard-merge/']
-=======
 summary: Learn how to use Data Migration to migrate data in the shard merge scenario.
 aliases: ['/docs/tidb-data-migration/dev/usage-scenario-shard-merge/']
->>>>>>> 76504e9... Update usage-scenario-shard-merge.md (#224)
 ---
 
 # Data Migration Shard Merge Scenario
@@ -63,11 +58,7 @@ Assume that the downstream schema after migration is as follows:
 
 ## Migration solution
 
-<<<<<<< HEAD
-- To satisfy the replication Requirements #1 and #2, configure the [table routing rule](feature-overview.md#table-routing) as follows:
-=======
 - To satisfy the migration Requirements #1 and #2, configure the [table routing rule](key-features.md#table-routing) as follows:
->>>>>>> 76504e9... Update usage-scenario-shard-merge.md (#224)
 
     ```yaml
     routes:
@@ -77,11 +68,7 @@ Assume that the downstream schema after migration is as follows:
         target-schema: "user"
     ```
 
-<<<<<<< HEAD
-- To satisfy the replication Requirement #3, configure the [table routing rule](feature-overview.md#table-routing) as follows:
-=======
 - To satisfy the migration Requirement #3, configure the [table routing rule](key-features.md#table-routing) as follows:
->>>>>>> 76504e9... Update usage-scenario-shard-merge.md (#224)
 
     ```yaml
     routes:
@@ -96,11 +83,7 @@ Assume that the downstream schema after migration is as follows:
         target-table:  "sale"
     ```
 
-<<<<<<< HEAD
-- To satisfy the replication Requirements #4 and #5, configure the [binlog event filtering rule](feature-overview.md#binlog-event-filter) as follows:
-=======
 - To satisfy the migration Requirements #4 and #5, configure the [binlog event filtering rule](key-features.md#binlog-event-filter) as follows:
->>>>>>> 76504e9... Update usage-scenario-shard-merge.md (#224)
 
     ```yaml
     filters:
@@ -115,11 +98,7 @@ Assume that the downstream schema after migration is as follows:
     >
     > The migration Requirements #4 and #5 indicate that all the deletion operations in the `user` schema are filtered out, so a schema level filtering rule is configured here. And the deletion operations of tables in the `user` schema participating in the future migration will also be filtered out.
 
-<<<<<<< HEAD
-- To satisfy the replication Requirement #6, configure the [binlog event filter rule](feature-overview.md#binlog-event-filter) as follows:
-=======
 - To satisfy the migration Requirement #6, configure the [binlog event filter rule](key-features.md#binlog-event-filter) as follows:
->>>>>>> 76504e9... Update usage-scenario-shard-merge.md (#224)
 
     ```yaml
     filters:
@@ -135,11 +114,7 @@ Assume that the downstream schema after migration is as follows:
         action: Ignore
     ```
 
-<<<<<<< HEAD
-- To satisfy the replication Requirement #7, configure the [block and allow table lists](feature-overview.md#block-and-allow-table-lists) as follows:
-=======
 - To satisfy the migration Requirement #7, configure the [block and allow table lists](key-features.md#block-and-allow-table-lists) as follows:
->>>>>>> 76504e9... Update usage-scenario-shard-merge.md (#224)
 
     ```yaml
     block-allow-list:  # Use black-white-list if the DM's version <= v1.0.6.
