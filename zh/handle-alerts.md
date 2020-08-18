@@ -20,7 +20,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/handle-alerts/']
 
 ### `DM_pending_DDL`
 
-存在未完成的 shard DDL 并超过一小时会触发该告警，在某些应用场景下，存在未完成的 shard DDL 可能是用户所期望的。在用户预期以外的场景下，可以通过[手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)解决。
+存在未完成的 shard DDL 并超过一小时会触发该告警。在某些应用场景下，存在未完成的 shard DDL 可能是用户所期望的。在用户预期以外的场景下，可以通过[手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)解决。
 
 ## 任务状态告警
 
