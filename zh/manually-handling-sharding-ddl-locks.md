@@ -224,7 +224,7 @@ MySQL 及 DM 操作与处理流程如下：
         ```
         {
             "result": true,
-           "msg": ""
+            "msg": ""
         ```
 
 7. 使用 `show-dd-locks` 确认 DDL lock 是否被成功 unlock。
