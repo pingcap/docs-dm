@@ -57,12 +57,6 @@ DM-worker 内部用于从上游导出全量数据的处理单元，每个 Subtas
 
 MySQL/MariaDB 的全局事务 ID，当启用该功能后会在 Binlog 文件中记录 GTID 相关信息，多个 GTID 即组成为 GTID Set，具体请参考 [MySQL GTID Format and Storage](https://dev.mysql.com/doc/refman/5.7/en/replication-gtids-concepts.html) 与 [MariaDB Global Transaction ID](https://mariadb.com/kb/en/library/gtid/)。
 
-## H
-
-### Heartbeat
-
-在增量数据迁移过程中，用于估算数据从在上游写入后到达 Binlog replication 处理单元延迟时间的机制，具体可参考[同步延迟监控](key-features.md#同步延迟监控)。
-
 ## L
 
 ### Load 处理单元

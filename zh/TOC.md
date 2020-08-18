@@ -11,7 +11,6 @@
     - [Table routing](key-features.md#table-routing)
     - [Block & Allow Lists](key-features.md#block--allow-table-lists)
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
-    - [同步延迟监控](key-features.md#同步延迟监控)
     - [Online-ddl-scheme](feature-online-ddl-scheme.md)
     - [分库分表合并同步](feature-shard-merge.md)
 + [应用场景](scenarios.md)
@@ -60,7 +59,6 @@
   + 架构
     - [DM 简介](overview.md)
     - [DM-worker 简介](dm-worker-intro.md)
-    - [DM Relay Log](relay-log.md)
   - [DM 命令行参数](command-line-flags.md)
   + 配置
     - [概述](config-overview.md)
