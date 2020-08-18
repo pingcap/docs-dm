@@ -34,9 +34,33 @@ docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=tru
 
 ### 准备数据
 
-- 向 mysql-3306 写入[示例数据](https://github.com/pingcap/dm/blob/bc1094a6b7388ad934279898b4e308cd3d58f7a9/tests/sharding/data/db1.prepare.sql)。
+- 向 mysql-3306 写入示例数据。
 
-- 向 mysql-3307 写入[示例数据](https://github.com/pingcap/dm/blob/bc1094a6b7388ad934279898b4e308cd3d58f7a9/tests/sharding/data/db2.prepare.sql)。
+    {{< copyable "sql" >}}
+
+    ```sql
+    drop database if exists `sharding1`;
+    create database `sharding1`;
+    use `sharding1`;
+    create table t1 (id bigint, uid int, name varchar(80), info varchar(100), primary key (`id`), unique key(`uid`)) DEFAULT CHARSET=utf8mb4;
+    create table t2 (id bigint, uid int, name varchar(80), info varchar(100), primary key (`id`), unique key(`uid`)) DEFAULT CHARSET=utf8mb4;
+    insert into t1 (uid, name) values (10001, 'Gabriel García Márquez'), (10002, 'Cien años de soledad');
+    insert into t2 (uid, name) values (20001, 'José Arcadio Buendía'), (20002, 'Úrsula Iguarán'), (20003, 'José Arcadio');
+    ```
+
+- 向 mysql-3307 写入示例数据。
+
+    {{< copyable "sql" >}}
+
+    ```sql
+    drop database if exists `sharding2`;
+    create database `sharding2`;
+    use `sharding2`;
+    create table t2 (id bigint, uid int, name varchar(80), info varchar(100), primary key (`id`), unique key(`uid`)) DEFAULT CHARSET=utf8mb4;
+    create table t3 (id bigint, uid int, name varchar(80), info varchar(100), primary key (`id`), unique key(`uid`)) DEFAULT CHARSET=utf8mb4;
+    insert into t2 (uid, name, info) values (40000, 'Remedios Moscote', '{}');
+    insert into t3 (uid, name, info) values (30001, 'Aureliano José', '{}'), (30002, 'Santa Sofía de la Piedad', '{}'), (30003, '17 Aurelianos', NULL);
+    ```
 
 ### 运行下游 TiDB
 
@@ -61,7 +85,11 @@ mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
 
 ### 对密码进行加密
 
-为了安全，建议配置及使用加密后的密码。使用 dmctl 对 MySQL/TiDB 的密码进行加密，以密码为 "123456" 为例：
+> **注意：**
+>
+> 如果数据库没有设置密码，则可以跳过该步骤。
+
+为了安全，可配置及使用加密后的密码。使用 dmctl 对 MySQL/TiDB 的密码进行加密，以密码为 "123456" 为例：
 
 {{< copyable "shell-regular" >}}
 
@@ -74,10 +102,6 @@ fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
 ```
 
 记录该加密后的密码，用于下面新建 MySQL 数据源。
-
-> **注意：**
->
-> 如果数据库没有设置密码，则可以跳过该步骤。
 
 ### 编写 source 配置文件
 
@@ -132,7 +156,7 @@ target-database:
   host: "127.0.0.1"
   port: 4000
   user: "root"
-  password: "" # 如果密码不为空，也需要配置 dmctl 加密后的密码
+  password: "" # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
 
 mysql-instances:
   - source-id: "mysql-replica-01"

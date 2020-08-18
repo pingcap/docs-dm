@@ -507,43 +507,6 @@ column-mappings:
 - MySQL instance 1 的表 `test_1`.`t_1` 的 `ID = 1` 的行经过转换后，ID = 1 变为 `1 << (64-1-4) | 1 << (64-1-4-7) | 1 << 44 | 1 = 580981944116838401`
 - MySQL instance 2 的表 `test_1`.`t_2` 的 `ID = 1` 的行经过转换后，ID = 2 变为 `2 << (64-1-4) | 1 << (64-1-4-7) | 2 << 44 | 2 = 1157460288606306306`
 
-## 同步延迟监控
-
-DM 支持通过在 MySQL/MariaDB 上写 `heartbeat` 相关的数据，并在数据同步到 DM 时，计算每个同步任务与 MySQL/MariaDB 的实时同步延迟。
-
-> **注意：**
->
-> - `heartbeat` 开启后会在 DM-worker 连接的上游 MySQL 实例上执行写入操作，如果上游多个 MySQL 实例构成主从集群，请确保 DM-worker 连接的是主实例，否则会造成 MySQL 主从间数据的不一致。
-> - 同步延迟的估算的精度在秒级别。
-> - `heartbeat` 相关的 binlog 不会同步到下游，在计算延迟后会被丢弃。
-
-### 系统权限
-
-如果开启 heartbeat 功能，需要上游 MySQL/MariaDB 实例提供下面的权限：
-
-- SELECT
-- INSERT
-- CREATE (databases, tables)
-- DELETE
-
-### 参数配置
-
-在 task 的配置文件中设置：
-
-```
-enable-heartbeat: true
-```
-
-### 原理介绍
-
-- DM-worker 在对应的上游 MySQL/MariaDB 创建库 `dm_heartbeat`（当前不可配置）
-- DM-worker 在对应的上游 MySQL/MariaDB 创建表 `heartbeat`（当前不可配置）
-- DM-worker 每秒钟（当前不可配置）在对应的上游 MySQL/MariaDB 的 `dm_heartbeat`.`heartbeat` 表中，利用 `replace statement` 更新当前时间戳 `TS_master`
-- DM-worker 每个任务拿到 `dm_heartbeat`.`heartbeat` 的 binlog 后，更新自己的同步时间 `TS_slave_task`
-- DM-worker 每 10 秒在对应的上游 MySQL/MariaDB 的 `dm_heartbeat`.`heartbeat` 查询当前的 `TS_master`，并且对每个任务计算 `task_lag` = `TS_master` - `TS_slave_task`
-
-可以在 metrics 的 [binlog replication](monitor-a-dm-cluster.md#binlog-replication) 处理单元找到 replicate lag 监控项。
-
 ## online DDL 工具支持
 
 在 MySQL 生态中，gh-ost 与 pt-osc 等工具较广泛地被使用，DM 对其提供了特殊的支持以避免对不必要的中间数据进行同步。
