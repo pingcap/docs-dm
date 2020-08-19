@@ -23,7 +23,7 @@ help pause-task
 pause a specified running task
 
 Usage:
- dmctl pause-task [-s source ...] <task-name> [flags]
+ dmctl pause-task [-s source ...] <task-name | task-file> [flags]
 
 Flags:
  -h, --help   help for pause-task
@@ -43,7 +43,7 @@ pause-task [-s "mysql-replica-01"] task-name
 ## Flags description
 
 - `-s`: (Optional) Specifies the MySQL source where you want to pause the subtasks of the replication task. If it is set, this command pauses only the subtasks on the specified MySQL source.
-- `task-name`: (Required) Specifies the task name.
+- `task-name| task-file`: (Required) Specifies the task name or task file path.
 
 ## Returned results
 
