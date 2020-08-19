@@ -32,13 +32,14 @@ help operate-source
 ```
 
 ```
-create/update/stop upstream MySQL/MariaDB source
+create/update/stop/show upstream MySQL/MariaDB source
 
 Usage:
-  dmctl operate-source <operate-type> <config-file> [flags]
+  dmctl operate-source <operate-type> [config-file ...] [--print-sample-config] [flags]
 
 Flags:
-  -h, --help   help for operate-source
+  -h, --help                  help for operate-source
+  -p, --print-sample-config   print sample config file of source
 
 Global Flags:
   -s, --source strings   MySQL Source ID
@@ -62,7 +63,11 @@ For the configuration of `source.yaml`, refer to [Upstream Database Configuratio
 
 + `stop`: Stops an upstream database source.
 
-+ `config-file`: (Required) Specifies the file path of `source.yaml`.
++ `show`: Shows the added data source and the corresponding DM-worker.
+
++ `config-file`: Specifies the file path of `source.yaml` and passes multiple file paths.
+
++ `--print-sample-config`: Prints the sample configuration file. This parameter ignores other parameters.
 
 ## Returned results
 
