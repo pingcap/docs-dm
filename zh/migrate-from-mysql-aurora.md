@@ -82,7 +82,7 @@ DM 可以通过多种方式进行部署，目前推荐使用 TiUP 部署 DM 集�
 {{< copyable "shell-regular" >}}
 
 ```bash
-./tiup dmctl --master-addr 127.0.0.1:8261 query-status
+tiup dmctl --master-addr 127.0.0.1:8261 query-status
 ```
 
 返回值为
@@ -138,8 +138,8 @@ from:
 {{< copyable "shell-regular" >}}
 
 ```bash
-./tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source1.yaml
-./tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source2.yaml
+tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source1.yaml
+tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source2.yaml
 ```
 
 添加数据源成功时，每个数据源的返回信息中包含了一个与之绑定的 DM-worker。
@@ -209,7 +209,7 @@ mydumpers:
 {{< copyable "shell-regular" >}}
 
 ```bash
-./tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml --remove-meta
+tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml --remove-meta
 ```
 
 启动成功时的返回信息是
@@ -242,7 +242,7 @@ mydumpers:
 {{< copyable "shell-regular" >}}
 
 ```bash
-./tiup dmctl --master-addr 127.0.0.1:8261 query-status
+tiup dmctl --master-addr 127.0.0.1:8261 query-status
 ```
 
 任务正常运行的返回信息是
