@@ -20,6 +20,7 @@
 + 部署使用
   - [软硬件要求](hardware-and-software-requirements.md)
   + 部署 DM 集群
+    - [使用 TiUP](deploy-a-dm-cluster-using-tiup.md)
     - [使用 DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
   + [使用 DM 同步数据](replicate-data-using-dm.md)
@@ -30,6 +31,7 @@
     - [1.0.x 到 2.0.x 手动升级](manually-upgrade-dm-1.0-to-2.0.md)
     - [1.0.x 版本间升级](upgrade-dm-1.0.md)
   - [集群操作](cluster-operations.md)
+  - [使用 TiUP 运维集群](maintain-dm-using-tiup.md)
   + 任务管理
     - [dmctl 简介](dmctl-introduction.md)
     - [管理上游数据源](manage-source.md)
