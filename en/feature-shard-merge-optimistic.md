@@ -5,7 +5,7 @@ summary: Learn how DM merges and replicates data from sharded tables in the opti
 
 # Merge and Replicate Data from Sharded Tables in Optimistic Mode
 
-This document introduces the sharding support feature provided by Data Migration (DM) in the optimistic mode. This feature allows you to merge and replicate the data of tables with the same table schema in the upstream MySQL or MariaDB instances into one same table in the downstream TiDB.
+This document introduces the sharding support feature provided by Data Migration (DM) in the optimistic mode. This feature allows you to merge and replicate the data of tables with the same or different table schema(s) in the upstream MySQL or MariaDB instances into one same table in the downstream TiDB.
 
 > **Note:**
 >
@@ -13,11 +13,13 @@ This document introduces the sharding support feature provided by Data Migration
 
 ## Background
 
-DM supports executing DDL statements on sharded tables online, which is called sharding DDL and uses the "pessimistic mode" by default. In this mode, when a DDL statement is executed in an upstream sharded table, data replication of this table is paused until the same DDL statement is executed in all other sharded tables. Only by then this DDL statement is executed in the downstream and data replication resumes. This pessimistic mode guarantees that the data replicated to the downstream is always correct but pauses the data replication, which is bad for making A/B changes in the upstream. In some cases, users might spend a long time executing DDL statements in a single sharded table and change the schemas of other sharded tables only after a period of validation. In the pessimistic mode, these DDL statements block data replication and cause many binlog events to pile up.
+DM supports executing DDL statements on sharded tables online, which is called sharding DDL, and uses the "pessimistic mode" by default. In this mode, when a DDL statement is executed in an upstream sharded table, data replication of this table is paused until the same DDL statement is executed in all other sharded tables. Only by then this DDL statement is executed in the downstream and data replication resumes.
 
-Therefore, an "optimistic mode" is needed. In this mode, a DDL statement executed on a sharded table is automatically converted to a statement that is compatible with other sharded tables, and then immediately replicated to the downstream. In this mode, no sharded table is blocked from DML replication.
+The pessimistic mode guarantees that the data replicated to the downstream is always correct, but it pauses the data replication, which is bad for making A/B changes in the upstream. In some cases, users might spend a long time executing DDL statements in a single sharded table and change the schemas of other sharded tables only after a period of validation. In the pessimistic mode, these DDL statements block data replication and cause many binlog events to pile up.
 
-## Configuration of optimistic mode
+Therefore, an "optimistic mode" is needed. In this mode, a DDL statement executed on a sharded table is automatically converted to a statement that is compatible with other sharded tables, and then immediately replicated to the downstream. In this way, the DDL statement does not block any sharded table from executing DML replication.
+
+## Configuration of the optimistic mode
 
 To use the optimistic mode, specify the `shard-mode` item in the task configuration file as `optimistic`. For the detailed sample configuration file, see [DM Advanced Task Configuration File](task-configuration-file-full.md).
 
@@ -46,7 +48,7 @@ In addition, the following restrictions apply to DM, no matter in the optimistic
 - The new table added to a sharding group must have a consistent table schema with that of other members. The `CREATE/RENAME TABLE` statement is forbidden when a batch of DDL statements is being executed.
 - `DROP TABLE` or `DROP DATABASE` is not supported.
 - The DDL statement that is not supported in TiDB is also not supported in DM.
-- The default value of a newly added column must not contain `current_timestamp`, `rand()`, `uuid()`; otherwise, data consistency between the upstream and the downstream might occur.
+- The default value of a newly added column must not contain `current_timestamp`, `rand()`, `uuid()`; otherwise, data inconsistency between the upstream and the downstream might occur.
 
 ## Risks
 
@@ -86,17 +88,17 @@ ALTER TABLE `tbl00` ADD COLUMN `Age` INT DEFAULT -1;
 
 ![optimistic-ddl-fail-example-3](/media/optimistic-ddl-fail-example-3.png)
 
-By then, the `Age` column of `tbl00` is inconsistent because `DEFAULT 0` and `DEFAULT -1` are incompatible with each other. In this situation, DM will report the error but you have to manually fix the data inconsistency.
+By then, the `Age` column of `tbl00` is inconsistent because `DEFAULT 0` and `DEFAULT -1` are incompatible with each other. In this situation, DM will report the error, but you have to manually fix the data inconsistency.
 
 ## Implementation principle
 
-In the optimistic mode, after DM-worker receives the DDL statement from the upstream, it forwards the updated table schema to DM-master. The DM-work tracks the current schema of each sharded table and DM-master merges these schemas into a composite schema that is compatible with DML statements of every sharded table. Then DM-master replicates the corresponding DDL statement to the downstream. DML statements are directly replicated to the downstream.
+In the optimistic mode, after DM-worker receives the DDL statement from the upstream, it forwards the updated table schema to DM-master. DM-worker tracks the current schema of each sharded table and DM-master merges these schemas into a composite schema that is compatible with DML statements of every sharded table. Then DM-master replicates the corresponding DDL statement to the downstream. DML statements are directly replicated to the downstream.
 
 ![optimistic-ddl-flow](/media/optimistic-ddl-flow.png)
 
 ### Examples
 
-Assume the upstream MySQL has three sharded tables (`tbl00`, `tbl01`, and `tbl02`). Merge and replicate these sharded table to the `tbl` table in the downstream TiDB. See the following image:
+Assume the upstream MySQL has three sharded tables (`tbl00`, `tbl01`, and `tbl02`). Merge and replicate these sharded tables to the `tbl` table in the downstream TiDB. See the following image:
 
 ![optimistic-ddl-example-1](/media/optimistic-ddl-example-1.png)
 
@@ -139,7 +141,7 @@ ALTER TABLE `tbl01` DROP COLUMN `Name`;
 
 ![optimistic-ddl-example-6](/media/optimistic-ddl-example-6.png)
 
-Then the downstream will receive the DML statement from `tbl00` and `tbl02` with the `Name` column, so this column is not immediately dropped.
+Then the downstream will receive the DML statements from `tbl00` and `tbl02` with the `Name` column, so this column is not immediately dropped.
 
 In the same way, all DML statements can still be replicated to the downstream:
 
