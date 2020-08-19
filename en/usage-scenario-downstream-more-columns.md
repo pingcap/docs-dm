@@ -52,7 +52,7 @@ When you replicate incremental data using DM, if the downstream table schema has
 ]
 ```
 
-When a DML statement in the binlog event needs to be migrated, if DM does not maintain internally the table schema corresponding to that table, DM will try to use the current table schema in the downstream to parse the binlog event and generate the corresponding DML statement. If the columns in the binlog event is inconsistent with the columns in te downstream table schema, the above error might occur.
+When a DML statement in the binlog event needs to be migrated, if DM does not maintain internally the table schema corresponding to that table, DM will try to use the current table schema in the downstream to parse the binlog event and generate the corresponding DML statement. If the columns in the binlog event are inconsistent with the columns in te downstream table schema, the above error might occur.
 
 In such cases, you can run the [`operate-schema`](manage-schema.md) command to specify for the table a table schema that matches the binlog event. The steps are as follows:
 

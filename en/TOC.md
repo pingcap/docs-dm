@@ -56,7 +56,7 @@
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
-  - [Migrate to Downstream with More Columns](usage-scenario-downstream-more-columns.md)
+  - [Migration When the Downstream Table Has More Columns](usage-scenario-downstream-more-columns.md)
   - [Switch DM-worker Connection between MySQL Instances](usage-scenario-master-slave-switch.md)
 + Performance Tuning
   - [Optimize Configuration](tune-configuration.md)
