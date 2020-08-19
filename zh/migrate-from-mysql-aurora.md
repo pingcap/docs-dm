@@ -49,7 +49,7 @@ Aurora 集群数据与迁移计划如下：
 
 > **注意：**
 >
-> 本次迁移不涉及合库合表，如需使用合库合表请参考 [DM 合库合表场景](https://docs.pingcap.com/zh/tidb-data-migration/dev/scenarios#%E5%90%88%E5%BA%93%E5%90%88%E8%A1%A8%E5%9C%BA%E6%99%AF) 。
+> 本次迁移不涉及合库合表，如需使用合库合表请参考 [DM 合库合表场景](scenarios.md#合库合表场景) 。
 
 ## 第 1 步：数据迁移前置条件
 
@@ -133,7 +133,7 @@ from:
   port: 3306
 ```
 
-参照[使用 DM 同步数据：创建数据源](https://docs.pingcap.com/zh/tidb-data-migration/dev/replicate-data-using-dm#%E7%AC%AC-3-%E6%AD%A5%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E6%BA%90)，通过 TiUP 使用 `dmctl` 添加两个数据源。
+参照[使用 DM 同步数据：创建数据源](replicate-data-using-dm.md#第-3-步创建数据源)，通过 TiUP 使用 `dmctl` 添加两个数据源。
 
 {{< copyable "shell-regular" >}}
 
