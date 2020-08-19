@@ -99,7 +99,7 @@ To illustrate how to modify the task configuration, the following is an example 
     {{< copyable "" >}}
 
     ```bash
-    stop-task <task-name>
+    stop-task <task-name | task-file>
     ```
 
 3. Start the task by executing the `start-task` command:
