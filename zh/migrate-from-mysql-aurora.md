@@ -17,7 +17,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/migrate-from-mysql-aurora/']
 | Aurora-2 | test-dm-2-0-2.cluster-czrtqco96yc6.us-east-2.rds.amazonaws.com | 3306 | 写入器 | Aurora (MySQL)-5.7.12 |
 | Aurora-2 | test-dm-2-0-2.cluster-ro-czrtqco96yc6.us-east-2.rds.amazonaws.com | 3306 | 读取器 | Aurora (MySQL)-5.7.12 |
 
-Aurora 集群中数据与迁移计划如下：
+Aurora 集群数据与迁移计划如下：
 
 | 集群 | 数据库 | 表 | 是否迁移 |
 |:---- |:---- | :--- | :--- |
@@ -45,7 +45,7 @@ Aurora 集群中数据与迁移计划如下：
 |:---- | :--- |
 | root | 87654321 |
 
-预期迁移后，TiDB 集群中存在``` `migrate_me`.`t1` ```与``` `migrate_me`.`t2` ```，其中数据与 Aurora 集群一致。
+预期迁移后，TiDB 集群中存在表``` `migrate_me`.`t1` ```与``` `migrate_me`.`t2` ```，其中数据与 Aurora 集群一致。
 
 > **注意：**
 >
@@ -55,7 +55,7 @@ Aurora 集群中数据与迁移计划如下：
 
 ### DM 部署节点
 
-DM 作为数据迁移的核心，需要正常连接上游 Aurora 与下游 TiDB 集群，因此通过 MySQL client 等方式检查部署 DM 的节点能连通上下游。除此以外，DM 对软硬件要求可以参见 [DM 集群软硬件环境需求](hardware-and-software-requirements.md)。
+DM 作为数据迁移的核心，需要正常连接上游 Aurora 集群与下游 TiDB 集群，因此通过 MySQL client 等方式检查部署 DM 的节点能连通上下游。除此以外，DM 对软硬件要求参见 [DM 集群软硬件环境需求](hardware-and-software-requirements.md)。
 
 ### Aurora
 
@@ -72,7 +72,7 @@ CHECK
 >
 > 基于 GTID 的数据迁移需要 MySQL 5.7 (Aurora 2.04) 或更高版本。
 
-除这些 Aurora 特有配置以外，上游数据库需满足权限、表结构等迁移 MySQL 的其他要求，参见[上游 MySQL 实例检查内容](precheck.md#检查内容)。
+除上述 Aurora 特有配置以外，上游数据库需满足迁移 MySQL 的其他要求，参见[上游 MySQL 实例检查内容](precheck.md#检查内容)。
 
 ## 第 2 步：部署 DM 集群
 
@@ -82,7 +82,7 @@ DM 可以通过多种方式进行部署，目前推荐使用 TiUP 部署 DM 集�
 
 > **注意：**
 >
-> 是用其他方式部署的 DM 可以用类似的方式调用 `dmctl`，见 [dmctl 简介](dmctl-introduction.md)
+> 使用其他方式部署 DM 可以用类似的方式调用 `dmctl`，见 [dmctl 简介](dmctl-introduction.md)
 
 {{< copyable "shell-regular" >}}
 
@@ -104,7 +104,7 @@ DM 可以通过多种方式进行部署，目前推荐使用 TiUP 部署 DM 集�
 
 > **注意：**
 >
-> - DM 所使用的配置文件支持明文数据库密码或密文数据库密码。关于如何获得密文数据库密码，参考[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
+> DM 所使用的配置文件支持明文或密文数据库密码。关于如何获得密文数据库密码，参考[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
 
 根据示例信息保存如下的数据源配置文件：
 
@@ -147,7 +147,7 @@ from:
 ./tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source2.yaml
 ```
 
-每个数据源的返回信息中，应当包含了一个与之绑定的 DM-worker。
+添加数据源成功时，每个数据源的返回信息中包含了一个与之绑定的 DM-worker。
 
 ```bash
 {
@@ -168,9 +168,9 @@ from:
 
 > **注意：**
 >
-> 由于 Aurora 不支持 FTWRL，全量导出数据时需要暂停写入，见 [AWS 官网](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)。在示例的全量+增量模式下，DM 将自动启用 `safe mode` 解决这一问题。如果需要保证数据一致请按照官网操作，并将下文中的配置文件最后一行 `extra-args` 设置为空
+> 由于 Aurora 不支持 FTWRL，仅使用全量模式导出数据时需要暂停写入，见 [AWS 官网说明](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)。在示例的全量+增量模式下，DM 将自动启用 `safe mode` 解决这一问题，但仍有可能出现数据不一致。如需保证数据一致请按照 [AWS 官网说明](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)操作，并将下文的配置文件最后一行 `extra-args` 设置为空
 
-本示例选择同步 Aurora 已有数据并将新增数据实时同步给 TiDB，即**全量+增量**模式。根据上文中的 TiDB 集群信息、添加数据源 ID、要同步以及忽略的表，保存如下任务配置文件 `task.yaml`：
+本示例选择同步 Aurora 已有数据并将新增数据实时同步给 TiDB，即**全量+增量**模式。根据上文的 TiDB 集群信息、已添加的数据源 ID、要同步以及忽略的表，保存如下任务配置文件 `task.yaml`：
 
 ```yaml
 # 任务名，多个同时运行的任务不能重名。
@@ -197,19 +197,19 @@ mysql-instances:
 
 # 黑白名单配置。
 block-allow-list:
-  global:                             # 被上文 block-allow-list: "global" 所引用
+  global:                             # 被上文 block-allow-list: "global" 引用
     do-dbs: ["migrate_me"]            # 需要同步的上游数据库白名单。
     ignore-dbs: ["ignore_me"]         # 需要同步的表的库名。
 
 # Dump 单元配置
 mydumpers:
-  global:
+  global:                             # 被上文 mydumper-config-name: "global" 引用
     extra-args: "--consistency none"  # Aurora 不支持 FTWRL，配置此项以绕过。
 ```
 
 ## 第 5 步：启动任务
 
-通过 TiUP 使用 `dmctl` 启动任务。
+通过 TiUP 使用 `dmctl` 启动任务。`--remove-meta` 参数可以清理本任务上次运行产生的状态。
 
 {{< copyable "shell-regular" >}}
 
@@ -242,7 +242,7 @@ mydumpers:
 
 ## 第 6 步：查询任务并验证数据
 
-如需了解 DM 集群中是否存在正在运行的同步任务及任务状态等信息，可通过 TiUP 使用 `dmctl` 进行查询。
+通过 TiUP 使用 `dmctl` 查询正在运行的同步任务及任务状态等信息。
 
 {{< copyable "shell-regular" >}}
 
@@ -269,4 +269,4 @@ mydumpers:
 }
 ```
 
-用户可以查询数据，在 Aurora 中修改数据并验证到 TiDB 的同步。
+用户也可以在下游查询数据，在 Aurora 中修改数据并验证到 TiDB 的同步。
