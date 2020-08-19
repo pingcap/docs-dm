@@ -11,7 +11,7 @@ When the upstream MySQL instance that DM-worker connects to needs downtime maint
 >
 > - You can switch the DM-worker connection to only an instance within the same primary-secondary replication cluster.
 > - The MySQL instance to be newly connected to must have the binlog required by DM-worker.
-> - DM-worker must operate in the GTID sets mode, which means you must specify `enable_gtid=true` in the corresponding source configuration file.
+> - DM-worker must operate in the GTID sets mode, which means you must specify `enable-gtid: true` in the corresponding source configuration file.
 > - The connection switch only supports the following two scenarios. Strictly follow the procedures for each scenario. Otherwise, you might have to re-deploy the DM cluster according to the newly connected MySQL instance and perform the data replication task all over again.
 
 For more details on GTID set, refer to [MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/replication-gtids-concepts.html#replication-gtids-concepts-gtid-sets).
@@ -48,5 +48,5 @@ To make DM-worker connect to a new MySQL instance in the upstream by modifying t
     - `gtid-E` contains `gtid-S`.
 5. Use `stop-task` to stop all running tasks of data replication.
 6. Use the `operator-source stop` command to remove the source configuration corresponding to the address of the old MySQL instance from the DM cluster.
-7. Update the address of MySQL instance in the source configuration file and use the `operate-source create` command to reload the new source configuration in the DM cluster.
+7. Update the address of the MySQL instance in the source configuration file and use the `operate-source create` command to reload the new source configuration in the DM cluster.
 8. Use `start-task` to restart the replication task.
