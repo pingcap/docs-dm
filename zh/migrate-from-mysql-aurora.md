@@ -82,16 +82,38 @@ DM 可以通过多种方式进行部署，目前推荐使用 TiUP 部署 DM 集�
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dmctl --master-addr 127.0.0.1:8261 query-status
+tiup dmctl --master-addr 127.0.0.1:8261 list-member
 ```
 
-返回值为
+返回值中的 `master` 与 `worker` 与部署数目一致：
 
 ```bash
 {
     "result": true,
     "msg": "",
-    "tasks": []
+    "members": [
+        {
+            "leader": {
+                ...
+            }
+        },
+        {
+            "master": {
+                "msg": "",
+                "masters": [
+                    ...
+                ]
+            }
+        },
+        {
+            "worker": {
+                "msg": "",
+                "workers": [
+                    ...
+                ]
+            }
+        }
+    ]
 }
 ```
 
