@@ -57,10 +57,10 @@ When you use the optimistic mode for a replication task, a DDL statement is repl
 ### Operations that cause data inconsistency
 
 - The schema of each sharded table is incompatible with each other. For example:
-    - Add a column of the same name to two sharded tables respectively but the columns are of different types.
-    - Add a column of the same name to two sharded tables respectively but the columns have different default values.
-    - Add a generated column of the same name to two sharded tables respectively but the columns are generated using different expressions.
-    - Add an index of the same name to two sharded tables respectively but the keys are different.
+    - Two columns of the same name are added to two sharded tables respectively, but the columns are of different types.
+    - Two columns of the same name are added to two sharded tables respectively, but the columns have different default values.
+    - Two generated columns of the same name are added to two sharded tables respectively, but the columns are generated using different expressions.
+    - Two indexes of the same name are added to two sharded tables respectively, but the keys are different.
     - Other different table schemas with the same name.
 - Execute the DDL statement that can corrupt data in the sharded table and then try to roll back.
 
