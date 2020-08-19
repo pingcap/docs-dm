@@ -15,11 +15,11 @@ aliases: ['/docs-cn/tidb-data-migration/dev/manage-source/']
 {{< copyable "shell-regular" >}}
 
 ```bash
-./dmctl -encrypt 123456
+./dmctl -encrypt 'abc!@#123'
 ```
 
 ```
-VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU=
+MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
 
 ## 加载数据源配置
