@@ -107,7 +107,7 @@ from:
 
 ## 第 3 步：下线 v1.0.x 集群
 
-如果原 v1.0.x 集群是使用 DM-Ansible 部署的，则[使用 DM-Ansible 下线 v1.0.x 集群](https://docs.pingcap.com/zh/tidb-data-migration/v1.0/cluster-operations#%E4%B8%8B%E7%BA%BF%E9%9B%86%E7%BE%A4)。
+如果原 v1.0.x 集群是使用 DM-Ansible 部署的，则[使用 DM-Ansible 下线 v1.0.x 集群](https://docs.pingcap.com/zh/tidb-data-migration/v1.0/cluster-operations#下线集群)。
 
 如果原 v1.0.x 集群是使用 Binary 部署，则直接停止 DM-worker 与 DM-master 进程。
 
