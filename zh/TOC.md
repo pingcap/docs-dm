@@ -71,6 +71,9 @@
     - [上游数据库配置](source-configuration-file.md)
     - [任务配置](task-configuration-file.md)
     - [完整任务配置](task-configuration-file-full.md)
+  + 安全
+    - [为 DM 的连接开启加密传输](enable-tls.md)
+    - [生成自签名证书](generate-self-signed-certificates.md)
   - [监控指标](monitor-a-dm-cluster.md)
   - [告警信息](alert-rules.md)
   - [错误码](error-handling.md#常见故障处理方法)

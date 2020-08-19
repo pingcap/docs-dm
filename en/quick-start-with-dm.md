@@ -191,7 +191,7 @@ A normal DM cluster returns the following information:
                             "http://127.0.0.1:8291"
                         ],
                         "clientURLs": [
-                            "http://0.0.0.0:8261"
+                            "http://127.0.0.1:8261"
                         ]
                     },
                     {
@@ -202,7 +202,7 @@ A normal DM cluster returns the following information:
                             "http://127.0.0.1:8292"
                         ],
                         "clientURLs": [
-                            "http://0.0.0.0:8361"
+                            "http://127.0.0.1:8361"
                         ]
                     },
                     {
@@ -213,7 +213,7 @@ A normal DM cluster returns the following information:
                             "http://127.0.0.1:8293"
                         ],
                         "clientURLs": [
-                            "http://0.0.0.0:8461"
+                            "http://127.0.0.1:8461"
                         ]
                     },
                 ]
