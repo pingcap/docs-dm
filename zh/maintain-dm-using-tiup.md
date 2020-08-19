@@ -247,7 +247,7 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 
 ## 导入 DM-Ansible 部署的 DM 1.0 集群并升级
 
-在 TiUP 之前，一般使用 DM Ansible 部署 DM 集群，import 命令用于根据 Ansible 部署的 1.0 集群生成 TiUP 对应的 `topology.yaml`, 并根据拓扑部署 2.0 的集群。
+在 TiUP 之前，一般使用 DM Ansible 部署 DM 集群，`import` 命令用于根据 Ansible 部署的 1.0 集群生成 TiUP 对应的 `topology.yaml`, 并根据拓扑部署 2.0 的集群。
 
 例如，导入一个 DM Ansible 集群：
 
@@ -257,7 +257,7 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 tiup dm import --dir=/path/to/tidb-ansible
 ```
 
-import 命令的工作流程如下：
+`import` 命令的工作流程如下：
 
 - 根据 ansible 部署的集群生成一个 TiUP 部署使用的拓扑文件 [topology.yml](https://github.com/pingcap/tiup/blob/master/examples/topology.dm.example.yaml)。
 - 确认部署后使用生成的拓扑文件部署 2.0 以上版本的集群。
