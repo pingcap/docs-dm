@@ -1,6 +1,6 @@
 ---
 title: DM 任务完整配置文件介绍
-aliases: ['/docs-cn/tidb-data-migration/dev/task-configuration-file-full/']
+aliases: ['/docs-cn/tidb-data-migration/dev/task-configuration-file-full/','/zh/tidb-data-migration/dev/dm-portal','/docs-cn/tidb-data-migration/dev/dm-portal/']
 ---
 
 # DM 任务完整配置文件介绍
@@ -32,9 +32,6 @@ shard-mode: "pessimistic"       # 如果为分库分表合并任务则需要配�
 ignore-checking-items: []       # 忽略的检测项，可包含 "all"、"dump_privilege"、"replication_privilege"、"version"、"binlog_enable"、"binlog_format"、"binlog_row_image"、"table_schema"、"schema_of_shard_tables"、"auto_increment_ID"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
 remove-meta: false              # 是否在任务同步开始前移除该任务名对应的 `meta`（`checkpoint` 和 `onlineddl` 等）。
-enable-heartbeat: false         # 若开启 `heartbeat` 功能，DM 会定时更新上游 MySQL heartbeat table，用于估算同步延迟
-heartbeat-update-interval: 1    # DM 更新上游 MySQL heartbeat table 的间隔
-heartbeat-report-interval: 10   # DM 估算延迟 lag 的间隔
 timezone: "Asia/Shanghai"       # 时区
 case-sensitive: false           # schema/table 是否大小写敏感
 online-ddl-scheme: "gh-ost"     # 目前仅支持 "gh-ost" 、"pt"
@@ -50,6 +47,10 @@ target-database:                # 下游数据库实例配置
     sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE"
     tidb_skip_utf8_check: 1
     tidb_constraint_check_in_place: 0
+  security:                       # 下游 TiDB TLS 相关配置                             
+    ssl-ca: "/path/to/ca.pem"
+    ssl-cert: "/path/to/cert.pem"
+    ssl-key: "/path/to/key.pem"
 
 ## ******** 功能配置集 **********
 

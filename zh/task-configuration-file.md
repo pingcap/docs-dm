@@ -29,7 +29,7 @@ target-database:       # 下游数据库实例配置
   host: "127.0.0.1"
   port: 4000
   user: "root"
-  password: ""         # 如果不为空则需经过 dmctl 加密
+  password: ""         # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
 
 ## ******** 功能配置集 **********
 block-allow-list:        # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
@@ -89,6 +89,6 @@ mysql-instances:
 
 1. 修改任务配置文件，将 `remove-meta` 设置为 `false`
 
-2. 通过 `stop-task` 命令停止任务：`stop-task <task-name>`
+2. 通过 `stop-task` 命令停止任务：`stop-task <task-name | task-file>`
 
 3. 通过 `start-task` 命令启动任务：`start-task <config-file>`

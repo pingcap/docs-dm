@@ -6,13 +6,17 @@ aliases: ['/docs-cn/tidb-data-migration/dev/dmctl-introduction/','/docs-cn/tidb-
 
 # dmctl 简介
 
-dmctl 是用来控制 DM 集群的命令行工具。对于用 DM-Ansible 部署的 DM 集群，dmctl 二进制文件路径为 `dm-ansible/dmctl`。
+dmctl 是用来控制 DM 集群的命令行工具。对于用 TiUP 部署的 DM 集群，可以直接使用 [`tiup dmctl`](maintain-dm-using-tiup.md#集群控制工具-dmctl)。
 
 dmctl 同时支持交互模式和命令模式。
 
 ## dmctl 交互模式
 
 进入交互模式，与 DM-master 进行交互：
+
+> **注意：**
+>
+> 交互模式下不具有 bash 的特性，比如不需要通过引号传递字符串参数而应当直接传递。
 
 {{< copyable "shell-regular" >}}
 
@@ -90,20 +94,20 @@ Available Commands:
   offline-worker        offline-worker <name> <address>
   operate-source        operate-source <operate-type> [config-file ...] [--print-sample-config]
   pause-relay           pause-relay <-s source ...>
-  pause-task            pause-task [-s source ...] <task-name>
+  pause-task            pause-task [-s source ...] <task-name | task-file>
   purge-relay           purge-relay <-s source> [--filename] [--sub-dir]
   query-error           query-error [-s source ...] [task-name]
   query-status          query-status [-s source ...] [task-name] [--more]
   resume-relay          resume-relay <-s source ...>
-  resume-task           resume-task [-s source ...] <task-name>
+  resume-task           resume-task [-s source ...] <task-name | task-file>
   show-ddl-locks        show-ddl-locks [-s source ...] [task-name]
   sql-inject            sql-inject <-s source> <task-name> <sql1;sql2;>
   sql-replace           sql-replace <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name> <sql1;sql2;>
   sql-skip              sql-skip <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name>
   start-task            start-task [-s source ...] <config-file>
-  stop-task             stop-task [-s source ...] <task-name>
+  stop-task             stop-task [-s source ...] <task-name | task-file>
   switch-relay-master   switch-relay-master <-s source ...>
-  unlock-ddl-lock       unlock-ddl-lock [-s source ...] <lock-ID>
+  unlock-ddl-lock       unlock-ddl-lock <lock-ID>
   update-master-config  update-master-config <config-file>
   update-relay          update-relay [-s source ...] <config-file>
   update-task           update-task [-s source ...] <config-file>

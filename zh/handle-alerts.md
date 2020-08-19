@@ -8,6 +8,20 @@ aliases: ['/docs-cn/tidb-data-migration/dev/handle-alerts/']
 
 本文档介绍 DM 中各主要告警信息的处理方法。
 
+## 高可用告警
+
+### `DM_worker_offline`
+
+存在离线的 DM-worker 超过一小时会触发该告警。在高可用架构下，该告警可能不会直接中断任务，但是会提升任务中断的风险。处理告警可以查看对应 DM-worker 节点的工作状态，检查是否连通，并通过日志排查错误。
+
+### `DM_DDL_error`
+
+处理 shard DDL 时出现错误，此时需要参考 [DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
+
+### `DM_pending_DDL`
+
+存在未完成的 shard DDL 并超过一小时会触发该告警。在某些应用场景下，存在未完成的 shard DDL 可能是用户所期望的。在用户预期以外的场景下，可以通过[手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)解决。
+
 ## 任务状态告警
 
 ### `DM_task_state`
@@ -15,6 +29,10 @@ aliases: ['/docs-cn/tidb-data-migration/dev/handle-alerts/']
 当 DM-worker 内有子任务处于 `Paused` 状态超过 20 分钟时会触发该告警，此时需要参考 [DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
 
 ## relay log 告警
+
+> **注意：**
+>
+> 当前 DM v2.0 版本暂不支持开启 relay log 功能。
 
 ### `DM_relay_process_exits_with_error`
 
@@ -26,7 +44,6 @@ aliases: ['/docs-cn/tidb-data-migration/dev/handle-alerts/']
 
 - 手动清理该磁盘上其他无用数据以增加可用容量。
 - 尝试调整 relay log 的[自动清理策略](relay-log.md#自动数据清理)或执行[手动清理](relay-log.md#手动数据清理)。
-- 尝试[迁移 DM-worker 实例](cluster-operations.md#替换迁移-dm-worker-实例)到其他可用容量充足的磁盘上。
 
 ### `DM_relay_log_data_corruption`
 

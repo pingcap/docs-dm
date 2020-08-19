@@ -11,7 +11,6 @@
     - [Table routing](key-features.md#table-routing)
     - [Block & Allow Lists](key-features.md#block--allow-table-lists)
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
-    - [同步延迟监控](key-features.md#同步延迟监控)
     - [Online-ddl-scheme](feature-online-ddl-scheme.md)
     - [分库分表合并同步](feature-shard-merge.md)
 + [应用场景](scenarios.md)
@@ -21,7 +20,7 @@
 + 部署使用
   - [软硬件要求](hardware-and-software-requirements.md)
   + 部署 DM 集群
-    - [使用 DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
+    - [使用 TiUP](deploy-a-dm-cluster-using-tiup.md)
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
   + [使用 DM 同步数据](replicate-data-using-dm.md)
   + [监控与告警设置](monitor-a-dm-cluster.md)
@@ -30,7 +29,7 @@
   + 版本升级
     - [1.0.x 到 2.0.x 手动升级](manually-upgrade-dm-1.0-to-2.0.md)
     - [1.0.x 版本间升级](upgrade-dm-1.0.md)
-  - [集群操作](cluster-operations.md)
+  - [使用 TiUP 运维集群](maintain-dm-using-tiup.md)
   + 任务管理
     - [dmctl 简介](dmctl-introduction.md)
     - [管理上游数据源](manage-source.md)
@@ -41,8 +40,9 @@
     - [暂停任务](pause-task.md)
     - [恢复任务](resume-task.md)
     - [停止任务](stop-task.md)
-    - [跳过或替代执行异常的 SQL 语句](skip-or-replace-abnormal-sql-statements.md)
+    - [处理出错的 SQL 语句](handle-failed-sql-statements.md)
   - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
+  - [管理迁移中表的表结构](manage-schema.md)
   - [告警处理](handle-alerts.md)
   - [日常巡检](daily-check.md)
 + 故障处理
@@ -53,6 +53,7 @@
   - [分库分表合并场景](usage-scenario-shard-merge.md)
   - [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
   - [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
+  - [下游表结构存在更多列的迁移场景](usage-scenario-downstream-more-columns.md)
   - [DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
 + 性能调优
   - [配置调优](tune-configuration.md)
@@ -60,7 +61,6 @@
   + 架构
     - [DM 简介](overview.md)
     - [DM-worker 简介](dm-worker-intro.md)
-    - [DM Relay Log](relay-log.md)
   - [DM 命令行参数](command-line-flags.md)
   + 配置
     - [概述](config-overview.md)
@@ -69,7 +69,9 @@
     - [上游数据库配置](source-configuration-file.md)
     - [任务配置](task-configuration-file.md)
     - [完整任务配置](task-configuration-file-full.md)
-    - [使用 DM Portal 生成任务配置](dm-portal.md)
+  + 安全
+    - [为 DM 的连接开启加密传输](enable-tls.md)
+    - [生成自签名证书](generate-self-signed-certificates.md)
   - [监控指标](monitor-a-dm-cluster.md)
   - [告警信息](alert-rules.md)
   - [错误码](error-handling.md#常见故障处理方法)

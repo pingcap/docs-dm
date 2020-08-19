@@ -12,7 +12,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-master-slave-switch/'
 >
 > - 仅支持在同一个主从复制集内的 MySQL 实例间进行切换。
 > - 将要切换到的 MySQL 实例必须拥有 DM-worker 所需的 binlog。
-> - DM-worker 必须以 GTID sets 模式运行，即 DM 通过 DM-Ansible 部署时必须指定 `enable_gtid=true`。
+> - DM-worker 必须以 GTID sets 模式运行，即对应 source 配置文件中指定 `enable-gtid: true`。
 > - DM 仅支持以下两种切换场景，且必须严格按照各场景的步骤执行操作，否则可能需要根据切换后的 MySQL 实例重新搭建 DM 集群并完整重做数据迁移任务。
 
 有关 GTID sets 的概念解释，请参考 [MySQL 文档](https://dev.mysql.com/doc/refman/5.7/en/replication-gtids-concepts.html#replication-gtids-concepts-gtid-sets)。
@@ -27,29 +27,27 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-master-slave-switch/'
 
 如果 DM-worker 连接的 VIP 需要指向新的 MySQL 实例，需要按以下步骤进行操作：
 
-1. 使用 `query-status` 命令获取当前 relay 处理单元已从原 MySQL 实例获取到的 binlog 对应的 GTID sets (`relayBinlogGtid`)，记为 `gtid-W`。
+1. 使用 `query-status` 命令获取当前 binlog replication 处理单元已复制到下游的 binlog 对应的 GTID sets (`syncerBinlogGtid`)，记为 `gtid-S`。
 2. 在将要切换到的 MySQL 实例上使用 `SELECT @@GLOBAL.gtid_purged;` 获取已经被 purged 的 binlog 对应的 GTID sets，记为 `gtid-P`。
 3. 在将要切换到的 MySQL 实例上使用 `SELECT @@GLOBAL.gtid_executed;` 获取所有已经执行成功的事务对应的 GTID sets，记为 `gtid-E`。
 4. 确保满足以下关系，否则不支持将 DM-worker 连接切换到相应的 MySQL 实例：
-    - `gtid-W` 包含 `gtid-P`（`gtid-P` 可以为空）
-    - `gtid-E` 包含 `gtid-W`
-5. 使用 `pause-relay` 命令暂停 relay 处理。
-6. 使用 `pause-task` 命令暂停所有运行中的数据迁移任务。
-7. 变更 VIP 以指向新的 MySQL 实例。
-8. 使用 `switch-relay-master` 命令通知 relay 处理单元进行主从切换。
-9. 使用 `resume-relay` 命令恢复 relay 处理，使其从新的 MySQL 实例读取 binlog。
-10. 使用 `resume-task` 命令恢复之前的数据迁移任务。
+    - `gtid-S` 包含 `gtid-P`（`gtid-P` 可以为空）
+    - `gtid-E` 包含 `gtid-S`
+5. 使用 `pause-task` 命令暂停所有运行中的数据迁移任务。
+6. 变更 VIP 以指向新的 MySQL 实例。
+7. 使用 `resume-task` 命令恢复之前的数据迁移任务。
 
 ## 变更 DM-worker 连接的上游 MySQL 实例地址
 
 若要变更 DM-worker 的配置信息来使 DM-worker 连接到新的上游 MySQL 实例，需要按以下步骤进行操作：
 
-1. 使用 `query-status` 命令获取当前 relay 处理单元已从原 MySQL 实例获取到的 binlog 对应的 GTID sets (`relayBinlogGtid`)，记为 `gtid-W`。
+1. 使用 `query-status` 命令获取当前 binlog replication 处理单元已复制到下游的 binlog 对应的 GTID sets (`syncerBinlogGtid`)，记为 `gtid-S`。
 2. 在将要切换到的 MySQL 实例上使用 `SELECT @@GLOBAL.gtid_purged;` 获取已经被 purged 的 binlog 对应的 GTID sets，记为 `gtid-P`。
 3. 在将要切换到的 MySQL 实例上使用 `SELECT @@GLOBAL.gtid_executed;` 获取所有已经执行成功的事务对应的 GTID sets，记为 `gtid-E`。
 4. 确保满足以下关系，否则不支持将 DM-worker 连接切换到相应的 MySQL 实例：
-    - `gtid-W` 包含 `gtid-P`（`gtid-P` 可以为空）
-    - `gtid-E` 包含 `gtid-W`
+    - `gtid-S` 包含 `gtid-P`（`gtid-P` 可以为空）
+    - `gtid-E` 包含 `gtid-S`
 5. 使用 `stop-task` 命令停止所有运行中的数据迁移任务。
-6. 更新 `inventory.ini` 中的 DM-worker 配置，并使用 DM-Ansible 对 DM-worker 进行滚动升级操作。
-7. 使用 `start-task` 命令重新启动数据迁移任务。
+6. 使用 `operate-source stop` 命令从 DM 集群中移除原 MySQL 实例地址对应的 source 配置。
+7. 更新 source 配置文件中的 MySQL 实例地址并使用 `operate-source create` 命令将新的 source 配置重新加载到 DM 集群中。
+8. 使用 `start-task` 命令重新启动数据迁移任务。
