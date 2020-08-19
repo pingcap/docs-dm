@@ -16,7 +16,7 @@ This section describes the basic use of dmctl commands in the interactive mode.
 
 > **Note:**
 >
-> The interactive mode does not support Bash features. For example, you need to directly pass string flags instead of passing them in quotation marks.
+> The interactive mode does not support Bash features. For example, you need to directly pass string flags instead of passing them in quotes.
 
 ### dmctl help
 
