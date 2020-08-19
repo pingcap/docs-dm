@@ -16,7 +16,7 @@ Enter the interactive mode to interact with DM-master:
 
 > **Note:**
 >
-> The interactive mode does not have the features of bash. For example, string parameters should be passed directly without quotation marks.
+> The interactive mode does not support Bash features. For example, you need to directly pass string flags instead of passing them in quotes.
 
 {{< copyable "shell-regular" >}}
 
