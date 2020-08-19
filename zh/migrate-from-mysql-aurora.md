@@ -154,7 +154,7 @@ from:
             "result": true,
             "msg": "",
             "source": "aurora-replica-01",
-            "worker": "a-dm-worker-ID"
+            "worker": "one-dm-worker-ID"
         }
     ]
 }
@@ -194,56 +194,36 @@ block-allow-list:
 
 ## 第 5 步：启动任务
 
-1. 进入 dmctl 目录 `/home/tidb/dm-ansible/resources/bin/`
+通过 TiUP 使用 `dmctl` 启动任务。
 
-2. 执行以下命令启动 dmctl
+{{< copyable "shell-regular" >}}
 
-    {{< copyable "shell-regular" >}}
+```bash
+./tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml
+```
 
-    ```bash
-    ./dmctl --master-addr 172.16.10.71:8261
-    ```
+启动成功时的返回信息是
 
-3. 执行以下命令启动数据同步任务（`task.yaml` 是之前编辑的配置文件）
-
-    {{< copyable "shell-regular" >}}
-
-    ```bash
-    start-task ./task.yaml
-    ```
-
-    - 如果执行命令后的返回结果中不包含错误信息，则表明任务已经成功启动
-    - 如果包含以下错误信息，则表明上游 Aurora 用户可能拥有 TiDB 不支持的权限类型
-
-        ```json
+```
+{
+    "result": true,
+    "msg": "",
+    "sources": [
         {
-            "id": 4,
-            "name": "source db dump privilege chcker",
-            "desc": "check dump privileges of source DB",
-            "state": "fail",
-            "errorMsg": "line 1 column 285 near \"LOAD FROM S3, SELECT INTO S3 ON *.* TO 'root'@'%' WITH GRANT OPTION\" ...",
-            "instruction": "",
-            "extra": "address of db instance - pingcap-1.h8emfqdptyc4.us-east-2.rds.amazonaws.com"
+            "result": true,
+            "msg": "",
+            "source": "aurora-replica-01",
+            "worker": "one-dm-worker-ID"
         },
         {
-            "id": 5,
-            "name": "source db replication privilege chcker",
-            "desc": "check replication privileges of source DB",
-            "state": "fail",
-            "errorMsg": "line 1 column 285 near \"LOAD FROM S3, SELECT INTO S3 ON *.* TO 'root'@'%' WITH GRANT OPTION\" ...",
-            "instruction": "",
-            "extra": "address of db instance - pingcap-1.h8emfqdptyc4.us-east-2.rds.amazonaws.com"
+            "result": true,
+            "msg": "",
+            "source": "aurora-replica-02",
+            "worker": "another-dm-worker-ID"
         }
-        ```
-
-        此时可以选择以下两种处理方法中的任意一种进行处理后，再使用 `start-task` 尝试重新启动任务：
-
-        1. 为用于进行数据迁移的 Aurora 用户移除不被 TiDB 支持的不必要的权限
-        2. 如果能确保 Aurora 用户拥有 DM 所需要的权限，可以在 `task.yaml` 配置文件中添加如下顶级配置项以跳过启用任务时的前置权限检查
-
-            ```yaml
-            ignore-checking-items: ["dump_privilege", "replication_privilege"]
-            ```
+    ]
+}
+```
 
 ## 第 6 步：查询任务
 
