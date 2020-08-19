@@ -204,7 +204,7 @@ mydumpers:
 
 ## 第 5 步：启动任务
 
-通过 TiUP 使用 `dmctl` 启动任务。`--remove-meta` 参数可以清理本任务上次运行产生的状态。
+通过 TiUP 使用 `dmctl` 启动任务。
 
 {{< copyable "shell-regular" >}}
 
