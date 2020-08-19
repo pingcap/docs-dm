@@ -31,7 +31,7 @@ In the Grafana dashboard, the default name of DM is `DM-task`.
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
 | before any operate error | The number of errors before any operation | N/A | N/A |
-| source bound error | The number of data source binding operations | N/A | N/A |
+| source bound error | The number of errors of data source binding operations | N/A | N/A |
 | start error | The number of errors during the start of a subtask | N/A | N/A |
 | pause error | The number of errors during the pause of a subtask | N/A | N/A |
 | resume error | The number of errors during the resuming of a subtask | N/A | N/A |
@@ -47,7 +47,7 @@ In the Grafana dashboard, the default name of DM is `DM-task`.
 | number of workers in different state | The number of DM-workers in different states | Some DM-worker(s) has (have) been offline for more than one hour | critical |
 | workers' state | The state of the DM-worker | N/A | N/A |
 | number of worker event error | The number of different types of DM-worker errors | N/A | N/A |
-| shard ddl error per minute | The number of different types of sharding DDL errors per minute | A sharding DDL error occurs | critical |
+| shard ddl error per minute | The number of different types of sharding DDL errors per minute | Any sharding DDL error occurs | critical |
 | number of pending shard ddl | The number of pending sharding DDL operations | The number of pending sharding DDL operations has existed for more than one hour | critical |
 
 ### Task state
