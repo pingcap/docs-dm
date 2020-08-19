@@ -48,7 +48,7 @@ In the Grafana dashboard, the default name of DM is `DM-task`.
 | workers' state | The state of the DM-worker | N/A | N/A |
 | number of worker event error | The number of different types of DM-worker errors | N/A | N/A |
 | shard ddl error per minute | The number of different types of sharding DDL errors per minute | Any sharding DDL error occurs | critical |
-| number of pending shard ddl | The number of pending sharding DDL operations | The number of pending sharding DDL operations has existed for more than one hour | critical |
+| number of pending shard ddl | The number of pending sharding DDL operations | Any pending sharding DDL operation has existed for more than one hour | critical |
 
 ### Task state
 
