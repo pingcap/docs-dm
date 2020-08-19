@@ -165,24 +165,24 @@ tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source2.ya
 >
 > 由于 Aurora 不支持 FTWRL，仅使用全量模式导出数据时需要暂停写入，见 [AWS 官网说明](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)。在示例的全量+增量模式下，DM 将自动启用 `safe mode` 解决这一问题，但仍有可能出现数据不一致。如需保证数据一致请按照 [AWS 官网说明](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)操作，并将下文的配置文件最后一行 `extra-args` 设置为空
 
-本示例选择同步 Aurora 已有数据并将新增数据实时同步给 TiDB，即**全量+增量**模式。根据上文的 TiDB 集群信息、已添加的数据源 ID、要同步以及忽略的表，保存如下任务配置文件 `task.yaml`：
+本示例选择同步 Aurora 已有数据并将新增数据实时同步给 TiDB，即**全量+增量**模式。根据上文的 TiDB 集群信息、已添加的 `source-id`、要同步的表，保存如下任务配置文件 `task.yaml`：
 
 ```yaml
-# 任务名，多个同时运行的任务不能重名。
+# 任务名，多个同时运行的任务不能重名
 name: "test"
-# 全量+增量 (all) 同步模式。
+# 全量+增量 (all) 同步模式
 task-mode: "all"
-# 下游 TiDB 配置信息。
+# 下游 TiDB 配置信息
 target-database:
   host: "tidb.6657c286.23110bc6.us-east-1.prod.aws.tidbcloud.com"
   port: 4000
   user: "root"
   password: "87654321"
 
-# 当前数据同步任务需要的全部上游 MySQL 实例配置。
+# 当前数据同步任务需要的全部上游 MySQL 实例配置
 mysql-instances:
 - source-id: "aurora-replica-01"
-  # 需要同步的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置。
+  # 需要同步的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置
   block-allow-list: "global"
   mydumper-config-name: "global"
 
@@ -190,16 +190,15 @@ mysql-instances:
   block-allow-list: "global"
   mydumper-config-name: "global"
 
-# 黑白名单配置。
+# 黑白名单配置
 block-allow-list:
   global:                             # 被上文 block-allow-list: "global" 引用
-    do-dbs: ["migrate_me"]            # 需要同步的上游数据库白名单。
-    ignore-dbs: ["ignore_me"]         # 需要同步的表的库名。
+    do-dbs: ["migrate_me"]            # 需要同步的上游数据库白名单。白名单以外的库表不会被同步
 
 # Dump 单元配置
 mydumpers:
   global:                             # 被上文 mydumper-config-name: "global" 引用
-    extra-args: "--consistency none"  # Aurora 不支持 FTWRL，配置此项以绕过。
+    extra-args: "--consistency none"  # Aurora 不支持 FTWRL，配置此项以绕过
 ```
 
 ## 第 5 步：启动任务
