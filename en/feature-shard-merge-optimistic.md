@@ -114,7 +114,7 @@ Then TiDB will receive the DML statement from `tbl00` (with the `Level` column) 
 
 ![optimistic-ddl-example-3](/media/optimistic-ddl-example-3.png)
 
-The following DM statement can be replicated to the downstream without any modification:
+The following DML statements can be replicated to the downstream without any modification:
 
 ```sql
 UPDATE `tbl00` SET `Level` = 9 WHERE `ID` = 1;
