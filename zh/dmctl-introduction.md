@@ -6,7 +6,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/dmctl-introduction/','/docs-cn/tidb-
 
 # dmctl 简介
 
-dmctl 是用来控制 DM 集群的命令行工具。对于用 DM-Ansible 部署的 DM 集群，dmctl 二进制文件路径为 `dm-ansible/dmctl`。
+dmctl 是用来控制 DM 集群的命令行工具。对于用 TiUP 部署的 DM 集群，可以直接使用 [`tiup dmctl`](maintain-dm-using-tiup.md#集群控制工具-dmctl)。
 
 dmctl 同时支持交互模式和命令模式。
 
@@ -107,7 +107,7 @@ Available Commands:
   start-task            start-task [-s source ...] <config-file>
   stop-task             stop-task [-s source ...] <task-name | task-file>
   switch-relay-master   switch-relay-master <-s source ...>
-  unlock-ddl-lock       unlock-ddl-lock [-s source ...] <lock-ID>
+  unlock-ddl-lock       unlock-ddl-lock <lock-ID>
   update-master-config  update-master-config <config-file>
   update-relay          update-relay [-s source ...] <config-file>
   update-task           update-task [-s source ...] <config-file>
