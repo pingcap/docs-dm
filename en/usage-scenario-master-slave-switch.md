@@ -32,9 +32,9 @@ To switch one upstream MySQL instance (when DM-worker connects to it via a VIP) 
 4. Make sure that the following conditions are met. Otherwise, you cannot switch the DM-work connection to the new MySQL instance:
     - `gtid-S` contains `gtid-P`. `gtid-P` can be empty.
     - `gtid-E` contains `gtid-S`.
-5. Use `pause-task` to pause all running tasks of data replication.
+5. Use `pause-task` to pause all running tasks of data migration.
 6. Change the VIP for it to direct at the new MySQL instance.
-7. Use `resume-task` to resume the previous replication task.
+7. Use `resume-task` to resume the previous migration task.
 
 ## Change the address of the upstream MySQL instance that DM-worker connects to
 
@@ -49,4 +49,4 @@ To make DM-worker connect to a new MySQL instance in the upstream by modifying t
 5. Use `stop-task` to stop all running tasks of data replication.
 6. Use the `operator-source stop` command to remove the source configuration corresponding to the address of the old MySQL instance from the DM cluster.
 7. Update the address of the MySQL instance in the source configuration file and use the `operate-source create` command to reload the new source configuration in the DM cluster.
-8. Use `start-task` to restart the replication task.
+8. Use `start-task` to restart the migration task.
