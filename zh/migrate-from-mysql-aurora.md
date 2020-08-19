@@ -80,6 +80,10 @@ DM 可以通过多种方式进行部署，目前推荐使用 TiUP 部署 DM 集�
 
 部署完成后，需要记录任意一台 DM-master 节点的 IP 和服务端口（默认为 `8261`），以供 `dmctl` 连接。本示例使用 `127.0.0.1:8261`。通过 TiUP 使用 `dmctl` 检查 DM 状态：
 
+> **注意：**
+>
+> 是用其他方式部署的 DM 可以用类似的方式调用 `dmctl`，见 [dmctl 简介](dmctl-introduction.md)
+
 {{< copyable "shell-regular" >}}
 
 ```bash
@@ -162,6 +166,10 @@ from:
 
 ## 第 4 步：配置任务
 
+> **注意：**
+>
+> 由于 Aurora 不支持 FTWRL，全量导出数据时需要暂停写入，见 [AWS 官网](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)。在示例的全量+增量模式下，DM 将自动启用 `safe mode` 解决这一问题。如果需要保证数据一致请按照官网操作，并将下文中的配置文件最后一行 `extra-args` 设置为空
+
 本示例选择同步 Aurora 已有数据并将新增数据实时同步给 TiDB，即**全量+增量**模式。根据上文中的 TiDB 集群信息、添加数据源 ID、要同步以及忽略的表，保存如下任务配置文件 `task.yaml`：
 
 ```yaml
@@ -181,15 +189,22 @@ mysql-instances:
 - source-id: "aurora-replica-01"
   # 需要同步的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置。
   block-allow-list: "global"
+  mydumper-config-name: "global"
 
 - source-id: "aurora-replica-02"
   block-allow-list: "global"
+  mydumper-config-name: "global"
 
 # 黑白名单配置。
 block-allow-list:
   global:                             # 被上文 block-allow-list: "global" 所引用
     do-dbs: ["migrate_me"]            # 需要同步的上游数据库白名单。
     ignore-dbs: ["ignore_me"]         # 需要同步的表的库名。
+
+# Dump 单元配置
+mydumpers:
+  global:
+    extra-args: "--consistency none"  # Aurora 不支持 FTWRL，配置此项以绕过。
 ```
 
 ## 第 5 步：启动任务
@@ -199,7 +214,7 @@ block-allow-list:
 {{< copyable "shell-regular" >}}
 
 ```bash
-./tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml
+./tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml --remove-meta
 ```
 
 启动成功时的返回信息是
@@ -225,26 +240,33 @@ block-allow-list:
 }
 ```
 
-## 第 6 步：查询任务
+## 第 6 步：查询任务并验证数据
 
-如需了解 DM 集群中是否存在正在运行的同步任务及任务状态等信息，可在 dmctl 内使用以下命令进行查询：
+如需了解 DM 集群中是否存在正在运行的同步任务及任务状态等信息，可通过 TiUP 使用 `dmctl` 进行查询。
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-query-status
+./tiup dmctl --master-addr 127.0.0.1:8261 query-status
 ```
 
-> **注意：**
->
-> 如果查询命令的返回结果中包含以下错误信息，则表明在全量同步的 dump 阶段不能获得相应的 lock：
->
-> ```
-> Couldn't acquire global lock, snapshots will not be consistent: Access denied for user 'root'@'%' (using password: YES)
-> ```
->
-> 此时如果能接受不使用 FTWL 来确保 dump 文件与 metadata 的一致或上游能暂时停止写入，可以通过为 `mydumpers` 下的 `extra-args` 添加 `--no-locks` 参数来进行绕过，具体方法为：
->
-> 1. 使用 `stop-task` 停止当前由于不能正常 dump 而已经转为 paused 的任务
-> 2. 将原 `task.yaml` 中的 `extra-args: "-B test_db -T test_table"` 更新为 `extra-args: "-B test_db -T test_table --no-locks"`
-> 3. 使用 `start-task` 重新启动任务
+任务正常运行的返回信息是
+
+```
+{
+    "result": true,
+    "msg": "",
+    "tasks": [
+        {
+            "taskName": "test",
+            "taskStatus": "Running",
+            "sources": [
+                "aurora-replica-01",
+                "aurora-replica-02"
+            ]
+        }
+    ]
+}
+```
+
+用户可以查询数据，在 Aurora 中修改数据并验证到 TiDB 的同步。
