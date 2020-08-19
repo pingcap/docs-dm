@@ -9,11 +9,11 @@ aliases: ['/docs-cn/tidb-data-migration/dev/replicate-data-using-dm/']
 
 ## 第 1 步：部署 DM 集群
 
-目前推荐使用 DM-Ansible 部署 DM 集群，具体部署方法参照 [使用 DM-Ansible 部署 DM 集群](deploy-a-dm-cluster-using-ansible.md)；也可以使用 binary 部署 DM 集群用于体验或者测试，具体部署方法参照[使用 DM binary 部署 DM 集群](deploy-a-dm-cluster-using-binary.md)。
+目前推荐使用 TiUP 部署 DM 集群，具体部署方法参照 [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)；也可以使用 binary 部署 DM 集群用于体验或者测试，具体部署方法参照[使用 DM binary 部署 DM 集群](deploy-a-dm-cluster-using-binary.md)。
 
 > **注意：**
 >
-> - 在 DM 所有的配置文件中，对于数据库密码推荐使用 dmctl 加密后的密文。如果数据库密码为空，则不需要加密。关于如何使用 dmctl 加密明文密码，参考[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
+> - 在 DM 所有的配置文件中，对于数据库密码推荐使用 dmctl 加密后的密文。如果数据库密码为空，则不需要加密。关于如何使用 dmctl 加密明文密码，参考[使用 dmctl 加密数据库密码](manage-source.md#加密数据库密码)。
 > - 上下游数据库用户必须拥有相应的读写权限。
 
 ## 第 2 步：检查集群信息
