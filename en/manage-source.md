@@ -65,7 +65,7 @@ For the configuration of `source.yaml`, refer to [Upstream Database Configuratio
 
 + `show`: Shows the added data source and the corresponding DM-worker.
 
-+ `config-file`: Specifies the file path of `source.yaml` and passes multiple file paths.
++ `config-file`: Specifies the file path of `source.yaml` and can pass multiple file paths.
 
 + `--print-sample-config`: Prints the sample configuration file. This parameter ignores other parameters.
 
