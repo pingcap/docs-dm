@@ -99,7 +99,7 @@ tiup dmctl --master-addr 127.0.0.1:8261 query-status
 
 > **注意：**
 >
-> DM 所使用的配置文件支持明文或密文数据库密码，推荐使用密文数据库密码确保安全。关于如何获得密文数据库密码，参考[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
+> DM 所使用的配置文件支持明文或密文数据库密码，推荐使用密文数据库密码确保安全。关于如何获得密文数据库密码，参考[使用 dmctl 加密数据库密码](manage-source.md#加密数据库密码)。
 
 根据示例信息保存如下的数据源配置文件：
 
