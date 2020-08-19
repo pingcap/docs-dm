@@ -1,17 +1,17 @@
 ---
 title: Migration When the Downstream Table Has More Columns
-summary: learn how to use DM to migrate tables when the downstream table schema has more columns.
+summary: Learn how to use DM to migrate tables when the downstream table schema has more columns.
 ---
 
 # Migration When the Downstream Table Has More Columns
 
-This document describes how to migrate tables using DM when the downstream table schema has more columns than the upstream.
+This document describes how to migrate tables using DM when the downstream table schema has more columns than the upstream table schema.
 
 > **Note:**
 >
-> * The columns that are only in the downstream must be given a default value or allowed to be `NULL`.
+> * The columns that only exist in the downstream must be given a default value or allowed to be `NULL`.
 > * For tables that are being migrated by DM, you can directly add new columns in the downstream that are given a default value or allowed to be `NULL`. Adding such new columns does not affect the data migration.
-> * Currently DM does not support the full import of data whose table schema is inconsistent into TiDB.
+> * Currently DM does not support the full import of data with inconsistent table schema into TiDB.
 
 ## Migration solution
 
@@ -56,7 +56,7 @@ When a DML statement in the binlog event needs to be migrated, if DM does not ma
 
 In such cases, you can run the [`operate-schema`](manage-schema.md) command to specify for the table a table schema that matches the binlog event. The steps are as follows:
 
-1. Prepare the `CREATE TABLE` table schema statement that corresponds to data in the binlog event and save the statement in a file. For example, save the following table schema in the `db_single.t1-schema.sql` file:
+1. Prepare the `CREATE TABLE` table schema statement that corresponds to data in the binlog event and save this statement in a file. For example, save the following table schema in the `db_single.t1-schema.sql` file:
 
     ```sql
     CREATE TABLE `t1` (
@@ -68,7 +68,7 @@ In such cases, you can run the [`operate-schema`](manage-schema.md) command to s
 
 2. Run the [`operate-schema`](manage-schema.md) command to set the table schema. At this time, the task should be in the `Paused` state because of the above error.
 
-    {{< copyable "" >}}
+    {{< copyable "regular-shell" >}}
 
     ```bash
     operate-schema set -s mysql-replica-01 task_single -d db_single -t t1 db_single.t1-schema.sql
