@@ -57,9 +57,9 @@ When you use the optimistic mode for a replication task, a DDL statement is repl
 - The schema of each sharded table is incompatible with each other. For example:
     - Add a column of the same name to two sharded tables respectively but the columns are of different types.
     - Add a column of the same name to two sharded tables respectively but the columns have different default values.
-    - Add a generated column of the same name to two sharded tables respectively but the columns are generated using different indexes.
+    - Add a generated column of the same name to two sharded tables respectively but the columns are generated using different expressions.
     - Add an index of the same name to two sharded tables respectively but the keys are different.
-    - Other different table insertions with the same name.
+    - Other different table schemas with the same name.
 - Execute the DDL statement that can corrupt data in the sharded table and then try to roll back.
 
     For example, drop a column `X` and then add this column back.
