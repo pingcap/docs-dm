@@ -26,7 +26,7 @@ Aurora 集群数据与迁移计划如下：
 | Aurora-2 | migrate_me | t2 | 是 |
 | Aurora-2 | ignore_me | ignore_table | 否 |
 
-迁移使用的 Aurora 集群用户如下
+迁移使用的 Aurora 集群用户如下：
 
 | 集群 | 用户 | 密码 |
 |:---- |:---- | :--- |
