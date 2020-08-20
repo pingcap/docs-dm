@@ -61,7 +61,7 @@ DM 作为数据迁移的核心，需要正常连接上游 Aurora 集群与下游
 
 ### Aurora
 
-DM 在增量同步阶段依赖 `ROW` 格式的 binlog，参见[为 Aurora 实例启用 binlog](https://aws.amazon.com/cn/premiumsupport/knowledge-center/enable-binary-logging-aurora/) 进行配置。
+DM 在增量复制阶段依赖 `ROW` 格式的 binlog，参见[为 Aurora 实例启用 binlog](https://aws.amazon.com/cn/premiumsupport/knowledge-center/enable-binary-logging-aurora/) 进行配置。
 
 如果需要基于 GTID 进行数据迁移，需要将 `gtid-mode` 与 `enforce_gtid_consistency` 均设置为 `ON`，参见[为 Aurora 集群启用 GTID 支持](https://docs.aws.amazon.com/zh_cn/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora)。
 
@@ -157,7 +157,7 @@ from:
   port: 3306
 ```
 
-参见[使用 DM 同步数据：创建数据源](replicate-data-using-dm.md#第-3-步创建数据源)，通过 TiUP 使用 `dmctl` 添加两个数据源。
+参见[使用 DM 迁移数据：创建数据源](replicate-data-using-dm.md#第-3-步创建数据源)，通过 TiUP 使用 `dmctl` 添加两个数据源。
 
 {{< copyable "shell-regular" >}}
 
@@ -189,12 +189,12 @@ tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source2.ya
 >
 > 由于 Aurora 不支持 FTWRL，仅使用全量模式导出数据时需要暂停写入，参见 [AWS 官网说明](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)。在示例的全量+增量模式下，DM 将自动启用 `safe mode` 解决这一问题，但仍有可能出现数据不一致。如需保证数据一致，参见 [AWS 官网说明](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)操作，并将下文的配置文件最后一行 `extra-args` 设置为空。
 
-本示例选择同步 Aurora 已有数据并将新增数据实时同步给 TiDB，即**全量+增量**模式。根据上文的 TiDB 集群信息、已添加的 `source-id`、要同步的表，保存如下任务配置文件 `task.yaml`：
+本示例选择迁移 Aurora 已有数据并将新增数据实时迁移给 TiDB，即**全量+增量**模式。根据上文的 TiDB 集群信息、已添加的 `source-id`、要迁移的表，保存如下任务配置文件 `task.yaml`：
 
 ```yaml
 # 任务名，多个同时运行的任务不能重名
 name: "test"
-# 全量+增量 (all) 同步模式
+# 全量+增量 (all) 复制模式
 task-mode: "all"
 # 下游 TiDB 配置信息
 target-database:
@@ -203,10 +203,10 @@ target-database:
   user: "root"
   password: "87654321"
 
-# 当前数据同步任务需要的全部上游 MySQL 实例配置
+# 当前数据迁移任务需要的全部上游 MySQL 实例配置
 mysql-instances:
 - source-id: "aurora-replica-01"
-  # 需要同步的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置
+  # 需要迁移的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置
   block-allow-list: "global"
   mydumper-config-name: "global"
 
@@ -217,7 +217,7 @@ mysql-instances:
 # 黑白名单配置
 block-allow-list:
   global:                             # 被上文 block-allow-list: "global" 引用
-    do-dbs: ["migrate_me"]            # 需要同步的上游数据库白名单。白名单以外的库表不会被同步
+    do-dbs: ["migrate_me"]            # 需要迁移的上游数据库白名单。白名单以外的库表不会被迁移
 
 # Dump 单元配置
 mydumpers:
@@ -260,7 +260,7 @@ tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml --remove-meta
 
 ## 第 6 步：查询任务并验证数据
 
-通过 TiUP 使用 `dmctl` 查询正在运行的同步任务及任务状态等信息。
+通过 TiUP 使用 `dmctl` 查询正在运行的迁移任务及任务状态等信息。
 
 {{< copyable "shell-regular" >}}
 
@@ -287,4 +287,4 @@ tiup dmctl --master-addr 127.0.0.1:8261 query-status
 }
 ```
 
-用户也可以在下游查询数据，在 Aurora 中修改数据并验证到 TiDB 的同步。
+用户也可以在下游查询数据，在 Aurora 中修改数据并验证到 TiDB 的数据复制。
