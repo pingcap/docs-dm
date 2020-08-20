@@ -103,7 +103,7 @@ Available Commands:
   start-task            start-task [-s source ...] <config-file>
   stop-task             stop-task [-s source ...] <task-name | task-file>
   switch-relay-master   switch-relay-master <-s source ...>
-  unlock-ddl-lock       unlock-ddl-lock [-s source ...] <lock-ID>
+  unlock-ddl-lock       unlock-ddl-lock <lock-ID>
   update-master-config  update-master-config <config-file>
   update-relay          update-relay [-s source ...] <config-file>
   update-task           update-task [-s source ...] <config-file>
