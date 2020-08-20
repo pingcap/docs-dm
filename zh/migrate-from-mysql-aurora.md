@@ -71,7 +71,7 @@ DM 在增量同步阶段依赖 `ROW` 格式的 binlog，参见 [AWS 官网流程
 
 ## 第 2 步：部署 DM 集群
 
-DM 可以通过多种方式进行部署，目前推荐使用 TiUP 部署 DM 集群，具体部署方法参照[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。示例有两个数据源，因此需要至少部署两个 DM-worker 节点。
+DM 可以通过多种方式进行部署，目前推荐使用 TiUP 部署 DM 集群。具体部署方法，参见[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。示例有两个数据源，因此需要至少部署两个 DM-worker 节点。
 
 部署完成后，需要记录任意一台 DM-master 节点的 IP 和服务端口（默认为 `8261`），以供 `dmctl` 连接。本示例使用 `127.0.0.1:8261`。通过 TiUP 使用 `dmctl` 检查 DM 状态：
 
