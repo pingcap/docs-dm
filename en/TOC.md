@@ -18,7 +18,7 @@
     - [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md)
 + [Usage Scenarios](scenarios.md)
 + Quick Start
-  - [Deploy a DM cluster](quick-start-with-dm.md)
+  - [Deploy a DM Cluster](quick-start-with-dm.md)
   - [Create Data Migration Task](quick-start-create-task.md)
 + Deploy
   + [Software and Hardware Requirements](hardware-and-software-requirements.md)
