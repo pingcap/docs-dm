@@ -64,7 +64,6 @@
   + Architecture
     - [DM Overview](overview.md)
     - [DM-worker](dm-worker-intro.md)
-    - [DM Relay Log](relay-log.md)
   - [Command-line Flags](command-line-flags.md)
   + Configuration
     - [Overview](config-overview.md)
@@ -73,7 +72,6 @@
     - [Upstream Database Configuration](source-configuration-file.md)
     - [Task Configuration](task-configuration-file.md)
     - [Full Task Configuration](task-configuration-file-full.md)
-    - [Use DM Portal](dm-portal.md)
   - [Monitoring Metrics](monitor-a-dm-cluster.md)
   - [Alert Rules](alert-rules.md)
   - [Error Codes](error-handling.md#handle-common-errors)

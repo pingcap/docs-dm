@@ -6,7 +6,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/monitor-a-dm-cluster/']
 
 # DM 监控指标
 
-使用 DM-Ansible 部署 DM 集群的时候，会默认部署一套[监控系统](replicate-data-using-dm.md#第-8-步监控任务与查看日志)。
+使用 TiUP 部署 DM 集群的时候，会默认部署一套[监控系统](replicate-data-using-dm.md#第-8-步监控任务与查看日志)。
 
 ## Task
 
