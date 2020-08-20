@@ -68,7 +68,7 @@ The [block and allow lists filtering rule](key-features.md#block-and-allow-table
 
 ### Sharding support
 
-DM supports merging the original sharded instances and tables into TiDB, but with [some restrictions](feature-shard-merge.md#restrictions).
+DM supports merging the original sharded instances and tables into TiDB, but with some restrictions. For details, see [Sharding DDL usage Restrictions in the pessimistic mode](feature-shard-merge-pessimistic.md#restrictions) and [Sharding DDL usage Restrictions in the optimistic mode](feature-shard-merge-optimistic.md#restrictions).
 
 ## Usage restrictions
 
@@ -98,7 +98,7 @@ Before using the DM tool, note the following restrictions:
 
     - If conflict exists between sharded tables, solve the conflict by referring to [handling conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key). Otherwise, data replication is not supported. Conflicting data can cover each other and cause data loss.
 
-    - For other sharding restrictions, see [Sharding DDL usage restrictions](feature-shard-merge.md#restrictions).
+    - For other sharding restrictions, see [Sharding DDL usage Restrictions in pessimistic mode](feature-shard-merge-pessimistic.md#restrictions) and [Sharding DDL usage Restrictions in optimistic mode](feature-shard-merge-optimistic.md#restrictions).
 
 + Operations
 
@@ -108,4 +108,4 @@ Before using the DM tool, note the following restrictions:
 
 + Switching DM-worker connection to another MySQL instance
 
-    When DM-worker connects the upstream MySQL instance via a virtual IP (VIP), if you switch the VIP connection to another MySQL instance, DM might connect to the new and old MySQL instances at the same time in different connections. In this situation, the binlog replicated to DM is not consistent with other upstream status that DM receives, causing unpredictable anomalies and even data damage. To make necessary changes to DM manually, refer to [Switch DM-worker connection via virtual IP](usage-scenario-master-slave-switch.md#switch-dm-worker-connection-via-virtual-ip).
+    When DM-worker connects the upstream MySQL instance via a virtual IP (VIP), if you switch the VIP connection to another MySQL instance, DM might connect to the new and old MySQL instances at the same time in different connections. In this situation, the binlog replicated to DM is not consistent with other upstream status that DM receives, causing unpredictable anomalies and even data damage. To make necessary changes to DM manually, see [Switch DM-worker connection via virtual IP](usage-scenario-master-slave-switch.md#switch-dm-worker-connection-via-virtual-ip).

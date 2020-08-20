@@ -8,10 +8,11 @@ aliases: ['/docs/tidb-data-migration/dev/feature-manually-handling-sharding-ddl-
 
 DM uses the sharding DDL lock to ensure operations are performed in the correct order. This locking mechanism resolves sharding DDL locks automatically in most cases, but you need to use the `unlock-ddl-lock` or `break-ddl-lock` command to manually handle the abnormal DDL locks in some abnormal scenarios.
 
-> **Warning:**
+> **Note:**
 >
+> - This document only applies to the processing of sharding DDL lock in pessimistic coordination mode. 
 > - Do not use `unlock-ddl-lock` or `break-ddl-lock` unless you are totally aware of the possible impacts brought by the command and you can accept them.
-> - Before manually handling the abnormal DDL locks, make sure that you have already read the DM [shard merge principles](feature-shard-merge.md#principles).
+> - Before manually handling the abnormal DDL locks, make sure that you have already read the DM [shard merge principles](feature-shard-merge-pessimistic.md#principles).
 
 ## Command
 
@@ -174,7 +175,7 @@ Currently, the `unlock-ddl-lock` or `break-ddl-lock` command only supports handl
 
 #### The reason for the abnormal lock
 
-Before `DM-master` tries to automatically unlock the sharding DDL lock, all the DM-workers need to receive the sharding DDL events (for details, see [shard merge principles](feature-shard-merge.md#principles)). If the sharding DDL event is already in the replication process, and some DM-workers have gone offline and are not to be restarted (these DM-workers have been removed according to the application demand), then the sharding DDL lock cannot be automatically replicated and unlocked because not all the DM-workers can receive the DDL event.
+Before `DM-master` tries to automatically unlock the sharding DDL lock, all the DM-workers need to receive the sharding DDL events (for details, see [shard merge principles](feature-shard-merge.md#principles-pessimistic.md)). If the sharding DDL event is already in the replication process, and some DM-workers have gone offline and are not to be restarted (these DM-workers have been removed according to the application demand), then the sharding DDL lock cannot be automatically replicated and unlocked because not all the DM-workers can receive the DDL event.
 
 > **Note:**
 >

@@ -33,7 +33,7 @@ If you know in advance that an unsupported SQL statement is going to be replicat
 
 - `--sharding` is only used to preset the operation to the sharding group. You must preset it before executing the DDL statement and presetting it after executing the DDL is not allowed.
     - `--sharding` only supports presetting operations, and in this mode, you can only use `--sql-pattern` to match the binlog event.
-    - For the principles of replicating sharding DDL statements using DM, see [Merge and replicate data from sharded tables](feature-shard-merge.md#principles)
+    - For the principles of replicating sharding DDL statements using DM, see [Merge and replicate data from sharded tables in the pessimistic mode](feature-shard-merge-pessimistic.md#restrictions) and [Merge and replicate data from sharded tables in pessimistic mode in the optimistic mode](feature-shard-merge-optimistic.md#restrictions).
 
 ## Match the binlog event
 
