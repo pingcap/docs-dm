@@ -142,7 +142,7 @@ from:
   port: 3306
 ```
 
-文件 `source2.yaml`
+文件 `source2.yaml`：
 
 ```yaml
 # Aurora-2
