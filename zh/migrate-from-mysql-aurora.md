@@ -187,7 +187,7 @@ tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source2.ya
 
 > **注意：**
 >
-> 由于 Aurora 不支持 FTWRL，仅使用全量模式导出数据时需要暂停写入，见 [AWS 官网说明](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)。在示例的全量+增量模式下，DM 将自动启用 `safe mode` 解决这一问题，但仍有可能出现数据不一致。如需保证数据一致，参见 [AWS 官网说明](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)操作，并将下文的配置文件最后一行 `extra-args` 设置为空
+> 由于 Aurora 不支持 FTWRL，仅使用全量模式导出数据时需要暂停写入，参见 [AWS 官网说明](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)。在示例的全量+增量模式下，DM 将自动启用 `safe mode` 解决这一问题，但仍有可能出现数据不一致。如需保证数据一致，参见 [AWS 官网说明](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)操作，并将下文的配置文件最后一行 `extra-args` 设置为空。
 
 本示例选择同步 Aurora 已有数据并将新增数据实时同步给 TiDB，即**全量+增量**模式。根据上文的 TiDB 集群信息、已添加的 `source-id`、要同步的表，保存如下任务配置文件 `task.yaml`：
 
