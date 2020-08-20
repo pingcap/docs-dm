@@ -14,6 +14,14 @@ DM 2.0 相比于 1.0，主要有以下改进：
 - 与上下游数据库及 DM 各组件间连接的 [TLS 支持](enable-tls.md)。
 - 实验性地支持从 MySQL 8.0 迁移数据。
 
+DM 2.0 相比于 1.0，主要有以下改进：
+
+- 数据迁移任务的高可用，部分 DM-master、DM-worker 节点异常后仍能保证数据迁移任务的正常运行。
+- [乐观协调模式下的 sharding DDL](feature-shard-merge-optimistic.md) 可以在部分场景下减少 sharding DDL 同步过程中的延迟、支持上游数据库灰度变更等场景。
+- 更好的易用性，包括新的[错误处理机制](handle-failed-sql-statements.md)及更清晰易读的错误信息与错误处理建议。
+- 与上下游数据库及 DM 各组件间连接的 [TLS 支持](enable-tls.md)。
+- 实验性地支持从 MySQL 8.0 迁移数据。
+
 > **注意：**
 >
 > DM 以 SQL 语句的形式将数据迁移到 TiDB 中，因此各个版本的 DM 都分别兼容**所有版本**的 TiDB。在生产环境中，推荐使用 DM 的最新已发布版本。已发布版本的下载方式参见 [DM 下载链接](https://pingcap.com/docs-cn/stable/reference/tools/download/#tidb-dm-data-migration)。
