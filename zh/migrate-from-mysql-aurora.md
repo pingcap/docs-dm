@@ -155,7 +155,7 @@ from:
   port: 3306
 ```
 
-参照[使用 DM 同步数据：创建数据源](replicate-data-using-dm.md#第-3-步创建数据源)，通过 TiUP 使用 `dmctl` 添加两个数据源。
+参见[使用 DM 同步数据：创建数据源](replicate-data-using-dm.md#第-3-步创建数据源)，通过 TiUP 使用 `dmctl` 添加两个数据源。
 
 {{< copyable "shell-regular" >}}
 
