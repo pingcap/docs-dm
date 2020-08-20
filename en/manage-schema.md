@@ -1,11 +1,11 @@
 ---
 title: Manage Table Schema during Migration
-summary: Learn how to manage the schema of the table to be migrated within DM.
+summary: Learn how to manage the schema of the table to be migrated in DM.
 ---
 
 # Manage Table Schema during Migration
 
-This document describes how to manage the schema of the table within DM during migration using [dmctl](dmctl-introduction.md).
+This document describes how to manage the schema of the table in DM during migration using [dmctl](dmctl-introduction.md).
 
 ## Implementation principles
 
