@@ -32,7 +32,7 @@ To support the special scenarios mentioned above and handle other migration inte
 
 ## Command
 
-{{< copyable "" >}}
+{{< copyable "shell-regular" >}}
 
 ```bash
 help operate-schema
@@ -84,7 +84,7 @@ Global Flags:
 
 If you want to get the table schema of the ``` `db_single`.`t1` ``` table corresponding to the `mysql-replica-01` MySQL source in the `db_single` task, run the following command:
 
-{{< copyable "" >}}
+{{< copyable "shell-regular" >}}
 
 ```bash
 operate-schema get -s mysql-replica-01 task_single -d db_single -t t1
@@ -119,7 +119,7 @@ CREATE TABLE `t1` (
 
 Save the `CREATE TABLE` statement above as a file (for example, `db_single.t1-schema.sql`), and run the following command:
 
-{{< copyable "" >}}
+{{< copyable "shell-regular" >}}
 
 ```bash
 operate-schema set -s mysql-replica-01 task_single -d db_single -t t1 db_single.t1-schema.sql
@@ -152,7 +152,7 @@ operate-schema set -s mysql-replica-01 task_single -d db_single -t t1 db_single.
 
 If you want to delete the table schema of the ``` `db_single`.`t1` ``` table corresponding to the `mysql-replica-01` MySQL source in the `db_single` task, run the following command:
 
-{{< copyable "" >}}
+{{< copyable "shell-regular" >}}
 
 ```bash
 operate-schema remove -s mysql-replica-01 task_single -d db_single -t t1

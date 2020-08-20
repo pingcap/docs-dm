@@ -52,7 +52,7 @@ When you replicate incremental data using DM, if the downstream table schema has
 ]
 ```
 
-When a DML statement in the binlog event needs to be migrated, if DM does not maintain internally the table schema corresponding to that table, DM will try to use the current table schema in the downstream to parse the binlog event and generate the corresponding DML statement. If the columns in the binlog event are inconsistent with the columns in te downstream table schema, the above error might occur.
+When a DML statement in the binlog event needs to be migrated, if DM has not maintained internally the table schema corresponding to that table, DM tries to use the current table schema in the downstream to parse the binlog event and generate the corresponding DML statement. If the number of columns in the binlog event is inconsistent with the number of columns in the downstream table schema, the above error might occur.
 
 In such cases, you can run the [`operate-schema`](manage-schema.md) command to specify for the table a table schema that matches the binlog event. The steps are as follows:
 
@@ -66,14 +66,14 @@ In such cases, you can run the [`operate-schema`](manage-schema.md) command to s
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1
     ```
 
-2. Run the [`operate-schema`](manage-schema.md) command to set the table schema. At this time, the task should be in the `Paused` state because of the above error.
+2. Execute the [`operate-schema`](manage-schema.md) command to set the table schema. At this time, the task should be in the `Paused` state because of the above error.
 
-    {{< copyable "" >}}
+    {{< copyable "shell-regular" >}}
 
     ```bash
     operate-schema set -s mysql-replica-01 task_single -d db_single -t t1 db_single.t1-schema.sql
     ```    
 
-3. Run the [`resume-task`](resume-task.md) command to resume the `Paused` task.
+3. Execute the [`resume-task`](resume-task.md) command to resume the `Paused` task.
 
-4. Run the [`query-status`](query-status.md) command to check whether the data migration task is running normally.
+4. Execute the [`query-status`](query-status.md) command to check whether the data migration task is running normally.
