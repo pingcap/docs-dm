@@ -42,6 +42,7 @@ In the error system, usually, the information of a specific error is as follows:
     | `dm-tracer`      |  DM-tracer service  | `[code=42004:class=dm-tracer:scope=internal:level=medium] trace event test.1 not found` |
     | `schema-tracker` | schema-tracker (during incremental data replication)   | `[code=44006:class=schema-tracker:scope=internal:level=high],"cannot track DDL: ALTER TABLE test DROP COLUMN col1"` |
     | `scheduler`      | Scheduling operations (of data replication tasks)   | `[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
+    | `dmctl`          | An error occurs within dmctl or when it interacts with other components | `[code=48001:class=dmctl:scope=internal:level=high],"can not create grpc connection"` |
 
 - `scope`: Error scope.
 
@@ -61,9 +62,9 @@ In the error system, usually, the information of a specific error is as follows:
 
     Detailed descriptions of the error. To wrap and store every additional layer of error message on the error call chain, the [errors.Wrap](https://godoc.org/github.com/pkg/errors#hdr-Adding_context_to_an_error) mode is adopted. The message description wrapped at the outermost layer indicates the error in DM and the message description wrapped at the innermost layer indicates the error source.
 
-- `workaround`: Error handling methods.
+- `workaround`: Error handling methods (optional)
 
-    The handling methods for this error. For some confirmed errors (such as configuration errors), DM gives corresponding manual handling methods in `workaround`.
+    The handling methods for this error. For some confirmed errors (such as configuration errors), DM gives the corresponding manual handling methods in `workaround`.
 
 - Error stack information (optional)
 
