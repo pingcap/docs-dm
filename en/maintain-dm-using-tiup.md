@@ -168,7 +168,7 @@ The rolling upgrade process is made as transparent as possible to the applicatio
 
 ### Upgrade command
 
-For example, the following command upgrades the cluster to v2.0.1:
+You can run the `tiup dm upgrade` command to upgrade a DM cluster. For example, the following command upgrades the cluster to v2.0.1:
 
 {{< copyable "shell-regular" >}}
 
