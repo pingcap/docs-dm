@@ -104,7 +104,7 @@ alertmanager_servers:
 >
 > - For more parameter description, see [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml) and [worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml).
 
-## Step 4: Execute the deployment command
+## Step 3: Execute the deployment command
 
 > **Note:**
 >
