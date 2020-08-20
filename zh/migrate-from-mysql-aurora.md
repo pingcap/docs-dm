@@ -33,7 +33,7 @@ Aurora 集群数据与迁移计划如下：
 | Aurora-1 | root | 12345678 |
 | Aurora-2 | root | 12345678 |
 
-示例使用的 TiDB 集群信息如下。该集群使用 [Cloud TiDB](https://tidbcloud.com/) 服务一键部署：
+示例使用的 TiDB 集群信息如下。该集群使用 [TiDB Cloud](https://tidbcloud.com/) 服务一键部署：
 
 | 节点 | 端口 | 版本 |
 |:--- | :--- | :--- |
