@@ -235,7 +235,7 @@ mydumpers:
 tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml --remove-meta
 ```
 
-启动成功时的返回信息是
+启动成功时的返回信息是：
 
 ```
 {
