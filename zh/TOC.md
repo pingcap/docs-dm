@@ -36,7 +36,6 @@
     - [任务前置检查](precheck.md)
     - [创建任务](create-task.md)
     - [查询状态](query-status.md)
-    - [查询错误](query-error.md)
     - [暂停任务](pause-task.md)
     - [恢复任务](resume-task.md)
     - [停止任务](stop-task.md)
