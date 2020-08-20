@@ -11,7 +11,7 @@ This document describes how to migrate tables using DM when the downstream table
 >
 > * The columns that only exist in the downstream must be given a default value or allowed to be `NULL`.
 > * For tables that are being migrated by DM, you can directly add new columns in the downstream that are given a default value or allowed to be `NULL`. Adding such new columns does not affect the data migration.
-> * Currently DM does not support the full import of data with inconsistent table schema into TiDB.
+> * If the columns that only exist in the downstream have default values or are allowed to be `NULL`, there is no need for special configuration and processing for full export and import.
 
 ## Migration solution
 
