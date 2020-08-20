@@ -53,13 +53,15 @@ Aurora 集群数据与迁移计划如下：
 
 ## 第 1 步：数据迁移前置条件
 
+为了保证迁移成功，在开始迁移之前需要进行前置条件的检查。本文在此列出了需要的检查以及与 DM、Aurora 组件相关的解决方案。
+
 ### DM 部署节点
 
 DM 作为数据迁移的核心，需要正常连接上游 Aurora 集群与下游 TiDB 集群，因此通过 MySQL client 等方式检查部署 DM 的节点能连通上下游。除此以外，DM 对软硬件要求，参见 [DM 集群软硬件环境需求](hardware-and-software-requirements.md)。
 
 ### Aurora
 
-DM 在增量同步阶段依赖 `ROW` 格式的 binlog，参见 [AWS 官网流程](https://aws.amazon.com/cn/premiumsupport/knowledge-center/enable-binary-logging-aurora/)进行配置。
+DM 在增量同步阶段依赖 `ROW` 格式的 binlog，参见[为 Aurora 实例启用 binlog](https://aws.amazon.com/cn/premiumsupport/knowledge-center/enable-binary-logging-aurora/) 进行配置。
 
 如果需要基于 GTID 进行数据迁移，需要将 `gtid-mode` 与 `enforce_gtid_consistency` 均设置为 `ON`，参见[为 Aurora 集群启用 GTID 支持](https://docs.aws.amazon.com/zh_cn/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora)。
 
