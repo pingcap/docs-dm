@@ -267,7 +267,7 @@ When the non-owner corresponding MySQL source restores data migration, it tries 
 
 Suppose that now we have the same upstream and downstream table structures and the same demand for merging tables and replication as in the manual solution of [Some MySQL sources are removed](#scenario-1-some-mysql-sources-are-removed).
 
-When `DM-master` automatically executes the unlocking process, the owner（`mysql-replica-01`）successfully executes the DDL and continues the replication process, but in the process of requesting the non-owner (`mysql-replica-02`) to skip the DDL operation, the checkpoint fails to update after skipping the DDL because the corresponding DM worker was restarted.
+When `DM-master` automatically executes the unlocking process, the owner (`mysql-replica-01`) successfully executes the DDL and continues the replication process, but in the process of requesting the non-owner (`mysql-replica-02`) to skip the DDL operation, the checkpoint fails to update after skipping the DDL because the corresponding DM worker was restarted.
 
 After `DM-worker-2` restarts, it will try to replicate the waiting DDL lock before it restarted. At this point, a new lock will be created on `DM-master`, and the DM-worker will become the owner of the lock (other DM-workers have executed/skipped the DDL by now and are continuing the replication process).
 
