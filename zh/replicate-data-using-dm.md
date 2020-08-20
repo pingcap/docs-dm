@@ -9,16 +9,16 @@ aliases: ['/docs-cn/tidb-data-migration/dev/replicate-data-using-dm/']
 
 ## 第 1 步：部署 DM 集群
 
-目前推荐使用 DM-Ansible 部署 DM 集群，具体部署方法参照 [使用 DM-Ansible 部署 DM 集群](deploy-a-dm-cluster-using-ansible.md)；也可以使用 binary 部署 DM 集群用于体验或者测试，具体部署方法参照[使用 DM binary 部署 DM 集群](deploy-a-dm-cluster-using-binary.md)。
+目前推荐使用 TiUP 部署 DM 集群，具体部署方法参照 [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)；也可以使用 binary 部署 DM 集群用于体验或者测试，具体部署方法参照[使用 DM binary 部署 DM 集群](deploy-a-dm-cluster-using-binary.md)。
 
 > **注意：**
 >
-> - 在 DM 所有的配置文件中，对于数据库密码推荐使用 dmctl 加密后的密文。如果数据库密码为空，则不需要加密。关于如何使用 dmctl 加密明文密码，参考[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
+> - 在 DM 所有的配置文件中，对于数据库密码推荐使用 dmctl 加密后的密文。如果数据库密码为空，则不需要加密。关于如何使用 dmctl 加密明文密码，参考[使用 dmctl 加密数据库密码](manage-source.md#加密数据库密码)。
 > - 上下游数据库用户必须拥有相应的读写权限。
 
 ## 第 2 步：检查集群信息
 
-使用 DM-Ansible 部署 DM 集群后，相关配置信息如下：
+使用 TiUP 部署 DM 集群后，相关配置信息如下：
 
 - DM 集群相关组件配置信息
 
@@ -35,24 +35,6 @@ aliases: ['/docs-cn/tidb-data-migration/dev/replicate-data-using-dm/']
     | 上游 MySQL-1 | 172.16.10.81 | 3306 | root | VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU= |
     | 上游 MySQL-2 | 172.16.10.82 | 3306 | root | VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU= |
     | 下游 TiDB | 172.16.10.83 | 4000 | root | |
-
-- dm-master 进程配置文件 `{ansible deploy}/conf/dm-master.toml` 中的配置
-
-    ```toml
-    # Master 配置
-
-    [[deploy]]
-    source-id = "mysql-replica-01"
-    dm-worker = "172.16.10.72:8262"
-
-    [[deploy]]
-    source-id = "mysql-replica-02"
-    dm-worker = "172.16.10.73:8262"
-    ```
-
-    > **注意：**
-    >
-    > `{ansible deploy}/conf/dm-master.toml` 中的 `{ansible deploy}` 表示使用 DM-Ansible 部署 DM 时通过 `deploy_dir` 参数指定的目录。
 
 ## 第 3 步：创建数据源
 
@@ -73,12 +55,12 @@ aliases: ['/docs-cn/tidb-data-migration/dev/replicate-data-using-dm/']
       port: 3306
     ```
 
-2. 在终端中执行下面的命令，使用 dmctl 将 MySQL-1 的数据源配置加载到 DM 集群中：
+2. 在终端中执行下面的命令，使用 `tiup dmctl` 将 MySQL-1 的数据源配置加载到 DM 集群中：
 
     {{< copyable "shell-regular" >}}
 
     ```bash
-    ./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create conf/source1.yaml
+    tiup dmctl --master-addr 172.16.10.71:8261 operate-source create conf/source1.yaml
     ```
 
 3. 对于 MySQL-2，修改配置文件中的相关信息，并执行相同的 dmctl 命令。
@@ -87,7 +69,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/replicate-data-using-dm/']
 
 假设需要将 MySQL-1 和 MySQL-2 实例的 `test_db` 库的 `test_table` 表以**全量+增量**的模式同步到下游 TiDB 的 `test_db` 库的 `test_table` 表。
 
-复制并编辑 `{ansible deploy}/conf/task.yaml.example`，生成如下任务配置文件 `task.yaml`：
+编辑任务配置文件 `task.yaml`：
 
 ```yaml
 # 任务名，多个同时运行的任务不能重名。
@@ -140,75 +122,64 @@ mydumpers:
 >
 > 第一次启动数据同步任务时，必须确保上游数据库已配置。否则，启动任务时会报错。
 
-1. 进入 dmctl 目录 `/home/tidb/dm-ansible/resources/bin/`。
-
-2. 执行以下命令启动 dmctl。
-
-    {{< copyable "shell-regular" >}}
-
-    ```bash
-    ./dmctl --master-addr 172.16.10.71:8261
-    ```
-
-3. 执行以下命令启动数据同步任务。其中，`task.yaml` 是之前编辑的配置文件。
-
-    {{< copyable "" >}}
-
-    ```bash
-    » start-task ./task.yaml
-    ```
-
-    - 如果执行该命令后返回的结果如下，则表明任务已成功启动。
-
-        ```json
-        {
-            "result": true,
-            "msg": "",
-            "workers": [
-                {
-                    "result": true,
-                    "worker": "172.16.10.72:8262",
-                    "msg": ""
-                },
-                {
-                    "result": true,
-                    "worker": "172.16.10.73:8262",
-                    "msg": ""
-                }
-            ]
-        }
-        ```
-
-    - 如果任务启动失败，可根据返回结果的提示进行配置变更后执行 `start-task task.yaml` 命令重新启动任务。
-
-## 第 6 步：查询任务
-
-如需了解 DM 集群中是否存在正在运行的同步任务及任务状态等信息，可在 dmctl 内使用以下命令进行查询：
+使用 `tiup dmctl` 执行以下命令启动数据同步任务。其中，`task.yaml` 是之前编辑的配置文件。
 
 {{< copyable "" >}}
 
 ```bash
-» query-status
+tiup dmctl --master-addr 172.16.10.71:8261 start-task ./task.yaml
+```
+
+- 如果执行该命令后返回的结果如下，则表明任务已成功启动。
+
+    ```json
+    {
+        "result": true,
+        "msg": "",
+        "workers": [
+            {
+                "result": true,
+                "worker": "172.16.10.72:8262",
+                "msg": ""
+            },
+            {
+                "result": true,
+                "worker": "172.16.10.73:8262",
+                "msg": ""
+            }
+        ]
+    }
+    ```
+
+- 如果任务启动失败，可根据返回结果的提示进行配置变更后执行 `start-task task.yaml` 命令重新启动任务。
+
+## 第 6 步：查询任务
+
+如需了解 DM 集群中是否存在正在运行的同步任务及任务状态等信息，可使用 `tiup dmctl` 执行以下命令进行查询：
+
+{{< copyable "" >}}
+
+```bash
+tiup dmctl --master-addr 172.16.10.71:8261 query-status
 ```
 
 ## 第 7 步：停止任务
 
-如果不再需要进行数据同步，可以在 dmctl 内使用以下命令停止同步任务：
+如果不再需要进行数据同步，可以使用 `tiup dmctl` 执行以下命令停止同步任务：
 
 {{< copyable "" >}}
 
 ```bash
-» stop-task test
+tiup dmctl --master-addr 172.16.10.71:8261 stop-task test
 ```
 
 其中的 `test` 是 `task.yaml` 配置文件中 `name` 配置项设置的任务名。
 
 ## 第 8 步：监控任务与查看日志
 
-如果使用 DM-Ansible 部署 DM 集群时，正确部署了 Prometheus、Alertmanager 与 Grafana，且其地址均为 `172.16.10.71`。可在浏览器中打开 <http://172.16.10.71:9093> 进入 Alertmanager 查看 DM 告警信息；可在浏览器中打开 <http://172.16.10.71:3000> 进入 Grafana，选择 DM 的 dashboard 查看 DM 相关监控项。
+如果使用 TiUP 部署 DM 集群时，正确部署了 Prometheus、Alertmanager 与 Grafana，且其地址均为 `172.16.10.71`。可在浏览器中打开 <http://172.16.10.71:9093> 进入 Alertmanager 查看 DM 告警信息；可在浏览器中打开 <http://172.16.10.71:3000> 进入 Grafana，选择 DM 的 dashboard 查看 DM 相关监控项。
 
 DM 在运行过程中，DM-worker, DM-master 及 dmctl 都会通过日志输出相关信息。各组件的日志目录如下：
 
-- DM-master 日志目录：通过 DM-master 进程参数 `--log-file` 设置。如果使用 DM-Ansible 部署 DM，则日志目录位于 DM-master 节点的 `{ansible deploy}/log/dm-master.log`。
-- DM-worker 日志目录：通过 DM-worker 进程参数 `--log-file` 设置。如果使用 DM-Ansible 部署 DM，则日志目录位于 DM-worker 节点的 `{ansible deploy}/log/dm-worker.log`。
-- dmctl 日志目录：与其二进制文件目录相同。
+- DM-master 日志目录：通过 DM-master 进程参数 `--log-file` 设置。如果使用 TiUP 部署 DM，则日志目录位于 `{log_dir}`。
+- DM-worker 日志目录：通过 DM-worker 进程参数 `--log-file` 设置。如果使用 TiUP 部署 DM，则日志目录位于 `{log_dir}`。

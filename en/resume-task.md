@@ -17,7 +17,7 @@ help resume-task
 resume a specified paused task
 
 Usage:
- dmctl resume-task [-s source ...] <task-name> [flags]
+ dmctl resume-task [-s source ...] <task-name | task-file> [flags]
 
 Flags:
  -h, --help   help for resume-task
@@ -37,7 +37,7 @@ resume-task [-s "mysql-replica-01"] task-name
 ## Flags description
 
 - `-s`: (Optional) Specifies the MySQL source where you want to resume the subtask of the replication task. If it is set, the command resumes only the subtasks on the specified MySQL source.
-- `task-name`: (Required) Specifies the task name.
+- `task-name | task-file`: (Required) Specifies the task name or task file path.
 
 ## Returned results
 

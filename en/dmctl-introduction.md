@@ -14,6 +14,10 @@ The dmctl component supports the interactive mode and the command mode.
 
 Enter the interactive mode to interact with DM-master:
 
+> **Note:**
+>
+> The interactive mode does not support Bash features. For example, you need to directly pass string flags instead of passing them in quotes.
+
 {{< copyable "shell-regular" >}}
 
 ```bash
@@ -39,7 +43,7 @@ Available Commands:
   help                 help about any command
   migrate-relay        migrate DM-worker's relay unit
   offline-worker       offline worker which has been closed
-  operate-source       create/update/stop upstream MySQL/MariaDB source
+  operate-source       create/update/stop/show upstream MySQL/MariaDB source
   pause-relay          pause DM-worker's relay unit
   pause-task           pause a specified running task
   purge-relay          purge relay log files of the DM-worker according to the specified filename
@@ -88,20 +92,20 @@ Available Commands:
   check-task            check-task <config-file>
   migrate-relay         migrate-relay <source> <binlogName> <binlogPos>
   offline-worker        offline-worker <name> <address>
-  operate-source        operate-source <operate-type> <config-file>
+  operate-source        operate-source <operate-type> [config-file ...] [--print-sample-config]
   pause-relay           pause-relay <-s source ...>
-  pause-task            pause-task [-s source ...] <task-name>
+  pause-task            pause-task [-s source ...] <task-name | task-file>
   purge-relay           purge-relay <-s source> [--filename] [--sub-dir]
   query-error           query-error [-s source ...] [task-name]
   query-status          query-status [-s source ...] [task-name] [--more]
   resume-relay          resume-relay <-s source ...>
-  resume-task           resume-task [-s source ...] <task-name>
+  resume-task           resume-task [-s source ...] <task-name | task-file>
   show-ddl-locks        show-ddl-locks [-s source ...] [task-name]
   sql-inject            sql-inject <-s source> <task-name> <sql1;sql2;>
   sql-replace           sql-replace <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name> <sql1;sql2;>
   sql-skip              sql-skip <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name>
   start-task            start-task [-s source ...] <config-file>
-  stop-task             stop-task [-s source ...] <task-name>
+  stop-task             stop-task [-s source ...] <task-name | task-file>
   switch-relay-master   switch-relay-master <-s source ...>
   unlock-ddl-lock       unlock-ddl-lock [-s source ...] <lock-ID>
   update-master-config  update-master-config <config-file>
