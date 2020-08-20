@@ -74,7 +74,7 @@ After the cluster is successfully deployed, start the cluster by running the fol
 tiup start start prod-cluster
 ```
 
-If you forget the name of your cluster, view the cluster list by running `tiup cluster list`.
+If you forget the name of your cluster, view the cluster list by running `tiup dm list`.
 
 ## Check the cluster status
 
@@ -168,12 +168,6 @@ The rolling upgrade process is made as transparent as possible to the applicatio
 
 ### Upgrade command
 
-The flags for the upgrade command is as follows:
-
-```bash
-tiup dm upgrade <cluster-name> <version> [flags]
-```
-
 For example, the following command upgrades the cluster to v2.0.1:
 
 {{< copyable "shell-regular" >}}
@@ -197,7 +191,7 @@ TiUP DM opens the configuration file in the vi editor. If you want to use other 
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup cluster reload prod-cluster
+tiup dm reload prod-cluster
 ```
 
 The command sends the configuration to the target machine and restarts the cluster to make the configuration take effect.

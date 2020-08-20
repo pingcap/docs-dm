@@ -148,7 +148,7 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
       - host: 172.16.5.140
 
     ```
-    
+
 2. 执行扩容操作。TiUP DM 根据 scale.yaml 文件中声明的端口、目录等信息在集群中添加相应的节点：
 
     {{< copyable "shell-regular" >}}
@@ -164,12 +164,6 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
 滚动升级过程中尽量保证对前端业务透明、无感知，其中对不同节点有不同的操作。
 
 ### 升级操作
-
-升级命令参数如下：
-
-```bash
-tiup dm upgrade <cluster-name> <version> [flags]
-```
 
 例如，把集群升级到 v2.0.1 的命令为：
 
@@ -189,12 +183,12 @@ tiup dm upgrade prod-cluster v2.0.1
 tiup dm edit-config prod-cluster
 ```
 
-然后 TiUP cluster 组件会使用 vi 打开配置文件供编辑（如果你想要使用其他编辑器，请使用 `EDITOR` 环境变量自定义编辑器，例如 `export EDITOR=nano`），编辑完之后保存即可。此时的配置并没有应用到集群，如果想要让它生效，还需要执行：
+然后 TiUP DM 组件会使用 vi 打开配置文件供编辑（如果你想要使用其他编辑器，请使用 `EDITOR` 环境变量自定义编辑器，例如 `export EDITOR=nano`），编辑完之后保存即可。此时的配置并没有应用到集群，如果想要让它生效，还需要执行：
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup cluster reload prod-cluster
+tiup dm reload prod-cluster
 ```
 
 该操作会将配置发送到目标机器，滚动重启集群，使配置生效。
