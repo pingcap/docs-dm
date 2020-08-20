@@ -106,11 +106,11 @@ The `Status` column uses `Up` or `Down` to indicate whether the service is runni
 
 For the DM-master component, `|L` might be appended to a status, which indicates that the DM-master node is a Leader. For the DM-worker component, `Free` indicates that the current DM-worker node is not bound to an upstream.
 
-## Scale in a node
+## Scale in a cluster
 
-Scaling in a node means taking the node offline. This operation removes the node from the cluster and deletes the remaining data files.
+Scaling in a cluster means making some node(s) offline. This operation removes the specified node(s) from the cluster and deletes the remaining data files.
 
-When you scale in a node, DM operations on DM-master and DM-worker components are performed in the following order:
+When you scale in a cluster, DM operations on DM-master and DM-worker components are performed in the following order:
 
 1. Stop component processes.
 2. Call the API for DM-master to delete the `member`.
@@ -122,7 +122,7 @@ The basic usage of the scale-in command:
 tiup dm scale-in <cluster-name> -N <node-id>
 ```
 
-To use this command, you need to specify at least two flags: the cluster name and the node ID. The node ID can be obtained by using the `tiup dm display` command in the previous section.
+To use this command, you need to specify at least two arguments: the cluster name and the node ID. The node ID can be obtained by using the `tiup dm display` command in the previous section.
 
 For example, to scale in the DM-worker node on `172.16.5.140`, run the following command:
 
@@ -132,9 +132,9 @@ For example, to scale in the DM-worker node on `172.16.5.140`, run the following
 tiup dm scale-in prod-cluster -N 172.16.5.140:8262
 ```
 
-## Scale out a node
+## Scale out a cluster
 
-The scale-out operation has an inner logic similar to that of deployment: the TiUP DM component firstly ensures the SSH connection of the node, creates the required directories on the target node, then executes the deployment operation, and starts the node service.
+The scale-out operation has an inner logic similar to that of deployment: the TiUP DM component first ensures the SSH connection of the node, creates the required directories on the target node, then executes the deployment operation, and starts the node service.
 
 For example, to scale out a DM-worker node in the `prod-cluster` cluster, take the following steps:
 
@@ -273,7 +273,7 @@ Flags:
   -h, --help   help for audit
 ```
 
-If the `[audit-id]` flag is not specified, the command shows a list of commands that have been executed. For example:
+If the `[audit-id]` argument is not specified, the command shows a list of commands that have been executed. For example:
 
 {{< copyable "shell-regular" >}}
 
@@ -289,7 +289,7 @@ ID      Time                  Command
 4D5kNr  2020-08-13T05:36:10Z  tiup dm deploy -p prod-cluster v2.0.0 ./examples/dm/minimal.yaml
 ```
 
-The first column is `audit-id`. To view the execution log of a certain command, pass the `audit-id` of a command as the flag as follows:
+The first column is `audit-id`. To view the execution log of a certain command, pass the `audit-id` argument as follows:
 
 {{< copyable "shell-regular" >}}
 
@@ -337,7 +337,7 @@ Specify the version of dmctl:
 tiup dmctl:v2.0.0 [args]
 ```
 
-For example, to add a source previously, the dmctl command is `dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml`. After dmctl is integrated into TiUP, this command is:
+The previous dmctl command to add a source is `dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml`. After dmctl is integrated into TiUP, the command is:
 
 {{< copyable "shell-regular" >}}
 
@@ -347,14 +347,14 @@ tiup dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml
 
 ## Use the system's native SSH client to connect to cluster
 
-All operations above performed on the cluster machine use the TiUP-embedded SSH client to connect to the cluster and execute commands. However, in some scenarios, you might also need to use the SSH client native to the control machine system to perform such cluster operations. For example:
+All operations above performed on the cluster machine use the SSH client embedded in TiUP to connect to the cluster and execute commands. However, in some scenarios, you might also need to use the SSH client native to the control machine system to perform such cluster operations. For example:
 
 - To use a SSH plug-in for authentication
 - To use a customized SSH client
 
 Then you can use the `--native-ssh` command-line flag to enable the system-native command-line tool:
 
-- Deploy a cluster:  `tiup dm deploy <cluster-name> <version> <topo> --native-ssh`
+- Deploy a cluster: `tiup dm deploy <cluster-name> <version> <topo> --native-ssh`
 - Start a cluster: `tiup dm start <cluster-name> --native-ssh`
 - Upgrade a cluster: `tiup dm upgrade ... --native-ssh`
 
@@ -370,7 +370,7 @@ export TIUP_NATIVE_SSH=1
 export TIUP_NATIVE_SSH=enable
 ```
 
-If you specify this environmental variable and `--native-ssh` at the same time, `--native-ssh` prevails.
+If you specify this environment variable and `--native-ssh` at the same time, `--native-ssh` has higher priority.
 
 > **Note:**
 >
