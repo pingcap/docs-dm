@@ -34,7 +34,7 @@
     - [Manually Upgrade from v1.0.x to v2.0.x](manually-upgrade-dm-1.0-to-2.0.md)
     - [Upgrade Between v1.0.x](upgrade-dm-1.0.md)
   - [Cluster Operations](cluster-operations.md)
-  - [Use TiUP to Maintain DM Cluster](maintain-dm-using-tiup.md)
+  - [Use TiUP to Maintain a DM Cluster](maintain-dm-using-tiup.md)
   + Manage Replication Tasks
     - [dmctl Introduction](dmctl-introduction.md)
     - [Manage Upstream Data Source](manage-source.md)

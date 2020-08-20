@@ -63,7 +63,7 @@ According to the intended cluster topology, you need to manually create and edit
 
 You need to create a YAML configuration file (named `topology.yaml` for example) according to the [configuration file template](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml). For other scenarios, edit the configuration accordingly.
 
-The configuration file of a minimal deployment topology (3 DM-masters, 3 DM-workers, and 1 monitoring component) is as follows:
+The configuration file of a minimal deployment topology (3 DM-master instances, 3 DM-worker instances, and 1 monitoring component) is as follows:
 
 ```yaml
 ---
@@ -100,7 +100,7 @@ alertmanager_servers:
 >
 > - For parameters that should be effective on a specific node, configure these parameters in `config` of this node.
 >
-> - Use `.` to indicate the subcategory of the configuration, such as `log.slow-threshold`. For more formats, see [TiUP configuration template](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml)。
+> - Use `.` to indicate the subcategory of the configuration, such as `log.slow-threshold`. For more formats, see [TiUP configuration template](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml).
 >
 > - For more parameter description, see [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml) and [worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml).
 
@@ -125,9 +125,9 @@ In the above command:
 - The name of the deployed DM cluster is `dm-test`.
 - The version of the DM cluster is `v2.0.0`, You can see other supported versions by running `tiup list dm-master`.
 - The initialization configuration file is `topology.yaml`.
-- --user root: Log in to the target machine through the `root` key to complete the cluster deployment, or you can use other users with `ssh` and `sudo` privileges to complete the deployment.
+- `--user root`: Log in to the target machine through the `root` key to complete the cluster deployment, or you can use other users with `ssh` and `sudo` privileges to complete the deployment.
 - `[-i]` and `[-p]`: optional. If you have configured login to the target machine without password, these parameters are not required. If not, choose one of the two parameters. `[-i]` is the private key of the `root` user (or other users specified by `--user`) that has access to the target machine. `[-p]` is used to input the user password interactively.
-- TiUP DM uses the embedded SSH client. If you want to use the SSH client native to the control machine system, make configuration according to [use the system's native SSH client to connect to cluster](maintain-dm-using-tiup.md#use-the-systems-native-ssh-client-to-connect-to-cluster).
+- TiUP DM uses the embedded SSH client. If you want to use the SSH client native to the control machine system, edit the configuration according to [using the system's native SSH client to connect to the cluster](maintain-dm-using-tiup.md#use-the-systems-native-ssh-client-to-connect-to-cluster).
 
 At the end of the output log, you will see ```Deployed cluster `dm-test` successfully```. This indicates that the deployment is successful.
 
@@ -149,7 +149,7 @@ dm-test  tidb  v2.0.0  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/stor
 
 ## Step 5: Check the status of the deployed DM cluster
 
-For example, execute the following command to check the status of the `dm-test` cluster:
+To check the status of the `dm-test` cluster, execute the following command:
 
 {{< copyable "shell-regular" >}}
 
