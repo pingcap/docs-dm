@@ -18,7 +18,7 @@
     - [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md)
 + [Usage Scenarios](scenarios.md)
 + Quick Start
-  - [Deploy a DM cluster](quick-start-with-dm.md)
+  - [Deploy a DM Cluster](quick-start-with-dm.md)
   - [Create Data Migration Task](quick-start-create-task.md)
 + Deploy
   + [Software and Hardware Requirements](hardware-and-software-requirements.md)
@@ -39,12 +39,12 @@
     - [Precheck a Task](precheck.md)
     - [Create a Task](create-task.md)
     - [Query Status](query-status.md)
-    - [Query Error](query-error.md)
     - [Pause a Task](pause-task.md)
     - [Resume a Task](resume-task.md)
     - [Stop a Task](stop-task.md)
     - [Skip or Replace Abnormal SQL Statements](skip-or-replace-abnormal-sql-statements.md)
   - [Manually Handle Sharding DDL Locks](feature-manually-handling-sharding-ddl-locks.md)
+  - [Manage Table Schema during Migration](manage-schema.md)
   - [Handle Alerts](handle-alerts.md)
   - [Daily Check](daily-check.md)
 + Troubleshoot
@@ -55,6 +55,7 @@
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
+  - [Migration When the Downstream Table Has More Columns](usage-scenario-downstream-more-columns.md)
   - [Switch DM-worker Connection between MySQL Instances](usage-scenario-master-slave-switch.md)
 + Performance Tuning
   - [Optimize Configuration](tune-configuration.md)
