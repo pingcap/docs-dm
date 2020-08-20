@@ -248,7 +248,7 @@ Therefore, after you have manually unlocked the DDL lock, you should perform the
 >
 > After you run `unlock-ddl-lock`, if the MySQL source that went offline becomes online again and tries to replicate the data of the sharded tables, a match error between the data and the downstream table structure might occur.
 
-### Scenario 2: Some DM-workers stop abnormally or  network failure occurs during the DDL unlocking process
+### Scenario 2: Some DM-workers stop abnormally or the network failure occurs during the DDL unlocking process
 
 #### The reason for the abnormal lock
 
