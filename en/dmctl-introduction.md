@@ -39,35 +39,28 @@ Usage:
   dmctl [command]
 
 Available Commands:
-  check-task           check the config file of the task
-  help                 help about any command
-  migrate-relay        migrate DM-worker's relay unit
-  offline-worker       offline worker which has been closed
-  operate-source       create/update/stop/show upstream MySQL/MariaDB source
-  pause-relay          pause DM-worker's relay unit
-  pause-task           pause a specified running task
-  purge-relay          purge relay log files of the DM-worker according to the specified filename
-  query-error          query task error
-  query-status         query task status
-  resume-relay         resume DM-worker's relay unit
-  resume-task          resume a specified paused task
-  show-ddl-locks       show un-resolved DDL locks
-  sql-inject           inject (limited) SQLs into binlog replication unit as binlog events
-  sql-replace          replace SQLs matched by a specific binlog position (binlog-pos) or a SQL pattern (sql-pattern); each SQL must end with a semicolon
-  sql-skip             skip the binlog event matched by a specific binlog position (binlog-pos) or a SQL pattern (sql-pattern)
-  start-task           start a task as defined in the config file
-  stop-task            stop a specified task
-  switch-relay-master  switch the master server of the DM-worker's relay unit
-  unlock-ddl-lock      forcefully unlock DDL lock
-  update-master-config update the config of the DM-master
-  update-relay         update the relay unit config of the DM-worker
-  update-task          update a task's config for routes, filters, or block-allow-list
+  check-task      Checks the configuration file of the task.
+  get-task-config Gets the task configuration.
+  handle-error    skip/replace/revert the current error event or a specific binlog position (binlog-pos) event.
+  help            Help about any command.
+  list-member     Lists member information.
+  offline-member  Offlines member which has been closed.
+  operate-leader  evict/cancel-evict the leader.
+  operate-schema  get/set/remove the schema for an upstream table.
+  operate-source  create/update/stop/show upstream MySQL/MariaDB source.
+  pause-task      Pauses a specified running task.
+  query-status    Queries task status.
+  resume-task     Resumes a specified paused task.
+  show-ddl-locks  Shows un-resolved DDL locks.
+  start-task      Starts a task as defined in the configuration file.
+  stop-task       Stops a specified task.
+  unlock-ddl-lock Unlocks DDL lock forcefully.
 
 Flags:
-  -h, --help             help for dmctl
-  -s, --source strings   MySQL Source ID
+  -h, --help             Help for dmctl.
+  -s, --source strings   MySQL Source ID.
 
-Use `dmctl [command] --help` to get more information about a command.
+Use "dmctl [command] --help" for more information about a command.
 ```
 
 ## Command mode
@@ -90,25 +83,31 @@ The command mode differs from the interactive mode in that you need to append th
 ```
 Available Commands:
   check-task            check-task <config-file>
-  migrate-relay         migrate-relay <source> <binlogName> <binlogPos>
-  offline-worker        offline-worker <name> <address>
+  get-task-config       get-task-config <task-name | task-file> [--file filename]
+  handle-error          handle-error <task-name | task-file> [-s source ...] [-b binlog-pos] <skip/replace/revert> [replace-sql1;replace-sql2;]
+  list-member           list-member [--leader] [--master] [--worker] [--name master-name/worker-name ...]
+  offline-member        offline-member <--master/--worker> <--name master-name/worker-name>
+  operate-leader        operate-leader <operate-type>
+  operate-schema        operate-schema <operate-type> <-s source ...> <task-name | task-file> <-d database> <-t table> [schema-file]
   operate-source        operate-source <operate-type> [config-file ...] [--print-sample-config]
-  pause-relay           pause-relay <-s source ...>
   pause-task            pause-task [-s source ...] <task-name | task-file>
-  purge-relay           purge-relay <-s source> [--filename] [--sub-dir]
-  query-error           query-error [-s source ...] [task-name]
   query-status          query-status [-s source ...] [task-name] [--more]
-  resume-relay          resume-relay <-s source ...>
   resume-task           resume-task [-s source ...] <task-name | task-file>
   show-ddl-locks        show-ddl-locks [-s source ...] [task-name]
-  sql-inject            sql-inject <-s source> <task-name> <sql1;sql2;>
-  sql-replace           sql-replace <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name> <sql1;sql2;>
-  sql-skip              sql-skip <-s source> [-b binlog-pos] [-p sql-pattern] [--sharding] <task-name>
-  start-task            start-task [-s source ...] <config-file>
+  start-task            start-task [-s source ...] [--remove-meta] <config-file>
   stop-task             stop-task [-s source ...] <task-name | task-file>
-  switch-relay-master   switch-relay-master <-s source ...>
   unlock-ddl-lock       unlock-ddl-lock [-s source ...] <lock-ID>
-  update-master-config  update-master-config <config-file>
-  update-relay          update-relay [-s source ...] <config-file>
-  update-task           update-task [-s source ...] <config-file>
+
+Special Commands:
+  --encrypt Encrypts plaintext to ciphertext.
+  --decrypt Decrypts ciphertext to plaintext.
+
+Global Options:
+  --V Prints version and exit.
+  --config Path to configuration file.
+  --master-addr Master API server addr.
+  --rpc-timeout RPC timeout, default is 10m.
+  --ssl-ca Path of file that contains list of trusted SSL CAs for connection.
+  --ssl-cert Path of file that contains X509 certificate in PEM format for connection.
+  --ssl-key Path of file that contains X509 key in PEM format for connection.
 ```

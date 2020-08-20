@@ -136,7 +136,7 @@ When you use dmctl to manually handle the SQL statements unsupported by TiDB, th
 
 ### query-error
 
-`query-error` allows you to query errors that occur during the running of MySQL instance subtasks. For details, see [Query Error](query-error.md).
+`query-error` allows you to query errors that occur during the running of MySQL instance subtasks.
 
 ### sql-skip
 
