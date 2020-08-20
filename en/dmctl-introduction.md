@@ -35,26 +35,26 @@ Usage:
   dmctl [command]
 
 Available Commands:
-  check-task      check the config file of the task
-  get-task-config get task config
-  handle-error    skip/replace/revert the current error event or a specific binlog position (binlog-pos) event
-  help            Help about any command
-  list-member     list member information
-  offline-member  offline member which has been closed
-  operate-leader  operate-type can be 'evict' or 'cancel-evict', used to evict leader or cancel evict
-  operate-schema  get/set/remove the schema for an upstream table
-  operate-source  create/update/stop/show upstream MySQL/MariaDB source
-  pause-task      pause a specified running task
-  query-status    query task status
-  resume-task     resume a specified paused task
-  show-ddl-locks  show un-resolved DDL locks
-  start-task      start a task as defined in the config file
-  stop-task       stop a specified task
-  unlock-ddl-lock forcefully unlock DDL lock
+  check-task      Checks the configuration file of the task.
+  get-task-config Gets the task configuration.
+  handle-error    skip/replace/revert the current error event or a specific binlog position (binlog-pos) event.
+  help            Help about any command.
+  list-member     Lists member information.
+  offline-member  Offlines member which has been closed.
+  operate-leader  evict/cancel-evict the leader.
+  operate-schema  get/set/remove the schema for an upstream table.
+  operate-source  create/update/stop/show upstream MySQL/MariaDB source.
+  pause-task      Pauses a specified running task.
+  query-status    Queries task status.
+  resume-task     Resumes a specified paused task.
+  show-ddl-locks  Shows un-resolved DDL locks.
+  start-task      Starts a task as defined in the configuration file.
+  stop-task       Stops a specified task.
+  unlock-ddl-lock Unlocks DDL lock forcefully.
 
 Flags:
-  -h, --help             help for dmctl
-  -s, --source strings   MySQL Source ID
+  -h, --help             Help for dmctl.
+  -s, --source strings   MySQL Source ID.
 
 Use "dmctl [command] --help" for more information about a command.
 ```
@@ -95,15 +95,15 @@ Available Commands:
   unlock-ddl-lock       unlock-ddl-lock [-s source ...] <lock-ID>
 
 Special Commands:
-  --encrypt encrypt plaintext to ciphertext
-  --decrypt decrypt ciphertext to plaintext
+  --encrypt Encrypts plaintext to ciphertext.
+  --decrypt Decrypts ciphertext to plaintext.
 
 Global Options:
-  --V prints version and exit
-  --config path to config file
-  --master-addr master API server addr
-  --rpc-timeout rpc timeout, default is 10m
-  --ssl-ca path of file that contains list of trusted SSL CAs for connection
-  --ssl-cert path of file that contains X509 certificate in PEM format for connection
-  --ssl-key path of file that contains X509 key in PEM format for connection
+  --V Prints version and exit.
+  --config Path to configuration file.
+  --master-addr Master API server addr.
+  --rpc-timeout RPC timeout, default is 10m.
+  --ssl-ca Path of file that contains list of trusted SSL CAs for connection.
+  --ssl-cert Path of file that contains X509 certificate in PEM format for connection.
+  --ssl-key Path of file that contains X509 key in PEM format for connection.
 ```
