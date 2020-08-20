@@ -127,7 +127,7 @@ tiup dmctl --master-addr 127.0.0.1:8261 list-member
 
 根据示例信息保存如下的数据源配置文件，其中 `source-id` 的值将在第 4 步配置任务时被引用。
 
-文件 `source1.yaml`
+文件 `source1.yaml`：
 
 ```yaml
 # Aurora-1
