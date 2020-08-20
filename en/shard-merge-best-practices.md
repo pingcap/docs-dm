@@ -6,7 +6,7 @@ aliases: ['/docs/tidb-data-migration/dev/shard-merge-best-practices/']
 
 # Best Practices of Data Migration in the Shard Merge Scenario
 
-This document describes the features and limitations of [TiDB Data Migration](https://github.com/pingcap/dm) (DM) in the shard merge scenario and provides a data migration best practice guide for your application (se the default "pessimistic mode").
+This document describes the features and limitations of [TiDB Data Migration](https://github.com/pingcap/dm) (DM) in the shard merge scenario and provides a data migration best practice guide for your application (the default "pessimistic" mode).
 
 ## Use a separate data migration task
 
