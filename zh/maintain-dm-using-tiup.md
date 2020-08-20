@@ -165,7 +165,7 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
 
 ### 升级操作
 
-例如，把集群升级到 v2.0.1 的命令为：
+可使用 `tiup dm upgrade` 命令来升级集群。例如，把集群升级到 v2.0.1 的命令为：
 
 {{< copyable "shell-regular" >}}
 
