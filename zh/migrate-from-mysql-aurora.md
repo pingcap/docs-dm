@@ -55,7 +55,7 @@ Aurora 集群数据与迁移计划如下：
 
 ### DM 部署节点
 
-DM 作为数据迁移的核心，需要正常连接上游 Aurora 集群与下游 TiDB 集群，因此通过 MySQL client 等方式检查部署 DM 的节点能连通上下游。除此以外，DM 对软硬件要求参见 [DM 集群软硬件环境需求](hardware-and-software-requirements.md)。
+DM 作为数据迁移的核心，需要正常连接上游 Aurora 集群与下游 TiDB 集群，因此通过 MySQL client 等方式检查部署 DM 的节点能连通上下游。除此以外，DM 对软硬件要求，参见 [DM 集群软硬件环境需求](hardware-and-software-requirements.md)。
 
 ### Aurora
 
