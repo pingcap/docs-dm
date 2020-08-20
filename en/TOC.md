@@ -5,6 +5,7 @@
 
 ## TOC
 
+<<<<<<< HEAD
 + Overview
   - [DM Overview](overview.md)
   - [Restrictions](overview.md#usage-restrictions)
@@ -29,6 +30,23 @@
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
   - [Switch DM-worker Connection between MySQL Instances](usage-scenario-master-slave-switch.md)
 - [Quick Start](get-started.md)
+=======
++ About DM
+  + Benchmarks
+    - [DM 1.0-GA Benchmark Report](benchmark-v1.0-ga.md)
+    - [DM 1.0-alpha Benchmark Report](benchmark-v1-alpha.md)
+  + Features
+    - [Table Routing](key-features.md#table-routing)
+    - [Block and Allow Lists](key-features.md#block-and-allow-table-lists)
+    - [Binlog Event Filter](key-features.md#binlog-event-filter)
+    - [Replication Delay Monitoring](key-features.md#replication-delay-monitoring)
+    - [Online DDL Scheme](feature-online-ddl-scheme.md)
+    - [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md)
++ [Usage Scenarios](scenarios.md)
++ Quick Start
+  - [Deploy a DM Cluster](quick-start-with-dm.md)
+  - [Create Data Migration Task](quick-start-create-task.md)
+>>>>>>> 5492b9a... en: update error handling descriptions (#265)
 + Deploy
   + Deploy a DM Cluster
     - [Use DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
