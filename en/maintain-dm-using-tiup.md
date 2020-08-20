@@ -256,7 +256,7 @@ tiup dm import --dir=/path/to/tidb-ansible
 
 The process of using the `import` command is as follows:
 
-1. TiUP generates a topology file [`topology.yml`](https://github.com/pingcap/tiup/blob/master/examples/topology.dm.example.yaml) based on the DM cluster previously deployed using DM Ansible.
+1. TiUP generates a topology file [`topology.yml`](https://github.com/pingcap/tiup/blob/master/examples/topology.dm.example.yaml) based on the DM cluster previously deployed using DM-Ansible.
 2. After confirming that the topology file has been generated, you can use it to deploy the DM cluster of v2.0 or later versions.
 
 After the deployment is completed, you can execute the `tiup dm start` command to start the cluster and begin the process of upgrading the DM kernel.
@@ -299,7 +299,7 @@ tiup dm audit 4D5kQY
 
 ## Run commands on a host in the DM cluster
 
-To run command on a host in the TiDB cluster, use the `exec` command. The usage of the `exec` command is as follows:
+To run commands on a host in the DM cluster, use the `exec` command. The usage of the `exec` command is as follows:
 
 ```bash
 Usage:
