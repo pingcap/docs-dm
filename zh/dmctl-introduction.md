@@ -97,4 +97,17 @@ Available Commands:
   start-task            start-task [-s source ...] [--remove-meta] <config-file>
   stop-task             stop-task [-s source ...] <task-name | task-file>
   unlock-ddl-lock       unlock-ddl-lock [-s source ...] <lock-ID>
+
+Special Commands:
+  --encrypt encrypt plaintext to ciphertext
+  --decrypt decrypt ciphertext to plaintext
+
+Global Options:
+  --V prints version and exit
+  --config path to config file
+  --master-addr master API server addr
+  --rpc-timeout rpc timeout, default is 10m
+  --ssl-ca path of file that contains list of trusted SSL CAs for connection
+  --ssl-cert path of file that contains X509 certificate in PEM format for connection
+  --ssl-key path of file that contains X509 key in PEM format for connection
 ```
