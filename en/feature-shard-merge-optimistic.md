@@ -42,7 +42,7 @@ Currently, the following statements are not supported in the optimistic mode:
 - `ALTER TABLE table_name RENAME COLUMN column_1 TO column_2;` (To rename a column).
 - `ALTER TABLE table_name RENAME INDEX index_1 TO index_2;` (To rename an index).
 
-In addition, the following restrictions apply to DM, no matter in the optimistic mode or in the pessimistic mode:
+In addition, the following restrictions apply to both the optimistic mode and the pessimistic mode:
 
 - In an incremental replication task, ensure that each sharded table's schema that corresponds to the binlog position at the start of the task is consistent with each other.
 - The new table added to a sharding group must have a consistent table schema with that of other members. The `CREATE/RENAME TABLE` statement is forbidden when a batch of DDL statements is being executed.
@@ -92,7 +92,7 @@ By then, the `Age` column of `tbl00` is inconsistent because `DEFAULT 0` and `DE
 
 ## Implementation principle
 
-In the optimistic mode, after DM-worker receives the DDL statement from the upstream, it forwards the updated table schema to DM-master. DM-worker tracks the current schema of each sharded table and DM-master merges these schemas into a composite schema that is compatible with DML statements of every sharded table. Then DM-master replicates the corresponding DDL statement to the downstream. DML statements are directly replicated to the downstream.
+In the optimistic mode, after DM-worker receives the DDL statement from the upstream, it forwards the updated table schema to DM-master. DM-worker tracks the current schema of each sharded table, and DM-master merges these schemas into a composite schema that is compatible with DML statements of every sharded table. Then DM-master replicates the corresponding DDL statement to the downstream. DML statements are directly replicated to the downstream.
 
 ![optimistic-ddl-flow](/media/optimistic-ddl-flow.png)
 
@@ -162,7 +162,7 @@ ALTER TABLE `tbl02` ADD COLUMN `Level` INT;
 
 By then, all sharded tables have the `Level` column.
 
-Drop the `Name` column in `tbl00` and `tbl02` respectively:
+Drop the `Name` columns in `tbl00` and `tbl02` respectively:
 
 ```sql
 ALTER TABLE `tbl00` DROP COLUMN `Name`;
@@ -171,7 +171,7 @@ ALTER TABLE `tbl02` DROP COLUMN `Name`;
 
 ![optimistic-ddl-example-9](/media/optimistic-ddl-example-9.png)
 
-By then, the `Name` column is dropped from all sharded tables and can be safely dropped in the downstream:
+By then, the `Name` columns are dropped from all sharded tables and can be safely dropped in the downstream:
 
 ```sql
 ALTER TABLE `tbl` DROP COLUMN `Name`;
