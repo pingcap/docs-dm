@@ -175,7 +175,7 @@ Currently, the `unlock-ddl-lock` or `break-ddl-lock` command only supports handl
 
 #### The reason for the abnormal lock
 
-Before `DM-master` tries to automatically unlock the sharding DDL lock, all the DM-workers need to receive the sharding DDL events (for details, see [shard merge principles](feature-shard-merge.md#principles-pessimistic.md)). If the sharding DDL event is already in the replication process, and some DM-workers have gone offline and are not to be restarted (these DM-workers have been removed according to the application demand), then the sharding DDL lock cannot be automatically replicated and unlocked because not all the DM-workers can receive the DDL event.
+Before `DM-master` tries to automatically unlock the sharding DDL lock, all the DM-workers need to receive the sharding DDL events (for details, see [shard merge principles](feature-shard-merge.md#principles)). If the sharding DDL event is already in the replication process, and some DM-workers have gone offline and are not to be restarted (these DM-workers have been removed according to the application demand), then the sharding DDL lock cannot be automatically replicated and unlocked because not all the DM-workers can receive the DDL event.
 
 > **Note:**
 >
