@@ -1,34 +1,34 @@
 ---
 title: Manage Table Schema during Migration
-summary: Learn how to manage the table scheme of the table to be migrated within DM.
+summary: Learn how to manage the schema of the table to be migrated within DM.
 ---
 
 # Manage Table Schema during Migration
 
-This document describes how to manage the table schema within DM during the migration using [dmctl](dmctl-introduction.md).
+This document describes how to manage the schema of the table within DM during migration using [dmctl](dmctl-introduction.md).
 
-## Working Principles
+## Implementation principles
 
 When you migrate tables using DM, DM performs the following operations on the table schema:
 
-- For full export and import, DM directly exports the upstream table schema at the current time to SQL files and applies the table schema to the downstream.
+- For full export and import, DM directly exports the upstream table schema of the current time to SQL files and applies the table schema to the downstream.
 
 - For incremental replication, the whole data link contains the following table schemas, which might be the same or different:
 
-    * The upstream table schema at the current time. Written as `schema-U`.
-    * The table schema of the binlog event currently being consumed by DM. Written as `schema-B`. This schema corresponds to the upstream table schema at a historical time.
-    * The table schema currently internally maintained by DM (the schema tracker component). Written as `schema-I`.
-    * The table schema in the downstream TiDB cluster. Written as `schema-D`.
+    * The upstream table schema at the current time, identified as `schema-U`.
+    * The table schema of the binlog event currently being consumed by DM, identified as `schema-B`. This schema corresponds to the upstream table schema at a historical time.
+    * The table schema currently maintained in DM (the schema tracker component), identified as `schema-I`.
+    * The table schema in the downstream TiDB cluster, identified as `schema-D`.
 
-    In most cases, the four table schemas are the same.
+    In most cases, the four table schemas above are the same.
 
-When the upstream database performs a DDL operation to change the table schema, `schema-U` is changed. By applying the DDL operation to the internal schema tracker component and the downstream TiDB cluster, DM updates `schema-I` and `schema-D` in an orderly manner to keep them consistent with `schema-U`. Therefore, DM can normally consume the binlog event corresponding to the `schema-B` table schema. That is, after DDL is successfully replicated, `schema-U`, `schema-B`, `schema-I`, and `schema-D` are still consistent.
+When the upstream database performs a DDL operation to change the table schema, `schema-U` is changed. By applying the DDL operation to the internal schema tracker component and the downstream TiDB cluster, DM updates `schema-I` and `schema-D` in an orderly manner to keep them consistent with `schema-U`. Therefore, DM can then normally consume the binlog event corresponding to the `schema-B` table schema. That is, after the DDL operation is successfully replicated, `schema-U`, `schema-B`, `schema-I`, and `schema-D` are still consistent.
 
-However, during the migration that enables [optimistic mode shard DDL](feature-shard-merge-optimistic.md), the `schema-D` of the downstream merged table might be inconsistent with the `schema-B` and `schema-I` of some sharded tables. In such cases, DM still keeps `schema-I` and `schema-B` consistent to ensure that the binlog event corresponding to DML can be parsed normally.
+However, during the migration with [optimistic mode sharding DDL support](feature-shard-merge-optimistic.md) enabled, the `schema-D` of the downstream table might be inconsistent with the `schema-B` and `schema-I` of some upstream sharded tables. In such cases, DM still keeps `schema-I` and `schema-B` consistent to ensure that the binlog event corresponding to DML can be parsed normally.
 
-In addition, in some scenarios (such as when the downstream has more columns than the upstream), `schema-D` might be inconsistent with `schema-B` and `schema-I`.
+In addition, in some scenarios (such as when the downstream table has more columns than the upstream table), `schema-D` might be inconsistent with `schema-B` and `schema-I`.
 
-To support the special scenarios mentioned above and handle other migration interruptions due to schema inconsistency, DM provides the `operate-schema` command to obtain, modify, and delete the `schema-I` table schema internally maintained by DM.
+To support the scenarios mentioned above and handle other migration interruptions caused by schema inconsistency, DM provides the `operate-schema` command to obtain, modify, and delete the `schema-I` table schema maintained in DM.
 
 ## Command
 
@@ -55,13 +55,13 @@ Global Flags:
 
 > **Note:**
 >
-> Because a table schema might change during the migration, to obtain the fixed table schema, currently the `operate-schema` command can be used only when the data migration task is in the `Paused` state.
+> Because a table schema might change during data migration, to obtain the fixed table schema, currently the `operate-schema` command can be used only when the data migration task is in the `Paused` state.
 
 ## Parameters
 
 * `operate-type`:
     - Required.
-    - Specifies the operation type of the schema. The possible values are `get`, `set`, and `remove`.
+    - Specifies the type of operation on the schema. The optional values are `get`, `set`, and `remove`.
 * `-s`:
     - Required.
     - Specifies the MySQL source that the operation is applied to.
@@ -75,7 +75,7 @@ Global Flags:
     - Required.
     - Specifies the name of the upstream table corresponding to the table.
 * `schema-file`:
-    - Required when the operation type is `set`. Not required for other operation types.
+    - Required when the operation type is `set`. Optional for other operation types.
     - The table schema file to be set. The file content should be a valid `CREATE TABLE` statement.
 
 ## Usage example
@@ -140,11 +140,11 @@ operate-schema set -s mysql-replica-01 task_single -d db_single -t t1 db_single.
 }
 ```
 
-### Delete the table schema
+### Delete table schema
 
 > **Note:**
 >
-> After the table schema internally maintained by DM is deleted, if a DDL/DML statement related to this table needs to be replicated to the downstream, DM will try to get the table schema by the following three methods in an orderly manner:
+> After the table schema maintained in DM is deleted, if a DDL/DML statement related to this table needs to be replicated to the downstream, DM will try to get the table schema from the following three sources in an orderly manner:
 >
 > * The `table_info` field in the checkpoint table
 > * The meta information in the optimistic sharding DDL
