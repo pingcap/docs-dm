@@ -7,6 +7,42 @@ summary: Understand how to deal with the alert information in DM.
 
 This document introduces how to deal with the alert information in DM.
 
+## High availability alert
+
+### `DM_worker_offline`
+
+- Description:
+
+  If DM-worker is offline for more than one hour, an alert is triggered. In a high-availability architecture, this alert may not directly interrupt the task, but the risk increases.
+
+- Solution:
+
+   You can take the following steps to handle the alert:
+
+   1. View the working status of the corresponding DM-worker nodes.
+   2. Check whether the nodes are connected.
+   3. Troubleshoot errors through logs.
+
+### `DM_DDL_error`
+
+- Description:
+
+    An error occurs while running shard DDL.
+
+- Solution:
+
+    Refer to [Troubleshoot DM](error-handling.md#troubleshooting).
+
+### `DM_pending_DDL`
+
+- Description:
+
+    If the shard DDL is pending for more than one hour, an alert is triggered.
+
+- Solution:
+
+    In some usage cases, the pending shard DDL may be expected. In other cases, refer to [Handle Sharding DDL Locks Manually in DM](manually-handling-sharding-ddl-locks.md).
+
 ## Alert rules related to task status
 
 ### `DM_task_state`
