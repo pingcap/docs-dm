@@ -14,6 +14,10 @@ The dmctl component supports the interactive mode and the command mode.
 
 Enter the interactive mode to interact with DM-master:
 
+> **Note:**
+>
+> The interactive mode does not support Bash features. For example, you need to directly pass string flags instead of passing them in quotes.
+
 {{< copyable "shell-regular" >}}
 
 ```bash
