@@ -268,7 +268,7 @@ tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml --remove-meta
 tiup dmctl --master-addr 127.0.0.1:8261 query-status
 ```
 
-任务正常运行的返回信息是
+任务正常运行的返回信息是：
 
 ```
 {
