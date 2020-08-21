@@ -13,7 +13,6 @@
     - [Table Routing](key-features.md#table-routing)
     - [Block and Allow Lists](key-features.md#block-and-allow-table-lists)
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
-    - [Replication Delay Monitoring](key-features.md#replication-delay-monitoring)
     - [Online DDL Scheme](feature-online-ddl-scheme.md)
     - [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md)
 + [Usage Scenarios](scenarios.md)
@@ -23,7 +22,7 @@
 + Deploy
   + [Software and Hardware Requirements](hardware-and-software-requirements.md)
   + Deploy a DM Cluster
-    - [Use DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
+    - [Use TiUP](deploy-a-dm-cluster-using-tiup.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
   - [Replicate Data Using DM](replicate-data-using-dm.md)
   - [Monitor](monitor-a-dm-cluster.md)
@@ -32,7 +31,7 @@
   + Cluster Upgrade
     - [Manually Upgrade from v1.0.x to v2.0.x](manually-upgrade-dm-1.0-to-2.0.md)
     - [Upgrade Between v1.0.x](upgrade-dm-1.0.md)
-  - [Cluster Operations](cluster-operations.md)
+  - [Use TiUP to Maintain a DM Cluster](maintain-dm-using-tiup.md)
   + Manage Replication Tasks
     - [dmctl Introduction](dmctl-introduction.md)
     - [Manage Upstream Data Source](manage-source.md)

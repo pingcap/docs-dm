@@ -57,6 +57,10 @@ This document introduces how to deal with the alert information in DM.
 
 ## Alert rules related to relay log
 
+> **Note:**
+>
+> Currently, DM v2.0 does not support enabling the relay log feature.
+
 ### `DM_relay_process_exits_with_error`
 
 - Description:
@@ -79,7 +83,6 @@ This document introduces how to deal with the alert information in DM.
 
     - Delete unwanted data manually to increase free disk space.
     - Reconfigure the [automatic data purge strategy of the relay log](relay-log.md#automatic-data-purge) or [purge data manually](relay-log.md#manual-data-purge).
-    - [Migrate the DM-worker instance](cluster-operations.md#replacemigrate-a-dm-worker-instance) to a disk with enough free space.
 
 ### `DM_relay_log_data_corruption`
 
