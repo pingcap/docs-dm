@@ -70,6 +70,9 @@
     - [Upstream Database Configuration](source-configuration-file.md)
     - [Task Configuration](task-configuration-file.md)
     - [Full Task Configuration](task-configuration-file-full.md)
+  + Secure
+    - [Enable TLS for DM Connections](enable-tls.md)
+    - [Generate Self-signed Certificates](generate-self-signed-certificates.md)
   - [Monitoring Metrics](monitor-a-dm-cluster.md)
   - [Alert Rules](alert-rules.md)
   - [Error Codes](error-handling.md#handle-common-errors)
