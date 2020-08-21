@@ -96,7 +96,7 @@ Available Commands:
   show-ddl-locks        show-ddl-locks [-s source ...] [task-name]
   start-task            start-task [-s source ...] [--remove-meta] <config-file>
   stop-task             stop-task [-s source ...] <task-name | task-file>
-  unlock-ddl-lock       unlock-ddl-lock [-s source ...] <lock-ID>
+  unlock-ddl-lock       unlock-ddl-lock <lock-ID>
 
 Special Commands:
   --encrypt Encrypts plaintext to ciphertext.
