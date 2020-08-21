@@ -22,6 +22,7 @@
 + Deploy
   + [Software and Hardware Requirements](hardware-and-software-requirements.md)
   + Deploy a DM Cluster
+    - [Use TiUP](deploy-a-dm-cluster-using-tiup.md)
     - [Use DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
   - [Replicate Data Using DM](replicate-data-using-dm.md)
@@ -32,13 +33,13 @@
     - [Manually Upgrade from v1.0.x to v2.0.x](manually-upgrade-dm-1.0-to-2.0.md)
     - [Upgrade Between v1.0.x](upgrade-dm-1.0.md)
   - [Cluster Operations](cluster-operations.md)
+  - [Use TiUP to Maintain a DM Cluster](maintain-dm-using-tiup.md)
   + Manage Replication Tasks
     - [dmctl Introduction](dmctl-introduction.md)
     - [Manage Upstream Data Source](manage-source.md)
     - [Precheck a Task](precheck.md)
     - [Create a Task](create-task.md)
     - [Query Status](query-status.md)
-    - [Query Error](query-error.md)
     - [Pause a Task](pause-task.md)
     - [Resume a Task](resume-task.md)
     - [Stop a Task](stop-task.md)
