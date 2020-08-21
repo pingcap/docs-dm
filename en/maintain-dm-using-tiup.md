@@ -247,7 +247,7 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 
 > **Note:**
 >
-> TiUP does not support importing the DM Portal component in the 1.0 cluster.
+> TiUP does not support importing the DM Portal component in a DM 1.0 cluster.
 
 Before TiUP is released, DM-Ansible is often used to deploy DM clusters. To enable TiUP to take over the DM 1.0 cluster deployed by DM-Ansible, use the `import` command.
 
