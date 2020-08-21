@@ -8,6 +8,8 @@ aliases: ['/docs-cn/tidb-data-migration/dev/manually-upgrade-dm-1.0-to-2.0/']
 
 本文档主要介绍如何手动从 DM v1.0.x 升级到 v2.0.x，主要思路为利用 v1.0.x 时的全局 checkpoint 信息在 v2.0.x 集群中启动一个新的增量数据迁移任务。
 
+有关如何自动将 DM v1.0.x 升级到 v2.0.x，请参考[使用 TiUP 自动导入 DM-Ansible 部署的 1.0 集群](maintain-dm-using-tiup.md#导入-dm-ansible-部署的-dm-10-集群并升级)。
+
 > **注意：**
 >
 > - DM 当前不支持在数据迁移任务处于全量导出或全量导入过程中从 v1.0.x 升级到 v2.0.x。
