@@ -27,7 +27,7 @@ In the task configuration file, `online-ddl-scheme` is at the same level of `nam
 ## ********* Basic configuration *********
 name: test                      # The name of the task. Should be globally unique.
 task-mode: all                  # The task mode. Can be set to `full`/`incremental`/`all`.
-shard-mode: "pessimistic"       # This needs to be configured if it is a shard merge task. The "pessimistic" mode is used by default. After understanding the principles and restrictions of the "optimistic" mode, you can set to the "optimistic" mode.
+shard-mode: "pessimistic"       # You need to configure this if it is a shard merge task. The "pessimistic" mode is used by default. After understanding the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
 meta-schema: "dm_meta"          # The downstream database that stores the `meta` information.
 remove-meta: false              # Whether to remove the `meta` information (`checkpoint` and `onlineddl`) corresponding to the task name before starting the replication task.
 enable-heartbeat: false         # Whether to enable the heartbeat feature.

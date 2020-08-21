@@ -560,7 +560,7 @@ Currently, the shard merge feature is supported only in limited scenarios. For d
 Set `is-sharding` to `true` in the task configuration file:
 
 ```
-shard-mode: "pessimistic" # This needs to be configured if it is a shard merge task. The "pessimistic mode" is used by default. After understanding the principles and restrictions of the "optimistic" mode, you can set to the "optimistic mode".
+shard-mode: "pessimistic" # You need to configure this if it is a shard merge task. The "pessimistic" mode is used by default. After understanding the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
 ```
 
 ### Handle sharding DDL locks manually

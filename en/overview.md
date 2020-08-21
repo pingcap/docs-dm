@@ -98,7 +98,7 @@ Before using the DM tool, note the following restrictions:
 
     - If conflict exists between sharded tables, solve the conflict by referring to [handling conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key). Otherwise, data replication is not supported. Conflicting data can cover each other and cause data loss.
 
-    - For other sharding restrictions, see [Sharding DDL usage Restrictions in pessimistic mode](feature-shard-merge-pessimistic.md#restrictions) and [Sharding DDL usage Restrictions in optimistic mode](feature-shard-merge-optimistic.md#restrictions).
+    - For other sharding restrictions, see [Sharding DDL usage Restrictions in the pessimistic mode](feature-shard-merge-pessimistic.md#restrictions) and [Sharding DDL usage Restrictions in the optimistic mode](feature-shard-merge-optimistic.md#restrictions).
 
 + Operations
 
