@@ -79,18 +79,10 @@ After deployment, you need to record the IP and service port of any DM-master no
 
 > **Note:**
 >
-> - When using other methods to deploy DM, you can call `dmctl` in a similar way, see [Introduction to dmctl](dmctl-introduction.md).
+> When using other methods to deploy DM, you can call `dmctl` in a similar way, see [Introduction to dmctl](dmctl-introduction.md).
 
 {{< copyable "shell-regular" >}}
 
-<<<<<<< Updated upstream
-It is recommended to use TiUP to deploy a DM cluster. See [Deploy Data Migration Using TiUP](deploy-a-dm-cluster-using-tiup.md).
-
-> **Note:**
->
-> - It is recommended to use password encrypted with dmctl in all the DM configuration files. If the database password is empty, it is unnecessary to encrypt it. For how to use dmctl to encrypt a cleartext password, see [Encrypt the database password using dmctl](manage-source.md#encrypt-the-database-password).
-> - Both the upstream and downstream users must have the corresponding read and write privileges.
-=======
 ```bash
 tiup dmctl --master-addr 127.0.0.1:8261 list-member
 ```
