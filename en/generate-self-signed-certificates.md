@@ -70,11 +70,11 @@ A certificate authority (CA) is a trusted entity that issues digital certificate
 
 ### Certificates that might be used in the cluster
 
-- `master` certificate used by DM-master to authenticate DM-master for other components.
-- `worker` certificate used by DM-worker to authenticate DM-worker for other components.
-- `client` certificate used by dmctl to authenticate clients for DM-master and DM-worker.
+- The `master` certificate used by DM-master to authenticate DM-master for other components.
+- The `worker` certificate used by DM-worker to authenticate DM-worker for other components.
+- The `client` certificate used by dmctl to authenticate clients for DM-master and DM-worker.
 
-### Issue certificates to a DM-master
+### Issue certificates for DM-master
 
 To issue a certificate to a DM-master instance, perform the following steps:
 
