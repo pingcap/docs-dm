@@ -629,7 +629,7 @@ You can replace this DDL statement with two equivalent DDL statements. The steps
     }
     ```
 
-2. Use `query-status <task-name>` to view the task status, and you can see the following errors reported by the `shard_db_1`.`shard_table_1` table in MySQL instance 1 and the `shard_db_2`.`shard_table_1` table in MySQL instance 2:
+2. Use `query-status <task-name>` to view the task status, and you can see the following errors reported by the `shard_db_1`.`shard_table_2` table in MySQL instance 1 and the `shard_db_2`.`shard_table_2` table in MySQL instance 2:
 
     ```
     {
