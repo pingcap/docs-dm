@@ -40,8 +40,9 @@ In the error system, usually, the information of a specific error is as follows:
     | `dm-master`      |   DM-master service | `[code=38008:class=dm-master:scope=internal:level=high] grpc request error: rpc error: code = Unavailable desc = all SubConns are in TransientFailure, latest connection error: connection error: desc = "transport: Error while dialing dial tcp 172.17.0.2:8262: connect: connection refused"` |
     | `dm-worker`      |  DM-worker service  | `[code=40066:class=dm-worker:scope=internal:level=high] ExecuteDDL timeout, try use query-status to query whether the DDL is still blocking` |
     | `dm-tracer`      |  DM-tracer service  | `[code=42004:class=dm-tracer:scope=internal:level=medium] trace event test.1 not found` |
-    | `schema-tracker` | schema-tracker (during incremental data replication)   | `ErrSchemaTrackerCannotExecDDL,[code=44006:class=schema-tracker:scope=internal:level=high],"cannot track DDL: ALTER TABLE test DROP COLUMN col1"` |
-    | `scheduler`      | Scheduling operations (of data replication tasks)   | `ErrSchedulerNotStarted,[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
+    | `schema-tracker` | schema-tracker (during incremental data replication)   | `[code=44006:class=schema-tracker:scope=internal:level=high],"cannot track DDL: ALTER TABLE test DROP COLUMN col1"` |
+    | `scheduler`      | Scheduling operations (of data replication tasks)   | `[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
+    | `dmctl`          | An error occurs within dmctl or when it interacts with other components | `[code=48001:class=dmctl:scope=internal:level=high],"can not create grpc connection"` |
 
 - `scope`: Error scope.
 
@@ -60,6 +61,10 @@ In the error system, usually, the information of a specific error is as follows:
 - `message`: Error descriptions.
 
     Detailed descriptions of the error. To wrap and store every additional layer of error message on the error call chain, the [errors.Wrap](https://godoc.org/github.com/pkg/errors#hdr-Adding_context_to_an_error) mode is adopted. The message description wrapped at the outermost layer indicates the error in DM and the message description wrapped at the innermost layer indicates the error source.
+
+- `workaround`: Error handling methods (optional)
+
+    The handling methods for this error. For some confirmed errors (such as configuration errors), DM gives the corresponding manual handling methods in `workaround`.
 
 - Error stack information (optional)
 
@@ -98,7 +103,7 @@ However, you need to reset the data replication task in some cases. For details,
 | `code=10006` |  Occurs when performing the `EXECUTE` type SQL statements, including DDL statements and DML statements of the `INSERT`, `UPDATE`or `DELETE` type. For more detailed error information, check the error message which usually includes the error code and error information returned for database operations.
 |                                                              |
 | `code=11006` |  Occurs when the built-in parser of DM parses the incompatible DDL statements.          |  Refer to [Data Migration - incompatible DDL statements](faq.md#how-to-handle-incompatible-ddl-statements) for solution. |
-| `code=20010` |   Occurs when decrypting the database password that is provided in task configuration.                   |  Check whether the downstream database password provided in the configuration task is [correctly encrypted using dmctl](deploy-a-dm-cluster-using-ansible.md#encrypt-the-upstream-mysql-user-password-using-dmctl). |
+| `code=20010` |   Occurs when decrypting the database password that is provided in task configuration.                   |  Check whether the downstream database password provided in the configuration task is [correctly encrypted using dmctl](manage-source.md#encrypt-the-database-password). |
 | `code=26002` |  The task check fails to establish database connection. For more detailed error information, check the error message which usually includes the error code and error information returned for database operations. |  Check whether the machine where DM-master is located has permission to access the upstream. |
 | `code=32001` |   Abnormal dump processing unit                                            |  If the error message contains `mydumper: argument list too long.`, configure the table to be exported by manually adding the `--regex` regular expression in the Mydumper argument `extra-args` in the `task.yaml` file according to the block-allow list. For example, to export all tables named `hello`, add `--regex '.*\\.hello$'`; to export all tables, add `--regex '.*'`. |
 | `code=38008` |  An error occurs in the gRPC communication among DM components.                                     |   Check `class`. Find out the error occurs in the interaction of which components. Determine the type of communication error. If the error occurs when establishing gRPC connection, check whether the communication server is working normally. |
@@ -111,7 +116,7 @@ The `invalid connection` error indicates that anomalies have occurred in the con
 
 #### Solutions
 
-Because DM has the feature of concurrently replicating data to the downstream in replication tasks, several errors might occur when a task is interrupted. You can check these errors by using `query-status` or `query-error`.
+Because DM has the feature of concurrently replicating data to the downstream in replication tasks, several errors might occur when a task is interrupted. You can check these errors by using `query-status`.
 
 - If only the `invalid connection` error occurs during the incremental replication process, DM retries the task automatically.
 - If DM does not or fails to retry automatically because of version problems, use `stop-task` to stop the task and then use `start-task` to restart the task.
@@ -174,7 +179,7 @@ For binlog replication processing units, manually recover replication using the 
 
 ### `Access denied for user 'root'@'172.31.43.27' (using password: YES)` shows when you query the task or check the log
 
-For database related passwords in all the DM configuration files, use the passwords encrypted by `dmctl`. If a database password is empty, it is unnecessary to encrypt it. For how to encrypt the plaintext password, see [Encrypt the upstream MySQL user password using dmctl](deploy-a-dm-cluster-using-ansible.md#encrypt-the-upstream-mysql-user-password-using-dmctl).
+For database related passwords in all the DM configuration files, it is recommended to use the passwords encrypted by `dmctl`. If a database password is empty, it is unnecessary to encrypt it. For how to encrypt the plaintext password, see [Encrypt the database password using dmctl](manage-source.md#encrypt-the-database-password).
 
 In addition, the user of the upstream and downstream databases must have the corresponding read and write privileges. Data Migration also [prechecks the corresponding privileges automatically](precheck.md) while starting the data replication task.
 

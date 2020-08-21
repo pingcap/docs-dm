@@ -57,12 +57,6 @@ The dump processing unit is the processing unit used in DM-worker to export all 
 
 The GTID is the global transaction ID of MySQL or MariaDB. With this feature enabled, the GTID information is recorded in the binlog files. Multiple GTIDs form a GTID set. Refer to [MySQL GTID Format and Storage](https://dev.mysql.com/doc/refman/5.7/en/replication-gtids-concepts.html) and [MariaDB Global Transaction ID](https://mariadb.com/kb/en/library/gtid/) for details.
 
-## H
-
-### Heartbeat
-
-The heartbeat is a mechanism that calculates the delay from the time data is written in the upstream to the time data is processed by the binlog replication processing unit. Refer to [replication delay monitoring](key-features.md#replication-delay-monitoring) for details.
-
 ## L
 
 ### Load processing unit
