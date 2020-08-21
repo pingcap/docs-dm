@@ -16,7 +16,6 @@ aliases: ['/docs/tidb-data-migration/dev/']
 - [Table routing](key-features.md#table-routing)
 - [Block & Allow Lists](key-features.md#block-and-allow-table-lists)
 - [Binlog Event Filter](key-features.md#binlog-event-filter)
-- [Replication delay monitoring](key-features.md#replication-delay-monitoring)
 - [Online DDL Scheme](feature-online-ddl-scheme.md)
 - [Shard Merge](feature-shard-merge.md)
 
@@ -34,7 +33,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 <NavColumn>
 <ColumnTitle>Deploy and Use</ColumnTitle>
 
-- [Deploy DM Using DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
+- [Deploy DM Using TiUP](deploy-a-dm-cluster-using-tiup.md)
 - [Deploy DM Using Binary](deploy-a-dm-cluster-using-binary.md)
 - [Use DM to Replicate Data](replicate-data-using-dm.md)
 - [Monitor and Alert](monitor-a-dm-cluster.md)
@@ -45,7 +44,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 <ColumnTitle>Maintain</ColumnTitle>
 
 - [Upgrade DM](manually-upgrade-dm-1.0-to-2.0.md)
-- [DM Cluster Operations](cluster-operations.md)
+- [DM Cluster Operations](maintain-dm-using-tiup.md)
 - [Create a Task](create-task.md)
 - [Pause a Task](pause-task.md)
 - [Resume a Task](resume-task.md)

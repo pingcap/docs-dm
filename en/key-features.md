@@ -485,43 +485,6 @@ column-mappings:
 - The column ID of the MySQL instance 1 table `test_1`.`t_1` is converted from `1` to `1 << (64-1-4) | 1 << (64-1-4 -7) | 1 << 44 | 1 = 580981944116838401`.
 - The row ID of the MySQL instance 2 table `test_1`.`t_2` is converted from `2` to `2 << (64-1-4) | 1 << (64-1-4 -7) | 2 << 44 | 2 = 1157460288606306306`.
 
-## Replication delay monitoring
-
-DM supports writing data related to `heartbeat` on MySQL/MariaDB; when the data is replicated to DM, DM supports calculating the real-time replication delay between each replication task and MySQL/MariaDB.
-
-> **Note:**
->
-> - After `heartbeat` is enabled, write operations are performed on the upstream MySQL instances connected by DM-worker. If these upstream MySQL instances form a primary-secondary cluster, make sure that DM-worker connects to the primary instance; otherwise, the data of primary and secondary MySQL instances are inconsistent.
-> - The estimation accuracy of the replication delay is at the second level.
-> - The heartbeat related binlog is not replicated into the downstream, which is discarded after calculating the replication delay.
-
-### System privileges
-
-If the heartbeat feature is enabled, the upstream MySQL or MariaDB instances must provide the following privileges:
-
-- SELECT
-- INSERT
-- CREATE (databases, tables)
-- DELETE
-
-### Parameter configuration
-
-In the task configuration file, enable the heartbeat feature:
-
-```
-enable-heartbeat: true
-```
-
-### Principles introduction
-
-- DM-worker creates the `dm_heartbeat` (currently unconfigurable) schema in the corresponding upstream MySQL or MariaDB.
-- DM-worker creates the `heartbeat` (currently unconfigurable) table in the corresponding upstream MySQL or MariaDB.
-- DM-worker uses `replace statement` to update the current `TS_primary` timestamp every second (currently unconfigurable) in the corresponding upstream MySQL or MariaDB `dm_heartbeat`.`heartbeat` tables.
-- DM-worker updates the `TS_secondary_task` replication time after each replication task obtains the `dm_heartbeat`.`heartbeat` binlog.
-- DM-worker queries the current `TS_primary` timestamp in the corresponding upstream MySQL or MariaDB `dm_heartbeat`.`heartbeat` tables every 10 seconds, and calculates `task_lag` = `TS_primary` - `TS_secondary_task` for each task.
-
-See the `replicate lag` in the [binlog replication](monitor-a-dm-cluster.md#binlog-replication) processing unit of DM monitoring metrics.
-
 ## Online DDL tools
 
 In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM provides supports for these tools to avoid replicating unnecessary intermediate data.

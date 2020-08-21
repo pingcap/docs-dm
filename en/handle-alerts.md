@@ -7,6 +7,42 @@ summary: Understand how to deal with the alert information in DM.
 
 This document introduces how to deal with the alert information in DM.
 
+## Alerts related to high availability
+
+### `DM_worker_offline`
+
+- Description:
+
+    If a DM-worker node is offline for more than one hour, this alert is triggered. In a high-availability architecture, this alert might not directly interrupt the task but increases the risk of interruption.
+
+- Solution:
+
+    You can take the following steps to handle the alert:
+
+    1. View the working status of the corresponding DM-worker node.
+    2. Check whether the node is connected.
+    3. Troubleshoot errors through logs.
+
+### `DM_DDL_error`
+
+- Description:
+
+    This error occurs when DM is processing the sharding DDL operations.
+
+- Solution:
+
+    Refer to [Troubleshoot DM](error-handling.md#troubleshooting).
+
+### `DM_pending_DDL`
+
+- Description:
+
+    If a sharding DDL operation is pending for more than one hour, this alert is triggered.
+
+- Solution:
+
+    In some scenarios, the pending sharding DDL operation might be what users expect. Otherwise, refer to [Handle Sharding DDL Locks Manually in DM](feature-manually-handling-sharding-ddl-locks.md) for solution.
+
 ## Alert rules related to task status
 
 ### `DM_task_state`
@@ -20,6 +56,10 @@ This document introduces how to deal with the alert information in DM.
     Refer to [Troubleshoot DM](error-handling.md#troubleshooting).
 
 ## Alert rules related to relay log
+
+> **Note:**
+>
+> Currently, DM v2.0 does not support enabling the relay log feature.
 
 ### `DM_relay_process_exits_with_error`
 
@@ -43,7 +83,6 @@ This document introduces how to deal with the alert information in DM.
 
     - Delete unwanted data manually to increase free disk space.
     - Reconfigure the [automatic data purge strategy of the relay log](relay-log.md#automatic-data-purge) or [purge data manually](relay-log.md#manual-data-purge).
-    - [Migrate the DM-worker instance](cluster-operations.md#replacemigrate-a-dm-worker-instance) to a disk with enough free space.
 
 ### `DM_relay_log_data_corruption`
 
