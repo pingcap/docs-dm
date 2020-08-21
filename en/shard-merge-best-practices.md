@@ -12,7 +12,7 @@ This document describes the features and limitations of [TiDB Data Migration](ht
 
 In the [Merge and Replicate Data from Sharded Tables](feature-shard-merge-pessimistic.md#principles) document, the definition of "sharding group" is given: A sharding group consists of all upstream tables that need to be merged and replicated into the same downstream table.
 
-The current sharding DDL mechanism has some [usage restrictions](feature-shard-merge-pessimistic.md#restrictions) to coordinate the schema changes brought by DDL operations in different sharded tables. If these restrictions are violated due to unexpected reasons, you need to [handle sharding DDL locks manually in DM](feature-manually-handling-sharding-ddl-locks.md), or even redo the entire data migration task.
+The current sharding DDL mechanism has some [usage restrictions](feature-shard-merge-pessimistic.md#restrictions) to coordinate the schema changes brought by DDL operations in different sharded tables. If these restrictions are violated due to unexpected reasons, you need to [handle sharding DDL locks manually in DM](manually-handling-sharding-ddl-locks.md), or even redo the entire data migration task.
 
 To mitigate the impact on data migration when an exception occurs, it is recommended to merge and replicate each sharding group as a separate data migration task. **This might enable that only a small number of data migration tasks need to be handled manually while others remain unaffected.**
 
@@ -24,7 +24,7 @@ Therefore, when you find any sharding DDL lock on `DM-master` through `show-ddl-
 
 Instead, you can:
 
-- Follow the corresponding manual solution to handle the scenario if the failure of automatically releasing the sharding DDL lock is one of the [listed abnormal scenarios](feature-manually-handling-sharding-ddl-locks.md#supported-scenarios).
+- Follow the corresponding manual solution to handle the scenario if the failure of automatically releasing the sharding DDL lock is one of the [listed abnormal scenarios](manually-handling-sharding-ddl-locks.md#supported-scenarios).
 - Redo the entire data migration task if it is an unsupported scenario: First, empty the data in the downstream database and the `dm_meta` information associated with the migration task; then, re-execute the full and incremental data migration.
 
 ## Handle conflicts of auto-increment primary key
