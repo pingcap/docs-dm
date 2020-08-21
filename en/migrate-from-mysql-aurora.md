@@ -8,86 +8,193 @@ aliases: ['/docs/tidb-data-migration/dev/migrate-from-mysql-aurora/']
 
 This document describes how to migrate from [Amazon Aurora MySQL](https://aws.amazon.com/rds/aurora/details/mysql-details/?nc1=h_ls) to TiDB by using TiDB Data Migration (DM).
 
-## Step 1: Enable binlog in the Aurora cluster
+The Aurora cluster information in the example is as follows:
 
-Assuming that you want to migrate data from two Aurora clusters to TiDB, the information of the Aurora clusters is listed in the following table. The Aurora-1 cluster contains a separate reader endpoint.
+| Cluster | Endpoint | Port | Role | Version |
+|:-------- |:--- | :--- | :--- |:---|
+| Aurora-1 | test-dm-2-0.cluster-czrtqco96yc6.us-east-2.rds.amazonaws.com | 3306 | Writer | Aurora (MySQL)-5.7.12 |
+| Aurora-1 | test-dm-2-0.cluster-ro-czrtqco96yc6.us-east-2.rds.amazonaws.com | 3306 | Reader | Aurora (MySQL)-5.7.12 |
+| Aurora-2 | test-dm-2-0-2.cluster-czrtqco96yc6.us-east-2.rds.amazonaws.com | 3306 | Writer | Aurora (MySQL)-5.7.12 |
+| Aurora-2 | test-dm-2-0-2.cluster-ro-czrtqco96yc6.us-east-2.rds.amazonaws.com | 3306 | Reader | Aurora (MySQL)-5.7.12 |
 
-| Cluster | Endpoint | Port | Role |
-|:-------- |:--- | :--- | :--- |
-| Aurora-1 | pingcap-1.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | Writer |
-| Aurora-1 | pingcap-1-us-east-2a.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | Reader |
-| Aurora-2 | pingcap-2.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | Writer |
+The data and migration plan of the Aurora cluster are as follows:
 
-DM relies on the `ROW` format of binlog during the incremental replication process, so you need to set the binlog format as `ROW`. If binlog is not enabled or is incorrectly configured, DM cannot replicate data normally. For more details, see [Checking items](precheck.md#checking-items).
+| Cluster | Database | Table | Migration |
+|:---- |:---- | :--- | :--- |
+| Aurora-1 | migrate_me | t1 | Yes |
+| Aurora-1 | ignore_me | ignore_table | No |
+| Aurora-2 | migrate_me | t2 | Yes |
+| Aurora-2 | ignore_me | ignore_table | No |
+
+The Aurora cluster users for migration are as follows:
+
+| Cluster | User | Password |
+|:---- |:---- | :--- |
+| Aurora-1 | root | 12345678 |
+| Aurora-2 | root | 12345678 |
+
+The TiDB cluster information in the example is as follows. The cluster uses [TiDB Cloud](https://tidbcloud.com/) for one-click deployment:
+
+| Node | Port | Version |
+|:--- | :--- | :--- |
+| tidb.6657c286.23110bc6.us-east-1.prod.aws.tidbcloud.com | 4000 | v4.0.2 |
+
+The TiDB cluster users for migration are as follows:
+
+| User | Password |
+|:---- | :--- |
+| root | 87654321 |
+
+After migration, there are tables ``` `migrate_me`.`t1` ``` and ``` `migrate_me`.`t2` ``` in the TiDB cluster. The data of these tables is consistent with that of the Aurora cluster.
 
 > **Note:**
 >
-> Because binlog cannot be enabled in the Aurora reader, it cannot be taken as the upstream master server when you use DM to migrate data.
+> This migration does not involve the table combination function. To use the function, see [DM Shard Merge Scenario](scenarios.md#shard-merge-scenario).
 
-If you need to migrate data based on GTID (Global Transaction Identifier), enable GTID for the Aurora cluster.
+## Step 1: Data migration precheck
+
+To ensure a successful migration, pre-conditions need to be checked before starting the migration. Here lists the precheck and solutions to DM and Aurora components.
+
+### DM nodes deployment 
+
+As the core of data migration, DM needs to connect the upstream Aurora cluster and the downstream TiDB cluster. Therefore, use MySQL client and other methods to check whether the node where the DM is deployed can connect upstream and downstream. In addition, for DM requirements for software and hardware, see [DM Cluster Software and Hardware Recommendations](hardware-and-software-requirements.md).
+
+### Aurora
+
+DM relies on the `ROW` format of binlog during the incremental replication process. See [Enable binary for an Aurora Cluster](https://aws.amazon.com/premiumsupport/knowledge-center/enable-binary-logging-aurora/?nc1=h_ls)
+
+To migrate data based on GTID, set both `gtid-mode` and `enforce_gtid_consistency` to `ON`. See [Configuring GTID-Based Replication for an Aurora MySQL Cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora)
 
 > **Note:**
 >
-> GTID-based data migration requires MySQL 5.7 (Aurora 2.04.1) version or later.
+> GTID-based data migration requires MySQL 5.7 (Aurora 2.04) version or later.
 
-### Modify binlog related parameters in the Aurora cluster
-
-In the Aurora cluster, binlog related parameters are cluster level parameters among cluster parameter groups. For more information about binlog in the Aurora cluster, see [Enable Binary Logging on the Replication Master](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Replication.MySQL.html#AuroraMySQL.Replication.MySQL.EnableBinlog). You need to set the `binlog_format` to `ROW` when using DM for data migration.
-
-To migrate data based on GTID, set both `gtid-mode` and `enforce_gtid_consistency` to `ON`. See [Configuring GTID-Based Replication for an Aurora MySQL Cluster](https://docs.aws.amazon.com/zh_cn/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora) for more information about enabling GTID-based migration for Aurora cluster.
-
-> **Note:**
->
-> In the AWS Management Console, the `gtid_mode` parameter appears as `gtid-mode`.
+Besides the above Aurora-specific configuration, the upstream database meet other requirements for migrating MySQL. See [Checking Items](precheck.md#checking-items).
 
 ## Step 2: Deploy the DM cluster
 
+DM can be deployed in a variety of ways. Currently, it is recommended to use TiUP to deploy a DM cluster. For the specific deployment method, see [Deploy DM cluster using TiUP](deploy-a-dm-cluster-using-tiup.md). The example has two data sources, so at least two DM-worker nodes need to be deployed. 
+
+After deployment, you need to record the IP and service port of any DM-master node (`8261` by default) for `dmctl` to connect. This example uses `127.0.0.1:8261`. Check the DM status through TiUP using `dmctl`:
+
+> **Note:**
+>
+> - When using other methods to deploy DM, you can call `dmctl` in a similar way, see [Introduction to dmctl](dmctl-introduction.md).
+
+{{< copyable "shell-regular" >}}
+
+<<<<<<< Updated upstream
 It is recommended to use TiUP to deploy a DM cluster. See [Deploy Data Migration Using TiUP](deploy-a-dm-cluster-using-tiup.md).
 
 > **Note:**
 >
 > - It is recommended to use password encrypted with dmctl in all the DM configuration files. If the database password is empty, it is unnecessary to encrypt it. For how to use dmctl to encrypt a cleartext password, see [Encrypt the database password using dmctl](manage-source.md#encrypt-the-database-password).
 > - Both the upstream and downstream users must have the corresponding read and write privileges.
+=======
+```bash
+tiup dmctl --master-addr 127.0.0.1:8261 list-member
+```
 
-## Step 3: Check the cluster informtaion
+The `master` and `worker` in the return value are consistent with the number of deployment:
 
-After a DM cluster is deployed using DM-Ansible, the configuration information is as follows:
+```bash
+{
+    "result": true,
+    "msg": "",
+    "members": [
+        {
+            "leader": {
+                ...
+            }
+        },
+        {
+            "master": {
+                "msg": "",
+                "masters": [
+                    ...
+                ]
+            }
+        },
+        {
+            "worker": {
+                "msg": "",
+                "workers": [
+                    ...
+                ]
+            }
+        }
+    ]
+}
+```
 
-- DM cluster components
+## Step 3: Deploy the data source
 
-    | Component | Host | Port |
-    |:------|:---- |:---- |
-    | dm_worker1 | 172.16.10.72 | 8262 |
-    | dm_worker2 | 172.16.10.73 | 8262 |
-    | dm_master | 172.16.10.71 | 8261 |
+> **Note:**
+>
+> The configuration file used by DM supports plain text or cipher text database passwords. It is recommended to use password encrypted with dmctl. For how to obtain the cipher text database password, see [Encrypt the database password using dmctl](manage-source.md#encrypt-the-database-password)
+>>>>>>> Stashed changes
 
-- Upstream and downstream database instances
+Save the following configuration files of data source according to the sample information, in which the value of `source-id` will be quoted when configuring the task in step 4. 
 
-    | Database instance | Host | Port | Username | Encrypted password |
-    |:-------- |:--- | :--- | :--- | :--- |
-    | Upstream Aurora-1 | pingcap-1.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | root | VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU= |
-    | Upstream Aurora-2 | pingcap-2.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | root | VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU= |
-    | Downstream TiDB | 172.16.10.83 | 4000 | root | |
+File `source1.yaml`:
 
-- Configuration in the `{ansible deploy}/conf/dm-master.toml` DM-master process configuration file
+```yaml
+# Aurora-1
+source-id: "aurora-replica-01"
+enable-gtid: false
+from:
+  host: "test-dm-2-0.cluster-czrtqco96yc6.us-east-2.rds.amazonaws.com"
+  user: "root"
+  password: "12345678"
+  port: 3306
+```
 
-    ```toml
-    # DM-Master Configuration
+File `source2.yaml`:
 
-    [[deploy]]
-    source-id = "mysql-replica-01"
-    dm-worker = "172.16.10.72:8262"
+```yaml
+# Aurora-2
+source-id: "aurora-replica-02"
+enable-gtid: false
+from:
+  host: "test-dm-2-0-2.cluster-czrtqco96yc6.us-east-2.rds.amazonaws.com"
+  user: "root"
+  password: "12345678"
+  port: 3306
+```
 
-    [[deploy]]
-    source-id = "mysql-replica-02"
-    dm-worker = "172.16.10.73:8262"
-    ```
+See [Replicate Data Using Data Migration](replicate-data-using-dm#step-3-create-data-source), and use `dmctl` to add two data sources through TiUP.
+
+{{< copyable "shell-regular" >}}
+
+```bash
+tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source1.yaml
+tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source2.yaml
+```
+
+When the data source is successfully added, the return information of each data source includes a DM-worker bound to it.
+
+```bash
+{
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "aurora-replica-01",
+            "worker": "one-dm-worker-ID"
+        }
+    ]
+}
+```
 
 ## Step 4: Configure the task
 
-This section assumes that you need to replicate data of the `test_table` table in the `test_db` schema of Aurora-1 and Aurora-2 instances, in both full data migration and incremental replication modes, to the `test_table` table of the `test_db` schema in one downstream TiDB instance.
+> **Note:**
+>
+> Since Aurora does not support FTWRL, writing needs to be suspended when only exporting data in full data migration mode. See [Instructions in AWS Official Website](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls). In both full data migration and incremental replication modes of the example, DM will automatically enable the `safe mode` to solve this problem. But there may still be data inconsistencies. To ensure data consistency, see [Instructions in AWS Official Website](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls), and set the last line `extra-args` of the following configuration file to empty.
 
-Copy and edit `{ansible deploy}/conf/task.yaml.example` to generate the following `task.yaml` configuration file:
+This example migrates existing Aurora data and the newly added data is migrated to TiDB in real time. That is the **full data migration + incremental replication** mode. According to the above TiDB cluster information, the added `source-id`, and the table to be migrated, save the following task configuration file `task.yaml`:
 
 ```yaml
 # The task name. You need to use a different name for each of the multiple tasks that run simultaneously.
@@ -96,106 +203,94 @@ name: "test"
 task-mode: "all"
 # The downstream TiDB configuration information.
 target-database:
-  host: "172.16.10.83"
+  host: "tidb.6657c286.23110bc6.us-east-1.prod.aws.tidbcloud.com"
   port: 4000
   user: "root"
-  password: ""
+  password: "87654321"
 
-# Configuration of all the upstream MySQL instances required by the current data replication task.
+# Configuration of all the upstream MySQL instances required by the current data migration task.
 mysql-instances:
--
-  # ID of the upstream instance or the replication group. Refer to the configuration of `source_id` in the `inventory.ini` file or configuration of `source-id` in the `dm-master.toml` file.
-  source-id: "mysql-replica-01"
-  # The configuration item name of the block and allow lists of the schema or table to be replicated, used to quote the global block and allow lists configuration. For global configuration, see the `block-allow-list` below.
-  block-allow-list: "global"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
-  # The configuration item name of Mydumper, used to quote the global Mydumper configuration.
+- source-id: "aurora-replica-01"
+  # The configuration item name of the block and allow lists of the schema or table to be migrated, used to quote the global block and allow lists configuration. For global configuration, see the `block-allow-list` below.
+  block-allow-list: "global"
   mydumper-config-name: "global"
 
--
-  source-id: "mysql-replica-02"
-  block-allow-list: "global"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+- source-id: "aurora-replica-02"
+  block-allow-list: "global"
   mydumper-config-name: "global"
 
-# The global configuration of block and allow lists. Each instance can quote it by the configuration item name.
-block-allow-list:                     # Use black-white-list if the DM's version <= v2.0.0-beta.2.
-  global:
-    do-tables:                        # The allow list of the upstream table to be replicated
-    - db-name: "test_db"              # The database name of the table to be replicated
-      tbl-name: "test_table"          # The name of the table to be replicated
+# The configuration of block and allow lists.
+block-allow-list:
+  global:                             # Quoted by block-allow-list: "global" above
+    do-dbs: ["migrate_me"]            # The allow list of the upstream table to be migrated. Database tables outside the allow list will not be migrated.
 
-# Mydumper global configuration. Each instance can quote it by the configuration item name.
+# Dumper configuration.
 mydumpers:
-  global:
-    extra-args: "-B test_db -T test_table"  # The extra Mydumper argument. Since DM 1.0.2, DM automatically generates the "--tables-list" configuration. For versions earlier than 1.0.2, you need to configure this option manually.
+   global:                             # Quoted by mydumper-config-name: "global" above
+    extra-args: "--consistency none"  # Aurora does not support FTWRL, you need to configure this option to bypass.
 ```
 
 ## Step 5: Start the task
 
-1. Go to the dmctl directory: `/home/tidb/dm-ansible/resources/bin/`.
+Start tasks using `dmctl` through TiUP.
 
-2. Start dmctl using the following command:
-
-    ```bash
-    ./dmctl --master-addr 172.16.10.71:8261
-    ```
-
-3. Start data replication task using the following command:
-
-    ```bash
-    # `task.yaml` is the previously edited configuration file.
-    start-task ./task.yaml
-    ```
-
-    - If the returned results do not contain any error, it indicates the task is successfully started.
-    - If the returned results contain the following error information, it indicates the upstream Aurora user might have privileges unsupported by TiDB:
-
-        ```json
-        {
-            "id": 4,
-            "name": "source db dump privilege chcker",
-            "desc": "check dump privileges of source DB",
-            "state": "fail",
-            "errorMsg": "line 1 column 285 near \"LOAD FROM S3, SELECT INTO S3 ON *.* TO 'root'@'%' WITH GRANT OPTION\" ...",
-            "instruction": "",
-            "extra": "address of db instance - pingcap-1.h8emfqdptyc4.us-east-2.rds.amazonaws.com"
-        },
-        {
-            "id": 5,
-            "name": "source db replication privilege chcker",
-            "desc": "check replication privileges of source DB",
-            "state": "fail",
-            "errorMsg": "line 1 column 285 near \"LOAD FROM S3, SELECT INTO S3 ON *.* TO 'root'@'%' WITH GRANT OPTION\" ...",
-            "instruction": "",
-            "extra": "address of db instance - pingcap-1.h8emfqdptyc4.us-east-2.rds.amazonaws.com"
-        }
-        ```
-
-        To resolve this issue, use either of the following two solutions to handle it and then use the `start-task` command to restart the task:
-        1. Remove the unnecessary privileges unsupported by TiDB for the Aurora user that is used to migrate data.
-        2. If you can make sure that the Aurora user has the privileges required by DM, add the following configuration item to the `task.yaml` configuration file to skip the privileges precheck when starting the task.
-
-            ```yaml
-            ignore-checking-items: ["dump_privilege", "replication_privilege"]
-            ```
-
-## Step 6: Query the task
-
-To view the on-going data replication task(s) in the DM cluster or the task status, run the following command in dmctl to query:
+{{< copyable "shell-regular" >}}
 
 ```bash
-query-status
+tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml --remove-meta
 ```
 
-> **Note:**
->
-> If the following error message is in the returned results of the above query command, it indicates the corresponding lock cannot be obtained during the phase of the full data migration.
->
->   ```bash
->   Couldn't acquire global lock, snapshots will not be consistent: Access denied for user 'root'@'%' (using password: YES)
->   ```
->
-> If it is acceptable to not use FTWL to guarantee that the dump file is consistent with metadata or the upstream can pause writing data, you can skip the above error by adding the `--no-locks` argument for `extra-args` under `mydumpers`. The steps are as follows:
->
-> 1. Use the `stop-task` command to stop the paused task caused by the failure of nomarl dumping.
-> 2. In the `task.yaml` file, modify `extra-args: "-B test_db -T test_table"` to `extra-args: "-B test_db -T test_table --no-locks"`.
-> 3. Use the `start-task` command to restart the task.
+The return information when the task is successfully started:
+
+```
+{
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "aurora-replica-01",
+            "worker": "one-dm-worker-ID"
+        },
+        {       
+            "result": true,
+            "msg": "",
+            "source": "aurora-replica-02",
+            "worker": "another-dm-worker-ID"
+        }
+    ]
+}
+```
+
+## Step 6: Query the task and verify the data
+
+Use `dmctl` through TiUP to query information about the on-going migration task and task status.
+
+{{< copyable "shell-regular" >}}
+
+
+```bash
+tiup dmctl --master-addr 127.0.0.1:8261 query-status
+```
+
+The return information of when the task normally operate:
+
+```
+{
+    "result": true,
+    "msg": "",
+    "tasks": [
+        {
+            "taskName": "test",
+            "taskStatus": "Running",
+            "sources": [
+                "aurora-replica-01",
+                "aurora-replica-02"
+            ]
+        }
+    ]
+}
+```
+
+Users can query data in the downstream, modify data in Aurora, and verify data replication in TiDB.
