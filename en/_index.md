@@ -57,7 +57,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 - [Pause a Task](pause-task.md)
 - [Resume a Task](resume-task.md)
 - [Stop a Task](stop-task.md)
-- [Manually Handle Sharding DDL Locks](feature-manually-handling-sharding-ddl-locks.md)
+- [Manually Handle Sharding DDL Locks](manually-handling-sharding-ddl-locks.md)
 
 </NavColumn>
 

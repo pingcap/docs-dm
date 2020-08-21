@@ -41,7 +41,7 @@ This document introduces how to deal with the alert information in DM.
 
 - Solution:
 
-    In some scenarios, the pending sharding DDL operation might be what users expect. Otherwise, refer to [Handle Sharding DDL Locks Manually in DM](feature-manually-handling-sharding-ddl-locks.md) for solution.
+    In some scenarios, the pending sharding DDL operation might be what users expect. Otherwise, refer to [Handle Sharding DDL Locks Manually in DM](manually-handling-sharding-ddl-locks.md) for solution.
 
 ## Alert rules related to task status
 
