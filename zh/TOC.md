@@ -80,6 +80,8 @@
 + [常见问题](faq.md)
 + [术语表](glossary.md)
 + 版本发布历史
+  + v2.0
+    - [2.0.0-rc](releases/2.0.0-rc.md)
   + v1.0
     - [1.0.6](releases/1.0.6.md)
     - [1.0.5](releases/1.0.5.md)
