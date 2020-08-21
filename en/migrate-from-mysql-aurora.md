@@ -125,7 +125,7 @@ The number of `master`s and `worker`s in the returned result is consistent with 
 >
 > The configuration file used by DM supports database passwords in plaintext or ciphertext. It is recommended to use password encrypted using dmctl. For how to obtain the ciphertext password, see [Encrypt the database password using dmctl](manage-source.md#encrypt-the-database-password).
 
-Save the following configuration files of data source according to the example, in which the value of `source-id` will be used in the task configuration in [step 4](#configure-the-task). 
+Save the following configuration files of data source according to the example, in which the value of `source-id` will be used in the task configuration in [step 4](#step-4-configure-the-task). 
 
 The content of `source1.yaml`:
 
