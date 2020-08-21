@@ -89,11 +89,11 @@ The shard DDL is the DDL statement that is executed on the upstream sharded tabl
 
 ### Shard DDL lock
 
-The shard DDL lock is the lock mechanism that coordinates the replication of shard DDL. Refer to [the implementation principles of merging and replicating data from sharded tables](feature-shard-merge.md#principles) for details. In the current documentation, the shard DDL lock is also referred to as the sharding DDL lock.
+The shard DDL lock is the lock mechanism that coordinates the replication of shard DDL. Refer to [the implementation principles of merging and replicating data from sharded tables in the pessimistic mode](feature-shard-merge-pessimistic.md#principles) for details. In the current documentation, the shard DDL lock is also referred to as the sharding DDL lock.
 
 ### Shard group
 
-A shard group is all the upstream sharded tables to be merged and replicated to the same table in the downstream. Two-level shard groups are used for implementation of TiDB DM. Refer to [the implementation principles of merging and replicating sharded tables](feature-shard-merge.md#principles) for details. In the current documentation, the shard group is also referred to as the sharding group.
+A shard group is all the upstream sharded tables to be merged and replicated to the same table in the downstream. Two-level shard groups are used for implementation of TiDB DM. Refer to [the implementation principles of merging and replicating data from sharded tables in the pessimistic mode](feature-shard-merge-pessimistic.md#principles) for details. In the current documentation, the shard group is also referred to as the sharding group.
 
 ### Subtask
 

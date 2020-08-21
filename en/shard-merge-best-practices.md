@@ -6,19 +6,19 @@ aliases: ['/docs/tidb-data-migration/dev/shard-merge-best-practices/']
 
 # Best Practices of Data Migration in the Shard Merge Scenario
 
-This document describes the features and limitations of [TiDB Data Migration](https://github.com/pingcap/dm) (DM) in the shard merge scenario and provides a data migration best practice guide for your application.
+This document describes the features and limitations of [TiDB Data Migration](https://github.com/pingcap/dm) (DM) in the shard merge scenario and provides a data migration best practice guide for your application (the default "pessimistic" mode is used).
 
 ## Use a separate data migration task
 
-In the [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md#principles) document, the definition of "sharding group" is given: A sharding group consists of all upstream tables that need to be merged and replicated into the same downstream table.
+In the [Merge and Replicate Data from Sharded Tables](feature-shard-merge-pessimistic.md#principles) document, the definition of "sharding group" is given: A sharding group consists of all upstream tables that need to be merged and replicated into the same downstream table.
 
-The current sharding DDL mechanism has some [usage restrictions](feature-shard-merge.md#restrictions) to coordinate the schema changes brought by DDL operations in different sharded tables. If these restrictions are violated due to unexpected reasons, you need to [handle sharding DDL locks manually in DM](feature-manually-handling-sharding-ddl-locks.md), or even redo the entire data migration task.
+The current sharding DDL mechanism has some [usage restrictions](feature-shard-merge-pessimistic.md#restrictions) to coordinate the schema changes brought by DDL operations in different sharded tables. If these restrictions are violated due to unexpected reasons, you need to [handle sharding DDL locks manually in DM](feature-manually-handling-sharding-ddl-locks.md), or even redo the entire data migration task.
 
 To mitigate the impact on data migration when an exception occurs, it is recommended to merge and replicate each sharding group as a separate data migration task. **This might enable that only a small number of data migration tasks need to be handled manually while others remain unaffected.**
 
 ## Handle sharding DDL locks manually
 
-You can easily conclude from [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md#principles) that DM's sharding DDL lock is a mechanism for coordinating the execution of DDL operations to the downstream from multiple upstream sharded tables.
+You can easily conclude from [Merge and Replicate Data from Sharded Tables](feature-shard-merge-pessimistic.md#principles) that DM's sharding DDL lock is a mechanism for coordinating the execution of DDL operations to the downstream from multiple upstream sharded tables.
 
 Therefore, when you find any sharding DDL lock on `DM-master` through `show-ddl-locks` command, or any `unresolvedGroups` or `blockingDDLs` on some DM-workers through `query-status` command, do not rush to manually release the sharding DDL lock through `unlock-ddl-lock` or `break-ddl-lock` commands.
 
@@ -112,7 +112,7 @@ Then you can perform the following steps to fix the `ERROR 1062 (23000): Duplica
 
 ## Create/drop tables in the upstream
 
-In [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md#principles), it is clear that the coordination of sharding DDL lock depends on whether the downstream database receives the DDL statements of all upstream sharded tables. In addition, DM currently **does not support** dynamically creating or dropping sharded tables in the upstream. Therefore, to create or drop sharded tables in the upstream, it is recommended to perform the following steps.
+In [Merge and Replicate Data from Sharded Tables](feature-shard-merge-pessimistic.md#principles), it is clear that the coordination of sharding DDL lock depends on whether the downstream database receives the DDL statements of all upstream sharded tables. In addition, DM currently **does not support** dynamically creating or dropping sharded tables in the upstream. Therefore, to create or drop sharded tables in the upstream, it is recommended to perform the following steps.
 
 ### Create sharded tables in the upstream
 
