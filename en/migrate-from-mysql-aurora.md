@@ -153,7 +153,7 @@ from:
   port: 3306
 ```
 
-See [Replicate Data Using Data Migration](replicate-data-using-dm#step-3-create-data-source), and use `dmctl` to add two data sources through TiUP.
+See [Replicate Data Using Data Migration](replicate-data-using-dm.md#step-3-create-data-source), and use `dmctl` to add two data sources through TiUP.
 
 {{< copyable "shell-regular" >}}
 
