@@ -15,8 +15,8 @@ aliases: ['/docs/tidb-data-migration/dev/overview/']
 - High availability. The data migration task can run normally even when some DM-master or DM-worker nodes fail.
 - [Sharding DDL support in the optimistic mode](feature-shard-merge-optimistic.md). In this mode, replication latency can be reduced in some scenarios and you can make A/B changes in the upstream database.
 - Better usability, including the new [error handling mechanism](handle-failed-sql-statements.md) and the easier-to-read error messages and error handling suggestions.
-- The [TLS support](enable-tls.md) for connections between the upstream and the downstream, and for connections between DM components.
-- The support for migrating data from MySQL 8.0 (experimental).
+- [TLS support](enable-tls.md) for connections between the upstream and the downstream, and for connections between DM components.
+- Support for migrating data from MySQL 8.0 (experimental).
 
 > **Note:**
 >
