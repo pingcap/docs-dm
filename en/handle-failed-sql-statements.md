@@ -6,7 +6,7 @@ aliases: ['/docs/tidb-data-migration/dev/skip-or-replace-abnormal-sql-statements
 
 # Handle Failed SQL Statements
 
-This document introduces how to handle failed SQL statements when you're using the TiDB Data Migration tool to migrate data.
+This document introduces how to handle failed SQL statements when you're using the TiDB Data Migration (DM) tool to migrate data.
 
 Currently, TiDB is not completely compatible with all MySQL syntax (see [the DDL statements supported by TiDB](https://pingcap.com/docs/dev/reference/mysql-compatibility/#ddl)). Therefore, when DM is replicating data from MySQL to TiDB and TiDB does not support the corresponding SQL statement, an error might occur and break the replication process. In this case, you can use the `handle-error` command of DM to resume the replication.
 
