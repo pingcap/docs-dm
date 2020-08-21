@@ -8,6 +8,14 @@ aliases: ['/docs/tidb-data-migration/dev/']
 
 [TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data replication task management platform that supports the full data migration and the incremental data migration from MySQL/MariaDB into TiDB. It can help to reduce the operations cost and simplify the troubleshooting process.
 
+**What's new in DM v2.0:**
+
+- High availability. The data migration task can run normally even when some DM-master or DM-worker nodes fail.
+- [Sharding DDL support in the optimistic mode](feature-shard-merge-optimistic.md). In this mode, replication latency can be reduced in some scenarios and you can make A/B changes in the upstream database.
+- Better usability, including the new [error handling mechanism](handle-failed-sql-statements.md) and the easier-to-read error messages and error handling suggestions.
+- [TLS support](enable-tls.md) for connections between the upstream and the downstream, and for connections between DM components.
+- Support for migrating data from MySQL 8.0 (experimental).
+
 <NavColumns>
 <NavColumn>
 <ColumnTitle>About TiDB Data Migration</ColumnTitle>
@@ -49,7 +57,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 - [Pause a Task](pause-task.md)
 - [Resume a Task](resume-task.md)
 - [Stop a Task](stop-task.md)
-- [Manually Handle Sharding DDL Locks](feature-manually-handling-sharding-ddl-locks.md)
+- [Manually Handle Sharding DDL Locks](manually-handling-sharding-ddl-locks.md)
 
 </NavColumn>
 
