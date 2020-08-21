@@ -41,7 +41,7 @@
     - [Pause a Task](pause-task.md)
     - [Resume a Task](resume-task.md)
     - [Stop a Task](stop-task.md)
-    - [Skip or Replace Abnormal SQL Statements](skip-or-replace-abnormal-sql-statements.md)
+    - [Handle Failed SQL Statements](handle-failed-sql-statements.md)
   - [Manually Handle Sharding DDL Locks](feature-manually-handling-sharding-ddl-locks.md)
   - [Manage Table Schema during Migration](manage-schema.md)
   - [Handle Alerts](handle-alerts.md)
