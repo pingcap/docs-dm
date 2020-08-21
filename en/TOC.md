@@ -41,7 +41,6 @@
     - [Precheck a Task](precheck.md)
     - [Create a Task](create-task.md)
     - [Query Status](query-status.md)
-    - [Query Error](query-error.md)
     - [Pause a Task](pause-task.md)
     - [Resume a Task](resume-task.md)
     - [Stop a Task](stop-task.md)

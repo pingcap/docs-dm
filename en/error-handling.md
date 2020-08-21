@@ -116,7 +116,7 @@ The `invalid connection` error indicates that anomalies have occurred in the con
 
 #### Solutions
 
-Because DM has the feature of concurrently replicating data to the downstream in replication tasks, several errors might occur when a task is interrupted. You can check these errors by using `query-status` or `query-error`.
+Because DM has the feature of concurrently replicating data to the downstream in replication tasks, several errors might occur when a task is interrupted. You can check these errors by using `query-status`.
 
 - If only the `invalid connection` error occurs during the incremental replication process, DM retries the task automatically.
 - If DM does not or fails to retry automatically because of version problems, use `stop-task` to stop the task and then use `start-task` to restart the task.
