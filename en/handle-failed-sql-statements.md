@@ -71,7 +71,7 @@ Global Flags:
 
 + `binlog-pos`:
     - Flag parameter, string, `--binlog-pos`
-    - If it is not specified, DM automatically handles the currently failed SQL statement
+    - If it is not specified, DM automatically handles the currently failed SQL statement.
     - If it is specified, the skip operation is executed when `binlog-pos` matches with the position of the binlog event. The format is `binlog-filename:binlog-pos`, for example, `mysql-bin|000001.000003:3270`.
     - When the replication returns an error, the binlog position can be obtained from `position` in `startLocation` returned by `query-status`.
 
