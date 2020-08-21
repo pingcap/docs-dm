@@ -155,7 +155,7 @@ Now, suppose that you need to replicate these sharded tables to the `db_target.t
     ---
     name: test
     task-mode: all
-    is-sharding: true
+    shard-mode: "pessimistic"
     target-database:
     host: "127.0.0.1"
     port: 4000
