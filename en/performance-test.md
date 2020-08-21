@@ -117,7 +117,6 @@ Use `sysbench` to create test tables in the upstream.
   ---
   name: test-all
   task-mode: all
-  enable-heartbeat: true
 
   # Configure the replication task using the TiDB information of your actual test environment.
   target-database:
@@ -165,4 +164,4 @@ sysbench --test=oltp_insert --tables=4 --num-threads=32 --mysql-host=172.17.4.40
 
 #### Get test results
 
-To observe the replication status of DM, you can run the `query-status` command. To observe the monitoring metrics of DM, you can use Grafana. Here the monitoring metrics refer to `replicate lag` (replication latency), `finished sqls jobs` (the number of jobs finished per unit time), etc. For more information, see [Binlog Replication Monitoring Metrics](monitor-a-dm-cluster.md#binlog-replication).
+To observe the replication status of DM, you can run the `query-status` command. To observe the monitoring metrics of DM, you can use Grafana. Here the monitoring metrics refer to `finished sqls jobs` (the number of jobs finished per unit time), etc. For more information, see [Binlog Replication Monitoring Metrics](monitor-a-dm-cluster.md#binlog-replication).
