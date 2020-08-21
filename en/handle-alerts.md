@@ -13,21 +13,21 @@ This document introduces how to deal with the alert information in DM.
 
 - Description:
 
-  If DM-worker is offline for more than one hour, an alert is triggered. In a high-availability architecture, this alert may not directly interrupt the task, but the risk increases.
+    If a DM-worker node is offline for more than one hour, this alert is triggered. In a high-availability architecture, this alert might not directly interrupt the task but increases the risk of interruption.
 
 - Solution:
 
-   You can take the following steps to handle the alert:
+    You can take the following steps to handle the alert:
 
-   1. View the working status of the corresponding DM-worker nodes.
-   2. Check whether the nodes are connected.
+    1. View the working status of the corresponding DM-worker node.
+    2. Check whether the node is connected.
    3. Troubleshoot errors through logs.
 
 ### `DM_DDL_error`
 
 - Description:
 
-    An error occurs while running shard DDL.
+    This error occurs when DM is processing the sharding DDL operations.
 
 - Solution:
 
@@ -37,11 +37,11 @@ This document introduces how to deal with the alert information in DM.
 
 - Description:
 
-    If the shard DDL is pending for more than one hour, an alert is triggered.
+    If a sharding DDL operation is pending for more than one hour, this alert is triggered.
 
 - Solution:
 
-    In some usage cases, the pending shard DDL may be expected. In other cases, refer to [Handle Sharding DDL Locks Manually in DM](feature-manually-handling-sharding-ddl-locks.md).
+    In some scenarios, the pending sharding DDL operation might be what users expect. Otherwise, refer to [Handle Sharding DDL Locks Manually in DM](feature-manually-handling-sharding-ddl-locks.md) for solution.
 
 ## Alert rules related to task status
 
