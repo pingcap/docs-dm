@@ -125,7 +125,7 @@ The `master` and `worker` in the return value are consistent with the number of 
 >
 > The configuration file used by DM supports plain text or cipher text database passwords. It is recommended to use password encrypted with dmctl. For how to obtain the cipher text database password, see [Encrypt the database password using dmctl](manage-source.md#encrypt-the-database-password).
 
-Save the following configuration files of data source according to the sample information, in which the value of `source-id` will be quoted when configuring the task in step 4. 
+Save the following configuration files of data source according to the example, in which the value of `source-id` will be quoted when configuring the task in step 4. 
 
 File `source1.yaml`:
 
@@ -183,7 +183,7 @@ When the data source is successfully added, the return information of each data 
 
 > **Note:**
 >
-> Since Aurora does not support FTWRL, writing needs to be suspended when only exporting data in full data migration mode. See [Instructions in AWS Official Website](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls). In both full data migration and incremental replication modes of the example, DM will automatically enable the `safe mode` to solve this problem. But there may still be data inconsistencies. To ensure data consistency, see [Instructions in AWS Official Website](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls), and set the last line `extra-args` of the following configuration file to empty.
+> Since Aurora does not support FTWRL, writing needs to be suspended when only exporting data in full data migration mode. See [Instructions in AWS Official Website](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls). In both full data migration and incremental replication modes of the example, DM will automatically enable the `safe mode` to solve this problem. But there may still be data inconsistency. To ensure data consistency, see [Instructions in AWS Official Website](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls), and set the last line `extra-args` of the following configuration file to null.
 
 This example migrates existing Aurora data and the newly added data is migrated to TiDB in real time. That is the **full data migration + incremental replication** mode. According to the above TiDB cluster information, the added `source-id`, and the table to be migrated, save the following task configuration file `task.yaml`:
 
