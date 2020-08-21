@@ -50,7 +50,7 @@ A certificate authority (CA) is a trusted entity that issues digital certificate
     openssl genrsa -out root.key 4096
     ```
 
-2. Generate root certificates:
+2. Generate the root certificates:
 
     {{< copyable "shell-regular" >}}
 
@@ -58,7 +58,7 @@ A certificate authority (CA) is a trusted entity that issues digital certificate
     openssl req -new -x509 -days 1000 -key root.key -out root.crt
     ```
 
-3. Validate root certificates:
+3. Validate the root certificates:
 
     {{< copyable "shell-regular" >}}
 
