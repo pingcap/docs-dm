@@ -528,4 +528,4 @@ shard-mode: "pessimistic" # You need to configure this if it is a shard merge ta
 
 ### Handle sharding DDL locks manually
 
-In some abnormal scenarios, you need to [handle sharding DDL Locks manually](feature-manually-handling-sharding-ddl-locks.md).
+In some abnormal scenarios, you need to [handle sharding DDL Locks manually](manually-handling-sharding-ddl-locks.md).
