@@ -260,7 +260,6 @@ Use `dmctl` through TiUP to query information about the on-going migration task 
 
 {{< copyable "shell-regular" >}}
 
-
 ```bash
 tiup dmctl --master-addr 127.0.0.1:8261 query-status
 ```
