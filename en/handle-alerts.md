@@ -7,7 +7,7 @@ summary: Understand how to deal with the alert information in DM.
 
 This document introduces how to deal with the alert information in DM.
 
-## High availability alert
+## Alerts related to high availability
 
 ### `DM_worker_offline`
 
