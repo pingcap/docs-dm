@@ -3,7 +3,7 @@ name: Repsitory dispatch workflow from docs-dm-master
 on:
   push:
     branches:
-      - master
+      - release-2.0
 
 jobs:
   build:
