@@ -116,7 +116,7 @@ Currently, the `unlock-ddl-lock` command only supports handling sharding DDL loc
 
 #### The reason for the abnormal lock
 
-Before `DM-master` tries to automatically unlock the sharding DDL lock, all the MySQL sources need to receive the sharding DDL events (for details, see [shard merge principles](feature-shard-merge.md#principles)). If the sharding DDL event is already in the replication process, and some MySQL sources have been removed and are not to be reloaded (these MySQL sources have been removed according to the application demand), then the sharding DDL lock cannot be automatically replicated and unlocked because not all the DM-workers can receive the DDL event.
+Before `DM-master` tries to automatically unlock the sharding DDL lock, all the MySQL sources need to receive the sharding DDL events (for details, see [shard merge principles](feature-shard-merge-pessimistic.md#principles)). If the sharding DDL event is already in the replication process, and some MySQL sources have been removed and are not to be reloaded (these MySQL sources have been removed according to the application demand), then the sharding DDL lock cannot be automatically replicated and unlocked because not all the DM-workers can receive the DDL event.
 
 > **Note:**
 >
