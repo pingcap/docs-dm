@@ -35,7 +35,7 @@ The `query-status` command is used to query the current status of items such as 
 
 The `handle-error` command is used to handle the failed SQL statements.
 
-### 命令用法
+### Command usage
 
 ```bash
 » handle-error -h
