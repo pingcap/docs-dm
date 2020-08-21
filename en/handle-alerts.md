@@ -21,7 +21,7 @@ This document introduces how to deal with the alert information in DM.
 
     1. View the working status of the corresponding DM-worker node.
     2. Check whether the node is connected.
-   3. Troubleshoot errors through logs.
+    3. Troubleshoot errors through logs.
 
 ### `DM_DDL_error`
 
