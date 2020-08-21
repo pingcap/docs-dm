@@ -49,7 +49,7 @@ After migration, there are tables ``` `migrate_me`.`t1` ``` and ``` `migrate_me`
 
 > **Note:**
 >
-> This migration does not involve the table combination function. To use the function, see [DM Shard Merge Scenario](scenarios.md#shard-merge-scenario).
+> This migration does not involve the DM Shard Merge feature. To use it, see [DM Shard Merge Scenario](scenarios.md#shard-merge-scenario).
 
 ## Step 1: Data migration precheck
 
@@ -123,8 +123,7 @@ The `master` and `worker` in the return value are consistent with the number of 
 
 > **Note:**
 >
-> The configuration file used by DM supports plain text or cipher text database passwords. It is recommended to use password encrypted with dmctl. For how to obtain the cipher text database password, see [Encrypt the database password using dmctl](manage-source.md#encrypt-the-database-password)
->>>>>>> Stashed changes
+> The configuration file used by DM supports plain text or cipher text database passwords. It is recommended to use password encrypted with dmctl. For how to obtain the cipher text database password, see [Encrypt the database password using dmctl](manage-source.md#encrypt-the-database-password).
 
 Save the following configuration files of data source according to the sample information, in which the value of `source-id` will be quoted when configuring the task in step 4. 
 
