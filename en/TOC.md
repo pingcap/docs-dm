@@ -15,7 +15,10 @@
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
     - [Replication Delay Monitoring](key-features.md#replication-delay-monitoring)
     - [Online DDL Scheme](feature-online-ddl-scheme.md)
-    - [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md)
+    + Merge and Replicate Data from Sharded Tables
+      - [Overview](feature-shard-merge.md)
+      - [Pessimistic Mode](feature-shard-merge-pessimistic.md)
+      - [Optimistic Mode](feature-shard-merge-optimistic.md)
 + [Usage Scenarios](scenarios.md)
 + Quick Start
   - [Deploy a DM cluster](quick-start-with-dm.md)
