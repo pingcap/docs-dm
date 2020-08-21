@@ -100,11 +100,11 @@ For [data migration task configuration file](task-configuration-file.md), v2.0.x
 
 ## Step 2: Deploy the v2.0.x cluster
 
-Use TiUP to deploy a new v2.0.x cluster according to the required number of nodes.
+[Use TiUP](deploy-a-dm-cluster-using-tiup.md) to deploy a new v2.0.x cluster according to the required number of nodes.
 
 ## Step 3：Stop the v1.0.x cluster
 
-If the original v1.0.x cluster is deployed by DM-Ansible, you need to use [DM-Ansible to stop the v1.0.x cluster](https://docs.pingcap.com/tidb-data-migration/stable/cluster-operations#stop-a-cluster).
+If the original v1.0.x cluster is deployed by DM-Ansible, you need to use [DM-Ansible to stop the v1.0.x cluster](https://docs.pingcap.com/tidb-data-migration/v1.0/cluster-operations#stop-a-cluster).
 
 If the original v1.0.x cluster is deployed by binary, you can stop the DM-worker and DM-master processes directly.
 
