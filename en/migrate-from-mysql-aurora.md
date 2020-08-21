@@ -215,7 +215,7 @@ block-allow-list:
   global:                             # Quoted by block-allow-list: "global" above
     do-dbs: ["migrate_me"]            # The allow list of the upstream table to be migrated. Database tables that are not in the allow list will not be migrated.
 
-# Dumper configuration.
+# The configuration of the dump unit.
 mydumpers:
    global:                             # Quoted by mydumper-config-name: "global" above
     extra-args: "--consistency none"  # Aurora does not support FTWRL, you need to configure this option to bypass FTWRL.
