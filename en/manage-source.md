@@ -7,18 +7,18 @@ summary: Learn how to manage upstream MySQL instances in TiDB Data Migration.
 
 This document introduces how to manage upstream MySQL instances, including encrypting the MySQL password and managing data source configurations using [dmctl](dmctl-introduction.md).
 
-## Encrypt the MySQL password
+## Encrypt the database password
 
 In DM configuration files, it is recommended to use the password encrypted with dmctl. For one original password, the encrypted password is different after each encryption.
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-./dmctl -encrypt 123456
+./dmctl -encrypt 'abc!@#123'
 ```
 
 ```
-VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU=
+MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
 
 ## Load the data source configurations
