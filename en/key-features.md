@@ -516,14 +516,14 @@ DM supports merging the DML and DDL data in the upstream MySQL/MariaDB sharded t
 
 ### Restrictions
 
-Currently, the shard merge feature is supported only in limited scenarios. For details, refer to [Sharding DDL usage Restrictions](feature-shard-merge.md#restrictions).
+Currently, the shard merge feature is supported only in limited scenarios. For details, refer to [Sharding DDL usage Restrictions in the pessimistic mode](feature-shard-merge-pessimistic.md#restrictions) and [Sharding DDL usage Restrictions in the optimistic mode](feature-shard-merge-optimistic.md#restrictions).
 
 ### Parameter configuration
 
 Set `is-sharding` to `true` in the task configuration file:
 
 ```
-is-sharding: true
+shard-mode: "pessimistic" # You need to configure this if it is a shard merge task. The "pessimistic" mode is used by default. After understanding the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
 ```
 
 ### Handle sharding DDL locks manually
