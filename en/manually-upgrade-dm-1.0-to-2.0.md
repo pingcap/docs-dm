@@ -7,6 +7,8 @@ summary: Learn how to manually upgrade TiDB data migration from v1.0.x to v2.0.x
 
 This document introduces how to manually upgrade the TiDB DM tool from v1.0.x to v2.0.x. The main idea is to use the global checkpoint information in v1.0.x to start a new data replication task in the v2.0.x cluster.
 
+For how to automatically upgrade the TiDB DM tool from v1.0.x to v2.0.x, refer to [Using TiUP to automatically import the 1.0 cluster deployed by DM-Ansible](maintain-dm-using-tiup.md#import-and-upgrade-a-dm-10-cluster-deployed-using-dm-ansible).
+
 > **Note:**
 >
 > - Currently, upgrading DM from v1.0.x to v2.0.x is not supported when the data migration task is in the process of full export or full import.
