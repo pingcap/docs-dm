@@ -183,7 +183,7 @@ When the data sources are successfully added, the return information of each dat
 
 > **Note:**
 >
-> Because Aurora does not support FTWRL, write operations have to be paused when you only perform the full data migration to export data. See [AWS documentation](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls) for details. In this example, both full data migration and incremental replication are performed, and DM automatically enables the `safe mode` to solve this pause issue, but data inconsistency might still occur. To ensure data consistency, see [AWS documentation](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls), and set the last line `extra-args` in the following configuration file to empty.
+> Because Aurora does not support FTWRL, write operations have to be paused when you only perform the full data migration to export data. See [AWS documentation](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls) for details. In this example, both full data migration and incremental replication are performed, and DM automatically enables the `safe mode` to solve this pause issue, but data inconsistency might still occur. To ensure data consistency, see [AWS documentation](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls).
 
 This example migrates the existing data in Aurora and replicates incremental data to TiDB in real time, which is the **full data migration plus incremental replication** mode. According to the TiDB cluster information above, the added `source-id`, and the table to be migrated, save the following task configuration file `task.yaml`:
 
@@ -217,7 +217,7 @@ block-allow-list:
 
 # The configuration of the dump unit.
 mydumpers:
-   global:                             # Quoted by mydumper-config-name: "global" above
+   global:                            # Quoted by mydumper-config-name: "global" above
     extra-args: "--consistency none"  # Aurora does not support FTWRL, you need to configure this option to bypass FTWRL.
 ```
 
