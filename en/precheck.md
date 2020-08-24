@@ -67,9 +67,9 @@ Upstream and downstream database users must have the corresponding read and writ
 
 ### Disable checking items
 
-DM checks items according to the task type, and users can use `ignore-checking-items` in the task configuration file to disable checking items. `ignore-checking-items` is a list, where values include:
+DM checks items according to the task type, and users can use `ignore-checking-items` in the task configuration file to disable checking items. `ignore-checking-items` is a list whose elements can be:
 
-| Value  | Description   |
+| Element  | Description   |
 | :----  | :-----|
 | all | Disable all the checks |
 | dump_privilege | Disable the check of dump-related privileges of the upstream MySQL instance user |
