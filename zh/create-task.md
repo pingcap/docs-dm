@@ -15,16 +15,14 @@ help start-task
 ```
 
 ```
-start a task as defined in the config file
-
+Starts a task as defined in the configuration file
 Usage:
- dmctl start-task [-s source ...] <config-file> [flags]
-
+  dmctl start-task [-s source ...] [--remove-meta] <config-file> [flags]
 Flags:
- -h, --help   help for start-task
-
+  -h, --help          help for start-task
+      --remove-meta   whether to remove task's meta data
 Global Flags:
- -s, --source strings   MySQL Source ID
+  -s, --source strings   MySQL Source ID
 ```
 
 ## 命令用法示例
@@ -44,6 +42,9 @@ start-task [ -s "mysql-replica-01"] ./task.yaml
 + `config-file`：
     - 必选
     - 指定 `task.yaml` 的文件路径
++ `remove-meta`:
+    - 可选
+    - 如果设置，则在启动指定任务之前会移除该任务之前存在的 meta data
 
 ## 返回结果示例
 
