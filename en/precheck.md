@@ -64,3 +64,20 @@ Upstream and downstream database users must have the corresponding read and writ
             - The auto increment primary key exists in the sharded tables and its column type *is* bigint, but column mapping *is not* configured.
 
         - The check succeeds in other conditions except the two above.
+
+### Disable checking items
+
+DM checks items according to the task type, and users can use `ignore-checking-items` in the task configuration file to disable checking items. `ignore-checking-items` is a list, where values include:
+
+| Value  | Description   |
+| :----  | :-----|
+| all | Disable all the checks |
+| dump_privilege | Disable the check of dump-related privileges of the upstream MySQL instance user |
+| replication_privilege | Disable the check of replication-related privileges of the upstream MySQL instance user |
+| version | Disable the check of upstream database version |
+| binlog_enable | Disable the check of whether the upstream database has binlog enabled |
+| binlog_format | Disable the check of whether the binlog format of the upstream database is ROW |
+| binlog_row_image |  Disable the check of whether the binlog_row_image of the upstream database is FULL|
+| table_schema | Disable the the compatibility check of the upstream MySQL table schema |
+| schema_of_shard_tables | Disable the consistency check of the table schema of the upstream MySQL multi-instance sharding scenario |
+| auto_increment_ID | Disable the check of the conflicts of auto-increment primary keys of the upstream MySQL multi-instance sharding scenario |
