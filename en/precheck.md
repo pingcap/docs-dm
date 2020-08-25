@@ -72,7 +72,7 @@ DM checks items according to the task type, and you can use `ignore-checking-ite
 | Element  | Description   |
 | :----  | :-----|
 | all | Disable all checks |
-| dump_privilege | Disable the check of dump-related privileges of the upstream MySQL instance user |
+| dump_privilege | Disable checking dump-related privileges of the upstream MySQL instance user |
 | replication_privilege | Disable the check of replication-related privileges of the upstream MySQL instance user |
 | version | Disable the check of upstream database version |
 | binlog_enable | Disable checking whether the upstream database has binlog enabled |
