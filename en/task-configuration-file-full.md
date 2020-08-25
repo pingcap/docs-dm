@@ -35,7 +35,7 @@ remove-meta: false              # Whether to remove the `meta` information (`che
 timezone: "Asia/Shanghai"       # The timezone.
 case-sensitive: false           # Determines whether the schema/table is case-sensitive.
 online-ddl-scheme: "gh-ost"     # Only "gh-ost" and "pt" are currently supported.
-ignore-checking-items: []       # Do not disable any checking items.
+ignore-checking-items: []       # No element, which means not to disable any checking items.
 clean-dump-file: true           # Whether to clean up the files generated during data dump. Note that these include `metadata` files.
 
 target-database:                # Configuration of the downstream database instance.

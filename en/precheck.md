@@ -67,17 +67,17 @@ Upstream and downstream database users must have the corresponding read and writ
 
 ### Disable checking items
 
-DM checks items according to the task type, and users can use `ignore-checking-items` in the task configuration file to disable checking items. `ignore-checking-items` is a list whose elements can be:
+DM checks items according to the task type, and you can use `ignore-checking-items` in the task configuration file to disable checking items. The list of element options for `ignore-checking-items` is as follows:
 
 | Element  | Description   |
 | :----  | :-----|
-| all | Disable all the checks |
+| all | Disable all checks |
 | dump_privilege | Disable the check of dump-related privileges of the upstream MySQL instance user |
 | replication_privilege | Disable the check of replication-related privileges of the upstream MySQL instance user |
 | version | Disable the check of upstream database version |
-| binlog_enable | Disable the check of whether the upstream database has binlog enabled |
-| binlog_format | Disable the check of whether the binlog format of the upstream database is ROW |
-| binlog_row_image |  Disable the check of whether the binlog_row_image of the upstream database is FULL|
+| binlog_enable | Disable checking whether the upstream database has binlog enabled |
+| binlog_format | Disable checking whether the binlog format of the upstream database is ROW |
+| binlog_row_image |  Disable checking whether the binlog_row_image of the upstream database is FULL |
 | table_schema | Disable the the compatibility check of the upstream MySQL table schema |
-| schema_of_shard_tables | Disable the consistency check of the table schema of the upstream MySQL multi-instance sharding scenario |
-| auto_increment_ID | Disable the check of the conflicts of auto-increment primary keys of the upstream MySQL multi-instance sharding scenario |
+| schema_of_shard_tables | Disable checking whether the schemas of upstream MySQL sharded tables are consistent in the multi-instance sharding scenario |
+| auto_increment_ID | Disable checking the conflicts of auto-increment primary keys of the upstream MySQL shared tables in the multi-instance sharding scenario |
