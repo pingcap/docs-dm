@@ -57,7 +57,7 @@ For the configuration of `source.yaml`, refer to [Upstream Database Configuratio
 
 ## Flags description
 
-+ `create`: Create one or more upstream database sources. When creating multiple data sources fails, it rolls back to the state before executing the command.
++ `create`: Creates one or more upstream database source(s). When creating multiple data sources fails, DM rolls back to the state where the command was not executed.
 
 + `update`: Updates an upstream database source.
 
