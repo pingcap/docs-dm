@@ -61,7 +61,7 @@ For the configuration of `source.yaml`, refer to [Upstream Database Configuratio
 
 + `update`: Updates an upstream database source.
 
-+ `stop`: Stops one or more upstream database sources. When stopping multiple data sources fails, some data sources might been successfully stopped.
++ `stop`: Stops one or more upstream database source(s). When stopping multiple data sources fails, some data sources might be stopped.
 
 + `show`: Shows the added data source and the corresponding DM-worker.
 
