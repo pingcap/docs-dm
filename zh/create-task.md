@@ -19,7 +19,7 @@ Starts a task as defined in the configuration file
 Usage:
   dmctl start-task [-s source ...] [--remove-meta] <config-file> [flags]
 Flags:
-  -h, --help          help for start-task
+  -h, --help          Help for start-task
       --remove-meta   whether to remove task's meta data
 Global Flags:
   -s, --source strings   MySQL Source ID
