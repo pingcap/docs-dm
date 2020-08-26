@@ -265,6 +265,12 @@ tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml --remove-meta
 }
 ```
 
+如果返回信息中有 `source db replication privilege checker`、`source db dump privilege checker` 错误，说明 Aurora 中存在 MySQL 以外的权限，请在配置文件中添加如下内容。DM 会在版本更新中增强对 Aurora 权限的自动处理。
+
+```
+ignore-checking-items: ["replication_privilege","dump_privilege"]
+```
+
 ## 第 6 步：查询任务并验证数据
 
 通过 TiUP 使用 `dmctl` 查询正在运行的迁移任务及任务状态等信息。
