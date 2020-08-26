@@ -63,7 +63,7 @@ DM 作为数据迁移的核心，需要正常连接上游 Aurora 集群与下游
 
 DM 在增量复制阶段依赖 `ROW` 格式的 binlog，参见[为 Aurora 实例启用 binlog](https://aws.amazon.com/cn/premiumsupport/knowledge-center/enable-binary-logging-aurora/) 进行配置。
 
-如果需要基于 GTID 进行数据迁移，需要将 `gtid-mode` 与 `enforce_gtid_consistency` 均设置为 `ON`，参见[为 Aurora 集群启用 GTID 支持](https://docs.aws.amazon.com/zh_cn/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora)。
+如果 Aurora 已开启了 GTID，则可以基于 GTID 进行数据迁移。GTID 的启用方式参见[为 Aurora 集群启用 GTID 支持](https://docs.aws.amazon.com/zh_cn/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora)。基于 GTID 进行数据迁移，需要将第 3 步数据源配置文件中的 `enable-gtid` 设置为 `true`。
 
 > **注意：**
 >
