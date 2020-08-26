@@ -67,7 +67,7 @@ DM 在增量复制阶段依赖 `ROW` 格式的 binlog，参见[为 Aurora 实例
 
 > **注意：**
 >
-> 基于 GTID 的数据迁移需要 MySQL 5.7 (Aurora 2.04) 或更高版本。
+> 基于 GTID 进行数据迁移需要 MySQL 5.7 (Aurora 2.04) 或更高版本。
 
 除上述 Aurora 特有配置以外，上游数据库需满足迁移 MySQL 的其他要求，参见[上游 MySQL 实例检查内容](precheck.md#检查内容)。
 
@@ -133,6 +133,7 @@ tiup dmctl --master-addr 127.0.0.1:8261 list-member
 # Aurora-1
 source-id: "aurora-replica-01"
 
+# 基于 GTID 进行数据迁移时，需要将该项设置为 true
 enable-gtid: false
 
 from:
