@@ -71,13 +71,13 @@ DM checks items according to the task type, and you can use `ignore-checking-ite
 
 | Element  | Description   |
 | :----  | :-----|
-| all | Disable all checks |
-| dump_privilege | Disable checking dump-related privileges of the upstream MySQL instance user |
-| replication_privilege | Disable checking replication-related privileges of the upstream MySQL instance user |
-| version | Disable checking the upstream database version |
-| binlog_enable | Disable checking whether the upstream database has binlog enabled |
-| binlog_format | Disable checking whether the binlog format of the upstream database is ROW |
-| binlog_row_image |  Disable checking whether the binlog_row_image of the upstream database is FULL |
-| table_schema | Disable checking the compatibility of the upstream MySQL table schema |
-| schema_of_shard_tables | Disable checking whether the schemas of upstream MySQL sharded tables are consistent in the multi-instance sharding scenario |
-| auto_increment_ID | Disable checking the conflicts of auto-increment primary keys of the upstream MySQL shared tables in the multi-instance sharding scenario |
+| all | Disables all checks |
+| dump_privilege | Disables checking dump-related privileges of the upstream MySQL instance user |
+| replication_privilege | Disables checking replication-related privileges of the upstream MySQL instance user |
+| version | Disables checking the upstream database version |
+| binlog_enable | Disables checking whether the upstream database has binlog enabled |
+| binlog_format | Disables checking whether the binlog format of the upstream database is ROW |
+| binlog_row_image |  Disables checking whether the binlog_row_image of the upstream database is FULL |
+| table_schema | Disables checking the compatibility of the upstream MySQL table schema |
+| schema_of_shard_tables | Disables checking whether the schemas of upstream MySQL sharded tables are consistent in the multi-instance sharding scenario |
+| auto_increment_ID | Disables checking the conflicts of auto-increment primary keys of the upstream MySQL shared tables in the multi-instance sharding scenario |
