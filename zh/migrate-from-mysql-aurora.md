@@ -69,7 +69,9 @@ DM 在增量复制阶段依赖 `ROW` 格式的 binlog，参见[为 Aurora 实例
 >
 > 基于 GTID 进行数据迁移需要 MySQL 5.7 (Aurora 2.04) 或更高版本。
 
-除上述 Aurora 特有配置以外，上游数据库需满足迁移 MySQL 的其他要求，参见[上游 MySQL 实例检查内容](precheck.md#检查内容)。
+> **注意：**
+>
+> 除上述 Aurora 特有配置以外，上游数据库需满足迁移 MySQL 的其他要求，例如表结构、字符集、权限等，参见[上游 MySQL 实例检查内容](precheck.md#检查内容)。
 
 ## 第 2 步：部署 DM 集群
 
@@ -229,6 +231,10 @@ mydumpers:
 ## 第 5 步：启动任务
 
 通过 TiUP 使用 `dmctl` 启动任务。
+
+> **注意：**
+>
+> 目前通过 TiUP 使用 `dmctl` 的方式，需要使用 `task.yaml` 绝对路径。TiUP 将会在后续更新中正确支持相对路径。
 
 {{< copyable "shell-regular" >}}
 
