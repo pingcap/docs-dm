@@ -106,7 +106,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/benchmark-v1.0-ga/']
 
 ### 增量复制性能测试用例
 
-使用[增量复制性能测试用例](performance-test.md#复制性能测试用例)中介绍的方法进行测试。
+使用[增量复制性能测试用例](performance-test.md#增量复制性能测试用例)中介绍的方法进行测试。
 
 #### 增量复制性能测试结果
 
