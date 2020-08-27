@@ -11,7 +11,7 @@ DM (Data Migration) 使用 sharding DDL lock 来确保分库分表的 DDL 操作
 > 
 > - 本文档只适用于悲观协调模式下 sharding DDL lock 的处理。
 > - 不要轻易使用 `unlock-ddl-lock` 命令，除非完全明确当前场景下使用这些命令可能会造成的影响，并能接受这些影响。
-> - 在手动处理异常的 DDL lock 前，请确保已经了解 DM 的[分库分表合并同步原理](feature-shard-merge-pessimistic.md#实现原理)。
+> - 在手动处理异常的 DDL lock 前，请确保已经了解 DM 的[分库分表合并迁移原理](feature-shard-merge-pessimistic.md#实现原理)。
 
 ## 命令介绍
 
@@ -123,11 +123,11 @@ unlock-ddl-lock test-`shard_db`.`shard_table`
 
 #### Lock 异常原因
 
-在 DM-master 尝试自动 unlock sharding DDL lock 之前，需要等待所有 MySQL source 的 sharding DDL events 全部到达（详见[分库分表合并同步原理](feature-shard-merge-pessimistic.md#实现原理)）。如果 sharding DDL 已经在同步过程中，同时有部分 MySQL source 被移除，且不再计划重新加载它们（按业务需求移除了这部分 MySQL source），则会由于永远无法等齐所有的 DDL 而造成 lock 无法自动 unlock。
+在 DM-master 尝试自动 unlock sharding DDL lock 之前，需要等待所有 MySQL source 的 sharding DDL events 全部到达（详见[分库分表合并迁移原理](feature-shard-merge-pessimistic.md#实现原理)）。如果 sharding DDL 已经在迁移过程中，同时有部分 MySQL source 被移除，且不再计划重新加载它们（按业务需求移除了这部分 MySQL source），则会由于永远无法等齐所有的 DDL 而造成 lock 无法自动 unlock。
 
 #### 手动处理示例
 
-假设上游有 MySQL-1（`mysql-replica-01`）和 MySQL-2（`mysql-replica-02`）两个实例，其中 MySQL-1 中有 `shard_db_1`.`shard_table_1` 和 `shard_db_1`.`shard_table_2` 两个表，MySQL-2 中有 `shard_db_2`.`shard_table_1` 和 `shard_db_2`.`shard_table_2` 两个表。现在需要将这 4 个表合并后同步到下游 TiDB 的 `shard_db`.`shard_table` 表中。
+假设上游有 MySQL-1（`mysql-replica-01`）和 MySQL-2（`mysql-replica-02`）两个实例，其中 MySQL-1 中有 `shard_db_1`.`shard_table_1` 和 `shard_db_1`.`shard_table_2` 两个表，MySQL-2 中有 `shard_db_2`.`shard_table_1` 和 `shard_db_2`.`shard_table_2` 两个表。现在需要将这 4 个表合并后迁移到下游 TiDB 的 `shard_db`.`shard_table` 表中。
 
 初始表结构如下：
 
@@ -205,7 +205,7 @@ MySQL 及 DM 操作与处理流程如下：
     }
     ```
 
-4. 由于业务需要，`mysql-replica-02` 对应的数据不再需要同步到下游 TiDB，对 `mysql-replica-02` 执行了移除操作。
+4. 由于业务需要，`mysql-replica-02` 对应的数据不再需要迁移到下游 TiDB，对 `mysql-replica-02` 执行了移除操作。
 5. DM-master 上 ID 为 ```test-`shard_db`.`shard_table` ``` 的 lock 无法等到 `mysql-replica-02` 的 DDL 操作信息。
 
     `show-ddl-locks` 返回的 `unsynced` 中一直包含 `mysql-replica-02` 的信息。
@@ -262,11 +262,11 @@ MySQL 及 DM 操作与处理流程如下：
     +-------------+--------------------------------------------------+
     ```
 
-9. 使用 `query-status` 确认同步任务是否正常。
+9. 使用 `query-status` 确认迁移任务是否正常。
 
 #### 手动处理后的影响
 
-使用 `unlock-ddl-lock` 手动执行 unlock 操作后，由于该任务的配置信息中仍然包含了已下线的 MySQL source，如果不进行处理，则当下次 sharding DDL 到达时，仍会出现 lock 无法自动完成同步的情况。
+使用 `unlock-ddl-lock` 手动执行 unlock 操作后，由于该任务的配置信息中仍然包含了已下线的 MySQL source，如果不进行处理，则当下次 sharding DDL 到达时，仍会出现 lock 无法自动完成迁移的情况。
 
 因此，在手动解锁 DDL lock 后，需要再执行以下操作：
 
@@ -276,7 +276,7 @@ MySQL 及 DM 操作与处理流程如下：
 
 > **注意：**
 >
-> 在 `unlock-ddl-lock` 之后，如果已下线的 MySQL source 重新加载并尝试对其中的分表进行数据同步，则会由于数据与下游的表结构不匹配而发生错误。
+> 在 `unlock-ddl-lock` 之后，如果已下线的 MySQL source 重新加载并尝试对其中的分表进行数据迁移，则会由于数据与下游的表结构不匹配而发生错误。
 
 ### 场景二：unlock 过程中部分 DM-worker 异常停止或网络中断
 
@@ -295,11 +295,11 @@ MySQL 及 DM 操作与处理流程如下：
 
 #### 手动处理示例
 
-仍然假设是 [部分 MySQL source 被移除](#场景一部分-mysql-source-被移除) 示例中的上下游表结构及合表同步需求。
+仍然假设是 [部分 MySQL source 被移除](#场景一部分-mysql-source-被移除) 示例中的上下游表结构及合表迁移需求。
 
-当在 DM-master 自动执行 unlock 操作的过程中，owner（`mysql-replica-01`）成功执行了 DDL 操作且开始继续进行后续同步，但在请求非 owner（`mysql-replica-02`）跳过 DDL 操作的过程中，由于对应的 DM-worker 发生了重启在跳过 DDL 后未能更新 checkpoint。
+当在 DM-master 自动执行 unlock 操作的过程中，owner（`mysql-replica-01`）成功执行了 DDL 操作且开始继续进行后续迁移，但在请求非 owner（`mysql-replica-02`）跳过 DDL 操作的过程中，由于对应的 DM-worker 发生了重启在跳过 DDL 后未能更新 checkpoint。
 
-`mysql-replica-02` 对应的数据迁移子任务恢复后，将在 DM-master 上创建一个新的 lock，但其他 MySQL source 此时已经执行或跳过 DDL 操作并在进行后续同步。
+`mysql-replica-02` 对应的数据迁移子任务恢复后，将在 DM-master 上创建一个新的 lock，但其他 MySQL source 此时已经执行或跳过 DDL 操作并在进行后续迁移。
 
 处理流程如下：
 
@@ -355,8 +355,8 @@ MySQL 及 DM 操作与处理流程如下：
         ```
 
 3. 使用 `show-ddl-locks` 确认 DDL lock 是否被成功 unlock。
-4. 使用 `query-status` 确认同步任务是否正常。
+4. 使用 `query-status` 确认迁移任务是否正常。
 
 #### 手动处理后的影响
 
-手动 unlock sharding DDL lock 后，后续的 sharding DDL 将可以自动正常同步。
+手动 unlock sharding DDL lock 后，后续的 sharding DDL 将可以自动正常迁移。

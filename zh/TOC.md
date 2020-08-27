@@ -12,20 +12,20 @@
     - [Block & Allow Lists](key-features.md#block--allow-table-lists)
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
     - [Online-ddl-scheme](feature-online-ddl-scheme.md)
-    + 分库分表合并同步
+    + 分库分表合并迁移
       - [概述](feature-shard-merge.md)
       - [悲观模式](feature-shard-merge-pessimistic.md)
       - [乐观模式](feature-shard-merge-optimistic.md)
 + [应用场景](scenarios.md)
 + 快速上手
   - [部署集群](quick-start-with-dm.md)
-  - [创建数据同步任务](quick-start-create-task.md)
+  - [创建数据迁移任务](quick-start-create-task.md)
 + 部署使用
   - [软硬件要求](hardware-and-software-requirements.md)
   + 部署 DM 集群
     - [使用 TiUP](deploy-a-dm-cluster-using-tiup.md)
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
-  + [使用 DM 同步数据](replicate-data-using-dm.md)
+  + [使用 DM 迁移数据](replicate-data-using-dm.md)
   + [监控与告警设置](monitor-a-dm-cluster.md)
   + [性能测试](performance-test.md)
 + 运维操作
@@ -51,7 +51,7 @@
   - [故障及处理方法](error-handling.md)
   - [性能问题及处理方法](handle-performance-issues.md)
 + 教程
-  - [简单的从库同步场景](usage-scenario-simple-replication.md)
+  - [简单的从库迁移场景](usage-scenario-simple-replication.md)
   - [分库分表合并场景](usage-scenario-shard-merge.md)
   - [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
   - [分表合并数据迁移最佳实践](shard-merge-best-practices.md)

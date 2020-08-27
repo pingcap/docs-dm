@@ -194,7 +194,7 @@ tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source2.ya
 ```yaml
 # 任务名，多个同时运行的任务不能重名
 name: "test"
-# 全量+增量 (all) 复制模式
+# 全量+增量 (all) 迁移模式
 task-mode: "all"
 # 下游 TiDB 配置信息
 target-database:

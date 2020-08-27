@@ -34,7 +34,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/scenarios/']
 
 如果上游 MySQL/MariaDB 中的数据是以分库分表等形式存在的，在迁移到 TiDB 时通常会期望将其进行合并，这时可通过配置 `route-rules` 来将上游数据中的库名、表名等重命名后合并到下游同一个库或表中，具体可参考 [DM 分库分表合并场景](usage-scenario-shard-merge.md)以及[分表合并数据迁移最佳实践](shard-merge-best-practices.md)。
 
-对于 DDL 的迁移，DM 提供了特殊的支持，具体可参考[分库分表合并同步](feature-shard-merge.md)。
+对于 DDL 的迁移，DM 提供了特殊的支持，具体可参考[分库分表合并迁移](feature-shard-merge.md)。
 
 如只需迁移部分业务数据或过滤部分特定操作，可直接参考前述非合库合表场景中的[迁移 MySQL/MariaDB 中部分业务数据](#迁移-mysqlmariadb-中部分业务数据)。
 

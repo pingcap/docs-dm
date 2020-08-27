@@ -11,11 +11,11 @@ DDL 是数据库应用中必然会使用的一类 SQL。MySQL 虽然在 5.6 的�
 
 因此，gh-ost 以及 pt-osc 可以更优雅地在 MySQL 上面执行 DDL，把对读写的影响降到最低。
 
-TiDB 根据 Google F1 的在线异步 schema 变更算法实现，在 DDL 过程中并不会阻塞读写。因此，在 online-schema-change 过程中，gh-ost 和 pt-osc 所产生的大量中间表数据以及 binlog event，在 MySQL 与 TiDB 的数据同步过程中并不需要。
+TiDB 根据 Google F1 的在线异步 schema 变更算法实现，在 DDL 过程中并不会阻塞读写。因此，在 online-schema-change 过程中，gh-ost 和 pt-osc 所产生的大量中间表数据以及 binlog event，在 MySQL 与 TiDB 的数据迁移过程中并不需要。
 
-DM 是 MySQL 到 TiDB 的数据同步工具，online-ddl-scheme 功能就是对上述两个 online-schema-change 的工具进行特殊的处理，以便更快完成所需的 DDL 同步。
+DM 是 MySQL 到 TiDB 的数据迁移工具，online-ddl-scheme 功能就是对上述两个 online-schema-change 的工具进行特殊的处理，以便更快完成所需的 DDL 迁移。
 
-如果想从源码方面了解 DM online-ddl-scheme，可以参考 [DM 源码阅读系列文章（八）Online Schema Change 同步支持](https://pingcap.com/blog-cn/dm-source-code-reading-8/#dm-源码阅读系列文章八online-schema-change-同步支持)
+如果想从源码方面了解 DM online-ddl-scheme，可以参考 [DM 源码阅读系列文章（八）Online Schema Change 迁移支持](https://pingcap.com/blog-cn/dm-source-code-reading-8/#dm-源码阅读系列文章八online-schema-change-迁移支持)
 
 ## 配置
 
@@ -28,7 +28,7 @@ name: test                      # 任务名称，需要全局唯一
 task-mode: all                  # 任务模式，可设为 "full"、"incremental"、"all"
 shard-mode: "pessimistic"       # 如果为分库分表合并任务则需要配置该项。默认使用悲观协调模式 "pessimistic"，在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
-remove-meta: false              # 是否在任务同步开始前移除该任务名对应的 `meta`（`checkpoint` 和 `onlineddl` 等）。
+remove-meta: false              # 是否在任务迁移开始前移除该任务名对应的 `meta`（`checkpoint` 和 `onlineddl` 等）。
 online-ddl-scheme: "gh-ost"     # 目前仅支持 gh-ost 、pt
 
 target-database:                # 下游数据库实例配置
@@ -42,11 +42,11 @@ target-database:                # 下游数据库实例配置
 
 gh-ost 在实现 online-schema-change 的过程会产生 3 种 table：
 
-- `gho`：用于应用 DDL，待 `gho` 表中数据同步到与 origin table 一致后，通过 rename 的方式替换 origin table。
+- `gho`：用于应用 DDL，待 `gho` 表中数据迁移到与 origin table 一致后，通过 rename 的方式替换 origin table。
 - `ghc`：用于存放 online-schema-change 相关的信息。
 - `del`：对 origin table 执行 rename 操作而生成。
 
-DM 在同步过程中会把上述 table 分成 3 类：
+DM 在迁移过程中会把上述 table 分成 3 类：
 
 - ghostTable : `\_\*\_gho`
 - trashTable : `\_\*\_ghc`、`\_\*\_del`
@@ -93,7 +93,7 @@ DM 在同步过程中会把上述 table 分成 3 类：
     REPLACE INTO dm_meta.{task_name}_onlineddl (id, ghost_schema , ghost_table , ddls) VALUES (......);
     ```
 
-4. 往 `_ghc` 表写入数据，以及往 `_gho` 表同步 origin table 的数据：
+4. 往 `_ghc` 表写入数据，以及往 `_gho` 表迁移 origin table 的数据：
 
     ```sql
     Insert /* gh-ost */ into `test`.`_test4_ghc` values (......);
@@ -106,7 +106,7 @@ DM 在同步过程中会把上述 table 分成 3 类：
 
     DM：只要不是 **realtable** 的 DML 全部不执行。
 
-5. 数据同步完成后 origin table 与 `_gho` 一起改名，完成 online DDL 操作：
+5. 数据迁移完成后 origin table 与 `_gho` 一起改名，完成 online DDL 操作：
 
     ```sql
     Rename /* gh-ost */ table `test`.`test4` to `test`.`_test4_del`, `test`.`_test4_gho` to `test`.`test4`;
@@ -137,11 +137,11 @@ DM 在同步过程中会把上述 table 分成 3 类：
 
 pt-osc 在实现 online-schema-change 的过程会产生 2 种 table：
 
-- `new`：用于应用 DDL，待表中数据同步到与 origin table 一致后，再通过 rename 的方式替换 origin table。
+- `new`：用于应用 DDL，待表中数据迁移到与 origin table 一致后，再通过 rename 的方式替换 origin table。
 - `old`：对 origin table 执行 rename 操作后生成。
-- 3 种 **trigger**：`pt_osc\_\*\_ins`、`pt_osc\_\*\_upd`、`pt_osc\_\*\_del`，用于在 pt_osc 过程中，同步 origin table 新产生的数据到 `new`。
+- 3 种 **trigger**：`pt_osc\_\*\_ins`、`pt_osc\_\*\_upd`、`pt_osc\_\*\_del`，用于在 pt_osc 过程中，迁移 origin table 新产生的数据到 `new`。
 
-DM 在同步过程中会把上述 table 分成 3 类：
+DM 在迁移过程中会把上述 table 分成 3 类：
 
 - ghostTable : `\_\*\_new`
 - trashTable : `\_\*\_old`
@@ -174,7 +174,7 @@ pt-osc 主要涉及的 SQL 以及 DM 的处理：
     REPLACE INTO dm_meta.{task_name}_onlineddl (id, ghost_schema , ghost_table , ddls) VALUES (......);
     ```
 
-3. 创建用于同步数据的 3 个 Trigger：
+3. 创建用于迁移数据的 3 个 Trigger：
 
     ```sql
     CREATE TRIGGER `pt_osc_test_test4_del` AFTER DELETE ON `test`.`test4` ...... ;
@@ -184,7 +184,7 @@ pt-osc 主要涉及的 SQL 以及 DM 的处理：
 
     DM: 不执行 TiDB 不支持的相关 Trigger 操作。
 
-4. 往 `_new` 表同步 origin table 的数据：
+4. 往 `_new` 表迁移 origin table 的数据：
 
     ```sql
     INSERT LOW_PRIORITY IGNORE INTO `test`.`_test4_new` (`id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2`, `cl1`) SELECT `id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2`, `cl1` FROM `test`.`test4` LOCK IN SHARE MODE /*pt-online-schema-change 3227 copy table*/
@@ -192,7 +192,7 @@ pt-osc 主要涉及的 SQL 以及 DM 的处理：
 
     DM: 只要不是 **realTable** 的 DML 全部不执行。
 
-5. 数据同步完成后 origin table 与 `_new` 一起改名，完成 online DDL 操作：
+5. 数据迁移完成后 origin table 与 `_new` 一起改名，完成 online DDL 操作：
 
     ```sql
     RENAME TABLE `test`.`test4` TO `test`.`_test4_old`, `test`.`_test4_new` TO `test`.`test4`
