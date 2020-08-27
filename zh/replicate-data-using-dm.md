@@ -45,8 +45,8 @@ aliases: ['/docs-cn/tidb-data-migration/dev/replicate-data-using-dm/']
     
     source-id: "mysql-replica-01"
 
-    # 是否开启 GTID
-    enable-gtid: true
+    # DM-worker 是否使用全局事务标识符（GTID）拉取 binlog。使用前提是在上游 MySQL 已开启 GTID 模式。
+    enable-gtid: false
     
     from:
       host: "172.16.10.81"
