@@ -265,7 +265,13 @@ tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml --remove-meta
 }
 ```
 
-如果返回信息中有 `source db replication privilege checker`、`source db dump privilege checker` 错误，说明 Aurora 中存在 MySQL 以外的权限，请在配置文件中添加如下内容。DM 会在版本更新中增强对 Aurora 权限的自动处理。
+如果返回信息中有 `source db replication privilege checker`、`source db dump privilege checker` 错误，请检查 `errorMsg` 字段是否存在不能识别的权限。例如
+
+```
+line 1 column 287 near \"INVOKE LAMBDA ON *.* TO...
+```
+
+说明 `INVOKE LAMBDA` 权限导致报错。如果该权限是 Aurora 特有的，请在配置文件中添加如下内容跳过检查。DM 会在版本更新中增强对 Aurora 权限的自动处理。
 
 ```
 ignore-checking-items: ["replication_privilege","dump_privilege"]
