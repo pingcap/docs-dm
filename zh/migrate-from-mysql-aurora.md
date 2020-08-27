@@ -265,7 +265,7 @@ tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml --remove-meta
 }
 ```
 
-如果返回信息中有 `source db replication privilege checker`、`source db dump privilege checker` 错误，请检查 `errorMsg` 字段是否存在不能识别的权限。例如
+如果返回信息中有 `source db replication privilege checker`、`source db dump privilege checker` 错误，请检查 `errorMsg` 字段是否存在不能识别的权限。例如：
 
 ```
 line 1 column 287 near \"INVOKE LAMBDA ON *.* TO...
