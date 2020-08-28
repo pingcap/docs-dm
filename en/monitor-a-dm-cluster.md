@@ -1,6 +1,6 @@
 ---
 title: Data Migration Monitoring Metrics
-summary: Learn about the monitoring metrics when you use Data Migration to replicate data.
+summary: Learn about the monitoring metrics when you use Data Migration to migrate data.
 aliases: ['/docs/tidb-data-migration/dev/monitor-a-dm-cluster/']
 ---
 
@@ -18,13 +18,13 @@ In the Grafana dashboard, the default name of DM is `DM-task`.
 
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
-| task state | The state of subtasks for replication | N/A | N/A |
+| task state | The state of subtasks for migration | N/A | N/A |
 | storage capacity | The total storage capacity of the disk occupied by relay logs | N/A | N/A |
 | storage remain | The remaining storage capacity of the disk occupied by relay logs | N/A | N/A |
 | binlog file gap between master and relay | The number of binlog files by which the `relay` processing unit is behind the upstream master | N/A | N/A |
 | load progress | The percentage of the completed loading process of the load unit. The value is between 0%~100% | N/A | N/A |
-| binlog file gap between master and syncer | The number of binlog files by which the binlog replication unit is behind the upstream master | N/A | N/A |
-| shard lock resolving | Whether the current subtask is waiting for sharding DDL replication. A value greater than 0 means that the current subtask is waiting for sharding DDL replication | N/A | N/A |
+| binlog file gap between master and syncer | The number of binlog files by which the binlog migration unit is behind the upstream master | N/A | N/A |
+| shard lock resolving | Whether the current subtask is waiting for sharding DDL migration. A value greater than 0 means that the current subtask is waiting for sharding DDL migration | N/A | N/A |
 
 ### Operation errors
 
@@ -75,31 +75,31 @@ The following metrics show only when `task-mode` is in the `full` or `all` mode.
 | transaction execution latency | The latency of executing a transaction by the load unit (in seconds) | N/A | N/A |
 | statement execution latency | The duration of executing a statement by the load unit (in seconds) | N/A | N/A |
 
-### Binlog replication
+### Binlog migration
 
 The following metrics show only when `task-mode` is in the `incremental` or `all` mode.
 
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
-| remaining time to sync | The predicted remaining time it takes `syncer` to be completely replicated with the master (in minutes) | N/A | N/A |
 | replicate lag | The latency time it takes to replicate the binlog from master to `syncer` (in seconds) | N/A | N/A |
-| process exist with error | The binlog replication unit encounters an error within the DM-worker and exits | Immediate alerts | critical |
+| remaining time to sync | The predicted remaining time it takes `syncer` to be completely migrated with the master (in minutes) | N/A | N/A |
+| process exist with error | The binlog migration unit encounters an error within the DM-worker and exits | Immediate alerts | critical |
 | binlog file gap between master and syncer | The number of binlog files by which the `syncer` processing unit is behind the master | An alert occurs when the number of binlog files by which the `syncer` processing unit is behind the master exceeds one (>1) and the condition lasts over 10 minutes | critical |
 | binlog file gap between relay and syncer | The number of binlog files by which `syncer` is behind `relay` | An alert occurs when the number of binlog files by which the `syncer` processing unit is behind the `relay` processing unit exceeds one (>1) and the condition lasts over 10 minutes | critical |
 | binlog event QPS | The number of binlog events received per unit of time (this number does not include the events that need to be skipped) | N/A | N/A |
 | skipped binlog event QPS | The number of binlog events received per unit of time that need to be skipped | N/A | N/A |
-| read binlog event duration | The duration that the binlog replication unit reads the binlog from the relay log or the upstream MySQL (in seconds) | N/A | N/A |
-| transform binlog event duration | The duration that the binlog replication unit parses and transforms the binlog into SQL statements (in seconds) | N/A | N/A |
-| dispatch binlog event duration | The duration that the binlog replication unit dispatches a binlog event (in seconds) | N/A | N/A |
-| transaction execution latency | The duration that the binlog replication unit executes the transaction to the downstream (in seconds) | N/A | N/A |
-| binlog event size | The size of a binlog event that the binlog replication unit reads from the relay log or the upstream MySQL | N/A | N/A |
+| read binlog event duration | The duration that the binlog migration unit reads the binlog from the relay log or the upstream MySQL (in seconds) | N/A | N/A |
+| transform binlog event duration | The duration that the binlog migration unit parses and transforms the binlog into SQL statements (in seconds) | N/A | N/A |
+| dispatch binlog event duration | The duration that the binlog migration unit dispatches a binlog event (in seconds) | N/A | N/A |
+| transaction execution latency | The duration that the binlog migration unit executes the transaction to the downstream (in seconds) | N/A | N/A |
+| binlog event size | The size of a binlog event that the binlog migration unit reads from the relay log or the upstream MySQL | N/A | N/A |
 | DML queue remain length | The length of the remaining DML job queue | N/A | N/A |
 | total sqls jobs | The number of newly added jobs per unit of time | N/A | N/A |
 | finished sqls jobs | The number of finished jobs per unit of time | N/A | N/A |
-| statement execution latency | The duration that the binlog replication unit executes the statement to the downstream (in seconds) | N/A | N/A |
-| add job duration | The duration tht the binlog replication unit adds a job to the queue (in seconds) | N/A | N/A |
-| DML conflict detect duration | The duration that the binlog replication unit detects the conflict in DML (in seconds) | N/A | N/A |
-| skipped event duration | The duration that the binlog replication unit skips a binlog event (in seconds) | N/A | N/A |
+| statement execution latency | The duration that the binlog migration unit executes the statement to the downstream (in seconds) | N/A | N/A |
+| add job duration | The duration tht the binlog migration unit adds a job to the queue (in seconds) | N/A | N/A |
+| DML conflict detect duration | The duration that the binlog migration unit detects the conflict in DML (in seconds) | N/A | N/A |
+| skipped event duration | The duration that the binlog migration unit skips a binlog event (in seconds) | N/A | N/A |
 | unsynced tables | The number of tables that have not received the shard DDL statement in the current subtask | N/A | N/A |
 | shard lock resolving | Whether the current subtask is waiting for the shard DDL lock to be resolved. A value greater than 0 indicates that it is waiting for the shard DDL lock to be resolved | N/A | N/A |
 
@@ -153,7 +153,7 @@ In the Grafana dashboard, the default name of an instance is `DM-instance`.
 
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
-| task state | The state of subtasks for replication | An alert occurs when the subtask has been paused for more than 10 minutes | critical |
+| task state | The state of subtasks for migration | An alert occurs when the subtask has been paused for more than 10 minutes | critical |
 | load progress | The percentage of the completed loading process of the load unit. The value range is 0%~100% | N/A | N/A |
-| binlog file gap between master and syncer | The number of binlog files by which the binlog replication unit is behind the upstream master | N/A | N/A |
-| shard lock resolving | Whether the current subtask is waiting for sharding DDL replication. A value greater than 0 means that the current subtask is waiting for sharding DDL replication | N/A | N/A |
+| binlog file gap between master and syncer | The number of binlog files by which the binlog migration unit is behind the upstream master | N/A | N/A |
+| shard lock resolving | Whether the current subtask is waiting for sharding DDL migration. A value greater than 0 means that the current subtask is waiting for sharding DDL migration | N/A | N/A |

@@ -6,7 +6,7 @@ aliases: ['/docs/tidb-data-migration/dev/precheck/']
 
 # Precheck the Upstream MySQL Instance Configurations
 
-This document introduces the precheck feature provided by DM. This feature is used to detect possible errors in the upstream MySQL instance configuration when the data replication task is started.
+This document introduces the precheck feature provided by DM. This feature is used to detect possible errors in the upstream MySQL instance configuration when the data migration task is started.
 
 ## Command
 
@@ -14,7 +14,7 @@ This document introduces the precheck feature provided by DM. This feature is us
 
 ## Checking items
 
-Upstream and downstream database users must have the corresponding read and write privileges. DM checks the following privileges and configuration automatically while the data replication task is started:
+Upstream and downstream database users must have the corresponding read and write privileges. DM checks the following privileges and configuration automatically while the data migration task is started:
 
 + Database version
 
@@ -24,7 +24,7 @@ Upstream and downstream database users must have the corresponding read and writ
 + MySQL binlog configuration
 
     - Whether the binlog is enabled (DM requires that the binlog must be enabled)
-    - Whether `binlog_format=ROW` (DM only supports replication of the binlog in the ROW format)
+    - Whether `binlog_format=ROW` (DM only supports migration of the binlog in the ROW format)
     - Whether `binlog_row_image=FULL` (DM only supports `binlog_row_image=FULL`)
 
 + The privileges of the upstream MySQL instance users
@@ -73,7 +73,7 @@ DM checks items according to the task type, and you can use `ignore-checking-ite
 | :----  | :-----|
 | all | Disables all checks |
 | dump_privilege | Disables checking dump-related privileges of the upstream MySQL instance user |
-| replication_privilege | Disables checking replication-related privileges of the upstream MySQL instance user |
+| migration_privilege | Disables checking migration-related privileges of the upstream MySQL instance user |
 | version | Disables checking the upstream database version |
 | binlog_enable | Disables checking whether the upstream database has binlog enabled |
 | binlog_format | Disables checking whether the binlog format of the upstream database is ROW |

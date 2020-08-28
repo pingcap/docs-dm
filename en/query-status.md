@@ -1,6 +1,6 @@
 ---
 title: Query Status
-summary: Learn how to query the status of a data replication task.
+summary: Learn how to query the status of a data migration task.
 aliases: ['/docs/tidb-data-migration/dev/query-status/','/tidb-data-migration/dev/query-error/']
 ---
 
@@ -93,23 +93,23 @@ The status of a DM migration task depends on the status of each subtask assigned
                     "result": null,         # Displays the error information if a subtask fails.
                     "unresolvedDDLLockID": "test-`test`.`t_target`",    # The sharding DDL lock ID, used for manually handling the sharding DDL
                                                                         # lock in the abnormal condition.
-                    "sync": {                   # The replication information of the `Sync` processing unit. This information is about the
+                    "sync": {                   # The migration information of the `Sync` processing unit. This information is about the
                                                 # same component with the current processing unit.
-                        "totalEvents": "12",    # The total number of binlog events that are replicated in this subtask.
-                        "totalTps": "1",        # The number of binlog events that are replicated in this subtask per second.
-                        "recentTps": "1",       # The number of binlog events that are replicated in this subtask in the last one second.
+                        "totalEvents": "12",    # The total number of binlog events that are migrated in this subtask.
+                        "totalTps": "1",        # The number of binlog events that are migrated in this subtask per second.
+                        "recentTps": "1",       # The number of binlog events that are migrated in this subtask in the last one second.
                         "masterBinlog": "(bin.000001, 3234)",                               # The binlog position in the upstream database.
                         "masterBinlogGtid": "c0149e17-dff1-11e8-b6a8-0242ac110004:1-14",    # The GTID information in the upstream database.
-                        "syncerBinlog": "(bin.000001, 2525)",                               # The position of the binlog that has been replicated
+                        "syncerBinlog": "(bin.000001, 2525)",                               # The position of the binlog that has been migrated
                                                                                             # in the `Sync` processing unit.
-                        "syncerBinlogGtid": "",                                             # The binlog position replicated using GTID.
+                        "syncerBinlogGtid": "",                                             # The binlog position migrated using GTID.
                         "blockingDDLs": [       # The DDL list that is blocked currently. It is not empty only when all the upstream tables of this
                                                 # DM-worker are in the "synced" status. In this case, it indicates the sharding DDL statements to be executed or that are skipped.
                             "USE `test`; ALTER TABLE `test`.`t_target` DROP COLUMN `age`;"
                         ],
                         "unresolvedGroups": [   # The sharding group that is not resolved.
                             {
-                                "target": "`test`.`t_target`",                  # The downstream database table to be replicated.
+                                "target": "`test`.`t_target`",                  # The downstream database table to be migrated.
                                 "DDLs": [
                                     "USE `test`; ALTER TABLE `test`.`t_target` DROP COLUMN `age`;"
                                 ],
@@ -120,14 +120,14 @@ The status of a DM migration task depends on the status of each subtask assigned
                                     "`test`.`t1`"
                                 ],
                                 "unsynced": [                                   # The upstream table that has not executed this sharding DDL
-                                                                                # statement. If any upstream tables have not finished replication,
+                                                                                # statement. If any upstream tables have not finished migration,
                                                                                 # `blockingDDLs` is empty.
                                 ]
                             }
                         ],
                         "synced": false         # Whether the incremental replication catches up with the upstream and has the same binlog position as that in the
                                                 # upstream. The save point is not refreshed in real time in the `Sync` background, so "false" of "synced"
-                                                # does not always mean a replication delay exits.
+                                                # does not always mean a migration delay exits.
                     }
                 }
             ]
@@ -148,7 +148,7 @@ The status of a DM migration task depends on the status of each subtask assigned
                     "unit": "Load",
                     "result": null,
                     "unresolvedDDLLockID": "",
-                    "load": {                   # The replication information of the `Load` processing unit.
+                    "load": {                   # The migration information of the `Load` processing unit.
                         "finishedBytes": "115", # The number of bytes that have been loaded.
                         "totalBytes": "452",    # The total number of bytes that need to be loaded.
                         "progress": "25.44 %"   # The progress of the loading process.
@@ -224,7 +224,7 @@ For operation details of "unresolvedDDLLockID" of "subTaskStatus" of "sources", 
 - `Finished`:
 
     - The finished subtask status.
-    - Only when the full replication subtask is finished normally, the task is switched to this status.
+    - Only when the full migration subtask is finished normally, the task is switched to this status.
 
 ### Status switch diagram
 

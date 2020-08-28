@@ -11,7 +11,7 @@ This document introduces the main usage scenarios of TiDB Data Migration (DM) an
 
 ### Use TiDB as MySQL/MariaDB's secondary database
 
-If you want to use TiDB as the upstream MySQL/MariaDB's secondary database, that is, import the full data of the upstream instance to TiDB, and replicate the incremental data to TiDB in real-time once data changes are made, you can configure the data migration task according to the following rules:
+If you want to use TiDB as the upstream MySQL/MariaDB's secondary database, that is, import the full data of the upstream instance to TiDB, and migrate the incremental data to TiDB in real-time once data changes are made, you can configure the data migration task according to the following rules:
 
 - Specify `task-mode` as `all`.
 - Configure `target-database` based on the connection information of the downstream TiDB.
@@ -33,7 +33,7 @@ For more information, refer to [Data Migration Simple Usage Scenario](usage-scen
 
 If there are multiple sharded tables in multiple sharded schemas in the upstream MySQL/MariaDB, to merge them into one table or schema when migrating to TiDB, you can rename the table or the schema in the upstream database by configuring `route-rules`, and then these tables can be merged into the same downstream schema or table. For details, refer to [Data Migration Shard Merge Scenario](usage-scenario-shard-merge.md) and [Best Practices of Data Migration in the Shard Merge Scenario](shard-merge-best-practices.md).
 
-Specifically, DM supports the migration of DDL. For details, refer to [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md).
+Specifically, DM supports the migration of DDL. For details, refer to [Merge and Migrate Data from Sharded Tables](feature-shard-merge.md).
 
 If you only need to migrate some application data or filter out some operations, refer to [Migrate some applicationb data from MySQL/MariaDB](#migrate-some-application-data-from-mysqlmariadb).
 
