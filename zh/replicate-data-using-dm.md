@@ -45,9 +45,20 @@ aliases: ['/docs-cn/tidb-data-migration/stable/replicate-data-using-dm/','/docs-
     source-id = "mysql-replica-01"
     dm-worker = "172.16.10.72:8262"
 
+<<<<<<< HEAD
     [[deploy]]
     source-id = "mysql-replica-02"
     dm-worker = "172.16.10.73:8262"
+=======
+    # DM-worker 是否使用全局事务标识符 (GTID) 拉取 binlog。使用前提是在上游 MySQL 已开启 GTID 模式。
+    enable-gtid: false
+    
+    from:
+      host: "172.16.10.81"
+      user: "root"
+      password: "VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU="
+      port: 3306
+>>>>>>> 70a5013... Update enable-gtid description (#304)
     ```
 
     > **注意：**
