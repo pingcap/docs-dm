@@ -257,7 +257,7 @@ tiup dm import --dir=/path/to/tidb-ansible
 
 `import` 命令的工作流程如下：
 
-- 根据 ansible 部署的集群生成一个 TiUP 部署使用的拓扑文件 [topology.yml](https://github.com/pingcap/tiup/blob/master/examples/topology.dm.example.yaml)。
+- 根据 ansible 部署的集群生成一个 TiUP 部署使用的拓扑文件 [topology.yml](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml)。
 - 确认部署后使用生成的拓扑文件部署 2.0 以上版本的集群。
 
 部署成功后可以使用 `tiup dm start` 命令启动集群后进入 DM 内核升级流程。
