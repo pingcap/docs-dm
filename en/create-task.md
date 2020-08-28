@@ -14,13 +14,14 @@ help start-task
 ```
 
 ```
-start a task as defined in the config file
+Starts a task as defined in the configuration file
 Usage:
- dmctl start-task [-s source ...] <config-file> [flags]
+  dmctl start-task [-s source ...] [--remove-meta] <config-file> [flags]
 Flags:
- -h, --help   help for start-task
+  -h, --help          Help for start-task
+      --remove-meta   Whether to remove task's metadata
 Global Flags:
- -s, --source strings   MySQL Source ID
+  -s, --source strings   MySQL Source ID
 ```
 
 ## Usage example
@@ -35,6 +36,7 @@ start-task [ -s "mysql-replica-01"] ./task.yaml
 
 - `-s`: (Optional) Specifies the MySQL source to execute `task.yaml`. If it is set, the command only starts the subtasks of the specified task on the MySQL source.
 - `config-file`: (Required) Specifies the file path of `task.yaml`.
+- `remove-meta`: (Optional) Specifies whether to remove the task's previous metadata when starting the task.
 
 ## Returned results
 

@@ -151,7 +151,6 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 name: "shard_merge"
 task-mode: all
 meta-schema: "dm_meta"
-remove-meta: false
 ignore-checking-items: ["auto_increment_ID"]
 
 target-database:
