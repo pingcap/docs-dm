@@ -141,7 +141,6 @@ The complete replication task configuration is shown below. For more details, se
 name: "one-tidb-secondary"
 task-mode: all
 meta-schema: "dm_meta"
-remove-meta: false
 
 target-database:
   host: "192.168.0.1"

@@ -81,13 +81,11 @@ mysql-instances:
 
 ## 修改任务配置
 
-在某些情况下需要更新任务配置内容，比如重置数据同步任务时设置了 `remove-meta` 为 `true` 和 `task-mode` 为 `all`，当数据同步任务重置完成后，需要更新任务配置文件中的 `remove-meta` 设置为 `false`，防止下一次启动任务的时候重新同步任务。
-
 因为 DM 集群会持久化保存任务配置，所以修改任务配置需要通过 `stop-task`、`start-task` 将修改后的配置更新到 DM 集群中，如果直接修改任务配置文件，但是不重启任务，配置变更不会生效，DM 集群重启时仍然会读取之前保存的任务配置。
 
-这里以修改 `remove-meta` 配置为例，举例说明任务配置修改步骤：
+这里以修改 `timezone` 配置为例，举例说明任务配置修改步骤：
 
-1. 修改任务配置文件，将 `remove-meta` 设置为 `false`
+1. 修改任务配置文件，将 `timezone` 设置为 `Asia/Shanghai`
 
 2. 通过 `stop-task` 命令停止任务：`stop-task <task-name | task-file>`
 
