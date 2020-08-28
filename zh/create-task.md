@@ -44,7 +44,7 @@ start-task [ -s "mysql-replica-01"] ./task.yaml
     - 指定 `task.yaml` 的文件路径
 + `remove-meta`:
     - 可选
-    - 如果设置，则在启动指定任务之前会移除该任务之前存在的 metadata
+    - 如果设置，则在启动指定任务时会移除该任务之前存在的 metadata
 
 ## 返回结果示例
 
