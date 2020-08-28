@@ -29,7 +29,6 @@ name: test                      # The name of the task. Should be globally uniqu
 task-mode: all                  # The task mode. Can be set to `full`/`incremental`/`all`.
 shard-mode: "pessimistic"       # You need to configure this if it is a shard merge task. The "pessimistic" mode is used by default. After understanding the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
 meta-schema: "dm_meta"          # The downstream database that stores the `meta` information.
-remove-meta: false              # Whether to remove the `meta` information (`checkpoint` and `onlineddl`) corresponding to the task name before starting the replication task.
 online-ddl-scheme: "gh-ost"     # Only "gh-ost" and "pt" are currently supported.
 target-database:                # Configuration of the downstream database instance.
   host: "192.168.0.1"
