@@ -34,7 +34,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 
 - [Usage Scenarios](usage-scenario-shard-merge.md)
 - [Quick Start with DM](quick-start-with-dm.md)
-- [Replicate Data Using DM](replicate-data-using-dm.md)
+- [Migrate Data Using DM](replicate-data-using-dm.md)
 
 </NavColumn>
 
@@ -43,7 +43,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 
 - [Deploy DM Using TiUP](deploy-a-dm-cluster-using-tiup.md)
 - [Deploy DM Using Binary](deploy-a-dm-cluster-using-binary.md)
-- [Use DM to Replicate Data](replicate-data-using-dm.md)
+- [Use DM to Migrate Data](replicate-data-using-dm.md)
 - [Monitor and Alert](monitor-a-dm-cluster.md)
 
 </NavColumn>
