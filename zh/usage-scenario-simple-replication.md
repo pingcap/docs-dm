@@ -160,7 +160,6 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/']
 name: "one-tidb-slave"
 task-mode: all
 meta-schema: "dm_meta"
-remove-meta: false
 
 target-database:
   host: "192.168.0.1"

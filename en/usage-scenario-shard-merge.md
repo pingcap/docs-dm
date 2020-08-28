@@ -140,7 +140,6 @@ The complete configuration of the migration task is shown as below. For more det
 name: "shard_merge"
 task-mode: all
 meta-schema: "dm_meta"
-remove-meta: false
 ignore-checking-items: ["auto_increment_ID"]
 
 target-database:
