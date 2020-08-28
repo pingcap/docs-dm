@@ -36,7 +36,7 @@ start-task [ -s "mysql-replica-01"] ./task.yaml
 
 - `-s`: (Optional) Specifies the MySQL source to execute `task.yaml`. If it is set, the command only starts the subtasks of the specified task on the MySQL source.
 - `config-file`: (Required) Specifies the file path of `task.yaml`.
-- `remove-meta`: (Optional) Specifies whether to remove the task's previous meta data when starting the task.
+- `remove-meta`: (Optional) Specifies whether to remove the task's previous metadata when starting the task.
 
 ## Returned results
 
