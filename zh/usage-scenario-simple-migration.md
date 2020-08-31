@@ -1,6 +1,6 @@
 ---
 title: Data Migration 简单使用场景
-aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/']
+aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/','/zh/tidb-data-migration/dev/usage-scenario-simple-replication']
 ---
 
 # Data Migration 简单使用场景
