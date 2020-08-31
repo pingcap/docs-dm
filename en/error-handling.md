@@ -155,7 +155,7 @@ For relay units, manually recover migration using the following solution:
 
 5. Restart the DM-worker.
 
-For binlog migration processing units, manually recover migration using the following solution:
+For binlog replication processing units, manually recover migration using the following solution:
 
 1. Identify in the upstream that the size of the corresponding binlog file has exceeded 4GB when the error occurs.
 

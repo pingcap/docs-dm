@@ -105,7 +105,7 @@ Full import data size in this benchmark case is 3.78 GB, load unit pool size use
 
 ### Incremental replication benchmark case
 
-For details about the test method, see [Incremental Migration Benchmark Case](performance-test.md#incremental-replication-benchmark-case).
+For details about the test method, see [Incremental Replication Benchmark Case](performance-test.md#incremental-replication-benchmark-case).
 
 #### Benchmark result for incremental replication
 
@@ -115,7 +115,7 @@ DM sync unit `worker-count` is 32, and `batch` size is 100 in this benchmark cas
 | :------------------------: | :------------------------------------------------------------: | :----------------------------------------------------------: | :--------------------------: |
 | MySQL                      | 42.79k                                                         | 42.79k                                                       | 1.18ms                       |
 | DM relay log unit          | -                                                              | 11.3MB/s                                                     | 45us (read duration)         |
-| DM binlog migration unit | 22.97k (binlog event received qps, not including skipped events) | -                                                            | 20ms (txn execution latency) |
+| DM binlog replication unit | 22.97k (binlog event received qps, not including skipped events) | -                                                            | 20ms (txn execution latency) |
 | TiDB                       | 31.30k (Begin/Commit 3.93k Insert 22.76k)                      | 4.16k                                                        | 95%: 6.4ms 99%: 9ms          |
 
 #### Benchmark result with different sync unit concurrency
