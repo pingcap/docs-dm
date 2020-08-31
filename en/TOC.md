@@ -27,7 +27,7 @@
   + Deploy a DM Cluster
     - [Use TiUP](deploy-a-dm-cluster-using-tiup.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
-  - [Migrate Data Using DM](replicate-data-using-dm.md)
+  - [Migrate Data Using DM](migrate-data-using-dm.md)
   - [Monitor](monitor-a-dm-cluster.md)
   - [Performance Test](performance-test.md)
 + Maintain
@@ -53,7 +53,7 @@
   - [Handle Errors](error-handling.md)
   - [Handle Performance Issues](handle-performance-issues.md)
 + Tutorials
-  - [Simple Migration Scenario](usage-scenario-simple-replication.md)
+  - [Simple Migration Scenario](usage-scenario-simple-migration.md)
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)

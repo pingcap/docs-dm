@@ -27,7 +27,7 @@ To migrate upstream data to a schema or table with a different name in the downs
 
 For some archiving scenarios, some data may be periodically cleaned up by executing the `TRUNCATE TABLE`/`DROP TABLE` command in the upstream or through other means. To make sure all data are retained in the downstream TiDB, you can disable these data clearing operations by configuring `filter-rules`.
 
-For more information, refer to [Data Migration Simple Usage Scenario](usage-scenario-simple-replication.md).
+For more information, refer to [Data Migration Simple Usage Scenario](usage-scenario-simple-migration.md).
 
 ## Shard Merge scenario
 

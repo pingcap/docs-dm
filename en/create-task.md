@@ -1,9 +1,9 @@
 ---
-title: Create a Data Replication Task
+title: Create a Data Migration Task
 summary: Learn how to create a data migration task in TiDB Data Migration.
 ---
 
-# Create a Data Replication Task
+# Create a Data Migration Task
 
 You can use the `start-task` command to create a data migration task. When the data migration task is started, DM [prechecks privileges and configurations](precheck.md).
 

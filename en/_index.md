@@ -34,7 +34,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 
 - [Usage Scenarios](usage-scenario-shard-merge.md)
 - [Quick Start with DM](quick-start-with-dm.md)
-- [Migrate Data Using DM](replicate-data-using-dm.md)
+- [Migrate Data Using DM](migrate-data-using-dm.md)
 
 </NavColumn>
 
@@ -43,7 +43,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 
 - [Deploy DM Using TiUP](deploy-a-dm-cluster-using-tiup.md)
 - [Deploy DM Using Binary](deploy-a-dm-cluster-using-binary.md)
-- [Use DM to Migrate Data](replicate-data-using-dm.md)
+- [Use DM to Migrate Data](migrate-data-using-dm.md)
 - [Monitor and Alert](monitor-a-dm-cluster.md)
 
 </NavColumn>
@@ -64,7 +64,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 <NavColumn>
 <ColumnTitle>Tutorials</ColumnTitle>
 
-- [Simple Usage Scenario](usage-scenario-simple-replication.md)
+- [Simple Usage Scenario](usage-scenario-simple-migration.md)
 - [Shard Merge Scenario](usage-scenario-shard-merge.md)
 - [Migrate from MySQL (Amazon Aurora)](migrate-from-mysql-aurora.md)
 - [Shard Merge Scenario Best Practices](shard-merge-best-practices.md)
