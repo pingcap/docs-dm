@@ -101,16 +101,16 @@ ID                 Role          Host          Ports      OS/Arch       Status  
 172.19.0.101:9090  prometheus    172.19.0.101  9090       linux/x86_64  Up         /home/tidb/data/prometheus-9090    /home/tidb/deploy/prometheus-9090
 ```
 
-Status 列用 `Up` 或者 `Down` 表示该服务是否正常。对于 master 组件，同时可能会带有 `|L` 表示该 master 是 Leader, 对于 worker 组件，Free 表示当前 worker 没有与上游绑定。
+Status 列用 `Up` 或者 `Down` 表示该服务是否正常。对于 DM-master 组件，同时可能会带有 `|L` 表示该 DM-master 是 Leader, 对于 DM-worker 组件，Free 表示当前 DM-worker 没有与上游绑定。
 
 ## 缩容节点
 
 缩容即下线服务，最终会将指定的节点从集群中移除，并删除遗留的相关数据文件。
 
-缩容操作进行时，内部对 dm-master、dm-worker 组件的操作流程为：
+缩容操作进行时，内部对 DM-master、DM-worker 组件的操作流程为：
 
 1. 停止组件进程
-2. 调用 DM master 删除 member 的 API
+2. 调用 DM-master 删除 member 的 API
 3. 清除节点的相关数据文件
 
 缩容命令的基本用法：
@@ -121,7 +121,7 @@ tiup dm scale-in <cluster-name> -N <node-id>
 
 它需要指定至少两个参数，一个是集群名字，另一个是节点 ID。节点 ID 可以参考上一节使用 `tiup dm display` 命令获取。
 
-比如想缩容 172.16.5.140 上的 worker 节点，可以执行：
+比如想缩容 172.16.5.140 上的 DM-worker 节点（DM-master 的缩容类似），可以执行：
 
 {{< copyable "shell-regular" >}}
 
@@ -133,7 +133,7 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
 
 扩容的内部逻辑与部署类似，TiUP DM 组件会先保证节点的 SSH 连接，在目标节点上创建必要的目录，然后执行部署并且启动服务。
 
-例如，在集群 `prod-cluster` 中扩容一个 worker 节点：
+例如，在集群 `prod-cluster` 中扩容一个 DM-worker 节点（DM-master 的扩容类似）：
 
 1. 新建 scale.yaml 文件，添加新增的 woker 节点信息：
 
@@ -223,7 +223,7 @@ Global Flags:
   -y, --yes                Skip all confirmations and assumes 'yes'
 ```
 
-例如，有一个 dm-master 的 hotfix 包放在 `/tmp/dm-master-hotfix.tar.gz`，如果此时想要替换集群上的所有 master，则可以执行：
+例如，有一个 DM-master 的 hotfix 包放在 `/tmp/dm-master-hotfix.tar.gz`，如果此时想要替换集群上的所有 DM-master，则可以执行：
 
 {{< copyable "shell-regular" >}}
 
@@ -231,7 +231,7 @@ Global Flags:
 tiup dm patch prod-cluster /tmp/dm-master-hotfix.tar.gz -R dm-master
 ```
 
-或者只替换其中一个 master：
+或者只替换其中一个 DM-master：
 
 {{< copyable "shell-regular" >}}
 
@@ -243,7 +243,12 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 
 > **注意：**
 >
-> TiUP 不支持导入 1.0 集群中的 DM Portal 组件。
+> - TiUP 不支持导入 1.0 集群中的 DM Portal 组件。
+> - 导入前请先停止原集群。
+> - 仅支持导入到 v2.0.0-rc.2 或更高版本。
+> - 部分组件生成的部署目录会跟原集群不一样，具体可以使用 `display` 命令查看。
+> - 导入前运行 `tiup update --self && tiup update dm` 确认升级 TiUP DM 组件到最新版本。
+> - 导入后集群中仅会有一个 DM-master 节点，可参考[扩容节点](#扩容节点)对 DM-master 进行扩容。
 
 在 TiUP 之前，一般使用 DM Ansible 部署 DM 集群，`import` 命令用于根据 Ansible 部署的 1.0 集群生成 TiUP 对应的 `topology.yaml`, 并根据拓扑部署 2.0 的集群。
 
@@ -252,13 +257,15 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dm import --dir=/path/to/tidb-ansible
+tiup dm import --dir=/path/to/dm-ansible --cluster-version v2.0.0-rc.2
 ```
+
+可以通过执行 `tiup list dm-master` 来查看 TiUP 支持的最新集群版本。
 
 `import` 命令的工作流程如下：
 
-- 根据 ansible 部署的集群生成一个 TiUP 部署使用的拓扑文件 [topology.yml](https://github.com/pingcap/tiup/blob/master/examples/topology.dm.example.yaml)。
-- 确认部署后使用生成的拓扑文件部署 2.0 以上版本的集群。
+- 根据 DM-Ansible 部署的集群生成一个拓扑文件 [topology.yml](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml) 用于 TiUP 部署。
+- 确认该生成的部署拓扑文件无误后，使用该文件部署 2.0 以上版本的集群。
 
 部署成功后可以使用 `tiup dm start` 命令启动集群后进入 DM 内核升级流程。
 

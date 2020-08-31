@@ -24,7 +24,7 @@ DM (Data Migration) 使用 sharding DDL lock 来确保分库分表的 DDL 操作
 {{< copyable "shell-regular" >}}
 
 ```bash
-show-ddl-locks [--source=mysql-replica-01] [task-name]
+show-ddl-locks [--source=mysql-replica-01] [task-name | task-file]
 ```
 
 #### 参数解释
@@ -33,7 +33,7 @@ show-ddl-locks [--source=mysql-replica-01] [task-name]
     - flag 参数，string，`--source`，可选
     - 不指定时，查询所有 MySQL source 相关的 lock 信息；指定时，仅查询与该 MySQL source 相关的 lock 信息，可重复多次指定
 
-+ `task-name`：
++ `task-name | task-file`：
     - 非 flag 参数，string，可选
     - 不指定时，查询与所有任务相关的 lock 信息；指定时，仅查询特定任务相关的 lock 信息
 

@@ -23,7 +23,7 @@ This command queries the current DDL lock information on `DM-master`.
 #### Command usage
 
 ```bash
-show-ddl-locks [--source=mysql-replica-01] [task-name]
+show-ddl-locks [--source=mysql-replica-01] [task-name | task-file]
 ```
 
 #### Arguments description
@@ -34,7 +34,7 @@ show-ddl-locks [--source=mysql-replica-01] [task-name]
     - It can be specified repeatedly multiple times.
     - If it is not specified, this command queries the lock information related to all MySQL sources; if it is specified, this command queries the lock information related only to the specified MySQL source.
 
-+ `task-name`:
++ `task-name | task-file`:
 
     - Non-flag; string; optional
     - If it is not specified, this command queries the lock information related to all tasks; if it is specified, this command queries the lock information related only to the specified task.
