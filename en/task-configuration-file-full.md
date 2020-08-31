@@ -14,6 +14,10 @@ For the feature and configuration of each configuration item, see [Data replicat
 
 For description of important concepts including `source-id` and the DM-worker ID, see [Important concepts](config-overview.md#important-concepts).
 
+## Disable checking items
+
+DM checks items according to the task type, see [Disable checking items](precheck.md#disable-checking-items). You can use `ignore-checking-items` in the task configuration file to disable checking items.
+
 ## Task configuration file template (advanced)
 
 The following is the task configuration file template which allows you to perform **advanced** data replication tasks.
@@ -31,6 +35,7 @@ remove-meta: false              # Whether to remove the `meta` information (`che
 enable-heartbeat: false         # Whether to enable the heartbeat feature.
 online-ddl-scheme: "gh-ost"     # Only "gh-ost" and "pt" are currently supported.
 case-sensitive: false           # Whether schema/table is case-sensitive.
+ignore-checking-items: []       # No element, which means not to disable any checking items.
 clean-dump-file: true           # Whether to clean up the files generated during data dump. Note that these include `metadata` files. New in v1.0.7.
 
 target-database:                # Configuration of the downstream database instance.
