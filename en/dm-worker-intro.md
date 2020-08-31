@@ -33,7 +33,7 @@ Dumper dumps the full data from the upstream MySQL/MariaDB to the local disk.
 
 Loader reads the files of Dumper and then loads these files to the downstream TiDB.
 
-### Binlog migration/Syncer
+### Binlog replication
 
 Binlog replication/Syncer reads the binlog events of the upstream MySQL/MariaDB or the binlog events of the relay log, transforms these events to SQL statements, and then applies these statements to the downstream TiDB.
 

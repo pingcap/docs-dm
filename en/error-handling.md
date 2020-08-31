@@ -137,7 +137,7 @@ The current version of DM automatically retries on error. If you use the previou
 
 During the DM process of relay log pulling or incremental replication, this two errors might occur if the size of the upstream binlog file exceeds **4 GB**.
 
-**Cause:** When writing relay logs, DM needs to perform event verification based on binlog positions and the size of the binlog file, and store the migrated binlog positions as checkpoints. However, the official MySQL uses `uint32` to store binlog positions. This means the binlog position for a binlog file over 4 GB overflows, and then the errors above occur.
+**Cause:** When writing relay logs, DM needs to perform event verification based on binlog positions and the size of the binlog file, and store the replicated binlog positions as checkpoints. However, the official MySQL uses `uint32` to store binlog positions. This means the binlog position for a binlog file over 4 GB overflows, and then the errors above occur.
 
 #### Solutions
 

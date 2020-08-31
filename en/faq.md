@@ -66,7 +66,7 @@ You can avoid this error by the following steps:
 
 3. Execute the upstream DDL in the downstream TiDB manually.
 
-4. After the Pos is migrated to the position after the gh-ost process, re-enable the `online-ddl-scheme` and comment out `block-allow-list.ignore-tables`.
+4. After the Pos is replicated to the position after the gh-ost process, re-enable the `online-ddl-scheme` and comment out `block-allow-list.ignore-tables`.
 
 ## How to add tables to the existing data migration tasks?
 
