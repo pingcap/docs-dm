@@ -243,7 +243,10 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 
 > **注意：**
 >
-> TiUP 不支持导入 1.0 集群中的 DM Portal 组件。
+> - TiUP 不支持导入 1.0 集群中的 DM Portal 组件。
+> - 导入前请先停止原集群。
+> - 部分组件生成的部署目录会跟原集群不一样，具体可以使用 `display` 命令查看。
+> - 导入前运行 `tiup update --self && tiup update dm` 确认升级 TiUP DM 组件到最新版本。
 
 在 TiUP 之前，一般使用 DM Ansible 部署 DM 集群，`import` 命令用于根据 Ansible 部署的 1.0 集群生成 TiUP 对应的 `topology.yaml`, 并根据拓扑部署 2.0 的集群。
 
@@ -252,8 +255,10 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dm import --dir=/path/to/tidb-ansible
+tiup dm import --dir=/path/to/tidb-ansible --cluster-version v2.0.0-rc
 ```
+
+可以通过执行 `tiup list dm-master` 来查看 TiUP 支持的最新集群版本。
 
 `import` 命令的工作流程如下：
 
