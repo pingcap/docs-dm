@@ -138,7 +138,7 @@ pt-osc 在实现 online-schema-change 的过程会产生 2 种 table：
 
 - `new`：用于应用 DDL，待表中数据同步到与 origin table 一致后，再通过 rename 的方式替换 origin table。
 - `old`：对 origin table 执行 rename 操作后生成。
-- 3 种 **trigger**：`pt_osc\_\*\_ins`、`pt_osc\_\*\_upd`、`pt_osc\_\*\_del`，用于在 pt_osc 过程中，迁移 origin table 新产生的数据到 `new`。
+- 3 种 **trigger**：`pt_osc\_\*\_ins`、`pt_osc\_\*\_upd`、`pt_osc\_\*\_del`，用于在 pt_osc 过程中，同步 origin table 新产生的数据到 `new`。
 
 DM 在迁移过程中会把上述 table 分成 3 类：
 
