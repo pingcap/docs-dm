@@ -63,6 +63,12 @@ MySQL/MariaDB 的全局事务 ID，当启用该功能后会在 Binlog 文件中�
 
 DM-worker 内部用于将全量导出数据导入到下游的处理单元，每个 Subtask 对应一个 Load 处理单元。在当前文档中，有时也称作 Import 处理单元。
 
+## M
+
+### Migration
+
+在明确提到是“全量”、没有明确提到是"全量还是增量"、明确提到是"全量+增量"的情况下，使用 migrate/migration 表示迁移。
+
 ## R
 
 ### Relay log
@@ -74,6 +80,10 @@ DM-worker 从上游 MySQL/MariaDB 拉取 Binlog 后存储在本地的文件，�
 ### Relay 处理单元
 
 DM-worker 内部用于从上游拉取 Binlog 并写入数据到 Relay log 的处理单元，每个 DM-worker 实例内部仅存在一个该处理单元。
+
+### Replication
+
+明确提到是“增量”的情况下，使用 replicate/replication 表示增量复制，而不用同步或迁移。
 
 ## S
 
