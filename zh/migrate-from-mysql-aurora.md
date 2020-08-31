@@ -234,7 +234,7 @@ mydumpers:
 
 > **注意：**
 >
-> 目前通过 TiUP 使用 `dmctl` 的方式，需要使用 `task.yaml` 绝对路径。TiUP 将会在后续更新中正确支持相对路径。
+> 目前通过 TiUP 使用 `dmctl` 时，需要使用 `task.yaml` 绝对路径。TiUP 将会在后续更新中正确支持相对路径。
 
 {{< copyable "shell-regular" >}}
 
@@ -271,7 +271,7 @@ tiup dmctl --master-addr 127.0.0.1:8261 start-task /absolute/path/to/task.yaml -
 line 1 column 287 near \"INVOKE LAMBDA ON *.* TO...
 ```
 
-说明 `INVOKE LAMBDA` 权限导致报错。如果该权限是 Aurora 特有的，请在配置文件中添加如下内容跳过检查。DM 会在版本更新中增强对 Aurora 权限的自动处理。
+以上返回信息说明 `INVOKE LAMBDA` 权限导致报错。如果该权限是 Aurora 特有的，请在配置文件中添加如下内容跳过检查。DM 会在版本更新中增强对 Aurora 权限的自动处理。
 
 ```
 ignore-checking-items: ["replication_privilege","dump_privilege"]
