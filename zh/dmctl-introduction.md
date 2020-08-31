@@ -91,9 +91,9 @@ Available Commands:
   operate-schema        operate-schema <operate-type> <-s source ...> <task-name | task-file> <-d database> <-t table> [schema-file]
   operate-source        operate-source <operate-type> [config-file ...] [--print-sample-config]
   pause-task            pause-task [-s source ...] <task-name | task-file>
-  query-status          query-status [-s source ...] [task-name] [--more]
+  query-status          query-status [-s source ...] [task-name | task-file] [--more]
   resume-task           resume-task [-s source ...] <task-name | task-file>
-  show-ddl-locks        show-ddl-locks [-s source ...] [task-name]
+  show-ddl-locks        show-ddl-locks [-s source ...] [task-name | task-file]
   start-task            start-task [-s source ...] [--remove-meta] <config-file>
   stop-task             stop-task [-s source ...] <task-name | task-file>
   unlock-ddl-lock       unlock-ddl-lock [-s source ...] <lock-ID>
