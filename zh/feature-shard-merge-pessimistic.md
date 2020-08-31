@@ -26,7 +26,7 @@ DM 在悲观模式下进行分表 DDL 的迁移有以下几点使用限制：
 
 - sharding group 数据迁移任务不支持 `DROP DATABASE/TABLE` 语句。
 
-    - DM-worker 中的 binlog 迁移单元（sync）会自动忽略掉上游分表的 `DROP DATABASE` 和 `DROP TABLE` 语句。
+    - DM-worker 中的 binlog 复制单元（sync）会自动忽略掉上游分表的 `DROP DATABASE` 和 `DROP TABLE` 语句。
 
 - sharding group 数据迁移任务支持 `RENAME TABLE` 语句，但有如下限制（online DDL 中的 `RENAME` 有特殊方案进行支持）：
 
