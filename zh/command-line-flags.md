@@ -20,7 +20,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/command-line-flags/']
 
 - DM-master 节点间通信的外部连接地址
 - 默认值为 `"{peer-urls}"`
-- 可选参数，可以为 `"域名:port"` 的形式
+- 可选参数，可以为 `"http(s)://域名:port"` 的形式
 
 ### `--config`
 
