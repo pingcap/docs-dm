@@ -86,13 +86,11 @@ For more details, refer to the comments about `mysql-instances` in the [template
 
 ## Modify the task configuration
 
-In some cases, you might need to update the task configuration. For example, if you set `remove-meta` to `true` and `task-mode` to `all` when resetting the data replication task, you need to set `remove-meta` to `false` after the task is reset. This can prevent the task from being replicated the next time the task is started.
-
 It is recommended to update the modified configuration to the DM cluster by executing the `stop-task` and `start-task` commands, since the DM cluster persists the task configuration. If the task configuration file is modified directly, without restarting the task, the configuration changes does not take effect. In this case, the DM cluster still reads the previous task configuration when the DM cluster is restarted.
 
-To illustrate how to modify the task configuration, the following is an example of modifying `remove-meta`:
+To illustrate how to modify the task configuration, the following is an example of modifying `timezone`:
 
-1. Modify the task configuration file and set `remove-meta` to `false`.
+1. Modify the task configuration file and set `timezone` to `Asia/Shanghai`.
 
 2. Stop the task by executing the `stop-task` command:
 
