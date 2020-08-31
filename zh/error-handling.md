@@ -1,7 +1,7 @@
 ---
 title: 故障及处理方法
 summary: 了解 DM 的错误系统及常见故障的处理方法。
-aliases: ['/docs-cn/tidb-data-migration/stable/error-handling/','/docs-cn/tidb-data-migration/v1.0/error-handling/','/docs-cn/tidb-data-migration/stable/troubleshoot-dm/','/docs-cn/tidb-data-migration/stable/error-system/','/docs-cn/tidb-data-migration/v1.0/troubleshoot-dm/', '/docs-cn/tidb-data-migration/v1.0/error-system/', '/docs-cn/dev/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v3.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v3.0/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v2.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/stable/reference/tools/data-migration/troubleshoot/error-handling/']
+aliases: ['/docs-cn/tidb-data-migration/stable/error-handling/','/docs-cn/tidb-data-migration/v1.0/error-handling/','/docs-cn/tidb-data-migration/stable/troubleshoot-dm/','/docs-cn/tidb-data-migration/stable/error-system/','/docs-cn/tidb-data-migration/v1.0/troubleshoot-dm/', '/docs-cn/tidb-data-migration/v1.0/error-system/', '/docs-cn/dev/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v3.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v3.0/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v2.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/stable/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v3.0/how-to/troubleshoot/data-migration/']
 ---
 
 # 故障及处理方法
