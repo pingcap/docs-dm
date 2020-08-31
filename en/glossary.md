@@ -26,7 +26,7 @@ Binlog events are information about data modification made to a MySQL or MariaDB
 
 The binlog position is the offset information of a binlog event in a binlog file. Refer to [MySQL `SHOW BINLOG EVENTS`](https://dev.mysql.com/doc/refman/8.0/en/show-binlog-events.html) and [MariaDB `SHOW BINLOG EVENTS`](https://mariadb.com/kb/en/library/show-binlog-events/) for details.
 
-### Binlog migration processing unit
+### Binlog replication processing unit
 
 Binlog migration processing unit is the processing unit used in DM-worker to read upstream binlogs or local relay logs, and to migrate these logs to the downstream. Each subtask corresponds to a binlog migration processing unit. In the current documentation, the binlog migration processing unit is also referred to as the sync processing unit.
 
@@ -63,6 +63,12 @@ The GTID is the global transaction ID of MySQL or MariaDB. With this feature ena
 
 The load processing unit is the processing unit used in DM-worker to import the fully exported data to the downstream. Each subtask corresponds to a load processing unit. In the current documentation, the load processing unit is also referred to as the import processing unit.
 
+## M
+
+### Migrate/migration
+
+In the case of clearly mentioning "full", not explicitly mentioning "full or incremental", and clearly mentioning "full + incremental", use migrate/migration instead of replicate/replication.
+
 ## R
 
 ### Relay log
@@ -74,6 +80,10 @@ For more details such as the relay log's directory structure, initial migration 
 ### Relay processing unit
 
 The relay processing unit is the processing unit used in DM-worker to pull binlog files from the upstream and write data into relay logs. Each DM-worker instance has only one relay processing unit.
+
+### Replicate/replication
+
+In the case of clearly mentioning "incremental", use replicate/replication instead of migrate/migration.
 
 ## S
 
