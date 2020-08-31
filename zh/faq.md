@@ -1,6 +1,6 @@
 ---
 title: Data Migration 常见问题
-aliases: ['/docs-cn/tidb-data-migration/stable/faq/','/docs-cn/tidb-data-migration/v1.0/faq/','/docs-cn/dev/faq/data-migration/','/docs-cn/dev/reference/tools/data-migration/faq/','/docs-cn/v3.1/reference/tools/data-migration/faq/','/docs-cn/v3.0/reference/tools/data-migration/faq/','/docs-cn/v2.1/reference/tools/data-migration/faq/']
+aliases: ['/docs-cn/tidb-data-migration/stable/faq/','/docs-cn/tidb-data-migration/v1.0/faq/','/docs-cn/dev/faq/data-migration/','/docs-cn/dev/reference/tools/data-migration/faq/','/docs-cn/v3.1/reference/tools/data-migration/faq/','/docs-cn/v3.0/reference/tools/data-migration/faq/','/docs-cn/v2.1/reference/tools/data-migration/faq/','/docs-cn/v2.1/faq/data-migration/']
 ---
 
 # Data Migration 常见问题
