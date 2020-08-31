@@ -28,7 +28,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/scenarios/']
 
 对于一些归档类场景，可能在上游会定期通过 `TRUNCATE TABLE`/`DROP TABLE` 或其他方式清理部分数据，但又期望下游 TiDB 中保留全部的数据，则可额外配置 `filter-rules` 过滤掉相关数据清理操作。
 
-对于此类场景，可参考 [Data Migration 简单使用场景](usage-scenario-simple-replication.md)。
+对于此类场景，可参考 [Data Migration 简单使用场景](usage-scenario-simple-migration.md)。
 
 ## 合库合表场景
 

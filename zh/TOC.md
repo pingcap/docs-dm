@@ -25,7 +25,7 @@
   + 部署 DM 集群
     - [使用 TiUP](deploy-a-dm-cluster-using-tiup.md)
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
-  + [使用 DM 迁移数据](replicate-data-using-dm.md)
+  + [使用 DM 迁移数据](migrate-data-using-dm.md)
   + [监控与告警设置](monitor-a-dm-cluster.md)
   + [性能测试](performance-test.md)
 + 运维操作
@@ -51,7 +51,7 @@
   - [故障及处理方法](error-handling.md)
   - [性能问题及处理方法](handle-performance-issues.md)
 + 教程
-  - [简单的从库迁移场景](usage-scenario-simple-replication.md)
+  - [简单的从库迁移场景](usage-scenario-simple-migration.md)
   - [分库分表合并场景](usage-scenario-shard-merge.md)
   - [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
   - [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
