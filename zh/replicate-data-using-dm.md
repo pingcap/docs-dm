@@ -40,6 +40,9 @@ aliases: ['/docs-cn/tidb-data-migration/stable/replicate-data-using-dm/','/docs-
 
     ```toml
     # Master 配置
+    
+    # DM-worker 是否使用全局事务标识符 (GTID) 拉取 binlog。使用前提是在上游 MySQL 已开启 GTID 模式。
+    enable-gtid = false
 
     [[deploy]]
     source-id = "mysql-replica-01"
