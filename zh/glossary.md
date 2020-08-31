@@ -67,7 +67,7 @@ DM-worker 内部用于将全量导出数据导入到下游的处理单元，每�
 
 ### Migrate/migration
 
-在明确提到是“全量”、没有明确提到是"全量还是增量"、明确提到是"全量+增量"的情况下，使用 migrate/migration 表示同步或迁移。
+在明确提到是“全量”、没有明确提到是"全量还是增量"、明确提到是"全量+增量"的情况下，使用 migrate/migration 表示迁移。
 
 ## R
 
@@ -83,7 +83,7 @@ DM-worker 内部用于从上游拉取 Binlog 并写入数据到 Relay log 的处
 
 ### Replicate/replication
 
-明确提到是“增量”的情况下，使用 replicate/replication 表示增量复制，而不用同步或迁移。
+明确提到是“增量”的情况下，使用 replicate/replication 表示增量复制。
 
 ## S
 
