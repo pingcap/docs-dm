@@ -92,7 +92,7 @@ DM 在迁移过程中会把上述 table 分成 3 类：
     REPLACE INTO dm_meta.{task_name}_onlineddl (id, ghost_schema , ghost_table , ddls) VALUES (......);
     ```
 
-4. 往 `_ghc` 表写入数据，以及往 `_gho` 表迁移 origin table 的数据：
+4. 往 `_ghc` 表写入数据，以及往 `_gho` 表同步 origin table 的数据：
 
     ```sql
     Insert /* gh-ost */ into `test`.`_test4_ghc` values (......);
