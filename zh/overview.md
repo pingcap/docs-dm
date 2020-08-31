@@ -61,7 +61,7 @@ dmctl 是用来控制 DM 集群的命令行工具。
 
 当部署的 DM-worker 节点数超过上游 MySQL/MariaDB 节点数时，超出上游节点数的相关 DM-worker 节点默认将处于空闲状态。若某个 DM-worker 节点下线或与 DM-master leader 发生网络隔离，DM-master 能自动将与原 DM-worker 节点相关的数据迁移任务调度到其他空闲的 DM-worker 节点上（若原 DM-worker 节点为网络隔离状态，则其会自动停止相关的数据迁移任务）；若无空闲的 DM-worker 节点可供调度，则原 DM-worker 相关的数据迁移任务将无法进行。
 
-## 同步功能介绍
+## 迁移功能介绍
 
 下面简单介绍 DM 数据迁移功能的核心特性。
 
