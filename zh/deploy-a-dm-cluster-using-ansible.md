@@ -373,6 +373,11 @@ cd /home/tidb/dm-ansible/resources/bin &&
 MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
 
+> **注意：**
+>
+> + 如果数据库没有设置密码，则可以跳过该步骤。
+> + DM v1.0.6 及其以后版本可以配置明文数据库密码。
+
 ## 第 8 步：编辑 `inventory.ini` 文件中的变量
 
 此步介绍如何编辑部署目录中的变量，如何配置 relay log 同步位置以及 relay log GTID 的同步模式。此外，还会描述 `inventory.ini` 中的全局变量。
