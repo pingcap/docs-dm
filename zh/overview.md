@@ -103,7 +103,7 @@ DM 支持对原分库分表进行合库合表操作，但需要满足一些使�
 
 + 操作限制
 
-    - 在一些情况下，DM-worker 重启后不能自动恢复 DDL lock 迁移，需要手动处理。详见[手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)。
+    - 在一些情况下，DM-worker 重启后不能自动恢复 DDL lock 同步，需要手动处理。详见[手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)。
 
 + DM-worker 切换 MySQL
 
