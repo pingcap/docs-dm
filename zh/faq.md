@@ -58,7 +58,7 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 
 3. 手工在下游的 TiDB 执行上游的 DDL。
 
-4. 待 Pos 迁移到 gh-ost 整体流程后的位置，再重新启用 `online-ddl-schema` 以及注释掉 `block-allow-list.ignore-tables`。
+4. 待 Pos 复制到 gh-ost 整体流程后的位置，再重新启用 `online-ddl-schema` 以及注释掉 `block-allow-list.ignore-tables`。
 
 ## 如何为已有迁移任务增加需要迁移的表？
 
