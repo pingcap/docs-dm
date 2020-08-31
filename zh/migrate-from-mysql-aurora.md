@@ -57,19 +57,21 @@ Aurora 集群数据与迁移计划如下：
 
 ### DM 部署节点
 
-DM 作为数据迁移的核心，需要正常连接上游 Aurora 集群与下游 TiDB 集群，因此通过 MySQL client 等方式检查部署 DM 的节点是否能连通上下游。除此以外，关于 DM 对软硬件的要求，参见 [DM 集群软硬件环境需求](hardware-and-software-requirements.md)。
+DM 作为数据迁移的核心，需要正常连接上游 Aurora 集群与下游 TiDB 集群，因此通过 MySQL client 等方式检查部署 DM 的节点是否能连通上下游。除此以外，关于 DM 节点数目、软硬件等要求，参见 [DM 集群软硬件环境需求](hardware-and-software-requirements.md)。
 
 ### Aurora
 
 DM 在增量复制阶段依赖 `ROW` 格式的 binlog，参见[为 Aurora 实例启用 binlog](https://aws.amazon.com/cn/premiumsupport/knowledge-center/enable-binary-logging-aurora/) 进行配置。
 
-如果需要基于 GTID 进行数据迁移，需要将 `gtid-mode` 与 `enforce_gtid_consistency` 均设置为 `ON`，参见[为 Aurora 集群启用 GTID 支持](https://docs.aws.amazon.com/zh_cn/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora)。
+如果 Aurora 已开启了 GTID，则可以基于 GTID 进行数据迁移。GTID 的启用方式参见[为 Aurora 集群启用 GTID 支持](https://docs.aws.amazon.com/zh_cn/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora)。基于 GTID 进行数据迁移，需要将第 3 步数据源配置文件中的 `enable-gtid` 设置为 `true`。
 
 > **注意：**
 >
-> 基于 GTID 的数据迁移需要 MySQL 5.7 (Aurora 2.04) 或更高版本。
+> 基于 GTID 进行数据迁移需要 MySQL 5.7 (Aurora 2.04) 或更高版本。
 
-除上述 Aurora 特有配置以外，上游数据库需满足迁移 MySQL 的其他要求，参见[上游 MySQL 实例检查内容](precheck.md#检查内容)。
+> **注意：**
+>
+> 除上述 Aurora 特有配置以外，上游数据库需满足迁移 MySQL 的其他要求，例如表结构、字符集、权限等，参见[上游 MySQL 实例检查内容](precheck.md#检查内容)。
 
 ## 第 2 步：部署 DM 集群
 
@@ -133,6 +135,7 @@ tiup dmctl --master-addr 127.0.0.1:8261 list-member
 # Aurora-1
 source-id: "aurora-replica-01"
 
+# 基于 GTID 进行数据迁移时，需要将该项设置为 true
 enable-gtid: false
 
 from:
@@ -229,10 +232,14 @@ mydumpers:
 
 通过 TiUP 使用 `dmctl` 启动任务。
 
+> **注意：**
+>
+> 目前通过 TiUP 使用 `dmctl` 时，需要使用 `task.yaml` 绝对路径。TiUP 将会在后续更新中正确支持相对路径。
+
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml --remove-meta
+tiup dmctl --master-addr 127.0.0.1:8261 start-task /absolute/path/to/task.yaml --remove-meta
 ```
 
 启动成功时的返回信息是：
@@ -256,6 +263,18 @@ tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml --remove-meta
         }
     ]
 }
+```
+
+如果返回信息中有 `source db replication privilege checker`、`source db dump privilege checker` 错误，请检查 `errorMsg` 字段是否存在不能识别的权限。例如：
+
+```
+line 1 column 287 near \"INVOKE LAMBDA ON *.* TO...
+```
+
+以上返回信息说明 `INVOKE LAMBDA` 权限导致报错。如果该权限是 Aurora 特有的，请在配置文件中添加如下内容跳过检查。DM 会在版本更新中增强对 Aurora 权限的自动处理。
+
+```
+ignore-checking-items: ["replication_privilege","dump_privilege"]
 ```
 
 ## 第 6 步：查询任务并验证数据
