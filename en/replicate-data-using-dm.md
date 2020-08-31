@@ -47,7 +47,7 @@ After the DM cluster is deployed using TiUP, the configuration information is li
     # MySQL1 Configuration.
 
     source-id: "mysql-replica-01"
-    # This indicates that whether DM-worker uses Global Transaction Identifier (GTID) to pull binlog. The prerequisite for use is that the GTID mode is enabled in the upstream MySQL.
+    # This indicates that whether DM-worker uses Global Transaction Identifier (GTID) to pull binlog. Before you use this configuration item, make sure that the GTID mode is enabled in the upstream MySQL.
     enable-gtid: false
 
     from:
