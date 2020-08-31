@@ -114,7 +114,7 @@ DM 的迁移任务状态取决于其分配到 DM-worker 上的[子任务状态](
                                     "`test`.`t3`"
                                     "`test`.`t1`"
                                 ],
-                                "unsynced": [                                   # `Sync` 处理单元未读到该 sharding DDL 的上游分表。如有上游分表未完成迁移，`blockingDDLs` 为空
+                                "unsynced": [                                   # `Sync` 处理单元未读到该 sharding DDL 的上游分表。如有上游分表未完成同步，`blockingDDLs` 为空
                                 ]
                             }
                         ],

@@ -173,7 +173,7 @@ pt-osc 主要涉及的 SQL 以及 DM 的处理：
     REPLACE INTO dm_meta.{task_name}_onlineddl (id, ghost_schema , ghost_table , ddls) VALUES (......);
     ```
 
-3. 创建用于迁移数据的 3 个 Trigger：
+3. 创建用于同步数据的 3 个 Trigger：
 
     ```sql
     CREATE TRIGGER `pt_osc_test_test4_del` AFTER DELETE ON `test`.`test4` ...... ;
@@ -183,7 +183,7 @@ pt-osc 主要涉及的 SQL 以及 DM 的处理：
 
     DM: 不执行 TiDB 不支持的相关 Trigger 操作。
 
-4. 往 `_new` 表迁移 origin table 的数据：
+4. 往 `_new` 表同步 origin table 的数据：
 
     ```sql
     INSERT LOW_PRIORITY IGNORE INTO `test`.`_test4_new` (`id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2`, `cl1`) SELECT `id`, `date`, `account_id`, `conversion_price`, `ocpc_matched_conversions`, `ad_cost`, `cl2`, `cl1` FROM `test`.`test4` LOCK IN SHARE MODE /*pt-online-schema-change 3227 copy table*/
@@ -191,7 +191,7 @@ pt-osc 主要涉及的 SQL 以及 DM 的处理：
 
     DM: 只要不是 **realTable** 的 DML 全部不执行。
 
-5. 数据迁移完成后 origin table 与 `_new` 一起改名，完成 online DDL 操作：
+5. 数据同步完成后 origin table 与 `_new` 一起改名，完成 online DDL 操作：
 
     ```sql
     RENAME TABLE `test`.`test4` TO `test`.`_test4_old`, `test`.`_test4_new` TO `test`.`test4`
