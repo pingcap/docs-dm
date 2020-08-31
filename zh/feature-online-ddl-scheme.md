@@ -105,7 +105,7 @@ DM 在迁移过程中会把上述 table 分成 3 类：
 
     DM：只要不是 **realtable** 的 DML 全部不执行。
 
-5. 数据迁移完成后 origin table 与 `_gho` 一起改名，完成 online DDL 操作：
+5. 数据同步完成后 origin table 与 `_gho` 一起改名，完成 online DDL 操作：
 
     ```sql
     Rename /* gh-ost */ table `test`.`test4` to `test`.`_test4_del`, `test`.`_test4_gho` to `test`.`test4`;
