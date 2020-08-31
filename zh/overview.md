@@ -9,7 +9,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/overview/','/docs-cn/tools/dm/overvi
 
 DM 2.0 相比于 1.0，主要有以下改进：
 
-- 数据迁移任务的高可用，部分 DM-master、DM-worker 节点异常后仍能保证数据迁移任务的正常运行。
+- [数据迁移任务的高可用](#高可用)，部分 DM-master、DM-worker 节点异常后仍能保证数据迁移任务的正常运行。
 - [乐观协调模式下的 sharding DDL](feature-shard-merge-optimistic.md) 可以在部分场景下减少 sharding DDL 同步过程中的延迟、支持上游数据库灰度变更等场景。
 - 更好的易用性，包括新的[错误处理机制](handle-failed-sql-statements.md)及更清晰易读的错误信息与错误处理建议。
 - 与上下游数据库及 DM 各组件间连接的 [TLS 支持](enable-tls.md)。
@@ -54,6 +54,12 @@ dmctl 是用来控制 DM 集群的命令行工具。
 - 查看数据同步任务状态
 - 处理数据同步任务错误
 - 校验数据同步任务配置的正确性
+
+### 高可用
+
+当部署多个 DM-master 节点时，所有 DM-master 节点将使用内部嵌入的 etcd 组成集群。该 DM-master 集群用于存储集群节点信息、任务配置等元数据，同时通过 etcd 选举出 leader 节点。该 leader 节点用于提供集群管理、数据迁移任务管理相关的各类服务。因此，若可用的 DM-master 节点数超过部署节点的半数，即可正常提供服务。
+
+当部署的 DM-worker 节点数超过上游 MySQL/MariaDB 节点数时，超出上游节点数的相关 DM-worker 节点默认将处于空闲状态。若某个 DM-worker 节点下线或与 DM-master leader 发生网络隔离，DM-master 能自动将与原 DM-worker 节点相关的数据迁移任务调度到其他空闲的 DM-worker 节点上（若原 DM-worker 节点为网络隔离状态，则其会自动停止相关的数据迁移任务）；若无空闲的 DM-worker 节点可供调度，则原 DM-worker 相关的数据迁移任务将无法进行。
 
 ## 同步功能介绍
 
@@ -103,7 +109,6 @@ DM 支持对原分库分表进行合库合表操作，但需要满足一些使�
 
 + 操作限制
 
-    - DM-worker 重启后不能自动恢复数据同步任务，需要使用 dmctl 手动执行 `start-task`。详见[创建数据同步任务](create-task.md)。
     - 在一些情况下，DM-worker 重启后不能自动恢复 DDL lock 同步，需要手动处理。详见[手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)。
 
 + DM-worker 切换 MySQL

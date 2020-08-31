@@ -19,7 +19,7 @@ This document introduces DM's command-line flags.
 
 - The external address for communication between DM-master nodes
 - The default value is `"{peer-urls}"`
-- Optional flag. It can be in the form of `"domain-name:port"`
+- Optional flag. It can be in the form of `"http(s)://domain-name:port"`
 
 ### `--config`
 
