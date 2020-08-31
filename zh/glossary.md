@@ -51,6 +51,12 @@ TiDB DM 在全量导入与增量复制过程中的断点信息，用于在重新
 
 DM-worker 内部用于从上游导出全量数据的处理单元，每个 Subtask 对应一个 Dump 处理单元。
 
+## F
+
+### 复制
+
+在明确提到是“增量”的情况下，数据按指定的策略进行增量复制。
+
 ## G
 
 ### GTID
@@ -63,11 +69,11 @@ MySQL/MariaDB 的全局事务 ID，当启用该功能后会在 Binlog 文件中�
 
 DM-worker 内部用于将全量导出数据导入到下游的处理单元，每个 Subtask 对应一个 Load 处理单元。在当前文档中，有时也称作 Import 处理单元。
 
-## M
+## Q
 
-### Migrate/migration
+### 迁移
 
-在明确提到是“全量”、没有明确提到是"全量还是增量"、明确提到是"全量+增量"的情况下，使用 migrate/migration 表示迁移。
+在明确提到是“全量”、没有明确提到是"全量还是增量"、明确提到是"全量+增量"的情况下，数据按指定的策略进行迁移。
 
 ## R
 
@@ -80,10 +86,6 @@ DM-worker 从上游 MySQL/MariaDB 拉取 Binlog 后存储在本地的文件，�
 ### Relay 处理单元
 
 DM-worker 内部用于从上游拉取 Binlog 并写入数据到 Relay log 的处理单元，每个 DM-worker 实例内部仅存在一个该处理单元。
-
-### Replicate/replication
-
-明确提到是“增量”的情况下，使用 replicate/replication 表示增量复制。
 
 ## S
 
