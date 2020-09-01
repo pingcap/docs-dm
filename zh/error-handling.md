@@ -42,6 +42,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/troubleshoot-dm/','/docs-cn/tidb-
     | `dm-tracer`      | DM-tracer 服务内部出现错误   | `[code=42004:class=dm-tracer:scope=internal:level=medium] trace event test.1 not found` |
     | `schema-tracker` | 增量复制时记录 schema 变更出现错误   | `ErrSchemaTrackerCannotExecDDL,[code=44006:class=schema-tracker:scope=internal:level=high],"cannot track DDL: ALTER TABLE test DROP COLUMN col1"` |
     | `scheduler`      | 数据迁移任务调度相关操作出错操作   | `ErrSchedulerNotStarted,[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
+    | `dmctl`          | dmctl 内部或与其他组件交互出现错误   | `[code=48001:class=dmctl:scope=internal:level=high],"can not create grpc connection"` |
 
 - `scope`：错误作用域。
 

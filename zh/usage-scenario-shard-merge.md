@@ -121,7 +121,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/shard-mer
         action: Ignore
     ```
 
-- 要满足迁移需求 #7，配置 [Block & Allow Table Lists](feature-overview.md#block--allow-table-lists) 如下：
+- 要满足迁移需求 #7，配置 [Block & Allow Lists](feature-overview.md#block--allow-table-lists) 如下：
 
     {{< copyable "" >}}
 

@@ -1,6 +1,6 @@
 ---
 title: DM Portal 简介
-aliases: ['/docs-cn/dev/reference/tools/data-migration/dm-portal/','/docs-cn/v3.1/reference/tools/data-migration/dm-portal/','/docs-cn/v3.0/reference/tools/data-migration/dm-portal/','/docs-cn/v2.1/reference/tools/data-migration/dm-portal/']
+aliases: ['/docs-cn/stable/reference/tools/data-migration/dm-portal/','/docs-cn/v3.1/reference/tools/data-migration/dm-portal/','/docs-cn/v3.0/reference/tools/data-migration/dm-portal/','/docs-cn/v2.1/reference/tools/data-migration/dm-portal/']
 ---
 
 # DM Portal 简介
