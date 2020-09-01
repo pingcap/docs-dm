@@ -51,7 +51,7 @@ dmctl 是用来控制 DM 集群的命令行工具。
 ## 同步功能介绍
 
 下面简单介绍 DM 数据同步功能的核心特性。
-s
+
 ### Table routing
 
 Table routing 是指将上游 MySQL 或 MariaDB 实例的某些表同步到下游指定表的路由功能，可以用于分库分表的合并同步。
