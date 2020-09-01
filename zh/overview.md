@@ -1,6 +1,6 @@
 ---
 title: Data Migration 简介
-aliases: ['/docs-cn/dev/reference/tools/data-migration/overview/','/docs-cn/v3.1/reference/tools/data-migration/overview/','/docs-cn/v3.0/reference/tools/data-migration/overview/','/docs-cn/v2.1/reference/tools/data-migration/overview/','/docs-cn/stable/reference/tools/data-migration/overview/']
+aliases: ['/docs-cn/tidb-data-migration/stable/overview/','/docs-cn/tidb-data-migration/v1.0/overview/','/docs-cn/dev/reference/tools/data-migration/overview/','/docs-cn/v3.1/reference/tools/data-migration/overview/','/docs-cn/v3.0/reference/tools/data-migration/overview/','/docs-cn/v2.1/reference/tools/data-migration/overview/','/docs-cn/stable/reference/tools/data-migration/overview/']
 ---
 
 # Data Migration 简介

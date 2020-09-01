@@ -1,6 +1,6 @@
 ---
 title: 上游 MySQL 实例配置前置检查
-aliases: ['/docs-cn/dev/reference/tools/data-migration/precheck/','/docs-cn/v3.1/reference/tools/data-migration/precheck/','/docs-cn/v3.0/reference/tools/data-migration/precheck/','/docs-cn/v2.1/reference/tools/data-migration/precheck/']
+aliases: ['/docs-cn/tidb-data-migration/stable/precheck/','/docs-cn/tidb-data-migration/v1.0/precheck/','/docs-cn/dev/reference/tools/data-migration/precheck/','/docs-cn/v3.1/reference/tools/data-migration/precheck/','/docs-cn/v3.0/reference/tools/data-migration/precheck/','/docs-cn/v2.1/reference/tools/data-migration/precheck/']
 ---
 
 # 上游 MySQL 实例配置前置检查
@@ -41,6 +41,8 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/precheck/','/docs-cn/v3.1
 
     - TiDB 不支持外键
     - 字符集的兼容性不同，详见 [TiDB 支持的字符集](https://pingcap.com/docs-cn/dev/reference/sql/character-set/)
+
+    DM 还会检查上游表中是否存在主键或唯一键约束，在 v1.0.7 版本引入。
 
 + 上游 MySQL 多实例分库分表的一致性
 

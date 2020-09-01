@@ -1,7 +1,7 @@
 ---
 title: 故障及处理方法
 summary: 了解 DM 的错误系统及常见故障的处理方法。
-aliases: ['/docs-cn/tidb-data-migration/stable/troubleshoot-dm/','/docs-cn/tidb-data-migration/stable/error-system/','/docs-cn/tidb-data-migration/v1.0/troubleshoot-dm/', '/docs-cn/tidb-data-migration/v1.0/error-system/', '/docs-cn/dev/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v3.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v3.0/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v2.1/reference/tools/data-migration/troubleshoot/error-handling/']
+aliases: ['/docs-cn/tidb-data-migration/stable/error-handling/','/docs-cn/tidb-data-migration/v1.0/error-handling/','/docs-cn/tidb-data-migration/stable/troubleshoot-dm/','/docs-cn/tidb-data-migration/stable/error-system/','/docs-cn/tidb-data-migration/v1.0/troubleshoot-dm/', '/docs-cn/tidb-data-migration/v1.0/error-system/', '/docs-cn/dev/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v3.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v3.0/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v2.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/stable/reference/tools/data-migration/troubleshoot/error-handling/','/docs-cn/v3.0/how-to/troubleshoot/data-migration/']
 ---
 
 # 故障及处理方法
@@ -42,6 +42,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/troubleshoot-dm/','/docs-cn/tidb-
     | `dm-tracer`      | DM-tracer 服务内部出现错误   | `[code=42004:class=dm-tracer:scope=internal:level=medium] trace event test.1 not found` |
     | `schema-tracker` | 增量复制时记录 schema 变更出现错误   | `ErrSchemaTrackerCannotExecDDL,[code=44006:class=schema-tracker:scope=internal:level=high],"cannot track DDL: ALTER TABLE test DROP COLUMN col1"` |
     | `scheduler`      | 数据迁移任务调度相关操作出错操作   | `ErrSchedulerNotStarted,[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
+    | `dmctl`          | dmctl 内部或与其他组件交互出现错误   | `[code=48001:class=dmctl:scope=internal:level=high],"can not create grpc connection"` |
 
 - `scope`：错误作用域。
 
@@ -58,6 +59,10 @@ aliases: ['/docs-cn/tidb-data-migration/stable/troubleshoot-dm/','/docs-cn/tidb-
 - `message`：错误描述。
 
     错误的详细描述信息。对于错误调用链上每一层额外增加的错误 message，采用 [errors.Wrap](https://godoc.org/github.com/pkg/errors#hdr-Adding_context_to_an_error) 的模式来叠加和保存错误 message。wrap 最外层的 message 是 DM 内部对该错误的描述，wrap 最内层的 message 是该错误最底层出错位置的错误描述。
+
+- `workaround`: 错误处理方法（可选）。
+
+    对该错误的处理方法。对于部分明确的错误（如：配置信息错误等），DM 会在 `workaround` 中给出相应的人为处理方法。
 
 - 错误堆栈信息（可选）。
 
@@ -144,6 +149,6 @@ aliases: ['/docs-cn/tidb-data-migration/stable/troubleshoot-dm/','/docs-cn/tidb-
 
 ### 执行 `query-status` 或查看日志时出现 `Access denied for user 'root'@'172.31.43.27' (using password: YES)`
 
-在所有 DM 配置文件中，数据库相关的密码都必须使用经 dmctl 加密后的密文（若数据库密码为空，则无需加密）。有关如何使用 dmctl 加密明文密码，参见[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
+在所有 DM 配置文件中，数据库相关的密码都推荐使用经 dmctl 加密后的密文（若数据库密码为空，则无需加密）。有关如何使用 dmctl 加密明文密码，参见[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
 
 此外，在 DM 运行过程中，上下游数据库的用户必须具备相应的读写权限。在启动迁移任务过程中，DM 会自动进行相应权限的前置检查，详见[上游 MySQL 实例配置前置检查](precheck.md)。

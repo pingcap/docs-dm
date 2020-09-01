@@ -1,6 +1,6 @@
 ---
 title: online-ddl-scheme 功能介绍
-aliases: ['/docs-cn/dev/reference/tools/data-migration/features/online-ddl-scheme','/docs-cn/v3.1/reference/tools/data-migration/features/online-ddl-scheme','/docs-cn/v3.0/reference/tools/data-migration/features/online-ddl-scheme','/docs-cn/v2.1/reference/tools/data-migration/features/online-ddl-scheme']
+aliases: ['/docs-cn/tidb-data-migration/stable/feature-online-ddl-scheme/','/docs-cn/tidb-data-migration/v1.0/feature-online-ddl-scheme/','/docs-cn/dev/reference/tools/data-migration/features/online-ddl-scheme','/docs-cn/v3.1/reference/tools/data-migration/features/online-ddl-scheme','/docs-cn/v3.0/reference/tools/data-migration/features/online-ddl-scheme','/docs-cn/v2.1/reference/tools/data-migration/features/online-ddl-scheme']
 ---
 
 # DM online-ddl-scheme

@@ -1,6 +1,6 @@
 ---
-title: 分库分表合并迁移
-aliases: ['/docs-cn/dev/reference/tools/data-migration/features/shard-merge/','/docs-cn/v3.1/reference/tools/data-migration/features/shard-merge/','/docs-cn/v3.0/reference/tools/data-migration/features/shard-merge/','/docs-cn/v2.1/reference/tools/data-migration/features/shard-merge/']
+title: 分库分表合并同步
+aliases: ['/docs-cn/tidb-data-migration/stable/feature-shard-merge/','/docs-cn/tidb-data-migration/v1.0/feature-shard-merge/','/docs-cn/dev/reference/tools/data-migration/features/shard-merge/','/docs-cn/v3.1/reference/tools/data-migration/features/shard-merge/','/docs-cn/v3.0/reference/tools/data-migration/features/shard-merge/','/docs-cn/v2.1/reference/tools/data-migration/features/shard-merge/']
 ---
 
 # 分库分表合并迁移

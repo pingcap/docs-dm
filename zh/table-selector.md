@@ -1,7 +1,7 @@
 ---
 title: Table Selector
 summary: 介绍 DM 的 Table Selector
-aliases: ['/docs-cn/dev/reference/tools/data-migration/table-selector/','/docs-cn/v3.1/reference/tools/data-migration/table-selector/','/docs-cn/v3.0/reference/tools/data-migration/table-selector/','/docs-cn/v2.1/reference/tools/data-migration/table-selector/']
+aliases: ['/docs-cn/tidb-data-migration/stable/table-selector/','/docs-cn/tidb-data-migration/v1.0/table-selector/','/docs-cn/dev/reference/tools/data-migration/table-selector/','/docs-cn/v3.1/reference/tools/data-migration/table-selector/','/docs-cn/v3.0/reference/tools/data-migration/table-selector/','/docs-cn/v2.1/reference/tools/data-migration/table-selector/','/docs-cn/stable/reference/tools/data-migration/table-selector/']
 ---
 
 # Table Selector

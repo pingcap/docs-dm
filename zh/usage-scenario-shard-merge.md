@@ -1,6 +1,6 @@
 ---
 title: DM 分库分表合并场景
-aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/shard-merge','/docs-cn/v3.1/reference/tools/data-migration/usage-scenarios/shard-merge','/docs-cn/v3.0/reference/tools/data-migration/usage-scenarios/shard-merge','/docs-cn/v2.1/reference/tools/data-migration/usage-scenarios/shard-merge']
+aliases: ['/docs-cn/tidb-data-migration/stable/usage-scenario-shard-merge/','/docs-cn/tidb-data-migration/v1.0/usage-scenario-shard-merge/','/docs-cn/dev/reference/tools/data-migration/usage-scenarios/shard-merge','/docs-cn/v3.1/reference/tools/data-migration/usage-scenarios/shard-merge','/docs-cn/v3.0/reference/tools/data-migration/usage-scenarios/shard-merge','/docs-cn/v2.1/reference/tools/data-migration/usage-scenarios/shard-merge','/docs-cn/stable/reference/tools/data-migration/usage-scenarios/shard-merge/']
 ---
 
 # DM 分库分表合并场景
@@ -37,14 +37,14 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/shard-mer
 
 ## 迁移需求
 
-1. 合并三个实例中的 `user`.`information` 表至下游 TiDB 中的 `user`.`information` 表。
-2. 合并三个实例中的 `user`.`log_{north|south|east}` 表至下游TiDB中的 `user`.`log_{north|south|east}` 表。
-3. 合并三个实例中的 `store_{01|02}`.`sale_{01|02}` 表至下游TiDB中的 `store`.`sale` 表。
-4. 过滤掉三个实例的 `user`.`log_{north|south|east}` 表的所有删除操作。
-5. 过滤掉三个实例的 `user`.`information` 表的所有删除操作。
-6. 过滤掉三个实例的 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作。
-7. 过滤掉三个实例的 `user`.`log_bak` 表。
-8. 因为 `store_{01|02}`.`sale_{01|02}` 表带有 bigint 型的自增主键，将其合并至 TiDB 时会引发冲突。你需要有相应的方案来避免冲突。
+1. 同名表合并场景，比如将三个实例中的 `user`.`information` 表合并至下游 TiDB 中的 `user`.`information` 表。
+2. 不同名表合并场景，比如将三个实例中的 `user`.`log_{north|south|east}` 表合并至下游 TiDB 中的 `user`.`log_{north|south|east}` 表。
+3. 分片表合并场景，比如将三个实例中的 `store_{01|02}`.`sale_{01|02}` 表合并至下游 TiDB 中的 `store`.`sale` 表。
+4. 过滤删除操作场景，比如过滤掉三个实例中 `user`.`log_{north|south|east}` 表的所有删除操作。
+5. 过滤删除操作场景，比如过滤掉三个实例中 `user`.`information` 表的所有删除操作。
+6. 过滤删除操作场景，比如过滤掉三个实例中 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作。
+7. 使用通配符过滤特定表的场景，比如使用通配符 `user`.`log_*` 过滤掉三个实例的 `user`.`log_bak` 表。
+8. 主键冲突处理场景，假设 `store_{01|02}`.`sale_{01|02}` 表带有 bigint 型的自增主键，将其合并至 TiDB 时会引发冲突，可以使用相应的方案来避免冲突。
 
 ## 下游实例
 
@@ -121,7 +121,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/usage-scenarios/shard-mer
         action: Ignore
     ```
 
-- 要满足迁移需求 #7，配置 [Block & Allow Table Lists](feature-overview.md#block--allow-table-lists) 如下：
+- 要满足迁移需求 #7，配置 [Block & Allow Lists](feature-overview.md#block--allow-table-lists) 如下：
 
     {{< copyable "" >}}
 

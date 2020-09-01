@@ -28,25 +28,67 @@ When you encounter a DDL statement unsupported by TiDB, you need to manually han
 >
 > Currently, TiDB is not compatible with all the DDL statements that MySQL supports. See [MySQL Compatibility](https://pingcap.com/docs/dev/reference/mysql-compatibility/#ddl).
 
-## How to reset the data replication task?
+## How to reset the data migration task?
 
-You need to reset the entire data replication task in the following cases:
+### Reset the data migration task when the relay log is in the normal state
 
-- `RESET MASTER` is accidentally executed in the upstream database.
-- The relay log or the upstream binlog is corrupted or lost.
+If the relay log required by the data migration task is normal, you can use the following steps to reset the data migration task:
 
-Generally, at this time, the relay unit exits with an error and cannot be automatically restored gracefully. You need to manually restore the data replication and the steps are as follows:
+1. Use `stop-task` to stop abnormal data migration tasks.
 
-1. Use the `stop-task` command to stop all the replication tasks that are currently running.
-2. Use DM-Ansible to [stop the entire DM cluster](deploy-a-dm-cluster-using-ansible.md#step-10-stop-the-dm-cluster).
-3. Manually clean up the relay log directory of the DM-worker corresponding to the MySQL master whose binlog is reset.
+2. Clean up the downstream migrated data. 
+
+3. Choose one of the following methods to restart the data migration task:
+
+    - Modify the task configuration file to specify a new task name, and then use `start-task` to restart the migration task. 
+    - Modify the task configuration file to set `remove-meta` to `true`, and then use `start-task` to restart the migration task.
+
+### Reset the data migration task when the relay log is in the abnormal state
+
+#### The required relay log exists in upstream MySQL
+
+If the relay log required by the migration task is abnormal in the DM-worker, but is normal in the upstream MySQL, you can use the following steps to restore the data migration task:
+
+1. Use the `stop-task` command to stop all the migration tasks that are currently running. 
+
+2. Refer to [restart DM-worker](cluster-operations.md#restart-dm-worker) to **stop** the abnormal DM-worker node.
+
+3. Copy the normal binlog file from the upstream MySQL to replace the corresponding file in the [relay log directory](relay-log.md#directory-structure) of DM-worker.
 
     - If the cluster is deployed using DM-Ansible, the relay log is in the `<deploy_dir>/relay_log` directory.
-    - If the cluster is manually deployed using the binary, the relay log is in the directory set in the `relay-dir` parameter.
+    - If the cluster is manually deployed using the binary, the relay log is in the directory set by the `relay-dir` parameter.
 
-4. Clean up downstream replicated data.
+4. Modify the information of `relay.meta` in the relay log directory of DM-worker to the information corresponding to the next binlog file.
+
+    - If `enable-gtid` is not enabled, set `binlog-name` to the file name of the next binlog file, and set `binlog-pos` to `4`. If you copy `mysq-bin.000100` from the upstream MySQL to the relay directory, and want to continue to pull binlog from `mysql-bin.000101` later, set `binlog-name` to `mysql-bin.000101`. 
+
+    - If `enable-gtid` is enabled, set `binlog-gtid` to the value corresponding to `Previous_gtids` at the beginning of the next binlog file. You can obtain the value by executing [SHOW BINLOG EVENTS](https://dev.mysql.com/doc/refman/5.7/en/show-binlog-events.html).
+
+5. Refer to [restart DM-worker](cluster-operations.md#restart-dm-worker) to **start** the abnormal DM-worker node.
+
+6. Use `start-task` to resume all stopped migration tasks.
+
+#### The required relay log has been purged in upstream MySQL
+
+If the relay log required by the migration task is abnormal in the DM-worker, and has been purged in the upstream MySQL, you can use the following steps to reset the data migration task:
+
+1. Use the `stop-task` command to stop all the migration tasks that are currently running.
+
+2. Use DM-Ansible to [stop the entire DM cluster](deploy-a-dm-cluster-using-ansible.md#step-10-stop-the-dm-cluster).
+
+3. Manually clean up the relay log directory of the DM-worker corresponding to the MySQL cluster whose binlog is reset.
+
+    - If the cluster is deployed using DM-Ansible, the relay log is in the `<deploy_dir>/relay_log` directory.
+    - If the cluster is manually deployed using the binary, the relay log is in the directory set of the `relay-dir` parameter.
+
+4. Clean up downstream migrated data.
+
 5. Use DM-Ansible to [start the entire DM cluster](deploy-a-dm-cluster-using-ansible.md#step-9-deploy-the-dm-cluster).
-6. Restart data replication with the new task name, or set `remove-meta` to `true` and `task-mode` to `all`.
+
+6. Choose one of the following methods to restart the data migration task:
+
+    - Modify the task configuration file to specify a new task name, and then use `start-task` to restart the migration task. 
+    - Modify the task configuration file to set `remove-meta` to `true`, and then use `start-task` to restart the migration task.
 
 ## How to handle the error returned by the DDL operation related to the gh-ost table, after `online-ddl-scheme: "gh-ost"` is set?
 
@@ -74,3 +116,45 @@ You can avoid this error by the following steps:
 3. Execute the upstream DDL in the downstream TiDB manually.
 
 4. After the Pos is replicated to the position after the gh-ost process, re-enable the `online-ddl-scheme` and comment out `block-allow-list.ignore-tables`.
+
+## How to add tables to the existing data migration tasks?
+
+If you need to add tables to a data migration task that is running, you can address it in the following ways according to the stage of the task.
+
+> **Note:**
+>
+> Because adding tables to an existing data migration task is complex, it is recommended that you perform this operation only when necessary.
+
+### In the `Dump` stage
+
+Since MySQL cannot specify a snapshot for export, it does not support updating data migration tasks during the export and then restarting to resume the export through the checkpoint. Therefore, you cannot dynamically add tables that need to be migrated at the `Dump` stage.
+
+If you really need to add tables for migration, it is recommended to restart the task directly using the new configuration file.
+
+### In the `Load` stage
+
+During the export, multiple data migration tasks usually have different binlog positions. If you merge the tasks in the `Load` stage, they might not be able to reach consensus on binlog positions. Therefore, it is not recommended to add tables to a data migration task in the `Load` stage.
+
+### In the `Sync` stage
+
+When the data migration task is in the `Sync` stage, if you add additional tables to the configuration file and restart the task, DM does not re-execute full export and import for the newly added tables. Instead, DM continues incremental replication from the previous checkpoint.
+
+Therefore, if the full data of the newly added table has not been imported to the downstream, you need to use a separate data migration task to export and import the full data to the downstream.
+
+Record the position information in the global checkpoint (`is_global=1`) corresponding to the existing migration task as `checkpoint-T`, such as `(mysql-bin.000100, 1234)`. Record the position information of the full export `metedata` (or the checkpoint of another data migration task in the `Sync` stage) of the table to be added to the migration task as `checkpoint-S`, such as `(mysql-bin.000099, 5678)`. You can add the table to the migration task by the following steps:
+
+1. Use `stop-task` to stop an existing migration task. If the table to be added belongs to another running migration task, stop that task as well.
+
+2. Use a MySQL client to connect the downstream TiDB database and manually update the information in the checkpoint table corresponding to the existing migration task to the smaller value between `checkpoint-T` and `checkpoint-S`. In this example, it is `(mysql- bin.000099, 5678)`.
+
+    - The checkpoint table to be updated is `{task-name}_syncer_checkpoint` in the `{dm_meta}` schema.
+
+    - The checkpoint rows to be updated match `id=(source-id)` and `is_global=1`.
+
+    - The checkpoint columns to be updated are  `binlog_name` and `binlog_pos`.
+
+3. Set `safe-mode: true` for the `syncers` in the task to ensure reentrant execution.
+
+4. Start the task using `start-task`.
+
+5. Observe the task status through `query-status`. When `syncerBinlog` exceeds the larger value of `checkpoint-T` and `checkpoint-S`, restore `safe-mode` to the original value and restart the task. In this example, it is `(mysql-bin.000100, 1234)`.

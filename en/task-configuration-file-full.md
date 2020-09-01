@@ -14,6 +14,10 @@ For the feature and configuration of each configuration item, see [Data replicat
 
 For description of important concepts including `source-id` and the DM-worker ID, see [Important concepts](config-overview.md#important-concepts).
 
+## Disable checking items
+
+DM checks items according to the task type, see [Disable checking items](precheck.md#disable-checking-items). You can use `ignore-checking-items` in the task configuration file to disable checking items.
+
 ## Task configuration file template (advanced)
 
 The following is the task configuration file template which allows you to perform **advanced** data replication tasks.
@@ -31,6 +35,7 @@ remove-meta: false              # Whether to remove the `meta` information (`che
 enable-heartbeat: false         # Whether to enable the heartbeat feature.
 online-ddl-scheme: "gh-ost"     # Only "gh-ost" and "pt" are currently supported.
 case-sensitive: false           # Whether schema/table is case-sensitive.
+ignore-checking-items: []       # No element, which means not to disable any checking items.
 clean-dump-file: true           # Whether to clean up the files generated during data dump. Note that these include `metadata` files. New in v1.0.7.
 
 target-database:                # Configuration of the downstream database instance.
@@ -105,6 +110,7 @@ syncers:
     worker-count: 16                 # The number of threads that replicate binlog events concurrently in Syncer.
     batch: 100                       # The number of SQL statements in a transaction batch that Syncer replicates to the downstream database (100 by default).
     enable-ansi-quotes: true         # Enable this argument if `sql-mode: "ANSI_QUOTES"` is set in the `session`
+    safe-mode: false                 # If set to true, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. This ensures that DML statements can be imported repeatedly during data replication when there is any primary key or unique index in the table schema. TiDB DM automatically enables safe mode within the first 5 minutes after starting or resuming replication tasks.
 
 # ----------- Instance configuration -----------
 mysql-instances:

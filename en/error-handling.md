@@ -1,7 +1,7 @@
 ---
 title: Data Migration Error Handling
 summary: Learn how to deal with errors when you use TiDB Data Migration.
-aliases: ['/docs/tidb-data-migration/stable/troubleshoot-dm/','/docs/tidb-data-migration/stable/error-system/','/tidb-data-migration/stable/error-system/','/tidb-data-migration/stable/error-handling/''/docs/tidb-data-migration/stable/error-handling/','/docs/tidb-data-migration/stable/error-handling/','/docs/tidb-data-migration/v1.0/error-handling/','/docs/dev/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v3.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v3.0/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v2.1/reference/tools/data-migration/troubleshoot/error-handling/']
+aliases: ['/docs/tidb-data-migration/stable/troubleshoot-dm/','/docs/tidb-data-migration/stable/error-system/','/tidb-data-migration/stable/error-system/','/tidb-data-migration/stable/error-handling/''/docs/tidb-data-migration/stable/error-handling/','/docs/tidb-data-migration/stable/error-handling/','/docs/tidb-data-migration/v1.0/error-handling/','/docs/dev/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v3.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v3.0/reference/tools/data-migration/troubleshoot/error-handling/','/docs/v2.1/reference/tools/data-migration/troubleshoot/error-handling/','/docs/stable/reference/tools/data-migration/troubleshoot/error-handling/']
 ---
 
 # Handle Errors
@@ -40,8 +40,9 @@ In the error system, usually, the information of a specific error is as follows:
     | `dm-master`      |   DM-master service | `[code=38008:class=dm-master:scope=internal:level=high] grpc request error: rpc error: code = Unavailable desc = all SubConns are in TransientFailure, latest connection error: connection error: desc = "transport: Error while dialing dial tcp 172.17.0.2:8262: connect: connection refused"` |
     | `dm-worker`      |  DM-worker service  | `[code=40066:class=dm-worker:scope=internal:level=high] ExecuteDDL timeout, try use query-status to query whether the DDL is still blocking` |
     | `dm-tracer`      |  DM-tracer service  | `[code=42004:class=dm-tracer:scope=internal:level=medium] trace event test.1 not found` |
-    | `schema-tracker` | schema-tracker (during incremental data replication)   | `ErrSchemaTrackerCannotExecDDL,[code=44006:class=schema-tracker:scope=internal:level=high],"cannot track DDL: ALTER TABLE test DROP COLUMN col1"` |
-    | `scheduler`      | Scheduling operations (of data replication tasks)   | `ErrSchedulerNotStarted,[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
+    | `schema-tracker` | schema-tracker (during incremental data replication)   | `[code=44006:class=schema-tracker:scope=internal:level=high],"cannot track DDL: ALTER TABLE test DROP COLUMN col1"` |
+    | `scheduler`      | Scheduling operations (of data replication tasks)   | `[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
+    | `dmctl`          | An error occurs within dmctl or when it interacts with other components | `[code=48001:class=dmctl:scope=internal:level=high],"can not create grpc connection"` |
 
 - `scope`: Error scope.
 
@@ -60,6 +61,10 @@ In the error system, usually, the information of a specific error is as follows:
 - `message`: Error descriptions.
 
     Detailed descriptions of the error. To wrap and store every additional layer of error message on the error call chain, the [errors.Wrap](https://godoc.org/github.com/pkg/errors#hdr-Adding_context_to_an_error) mode is adopted. The message description wrapped at the outermost layer indicates the error in DM and the message description wrapped at the innermost layer indicates the error source.
+
+- `workaround`: Error handling methods (optional)
+
+    The handling methods for this error. For some confirmed errors (such as configuration errors), DM gives the corresponding manual handling methods in `workaround`.
 
 - Error stack information (optional)
 
@@ -85,7 +90,7 @@ If you encounter an error while running DM, take the following steps to troubles
     resume-task ${task name}
     ```
 
-However, you need to reset the data replication task in some cases. For details, refer to [Reset the Data Replication Task](faq.md#how-to-reset-the-data-replication-task).
+However, you need to reset the data replication task in some cases. For details, refer to [Reset the Data Replication Task](faq.md#how-to-reset-the-data-migration-task).
 
 ## Handle common errors
 
@@ -162,6 +167,6 @@ For binlog replication processing units, manually recover replication using the 
 
 ### `Access denied for user 'root'@'172.31.43.27' (using password: YES)` shows when you query the task or check the log
 
-For database related passwords in all the DM configuration files, use the passwords encrypted by `dmctl`. If a database password is empty, it is unnecessary to encrypt it. For how to encrypt the plaintext password, see [Encrypt the upstream MySQL user password using dmctl](deploy-a-dm-cluster-using-ansible.md#encrypt-the-upstream-mysql-user-password-using-dmctl).
+For database related passwords in all the DM configuration files, it is recommended to use the passwords encrypted by `dmctl`. If a database password is empty, it is unnecessary to encrypt it. For how to encrypt the plaintext password, see [Encrypt the upstream MySQL user password using dmctl](deploy-a-dm-cluster-using-ansible.md#encrypt-the-upstream-mysql-user-password-using-dmctl).
 
 In addition, the user of the upstream and downstream databases must have the corresponding read and write privileges. Data Migration also [prechecks the corresponding privileges automatically](precheck.md) while starting the data replication task.

@@ -1,6 +1,6 @@
 ---
 title: 使用 DM 迁移数据
-aliases: ['/docs-cn/dev/reference/tools/data-migration/deploy/','/docs-cn/v3.1/reference/tools/data-migration/deploy/','/docs-cn/v3.0/reference/tools/data-migration/deploy/','/docs-cn/v2.1/reference/tools/data-migration/deploy/']
+aliases: ['/docs-cn/tidb-data-migration/stable/replicate-data-using-dm/','/docs-cn/tidb-data-migration/v1.0/replicate-data-using-dm/','/docs-cn/dev/reference/tools/data-migration/deploy/','/docs-cn/v3.1/reference/tools/data-migration/deploy/','/docs-cn/v3.0/reference/tools/data-migration/deploy/','/docs-cn/v2.1/reference/tools/data-migration/deploy/']
 ---
 
 # 使用 DM 迁移数据
@@ -40,6 +40,9 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/deploy/','/docs-cn/v3.1/r
 
     ```toml
     # Master 配置
+    
+    # DM-worker 是否使用全局事务标识符 (GTID) 拉取 binlog。使用前提是在上游 MySQL 已开启 GTID 模式。
+    enable-gtid = false
 
     [[deploy]]
     source-id = "mysql-replica-01"

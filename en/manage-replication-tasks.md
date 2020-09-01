@@ -1,7 +1,7 @@
 ---
 title: Manage the Data Replication Task
 summary: Use dmctl to manage the data replication task.
-aliases: ['/docs/tidb-data-migration/stable/manage-replication-tasks/','/docs/tidb-data-migration/v1.0/manage-replication-tasks/','/docs/dev/reference/tools/data-migration/manage-tasks/','/docs/v3.1/reference/tools/data-migration/manage-tasks/','/docs/v3.0/reference/tools/data-migration/manage-tasks/','/docs/v2.1/reference/tools/data-migration/manage-tasks/']
+aliases: ['/docs/tidb-data-migration/stable/manage-replication-tasks/','/docs/tidb-data-migration/v1.0/manage-replication-tasks/','/docs/dev/reference/tools/data-migration/manage-tasks/','/docs/v3.1/reference/tools/data-migration/manage-tasks/','/docs/v3.0/reference/tools/data-migration/manage-tasks/','/docs/v2.1/reference/tools/data-migration/manage-tasks/','/docs/tools/dm/manage-task/']
 ---
 
 # Manage the Data Replication Task
@@ -13,6 +13,10 @@ The dmctl component supports the interactive mode for manual operations, and als
 ## dmctl interactive mode
 
 This section describes the basic use of dmctl commands in the interactive mode.
+
+> **Note:**
+>
+> The interactive mode does not support Bash features. For example, you need to directly pass string flags instead of passing them in quotes.
 
 ### dmctl help
 
@@ -215,7 +219,7 @@ help pause-task
 pause a specified running task
 
 Usage:
- dmctl pause-task [-w worker ...] <task-name> [flags]
+ dmctl pause-task [-w worker ...] <task-name | task-file> [flags]
 
 Flags:
  -h, --help   help for pause-task
@@ -241,7 +245,7 @@ pause-task [-w "127.0.0.1:8262"] task-name
 #### Flags description
 
 - `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the replication task (that you want to pause) run. If it is set, only subtasks on the specified DM-workers are paused.
-- `task-name`: (Required) Specifies the task name.
+- `task-name | task-file`: (Required) Specifies the task name or task file path.
 
 #### Returned results
 
@@ -289,7 +293,7 @@ help resume-task
 resume a specified paused task
 
 Usage:
- dmctl resume-task [-w worker ...] <task-name> [flags]
+ dmctl resume-task [-w worker ...] <task-name | task-file> [flags]
 
 Flags:
  -h, --help   help for resume-task
@@ -307,7 +311,7 @@ resume-task [-w "127.0.0.1:8262"] task-name
 #### Flags description
 
 - `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the replication task (that you want to restart) run. If it is set, only subtasks on the specified DM-workers are restarted.
-- `task-name`: (Required) Specifies the task name.
+- `task-name | task-file`: (Required) Specifies the task name or task file path.
 
 #### Returned results
 
@@ -355,7 +359,7 @@ help stop-task
 stop a specified task
 
 Usage:
- dmctl stop-task [-w worker ...] <task-name> [flags]
+ dmctl stop-task [-w worker ...] <task-name | task-file> [flags]
 
 Flags:
  -h, --help   help for stop-task
@@ -373,7 +377,7 @@ stop-task [-w "127.0.0.1:8262"]  task-name
 #### Flags description
 
 - `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the replication task (that you want to stop) run. If it is set, only subtasks on the specified DM-workers are stopped.
-- `task-name`: (Required) Specifies the task name.
+- `task-name | task-file`: (Required) Specifies the task name or task file path.
 
 #### Returned results
 
@@ -425,23 +429,23 @@ You can use the `update-task` command to update the data replication task. The f
 
 1. Check the status of the corresponding data replication task using `query-status <task-name>`.
 
-    If `stage` is not `Paused`, use `pause-task <task-name>` to pause the task.
+    If `stage` is not `Paused`, use `pause-task <task-name | task-file>` to pause the task.
 
 2. Edit the `task.yaml` file to update the custom configuration that you need to modify and the incorrect configuration.
 
 3. Update the task configuration using `update-task task.yaml`.
 
-4. Resume the task using `resume-task <task-name>`.
+4. Resume the task using `<task-name | task-file>`.
 
 #### Update items that do not support online update
 
 1. Check the status of the corresponding data replication task using `query-status <task-name>`.
 
-    If the task exists, use `stop-task <task-name>` to stop the task.
+    If the task exists, use `stop-task <task-name | task-file>` to stop the task.
 
 2. Edit the `task.yaml` file to update the custom configuration that you need to modify and the incorrect configuration.
 
-3. Restart the task using `start-task <task-name>`.
+3. Restart the task using `start-task <config-file>`.
 
 #### Command usage help
 

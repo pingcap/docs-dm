@@ -43,6 +43,8 @@ Upstream and downstream database users must have the corresponding read and writ
     - TiDB does not support the foreign key.
     - [Character set compatibility differs](https://pingcap.com/docs/stable/reference/sql/character-set/).
 
+    DM will also check whether the primary key or unique key restriction exists in all upstream tables. This check is introduced in v1.0.7.
+
 + The consistency of the sharded tables in the multiple upstream MySQL instances
 
     + The schema consistency of all sharded tables
@@ -62,3 +64,20 @@ Upstream and downstream database users must have the corresponding read and writ
             - The auto increment primary key exists in the sharded tables and its column type *is* bigint, but column mapping *is not* configured.
 
         - The check succeeds in other conditions except the two above.
+
+### Disable checking items
+
+DM checks items according to the task type, and you can use `ignore-checking-items` in the task configuration file to disable checking items. The list of element options for `ignore-checking-items` is as follows:
+
+| Element  | Description   |
+| :----  | :-----|
+| all | Disables all checks |
+| dump_privilege | Disables checking dump-related privileges of the upstream MySQL instance user |
+| replication_privilege | Disables checking replication-related privileges of the upstream MySQL instance user |
+| version | Disables checking the upstream database version |
+| binlog_enable | Disables checking whether the upstream database has binlog enabled |
+| binlog_format | Disables checking whether the binlog format of the upstream database is ROW |
+| binlog_row_image |  Disables checking whether the binlog_row_image of the upstream database is FULL |
+| table_schema | Disables checking the compatibility of the upstream MySQL table schema |
+| schema_of_shard_tables | Disables checking whether the schemas of upstream MySQL sharded tables are consistent in the multi-instance sharding scenario |
+| auto_increment_ID | Disables checking the conflicts of auto-increment primary keys of the upstream MySQL shared tables in the multi-instance sharding scenario |

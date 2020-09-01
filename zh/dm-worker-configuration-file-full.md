@@ -1,6 +1,6 @@
 ---
 title: DM-worker 完整配置说明
-aliases: ['/docs-cn/dev/reference/tools/data-migration/configure/dm-worker-configuration-file-full/','/docs-cn/v3.1/reference/tools/data-migration/configure/dm-worker-configuration-file-full/','/docs-cn/v3.0/reference/tools/data-migration/configure/dm-worker-configuration-file-full/','/docs-cn/v2.1/reference/tools/data-migration/configure/dm-worker-configuration-file-full/']
+aliases: ['/docs-cn/tidb-data-migration/stable/dm-worker-configuration-file-full/','/docs-cn/tidb-data-migration/v1.0/dm-worker-configuration-file-full/','/docs-cn/dev/reference/tools/data-migration/configure/dm-worker-configuration-file-full/','/docs-cn/v3.1/reference/tools/data-migration/configure/dm-worker-configuration-file-full/','/docs-cn/v3.0/reference/tools/data-migration/configure/dm-worker-configuration-file-full/','/docs-cn/v2.1/reference/tools/data-migration/configure/dm-worker-configuration-file-full/']
 ---
 
 # DM-worker 完整配置说明

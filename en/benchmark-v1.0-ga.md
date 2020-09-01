@@ -1,7 +1,7 @@
 ---
 title: DM 1.0-GA Benchmark Report
 summary: Learn about the DM 1.0-GA benchmark report.
-aliases: ['/docs/tidb-data-migration/stable/benchmark-v1.0-ga/','/docs/tidb-data-migration/v1.0/benchmark-v1.0-ga/','/docs/dev/benchmark/dm-v1.0-ga/','/docs/v3.0/benchmark/dm-v1.0-ga/','/docs/v3.1/benchmark/dm-v1.0-ga/']
+aliases: ['/docs/tidb-data-migration/stable/benchmark-v1.0-ga/','/docs/tidb-data-migration/v1.0/benchmark-v1.0-ga/','/docs/dev/benchmark/dm-v1.0-ga/','/docs/v3.0/benchmark/dm-v1.0-ga/','/docs/v3.1/benchmark/dm-v1.0-ga/','/docs/stable/benchmark/dm-v1.0-ga/']
 ---
 
 # DM 1.0-GA Benchmark Report

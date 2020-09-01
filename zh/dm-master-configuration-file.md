@@ -1,6 +1,6 @@
 ---
 title: DM-master 配置文件介绍
-aliases: ['/docs-cn/dev/reference/tools/data-migration/configure/dm-master-configuration-file/','/docs-cn/v3.1/reference/tools/data-migration/configure/dm-master-configuration-file/','/docs-cn/v3.0/reference/tools/data-migration/configure/dm-master-configuration-file/','/docs-cn/v2.1/reference/tools/data-migration/configure/dm-master-configuration-file/']
+aliases: ['/docs-cn/tidb-data-migration/stable/dm-master-configuration-file/','/docs-cn/tidb-data-migration/v1.0/dm-master-configuration-file/','/docs-cn/dev/reference/tools/data-migration/configure/dm-master-configuration-file/','/docs-cn/v3.1/reference/tools/data-migration/configure/dm-master-configuration-file/','/docs-cn/v3.0/reference/tools/data-migration/configure/dm-master-configuration-file/','/docs-cn/v2.1/reference/tools/data-migration/configure/dm-master-configuration-file/','/docs-cn/stable/reference/tools/data-migration/configure/dm-master-configuration-file/']
 ---
 
 # DM-master 配置文件介绍

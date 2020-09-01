@@ -27,6 +27,7 @@
   - [Simple Scenario](usage-scenario-simple-replication.md)
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
+  - [Switch DM-worker Connection between MySQL Instances](usage-scenario-master-slave-switch.md)
 - [Quick Start](get-started.md)
 + Deploy
   + Deploy a DM Cluster

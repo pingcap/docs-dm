@@ -1,6 +1,6 @@
 ---
 title: 管理数据迁移任务
-aliases: ['/docs-cn/dev/reference/tools/data-migration/manage-tasks/','/docs-cn/v3.1/reference/tools/data-migration/manage-tasks/','/docs-cn/v3.0/reference/tools/data-migration/manage-tasks/','/docs-cn/v2.1/reference/tools/data-migration/manage-tasks/']
+aliases: ['/docs-cn/tidb-data-migration/stable/manage-replication-tasks/','/docs-cn/tidb-data-migration/v1.0/manage-replication-tasks/','/docs-cn/dev/reference/tools/data-migration/manage-tasks/','/docs-cn/v3.1/reference/tools/data-migration/manage-tasks/','/docs-cn/v3.0/reference/tools/data-migration/manage-tasks/','/docs-cn/v2.1/reference/tools/data-migration/manage-tasks/']
 ---
 
 # 管理数据迁移任务
@@ -12,6 +12,10 @@ dmctl 支持交互模式用于人工操作，同时也支持命令模式用于�
 ## dmctl 交互模式
 
 本部分描述了在交互模式下一些 dmctl 命令的基本用法。
+
+> **注意：**
+>
+> 交互模式下不具有 bash 的特性，比如不需要通过引号传递字符串参数而应当直接传递。
 
 ### dmctl 使用帮助
 
@@ -251,7 +255,7 @@ help pause-task
 pause a specified running task
 
 Usage:
- dmctl pause-task [-w worker ...] <task-name> [flags]
+ dmctl pause-task [-w worker ...] <task-name | task-file> [flags]
 
 Flags:
  -h, --help   help for pause-task
@@ -274,9 +278,9 @@ pause-task [-w "127.0.0.1:8262"] task-name
     - 可选
     - 指定在特定的一组 DM-workers 上暂停数据迁移任务的子任务
     - 如果设置，则只暂停该任务在指定 DM-workers 上的子任务
-- `task-name`：
+- `task-name | task-file`：
     - 必选
-    - 指定任务名称
+    - 指定任务名称或任务文件路径
 
 #### 返回结果示例
 
@@ -328,7 +332,7 @@ help resume-task
 resume a specified paused task
 
 Usage:
- dmctl resume-task [-w worker ...] <task-name> [flags]
+ dmctl resume-task [-w worker ...] <task-name | task-file> [flags]
 
 Flags:
  -h, --help   help for resume-task
@@ -351,9 +355,9 @@ resume-task [-w "127.0.0.1:8262"] task-name
     - 可选
     - 指定在特定的一组 DM-workers 上恢复数据迁移任务的子任务
     - 如果设置，则只恢复该任务在指定 DM-workers 上的子任务
-- `task-name`：
+- `task-name | task-file`：
     - 必选
-    - 指定任务名称
+    - 指定任务名称或任务文件路径
 
 #### 返回结果示例
 
@@ -405,7 +409,7 @@ help stop-task
 stop a specified task
 
 Usage:
- dmctl stop-task [-w worker ...] <task-name> [flags]
+ dmctl stop-task [-w worker ...] <task-name | task-file> [flags]
 
 Flags:
  -h, --help   help for stop-task
@@ -428,9 +432,9 @@ stop-task [-w "127.0.0.1:8262"]  task-name
     - 可选
     - 指定在特定的一组 DM-workers 上停止数据迁移任务的子任务
     - 如果设置，则只停止该任务在指定 DM-workers 上的子任务
-- `task-name`：
+- `task-name | task-file`：
     - 必选
-    - 指定任务名称
+    - 指定任务名称或任务文件路径
 
 #### 返回结果示例
 
@@ -488,23 +492,23 @@ stop-task test
 
 1. 使用 `query-status <task-name>` 查询对应数据迁移任务的状态。
 
-    - 若 `stage` 不为 `Paused`，则先使用 `pause-task <task-name>` 暂停任务。
+    - 若 `stage` 不为 `Paused`，则先使用 `pause-task <task-name | task-file>` 暂停任务。
 
 2. 在 `task.yaml` 文件中更新需要修改的自定义配置或者错误配置。
 
 3. 使用 `update-task task.yaml` 更新任务配置。
 
-4. 使用 `resume-task <task-name>` 恢复任务。
+4. 使用 `resume-task <task-name | task-file>` 恢复任务。
 
 #### 不支持更新项的更新步骤
 
 1. 使用 `query-status <task-name>` 查询对应数据迁移任务的状态。
 
-    - 若任务存在，则通过 `stop-task <task-name>` 停止任务。
+    - 若任务存在，则通过 `stop-task <task-name | task-file>` 停止任务。
 
 2. 在 `task.yaml` 文件中更新需要修改的自定义配置或者错误配置。
 
-3. 使用 `start-task <task-name>` 重启恢复任务。
+3. 使用 `start-task <config-file>` 重启恢复任务。
 
 {{< copyable "" >}}
 

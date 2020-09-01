@@ -1,6 +1,6 @@
 ---
 title: 使用 DM-Ansible 部署 DM 集群
-aliases: ['/docs-cn/dev/how-to/deploy/data-migration-with-ansible/','/docs-cn/v3.1/how-to/deploy/data-migration-with-ansible/','/docs-cn/v3.0/how-to/deploy/data-migration-with-ansible/','/docs-cn/v2.1/how-to/deploy/data-migration-with-ansible/']
+aliases: ['/docs-cn/tidb-data-migration/stable/deploy-a-dm-cluster-using-ansible/','/docs-cn/tidb-data-migration/v1.0/deploy-a-dm-cluster-using-ansible/','/docs-cn/dev/how-to/deploy/data-migration-with-ansible/','/docs-cn/v3.1/how-to/deploy/data-migration-with-ansible/','/docs-cn/v3.0/how-to/deploy/data-migration-with-ansible/','/docs-cn/v2.1/how-to/deploy/data-migration-with-ansible/']
 ---
 
 # 使用 DM-Ansible 部署 DM 集群
@@ -372,6 +372,11 @@ cd /home/tidb/dm-ansible/resources/bin &&
 ```
 MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
+
+> **注意：**
+>
+> + 如果数据库没有设置密码，则可以跳过该步骤。
+> + DM v1.0.6 及其以后版本可以配置明文数据库密码。
 
 ## 第 8 步：编辑 `inventory.ini` 文件中的变量
 
