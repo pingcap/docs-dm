@@ -48,7 +48,7 @@ mysql-instances:
     block-allow-list:  "bw-rule-1"
     mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data.
     loader-thread: 16              # The number of threads that Loader uses for loading data.
-    syncer-thread: 16              # The number of threads that Syncer uses for migrating incremental data.
+    syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data.
 
   - source-id: "mysql-replica-02"
     block-allow-list:  "bw-rule-1" # Use black-white-list if the DM's version <= v2.0.0-beta.2.
@@ -71,7 +71,7 @@ Refer to the comments in the [template](#task-configuration-file-template-basic)
 - Description: the task mode that can be used to specify the data migration task to be executed.
 - Value: string (`full`, `incremental`, or `all`).
     - `full` only makes a full backup of the upstream database and then imports the full data to the downstream database.
-    - `incremental`: Only migrates the incremental data of the upstream database to the downstream database using the binlog. You can set the `meta` configuration item of the instance configuration to specify the starting position of incremental replication.
+    - `incremental`: Only replicates the incremental data of the upstream database to the downstream database using the binlog. You can set the `meta` configuration item of the instance configuration to specify the starting position of incremental replication.
     - `all`: `full` + `incremental`. Makes a full backup of the upstream database, imports the full data to the downstream database, and then uses the binlog to make an incremental replication to the downstream database starting from the exported position during the full backup process (binlog position).
 
 ### Feature configuration set
