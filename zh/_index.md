@@ -16,50 +16,26 @@ aliases: ['/docs-cn/tidb-data-migration/','/docs-cn/tidb-data-migration/stable/'
 
 DM 主要包括三个组件：DM-master，DM-worker 和 dmctl。
 
-<<<<<<< HEAD
 ![Data Migration architecture](/media/dm-architecture.png)
-=======
-- [性能数据](benchmark-v1.0-ga.md)
-- [Table routing](key-features.md#table-routing)
-- [Block & Allow Lists](key-features.md#block--allow-table-lists)
-- [Binlog Event Filter](key-features.md#binlog-event-filter)
-- [Online-ddl-scheme](feature-online-ddl-scheme.md)
-- [分库分表合并迁移](feature-shard-merge.md)
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 ### DM-master
 
 DM-master 负责管理和调度数据同步任务的各项操作。
 
-<<<<<<< HEAD
 - 保存 DM 集群的拓扑信息
 - 监控 DM-worker 进程的运行状态
 - 监控数据同步任务的运行状态
 - 提供数据同步任务管理的统一入口
 - 协调分库分表场景下各个实例分表的 DDL 同步
-=======
-- [应用场景](scenarios.md)
-- [部署集群](quick-start-with-dm.md)
-- [迁移任务](migrate-data-using-dm.md)
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 ### DM-worker
 
 DM-worker 负责执行具体的数据同步任务。
 
-<<<<<<< HEAD
 - 将 binlog 数据持久化保存在本地
 - 保存数据同步子任务的配置信息
 - 编排数据同步子任务的运行
 - 监控数据同步子任务的运行状态
-=======
-- [软硬件要求](hardware-and-software-requirements.md)
-- [使用 TiUP 部署集群](deploy-a-dm-cluster-using-tiup.md)
-- [使用 Binary 部署集群](deploy-a-dm-cluster-using-binary.md)
-- [使用 DM 迁移数据](migrate-data-using-dm.md)
-- [监控与告警设置](monitor-a-dm-cluster.md)
-- [性能测试](performance-test.md)
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 DM-worker 启动后，会自动同步上游 binlog 至本地配置目录（如果使用 DM-Ansible 部署 DM 集群，默认的同步目录为 `<deploy_dir>/relay_log`）。关于 relay log，详见 [DM Relay Log](relay-log.md)。
 
@@ -74,16 +50,8 @@ dmctl 是用来控制 DM 集群的命令行工具。
 
 ## 同步功能介绍
 
-<<<<<<< HEAD
 下面简单介绍 DM 数据同步功能的核心特性。
-=======
-- [简单的从库迁移场景](usage-scenario-simple-migration.md)
-- [分库分表合并场景](usage-scenario-shard-merge.md)
-- [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
-- [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
-- [DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
-
+s
 ### Table routing
 
 Table routing 是指将上游 MySQL 或 MariaDB 实例的某些表同步到下游指定表的路由功能，可以用于分库分表的合并同步。

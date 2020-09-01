@@ -78,38 +78,10 @@ DM 在增量同步阶段依赖 `ROW` 格式的 binlog，如果未启用 binlog �
     source-id = "mysql-replica-01"
     dm-worker = "172.16.10.72:8262"
 
-<<<<<<< HEAD
     [[deploy]]
     source-id = "mysql-replica-02"
     dm-worker = "172.16.10.73:8262"
     ```
-=======
-参见[使用 DM 迁移数据：创建数据源](migrate-data-using-dm.md#第-3-步创建数据源)，通过 TiUP 使用 `dmctl` 添加两个数据源。
-
-{{< copyable "shell-regular" >}}
-
-```bash
-tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source1.yaml
-tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source2.yaml
-```
-
-添加数据源成功时，每个数据源的返回信息中包含了一个与之绑定的 DM-worker。
-
-```bash
-{
-    "result": true,
-    "msg": "",
-    "sources": [
-        {
-            "result": true,
-            "msg": "",
-            "source": "aurora-replica-01",
-            "worker": "one-dm-worker-ID"
-        }
-    ]
-}
-```
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 ## 第 4 步：配置任务
 
@@ -120,11 +92,7 @@ tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source2.ya
 ```yaml
 # 任务名，多个同时运行的任务不能重名。
 name: "test"
-<<<<<<< HEAD
 # 全量+增量 (all) 同步模式。
-=======
-# 全量+增量 (all) 迁移模式
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 task-mode: "all"
 # 下游 TiDB 配置信息。
 target-database:

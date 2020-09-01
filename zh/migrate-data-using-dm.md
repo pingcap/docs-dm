@@ -1,11 +1,6 @@
 ---
-<<<<<<< HEAD:zh/replicate-data-using-dm.md
 title: 使用 DM 同步数据
 aliases: ['/docs-cn/tidb-data-migration/stable/replicate-data-using-dm/','/docs-cn/tidb-data-migration/v1.0/replicate-data-using-dm/','/docs-cn/dev/reference/tools/data-migration/deploy/','/docs-cn/v3.1/reference/tools/data-migration/deploy/','/docs-cn/v3.0/reference/tools/data-migration/deploy/','/docs-cn/v2.1/reference/tools/data-migration/deploy/']
-=======
-title: 使用 DM 迁移数据
-aliases: ['/docs-cn/tidb-data-migration/dev/replicate-data-using-dm/','/zh/tidb-data-migration/dev/replicate-data-using-dm']
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/migrate-data-using-dm.md
 ---
 
 # 使用 DM 迁移数据
@@ -85,13 +80,8 @@ mysql-instances:
 -
   # 上游实例或者复制组 ID，参考 `inventory.ini` 的 `source_id` 或者 `dm-master.toml` 的 `source-id 配置`。
   source-id: "mysql-replica-01"
-<<<<<<< HEAD:zh/replicate-data-using-dm.md
   # 需要同步的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置。
   block-allow-list: "global"          # 如果 DM 版本 <= v1.0.6 则使用 black-white-list。
-=======
-  # 需要迁移的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置。
-  block-allow-list: "global"          # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/migrate-data-using-dm.md
   # Mydumper 的配置项名称，用于引用全局的 Mydumper 配置。
   mydumper-config-name: "global"
 
@@ -125,11 +115,7 @@ mydumpers:
 >
 > 第一次启动数据迁移任务时，必须确保上游数据库已配置。否则，启动任务时会报错。
 
-<<<<<<< HEAD:zh/replicate-data-using-dm.md
 1. 进入 dmctl 目录 `/home/tidb/dm-ansible/resources/bin/`。
-=======
-使用 `tiup dmctl` 执行以下命令启动数据迁移任务。其中，`task.yaml` 是之前编辑的配置文件。
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/migrate-data-using-dm.md
 
 2. 执行以下命令启动 dmctl。
 
@@ -147,7 +133,6 @@ mydumpers:
     » start-task ./task.yaml
     ```
 
-<<<<<<< HEAD:zh/replicate-data-using-dm.md
     - 如果执行该命令后返回的结果如下，则表明任务已成功启动。
 
         ```json
@@ -174,9 +159,6 @@ mydumpers:
 ## 第 5 步：查询任务
 
 如需了解 DM 集群中是否存在正在运行的同步任务及任务状态等信息，可在 dmctl 内使用以下命令进行查询：
-=======
-如需了解 DM 集群中是否存在正在运行的迁移任务及任务状态等信息，可使用 `tiup dmctl` 执行以下命令进行查询：
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/migrate-data-using-dm.md
 
 {{< copyable "" >}}
 
@@ -186,11 +168,7 @@ mydumpers:
 
 ## 第 6 步：停止任务
 
-<<<<<<< HEAD:zh/replicate-data-using-dm.md
 如果不再需要进行数据同步，可以在 dmctl 内使用以下命令停止同步任务：
-=======
-如果不再需要进行数据迁移，可以使用 `tiup dmctl` 执行以下命令停止迁移任务：
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/migrate-data-using-dm.md
 
 {{< copyable "" >}}
 

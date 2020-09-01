@@ -1,10 +1,6 @@
 ---
 title: Data Migration 简单使用场景
-<<<<<<< HEAD:zh/usage-scenario-simple-replication.md
 aliases: ['/docs-cn/tidb-data-migration/stable/usage-scenario-simple-replication/','/docs-cn/tidb-data-migration/v1.0/usage-scenario-simple-replication/','/docs-cn/dev/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v3.1/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v3.0/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v2.1/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v3.0/reference/tools/data-migration/usage-scenarios/simple-replication']
-=======
-aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/','/zh/tidb-data-migration/dev/usage-scenario-simple-replication']
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/usage-scenario-simple-migration.md
 ---
 
 # Data Migration 简单使用场景
@@ -72,11 +68,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
 
 ## 迁移方案
 
-<<<<<<< HEAD:zh/usage-scenario-simple-replication.md
 - 为了满足[同步要求](#同步要求)中第一点的前三条要求，需要配置以下 [table routing 规则](feature-overview.md#table-routing)：
-=======
-- 为了满足[迁移要求](#迁移要求)中第一点的前三条要求，需要配置以下 [table routing 规则](key-features.md#table-routing)：
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/usage-scenario-simple-migration.md
 
     {{< copyable "" >}}
 
@@ -94,11 +86,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
         target-schema: "user_south"
     ```
 
-<<<<<<< HEAD:zh/usage-scenario-simple-replication.md
 - 为了满足[同步要求](#同步要求)中第二点的第一条要求，需要配置以下 [table routing 规则](feature-overview.md#table-routing)：
-=======
-- 为了满足[迁移要求](#迁移要求)中第二点的第一条要求，需要配置以下 [table routing 规则](key-features.md#table-routing)：
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/usage-scenario-simple-migration.md
 
     {{< copyable "" >}}
 
@@ -117,11 +105,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
         target-table:  "store_shenzhen"
     ```
 
-<<<<<<< HEAD:zh/usage-scenario-simple-replication.md
 - 为了满足[同步要求](#同步要求)中第一点的第四条要求，需要配置以下 [binlog event filter 规则](feature-overview.md#binlog-event-filter)：
-=======
-- 为了满足[迁移要求](#迁移要求)中第一点的第四条要求，需要配置以下 [binlog event filter 规则](key-features.md#binlog-event-filter)：
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/usage-scenario-simple-migration.md
 
     {{< copyable "" >}}
 
@@ -139,11 +123,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
         action: Ignore
     ```
 
-<<<<<<< HEAD:zh/usage-scenario-simple-replication.md
 - 为了满足[同步要求](#同步要求)中第二点的第二条要求，需要配置以下 [binlog event filter 规则](feature-overview.md#binlog-event-filter)：
-=======
-- 为了满足[迁移要求](#迁移要求)中第二点的第二条要求，需要配置以下 [binlog event filter 规则](key-features.md#binlog-event-filter)：
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/usage-scenario-simple-migration.md
 
     {{< copyable "" >}}
 
@@ -160,11 +140,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
     >
     > `store-filter-rule` 不同于 `log-filter-rule` 和 `user-filter-rule`。`store-filter-rule` 是针对整个 `store` 库的规则，而 `log-filter-rule` 和 `user-filter-rule` 是针对 `user` 库中 `log` 表的规则。
 
-<<<<<<< HEAD:zh/usage-scenario-simple-replication.md
 - 为了满足[同步要求](#同步要求)中的第三点要求，需要配置以下 [block & Allow Table Lists 规则](feature-overview.md#block--allow-table-lists)：
-=======
-- 为了满足[迁移要求](#迁移要求)中的第三点要求，需要配置以下 [Block & Allow Lists](key-features.md#block--allow-table-lists)：
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/usage-scenario-simple-migration.md
 
     {{< copyable "" >}}
 

@@ -111,19 +111,11 @@ DM-worker 内部用于从上游拉取 Binlog 并写入数据到 Relay log 的处
 
 ### Shard DDL lock
 
-<<<<<<< HEAD
 用于协调 Shard DDL 迁移的锁机制，具体原理可查看[分库分表合并同步实现原理](feature-shard-merge.md#实现原理)。在当前文档中，有时也称作 Sharding DDL lock。
 
 ### Shard group
 
 指合库合表迁移过程中，需要合并迁移到下游同一张表的所有上游分表 (shard)，TiDB DM 内部具体实现时使用了两级抽象的 Shard group，具体可查看[分库分表合并同步实现原理](feature-shard-merge.md#实现原理)。在当前文档中，有时也称作 Sharding group。
-=======
-用于协调 Shard DDL 迁移的锁机制，具体原理可查看[悲观模式下分库分表合并迁移实现原理](feature-shard-merge-pessimistic.md#实现原理)。在当前文档中，有时也称作 Sharding DDL lock。
-
-### Shard group
-
-指合库合表迁移过程中，需要合并迁移到下游同一张表的所有上游分表 (shard)，TiDB DM 内部具体实现时使用了两级抽象的 Shard group，具体可查看[悲观模式下分库分表合并迁移实现原理](feature-shard-merge-pessimistic.md#实现原理)。在当前文档中，有时也称作 Sharding group。
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 ### Subtask
 
@@ -137,11 +129,7 @@ DM-worker 内部用于从上游拉取 Binlog 并写入数据到 Relay log 的处
 
 ### Table routing
 
-<<<<<<< HEAD
 用于支持将上游 MySQL/MariaDB 实例的某些表同步到下游指定表的路由功能，可以用于分库分表的合并同步，具体可参考 [Table routing](feature-overview.md#table-routing)。
-=======
-用于支持将上游 MySQL/MariaDB 实例的某些表迁移到下游指定表的路由功能，可以用于分库分表的合并迁移，具体可参考 [Table routing](key-features.md#table-routing)。
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 ### Task
 

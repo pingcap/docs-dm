@@ -10,11 +10,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/shard-merge-best-practices/','/do
 
 ## 独立的数据迁移任务
 
-<<<<<<< HEAD
 在[分库分表合并同步的实现原理部分](feature-shard-merge.md#实现原理)，我们介绍了 sharding group 的概念，简单来说可以理解为需要合并到下游同一个表的所有上游表即组成一个 sharding group。
-=======
-在[分库分表合并迁移的实现原理部分](feature-shard-merge-pessimistic.md#实现原理)，我们介绍了 sharding group 的概念，简单来说可以理解为需要合并到下游同一个表的所有上游表即组成一个 sharding group。
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 当前的 sharding DDL 算法为了能协调在不同分表执行 DDL 对 schema 变更的影响，加入了一些[使用限制](feature-shard-merge.md#使用限制)。而当这些使用限制由于某些异常原因被打破时，我们需要[手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md) 甚至是完整重做整个数据迁移任务。
 
@@ -22,11 +18,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/shard-merge-best-practices/','/do
 
 ## 手动处理 sharding DDL lock
 
-<<<<<<< HEAD
 从[分库分表合并同步的实现原理部分](feature-shard-merge.md#实现原理)我们可以知道，DM 中的 sharding DDL lock 是用于协调不同上游分表向下游执行 DDL 的一种机制，本身并不是异常。
-=======
-从[分库分表合并迁移的实现原理部分](feature-shard-merge-pessimistic.md#实现原理)我们可以知道，DM 中的 sharding DDL lock 是用于协调不同上游分表向下游执行 DDL 的一种机制，本身并不是异常。
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 因此，当通过 `show-ddl-locks` 查看到 DM-master 上存在 sharding DDL lock 时，或通过 `query-status` 查看到某些 DM-worker 有 `unresolvedGroups` 或 `blockingDDLs` 时，并不要急于使用 `unlock-ddl-lock` 或 `break-ddl-lock` 尝试去手动解除 sharding DDL lock。
 
@@ -117,11 +109,7 @@ CREATE TABLE `tbl_multi_pk` (
 
 ## 合表迁移过程中在上游增/删表
 
-<<<<<<< HEAD
 从[分库分表合并同步的实现原理部分](feature-shard-merge.md#实现原理)我们可以知道，sharding DDL lock 的协调依赖于是否已收到上游已有各分表对应的 DDL，且当前 DM 在合表迁移过程中暂时**不支持**在上游动态增加或删除分表。如果需要在合表迁移过程中，对上游执行增、删分表操作，推荐按以下方式进行处理。
-=======
-从[分库分表合并迁移的实现原理部分](feature-shard-merge-pessimistic.md#实现原理)我们可以知道，sharding DDL lock 的协调依赖于是否已收到上游已有各分表对应的 DDL，且当前 DM 在合表迁移过程中暂时**不支持**在上游动态增加或删除分表。如果需要在合表迁移过程中，对上游执行增、删分表操作，推荐按以下方式进行处理。
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 ### 在上游增加分表
 

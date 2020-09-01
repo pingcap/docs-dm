@@ -27,13 +27,9 @@ DM 会尝试将包含多个 DDL 变更操作的单条语句拆分成只包含一
 
 ## 如何重置数据迁移任务？
 
-<<<<<<< HEAD
 ### relay log 无异常时重置同步任务
 
 如果数据同步任务所需要的 relay log 不存在异常，可使用如下步骤重置数据同步任务以对数据重新进行迁移：
-=======
-当数据迁移过程中发生异常且无法恢复时，需要重置数据迁移任务，对数据重新进行迁移：
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 1. 使用 `stop-task` 停止异常的数据迁移任务。
 
@@ -41,7 +37,6 @@ DM 会尝试将包含多个 DDL 变更操作的单条语句拆分成只包含一
 
 3. 从下面两种方式中选择其中一种重启数据迁移任务：
 
-<<<<<<< HEAD
     - 修改任务配置文件以指定新的任务名，然后使用 `start-task` 重启同步任务。
     - 修改任务配置文件以设置 `remove-meta` 为 `true`，然后使用 `start-task` 重启同步任务。
 
@@ -90,10 +85,6 @@ DM 会尝试将包含多个 DDL 变更操作的单条语句拆分成只包含一
    
     - 修改任务配置文件以指定新的任务名，然后使用 `start-task` 重启同步任务。
     - 修改任务配置文件以设置 `remove-meta` 为 `true`，然后使用 `start-task` 重启同步任务。
-=======
-    - 修改任务配置文件以指定新的任务名，然后使用 `start-task {task-config-file}` 重启迁移任务。
-    - 使用 `start-task --remove-meta {task-config-file}` 重启数据迁移任务。
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 ## 设置了 `online-ddl-scheme: "gh-ost"`， gh-ost 表相关的 DDL 报错该如何处理？
 

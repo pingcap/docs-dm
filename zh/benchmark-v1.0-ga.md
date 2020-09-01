@@ -147,20 +147,15 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 
 ### 增量复制性能测试用例
 
-<<<<<<< HEAD
 #### 测试过程
 
 - 部署测试环境
 - 使用 `sysbench` 在上游创建测试表，并生成全量导入的测试数据
 - 在 `all` 模式下启动 DM 同步任务，等待同步任务进入 `sync` 同步阶段
 - 使用 `sysbench` 在上游持续生成增量数据，通过 `query-status` 命令观测 DM 的同步状态，通过 Grafana 观测 DM 和 TiDB 的监控指标。
-=======
-使用[增量复制性能测试用例](performance-test.md#增量复制性能测试用例)中介绍的方法进行测试。
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 #### 增量复制性能测试结果
 
-<<<<<<< HEAD
 上游 `sysbench` 生成增量数据命令
 
 {{< copyable "shell-regular" >}}
@@ -170,9 +165,6 @@ sysbench --test=oltp_insert --tables=4 --num-threads=32 --mysql-host=172.17.4.40
 ```
 
 该性能测试中同步任务 `sync` 处理单元 `worker-count` 设置为 32，`batch` 大小设置为 100。
-=======
-该性能测试中复制任务 `sync` 处理单元 `worker-count` 设置为 32，`batch` 大小设置为 100。
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 | 组件                       | qps                                                          | tps                                                             | 95% 延迟                     |
 | :------------------------: | :----------------------------------------------------------: | :-------------------------------------------------------------: | :--------------------------: |

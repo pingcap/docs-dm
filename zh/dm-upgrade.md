@@ -11,13 +11,8 @@ aliases: ['/docs-cn/tidb-data-migration/stable/dm-upgrade/','/docs-cn/tidb-data-
 > **注意：**
 >
 > - 若无特殊说明，各版本的升级操作均为从前一个有升级指引的版本向当前版本升级。
-<<<<<<< HEAD:zh/dm-upgrade.md
 > - 若无特殊说明，各升级操作示例均假定已经下载了对应版本的 DM 和 DM-Ansible 且 DM binary 存在于 DM-Ansible 的相应目录中（下载 DM binary 可以参考[更新组件版本](cluster-operations.md#更新组件版本)）。
 > - 若无特殊说明，各升级操作示例均假定升级前已停止所有同步任务，升级完成后手动重新启动所有同步任务。
-=======
-> - 若无特殊说明，各升级操作示例均假定已经下载了对应版本的 DM 和 DM-Ansible 且 DM binary 存在于 DM-Ansible 的相应目录中。
-> - 若无特殊说明，各升级操作示例均假定升级前已停止所有迁移任务，升级完成后手动重新启动所有迁移任务。
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/upgrade-dm-1.0.md
 > - 以下版本升级指引逆序展示。
 
 ## 升级到 v1.0.5

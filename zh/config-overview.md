@@ -17,25 +17,15 @@ aliases: ['/docs-cn/tidb-data-migration/stable/config-overview/','/docs-cn/tidb-
 
 ### 任务配置文件
 
-<<<<<<< HEAD
 使用 DM-Ansible 部署 DM 集群时，`<path-to-dm-ansible>/conf` 中提供了任务配置文件模板：`task.yaml.exmaple` 文件。该文件是 DM 同步任务配置的标准文件，每一个具体的任务对应一个 `task.yaml` 文件。关于该配置文件的详细介绍，参见 [任务配置文件](task-configuration-file.md)。
-=======
-每一个数据迁移任务对应一个 `task.yaml` 文件。关于该配置文件的详细介绍，参见[任务配置文件](task-configuration-file.md)。
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 ### 创建数据迁移任务
 
 你可以基于 `task.yaml.example` 文件来创建数据同步任务，具体步骤如下：
 
-<<<<<<< HEAD
 1. 复制 `task.yaml.example` 为 `your_task.yaml`。
 2. 参考[任务配置文件](task-configuration-file.md)来修改 `your_task.yaml` 文件。
 3. [使用 dmctl 创建数据同步任务](manage-replication-tasks.md#创建数据同步任务)。
-=======
-1. [使用 dmctl 将数据源配置加载到 DM 集群](manage-source.md#加载数据源配置)
-2. 参考[任务配置文件](task-configuration-file.md)来创建 `your_task.yaml` 文件。
-3. [使用 dmctl 创建数据迁移任务](create-task.md)。
->>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 ### 关键概念
 
