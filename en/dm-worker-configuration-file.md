@@ -23,7 +23,7 @@ log-file = "dm-worker.log"
 # DM-worker listen address.
 worker-addr = ":8262"
 advertise-addr = "127.0.0.1:8262"
-join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
+join = "http://127.0.0.1:8261,http://127.0.0.1:8361,http://127.0.0.1:8461"
 
 ssl-ca = "/path/to/ca.pem"
 ssl-cert = "/path/to/cert.pem"
