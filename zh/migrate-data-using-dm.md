@@ -1,11 +1,16 @@
 ---
+<<<<<<< HEAD:zh/replicate-data-using-dm.md
 title: 使用 DM 同步数据
 aliases: ['/docs-cn/tidb-data-migration/stable/replicate-data-using-dm/','/docs-cn/tidb-data-migration/v1.0/replicate-data-using-dm/','/docs-cn/dev/reference/tools/data-migration/deploy/','/docs-cn/v3.1/reference/tools/data-migration/deploy/','/docs-cn/v3.0/reference/tools/data-migration/deploy/','/docs-cn/v2.1/reference/tools/data-migration/deploy/']
+=======
+title: 使用 DM 迁移数据
+aliases: ['/docs-cn/tidb-data-migration/dev/replicate-data-using-dm/','/zh/tidb-data-migration/dev/replicate-data-using-dm']
+>>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/migrate-data-using-dm.md
 ---
 
-# 使用 DM 同步数据
+# 使用 DM 迁移数据
 
-本文介绍如何使用 DM (Data Migration) 同步数据。
+本文介绍如何使用 DM (Data Migration) 迁移数据。
 
 ## 第 1 步：部署 DM 集群
 
@@ -59,14 +64,14 @@ aliases: ['/docs-cn/tidb-data-migration/stable/replicate-data-using-dm/','/docs-
 
 ## 第 3 步：配置任务
 
-假设需要将 MySQL-1 和 MySQL-2 实例的 `test_db` 库的 `test_table` 表以**全量+增量**的模式同步到下游 TiDB 的 `test_db` 库的 `test_table` 表。
+假设需要将 MySQL-1 和 MySQL-2 实例的 `test_db` 库的 `test_table` 表以**全量+增量**的模式迁移到下游 TiDB 的 `test_db` 库的 `test_table` 表。
 
 复制并编辑 `{ansible deploy}/conf/task.yaml.example`，生成如下任务配置文件 `task.yaml`：
 
 ```yaml
 # 任务名，多个同时运行的任务不能重名。
 name: "test"
-# 全量+增量 (all) 同步模式。
+# 全量+增量 (all) 迁移模式。
 task-mode: "all"
 # 下游 TiDB 配置信息。
 target-database:
@@ -75,13 +80,18 @@ target-database:
   user: "root"
   password: ""
 
-# 当前数据同步任务需要的全部上游 MySQL 实例配置。
+# 当前数据迁移任务需要的全部上游 MySQL 实例配置。
 mysql-instances:
 -
   # 上游实例或者复制组 ID，参考 `inventory.ini` 的 `source_id` 或者 `dm-master.toml` 的 `source-id 配置`。
   source-id: "mysql-replica-01"
+<<<<<<< HEAD:zh/replicate-data-using-dm.md
   # 需要同步的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置。
   block-allow-list: "global"          # 如果 DM 版本 <= v1.0.6 则使用 black-white-list。
+=======
+  # 需要迁移的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置。
+  block-allow-list: "global"          # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
+>>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/migrate-data-using-dm.md
   # Mydumper 的配置项名称，用于引用全局的 Mydumper 配置。
   mydumper-config-name: "global"
 
@@ -93,9 +103,9 @@ mysql-instances:
 # 黑白名单全局配置，各实例通过配置项名引用。
 block-allow-list:                     # 如果 DM 版本 <= v1.0.6 则使用 black-white-list。
   global:
-    do-tables:                        # 需要同步的上游表的白名单。
-    - db-name: "test_db"              # 需要同步的表的库名。
-      tbl-name: "test_table"          # 需要同步的表的名称。
+    do-tables:                        # 需要迁移的上游表的白名单。
+    - db-name: "test_db"              # 需要迁移的表的库名。
+      tbl-name: "test_table"          # 需要迁移的表的名称。
 
 # Mydumper 全局配置，各实例通过配置项名引用。
 mydumpers:
@@ -106,16 +116,20 @@ mydumpers:
 
 ## 第 4 步：启动任务
 
-为了提前发现数据同步任务的一些配置错误，DM 中增加了[前置检查](precheck.md)功能：
+为了提前发现数据迁移任务的一些配置错误，DM 中增加了[前置检查](precheck.md)功能：
 
-- 启动数据同步任务时，DM 自动检查相应的权限和配置。
+- 启动数据迁移任务时，DM 自动检查相应的权限和配置。
 - 也可使用 `check-task` 命令手动前置检查上游的 MySQL 实例配置是否符合 DM 的配置要求。
 
 > **注意：**
 >
-> 第一次启动数据同步任务时，必须确保上游数据库已配置。否则，启动任务时会报错。
+> 第一次启动数据迁移任务时，必须确保上游数据库已配置。否则，启动任务时会报错。
 
+<<<<<<< HEAD:zh/replicate-data-using-dm.md
 1. 进入 dmctl 目录 `/home/tidb/dm-ansible/resources/bin/`。
+=======
+使用 `tiup dmctl` 执行以下命令启动数据迁移任务。其中，`task.yaml` 是之前编辑的配置文件。
+>>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/migrate-data-using-dm.md
 
 2. 执行以下命令启动 dmctl。
 
@@ -133,6 +147,7 @@ mydumpers:
     » start-task ./task.yaml
     ```
 
+<<<<<<< HEAD:zh/replicate-data-using-dm.md
     - 如果执行该命令后返回的结果如下，则表明任务已成功启动。
 
         ```json
@@ -159,6 +174,9 @@ mydumpers:
 ## 第 5 步：查询任务
 
 如需了解 DM 集群中是否存在正在运行的同步任务及任务状态等信息，可在 dmctl 内使用以下命令进行查询：
+=======
+如需了解 DM 集群中是否存在正在运行的迁移任务及任务状态等信息，可使用 `tiup dmctl` 执行以下命令进行查询：
+>>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/migrate-data-using-dm.md
 
 {{< copyable "" >}}
 
@@ -168,7 +186,11 @@ mydumpers:
 
 ## 第 6 步：停止任务
 
+<<<<<<< HEAD:zh/replicate-data-using-dm.md
 如果不再需要进行数据同步，可以在 dmctl 内使用以下命令停止同步任务：
+=======
+如果不再需要进行数据迁移，可以使用 `tiup dmctl` 执行以下命令停止迁移任务：
+>>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306):zh/migrate-data-using-dm.md
 
 {{< copyable "" >}}
 

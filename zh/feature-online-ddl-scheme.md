@@ -11,11 +11,11 @@ DDL 是数据库应用中必然会使用的一类 SQL。MySQL 虽然在 5.6 的�
 
 因此，gh-ost 以及 pt-osc 可以更优雅地在 MySQL 上面执行 DDL，把对读写的影响降到最低。
 
-TiDB 根据 Google F1 的在线异步 schema 变更算法实现，在 DDL 过程中并不会阻塞读写。因此，在 online-schema-change 过程中，gh-ost 和 pt-osc 所产生的大量中间表数据以及 binlog event，在 MySQL 与 TiDB 的数据同步过程中并不需要。
+TiDB 根据 Google F1 的在线异步 schema 变更算法实现，在 DDL 过程中并不会阻塞读写。因此，在 online-schema-change 过程中，gh-ost 和 pt-osc 所产生的大量中间表数据以及 binlog event，在 MySQL 与 TiDB 的数据迁移过程中并不需要。
 
-DM 是 MySQL 到 TiDB 的数据同步工具，online-ddl-scheme 功能就是对上述两个 online-schema-change 的工具进行特殊的处理，以便更快完成所需的 DDL 同步。
+DM 是 MySQL 到 TiDB 的数据迁移工具，online-ddl-scheme 功能就是对上述两个 online-schema-change 的工具进行特殊的处理，以便更快完成所需的 DDL 迁移。
 
-如果想从源码方面了解 DM online-ddl-scheme，可以参考 [DM 源码阅读系列文章（八）Online Schema Change 同步支持](https://pingcap.com/blog-cn/dm-source-code-reading-8/#dm-源码阅读系列文章八online-schema-change-同步支持)
+如果想从源码方面了解 DM online-ddl-scheme，可以参考 [DM 源码阅读系列文章（八）Online Schema Change 迁移支持](https://pingcap.com/blog-cn/dm-source-code-reading-8/#dm-源码阅读系列文章八online-schema-change-迁移支持)
 
 ## 配置
 
@@ -43,11 +43,11 @@ target-database:                # 下游数据库实例配置
 
 gh-ost 在实现 online-schema-change 的过程会产生 3 种 table：
 
-- `gho`：用于应用 DDL，待 `gho` 表中数据同步到与 origin table 一致后，通过 rename 的方式替换 origin table。
+- `gho`：用于应用 DDL，待 `gho` 表中数据迁移到与 origin table 一致后，通过 rename 的方式替换 origin table。
 - `ghc`：用于存放 online-schema-change 相关的信息。
 - `del`：对 origin table 执行 rename 操作而生成。
 
-DM 在同步过程中会把上述 table 分成 3 类：
+DM 在迁移过程中会把上述 table 分成 3 类：
 
 - ghostTable : `\_\*\_gho`
 - trashTable : `\_\*\_ghc`、`\_\*\_del`
@@ -142,7 +142,7 @@ pt-osc 在实现 online-schema-change 的过程会产生 2 种 table：
 - `old`：对 origin table 执行 rename 操作后生成。
 - 3 种 **trigger**：`pt_osc\_\*\_ins`、`pt_osc\_\*\_upd`、`pt_osc\_\*\_del`，用于在 pt_osc 过程中，同步 origin table 新产生的数据到 `new`。
 
-DM 在同步过程中会把上述 table 分成 3 类：
+DM 在迁移过程中会把上述 table 分成 3 类：
 
 - ghostTable : `\_\*\_new`
 - trashTable : `\_\*\_old`

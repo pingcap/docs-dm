@@ -7,7 +7,11 @@ aliases: ['/docs-cn/tidb-data-migration/stable/task-configuration-file/','/docs-
 
 本文档主要介绍 Data Migration (DM) 的任务基础配置文件 [`task_basic.yaml`](https://github.com/pingcap/dm/blob/master/dm/master/task_basic.yaml)，包含[全局配置](#全局配置)和[实例配置](#实例配置)两部分。
 
+<<<<<<< HEAD
 完整的任务配置参见 [DM 任务完整配置文件介绍](task-configuration-file-full.md)。关于各配置项的功能和配置，请参阅[数据同步功能](feature-overview.md)。
+=======
+完整的任务配置参见 [DM 任务完整配置文件介绍](task-configuration-file-full.md)。关于各配置项的功能和配置，请参阅[数据迁移功能](key-features.md)。
+>>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 ## 关键概念
 
@@ -15,7 +19,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/task-configuration-file/','/docs-
 
 ## 基础配置文件示例
 
-下面是一个基础的配置文件示例，通过该示例可以完成简单的数据同步功能。
+下面是一个基础的配置文件示例，通过该示例可以完成简单的数据迁移功能。
 
 ```yaml
 ---
@@ -34,11 +38,12 @@ target-database:       # 下游数据库实例配置
 ## ******** 功能配置集 **********
 block-allow-list:        # 上游数据库实例匹配的表的 block & allow list 过滤规则集，如果 DM 版本 <= v1.0.6 则使用 black-white-list
   bw-rule-1:             # 黑白名单配置的名称
-    do-dbs: ["all_mode"] # 同步哪些库
+    do-dbs: ["all_mode"] # 迁移哪些库
 
 # ----------- 实例配置 -----------
 mysql-instances:
   - source-id: "mysql-replica-01"  # 上游实例或者复制组 ID，参考 `dm-master.toml` 的 `source-id` 配置
+<<<<<<< HEAD
     block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v1.0.6 则使用 black-white-list
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量，在 v1.0.2 版本引入
     loader-thread: 16              # loader 用于导入数据的线程数量，在 v1.0.2 版本引入
@@ -49,6 +54,18 @@ mysql-instances:
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量，在 v1.0.2 版本引入
     loader-thread: 16              # loader 用于导入数据的线程数量，在 v1.0.2 版本引入
     syncer-thread: 16              # syncer 用于同步增量数据的线程数量，在 v1.0.2 版本引入
+=======
+    block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    mydumper-thread: 4             # mydumper 用于导出数据的线程数量
+    loader-thread: 16              # loader 用于导入数据的线程数量
+    syncer-thread: 16              # syncer 用于复制增量数据的线程数量
+
+  - source-id: "mysql-replica-02" # 上游实例或者复制组 ID，参考 `dm-master.toml` 的 `source-id` 配置
+    block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    mydumper-thread: 4             # mydumper 用于导出数据的线程数量
+    loader-thread: 16              # loader 用于导入数据的线程数量
+    syncer-thread: 16              # syncer 用于复制增量数据的线程数量
+>>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 ```
 
 ## 配置顺序
@@ -67,8 +84,8 @@ mysql-instances:
 - 描述：任务模式，可以通过任务模式来指定需要执行的数据迁移工作。
 - 值为字符串（`full`，`incremental` 或 `all`）。
     - `full`：只全量备份上游数据库，然后将数据全量导入到下游数据库。
-    - `incremental`：只通过 binlog 把上游数据库的增量修改同步到下游数据库, 可以设置实例配置的 `meta` 配置项来指定增量同步开始的位置。
-    - `all`：`full` + `incremental`。先全量备份上游数据库，将数据全量导入到下游数据库，然后从全量数据备份时导出的位置信息 (binlog position) 开始通过 binlog 增量同步数据到下游数据库。
+    - `incremental`：只通过 binlog 把上游数据库的增量修改复制到下游数据库, 可以设置实例配置的 `meta` 配置项来指定增量复制开始的位置。
+    - `all`：`full` + `incremental`。先全量备份上游数据库，将数据全量导入到下游数据库，然后从全量数据备份时导出的位置信息 (binlog position) 开始通过 binlog 增量复制数据到下游数据库。
 
 ### 功能配置集
 
@@ -76,7 +93,7 @@ mysql-instances:
 
 ## 实例配置
 
-本小节定义具体的数据同步子任务，DM 支持从单个或者多个上游 MySQL 实例同步数据到同一个下游数据库实例。
+本小节定义具体的数据迁移子任务，DM 支持从单个或者多个上游 MySQL 实例迁移数据到同一个下游数据库实例。
 配置项说明参见以上示例配置文件中 `mysql-instances` 的注释。
 
 ## 修改任务配置

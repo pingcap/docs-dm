@@ -1,10 +1,16 @@
 ---
+<<<<<<< HEAD
 title: 分库分表合并同步
 aliases: ['/docs-cn/tidb-data-migration/stable/feature-shard-merge/','/docs-cn/tidb-data-migration/v1.0/feature-shard-merge/','/docs-cn/dev/reference/tools/data-migration/features/shard-merge/','/docs-cn/v3.1/reference/tools/data-migration/features/shard-merge/','/docs-cn/v3.0/reference/tools/data-migration/features/shard-merge/','/docs-cn/v2.1/reference/tools/data-migration/features/shard-merge/']
+=======
+title: 分库分表合并迁移
+aliases: ['/docs-cn/tidb-data-migration/dev/feature-shard-merge/']
+>>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 ---
 
-# 分库分表合并同步
+# 分库分表合并迁移
 
+<<<<<<< HEAD
 本文介绍了 DM 提供的分库分表合并同步功能。此功能用于将上游 MySQL/MariaDB 实例中结构相同的表同步到下游 TiDB 的同一个表中。DM 不仅支持同步上游的 DML 数据，也支持协调同步多个上游分表的 DDL 表结构变更。
 
 > **注意：**
@@ -163,15 +169,45 @@ DM-worker 内部 sharding DDL 同步的简化流程为：
 1. 各 DM-worker 独立地协调对应上游 MySQL 实例内多个分表组成的 sharding group 的 DDL 同步。
 
 2. 当 DM-worker 收到所有分表的 DDL 语句时，向 DM-master 发送 DDL 相关信息。
+=======
+本文介绍了 DM 提供的分库分表的合并迁移功能，此功能可用于将上游 MySQL/MariaDB 实例中结构相同/不同的表迁移到下游 TiDB 的同一个表中。DM 不仅支持迁移上游的 DML 数据，也支持协调迁移多个上游分表的 DDL 表结构变更。
+
+## 简介
+
+DM 支持对上游多个分表的数据合并迁移到 TiDB 的一个表中，在迁移过程中需要协调各个分表的 DDL，以及该 DDL 前后的 DML。针对用户的使用场景，DM 支持悲观协调和乐观协调两种不同的模式。
+
+> **注意：**
+>
+> - 要执行分库分表合并迁移任务，必须在任务配置文件中设置 `shard-mode`。
+> - DM 对分库分表的合并默认使用悲观协调模式，在文档中如果没特殊说明则默认为悲观协调模式。
+> - 在没有深入了解乐观模式的原理和使用限制的情况下不建议使用该模式，否则可能造成迁移中断甚至数据不一致的严重后果。
+>>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 3. DM-master 根据 DM-worker 发来的 DDL 信息，协调由各 DM-worker 组成的 sharing group 的 DDL 同步。
 
+<<<<<<< HEAD
 4. 当 DM-master 收到所有 DM-worker 的 DDL 信息时，请求 DDL 锁的 owner（某个 DM-worker） 执行该 DDL 语句。
+=======
+当上游一个分表执行某一 DDL 后，这个分表的迁移会暂停，并等待其他所有分表都执行了同样的 DDL 才在下游执行该 DDL 并继续数据迁移。“悲观协调”模式的优点是可以保证迁移到下游的数据不会出错，详细的介绍请参考[悲观模式下分库分表合并迁移](feature-shard-merge-pessimistic.md)。
+>>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 5. DDL 锁的 owner 执行 DDL 语句，并将结果反馈给 DM-master；自身开始重新同步在内部协调 DDL 同步过程中被忽略的 DML 语句。
 
+<<<<<<< HEAD
 6. 当 DM-master 收到 owner 执行 DDL 成功的消息后，请求其他所有 DM-worker 继续开始同步。
+=======
+在一个分表上执行的 DDL，DM 会自动修改成兼容其他分表的语句，并立即迁移到下游，不会阻挡任何分表 DML 的迁移。“乐观协调”模式的优点是处理 DDL 时不会阻塞数据的迁移，但是使用不当会有迁移中断甚至数据不一致的风险，详细的介绍请参考[乐观模式下分库分表合并迁移](feature-shard-merge-optimistic.md)。
+>>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
 
 7. 其他所有 DM-worker 各自开始重新同步在内部协调 DDL 同步过程中被忽略的 DML 语句。
 
+<<<<<<< HEAD
 8. 在完成被忽略的 DML 语句的重新同步后，所有 DM-worker 继续正常同步。
+=======
+| 悲观协调模式   | 乐观协调模式   |
+| :----------- | :----------- |
+| 发起 DDL 的分表会暂停 DML 迁移 | 发起 DDL 的分表会继续 DML 迁移 |
+| 每个分表的 DDL 执行次序和语句必须相同 | 每个分表只需保持表结构互相兼容即可 |
+| DDL 在整个分表群达成一致后才迁移到下游 | 每个分表的 DDL 会即时影响下游 |
+| 错误的 DDL 操作在侦测到后可以被拦截 | 错误的 DDL 操作也会被迁移到下游，可能在侦测到之前已使部分上下游数据不一致 |
+>>>>>>> c5cb126... zh: Update descriptions about 迁移 & 同步 to make it clearer (#306)
