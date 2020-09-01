@@ -48,21 +48,9 @@ After the DM cluster is deployed using DM-Ansible, the configuration information
     source-id = "mysql-replica-01"
     dm-worker = "172.16.10.72:8262"
 
-<<<<<<< HEAD
     [[deploy]]
     source-id = "mysql-replica-02"
     dm-worker = "172.16.10.73:8262"
-=======
-    source-id: "mysql-replica-01"
-    # This indicates that whether DM-worker uses Global Transaction Identifier (GTID) to pull binlog. Before you use this configuration item, make sure that the GTID mode is enabled in the upstream MySQL.
-    enable-gtid: false
-
-    from:
-      host: "172.16.10.81"
-      user: "root"
-      password: "VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU="
-      port: 3306
->>>>>>> d556e9b... Update replicate-data-using-dm.md (#328)
     ```
 
     > **Note:**
