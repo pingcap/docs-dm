@@ -28,7 +28,7 @@ The binlog position is the offset information of a binlog event in a binlog file
 
 ### Binlog replication processing unit
 
-Binlog migration processing unit is the processing unit used in DM-worker to read upstream binlogs or local relay logs, and to migrate these logs to the downstream. Each subtask corresponds to a binlog migration processing unit. In the current documentation, the binlog migration processing unit is also referred to as the sync processing unit.
+Binlog replication processing unit is the processing unit used in DM-worker to read upstream binlogs or local relay logs, and to migrate these logs to the downstream. Each subtask corresponds to a binlog replication processing unit. In the current documentation, the binlog replication processing unit is also referred to as the sync processing unit.
 
 ### Block & allow table list
 

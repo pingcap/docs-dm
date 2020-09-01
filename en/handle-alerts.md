@@ -145,13 +145,13 @@ This document introduces how to deal with the alert information in DM.
 
     Refer to [Troubleshoot DM](error-handling.md#troubleshooting).
 
-## Alert rules related to binlog migration
+## Alert rules related to binlog replication
 
 ### `DM_sync_process_exists_with_error`
 
 - Description:
 
-    When the binlog migration processing unit encounters an error,  this unit moves to the `Paused` state, and an alert is triggered immediately.
+    When the binlog replication processing unit encounters an error,  this unit moves to the `Paused` state, and an alert is triggered immediately.
 
 - Solution:
 
@@ -171,7 +171,7 @@ This document introduces how to deal with the alert information in DM.
 
 - Description:
 
-    When the number of the binlog files in the current relay log processing unit exceeds that of the latest binlog files processed by the binlog migration processing unit by **more than** 1 for 10 minutes, an alert is triggered.
+    When the number of the binlog files in the current relay log processing unit exceeds that of the latest binlog files processed by the binlog replication processing unit by **more than** 1 for 10 minutes, an alert is triggered.
 
 - Solution:
 
