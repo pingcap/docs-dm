@@ -55,7 +55,7 @@ The main operations of the Load unit are to read the SQL file data from the loca
 
 ## Binlog replication unit
 
-To diagnose performance issues in the Binlog replication unit, you can check the `binlog file gap between master and syncer` monitoring metric. For more information about this metric, refer to [monitoring metrics of the Binlog replication](monitor-a-dm-cluster.md#binlog-migration). 
+To diagnose performance issues in the Binlog replication unit, you can check the `binlog file gap between master and syncer` monitoring metric. For more information about this metric, refer to [monitoring metrics of the Binlog replication](monitor-a-dm-cluster.md#binlog-replication). 
 
 - If this metric is greater than 1 for a long time, it usually indicates that there is a performance issue.
 - If this metric is 0, it usually indicates that there is no performance issue.
