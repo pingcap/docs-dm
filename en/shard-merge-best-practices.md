@@ -106,7 +106,7 @@ Then you can perform the following steps to fix the `ERROR 1062 (23000): Duplica
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1
     ```
 
-2. Start the full and incremental data replication task.
+2. Start the full and incremental data migration task.
 
 3. Run `query-status` to verify whether the data migration task is successfully processed and whether the data from upstream has already been merged and migrated to the downstream database.
 

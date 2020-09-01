@@ -36,7 +36,7 @@ CREATE TABLE `t1` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin
 ```
 
-When you migrate incremental data using DM, if the downstream table schema has more columns than the upstream table schema, you can see the similar error by running the `query-status` command:
+When you replicate incremental data using DM, if the downstream table schema has more columns than the upstream table schema, you can see the similar error by running the `query-status` command:
 
 ```
 "errors": [
