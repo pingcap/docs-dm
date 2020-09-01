@@ -1,11 +1,11 @@
 ---
-title: 管理数据同步任务
+title: 管理数据迁移任务
 aliases: ['/docs-cn/dev/reference/tools/data-migration/manage-tasks/','/docs-cn/v3.1/reference/tools/data-migration/manage-tasks/','/docs-cn/v3.0/reference/tools/data-migration/manage-tasks/','/docs-cn/v2.1/reference/tools/data-migration/manage-tasks/']
 ---
 
-# 管理数据同步任务
+# 管理数据迁移任务
 
-本文介绍了如何使用 [dmctl](overview.md#dmctl) 组件来进行数据同步任务的管理和维护。对于用 DM-Ansible 部署的 DM 集群，dmctl 二进制文件路径为 `dm-ansible/dmctl`。
+本文介绍了如何使用 [dmctl](overview.md#dmctl) 组件来进行数据迁移任务的管理和维护。对于用 DM-Ansible 部署的 DM 集群，dmctl 二进制文件路径为 `dm-ansible/dmctl`。
 
 dmctl 支持交互模式用于人工操作，同时也支持命令模式用于脚本。
 
@@ -106,13 +106,13 @@ Flags:
 # 使用 `dmctl [command] --help` 来获取某个命令的更多信息
 ```
 
-## 管理数据同步任务
+## 管理数据迁移任务
 
 本部分描述了如何使用不同的任务管理命令来执行相应操作。
 
-### 创建数据同步任务
+### 创建数据迁移任务
 
-`start-task` 命令用于创建数据同步任务。 当数据同步任务启动时，DM 将[自动对相应权限和配置进行前置检查](precheck.md)。
+`start-task` 命令用于创建数据迁移任务。 当数据迁移任务启动时，DM 将[自动对相应权限和配置进行前置检查](precheck.md)。
 
 {{< copyable "" >}}
 
@@ -178,9 +178,9 @@ start-task task.yaml
 }
 ```
 
-### 查询数据同步任务状态
+### 查询数据迁移任务状态
 
-`query-status` 命令用于查询数据同步任务状态。有关查询结果及子任务状态，详见[查询状态](query-status.md)。
+`query-status` 命令用于查询数据迁移任务状态。有关查询结果及子任务状态，详见[查询状态](query-status.md)。
 
 {{< copyable "" >}}
 
@@ -213,11 +213,11 @@ query-status
 
 - `-w`：
     - 可选
-    - 查询在指定的一组 DM-workers 上运行的数据同步任务的子任务
+    - 查询在指定的一组 DM-workers 上运行的数据迁移任务的子任务
 - `task-name`：
     - 可选
     - 指定任务名称
-    - 如果未设置，则返回全部数据同步任务的查询结果
+    - 如果未设置，则返回全部数据迁移任务的查询结果
 
 #### 返回结果示例
 
@@ -225,21 +225,21 @@ query-status
 
 ### 查询运行错误
 
-`query-error` 可用于查询数据同步任务与 relay 处理单元的错误信息。相比于 `query-status`，`query-error` 一般不用于获取除错误信息之外的其他信息。
+`query-error` 可用于查询数据迁移任务与 relay 处理单元的错误信息。相比于 `query-status`，`query-error` 一般不用于获取除错误信息之外的其他信息。
 
 `query-error` 常用于获取 `sql-skip`/`sql-replace` 所需的 binlog position 信息，有关 `query-error` 的参数与结果解释，请参考 [“跳过或替代执行异常的 SQL 语句”文档中的 query-error](skip-or-replace-abnormal-sql-statements.md#query-error)。
 
-### 暂停数据同步任务
+### 暂停数据迁移任务
 
-`pause-task` 命令用于暂停数据同步任务。
+`pause-task` 命令用于暂停数据迁移任务。
 
 > **注意：**
 >
 > 有关 `pause-task` 与 `stop-task` 的区别如下：
 >
-> - 使用 `pause-task` 仅暂停同步任务的执行，但仍然会在内存中保留任务的状态信息等，且可通过 `query-status` 进行查询；使用 `stop-task` 会停止同步任务的执行，并移除内存中与该任务相关的信息，且不可再通过 `query-status` 进行查询，但不会移除已经写入到下游数据库中的数据以及其中的 checkpoint 等 `dm_meta` 信息。
-> - 使用 `pause-task` 暂停同步任务期间，由于任务本身仍然存在，因此不能再启动同名的新任务，且会阻止对该任务所需 relay log 的清理；使用 `stop-task` 停止任务后，由于任务不再存在，因此可以再启动同名的新任务，且不会阻止对 relay log 的清理。
-> - `pause-task` 一般用于临时暂停同步任务以排查问题等；`stop-task` 一般用于永久删除同步任务或通过与 `start-task` 配合以更新配置信息。
+> - 使用 `pause-task` 仅暂停迁移任务的执行，但仍然会在内存中保留任务的状态信息等，且可通过 `query-status` 进行查询；使用 `stop-task` 会停止迁移任务的执行，并移除内存中与该任务相关的信息，且不可再通过 `query-status` 进行查询，但不会移除已经写入到下游数据库中的数据以及其中的 checkpoint 等 `dm_meta` 信息。
+> - 使用 `pause-task` 暂停迁移任务期间，由于任务本身仍然存在，因此不能再启动同名的新任务，且会阻止对该任务所需 relay log 的清理；使用 `stop-task` 停止任务后，由于任务不再存在，因此可以再启动同名的新任务，且不会阻止对 relay log 的清理。
+> - `pause-task` 一般用于临时暂停迁移任务以排查问题等；`stop-task` 一般用于永久删除迁移任务或通过与 `start-task` 配合以更新配置信息。
 
 {{< copyable "" >}}
 
@@ -272,7 +272,7 @@ pause-task [-w "127.0.0.1:8262"] task-name
 
 - `-w`：
     - 可选
-    - 指定在特定的一组 DM-workers 上暂停数据同步任务的子任务
+    - 指定在特定的一组 DM-workers 上暂停数据迁移任务的子任务
     - 如果设置，则只暂停该任务在指定 DM-workers 上的子任务
 - `task-name`：
     - 必选
@@ -314,9 +314,9 @@ pause-task test
 }
 ```
 
-### 恢复数据同步任务
+### 恢复数据迁移任务
 
-`resume-task` 命令用于恢复处于 `Paused` 状态的数据同步任务，通常用于在人为处理完造成同步任务暂停的故障后手动恢复同步任务。
+`resume-task` 命令用于恢复处于 `Paused` 状态的数据迁移任务，通常用于在人为处理完造成迁移任务暂停的故障后手动恢复迁移任务。
 
 {{< copyable "" >}}
 
@@ -349,7 +349,7 @@ resume-task [-w "127.0.0.1:8262"] task-name
 
 - `-w`：
     - 可选
-    - 指定在特定的一组 DM-workers 上恢复数据同步任务的子任务
+    - 指定在特定的一组 DM-workers 上恢复数据迁移任务的子任务
     - 如果设置，则只恢复该任务在指定 DM-workers 上的子任务
 - `task-name`：
     - 必选
@@ -391,9 +391,9 @@ resume-task test
 }
 ```
 
-### 停止数据同步任务
+### 停止数据迁移任务
 
-`stop-task` 命令用于停止数据同步任务。有关 `stop-task` 与 `pause-task` 的区别，请参考[暂停数据同步任务](#暂停数据同步任务)中的相关说明。
+`stop-task` 命令用于停止数据迁移任务。有关 `stop-task` 与 `pause-task` 的区别，请参考[暂停数据迁移任务](#暂停数据迁移任务)中的相关说明。
 
 {{< copyable "" >}}
 
@@ -426,7 +426,7 @@ stop-task [-w "127.0.0.1:8262"]  task-name
 
 - `-w`：
     - 可选
-    - 指定在特定的一组 DM-workers 上停止数据同步任务的子任务
+    - 指定在特定的一组 DM-workers 上停止数据迁移任务的子任务
     - 如果设置，则只停止该任务在指定 DM-workers 上的子任务
 - `task-name`：
     - 必选
@@ -468,9 +468,9 @@ stop-task test
 }
 ```
 
-### 更新数据同步任务
+### 更新数据迁移任务
 
-`update-task` 命令用于更新数据同步任务。
+`update-task` 命令用于更新数据迁移任务。
 
 支持的更新项包括：
 
@@ -482,11 +482,11 @@ stop-task test
 
 > **注意：**
 >
-> 如果能确保同步任务所需的 relay log 在任务停止期间不会被清理，则推荐使用[不支持更新项的更新步骤](#不支持更新项的更新步骤)来以统一的方式更新任务配置信息。
+> 如果能确保迁移任务所需的 relay log 在任务停止期间不会被清理，则推荐使用[不支持更新项的更新步骤](#不支持更新项的更新步骤)来以统一的方式更新任务配置信息。
 
 #### 支持更新项的更新步骤
 
-1. 使用 `query-status <task-name>` 查询对应数据同步任务的状态。
+1. 使用 `query-status <task-name>` 查询对应数据迁移任务的状态。
 
     - 若 `stage` 不为 `Paused`，则先使用 `pause-task <task-name>` 暂停任务。
 
@@ -498,7 +498,7 @@ stop-task test
 
 #### 不支持更新项的更新步骤
 
-1. 使用 `query-status <task-name>` 查询对应数据同步任务的状态。
+1. 使用 `query-status <task-name>` 查询对应数据迁移任务的状态。
 
     - 若任务存在，则通过 `stop-task <task-name>` 停止任务。
 
@@ -537,7 +537,7 @@ update-task [-w "127.0.0.1:8262"] ./task.yaml
 
 - `-w`：
     - 可选
-    - 指定在特定的一组 DM-workers 上更新数据同步任务的子任务
+    - 指定在特定的一组 DM-workers 上更新数据迁移任务的子任务
     - 如果设置，则只更新指定 DM-workers 上的子任务配置
 - `config-file`：
     - 必选
@@ -576,13 +576,13 @@ update-task task.yaml
 
 ## 其他任务与集群管理命令
 
-除上述常用的任务管理命令外，DM 还提供了其他一些命令用于管理数据同步任务或 DM 集群本身。
+除上述常用的任务管理命令外，DM 还提供了其他一些命令用于管理数据迁移任务或 DM 集群本身。
 
 ### 检查任务配置文件
 
-`check-task` 命令用于检查指定的数据同步任务配置文件（`task.yaml`）是否合法以及上下游数据库的配置、权限、表结构等是否满足同步需要。具体可参考[上游 MySQL 实例配置前置检查](precheck.md)。
+`check-task` 命令用于检查指定的数据迁移任务配置文件（`task.yaml`）是否合法以及上下游数据库的配置、权限、表结构等是否满足迁移需要。具体可参考[上游 MySQL 实例配置前置检查](precheck.md)。
 
-在使用 `start-task` 启动同步任务时，DM 也会执行 `check-task` 所做的全部检查。
+在使用 `start-task` 启动迁移任务时，DM 也会执行 `check-task` 所做的全部检查。
 
 {{< copyable "" >}}
 

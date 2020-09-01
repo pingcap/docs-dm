@@ -43,29 +43,29 @@ ansible-playbook stop.yml
 
 **全量数据导入过程中：**
 
-对于全量数据导入时的 SQL 文件，DM 使用下游数据库记录断点信息，DM-worker 会在本地 meta 文件记录子任务信息。DM-worker 重启时会检查断点信息和本地记录的子任务信息，重启前处于运行中状态的任务会自动恢复数据同步。
+对于全量数据导入时的 SQL 文件，DM 使用下游数据库记录断点信息，DM-worker 会在本地 meta 文件记录子任务信息。DM-worker 重启时会检查断点信息和本地记录的子任务信息，重启前处于运行中状态的任务会自动恢复数据迁移。
 
-**增量数据同步过程中：**
+**增量数据迁移过程中：**
 
-对于增量数据导入过程中的 binlog，DM 使用下游数据库记录断点信息，并会在同步任务开始或恢复后的第一个五分钟之内开启安全模式。
+对于增量数据导入过程中的 binlog，DM 使用下游数据库记录断点信息，并会在迁移任务开始或恢复后的第一个五分钟之内开启安全模式。
 
-+ 未启用 sharding DDL 同步
++ 未启用 sharding DDL 迁移
 
-    如果 DM-worker 上运行的任务未启用 sharding DDL 同步功能，DM-worker 重启时会检查断点信息和本地记录的子任务信息，重启前处于运行中状态的任务会自动恢复数据同步。
+    如果 DM-worker 上运行的任务未启用 sharding DDL 迁移功能，DM-worker 重启时会检查断点信息和本地记录的子任务信息，重启前处于运行中状态的任务会自动恢复数据迁移。
 
-+ 已启用 sharding DDL 同步
++ 已启用 sharding DDL 迁移
 
-    - DM 同步 sharding DDL 语句时，如果 DM-worker 成功执行（或跳过）sharding DDL 的 binlog event，与 DM-worker 中的 sharding DDL 语句相关的所有表的断点信息都会被更新至 DDL 语句对应的 binlog event 之后的位置。
+    - DM 迁移 sharding DDL 语句时，如果 DM-worker 成功执行（或跳过）sharding DDL 的 binlog event，与 DM-worker 中的 sharding DDL 语句相关的所有表的断点信息都会被更新至 DDL 语句对应的 binlog event 之后的位置。
 
-    - 当 DM-worker 重启发生在 sharding DDL 语句同步开始前或完成后，DM-worker 会根据断点信息和本地记录的子任务信息自动恢复数据同步。
+    - 当 DM-worker 重启发生在 sharding DDL 语句迁移开始前或完成后，DM-worker 会根据断点信息和本地记录的子任务信息自动恢复数据迁移。
 
-    - 当 DM-worker 重启发生在 sharding DDL 语句同步过程中，可能会出现作为 DDL lock owner 的 DM-worker 实例已执行了 DDL 语句并成功变更了下游数据库表结构，但其他 DM-worker 实例重启而无法跳过 DDL 语句也无法更新断点的情况。
+    - 当 DM-worker 重启发生在 sharding DDL 语句迁移过程中，可能会出现作为 DDL lock owner 的 DM-worker 实例已执行了 DDL 语句并成功变更了下游数据库表结构，但其他 DM-worker 实例重启而无法跳过 DDL 语句也无法更新断点的情况。
 
-      此时 DM 会再次尝试同步这些未跳过执行的 DDL 语句。然而，由于未重启的 DM-worker 实例已经执行到了此 DDL 对应的 binlog event 之后，重启的 DM-worker 实例会被阻滞在重启前 DDL binlog event 对应的位置。
+      此时 DM 会再次尝试迁移这些未跳过执行的 DDL 语句。然而，由于未重启的 DM-worker 实例已经执行到了此 DDL 对应的 binlog event 之后，重启的 DM-worker 实例会被阻滞在重启前 DDL binlog event 对应的位置。
 
       要解决这个问题，请按照[手动处理 Sharding DDL Lock](feature-manually-handling-sharding-ddl-locks.md#场景二unlock-过程中部分-dm-worker-重启) 中描述的步骤操作。
 
-**总结**：尽量避免在 sharding DDL 同步过程中重启 DM-worker。
+**总结**：尽量避免在 sharding DDL 迁移过程中重启 DM-worker。
 
 #### DM-master 重启事项
 
@@ -80,7 +80,7 @@ DM-master 重启时会自动向每个 DM-worker 实例请求任务信息，重�
 
 > **注意：**
 >
-> 尽量避免在 sharding DDL 同步过程中重启 DM-worker。
+> 尽量避免在 sharding DDL 迁移过程中重启 DM-worker。
 
 使用以下两种方法中任一种重启 DM-worker 组件：
 
