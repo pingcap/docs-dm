@@ -18,7 +18,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/dm-portal/','/docs-cn/v3.
 支持 DM 的三种迁移模式：
 
 - 全量迁移
-- 增量迁移
+- 增量复制
 - All（全量+增量）
 
 ### 实例信息配置

@@ -29,7 +29,7 @@ Go Version: go version go1.13 linux/amd64
 
 ### 主要变更
 
-- 优化了 `UNIQUE KEY` 对应列含 `NULL` 值时的增量迁移速度
+- 优化了 `UNIQUE KEY` 对应列含 `NULL` 值时的增量复制速度
 - 增加对 TiDB 返回的 `Write conflict`（9007 与 8005）错误的重试
 - 修复了全量数据导入过程中有可能触发 `Duplicate entry` 错误的问题
 - 修复了全量导入完成后上游无数据写入时可能无法 `stop-task`/`pause-task` 的问题

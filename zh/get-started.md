@@ -340,9 +340,9 @@ loaders:
 
 以上文件包含一些全局配置项和几组定义各种行为的配置项。
 
-* `task-mode: all`：DM 导入上游实例的全量备份，并使用上游 MySQL Server 的 binlog 进行增量迁移。
+* `task-mode: all`：DM 导入上游实例的全量备份，并使用上游 MySQL Server 的 binlog 进行增量复制。
 
-    * 此外，可将 `task-mode` 设置为 `full` 或 `incremental` 以分别进行全量备份或增量迁移。
+    * 此外，可将 `task-mode` 设置为 `full` 或 `incremental` 以分别进行全量迁移或增量复制。
 
 * `is-sharding: true`：多个 DM-worker 实例进行同一个任务，这些实例将上游的若干分片合并到一个下游的表中。
 
@@ -518,6 +518,6 @@ mysql -h 127.0.0.1 -P 4000 -u root -e 'select * from t1' dmtest1 | tail
 
 ## 结论
 
-本教程完成了上游 3 个 MySQL Server 实例的分片迁移，介绍了分片迁移中，DM 如何在集群中导入初始数据，以及如何读取 MySQL 的 binlog 来迁移增量数据，从而使下游 TiDB 集群与上游实例保持迁移。
+本教程完成了上游 3 个 MySQL Server 实例的分片迁移，介绍了分片迁移中，DM 如何在集群中导入初始数据，以及如何读取 MySQL 的 binlog 来复制增量数据，从而使下游 TiDB 集群与上游实例保持迁移。
 
 关于 DM 的更多详情，请参考 [Data Migration 简介](overview.md)，或加入 [TiDB Community Slack](https://pingcap.com/tidbslack/) channel 参与讨论。

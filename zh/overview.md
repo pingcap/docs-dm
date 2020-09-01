@@ -5,7 +5,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/overview/','/docs-cn/v3.1
 
 # Data Migration 简介
 
-[TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据迁移任务管理平台，支持从 MySQL 或 MariaDB 到 TiDB 的全量数据迁移和增量数据迁移。使用 DM 工具有利于简化错误处理流程，降低运维成本。
+[TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据迁移任务管理平台，支持从 MySQL 或 MariaDB 到 TiDB 的全量数据迁移和增量数据复制。使用 DM 工具有利于简化错误处理流程，降低运维成本。
 
 > **注意：**
 >

@@ -42,13 +42,13 @@ mysql-instances:
     block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v1.0.6 则使用 black-white-list
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量，在 v1.0.2 版本引入
     loader-thread: 16              # loader 用于导入数据的线程数量，在 v1.0.2 版本引入
-    syncer-thread: 16              # syncer 用于迁移增量数据的线程数量，在 v1.0.2 版本引入
+    syncer-thread: 16              # syncer 用于复制增量数据的线程数量，在 v1.0.2 版本引入
 
   - source-id: "mysql-replica-02" # 上游实例或者复制组 ID，参考 `dm-master.toml` 的 `source-id` 配置
     block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v1.0.6 则使用 black-white-list
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量，在 v1.0.2 版本引入
     loader-thread: 16              # loader 用于导入数据的线程数量，在 v1.0.2 版本引入
-    syncer-thread: 16              # syncer 用于迁移增量数据的线程数量，在 v1.0.2 版本引入
+    syncer-thread: 16              # syncer 用于复制增量数据的线程数量，在 v1.0.2 版本引入
 ```
 
 ## 配置顺序
@@ -67,8 +67,8 @@ mysql-instances:
 - 描述：任务模式，可以通过任务模式来指定需要执行的数据迁移工作。
 - 值为字符串（`full`，`incremental` 或 `all`）。
     - `full`：只全量备份上游数据库，然后将数据全量导入到下游数据库。
-    - `incremental`：只通过 binlog 把上游数据库的增量修改迁移到下游数据库, 可以设置实例配置的 `meta` 配置项来指定增量迁移开始的位置。
-    - `all`：`full` + `incremental`。先全量备份上游数据库，将数据全量导入到下游数据库，然后从全量数据备份时导出的位置信息 (binlog position) 开始通过 binlog 增量迁移数据到下游数据库。
+    - `incremental`：只通过 binlog 把上游数据库的增量修改复制到下游数据库, 可以设置实例配置的 `meta` 配置项来指定增量复制开始的位置。
+    - `all`：`full` + `incremental`。先全量备份上游数据库，将数据全量导入到下游数据库，然后从全量数据备份时导出的位置信息 (binlog position) 开始通过 binlog 增量复制数据到下游数据库。
 
 ### 功能配置集
 

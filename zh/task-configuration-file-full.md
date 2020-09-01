@@ -102,7 +102,7 @@ syncers:                             # syncer 处理单元运行配置参数
     worker-count: 16                 # syncer 并发迁移 binlog event 的线程数量，默认值为 16
     batch: 100                       # syncer 迁移到下游数据库的一个事务批次 SQL 语句数，默认值为 100
     enable-ansi-quotes: true         # 若 `session` 中设置 `sql-mode: "ANSI_QUOTES"`，则需开启此项
-    safe-mode: false                 # 设置为 true，则将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。在启动或恢复增量迁移任务的前 5 分钟内 TiDB DM 会自动启动 safe mode
+    safe-mode: false                 # 设置为 true，则将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。在启动或恢复增量复制任务的前 5 分钟内 TiDB DM 会自动启动 safe mode
 
 # ----------- 实例配置 -----------
 mysql-instances:
@@ -124,7 +124,7 @@ mysql-instances:
     source-id: "mysql-replica-02"  # 上游实例或者复制组 ID，参考 `inventory.ini` 的 `source_id` 或者 `dm-master.toml` 的 `source-id` 配置
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量，等同于 mydumper 处理单元配置中的 `threads`，在 v1.0.2 版本引入
     loader-thread: 16              # loader 用于导入数据的线程数量，等同于 loader 处理单元配置中的 `pool-size`, 在 v1.0.2 版本引入
-    syncer-thread: 16              # syncer 用于迁移增量数据的线程数量，等同于 syncer 处理单元配置中的 `worker-count`，在 v1.0.2 版本引入
+    syncer-thread: 16              # syncer 用于复制增量数据的线程数量，等同于 syncer 处理单元配置中的 `worker-count`，在 v1.0.2 版本引入
 ```
 
 ## 配置顺序
@@ -145,8 +145,8 @@ mysql-instances:
 - 描述：任务模式，可以通过任务模式来指定需要执行的数据迁移工作。
 - 值为字符串（`full`，`incremental` 或 `all`）。
     - `full`：只全量备份上游数据库，然后将数据全量导入到下游数据库。
-    - `incremental`：只通过 binlog 把上游数据库的增量修改迁移到下游数据库, 可以设置实例配置的 `meta` 配置项来指定增量迁移开始的位置。
-    - `all`：`full` + `incremental`。先全量备份上游数据库，将数据全量导入到下游数据库，然后从全量数据备份时导出的位置信息 (binlog position) 开始通过 binlog 增量迁移数据到下游数据库。
+    - `incremental`：只通过 binlog 把上游数据库的增量修改迁移到下游数据库, 可以设置实例配置的 `meta` 配置项来指定增量复制开始的位置。
+    - `all`：`full` + `incremental`。先全量备份上游数据库，将数据全量导入到下游数据库，然后从全量数据备份时导出的位置信息 (binlog position) 开始通过 binlog 增量复制数据到下游数据库。
 
 ### 功能配置集
 

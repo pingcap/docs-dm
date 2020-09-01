@@ -36,7 +36,7 @@ DM 进行分表 DDL 的迁移有以下几点使用限制：
     - 只支持 `RENAME TABLE` 到一个不存在的表。
     - 一条 `RENAME TABLE` 语句只能包含一个 `RENAME` 操作。
 
-- 增量迁移任务需要确认开始迁移的 binlog position 上各分表的表结构必须一致，才能确保来自不同分表的 DML 语句能够迁移到表结构确定的下游，并且后续各分表的 DDL 语句能够正确匹配与迁移。
+- 增量复制任务需要确认开始复制的 binlog position 上各分表的表结构必须一致，才能确保来自不同分表的 DML 语句能复制移到表结构确定的下游，并且后续各分表的 DDL 语句能够正确匹配与复制。
 
 - 如果需要变更 [table routing 规则](feature-overview.md#table-routing)，必须先等所有 sharding DDL 语句迁移完成。
 

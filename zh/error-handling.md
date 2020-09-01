@@ -40,7 +40,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/troubleshoot-dm/','/docs-cn/tidb-
     | `dm-master`      | DM-master 服务内部出现错误   | `[code=38008:class=dm-master:scope=internal:level=high] grpc request error: rpc error: code = Unavailable desc = all SubConns are in TransientFailure, latest connection error: connection error: desc = "transport: Error while dialing dial tcp 172.17.0.2:8262: connect: connection refused"` |
     | `dm-worker`      | DM-worker 服务内部出现错误   | `[code=40066:class=dm-worker:scope=internal:level=high] ExecuteDDL timeout, try use query-status to query whether the DDL is still blocking` |
     | `dm-tracer`      | DM-tracer 服务内部出现错误   | `[code=42004:class=dm-tracer:scope=internal:level=medium] trace event test.1 not found` |
-    | `schema-tracker` | 增量迁移时记录 schema 变更出现错误   | `ErrSchemaTrackerCannotExecDDL,[code=44006:class=schema-tracker:scope=internal:level=high],"cannot track DDL: ALTER TABLE test DROP COLUMN col1"` |
+    | `schema-tracker` | 增量复制时记录 schema 变更出现错误   | `ErrSchemaTrackerCannotExecDDL,[code=44006:class=schema-tracker:scope=internal:level=high],"cannot track DDL: ALTER TABLE test DROP COLUMN col1"` |
     | `scheduler`      | 数据迁移任务调度相关操作出错操作   | `ErrSchedulerNotStarted,[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
 
 - `scope`：错误作用域。
@@ -117,7 +117,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/troubleshoot-dm/','/docs-cn/tidb-
 
 ### relay 处理单元报错 `event from * in * diff from passed-in event *` 或迁移任务中断并包含 `get binlog error ERROR 1236 (HY000)`、`binlog checksum mismatch, data may be corrupted` 等 binlog 获取或解析失败错误
 
-在 DM 进行 relay log 拉取与增量迁移过程中，如果遇到了上游超过 4GB 的 binlog 文件，就可能出现这两个错误。
+在 DM 进行 relay log 拉取与增量复制过程中，如果遇到了上游超过 4GB 的 binlog 文件，就可能出现这两个错误。
 
 原因是 DM 在写 relay log 时需要依据 binlog position 及文件大小对 event 进行验证，且需要保存迁移的 binlog position 信息作为 checkpoint。但是 MySQL binlog position 官方定义使用 uint32 存储，所以超过 4G 部分的 binlog position 的 offset 值会溢出，进而出现上面的错误。
 

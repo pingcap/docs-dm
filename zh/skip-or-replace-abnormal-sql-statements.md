@@ -76,7 +76,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/skip-replace-sqls/','/doc
 
 ### 实现原理
 
-DM 在进行增量数据迁移时，简化后的流程大致为：
+DM 在进行增量数据复制时，简化后的流程大致为：
 
 1. relay 处理单元从上游拉取 binlog 存储在本地作为 relay log。
 
