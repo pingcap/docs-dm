@@ -1,7 +1,6 @@
 ---
 title: Merge and Replicate Data from Sharded Tables
 summary: Learn how DM merges and replicates data from sharded tables.
-aliases: ['/docs/tidb-data-migration/dev/feature-shard-merge/']
 ---
 
 # Merge and Replicate Data from Sharded Tables

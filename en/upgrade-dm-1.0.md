@@ -1,7 +1,6 @@
 ---
 title: Upgrade TiDB Data Migration Between 1.0.x Versions
 summary: Learn how to upgrade a TiDB DM cluster from a lower 1.0.x version to a higher 1.0.x version.
-aliases: ['/docs/tidb-data-migration/dev/dm-upgrade/','/tidb-data-migration/dev/dm-upgrade']
 ---
 
 # Upgrade TiDB Data Migration Between 1.0.x Versions
