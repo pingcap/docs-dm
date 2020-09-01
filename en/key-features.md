@@ -460,7 +460,7 @@ Any of `instance_id`, `schema prefix` and `table prefix` can be set to an empty 
 
 ### Usage example
 
-Assuming in the sharding scenario where all tables have the auto-increment primary keys, you want to migrate two upstream MySQL instances `test_{1,2,3...}`.`t_{1,2,3...}` to the downstream TiDB instances `test`.`t`.
+Assuming in the sharding scenario where all tables have the auto-increment primary key, you want to migrate two upstream MySQL instances `test_{1,2,3...}`.`t_{1,2,3...}` to the downstream TiDB instances `test`.`t`.
 
 Configure the following two rules:
 
