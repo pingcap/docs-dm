@@ -7,21 +7,21 @@ aliases: ['/docs-cn/tidb-data-migration/stable/skip-or-replace-abnormal-sql-stat
 
 本文介绍了如何使用 DM 来处理异常的 SQL 语句。
 
-目前，TiDB 并不完全兼容所有的 MySQL 语法（详见 [TiDB 已支持的 DDL 语句](https://pingcap.com/docs-cn/dev/reference/mysql-compatibility/#ddl)）。当使用 DM 从 MySQL 同步数据到 TiDB 时，如果 TiDB 不支持对应的 SQL 语句，可能会造成错误并中断同步任务。在这种情况下，DM 提供以下两种方式来恢复同步：
+目前，TiDB 并不完全兼容所有的 MySQL 语法（详见 [TiDB 已支持的 DDL 语句](https://pingcap.com/docs-cn/dev/reference/mysql-compatibility/#ddl)）。当使用 DM 从 MySQL 迁移数据到 TiDB 时，如果 TiDB 不支持对应的 SQL 语句，可能会造成错误并中断迁移任务。在这种情况下，DM 提供以下两种方式来恢复迁移：
 
 - 使用 dmctl 来手动跳过 (skip) 该 SQL 语句对应的 binlog event。
 
 - 使用 dmctl 来手动指定其他 SQL 语句来替代 (replace) 该 SQL 语句对应的 binlog event，并向下游执行。
 
-如果提前预知将要同步 TiDB 不支持的 SQL 语句，也可以使用 dmctl 来手动预设跳过/替代执行操作。当 DM 尝试将该 SQL 语句对应的 binlog event 同步到下游时，该预设的操作将自动执行，从而避免同步过程被中断。
+如果提前预知将要迁移 TiDB 不支持的 SQL 语句，也可以使用 dmctl 来手动预设跳过/替代执行操作。当 DM 尝试将该 SQL 语句对应的 binlog event 迁移到下游时，该预设的操作将自动执行，从而避免迁移过程被中断。
 
 <!-- markdownlint-disable MD001 -->
 
 #### 使用限制
 
-- 跳过/替代执行操作只适合用于一次性跳过/替代执行**下游 TiDB 不支持执行的 SQL 语句**，其它同步错误请不要使用此方式进行处理。
+- 跳过/替代执行操作只适合用于一次性跳过/替代执行**下游 TiDB 不支持执行的 SQL 语句**，其它迁移错误请不要使用此方式进行处理。
 
-    - 其它同步错误可尝试使用 [Block & Allow Table Lists](feature-overview.md#block--allow-table-lists) 或 [binlog event filter](feature-overview.md#binlog-event-filter)。
+    - 其它迁移错误可尝试使用 [Block & Allow Table Lists](feature-overview.md#block--allow-table-lists) 或 [binlog event filter](feature-overview.md#binlog-event-filter)。
 
 - 如果业务不能接受下游 TiDB 跳过异常的 DDL 语句，也不接受使用其他 DDL 语句作为替代，则不适合使用此方式进行处理。
 
@@ -33,13 +33,13 @@ aliases: ['/docs-cn/tidb-data-migration/stable/skip-or-replace-abnormal-sql-stat
 - `--sharding` 仅用于对 sharding group 预设一些操作，并且必须在 DDL 语句执行之前预设，不能在 DDL 语句已经执行后预设。
 
     - `--sharding` 模式下只支持预设，并只能使用 `--sql-pattern` 来匹配 binlog event。
-    - 有关使用 DM 处理 sharding DDL 同步的原理，请参阅[分库分表合并同步原理](feature-shard-merge.md#实现原理)。
+    - 有关使用 DM 处理 sharding DDL 迁移的原理，请参阅[分库分表合并迁移原理](feature-shard-merge.md#实现原理)。
 
 #### 匹配 binlog event
 
-当同步任务由于执行 SQL 语句出错而中断时，可以使用 `query-error` 命令获取对应 binlog event 的 position 信息。在执行 `sql-skip` / `sql-replace` 时，通过指定该 position 信息，即可与对应的 binlog event 进行匹配。
+当迁移任务由于执行 SQL 语句出错而中断时，可以使用 `query-error` 命令获取对应 binlog event 的 position 信息。在执行 `sql-skip` / `sql-replace` 时，通过指定该 position 信息，即可与对应的 binlog event 进行匹配。
 
-然而，在同步中断前主动处理不被支持的 SQL 语句的情况下，由于无法提前预知 binlog event 的 position 信息，则需要使用其他方式来确保与后续将到达的 binlog event 进行匹配。
+然而，在迁移中断前主动处理不被支持的 SQL 语句的情况下，由于无法提前预知 binlog event 的 position 信息，则需要使用其他方式来确保与后续将到达的 binlog event 进行匹配。
 
 在 DM 中，支持如下两种 binlog event 匹配模式（两种模式只能选择其中一种）：
 
@@ -47,7 +47,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/skip-or-replace-abnormal-sql-stat
 
     - binlog position 在命令中使用 `--binlog-pos` 参数传入，格式为 `binlog-filename:binlog-pos`，如 `mysql-bin|000001.000003:3270`。
     - DM 中 binlog filename 的格式与上游 MySQL 中 binlog filename 的格式不完全一致。
-    - 在同步执行出错后，binlog position 可直接从 `query-error` 返回的 `failedBinlogPosition` 中获得。
+    - 在迁移执行出错后，binlog position 可直接从 `query-error` 返回的 `failedBinlogPosition` 中获得。
 
 2. DDL pattern：（仅限于 DDL 语句的）正则表达式匹配模式
 
@@ -64,43 +64,43 @@ aliases: ['/docs-cn/tidb-data-migration/stable/skip-or-replace-abnormal-sql-stat
 
 ### 支持场景
 
-- 场景一：同步过程中，上游执行了 TiDB 不支持的 DDL 语句并同步到了 DM，造成同步任务中断。
+- 场景一：迁移过程中，上游执行了 TiDB 不支持的 DDL 语句并迁移到了 DM，造成迁移任务中断。
 
-    - 如果业务能接受下游 TiDB 不执行该 DDL 语句，则使用 `sql-skip` 跳过对该 DDL 语句的同步以恢复同步任务。
-    - 如果业务能接受下游 TiDB 执行其他 DDL 语句来作为替代，则使用 `sql-replace` 替代该 DDL 的同步以恢复同步任务。
+    - 如果业务能接受下游 TiDB 不执行该 DDL 语句，则使用 `sql-skip` 跳过对该 DDL 语句的迁移以恢复迁移任务。
+    - 如果业务能接受下游 TiDB 执行其他 DDL 语句来作为替代，则使用 `sql-replace` 替代该 DDL 的迁移以恢复迁移任务。
 
-- 场景二：同步过程中，预先知道了上游将执行 TiDB 不支持的 DDL 语句，则需要提前处理以避免同步任务中断。
+- 场景二：迁移过程中，预先知道了上游将执行 TiDB 不支持的 DDL 语句，则需要提前处理以避免迁移任务中断。
 
     - 如果业务能接受下游 TiDB 不执行该 DDL 语句，则使用 `sql-skip` 预设一个跳过该 DDL 语句的操作，当执行到该 DDL 语句时即自动跳过。
     - 如果业务能接受下游 TiDB 执行其他 DDL 语句来作为替代，则使用 `sql-replace` 预设一个替代该 DDL 语句的操作，当执行到该 DDL 语句时即自动替代。
 
 ### 实现原理
 
-DM 在进行增量数据同步时，简化后的流程大致为：
+DM 在进行增量数据复制时，简化后的流程大致为：
 
 1. relay 处理单元从上游拉取 binlog 存储在本地作为 relay log。
 
-2. binlog 同步单元（sync）读取本地 relay log，获取其中的 binlog event。
+2. binlog 复制单元（sync）读取本地 relay log，获取其中的 binlog event。
 
-3. binlog 同步单元解析该 binlog event 并构造 DDL/DML 语句，然后将这些语句向下游 TiDB 执行。
+3. binlog 复制单元解析该 binlog event 并构造 DDL/DML 语句，然后将这些语句向下游 TiDB 执行。
 
-在 binlog 同步单元解析完 binlog event 并向下游 TiDB 执行时，可能会由于 TiDB 不支持对应的 SQL 语句而报错并造成同步中断。
+在 binlog 复制单元解析完 binlog event 并向下游 TiDB 执行时，可能会由于 TiDB 不支持对应的 SQL 语句而报错并造成迁移中断。
 
 在 DM 中，可以为 binlog event 注册一些跳过/替代执行操作（operator）。在向下游 TiDB 执行 SQL 语句前，将当前的 binlog event 信息（position、DDL 语句）与注册的 operator 进行比较。如果 position 或 DDL 语句与注册的某个 operator 匹配，则执行该 operator 对应的操作并将该 operator 移除。
 
-**同步中断后使用 `sql-skip` 或 `sql-replace` 恢复同步的流程**
+**迁移中断后使用 `sql-skip` 或 `sql-replace` 恢复迁移的流程**
 
 1. 使用 `sql-skip` 或 `sql-replace` 为指定的 binlog position 或 DDL pattern 注册 operator。
 
-2. 使用 `resume-task` 恢复之前由于同步出错导致中断的任务。
+2. 使用 `resume-task` 恢复之前由于迁移出错导致中断的任务。
 
-3. 重新解析获得之前造成同步出错的 binlog event。
+3. 重新解析获得之前造成迁移出错的 binlog event。
 
 4. 该 binlog event 与第一步注册的 operator 匹配成功。
 
-5. 执行 operator 对应的操作（跳过/替代执行）后，继续执行同步任务。
+5. 执行 operator 对应的操作（跳过/替代执行）后，继续执行迁移任务。
 
-**同步中断前使用 `sql-skip` 或 `sql-replace` 预设操作以避免同步中断的流程**
+**迁移中断前使用 `sql-skip` 或 `sql-replace` 预设操作以避免迁移中断的流程**
 
 1. 使用 `sql-skip` 或 `sql-replace` 为指定的 DDL pattern 注册 operator。
 
@@ -108,9 +108,9 @@ DM 在进行增量数据同步时，简化后的流程大致为：
 
 3. （包含 TiDB 不支持 SQL 语句的）binlog event 与第一步注册的 operator 匹配成功。
 
-4. 执行 operator 对应的操作（跳过/替代执行）后，继续执行同步任务，任务不发生中断。
+4. 执行 operator 对应的操作（跳过/替代执行）后，继续执行迁移任务，任务不发生中断。
 
-**合库合表同步中断前使用 `sql-skip` 或 `sql-replace` 预设操作以避免同步中断的流程**
+**合库合表迁移中断前使用 `sql-skip` 或 `sql-replace` 预设操作以避免迁移中断的流程**
 
 1. 使用 `sql-skip` 或 `sql-replace`（在 DM-master 上）为指定的 DDL pattern 注册 operator。
 
@@ -118,13 +118,13 @@ DM 在进行增量数据同步时，简化后的流程大致为：
 
 3. DM-master 协调各个 DM-worker 进行 DDL lock 同步。
 
-4. DM-master 判断得知 DDL lock 同步成功后，将第一步注册的 operator 发送给 DDL lock owner。
+4. DM-master 判断得知 DDL lock 迁移成功后，将第一步注册的 operator 发送给 DDL lock owner。
 
 5. DM-master 请求 DDL lock owner 执行 DDL 语句。
 
 6. DDL lock owner 将要执行的 DDL 语句与第四步收到的 operator 匹配成功。
 
-7. 执行 operator 对应的操作（跳过/替代执行）后，继续执行同步任务。
+7. 执行 operator 对应的操作（跳过/替代执行）后，继续执行迁移任务。
 
 ### 命令介绍
 
@@ -176,7 +176,7 @@ query-error [--worker=127.0.0.1:8262] [task-name]
                     "name": "test",              # 任务名
                     "stage": "Paused",           # 当前任务的状态
                     "unit": "Sync",              # 当前正在处理任务的处理单元
-                    "sync": {                    # binlog 同步单元（sync）的错误信息
+                    "sync": {                    # binlog 复制单元（sync）的错误信息
                         "errors": [              # 当前处理单元的错误信息列表
                             {
                                 // 错误信息描述
@@ -219,7 +219,7 @@ sql-skip <--worker=127.0.0.1:8262> [--binlog-pos=mysql-bin|000001.000003:3270] [
     - flag 参数，string，`--binlog-pos`；
     - `binlog-pos` 与 `--sql-pattern` 必须指定其中一个，且只能指定其中一个。
     - 在指定时表示操作将在 `binlog-pos` 与 binlog event 的 position 匹配时生效，格式为 `binlog-filename:binlog-pos`，如 `mysql-bin|000001.000003:3270`。
-    - 在同步执行出错后，binlog position 可直接从 `query-error` 返回的 `failedBinlogPosition` 中获得。
+    - 在迁移执行出错后，binlog position 可直接从 `query-error` 返回的 `failedBinlogPosition` 中获得。
 
 + `sql-pattern`：
     - flag 参数，string，`--sql-pattern`；
@@ -233,7 +233,7 @@ sql-skip <--worker=127.0.0.1:8262> [--binlog-pos=mysql-bin|000001.000003:3270] [
 + `sharding`：
     - flag 参数，boolean，`--sharding`；
     - 未指定 `--worker` 时必选，指定 `--worker` 时禁止使用；
-    - 在指定时表示预设的操作将在 sharding DDL 同步过程中的 DDL lock owner 内生效。
+    - 在指定时表示预设的操作将在 sharding DDL 迁移过程中的 DDL lock owner 内生效。
 
 + `task-name`：
     - 非 flag 参数，string，必选；
@@ -272,11 +272,11 @@ sql-replace <--worker=127.0.0.1:8262> [--binlog-pos=mysql-bin|000001.000003:3270
 
 ### 使用示例
 
-#### 同步中断后被动执行跳过操作
+#### 迁移中断后被动执行跳过操作
 
 ##### 应用场景
 
-假设现在需要将上游的 `db1.tbl1` 表同步到下游 TiDB（非合库合表同步场景），初始时表结构为：
+假设现在需要将上游的 `db1.tbl1` 表迁移到下游 TiDB（非合库合表迁移场景），初始时表结构为：
 
 {{< copyable "sql" >}}
 
@@ -304,7 +304,7 @@ SHOW CREATE TABLE db1.tbl1;
 ALTER TABLE db1.tbl1 CHANGE c2 c2 DECIMAL (10, 3);
 ```
 
-则会由于 TiDB 不支持该 DDL 语句而导致 DM 同步任务中断且报如下错误：
+则会由于 TiDB 不支持该 DDL 语句而导致 DM 迁移任务中断且报如下错误：
 
 ```
 exec sqls[[USE `db1`; ALTER TABLE `db1`.`tbl1` CHANGE COLUMN `c2` `c2` decimal(10,3);]] failed,
@@ -317,13 +317,13 @@ err:Error 1105: unsupported modify column length 10 is less than origin 11
 
 ##### 被动跳过 SQL 语句
 
-假设业务上可以接受下游 TiDB 不执行此 DDL 语句（即继续保持原有的表结构），则可以通过使用 `sql-skip` 命令跳过该 DDL 语句以恢复同步任务。操作步骤如下：
+假设业务上可以接受下游 TiDB 不执行此 DDL 语句（即继续保持原有的表结构），则可以通过使用 `sql-skip` 命令跳过该 DDL 语句以恢复迁移任务。操作步骤如下：
 
-1. 使用 `query-error` 获取同步出错的 binlog event 的 position 信息。
+1. 使用 `query-error` 获取迁移出错的 binlog event 的 position 信息。
     - position 信息可直接由 `query-error` 返回的 `failedBinlogPosition` 获得。
     - 本示例中的 position 为 `mysql-bin|000001.000003:34642`。
 
-2. 使用 `sql-skip` 预设一个 binlog event 跳过操作，该操作将在使用 `resume-task` 后同步该 binlog event 到下游时生效。
+2. 使用 `sql-skip` 预设一个 binlog event 跳过操作，该操作将在使用 `resume-task` 后迁移该 binlog event 到下游时生效。
 
     {{< copyable "" >}}
 
@@ -353,7 +353,7 @@ err:Error 1105: unsupported modify column length 10 is less than origin 11
     on replication unit
     ```
 
-3. 使用 `resume-task` 恢复之前出错中断的同步任务。
+3. 使用 `resume-task` 恢复之前出错中断的迁移任务。
 
     {{< copyable "" >}}
 
@@ -388,11 +388,11 @@ err:Error 1105: unsupported modify column length 10 is less than origin 11
 
 5. 使用 `query-error` 确认原错误信息已不再存在。
 
-#### 同步中断前主动执行替代执行操作
+#### 迁移中断前主动执行替代执行操作
 
 ##### 应用场景
 
-假设现在需要将上游的 `db2.tbl2` 表同步到下游 TiDB（非合库合表同步场景），初始时表结构为：
+假设现在需要将上游的 `db2.tbl2` 表迁移到下游 TiDB（非合库合表迁移场景），初始时表结构为：
 
 {{< copyable "sql" >}}
 
@@ -421,7 +421,7 @@ SHOW CREATE TABLE db2.tbl2;
 ALTER TABLE db2.tbl2 DROP COLUMN c2;
 ```
 
-当同步该 DDL 语句对应的 binlog event 到下游时，会由于 TiDB 不支持该 DDL 语句而导致 DM 同步任务中断且报如下错误：
+当迁移该 DDL 语句对应的 binlog event 到下游时，会由于 TiDB 不支持该 DDL 语句而导致 DM 迁移任务中断且报如下错误：
 
 ```
 exec sqls[[USE `db2`; ALTER TABLE `db2`.`tbl2` DROP COLUMN `c2`;]] failed,
@@ -450,7 +450,7 @@ err:Error 1105: can't drop column c2 with index covered now
     ALTER TABLE `db2`.`tbl2` DROP INDEX idx_c2;ALTER TABLE `db2`.`tbl2` DROP COLUMN `c2`;
     ```
 
-3. 使用 `sql-replace` 预设一个 binlog event 替代执行操作，该操作将在同步该 binlog event 到下游时生效。
+3. 使用 `sql-replace` 预设一个 binlog event 替代执行操作，该操作将在迁移该 binlog event 到下游时生效。
 
     {{< copyable "" >}}
 
@@ -498,29 +498,29 @@ err:Error 1105: can't drop column c2 with index covered now
 
 7. 使用 `query-error` 确认不存在 DDL 执行错误。
 
-#### 合库合表场景下同步中断后被动执行跳过操作
+#### 合库合表场景下迁移中断后被动执行跳过操作
 
 ##### 应用场景
 
-假设现在通过多个 DM-worker 将上游多个 MySQL 实例内的多个表进行合库合表同步到下游 TiDB 的同一个表，并且上游各分表执行了 TiDB 不支持的 DDL 语句。
+假设现在通过多个 DM-worker 将上游多个 MySQL 实例内的多个表进行合库合表迁移到下游 TiDB 的同一个表，并且上游各分表执行了 TiDB 不支持的 DDL 语句。
 
-DM-master 通过 DDL lock 协调 DDL 同步、并请求 DDL lock owner 向下游 TiDB 执行该 DDL 语句后，由于 TiDB 不支持该 DDL 语句，同步任务会报错并中断。
+DM-master 通过 DDL lock 协调 DDL 迁移、并请求 DDL lock owner 向下游 TiDB 执行该 DDL 语句后，由于 TiDB 不支持该 DDL 语句，迁移任务会报错并中断。
 
 ##### 被动跳过 SQL 语句
 
-合库合表场景下，被动跳过 TiDB 不支持的 DDL 语句的处理方式与非合库合表场景下的[同步中断后被动执行跳过操作](#同步中断后被动执行跳过操作)基本一致。
+合库合表场景下，被动跳过 TiDB 不支持的 DDL 语句的处理方式与非合库合表场景下的[迁移中断后被动执行跳过操作](#迁移中断后被动执行跳过操作)基本一致。
 
-但在合库合表场景下，只需要 DDL lock owner 向下游同步该 DDL 语句，因此在两种场景下的处理过程主要存在以下区别：
+但在合库合表场景下，只需要 DDL lock owner 向下游迁移该 DDL 语句，因此在两种场景下的处理过程主要存在以下区别：
 
 1. 合库合表场景下，仅需要对 DDL lock owner 执行 `sql-skip`（`--worker={DDL-lock-owner}`）。
 
 2. 合库合表场景下，仅需要对 DDL lock owner 执行 `resume-task`（`--worker={DDL-lock-owner}`）。
 
-#### 合库合表场景下同步中断前主动执行替代执行操作
+#### 合库合表场景下迁移中断前主动执行替代执行操作
 
 ##### 应用场景
 
-假设现在存在如下四个上游表需要合并同步到下游的同一个表 ``` `shard_db`.`shard_table` ```：
+假设现在存在如下四个上游表需要合并迁移到下游的同一个表 ``` `shard_db`.`shard_table` ```：
 
 - MySQL 实例 1 内有 `shard_db_1` 逻辑库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
 - MySQL 实例 2 内有 `shard_db_2` 逻辑库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
@@ -554,7 +554,7 @@ SHOW CREATE TABLE shard_db_1.shard_table_1;
 ALTER TABLE shard_db_*.shard_table_* DROP COLUMN c2;
 ```
 
-则当 DM 通过 sharding DDL lock 协调两个 DM-worker 同步该 DDL 语句、并请求 DDL lock owner 向下游执行该 DDL 语句时，会由于 TiDB 不支持该 DDL 语句而导致同步任务中断且报如下错误：
+则当 DM 通过 sharding DDL lock 协调两个 DM-worker 迁移该 DDL 语句、并请求 DDL lock owner 向下游执行该 DDL 语句时，会由于 TiDB 不支持该 DDL 语句而导致迁移任务中断且报如下错误：
 
 ```
 exec sqls[[USE `shard_db`; ALTER TABLE `shard_db`.`shard_table` DROP COLUMN `c2`;]] failed,
@@ -585,7 +585,7 @@ err:Error 1105: can't drop column c2 with index covered now
 
 3. 由于这是合库合表场景，因此使用 `--sharding` 参数来由 DM 自动确定替代执行操作只发生在 DDL lock owner 上。
 
-4. 使用 `sql-replace` 预设一个 binlog event 替代执行操作，该操作将在同步该 binlog event 到下游时生效。
+4. 使用 `sql-replace` 预设一个 binlog event 替代执行操作，该操作将在迁移该 binlog event 到下游时生效。
 
     {{< copyable "" >}}
 
@@ -656,7 +656,7 @@ err:Error 1105: can't drop column c2 with index covered now
     sharding:true
     ```
 
-7. 使用 `query-status` 确认任务的 `stage` 持续为 `Running`，且不存在正阻塞同步的 DDL 语句（`blockingDDLs`）与待解决的 sharding group（`unresolvedGroups`）。
+7. 使用 `query-status` 确认任务的 `stage` 持续为 `Running`，且不存在正阻塞迁移的 DDL 语句（`blockingDDLs`）与待解决的 sharding group（`unresolvedGroups`）。
 
 8. 使用 `query-error` 确认不存在 DDL 执行错误。
 

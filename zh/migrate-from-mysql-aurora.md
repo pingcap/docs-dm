@@ -18,7 +18,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/migrate-from-mysql-aurora/','/doc
 | Aurora-1 | pingcap-1-us-east-2a.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | 读取器 |
 | Aurora-2 | pingcap-2.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | 写入器 |
 
-DM 在增量同步阶段依赖 `ROW` 格式的 binlog，如果未启用 binlog 及设置正确的 binlog 格式，则不能正常使用 DM 进行数据同步，具体可参见[检查内容](precheck.md#检查内容)。
+DM 在增量复制阶段依赖 `ROW` 格式的 binlog，如果未启用 binlog 及设置正确的 binlog 格式，则不能正常使用 DM 进行数据迁移，具体可参见[检查内容](precheck.md#检查内容)。
 
 > **注意：**
 >
@@ -85,14 +85,14 @@ DM 在增量同步阶段依赖 `ROW` 格式的 binlog，如果未启用 binlog �
 
 ## 第 4 步：配置任务
 
-假设需要将 Aurora-1 和 Aurora-2 实例的 `test_db` 库的 `test_table` 表以**全量+增量**的模式同步到下游 TiDB 的 `test_db` 库的 `test_table` 表。
+假设需要将 Aurora-1 和 Aurora-2 实例的 `test_db` 库的 `test_table` 表以**全量+增量**的模式迁移到下游 TiDB 的 `test_db` 库的 `test_table` 表。
 
 复制并编辑 `{ansible deploy}/conf/task.yaml.example`，生成如下任务配置文件 `task.yaml`：
 
 ```yaml
 # 任务名，多个同时运行的任务不能重名。
 name: "test"
-# 全量+增量 (all) 同步模式。
+# 全量+增量 (all) 迁移模式。
 task-mode: "all"
 # 下游 TiDB 配置信息。
 target-database:
@@ -101,12 +101,12 @@ target-database:
   user: "root"
   password: ""
 
-# 当前数据同步任务需要的全部上游 MySQL 实例配置。
+# 当前数据迁移任务需要的全部上游 MySQL 实例配置。
 mysql-instances:
 -
   # 上游实例或者复制组 ID，参考 `inventory.ini` 的 `source_id` 或者 `dm-master.toml` 的 `source-id 配置`。
   source-id: "mysql-replica-01"
-  # 需要同步的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置。
+  # 需要迁移的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置。
   block-allow-list: "global"          # 如果 DM 版本 <= v1.0.6 则使用 black-white-list。
   # Mydumper 的配置项名称，用于引用全局的 Mydumper 配置。
   mydumper-config-name: "global"
@@ -119,9 +119,9 @@ mysql-instances:
 # 黑白名单全局配置，各实例通过配置项名引用。
 block-allow-list:                     # 如果 DM 版本 <= v1.0.6 则使用 black-white-list。
   global:
-    do-tables:                        # 需要同步的上游表的白名单。
-    - db-name: "test_db"              # 需要同步的表的库名。
-      tbl-name: "test_table"          # 需要同步的表的名称。
+    do-tables:                        # 需要迁移的上游表的白名单。
+    - db-name: "test_db"              # 需要迁移的表的库名。
+      tbl-name: "test_table"          # 需要迁移的表的名称。
 
 # Mydumper 全局配置，各实例通过配置项名引用。
 mydumpers:
@@ -141,7 +141,7 @@ mydumpers:
     ./dmctl --master-addr 172.16.10.71:8261
     ```
 
-3. 执行以下命令启动数据同步任务（`task.yaml` 是之前编辑的配置文件）
+3. 执行以下命令启动数据迁移任务（`task.yaml` 是之前编辑的配置文件）
 
     {{< copyable "shell-regular" >}}
 
@@ -184,7 +184,7 @@ mydumpers:
 
 ## 第 6 步：查询任务
 
-如需了解 DM 集群中是否存在正在运行的同步任务及任务状态等信息，可在 dmctl 内使用以下命令进行查询：
+如需了解 DM 集群中是否存在正在运行的迁移任务及任务状态等信息，可在 dmctl 内使用以下命令进行查询：
 
 {{< copyable "shell-regular" >}}
 
@@ -194,7 +194,7 @@ query-status
 
 > **注意：**
 >
-> 如果查询命令的返回结果中包含以下错误信息，则表明在全量同步的 dump 阶段不能获得相应的 lock：
+> 如果查询命令的返回结果中包含以下错误信息，则表明在全量迁移的 dump 阶段不能获得相应的 lock：
 >
 > ```
 > Couldn't acquire global lock, snapshots will not be consistent: Access denied for user 'root'@'%' (using password: YES)
