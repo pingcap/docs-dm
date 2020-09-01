@@ -67,6 +67,8 @@ The load processing unit is the processing unit used in DM-worker to import the 
 
 ### Migrate/migration
 
+The process of using the TiDB Data Migration tool to copy the **full data** of the upstream database to the downstream database.
+
 In the case of clearly mentioning "full", not explicitly mentioning "full or incremental", and clearly mentioning "full + incremental", use migrate/migration instead of replicate/replication.
 
 ## R
@@ -83,7 +85,9 @@ The relay processing unit is the processing unit used in DM-worker to pull binlo
 
 ### Replicate/replication
 
-In the case of clearly mentioning "incremental", use replicate/replication instead of migrate/migration.
+The process of using the TiDB Data Migration tool to copy the **incremental data** of the upstream database to the downstream database.
+
+In the case of clearly mentioning "incremental", use replicate/replication instead of migrate/migration. 
 
 ## S
 
