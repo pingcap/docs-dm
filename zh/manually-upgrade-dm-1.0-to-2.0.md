@@ -6,7 +6,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/manually-upgrade-dm-1.0-to-2.0/']
 
 # TiDB Data Migration 1.0.x 到 2.0.x 手动升级
 
-本文档主要介绍如何手动从 DM v1.0.x 升级到 v2.0.x，主要思路为利用 v1.0.x 时的全局 checkpoint 信息在 v2.0.x 集群中启动一个新的增量数据迁移任务。
+本文档主要介绍如何手动从 DM v1.0.x 升级到 v2.0.x，主要思路为利用 v1.0.x 时的全局 checkpoint 信息在 v2.0.x 集群中启动一个新的增量数据复制任务。
 
 有关如何自动将 DM v1.0.x 升级到 v2.0.x，请参考[使用 TiUP 自动导入 DM-Ansible 部署的 1.0 集群](maintain-dm-using-tiup.md#导入-dm-ansible-部署的-dm-10-集群并升级)。
 
@@ -117,7 +117,7 @@ from:
 
 1. 使用 [`operate-source`](manage-source.md#加载数据源配置) 命令将 [准备 v2.0.x 的配置文件](#第-1-步准备-v20x-的配置文件) 中得到的上游数据库 source 配置加载到 v2.0.x 集群中。
 
-2. 在下游 TiDB 中，从 v1.0.x 的数据迁移任务对应的增量 checkpoint 表中获取对应的全局 checkpoint 信息。
+2. 在下游 TiDB 中，从 v1.0.x 的数据复制任务对应的增量 checkpoint 表中获取对应的全局 checkpoint 信息。
 
     - 假设 v1.0.x 的数据迁移配置中未额外指定 `meta-schema`（或指定其值为默认的`dm_meta`），且对应的任务名为 `task_v1`，则对应的 checkpoint 信息在下游 TiDB 的 ``` `dm_meta`.`task_v1_syncer_checkpoint` ``` 表中。
     - 使用以下 SQL 语句分别获取该数据迁移任务对应的所有上游数据库 source 的全局 checkpoint 信息。
@@ -138,7 +138,7 @@ from:
     - 对 `task_v2.yaml` 进行以下修改：
         - 将 `name` 修改为一个新的、不存在的名称，如 `task_v2`
         - 将 `task-mode` 修改为 `incremental`
-        - 根据 step.2 中获取的全局 checkpoint 信息，为各 source 设置增量迁移的起始点，如：
+        - 根据 step.2 中获取的全局 checkpoint 信息，为各 source 设置增量复制的起始点，如：
 
             ```yaml
             mysql-instances:

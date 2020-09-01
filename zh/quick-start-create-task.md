@@ -1,16 +1,16 @@
 ---
-title: 创建数据同步任务
-summary: 了解在部署 DM 集群后，如何快速创建数据同步任务。
+title: 创建数据迁移任务
+summary: 了解在部署 DM 集群后，如何快速创建数据迁移任务。
 aliases: ['/docs-cn/tidb-data-migration/dev/quick-start-create-task/','/zh/tidb-data-migration/dev/create-task-and-verify']
 ---
 
-# 创建数据同步任务
+# 创建数据迁移任务
 
-本文档介绍在 DM 集群部署成功后，如何快速创建简单的数据同步任务。
+本文档介绍在 DM 集群部署成功后，如何快速创建简单的数据迁移任务。
 
 ## 使用样例
 
-在本地部署两个开启 binlog 的 MySQL 实例和一个 TiDB 实例；使用 DM 集群的一个 DM-master 来管理集群和数据同步任务。各个节点的信息如下：
+在本地部署两个开启 binlog 的 MySQL 实例和一个 TiDB 实例；使用 DM 集群的一个 DM-master 来管理集群和数据迁移任务。各个节点的信息如下：
 
 | 实例        | 服务器地址   | 端口   |
 | :---------- | :----------- | :--- |
@@ -19,7 +19,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/quick-start-create-task/','/zh/tidb-
 | TiDB       | 127.0.0.1 | 4000 |
 | DM-master  | 127.0.0.1 | 8261 |
 
-下面以此为例，说明如何创建数据同步任务。
+下面以此为例，说明如何创建数据迁移任务。
 
 ### 运行上游 MySQL
 
@@ -81,7 +81,7 @@ mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
 
 ## 配置 MySQL 数据源
 
-运行数据同步任务前，需要对 source 进行配置，也就是 MySQL 的相关设置。
+运行数据迁移任务前，需要对 source 进行配置，也就是 MySQL 的相关设置。
 
 ### 对密码进行加密
 
@@ -139,9 +139,9 @@ from:
 
 对于 MySQL2，将上面命令中的配置文件替换成 MySQL2 对应的配置文件。
 
-## 创建数据同步任务
+## 创建数据迁移任务
 
-在导入[准备数据](#准备数据)后，MySQL1 和 MySQL2 实例中有若干个分表，这些分表的结构相同，所在库的名称都以 "sharding" 开头，表名称都以 "t" 开头，并且主键或唯一键不存在冲突（即每张分表的主键或唯一键各不相同）。现在需要把这些分表同步到 TiDB 中的 `db_target.t_target` 表中。
+在导入[准备数据](#准备数据)后，MySQL1 和 MySQL2 实例中有若干个分表，这些分表的结构相同，所在库的名称都以 "sharding" 开头，表名称都以 "t" 开头，并且主键或唯一键不存在冲突（即每张分表的主键或唯一键各不相同）。现在需要把这些分表迁移到 TiDB 中的 `db_target.t_target` 表中。
 
 首先创建任务的配置文件：
 
@@ -224,8 +224,8 @@ routes:
 }
 ```
 
-这样就成功创建了一个将 MySQL1 和 MySQL2 实例中的分表数据同步到 TiDB 的任务。
+这样就成功创建了一个将 MySQL1 和 MySQL2 实例中的分表数据迁移到 TiDB 的任务。
 
 ## 数据校验
 
-修改上游 MySQL 分表中的数据，然后使用 [sync-diff-inspector](https://pingcap.com/docs-cn/stable/sync-diff-inspector/shard-diff/) 校验上下游数据是否一致，如果一致则说明同步任务运行正常。
+修改上游 MySQL 分表中的数据，然后使用 [sync-diff-inspector](https://pingcap.com/docs-cn/stable/sync-diff-inspector/shard-diff/) 校验上下游数据是否一致，如果一致则说明迁移任务运行正常。

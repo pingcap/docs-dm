@@ -6,7 +6,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/alert-rules/']
 
 # DM 告警信息
 
-使用 TiUP 部署 DM 集群的时候，会默认部署一套[告警系统](replicate-data-using-dm.md#第-8-步监控任务与查看日志)。
+使用 TiUP 部署 DM 集群的时候，会默认部署一套[告警系统](migrate-data-using-dm.md#第-8-步监控任务与查看日志)。
 
 DM 的告警规则及其对应的处理方法可参考[告警处理](handle-alerts.md)。
 
