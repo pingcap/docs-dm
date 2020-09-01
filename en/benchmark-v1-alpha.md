@@ -1,7 +1,6 @@
 ---
 title: DM 1.0-alpha Benchmark Report
 summary: Learn about the DM 1.0-alpha benchmark report.
-aliases: ['/docs/tidb-data-migration/dev/benchmark-v1-alpha/']
 ---
 
 # DM 1.0-alpha Benchmark Report

@@ -1,6 +1,5 @@
 ---
 title: Data Migration 简介
-aliases: ['/docs-cn/tidb-data-migration/dev/overview/','/docs-cn/tools/dm/overview/']
 ---
 
 # Data Migration 简介

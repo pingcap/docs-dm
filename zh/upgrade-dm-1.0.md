@@ -1,7 +1,6 @@
 ---
 title: TiDB Data Migration 1.0.x 版本间升级
 summary: 了解 TiDB Data Migration 工具的 1.0.x 版本变更和升级操作。
-aliases: ['/docs-cn/tidb-data-migration/dev/upgrade-dm-1.0/','/zh/tidb-data-migration/dev/dm-upgrade']
 ---
 
 # TiDB Data Migration 1.0.x 版本间升级

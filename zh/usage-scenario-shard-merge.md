@@ -1,6 +1,5 @@
 ---
 title: DM 分库分表合并场景
-aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 ---
 
 # DM 分库分表合并场景
