@@ -102,7 +102,7 @@ Assuming that the following two routing rules are configured and `test_1_bak`.`t
 
 ## Block and allow table lists
 
-The block and allow lists filtering rule of the upstream database instance tables is similar to MySQL migration-rules-db/tables, which can be used to filter or only migrate all operations of some databases or some tables.
+The block and allow lists filtering rule of the upstream database instance tables is similar to MySQL replication-rules-db/tables, which can be used to filter or only migrate all operations of some databases or some tables.
 
 ### Parameter configuration
 
@@ -140,7 +140,7 @@ If a value of the above parameters starts with the `~` character, the subsequent
 
 ### Filtering process
 
-The filtering rules corresponding to `do-dbs` and `ignore-dbs` are similar to the [Evaluation of Database-Level Replication and Binary Logging Options](https://dev.mysql.com/doc/refman/5.7/en/replication-rules-db-options.html) in MySQL. The filtering rules corresponding to `do-tables` and `ignore-tables` are similar to the [Evaluation of Table-Level Replication Options](https://dev.mysql.com/doc/refman/5.7/en/replication-rules-table-options.html) in MySQL. The filtering rules corresponding to `do-dbs` and `ignore-dbs` are similar to the [Evaluation of Database-Level Migration and Binary Logging Options](https://dev.mysql.com/doc/refman/5.7/en/replication-rules-db-options.html) in MySQL. The filtering rules corresponding to `do-tables` and `ignore-tables` are similar to the [Evaluation of Table-Level Migration Options](https://dev.mysql.com/doc/refman/5.7/en/replication-rules-table-options.html) in MySQL.
+The filtering rules corresponding to `do-dbs` and `ignore-dbs` are similar to the [Evaluation of Database-Level Replication and Binary Logging Options](https://dev.mysql.com/doc/refman/5.7/en/replication-rules-db-options.html) in MySQL. The filtering rules corresponding to `do-tables` and `ignore-tables` are similar to the [Evaluation of Table-Level Replication Options](https://dev.mysql.com/doc/refman/5.7/en/replication-rules-table-options.html) in MySQL.
 
 > **Note:**
 >
