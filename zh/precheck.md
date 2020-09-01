@@ -6,7 +6,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/precheck/']
 
 # 上游 MySQL 实例配置前置检查
 
-本文介绍了 DM 提供的前置检查功能，此功能用于在数据同步任务启动时提前检测出上游 MySQL 实例配置中可能存在的一些错误。
+本文介绍了 DM 提供的前置检查功能，此功能用于在数据迁移任务启动时提前检测出上游 MySQL 实例配置中可能存在的一些错误。
 
 ## 使用命令
 
@@ -14,7 +14,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/precheck/']
 
 ## 检查内容
 
-上下游数据库用户必须具备相应读写权限。当数据同步任务启动时，DM 会自动检查下列权限和配置：
+上下游数据库用户必须具备相应读写权限。当数据迁移任务启动时，DM 会自动检查下列权限和配置：
 
 + 数据库版本
 
@@ -24,7 +24,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/precheck/']
 + MySQL binlog 配置
 
     - binlog 是否开启（DM 要求 binlog 必须开启）
-    - 是否有 `binlog_format=ROW`（DM 只支持 ROW 格式的 binlog 同步）
+    - 是否有 `binlog_format=ROW`（DM 只支持 ROW 格式的 binlog 迁移）
     - 是否有 `binlog_row_image=FULL`（DM 只支持 `binlog_row_image=FULL`）
 
 + 上游 MySQL 实例用户的权限
