@@ -65,7 +65,7 @@ filters:                                        # 上游数据库实例匹配的
     schema-pattern: "test_*"                    # 库名匹配规则，支持通配符 "*" 和 "?"
     table-pattern: "t_*"                        # 表名匹配规则，支持通配符 "*" 和 "?"
     events: ["truncate table", "drop table"]    # 匹配哪些 event 类型
-    action: Ignore                              # 对与符合匹配规则的 binlog 迁移（Do）还是忽略(Ignore)
+    action: Ignore                              # 对与符合匹配规则的 binlog 复制（Do）还是忽略(Ignore)
   filter-rule-2:
     schema-pattern: "test_*"
     events: ["all dml"]
@@ -108,7 +108,7 @@ syncers:                             # syncer 处理单元运行配置参数
 mysql-instances:
   -
     source-id: "mysql-replica-01"           # 上游实例或者复制组 ID，参考 `inventory.ini` 的 `source_id` 或者 `dm-master.toml` 的 `source-id` 配置
-    meta:                                   # `task-mode` 为 `incremental` 且下游数据库的 `checkpoint` 不存在时 binlog 迁移开始的位置; 如果 checkpoint 存在，则以 `checkpoint` 为准
+    meta:                                   # `task-mode` 为 `incremental` 且下游数据库的 `checkpoint` 不存在时 binlog 复制开始的位置; 如果 checkpoint 存在，则以 `checkpoint` 为准
       binlog-name: binlog.000001
       binlog-pos: 4
 

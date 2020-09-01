@@ -23,7 +23,7 @@ aliases: ['/docs-cn/dev/reference/tools/data-migration/precheck/','/docs-cn/v3.1
 + MySQL binlog 配置
 
     - binlog 是否开启（DM 要求 binlog 必须开启）
-    - 是否有 `binlog_format=ROW`（DM 只支持 ROW 格式的 binlog 迁移）
+    - 是否有 `binlog_format=ROW`（DM 只支持 ROW 格式的 binlog 复制）
     - 是否有 `binlog_row_image=FULL`（DM 只支持 `binlog_row_image=FULL`）
 
 + 上游 MySQL 实例用户的权限

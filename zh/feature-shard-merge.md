@@ -29,7 +29,7 @@ DM 进行分表 DDL 的迁移有以下几点使用限制：
 
 - sharding group 数据迁移任务不支持 `DROP DATABASE/TABLE` 语句。
 
-    - DM-worker 中的 binlog 迁移单元（sync）会自动忽略掉上游分表的 `DROP DATABASE` 和 `DROP TABLE` 语句。
+    - DM-worker 中的 binlog 复制单元（sync）会自动忽略掉上游分表的 `DROP DATABASE` 和 `DROP TABLE` 语句。
 
 - sharding group 数据迁移任务支持 `RENAME TABLE` 语句，但有如下限制（online DDL 中的 `RENAME` 有特殊方案进行支持）：
 
@@ -50,7 +50,7 @@ DM 进行分表 DDL 的迁移有以下几点使用限制：
 
 ## 背景
 
-目前，DM 使用 ROW 格式的 binlog 进行数据迁移，且 binlog 中不包含表结构信息。在 ROW 格式的 binlog 迁移过程中，如果不需要将多个上游表合并迁移到下游的同一个表，则只存在一个上游表的 DDL 语句会更新对应下游表结构。ROW 格式的 binlog 可以认为是具有 self-description 属性。
+目前，DM 使用 ROW 格式的 binlog 进行数据迁移，且 binlog 中不包含表结构信息。在 ROW 格式的 binlog 复制过程中，如果不需要将多个上游表合并迁移到下游的同一个表，则只存在一个上游表的 DDL 语句会更新对应下游表结构。ROW 格式的 binlog 可以认为是具有 self-description 属性。
 
 分库分表合并迁移过程中，可以根据 column values 及下游的表结构构造出相应的 DML 语句，但此时若上游的分表执行 DDL 语句进行了表结构变更，则必须对该 DDL 语句进行额外迁移处理，以避免因为表结构和 binlog 数据不一致而造成迁移出错的问题。
 
@@ -60,7 +60,7 @@ DM 进行分表 DDL 的迁移有以下几点使用限制：
 
 在上图的例子中，分表的合库合表过程简化成了上游只有两个 MySQL 实例，每个实例内只有一个表。假设在数据迁移开始时，将两个分表的表结构版本记为 schema V1，将 DDL 语句执行完后的表结构版本记为 schema V2。
 
-现在，假设数据迁移过程中，DM-worker 内的 binlog 迁移单元（sync）从两个上游分表收到的 binlog 数据有如下时序：
+现在，假设数据迁移过程中，DM-worker 内的 binlog 复制单元（sync）从两个上游分表收到的 binlog 数据有如下时序：
 
 1. 开始迁移时，sync 从两个分表收到的都是 schema V1 版本的 DML 语句。
 

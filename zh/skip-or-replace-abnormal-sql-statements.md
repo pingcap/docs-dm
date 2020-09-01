@@ -80,11 +80,11 @@ DM 在进行增量数据迁移时，简化后的流程大致为：
 
 1. relay 处理单元从上游拉取 binlog 存储在本地作为 relay log。
 
-2. binlog 迁移单元（sync）读取本地 relay log，获取其中的 binlog event。
+2. binlog 复制单元（sync）读取本地 relay log，获取其中的 binlog event。
 
-3. binlog 迁移单元解析该 binlog event 并构造 DDL/DML 语句，然后将这些语句向下游 TiDB 执行。
+3. binlog 复制单元解析该 binlog event 并构造 DDL/DML 语句，然后将这些语句向下游 TiDB 执行。
 
-在 binlog 迁移单元解析完 binlog event 并向下游 TiDB 执行时，可能会由于 TiDB 不支持对应的 SQL 语句而报错并造成迁移中断。
+在 binlog 复制单元解析完 binlog event 并向下游 TiDB 执行时，可能会由于 TiDB 不支持对应的 SQL 语句而报错并造成迁移中断。
 
 在 DM 中，可以为 binlog event 注册一些跳过/替代执行操作（operator）。在向下游 TiDB 执行 SQL 语句前，将当前的 binlog event 信息（position、DDL 语句）与注册的 operator 进行比较。如果 position 或 DDL 语句与注册的某个 operator 匹配，则执行该 operator 对应的操作并将该 operator 移除。
 
@@ -176,7 +176,7 @@ query-error [--worker=127.0.0.1:8262] [task-name]
                     "name": "test",              # 任务名
                     "stage": "Paused",           # 当前任务的状态
                     "unit": "Sync",              # 当前正在处理任务的处理单元
-                    "sync": {                    # binlog 迁移单元（sync）的错误信息
+                    "sync": {                    # binlog 复制单元（sync）的错误信息
                         "errors": [              # 当前处理单元的错误信息列表
                             {
                                 // 错误信息描述
