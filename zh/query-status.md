@@ -1,6 +1,6 @@
 ---
 title: TiDB Data Migration 查询状态
-summary: 深入了解 TiDB Data Migration 如何查询数据同步任务状态
+summary: 深入了解 TiDB Data Migration 如何查询数据迁移任务状态
 aliases: ['/docs-cn/tidb-data-migration/dev/query-status/','/docs-cn/tidb-data-migration/dev/query-error/','/tidb-data-migration/dev/query-error/']
 ---
 
@@ -91,20 +91,20 @@ DM 的迁移任务状态取决于其分配到 DM-worker 上的[子任务状态](
                     "unit": "Sync",         # DM 的处理单元，包括 “Check”，“Dump“，“Load” 以及 “Sync”
                     "result": null,         # 子任务失败时显示错误信息
                     "unresolvedDDLLockID": "test-`test`.`t_target`",    # sharding DDL lock ID，可用于异常情况下手动处理 sharding DDL lock
-                    "sync": {                   # 当前 `Sync` 处理单元的同步信息
-                        "totalEvents": "12",    # 该子任务中同步的 binlog event 总数
-                        "totalTps": "1",        # 该子任务中每秒同步的 binlog event 数量
-                        "recentTps": "1",       # 该子任务中最后一秒同步的 binlog event 数量
+                    "sync": {                   # 当前 `Sync` 处理单元的迁移信息
+                        "totalEvents": "12",    # 该子任务中迁移的 binlog event 总数
+                        "totalTps": "1",        # 该子任务中每秒迁移的 binlog event 数量
+                        "recentTps": "1",       # 该子任务中最后一秒迁移的 binlog event 数量
                         "masterBinlog": "(bin.000001, 3234)",                               # 上游数据库当前的 binlog position
                         "masterBinlogGtid": "c0149e17-dff1-11e8-b6a8-0242ac110004:1-14",    # 上游数据库当前的 GTID 信息
-                        "syncerBinlog": "(bin.000001, 2525)",                               # 已被 `Sync` 处理单元同步的 binlog position
-                        "syncerBinlogGtid": "",                                             # 使用 GTID 同步的 binlog position
+                        "syncerBinlog": "(bin.000001, 2525)",                               # 已被 `Sync` 处理单元迁移的 binlog position
+                        "syncerBinlogGtid": "",                                             # 使用 GTID 迁移的 binlog position
                         "blockingDDLs": [       # 当前被阻塞的 DDL 列表。该项仅在当前 DM-worker 所有上游表都处于 “synced“ 状态时才有数值，此时该列表包含的是待执行或待跳过的 sharding DDL 语句
                             "USE `test`; ALTER TABLE `test`.`t_target` DROP COLUMN `age`;"
                         ],
                         "unresolvedGroups": [   # 没有被解决的 sharding group 信息
                             {
-                                "target": "`test`.`t_target`",                  # 待同步的下游表
+                                "target": "`test`.`t_target`",                  # 待迁移的下游表
                                 "DDLs": [
                                     "USE `test`; ALTER TABLE `test`.`t_target` DROP COLUMN `age`;"
                                 ],
@@ -118,7 +118,7 @@ DM 的迁移任务状态取决于其分配到 DM-worker 上的[子任务状态](
                                 ]
                             }
                         ],
-                        "synced": false         # 增量同步是否已追上上游。由于后台 `Sync` 单元并不会实时刷新保存点，当前值为 “false“ 并不一定代表发生了同步延迟
+                        "synced": false         # 增量复制是否已追上上游。由于后台 `Sync` 单元并不会实时刷新保存点，当前值为 “false“ 并不一定代表发生了迁移延迟
                     }
                 }
             ]
@@ -139,7 +139,7 @@ DM 的迁移任务状态取决于其分配到 DM-worker 上的[子任务状态](
                     "unit": "Load",
                     "result": null,
                     "unresolvedDDLLockID": "",
-                    "load": {                   # `Load` 处理单元的同步信息
+                    "load": {                   # `Load` 处理单元的迁移信息
                         "finishedBytes": "115", # 已全量导入字节数
                         "totalBytes": "452",    # 总计需要导入的字节数
                         "progress": "25.44 %"   # 全量导入进度
