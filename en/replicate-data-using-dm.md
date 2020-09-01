@@ -45,7 +45,7 @@ After the DM cluster is deployed using DM-Ansible, the configuration information
     # Master configuration.
     
     # This indicates that whether DM-worker uses Global Transaction Identifier (GTID) to pull binlog. Before you use this configuration item, make sure that the GTID mode is enabled in the upstream MySQL.
-    enable-gtid: false
+    enable-gtid = false
 
     [[deploy]]
     source-id = "mysql-replica-01"
