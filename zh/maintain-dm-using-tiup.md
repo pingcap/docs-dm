@@ -8,6 +8,20 @@ aliases: ['/docs-cn/tidb-data-migration/dev/cluster-operations/','/zh/tidb-data-
 
 本文介绍如何使用 TiUP 的 DM 组件运维 DM 集群。使用 TiUP 部署 DM 的完整步骤可参考[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。
 
+> **注意：**
+>
+> - 需要确保以下组件间端口可正常连通：
+>
+>   - 各 DM-master 节点间的 `peer_port`（默认为 `8291`）可互相连通。
+>
+>   - 各 DM-master 节点可连通所有 DM-worker 节点的 `port`（默认为 `8262`）。
+>
+>   - 各 DM-worker 节点可连通所有 DM-master 节点的 `port`（默认为 `8261`）。
+>
+>   - TiUP 节点可连通所有 DM-master 节点的 `port`（默认为 `8261`）。
+>
+>   - TiUP 节点可连通所有 DM-worker 节点的 `port`（默认为 `8262`）。
+
 TiUP DM 组件的帮助信息如下：
 
 ```bash
