@@ -103,7 +103,19 @@ alertmanager_servers:
 >
 > - 配置的层次结构使用 `.` 表示。如：`log.slow-threshold`。更多格式参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml)。
 >
-> - 更多参数说明，请参考 [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml)、[worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml) 
+> - 更多参数说明，请参考 [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml)、[worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml)
+>
+> - 需要确保以下组件间端口可正常连通：
+>
+>     - 各 DM-master 节点间的 `peer_port`（默认为 `8291`）可互相连通。
+>
+>     - 各 DM-master 节点可连通所有 DM-worker 节点的 `port`（默认为 `8262`）。
+>
+>     - 各 DM-worker 节点可连通所有 DM-master 节点的 `port`（默认为 `8261`）。
+>
+>     - TiUP 节点可连通所有 DM-master 节点的 `port`（默认为 `8261`）。
+>
+>     - TiUP 节点可连通所有 DM-worker 节点的 `port`（默认为 `8262`）。
 
 ## 第 3 步：执行部署命令
 
