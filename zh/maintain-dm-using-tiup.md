@@ -12,15 +12,15 @@ aliases: ['/docs-cn/tidb-data-migration/dev/cluster-operations/','/zh/tidb-data-
 >
 > - 需要确保以下组件间端口可正常连通：
 >
->   - 各 DM-master 节点间的 `peer_port`（默认为 `8291`）可互相连通。
+>     - 各 DM-master 节点间的 `peer_port`（默认为 `8291`）可互相连通。
 >
->   - 各 DM-master 节点可连通所有 DM-worker 节点的 `port`（默认为 `8262`）。
+>     - 各 DM-master 节点可连通所有 DM-worker 节点的 `port`（默认为 `8262`）。
 >
->   - 各 DM-worker 节点可连通所有 DM-master 节点的 `port`（默认为 `8261`）。
+>     - 各 DM-worker 节点可连通所有 DM-master 节点的 `port`（默认为 `8261`）。
 >
->   - TiUP 节点可连通所有 DM-master 节点的 `port`（默认为 `8261`）。
+>     - TiUP 节点可连通所有 DM-master 节点的 `port`（默认为 `8261`）。
 >
->   - TiUP 节点可连通所有 DM-worker 节点的 `port`（默认为 `8262`）。
+>     - TiUP 节点可连通所有 DM-worker 节点的 `port`（默认为 `8262`）。
 
 TiUP DM 组件的帮助信息如下：
 

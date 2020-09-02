@@ -39,11 +39,11 @@ aliases: ['/docs-cn/tidb-data-migration/dev/deploy-a-dm-cluster-using-binary/']
 >
 > - 需要确保以下组件间端口可正常连通：
 >
->   - 各 DM-master 节点间的 `8291` 端口可互相连通。
+>     - 各 DM-master 节点间的 `8291` 端口可互相连通。
 >
->   - 各 DM-master 节点可连通所有 DM-worker 节点的 `8262` 端口。
+>     - 各 DM-master 节点可连通所有 DM-worker 节点的 `8262` 端口。
 >
->   - 各 DM-worker 节点可连通所有 DM-master 节点的 `8261` 端口。
+>     - 各 DM-worker 节点可连通所有 DM-master 节点的 `8261` 端口。
 
 ### 部署 DM-master
 
