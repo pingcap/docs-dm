@@ -83,7 +83,7 @@ Global Flags:
 
 Assume that you need to replicate the upstream table `db1.tbl1` to the downstream TiDB. The initial table schema is:
 
-{{< copyable "sql" >}}
+{< copyable "sql" >}}
 
 ```sql
 SHOW CREATE TABLE db1.tbl1;
