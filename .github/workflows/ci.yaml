@@ -23,5 +23,7 @@ jobs:
       run: ./hack/verify-link-anchors.sh
     - name: "Check unclosed tags"
       run: 
-        python3 ./hack/check-tags.py $(git diff-tree --name-only --no-commit-id -r upstream/master...HEAD -- '*.md' ':(exclude).github/*');
+        git remote add upstream https://github.com/pingcap/docs-dm.git
+        git fetch upstream
+        python3 ./hack/check-tags.py $(git diff-tree --name-only --no-commit-id -r upstream/master...HEAD -- '*.md' ':(exclude).github/*')
         echo "checked files are $(git diff-tree --name-only --no-commit-id -r upstream/master...HEAD -- '*.md' ':(exclude).github/*')"
