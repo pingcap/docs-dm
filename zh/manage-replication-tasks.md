@@ -1,6 +1,5 @@
 ---
 title: 管理数据迁移任务
-title: 管理数据同步任务
 aliases: ['/docs-cn/tidb-data-migration/stable/manage-replication-tasks/','/docs-cn/tidb-data-migration/v1.0/manage-replication-tasks/','/docs-cn/dev/reference/tools/data-migration/manage-tasks/','/docs-cn/v3.1/reference/tools/data-migration/manage-tasks/','/docs-cn/v3.0/reference/tools/data-migration/manage-tasks/','/docs-cn/v2.1/reference/tools/data-migration/manage-tasks/','/docs-cn/stable/reference/tools/data-migration/manage-tasks/']
 ---
 

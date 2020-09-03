@@ -43,7 +43,7 @@ target-database:                # 下游数据库实例配置
 
 gh-ost 在实现 online-schema-change 的过程会产生 3 种 table：
 
-- `gho`：用于应用 DDL，待 `gho` 表中数据迁移到与 origin table 一致后，通过 rename 的方式替换 origin table。
+- `gho`：用于应用 DDL，待 `gho` 表中数据同步到与 origin table 一致后，通过 rename 的方式替换 origin table。
 - `ghc`：用于存放 online-schema-change 相关的信息。
 - `del`：对 origin table 执行 rename 操作而生成。
 
