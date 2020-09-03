@@ -93,7 +93,7 @@ The status of a DM migration task depends on the status of each subtask assigned
                     "result": null,         # Displays the error information if a subtask fails.
                     "unresolvedDDLLockID": "test-`test`.`t_target`",    # The sharding DDL lock ID, used for manually handling the sharding DDL
                                                                         # lock in the abnormal condition.
-                    "sync": {                   # The migration information of the `Sync` processing unit. This information is about the
+                    "sync": {                   # The replication information of the `Sync` processing unit. This information is about the
                                                 # same component with the current processing unit.
                         "totalEvents": "12",    # The total number of binlog events that are migrated in this subtask.
                         "totalTps": "1",        # The number of binlog events that are migrated in this subtask per second.
