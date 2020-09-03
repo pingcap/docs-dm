@@ -22,4 +22,4 @@ jobs:
     - name: Verify link anchors
       run: ./hack/verify-link-anchors.sh
     - name: "Check unclosed tags"
-      run: ./hack/check-tags.py $(git diff-tree --name-only --no-commit-id -r upstream/master..HEAD -- '*.md' ':(exclude).github/*')
+      run: python3 ./hack/check-tags.py $(git diff-tree --name-only --no-commit-id -r upstream/master..HEAD -- '*.md' ':(exclude).github/*')
