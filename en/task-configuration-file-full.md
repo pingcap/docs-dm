@@ -121,7 +121,7 @@ mysql-instances:
 
       binlog-name: binlog.000001
       binlog-pos: 4
-      binlog-gtid: "03fc0263-28c7-11e7-a653-6c0b84d59f30:1-7041423,05474d3c-28c7-11e7-8352-203db246dd3d:1-170"  # For incremental tasks with `enable-gtid: true` specified in the source, set this argument.
+      binlog-gtid: "03fc0263-28c7-11e7-a653-6c0b84d59f30:1-7041423,05474d3c-28c7-11e7-8352-203db246dd3d:1-170"  # You need to set this argument if you specify `enable-gtid: true` for the source of the incremental task.
 
     route-rules: ["route-rule-1", "route-rule-2"]   # The name of the mapping rule between the table matching the upstream database instance and the downstream database.
     filter-rules: ["filter-rule-1"]                 # The name of the binlog event filtering rule of the table matching the upstream database instance.
