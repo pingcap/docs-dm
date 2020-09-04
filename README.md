@@ -5,7 +5,7 @@ This repository stores all the source files of [TiDB Data Migration (DM) documen
 - `en`: [documentation in English](/en/TOC.md)
 - `zh`: [documentation in Chinese](/zh/TOC.md)
 
-## Documentation versions test
+## Documentation versions
 
 Currently, we maintain the following versions for TiDB DM documentation, each with a separate branch:
 
