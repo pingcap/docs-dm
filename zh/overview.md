@@ -92,7 +92,7 @@ DM 支持对原分库分表进行合库合表操作，但需要满足一些使�
 
     > **注意：**
     >
-    > 如果上游 MySQL/MariaDB server 间构成主从复制结构，则需要 5.7.1 < MySQL 版本 < 8.0 或者 MariaDB 版本大于 > 10.1.3。
+    > 如果上游 MySQL/MariaDB server 间构成主从复制结构，则需要 5.7.1 < MySQL 版本 < 8.0 或者 MariaDB 版本大于等于 10.1.3。
 
     在使用 dmctl 启动任务时，DM 会自动对任务上下游数据库的配置、权限等进行[前置检查](precheck.md)。
 
