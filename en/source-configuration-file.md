@@ -14,7 +14,7 @@ The following is a configuration file template of the upstream database:
 ```yaml
 source-id: "mysql-replica-01"
 
-# Enables GTID.
+# Whether to enable GTID.
 enable-gtid: false
 
 from:
