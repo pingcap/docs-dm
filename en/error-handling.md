@@ -161,6 +161,7 @@ For binlog replication processing units, manually recover migration using the fo
 
 4. Specify `safe-mode: true` in the `syncers` section of the migration task configuration to ensure re-entrant.
 
+5. Start the migration task using `start-task`.
 
 6. View the status of the migration task using `query-status`. You can restore `safe-mode` to the original value and restart the migration task when migration is done for the original error-triggering relay log files.
 
