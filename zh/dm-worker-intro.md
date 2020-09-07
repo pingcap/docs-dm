@@ -5,14 +5,14 @@ aliases: ['/docs-cn/tidb-data-migration/dev/dm-worker-intro/']
 
 # DM-worker 简介
 
-DM-worker 是 DM (Data Migration) 的一个组件，负责执行具体的数据同步任务。
+DM-worker 是 DM (Data Migration) 的一个组件，负责执行具体的数据迁移任务。
 
 其主要功能如下：
 
 - 注册为一台 MySQL 或 MariaDB 服务器的 slave。
 - 读取 MySQL 或 MariaDB 的 binlog event，并将这些 event 持久化保存在本地 (relay log)。
-- 单个 DM-worker 支持同步一个 MySQL 或 MariaDB 实例的数据到下游的多个 TiDB 实例。
-- 多个 DM-Worker 支持同步多个 MySQL 或 MariaDB 实例的数据到下游的一个 TiDB 实例。
+- 单个 DM-worker 支持迁移一个 MySQL 或 MariaDB 实例的数据到下游的多个 TiDB 实例。
+- 多个 DM-Worker 支持迁移多个 MySQL 或 MariaDB 实例的数据到下游的一个 TiDB 实例。
 
 ## DM-worker 处理单元
 
@@ -51,7 +51,7 @@ Binlog replication/Syncer 读取上游 MySQL/MariaDB 的 binlog event 或 relay 
 | `REPLICATION SLAVE` | Global |
 | `REPLICATION CLIENT` | Global |
 
-如果要同步 `db1` 的数据到 TiDB，可执行如下的 `GRANT` 语句：
+如果要迁移 `db1` 的数据到 TiDB，可执行如下的 `GRANT` 语句：
 
 {{< copyable "sql" >}}
 
@@ -60,7 +60,7 @@ GRANT RELOAD,REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'your_user'@'your_w
 GRANT SELECT ON db1.* TO 'your_user'@'your_wildcard_of_host';
 ```
 
-如果还要同步其他数据库的数据到 TiDB, 请确保已赋予这些库跟 `db1` 一样的权限。
+如果还要迁移其他数据库的数据到 TiDB, 请确保已赋予这些库跟 `db1` 一样的权限。
 
 ### 下游数据库用户权限
 
@@ -77,7 +77,7 @@ GRANT SELECT ON db1.* TO 'your_user'@'your_wildcard_of_host';
 | `ALTER` | Tables |
 | `INDEX` | Tables |
 
-对要执行同步操作的数据库或表执行下面的 `GRANT` 语句：
+对要执行迁移操作的数据库或表执行下面的 `GRANT` 语句：
 
 {{< copyable "sql" >}}
 

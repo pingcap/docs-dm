@@ -1,12 +1,12 @@
 ---
-title: 停止数据同步任务
-summary: 了解 TiDB Data Migration 如何停止数据同步任务。
+title: 停止数据迁移任务
+summary: 了解 TiDB Data Migration 如何停止数据迁移任务。
 aliases: ['/docs-cn/tidb-data-migration/dev/stop-task/']
 ---
 
-# 停止数据同步任务
+# 停止数据迁移任务
 
-`stop-task` 命令用于停止数据同步任务。有关 `stop-task` 与 `pause-task` 的区别，请参考[暂停数据同步任务](pause-task.md)中的相关说明。
+`stop-task` 命令用于停止数据迁移任务。有关 `stop-task` 与 `pause-task` 的区别，请参考[暂停数据迁移任务](pause-task.md)中的相关说明。
 
 {{< copyable "" >}}
 
@@ -39,7 +39,7 @@ stop-task [-s "mysql-replica-01"]  task-name
 
 - `-s`：
     - 可选
-    - 指定在特定的一个 MySQL 源上停止数据同步任务的子任务
+    - 指定在特定的一个 MySQL 源上停止数据迁移任务的子任务
     - 如果设置，则只停止该任务在指定 MySQL 源上的子任务
 - `task-name | task-file`：
     - 必选

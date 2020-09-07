@@ -5,7 +5,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/config-overview/']
 
 # DM 配置简介
 
-本文档简要介绍 DM (Data Migration) 的配置文件和数据同步任务的配置。
+本文档简要介绍 DM (Data Migration) 的配置文件和数据迁移任务的配置。
 
 ## 配置文件
 
@@ -13,19 +13,19 @@ aliases: ['/docs-cn/tidb-data-migration/dev/config-overview/']
 - `dm-worker.toml`：DM-worker 进程的配置文件，包括 DM-worker 的拓扑信息、日志等各项配置。配置说明详见 [DM-worker 配置文件介绍](dm-worker-configuration-file.md)。
 - `source.yaml`：上游数据库 MySQL/MariaDB 相关配置。配置说明详见[上游数据库配置文件介绍](source-configuration-file.md)。
 
-## 同步任务配置
+## 迁移任务配置
 
 ### 任务配置文件
 
-每一个数据同步任务对应一个 `task.yaml` 文件。关于该配置文件的详细介绍，参见[任务配置文件](task-configuration-file.md)。
+每一个数据迁移任务对应一个 `task.yaml` 文件。关于该配置文件的详细介绍，参见[任务配置文件](task-configuration-file.md)。
 
-### 创建数据同步任务
+### 创建数据迁移任务
 
 具体步骤如下：
 
 1. [使用 dmctl 将数据源配置加载到 DM 集群](manage-source.md#加载数据源配置)
 2. 参考[任务配置文件](task-configuration-file.md)来创建 `your_task.yaml` 文件。
-3. [使用 dmctl 创建数据同步任务](create-task.md)。
+3. [使用 dmctl 创建数据迁移任务](create-task.md)。
 
 ### 关键概念
 

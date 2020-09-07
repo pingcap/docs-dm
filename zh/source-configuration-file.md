@@ -14,7 +14,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/source-configuration-file/']
 ```yaml
 source-id: "mysql-replica-01"
 
-# 开启 GTID
+# 是否开启 GTID
 enable-gtid: false
 
 from:
