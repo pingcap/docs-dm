@@ -112,6 +112,7 @@ mysql-instances:
     meta:                                   # `task-mode` 为 `incremental` 且下游数据库的 `checkpoint` 不存在时 binlog 迁移开始的位置; 如果 checkpoint 存在，则以 `checkpoint` 为准
       binlog-name: binlog.000001
       binlog-pos: 4
+      binlog-gtid: "03fc0263-28c7-11e7-a653-6c0b84d59f30:1-7041423,05474d3c-28c7-11e7-8352-203db246dd3d:1-170"  # 对于 source 中指定了 `enable-gtid: true` 的增量任务，需要指定该值
 
     route-rules: ["route-rule-1", "route-rule-2"]  # 该上游数据库实例匹配的表到下游数据库的 table routing 规则名称
     filter-rules: ["filter-rule-1"]                # 该上游数据库实例匹配的表的 binlog event filter 规则名称

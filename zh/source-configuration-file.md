@@ -13,7 +13,7 @@ title: 上游数据库配置文件介绍
 ```yaml
 source-id: "mysql-replica-01"
 
-# 开启 GTID
+# 是否开启 GTID
 enable-gtid: false
 
 from:
