@@ -1,0 +1,20 @@
+name: link-check
+
+on: [pull_request]
+
+jobs:
+  base:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Link check for zh
+        uses: peter-evans/link-checker@v1
+        with:
+          args: -d $GITHUB_WORKSPACE/zh -r -v *
+
+      - name: Link check for en
+        uses: peter-evans/link-checker@v1
+        with:
+          args: -d $GITHUB_WORKSPACE/en -r -v *
