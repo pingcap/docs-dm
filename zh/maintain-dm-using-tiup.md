@@ -85,7 +85,7 @@ prod-cluster  tidb  v2.0.0  /root/.tiup/storage/dm/clusters/test  /root/.tiup/st
 {{< copyable "shell-regular" >}}
 
 ```shell
-tiup start start prod-cluster
+tiup dm start prod-cluster
 ```
 
 ## 检查集群状态
