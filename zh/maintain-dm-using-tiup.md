@@ -154,6 +154,8 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
     > **注意：**
     >
     > 需要新建一个拓扑文件，文件中只写入扩容节点的描述信息，不要包含已存在的节点。
+    >
+    > 其他更多配置项（如：部署目录等）请参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml)。
 
     ```yaml
     ---
