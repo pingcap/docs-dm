@@ -19,7 +19,7 @@ jobs:
         with:
           args: -c 32 -d /github/workspace -r -x "http://172.*|https://github.com/pingcap/dm/pull/.*|.*.md" zh*
 
-      - name: Link check for en
+      - name: Check external links in en files
         id: lc
         uses: peter-evans/link-checker@v1
         with:
