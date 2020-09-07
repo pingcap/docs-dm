@@ -25,7 +25,7 @@ jobs:
         with:
           args: -c 32 -d /github/workspace -r -x "http://172.*|https://github.com/pingcap/dm/pull/.*|.*.md" en*
 
-      - name: Fail if there were link errors
+      - name: Fail if there were external link errors
         if: ${{ steps.lc.outputs.exit_code }}
         run: |
           echo "please check previous steps: \"Link check for zh\" and \"Link check for en\""
