@@ -15,6 +15,15 @@ jobs:
           args: -d GITHUB_WORKSPACE -r -v -x http://172.* zh*
 
       - name: Link check for eh
+        id: lc
         uses: peter-evans/link-checker@v1
         with:
           args: -d GITHUB_WORKSPACE -r -v -x http://172.* en*
+
+      - name: Fail if there were link errors
+        run: exit ${{ steps.lc.outputs.exit_code }}
+
+      # Debug via SSH if previous steps failed
+      - name: Set up tmate session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v2
