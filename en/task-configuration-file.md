@@ -25,8 +25,6 @@ The following is a task configuration file template which allows you to perform 
 
 # ----------- Global configuration -----------
 ## ********** Basic configuration ************
-
-```yaml
 name: test                      # The name of the task. Should be globally unique.
 task-mode: all                  # The task mode. Can be set to `full`/`incremental`/`all`.
 
