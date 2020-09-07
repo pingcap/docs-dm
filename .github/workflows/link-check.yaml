@@ -26,7 +26,10 @@ jobs:
           args: -c 32 -d /github/workspace -r -x "http://172.*|https://github.com/pingcap/dm/pull/.*" en*
 
       - name: Fail if there were link errors
-        run: exit ${{ steps.lc.outputs.exit_code }}
+        if: ${{ steps.lc.outputs.exit_code }}
+        run: |
+          echo "please check previous steps: \"Link check for zh\" and \"Link check for en\""
+          exit ${{ steps.lc.outputs.exit_code }}
 
       # Debug via SSH if previous steps failed
       #- name: Set up tmate session
