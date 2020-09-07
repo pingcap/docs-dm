@@ -101,3 +101,8 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 4. 通过 `start-task` 启动迁移任务。
 
 5. 通过 `query-status` 观察迁移任务状态，当 `syncerBinlog` 超过 `checkpoint-T` 与 `checkpoint-S` 中的较大值后（在本例中，为 `(mysql-bin.000100, 1234)`），即可还原 `safe-mode` 为原始值并重启迁移任务。
+
+## 全量导入过程中遇到报错 `packet for query is too large. Try adjusting the 'max_allowed_packet' variable`
+
+尝试将任务配置文件 `mydumpers` 条目下 `statement-size` 设置为比默认 1000000（1M）更大的值。详见 [Loader 解决方案](https://docs.pingcap.com/zh/tidb/stable/loader-overview#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
+
