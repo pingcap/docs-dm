@@ -8,7 +8,7 @@ aliases: ['/docs/tidb-data-migration/dev/skip-or-replace-abnormal-sql-statements
 
 This document introduces how to handle failed SQL statements when you're using the TiDB Data Migration (DM) tool to migrate data.
 
-Currently, TiDB is not completely compatible with all MySQL syntax (see [the DDL statements supported by TiDB](https://pingcap.com/docs/dev/reference/mysql-compatibility/#ddl)). Therefore, when DM is replicating data from MySQL to TiDB and TiDB does not support the corresponding SQL statement, an error might occur and break the replication process. In this case, you can use the `handle-error` command of DM to resume the replication.
+Currently, TiDB is not completely compatible with all MySQL syntax (see [the DDL statements supported by TiDB](https://pingcap.com/docs/dev/reference/mysql-compatibility/#ddl)). Therefore, when DM is migrating data from MySQL to TiDB and TiDB does not support the corresponding SQL statement, an error might occur and break the migration process. In this case, you can use the `handle-error` command of DM to resume the migration.
 
 ## Restrictions
 
@@ -18,10 +18,10 @@ For example, `DROP PRIMARY KEY`. In this scenario, you can only create a new tab
 
 ## Supported scenarios
 
-During the replication, the DDL statement unsupported by TiDB is executed in the upstream and replicated to the downstream, and as a result, the replication task gets interrupted.
+During the migration, the DDL statement unsupported by TiDB is executed in the upstream and migrated to the downstream, and as a result, the migration task gets interrupted.
 
-- If it is acceptable that this DDL statement is skipped in the downstream TiDB, then you can use `handle-error <task-name> skip` to skip replicating this DDL statement and resume the replication.
-- If it is acceptable that this DDL statement is replaced with other DDL statements, then you can use `handle-error <task-name> replace` to replace this DDL statement and resume the replication.
+- If it is acceptable that this DDL statement is skipped in the downstream TiDB, then you can use `handle-error <task-name> skip` to skip migrating this DDL statement and resume the migration.
+- If it is acceptable that this DDL statement is replaced with other DDL statements, then you can use `handle-error <task-name> replace` to replace this DDL statement and resume the migration.
 
 ## Command
 
@@ -73,15 +73,15 @@ Global Flags:
     - Flag parameter, string, `--binlog-pos`
     - If it is not specified, DM automatically handles the currently failed SQL statement.
     - If it is specified, the skip operation is executed when `binlog-pos` matches with the position of the binlog event. The format is `binlog-filename:binlog-pos`, for example, `mysql-bin|000001.000003:3270`.
-    - When the replication returns an error, the binlog position can be obtained from `position` in `startLocation` returned by `query-status`.
+    - When the migration returns an error, the binlog position can be obtained from `position` in `startLocation` returned by `query-status`.
 
 ## Usage examples
 
-### Skip SQL if the replication gets interrupted
+### Skip SQL if the migration gets interrupted
 
 #### Non-shard-merge scenario
 
-Assume that you need to replicate the upstream table `db1.tbl1` to the downstream TiDB. The initial table schema is:
+Assume that you need to migrate the upstream table `db1.tbl1` to the downstream TiDB. The initial table schema is:
 
 {{< copyable "sql" >}}
 
@@ -109,13 +109,13 @@ Now, the following DDL statement is executed in the upstream to alter the table 
 ALTER TABLE db1.tbl1 CHANGE c2 c2 DECIMAL (10, 3);
 ```
 
-Because this DDL statement is not supported by TiDB, the replication task of DM gets interrupted. Execute the `query-status <task-name>` command, and you can see the following error:
+Because this DDL statement is not supported by TiDB, the migration task of DM gets interrupted. Execute the `query-status <task-name>` command, and you can see the following error:
 
 ```
 ERROR 8200 (HY000): Unsupported modify column: can't change decimal column precision
 ```
 
-Assume that it is acceptable in the actual production environment that this DDL statement is not executed in the downstream TiDB (namely, the original table schema is retained). Then you can use `handle-error <task-name> skip` to skip this DDL statement to resume the replication. The procedures are as follows:
+Assume that it is acceptable in the actual production environment that this DDL statement is not executed in the downstream TiDB (namely, the original table schema is retained). Then you can use `handle-error <task-name> skip` to skip this DDL statement to resume the migration. The procedures are as follows:
 
 1. Execute `handle-error <task-name> skip` to skip the currently failed DDL statement:
 
@@ -199,7 +199,7 @@ Assume that it is acceptable in the actual production environment that this DDL 
 
 #### Shard merge scenario
 
-Assume that you need to merge and replicate the following four tables in the upstream to one same table ``` `shard_db`.`shard_table` ``` in the downstream. The task mode is "pessimistic".
+Assume that you need to merge and migrate the following four tables in the upstream to one same table ``` `shard_db`.`shard_table` ``` in the downstream. The task mode is "pessimistic".
 
 The initial table schema is:
 
@@ -228,7 +228,7 @@ Now, execute the following DDL statement to all upstream sharded tables to alter
 ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DANISH_CI;
 ```
 
-Because this DDL statement is not supported by TiDB, the replication task of DM gets interrupted. Execute the `query-status` command, and you can see the following errors reported by the `shard_db_1`.`shard_table_1` table in MySQL instance 1 and the `shard_db_2`.`shard_table_1` table in MySQL instance 2:
+Because this DDL statement is not supported by TiDB, the migration task of DM gets interrupted. Execute the `query-status` command, and you can see the following errors reported by the `shard_db_1`.`shard_table_1` table in MySQL instance 1 and the `shard_db_2`.`shard_table_1` table in MySQL instance 2:
 
 ```
 {
@@ -244,7 +244,7 @@ Because this DDL statement is not supported by TiDB, the replication task of DM 
 }
 ```
 
-Assume that it is acceptable in the actual production environment that this DDL statement is not executed in the downstream TiDB (namely, the original table schema is retained). Then you can use `handle-error <task-name> skip` to skip this DDL statement to resume the replication. The procedures are as follows:
+Assume that it is acceptable in the actual production environment that this DDL statement is not executed in the downstream TiDB (namely, the original table schema is retained). Then you can use `handle-error <task-name> skip` to skip this DDL statement to resume the migration. The procedures are as follows:
 
 1. Execute `handle-error <task-name> skip` to skip the currently failed DDL statements in MySQL instance 1 and 2:
 
@@ -411,11 +411,11 @@ Assume that it is acceptable in the actual production environment that this DDL 
 
     You can see that the task runs normally with no error and all four wrong DDL statements are skipped.
 
-### Replace SQL if the replication gets interrupted
+### Replace SQL if the migration gets interrupted
 
 #### Non-shard-merge scenario
 
-Assume that you need to replicate the upstream table `db1.tbl1` to the downstream TiDB. The initial table schema is:
+Assume that you need to migrate the upstream table `db1.tbl1` to the downstream TiDB. The initial table schema is:
 
 {{< copyable "sql" >}}
 
@@ -442,7 +442,7 @@ Now, perform the following DDL operation in the upstream to add a new column wit
 ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
 ```
 
-Because this DDL statement is not supported by TiDB, the replication task gets interrupted. Execute the `query-status` command, and you can see the following error:
+Because this DDL statement is not supported by TiDB, the migration task gets interrupted. Execute the `query-status` command, and you can see the following error:
 
 ```
 {
@@ -535,7 +535,7 @@ You can replace this DDL statement with two equivalent DDL statements. The steps
 
 #### Shard merge scenario
 
-Assume that you need to merge and replicate the following four tables in the upstream to one same table ``` `shard_db`.`shard_table` ``` in the downstream. The task mode is "pessimistic".
+Assume that you need to merge and migrate the following four tables in the upstream to one same table ``` `shard_db`.`shard_table` ``` in the downstream. The task mode is "pessimistic".
 
 - In the MySQL instance 1, there is a schema `shard_db_1`, which has two tables `shard_table_1` and `shard_table_2`.
 - In the MySQL instance 2, there is a schema `shard_db_2`, which has two tables `shard_table_1` and `shard_table_2`.
@@ -567,7 +567,7 @@ Now, perform the following DDL operation to all upstream sharded tables to add a
 ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
 ```
 
-Because this DDL statement is not supported by TiDB, the replication task gets interrupted. Execute the `query-status` command, and you can see the following errors reported by the `shard_db_1`.`shard_table_1` table in MySQL instance 1 and the `shard_db_2`.`shard_table_1` table in MySQL instance 2:
+Because this DDL statement is not supported by TiDB, the migration task gets interrupted. Execute the `query-status` command, and you can see the following errors reported by the `shard_db_1`.`shard_table_1` table in MySQL instance 1 and the `shard_db_2`.`shard_table_1` table in MySQL instance 2:
 
 ```
 {

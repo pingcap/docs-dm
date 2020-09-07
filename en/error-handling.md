@@ -41,7 +41,7 @@ In the error system, usually, the information of a specific error is as follows:
     | `dm-worker`      |  DM-worker service  | `[code=40066:class=dm-worker:scope=internal:level=high] ExecuteDDL timeout, try use query-status to query whether the DDL is still blocking` |
     | `dm-tracer`      |  DM-tracer service  | `[code=42004:class=dm-tracer:scope=internal:level=medium] trace event test.1 not found` |
     | `schema-tracker` | schema-tracker (during incremental data replication)   | `[code=44006:class=schema-tracker:scope=internal:level=high],"cannot track DDL: ALTER TABLE test DROP COLUMN col1"` |
-    | `scheduler`      | Scheduling operations (of data replication tasks)   | `[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
+    | `scheduler`      | Scheduling operations (of data migration tasks)   | `[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
     | `dmctl`          | An error occurs within dmctl or when it interacts with other components | `[code=48001:class=dmctl:scope=internal:level=high],"can not create grpc connection"` |
 
 - `scope`: Error scope.
@@ -54,9 +54,9 @@ In the error system, usually, the information of a specific error is as follows:
 
     The severity level of the error, including `low`, `medium`, and `high`.
 
-    - The `low` level error usually relates to user operations and incorrect inputs. It does not affect replication tasks.
-    - The `medium` level error usually relates to user configurations. It affects some newly started services; however, it does not affect the existing DM replication status.
-    - The `high` level error usually needs your attention, since you need to resolve it to avoid the possible interruption of a replication task.
+    - The `low` level error usually relates to user operations and incorrect inputs. It does not affect migration tasks.
+    - The `medium` level error usually relates to user configurations. It affects some newly started services; however, it does not affect the existing DM migration status.
+    - The `high` level error usually needs your attention, since you need to resolve it to avoid the possible interruption of a migration task.
 
 - `message`: Error descriptions.
 
@@ -90,7 +90,7 @@ If you encounter an error while running DM, take the following steps to troubles
     resume-task ${task name}
     ```
 
-However, you need to reset the data replication task in some cases. For details, refer to [Reset the Data Replication Task](faq.md#how-to-reset-the-data-replication-task).
+However, you need to reset the data migration task in some cases. For details, refer to [Reset the Data Migration Task](faq.md#how-to-reset-the-data-migration-task).
 
 ## Handle common errors
 
@@ -108,7 +108,7 @@ However, you need to reset the data replication task in some cases. For details,
 | `code=32001` |   Abnormal dump processing unit                                            |  If the error message contains `mydumper: argument list too long.`, configure the table to be exported by manually adding the `--regex` regular expression in the Mydumper argument `extra-args` in the `task.yaml` file according to the block-allow list. For example, to export all tables named `hello`, add `--regex '.*\\.hello$'`; to export all tables, add `--regex '.*'`. |
 | `code=38008` |  An error occurs in the gRPC communication among DM components.                                     |   Check `class`. Find out the error occurs in the interaction of which components. Determine the type of communication error. If the error occurs when establishing gRPC connection, check whether the communication server is working normally. |
 
-### What can I do when a replication task is interrupted with the `invalid connection` error returned?
+### What can I do when a migration task is interrupted with the `invalid connection` error returned?
 
 #### Reason
 
@@ -116,12 +116,12 @@ The `invalid connection` error indicates that anomalies have occurred in the con
 
 #### Solutions
 
-Because DM has the feature of concurrently replicating data to the downstream in replication tasks, several errors might occur when a task is interrupted. You can check these errors by using `query-status`.
+Because DM has the feature of concurrently migrating data to the downstream in migration tasks, several errors might occur when a task is interrupted. You can check these errors by using `query-status`.
 
 - If only the `invalid connection` error occurs during the incremental replication process, DM retries the task automatically.
 - If DM does not or fails to retry automatically because of version problems, use `stop-task` to stop the task and then use `start-task` to restart the task.
 
-### A replication task is interrupted with the `driver: bad connection` error returned
+### A migration task is interrupted with the `driver: bad connection` error returned
 
 #### Reason
 
@@ -131,7 +131,7 @@ The `driver: bad connection` error indicates that anomalies have occurred in the
 
 The current version of DM automatically retries on error. If you use the previous version which does not support automatically retry, you can execute the `stop-task` command to stop the task. Then execute `start-task` to restart the task.
 
-### The relay unit throws error `event from * in * diff from passed-in event *` or a replication task is interrupted with failing to get or parse binlog errors like `get binlog error ERROR 1236 (HY000)` and `binlog checksum mismatch, data may be corrupted` returned
+### The relay unit throws error `event from * in * diff from passed-in event *` or a migration task is interrupted with failing to get or parse binlog errors like `get binlog error ERROR 1236 (HY000)` and `binlog checksum mismatch, data may be corrupted` returned
 
 #### Reason
 
@@ -141,7 +141,7 @@ During the DM process of relay log pulling or incremental replication, this two 
 
 #### Solutions
 
-For relay units, manually recover replication using the following solution:
+For relay units, manually recover migration using the following solution:
 
 1. Identify in the upstream that the size of the corresponding binlog file has exceeded 4GB when the error occurs.
 
@@ -155,13 +155,13 @@ For relay units, manually recover replication using the following solution:
 
 5. Restart the DM-worker.
 
-For binlog replication processing units, manually recover replication using the following solution:
+For binlog replication processing units, manually recover migration using the following solution:
 
 1. Identify in the upstream that the size of the corresponding binlog file has exceeded 4GB when the error occurs.
 
-2. Stop the replication task using `stop-task`.
+2. Stop the migration task using `stop-task`.
 
-3. Update the `binlog_name` in the global checkpoints and in each table checkpoint of the downstream `dm_meta` database to the name of the binlog file in error; update `binlog_pos` to a valid position value for which replication has completed, for example, 4.
+3. Update the `binlog_name` in the global checkpoints and in each table checkpoint of the downstream `dm_meta` database to the name of the binlog file in error; update `binlog_pos` to a valid position value for which migration has completed, for example, 4.
 
     Example: the name of the task in error is `dm_test`, the corresponding s`source-id` is `replica-1`, and the corresponding binlog file is `mysql-bin|000001.004451`. Execute the following command:
 
@@ -171,17 +171,17 @@ For binlog replication processing units, manually recover replication using the 
     UPDATE dm_test_syncer_checkpoint SET binlog_name='mysql-bin|000001.004451', binlog_pos = 4 WHERE id='replica-1';
     ```
 
-4. Specify `safe-mode: true` in the `syncers` section of the replication task configuration to ensure re-entrant.
+4. Specify `safe-mode: true` in the `syncers` section of the migration task configuration to ensure re-entrant.
 
-5. Start the replication task using `start-task`.
+5. Start the migration task using `start-task`.
 
-6. View the status of the replication task using `query-status`. You can restore `safe-mode` to the original value and restart the replication task when replication is done for the original error-triggering relay log files.
+6. View the status of the migration task using `query-status`. You can restore `safe-mode` to the original value and restart the migration task when migration is done for the original error-triggering relay log files.
 
 ### `Access denied for user 'root'@'172.31.43.27' (using password: YES)` shows when you query the task or check the log
 
 For database related passwords in all the DM configuration files, it is recommended to use the passwords encrypted by `dmctl`. If a database password is empty, it is unnecessary to encrypt it. For how to encrypt the plaintext password, see [Encrypt the database password using dmctl](manage-source.md#encrypt-the-database-password).
 
-In addition, the user of the upstream and downstream databases must have the corresponding read and write privileges. Data Migration also [prechecks the corresponding privileges automatically](precheck.md) while starting the data replication task.
+In addition, the user of the upstream and downstream databases must have the corresponding read and write privileges. Data Migration also [prechecks the corresponding privileges automatically](precheck.md) while starting the data migration task.
 
 ### The `load` processing unit reports the error `packet for query is too large. Try adjusting the 'max_allowed_packet' variable`
 

@@ -247,7 +247,10 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 
 > **Note:**
 >
-> TiUP does not support importing the DM Portal component in a DM 1.0 cluster.
+> - TiUP does not support importing the DM Portal component in a DM 1.0 cluster.
+> - You need to stop the original cluster before importing. 
+> - The deployment directories of some components are different from those of the original cluster. You can execute the `display` command to view the details. 
+> - Run `tiup update --self && tiup update dm` before importing to make sure that the TiUP DM component is the latest version.
 
 Before TiUP is released, DM-Ansible is often used to deploy DM clusters. To enable TiUP to take over the DM 1.0 cluster deployed by DM-Ansible, use the `import` command.
 
@@ -256,12 +259,14 @@ For example, to import a cluster deployed using DM Ansible:
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dm import --dir=/path/to/tidb-ansible
+tiup dm import --dir=/path/to/tidb-ansible --cluster-version v2.0.0-rc
 ```
+
+Execute `tiup list dm-master` to view the latest cluster version supported by TiUP.
 
 The process of using the `import` command is as follows:
 
-1. TiUP generates a topology file [`topology.yml`](https://github.com/pingcap/tiup/blob/master/examples/topology.dm.example.yaml) based on the DM cluster previously deployed using DM-Ansible.
+1. TiUP generates a topology file [`topology.yml`](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml) based on the DM cluster previously deployed using DM-Ansible.
 2. After confirming that the topology file has been generated, you can use it to deploy the DM cluster of v2.0 or later versions.
 
 After the deployment is completed, you can execute the `tiup dm start` command to start the cluster and begin the process of upgrading the DM kernel.
