@@ -20,7 +20,7 @@ This document introduces how to use the `query-status` command to query the task
 {
     "result": true,     # Whether the query is successful.
     "msg": "",          # Describes the reason for the unsuccessful query.
-    "tasks": [          # replication task list.
+    "tasks": [          # Migration task list.
         {
             "taskName": "test",         # The task name.
             "taskStatus": "Running",    # The status of the task.
@@ -50,7 +50,7 @@ It is recommended that you use `query-status` by the following steps:
 
 ## Task status
 
-The status of a DM replication task depends on the status of each subtask assigned to DM-worker. For detailed descriptions of subtask status, see [Subtask status](#subtask-status). The table below shows how the subtask status is related to task status.
+The status of a DM migration task depends on the status of each subtask assigned to DM-worker. For detailed descriptions of subtask status, see [Subtask status](#subtask-status). The table below shows how the subtask status is related to task status.
 
 |  Subtask status in a task | Task status |
 | :--- | :--- |
