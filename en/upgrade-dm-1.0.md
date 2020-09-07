@@ -12,7 +12,7 @@ This document introduces how to upgrade a TiDB DM cluster from a lower 1.0.x ver
 >
 > - Unless otherwise stated, DM version upgrade means upgrading DM from the previous version with an upgrade procedure to the current version.
 > - Unless otherwise stated, all the following upgrade examples assume that you have downloaded the corresponding DM version and DM-Ansible version, and the DM binary exists in the corresponding directory of DM-Ansible.
-> - Unless otherwise stated, all the following upgrade examples assume that all the data replication tasks have been stopped before the upgrade and all the replication tasks are restarted manually after DM upgrade is finished.
+> - Unless otherwise stated, all the following upgrade examples assume that all the data migration tasks have been stopped before the upgrade and all the migration tasks are restarted manually after DM upgrade is finished.
 > - The following shows the upgrade procedure of DM versions in reverse chronological order.
 
 ## Upgrade to v1.0.5
@@ -33,7 +33,7 @@ Go Version: go version go1.13 linux/amd64
 - Add retry for the `Write conflict` (9007 and 8005) error returned by TiDB
 - Fix the issue that the `Duplicate entry` error might occur during the full data import
 - Fix the issue that the `stop-task`/`pause-task` command may not work when no data written upstream after the full import is completed
-- Fix the issue that the monitoring metrics still display data after the replication task is stopped
+- Fix the issue that the monitoring metrics still display data after the migration task is stopped
 
 ### Upgrade operation example
 
@@ -57,9 +57,9 @@ Go Version: go version go1.13 linux/amd64
 ### Main changes
 
 - Add English UI for DM Portal
-- Add the `--more` parameter in the `query-status` command to show complete replication status information
-- Fix the issue that `resume-task` might fail to resume the replication task which is interrupted by the abnormal connection to the downstream TiDB server
-- Fix the issue that the online DDL operation cannot be properly replicated after a failed replication task is restarted because the online DDL meta information has been cleared after the DDL operation failure
+- Add the `--more` parameter in the `query-status` command to show complete migration status information
+- Fix the issue that `resume-task` might fail to resume the migration task which is interrupted by the abnormal connection to the downstream TiDB server
+- Fix the issue that the online DDL operation cannot be properly migrated after a failed migration task is restarted because the online DDL meta information has been cleared after the DDL operation failure
 - Fix the issue that `query-error` might cause the DM-worker to panic after `start-task` goes into error
 - Fix the issue that the relay log file and `relay.meta` cannot be correctly recovered when restarting an abnormally stopped DM-worker process before `relay.meta` is successfully written
 
@@ -85,7 +85,7 @@ Go Version: go version go1.13 linux/amd64
 ### Main changes
 
 - Add the command mode in dmctl
-- Support replicating the `ALTER DATABASE` DDL statement
+- Support migrating the `ALTER DATABASE` DDL statement
 - Optimize the error message output
 - Fix the panic-causing data race issue occurred when the full import unit pauses or exits
 - Fix the issue that `stop-task` and `pause-task` might not take effect when retrying SQL operations to the downstream
@@ -177,7 +177,7 @@ Go Version: go version go1.12 linux/amd64
 
 ### Main changes
 
-- Support automatically recovering replication tasks for some abnormal situations
+- Support automatically recovering migration tasks for some abnormal situations
 - Improve compatibility with DDL syntaxes
 - Fix the bug that the abnormal connection to the upstream database might cause data loss
 

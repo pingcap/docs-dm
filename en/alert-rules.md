@@ -5,7 +5,7 @@ summary: Introduce the alert information of DM.
 
 # DM Alert Information
 
-The [alert system](replicate-data-using-dm.md#step-8-monitor-the-task-and-check-logs) is deployed by default when you deploy a DM cluster using TiUP.
+The [alert system](migrate-data-using-dm.md#step-8-monitor-the-task-and-check-logs) is deployed by default when you deploy a DM cluster using TiUP.
 
 For more information about DM alert rules and the solutions, refer to [handle alerts](handle-alerts.md).
 

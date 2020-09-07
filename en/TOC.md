@@ -14,7 +14,7 @@
     - [Block and Allow Lists](key-features.md#block-and-allow-table-lists)
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
     - [Online DDL Scheme](feature-online-ddl-scheme.md)
-    + Merge and Replicate Data from Sharded Tables
+    + Merge and Migrate Data from Sharded Tables
       - [Overview](feature-shard-merge.md)
       - [Pessimistic Mode](feature-shard-merge-pessimistic.md)
       - [Optimistic Mode](feature-shard-merge-optimistic.md)
@@ -27,7 +27,7 @@
   + Deploy a DM Cluster
     - [Use TiUP](deploy-a-dm-cluster-using-tiup.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
-  - [Replicate Data Using DM](replicate-data-using-dm.md)
+  - [Migrate Data Using DM](migrate-data-using-dm.md)
   - [Monitor](monitor-a-dm-cluster.md)
   - [Performance Test](performance-test.md)
 + Maintain
@@ -35,7 +35,7 @@
     - [Manually Upgrade from v1.0.x to v2.0.x](manually-upgrade-dm-1.0-to-2.0.md)
     - [Upgrade Between v1.0.x](upgrade-dm-1.0.md)
   - [Use TiUP to Maintain a DM Cluster](maintain-dm-using-tiup.md)
-  + Manage Replication Tasks
+  + Manage Migration Tasks
     - [dmctl Introduction](dmctl-introduction.md)
     - [Manage Upstream Data Source](manage-source.md)
     - [Precheck a Task](precheck.md)
@@ -53,7 +53,7 @@
   - [Handle Errors](error-handling.md)
   - [Handle Performance Issues](handle-performance-issues.md)
 + Tutorials
-  - [Simple Replication Scenario](usage-scenario-simple-replication.md)
+  - [Simple Migration Scenario](usage-scenario-simple-migration.md)
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
