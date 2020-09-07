@@ -63,11 +63,15 @@ After a DM cluster is deployed using DM-Ansible, the configuration information i
 
 - Upstream and downstream database instances
 
+<<<<<<< HEAD
     | Database instance | Host | Port | Username | Encrypted password |
     |:-------- |:--- | :--- | :--- | :--- |
     | Upstream Aurora-1 | pingcap-1.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | root | VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU= |
     | Upstream Aurora-2 | pingcap-2.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | root | VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU= |
     | Downstream TiDB | 172.16.10.83 | 4000 | root | |
+=======
+See [Migrate Data Using Data Migration - Create Data Source](migrate-data-using-dm.md#step-3-create-data-source), and use `dmctl` to add two data sources through TiUP.
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
 
 - Configuration in the `{ansible deploy}/conf/dm-master.toml` DM-master process configuration file
 

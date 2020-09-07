@@ -5,6 +5,7 @@
 
 ## TOC
 
+<<<<<<< HEAD
 + Overview
   - [DM Overview](overview.md)
   - [Restrictions](overview.md#usage-restrictions)
@@ -29,10 +30,30 @@
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
   - [Switch DM-worker Connection between MySQL Instances](usage-scenario-master-slave-switch.md)
 - [Quick Start](get-started.md)
+=======
++ About DM
+  + Benchmarks
+    - [DM 1.0-GA Benchmark Report](benchmark-v1.0-ga.md)
+    - [DM 1.0-alpha Benchmark Report](benchmark-v1-alpha.md)
+  + Features
+    - [Table Routing](key-features.md#table-routing)
+    - [Block and Allow Lists](key-features.md#block-and-allow-table-lists)
+    - [Binlog Event Filter](key-features.md#binlog-event-filter)
+    - [Online DDL Scheme](feature-online-ddl-scheme.md)
+    + Merge and Migrate Data from Sharded Tables
+      - [Overview](feature-shard-merge.md)
+      - [Pessimistic Mode](feature-shard-merge-pessimistic.md)
+      - [Optimistic Mode](feature-shard-merge-optimistic.md)
++ [Usage Scenarios](scenarios.md)
++ Quick Start
+  - [Deploy a DM Cluster](quick-start-with-dm.md)
+  - [Create Data Migration Task](quick-start-create-task.md)
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
 + Deploy
   + Deploy a DM Cluster
     - [Use DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
+<<<<<<< HEAD
   + [Replicate Data Using DM](replicate-data-using-dm.md)
 + Configure
   - [Overview](config-overview.md)
@@ -55,12 +76,70 @@
 + [DM Portal](dm-portal.md)
 + Alert
   - [Alert Rules](alert-rules.md)
+=======
+  - [Migrate Data Using DM](migrate-data-using-dm.md)
+  - [Monitor](monitor-a-dm-cluster.md)
+  - [Performance Test](performance-test.md)
++ Maintain
+  + Cluster Upgrade
+    - [Manually Upgrade from v1.0.x to v2.0.x](manually-upgrade-dm-1.0-to-2.0.md)
+    - [Upgrade Between v1.0.x](upgrade-dm-1.0.md)
+  - [Use TiUP to Maintain a DM Cluster](maintain-dm-using-tiup.md)
+  + Manage Migration Tasks
+    - [dmctl Introduction](dmctl-introduction.md)
+    - [Manage Upstream Data Source](manage-source.md)
+    - [Precheck a Task](precheck.md)
+    - [Create a Task](create-task.md)
+    - [Query Status](query-status.md)
+    - [Pause a Task](pause-task.md)
+    - [Resume a Task](resume-task.md)
+    - [Stop a Task](stop-task.md)
+    - [Handle Failed SQL Statements](handle-failed-sql-statements.md)
+  - [Manually Handle Sharding DDL Locks](manually-handling-sharding-ddl-locks.md)
+  - [Manage Table Schema during Migration](manage-schema.md)
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
   - [Handle Alerts](handle-alerts.md)
 + Troubleshoot
   - [Handle Errors](error-handling.md)
   - [Handle Performance Issues](handle-performance-issues.md)
+<<<<<<< HEAD
 - [FAQ](faq.md)
 + Releases
+=======
++ Tutorials
+  - [Simple Migration Scenario](usage-scenario-simple-migration.md)
+  - [Shard Merge Scenario](usage-scenario-shard-merge.md)
+  - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
+  - [Shard Merge Best Practices](shard-merge-best-practices.md)
+  - [Migration When the Downstream Table Has More Columns](usage-scenario-downstream-more-columns.md)
+  - [Switch DM-worker Connection between MySQL Instances](usage-scenario-master-slave-switch.md)
++ Performance Tuning
+  - [Optimize Configuration](tune-configuration.md)
++ Reference
+  + Architecture
+    - [DM Overview](overview.md)
+    - [DM-worker](dm-worker-intro.md)
+  - [Command-line Flags](command-line-flags.md)
+  + Configuration
+    - [Overview](config-overview.md)
+    - [DM-master Configuration](dm-master-configuration-file.md)
+    - [DM-worker Configuration](dm-worker-configuration-file.md)
+    - [Upstream Database Configuration](source-configuration-file.md)
+    - [Task Configuration](task-configuration-file.md)
+    - [Full Task Configuration](task-configuration-file-full.md)
+  + Secure
+    - [Enable TLS for DM Connections](enable-tls.md)
+    - [Generate Self-signed Certificates](generate-self-signed-certificates.md)
+  - [Monitoring Metrics](monitor-a-dm-cluster.md)
+  - [Alert Rules](alert-rules.md)
+  - [Error Codes](error-handling.md#handle-common-errors)
++ [FAQ](faq.md)
++ [Glossary](glossary.md)
++ Release Notes
+  + v2.0
+    - [2.0.0-rc.2](releases/2.0.0-rc.2.md)
+    - [2.0.0-rc](releases/2.0.0-rc.md)
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
   + v1.0
     - [1.0.2](releases/1.0.2.md)
     - [1.0.3](releases/1.0.3.md)

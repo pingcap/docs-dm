@@ -11,10 +11,72 @@ This document introduces how to upgrade your Data Migration (DM) version to an i
 > **Note:**
 >
 > - Unless otherwise stated, DM version upgrade means upgrading DM from the previous version with an upgrade procedure to the current version.
+<<<<<<< HEAD:en/dm-upgrade.md
 > - Unless otherwise stated, all the following upgrade examples assume that you have downloaded the corresponding DM version and DM-Ansible version, and the DM binary exists in the corresponding directory of DM-Ansible. (For how to download the DM binary, see [Upgrade the component version](cluster-operations.md#upgrade-the-component-version)).
 > - Unless otherwise stated, all the following upgrade examples assume that all the data replication tasks have been stopped before the upgrade and all the replication tasks are restarted manually after DM upgrade is finished.
 > - The following shows the upgrade procedure of DM versions in reverse chronological order.
 
+=======
+> - Unless otherwise stated, all the following upgrade examples assume that you have downloaded the corresponding DM version and DM-Ansible version, and the DM binary exists in the corresponding directory of DM-Ansible.
+> - Unless otherwise stated, all the following upgrade examples assume that all the data migration tasks have been stopped before the upgrade and all the migration tasks are restarted manually after DM upgrade is finished.
+> - The following shows the upgrade procedure of DM versions in reverse chronological order.
+
+## Upgrade to v1.0.5
+
+### Version information
+
+```bash
+Release Version: v1.0.5
+Git Commit Hash: a8e9f53f91e29756b09a22cdc37a6a6efcdfe55b
+Git Branch: release-1.0
+UTC Build Time: 2020-04-27 06:56:31
+Go Version: go version go1.13 linux/amd64
+```
+
+### Main changes
+
+- Improve the incremental replication speed when the `UNIQUE KEY` column has the `NULL` value
+- Add retry for the `Write conflict` (9007 and 8005) error returned by TiDB
+- Fix the issue that the `Duplicate entry` error might occur during the full data import
+- Fix the issue that the `stop-task`/`pause-task` command may not work when no data written upstream after the full import is completed
+- Fix the issue that the monitoring metrics still display data after the migration task is stopped
+
+### Upgrade operation example
+
+1. Download the new version of DM-Ansible, and confirm that there is `dm_version = v1.0.5` in the `inventory.ini` file.
+2. Run `ansible-playbook local_prepare.yml` to download the new DM binary file to the local disk.
+3. Run `ansible-playbook rolling_update.yml` to perform a rolling update for the DM cluster components.
+4. Run `ansible-playbook rolling_update_monitor.yml` to perform a rolling update for the DM monitoring components.
+
+## Upgrade to v1.0.4
+
+### Version information
+
+```bash
+Release Version: v1.0.4-1-gd681c67
+Git Commit Hash: d681c6731d3432f4d8f38ea651f44d49d6860269
+Git Branch: release-1.0
+UTC Build Time: 2020-03-16 09:45:29
+Go Version: go version go1.13 linux/amd64
+```
+
+### Main changes
+
+- Add English UI for DM Portal
+- Add the `--more` parameter in the `query-status` command to show complete migration status information
+- Fix the issue that `resume-task` might fail to resume the migration task which is interrupted by the abnormal connection to the downstream TiDB server
+- Fix the issue that the online DDL operation cannot be properly migrated after a failed migration task is restarted because the online DDL meta information has been cleared after the DDL operation failure
+- Fix the issue that `query-error` might cause the DM-worker to panic after `start-task` goes into error
+- Fix the issue that the relay log file and `relay.meta` cannot be correctly recovered when restarting an abnormally stopped DM-worker process before `relay.meta` is successfully written
+
+### Upgrade operation example
+
+1. Download the new version of DM-Ansible, and confirm that there is `dm_version = v1.0.4` in the `inventory.ini` file.
+2. Run `ansible-playbook local_prepare.yml` to download the new DM binary file to the local disk.
+3. Run `ansible-playbook rolling_update.yml` to perform a rolling update for the DM cluster components.
+4. Run `ansible-playbook rolling_update_monitor.yml` to perform a rolling update for the DM monitoring components.
+
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312):en/upgrade-dm-1.0.md
 ## Upgrade to v1.0.3
 
 ### Version information
@@ -30,7 +92,7 @@ Go Version: go version go1.13 linux/amd64
 ### Main changes
 
 - Add the command mode in dmctl
-- Support replicating the `ALTER DATABASE` DDL statement
+- Support migrating the `ALTER DATABASE` DDL statement
 - Optimize the error message output
 - Fix the panic-causing data race issue occurred when the full import unit pauses or exits
 - Fix the issue that `stop-task` and `pause-task` might not take effect when retrying SQL operations to the downstream
@@ -122,7 +184,7 @@ Go Version: go version go1.12 linux/amd64
 
 ### Main changes
 
-- Support automatically recovering replication tasks for some abnormal situations
+- Support automatically recovering migration tasks for some abnormal situations
 - Improve compatibility with DDL syntaxes
 - Fix the bug that the abnormal connection to the upstream database might cause data loss
 

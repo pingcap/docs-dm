@@ -41,7 +41,7 @@ In the error system, usually, the information of a specific error is as follows:
     | `dm-worker`      |  DM-worker service  | `[code=40066:class=dm-worker:scope=internal:level=high] ExecuteDDL timeout, try use query-status to query whether the DDL is still blocking` |
     | `dm-tracer`      |  DM-tracer service  | `[code=42004:class=dm-tracer:scope=internal:level=medium] trace event test.1 not found` |
     | `schema-tracker` | schema-tracker (during incremental data replication)   | `[code=44006:class=schema-tracker:scope=internal:level=high],"cannot track DDL: ALTER TABLE test DROP COLUMN col1"` |
-    | `scheduler`      | Scheduling operations (of data replication tasks)   | `[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
+    | `scheduler`      | Scheduling operations (of data migration tasks)   | `[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
     | `dmctl`          | An error occurs within dmctl or when it interacts with other components | `[code=48001:class=dmctl:scope=internal:level=high],"can not create grpc connection"` |
 
 - `scope`: Error scope.
@@ -54,9 +54,9 @@ In the error system, usually, the information of a specific error is as follows:
 
     The severity level of the error, including `low`, `medium`, and `high`.
 
-    - The `low` level error usually relates to user operations and incorrect inputs. It does not affect replication tasks.
-    - The `medium` level error usually relates to user configurations. It affects some newly started services; however, it does not affect the existing DM replication status.
-    - The `high` level error usually needs your attention, since you need to resolve it to avoid the possible interruption of a replication task.
+    - The `low` level error usually relates to user operations and incorrect inputs. It does not affect migration tasks.
+    - The `medium` level error usually relates to user configurations. It affects some newly started services; however, it does not affect the existing DM migration status.
+    - The `high` level error usually needs your attention, since you need to resolve it to avoid the possible interruption of a migration task.
 
 - `message`: Error descriptions.
 
@@ -90,7 +90,11 @@ If you encounter an error while running DM, take the following steps to troubles
     resume-task ${task name}
     ```
 
+<<<<<<< HEAD
 However, you need to reset the data replication task in some cases. For details, refer to [Reset the Data Replication Task](faq.md#how-to-reset-the-data-migration-task).
+=======
+However, you need to reset the data migration task in some cases. For details, refer to [Reset the Data Migration Task](faq.md#how-to-reset-the-data-migration-task).
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
 
 ## Handle common errors
 
@@ -108,28 +112,40 @@ However, you need to reset the data replication task in some cases. For details,
 | `code=32001` |   Abnormal dump processing unit                                            |  If the error message contains `mydumper: argument list too long.`, configure the table to be exported by manually adding the `--regex` regular expression in the Mydumper argument `extra-args` in the `task.yaml` file according to the block-allow list. For example, to export all tables named `hello`, add `--regex '.*\\.hello$'`; to export all tables, add `--regex '.*'`. |
 | `code=38008` |  An error occurs in the gRPC communication among DM components.                                     |   Check `class`. Find out the error occurs in the interaction of which components. Determine the type of communication error. If the error occurs when establishing gRPC connection, check whether the communication server is working normally. |
 
-### What can I do when a replication task is interrupted with the `invalid connection` error returned?
+### What can I do when a migration task is interrupted with the `invalid connection` error returned?
 
 The `invalid connection` error indicates that anomalies have occurred in the connection between DM and the downstream TiDB database (such as network failure, TiDB restart, TiKV busy and so on) and that a part of the data for the current request has been sent to TiDB.
 
+<<<<<<< HEAD
 Because DM has the feature of concurrently replicating data to the downstream in replication tasks, several errors might occur when a task is interrupted. You can check these errors by using `query-status` or `query-error`.
+=======
+#### Solutions
+
+Because DM has the feature of concurrently migrating data to the downstream in migration tasks, several errors might occur when a task is interrupted. You can check these errors by using `query-status`.
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
 
 - If only the `invalid connection` error occurs during the incremental replication process, DM retries the task automatically.
 - If DM does not or fails to retry automatically because of version problems, use `stop-task` to stop the task and then use `start-task` to restart the task.
 
-### A replication task is interrupted with the `driver: bad connection` error returned
+### A migration task is interrupted with the `driver: bad connection` error returned
 
 The `driver: bad connection` error indicates that anomalies have occurred in the connection between DM and the upstream TiDB database (such as network failure, TiDB restart and so on) and that the data of the current request has not yet been sent to TiDB at that moment.
 
 The current version of DM automatically retries on error. If you use the previous version which does not support automatically retry, you can execute the `stop-task` command to stop the task. Then execute `start-task` to restart the task.
 
-### The relay unit throws error `event from * in * diff from passed-in event *` or a replication task is interrupted with failing to get or parse binlog errors like `get binlog error ERROR 1236 (HY000)` and `binlog checksum mismatch, data may be corrupted` returned
+### The relay unit throws error `event from * in * diff from passed-in event *` or a migration task is interrupted with failing to get or parse binlog errors like `get binlog error ERROR 1236 (HY000)` and `binlog checksum mismatch, data may be corrupted` returned
 
 During the DM process of relay log pulling or incremental replication, this two errors might occur if the size of the upstream binlog file exceeds **4 GB**.
 
 **Cause:** When writing relay logs, DM needs to perform event verification based on binlog positions and the size of the binlog file, and store the replicated binlog positions as checkpoints. However, the official MySQL uses `uint32` to store binlog positions. This means the binlog position for a binlog file over 4 GB overflows, and then the errors above occur.
 
+<<<<<<< HEAD
 For relay units, manually recover replication using the following solution:
+=======
+#### Solutions
+
+For relay units, manually recover migration using the following solution:
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
 
 1. Identify in the upstream that the size of the corresponding binlog file has exceeded 4GB when the error occurs.
 
@@ -143,13 +159,13 @@ For relay units, manually recover replication using the following solution:
 
 5. Restart the DM-worker.
 
-For binlog replication processing units, manually recover replication using the following solution:
+For binlog replication processing units, manually recover migration using the following solution:
 
 1. Identify in the upstream that the size of the corresponding binlog file has exceeded 4GB when the error occurs.
 
-2. Stop the replication task using `stop-task`.
+2. Stop the migration task using `stop-task`.
 
-3. Update the `binlog_name` in the global checkpoints and in each table checkpoint of the downstream `dm_meta` database to the name of the binlog file in error; update `binlog_pos` to a valid position value for which replication has completed, for example, 4.
+3. Update the `binlog_name` in the global checkpoints and in each table checkpoint of the downstream `dm_meta` database to the name of the binlog file in error; update `binlog_pos` to a valid position value for which migration has completed, for example, 4.
 
     Example: the name of the task in error is `dm_test`, the corresponding s`source-id` is `replica-1`, and the corresponding binlog file is `mysql-bin|000001.004451`. Execute the following command:
 
@@ -159,14 +175,44 @@ For binlog replication processing units, manually recover replication using the 
     UPDATE dm_test_syncer_checkpoint SET binlog_name='mysql-bin|000001.004451', binlog_pos = 4 WHERE id='replica-1';
     ```
 
-4. Specify `safe-mode: true` in the `syncers` section of the replication task configuration to ensure re-entrant.
+4. Specify `safe-mode: true` in the `syncers` section of the migration task configuration to ensure re-entrant.
 
-5. Start the replication task using `start-task`.
+5. Start the migration task using `start-task`.
 
-6. View the status of the replication task using `query-status`. You can restore `safe-mode` to the original value and restart the replication task when replication is done for the original error-triggering relay log files.
+6. View the status of the migration task using `query-status`. You can restore `safe-mode` to the original value and restart the migration task when migration is done for the original error-triggering relay log files.
 
 ### `Access denied for user 'root'@'172.31.43.27' (using password: YES)` shows when you query the task or check the log
 
 For database related passwords in all the DM configuration files, it is recommended to use the passwords encrypted by `dmctl`. If a database password is empty, it is unnecessary to encrypt it. For how to encrypt the plaintext password, see [Encrypt the upstream MySQL user password using dmctl](deploy-a-dm-cluster-using-ansible.md#encrypt-the-upstream-mysql-user-password-using-dmctl).
 
+<<<<<<< HEAD
 In addition, the user of the upstream and downstream databases must have the corresponding read and write privileges. Data Migration also [prechecks the corresponding privileges automatically](precheck.md) while starting the data replication task.
+=======
+In addition, the user of the upstream and downstream databases must have the corresponding read and write privileges. Data Migration also [prechecks the corresponding privileges automatically](precheck.md) while starting the data migration task.
+
+### The `load` processing unit reports the error `packet for query is too large. Try adjusting the 'max_allowed_packet' variable`
+
+#### Reasons
+
+* Both MySQL client and MySQL/TiDB server have the quota limits for `max_allowed_packet`. If any `max_allowed_packet` exceeds a limit, the client receives the error message. Currently, for the latest version of DM and TiDB server, the default value of `max_allowed_packet` is `64M`.
+
+* The full data import processing unit in DM does not support splitting the SQL file exported by the Dump processing unit in DM.
+
+#### Solutions
+
+* It is recommended to set the `statement-size` option of `extra-args` for the Dump processing unit:
+
+    According to the default `--statement-size` setting, the default size of `Insert Statement` generated by the Dump processing unit is about `1M`. With this default setting, the load processing unit does not report the error `packet for query is too large. Try adjusting the 'max_allowed_packet' variable` in most cases.
+
+    Sometimes you might receive the following `WARN` log during the data dump. This `WARN` log does not affect the dump process. This only means that wide tables are dumped.
+
+    ```
+    Row bigger than statement_size for xxx
+    ```
+
+* If the single row of the wide table exceeds `64M`, you need to modify the following configurations and make sure the configurations take effect.
+
+    * Execute `set @@global.max_allowed_packet=134217728` (`134217728` = 128 MB) in the TiDB server.
+
+    * First add the `max-allowed-packet: 134217728` (128 MB) to the `target-database` section in the DM task configuration file. Then, execute the `stop-task` command and execute the `start-task` command.
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)

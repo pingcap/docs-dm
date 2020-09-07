@@ -8,7 +8,11 @@ aliases: ['/docs/tidb-data-migration/stable/task-configuration-file-full/','/doc
 This document introduces the advanced task configuration file of Data Migration --
 [`task_advanced.yaml`](https://github.com/pingcap/dm/blob/master/dm/master/task_advanced.yaml), including [global configuration](#global-configuration) and [instance configuration](#instance-configuration).
 
+<<<<<<< HEAD
 For the feature and configuration of each configuration item, see [Data replication features](feature-overview.md).
+=======
+For the feature and configuration of each configuration item, see [Data migration features](key-features.md).
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
 
 ## Important concepts
 
@@ -20,7 +24,7 @@ DM checks items according to the task type, see [Disable checking items](prechec
 
 ## Task configuration file template (advanced)
 
-The following is the task configuration file template which allows you to perform **advanced** data replication tasks.
+The following is the task configuration file template which allows you to perform **advanced** data migration tasks.
 
 ```yaml
 ---
@@ -63,27 +67,48 @@ routes:
 
 # The binlog event filter rule set of the matched table of the upstream database instance.
 filters:
+<<<<<<< HEAD
   filter-rule-1:                                # The name of the filtering rule
     schema-pattern: "test_*"                    # The pattern of the upstream schema name, wildcard characters (*?) are supported
     table-pattern: "t_*"                        # The pattern of the upstream schema name, wildcard characters (*?) are supported
     events: ["truncate table", "drop table"]    # What event types to match
     action: Ignore                              # Whether to replicate (Do) or ignore (Ignore) the binlog that matches the filtering rule
+=======
+  filter-rule-1:                                # The name of the filtering rule.
+    schema-pattern: "test_*"                    # The pattern of the upstream schema name, wildcard characters (*?) are supported.
+    table-pattern: "t_*"                        # The pattern of the upstream schema name, wildcard characters (*?) are supported.
+    events: ["truncate table", "drop table"]    # What event types to match.
+    action: Ignore                              # Whether to migrate (Do) or ignore (Ignore) the binlog that matches the filtering rule.
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
   filter-rule-2:
     schema-pattern: "test_*"
     events: ["all dml"]
     action: Do
 
+<<<<<<< HEAD
 # The filter rule set of the block and allow list of the matched table of the upstream database instance.
 block-allow-list:                    # Use black-white-list if the DM's version <= v1.0.6.
   bw-rule-1:                         # The name of the block and allow list rule
     do-dbs: ["~^test.*", "user"]     # The allow list of upstream schemas needs to be replicated
     ignore-dbs: ["mysql", "account"] # The block list of upstream schemas needs to be replicated
     do-tables:                       # The allow list of upstream tables needs to be replicated
+=======
+# The filter rule set of the block allow list of the matched table of the upstream database instance.
+block-allow-list:                    # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+  bw-rule-1:                         # The name of the block allow list rule.
+    do-dbs: ["~^test.*", "user"]     # The allow list of upstream schemas needs to be migrated.
+    ignore-dbs: ["mysql", "account"] # The block list of upstream schemas needs to be migrated.
+    do-tables:                       # The allow list of upstream tables needs to be migrated.
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
     - db-name: "~^test.*"
       tbl-name: "~^t.*"
     - db-name: "user"
       tbl-name: "information"
+<<<<<<< HEAD
     ignore-tables:                   # The block list of upstream tables needs to be replicated
+=======
+    ignore-tables:                   # The block list of upstream tables needs to be migrated.
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
     - db-name: "user"
       tbl-name: "log"
 
@@ -110,7 +135,7 @@ syncers:
     worker-count: 16                 # The number of threads that replicate binlog events concurrently in Syncer.
     batch: 100                       # The number of SQL statements in a transaction batch that Syncer replicates to the downstream database (100 by default).
     enable-ansi-quotes: true         # Enable this argument if `sql-mode: "ANSI_QUOTES"` is set in the `session`
-    safe-mode: false                 # If set to true, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. This ensures that DML statements can be imported repeatedly during data replication when there is any primary key or unique index in the table schema. TiDB DM automatically enables safe mode within the first 5 minutes after starting or resuming replication tasks.
+    safe-mode: false                 # If set to true, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. This ensures that DML statements can be imported repeatedly during data migration when there is any primary key or unique index in the table schema. TiDB DM automatically enables safe mode within the first 5 minutes after starting or resuming migration tasks.
 
 # ----------- Instance configuration -----------
 mysql-instances:
@@ -147,7 +172,7 @@ mysql-instances:
 
 Refer to the comments in the [template](#task-configuration-file-template-advanced) to see more details. Detailed explanations about `task-mode` are as follows:
 
-- Description: the task mode that can be used to specify the data replication task to be executed.
+- Description: the task mode that can be used to specify the data migration task to be executed.
 - Value: string (`full`, `incremental`, or `all`).
     - `full` only makes a full backup of the upstream database and then imports the full data to the downstream database.
     - `incremental`: Only replicates the incremental data of the upstream database to the downstream database using the binlog. You can set the `meta` configuration item of the instance configuration to specify the starting position of incremental replication.
@@ -159,16 +184,22 @@ Arguments in each feature configuration set are explained in the comments in the
 
 | Parameter        | Description                                    |
 | :------------ | :--------------------------------------- |
+<<<<<<< HEAD
 | `routes` | The routing mapping rule set between the upstream and downstream tables. If the names of the upstream and downstream schemas and tables are the same, this item does not need to be configured. See [Table Routing](feature-overview.md#table-routing) for usage scenarios and sample configurations. |
 | `filters` | The binlog event filter rule set of the matched table of the upstream database instance. If binlog filtering is not required, this item does not need to be configured. See [Binlog Event Filter](feature-overview.md#binlog-event-filter) for usage scenarios and sample configurations. |
 | `block-allow-list` | The filter rule set of the block and allow list of the matched table of the upstream database instance. It is recommended to specify the schemas and tables that need to be replicated through this item, otherwise all schemas and tables are replicated. See [Binlog Event Filter](feature-overview.md#binlog-event-filter)[Block & Allow Lists](feature-overview.md#block-and-allow-table-lists) for usage scenarios and sample configurations. |
+=======
+| `routes` | The routing mapping rule set between the upstream and downstream tables. If the names of the upstream and downstream schemas and tables are the same, this item does not need to be configured. See [Table Routing](key-features.md#table-routing) for usage scenarios and sample configurations. |
+| `filters` | The binlog event filter rule set of the matched table of the upstream database instance. If binlog filtering is not required, this item does not need to be configured. See [Binlog Event Filter](key-features.md#binlog-event-filter) for usage scenarios and sample configurations. |
+| `block-allow-list` | The filter rule set of the block allow list of the matched table of the upstream database instance. It is recommended to specify the schemas and tables that need to be migrated through this item, otherwise all schemas and tables are migrated. See [Binlog Event Filter](key-features.md#binlog-event-filter) and [Block & Allow Lists](key-features.md#block-and-allow-table-lists) for usage scenarios and sample configurations. |
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
 | `mydumpers` | Configuration arguments of Mydumper processing unit. If the default configuration is sufficient for your needs, this item does not need to be configured. Or you can configure `thread` only using `mydumper-thread`. |
 | `loaders` | Configuration arguments of Loader processing unit. If the default configuration is sufficient for your needs, this item does not need to be configured. Or you can configure `pool-size` only using `loader-thread`. |
 | `syncers` | Configuration arguments of Syncer processing unit. If the default configuration is sufficient for your needs, this item does not need to be configured. Or you can configure `worker-count` only using `syncer-thread`. |
 
 ## Instance configuration
 
-This part defines the subtask of data replication. DM supports replicating data from one or multiple MySQL instances in the upstream to the same instance in the downstream.
+This part defines the subtask of data migration. DM supports migrating data from one or multiple MySQL instances in the upstream to the same instance in the downstream.
 
 For the configuration details of the above options, see the corresponding part in [Feature configuration set](#feature-configuration-set), as shown in the following table.
 

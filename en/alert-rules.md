@@ -5,11 +5,15 @@ summary: Introduce the alert information of DM.
 
 # DM Alert Information
 
+<<<<<<< HEAD
 The [alert system](replicate-data-using-dm.md#step-7-monitor-the-task-and-check-logs) is deployed by default when you deploy a DM cluster using DM-Ansible.
 
 > **Note:**
 >
 > There are alert rules provided with DM-worker only.
+=======
+The [alert system](migrate-data-using-dm.md#step-8-monitor-the-task-and-check-logs) is deployed by default when you deploy a DM cluster using TiUP.
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
 
 For more information about DM alert rules and the solutions, refer to [handle alerts](handle-alerts.md).
 

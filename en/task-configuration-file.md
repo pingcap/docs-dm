@@ -11,7 +11,11 @@ This document introduces the basic task configuration file of Data Migration --
 
 DM also implements [an advanced task configuration file](task-configuration-file-full.md) which provides greater flexibility and more control over DM.
 
+<<<<<<< HEAD
 For the feature and configuration of each configuration item, see [Data replication features](feature-overview.md).
+=======
+For the feature and configuration of each configuration item, see [Data migration features](key-features.md).
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
 
 ## Important concepts
 
@@ -19,7 +23,7 @@ For description of important concepts including `source-id` and the DM-worker ID
 
 ## Task configuration file template (basic)
 
-The following is a task configuration file template which allows you to perform basic data replication tasks.
+The following is a task configuration file template which allows you to perform basic data migration tasks.
 
 ```yaml
 ---
@@ -41,10 +45,14 @@ target-database:                # Configuration of the downstream database insta
 # The filter rule set of the block and allow list of the matched table of the upstream database instance.
 block-allow-list:        # Use black-white-list if the DM's version <= v1.0.6.
   bw-rule-1:             # The name of the block and allow lists filtering rule of the table matching the upstream database instance.
+<<<<<<< HEAD
     do-dbs: ["all_mode"] # Allow list of upstream tables needs to be replicated
+=======
+    do-dbs: ["all_mode"] # Allow list of upstream tables needs to be migrated.
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
 # ----------- Instance configuration -----------
 mysql-instances:
-  # The ID of the upstream instance or replication group. It can be configured by referring to the `source-id` in the `dm-master.toml` file.
+  # The ID of the upstream instance or migration group. It can be configured by referring to the `source-id` in the `dm-master.toml` file.
   - source-id: "mysql-replica-01"
     block-allow-list:  "bw-rule-1"     # Use black-white-list if the DM's version <= v1.0.6.
         mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data, new in v1.0.2 and later versions
@@ -68,7 +76,7 @@ mysql-instances:
 
 Refer to the comments in the [template](#task-configuration-file-template-basic) to see more details. Specific instruction about `task-mode` are as follows:
 
-- Description: the task mode that can be used to specify the data replication task to be executed.
+- Description: the task mode that can be used to specify the data migration task to be executed.
 - Value: string (`full`, `incremental`, or `all`).
     - `full` only makes a full backup of the upstream database and then imports the full data to the downstream database.
     - `incremental`: Only replicates the incremental data of the upstream database to the downstream database using the binlog. You can set the `meta` configuration item of the instance configuration to specify the starting position of incremental replication.
@@ -80,7 +88,7 @@ For basic applications, you only need to modify the block and allow lists filter
 
 ## Instance configuration
 
-This part defines the subtask of data replication. DM supports replicating data from one or multiple MySQL instances to the same instance.
+This part defines the subtask of data migration. DM supports migrating data from one or multiple MySQL instances to the same instance.
 
 For more details, refer to the comments about `mysql-instances` in the [template](#task-configuration-file-template-basic).
 

@@ -1,12 +1,18 @@
 ---
+<<<<<<< HEAD:en/replicate-data-using-dm.md
 title: Replicate Data Using Data Migration
 summary: Use the Data Migration tool to replicate the full data and the incremental data.
 aliases: ['/docs/tidb-data-migration/stable/replicate-data-using-dm/','/docs/tidb-data-migration/v1.0/replicate-data-using-dm/','/docs/dev/reference/tools/data-migration/deploy/','/docs/v3.1/reference/tools/data-migration/deploy/','/docs/v3.0/reference/tools/data-migration/deploy/','/docs/v2.1/reference/tools/data-migration/deploy/']
+=======
+title: Migrate Data Using Data Migration
+summary: Use the Data Migration tool to migrate the full data and the incremental data.
+aliases: ['/docs/tidb-data-migration/dev/replicate-data-using-dm/','/tidb-data-migration/dev/replicate-data-using-dm']
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312):en/migrate-data-using-dm.md
 ---
 
-# Replicate Data Using Data Migration
+# Migrate Data Using Data Migration
 
-This guide shows how to replicate data using the Data Migration (DM) tool.
+This guide shows how to migrate data using the Data Migration (DM) tool.
 
 ## Step 1: Deploy the DM cluster
 
@@ -62,7 +68,7 @@ After the DM cluster is deployed using DM-Ansible, the configuration information
 
 ## Step 3: Configure the data replication task
 
-The following example assumes that you need to replicate all the `test_table` table data in the `test_db` database of both the upstream MySQL-1 and MySQL-2 instances, to the downstream `test_table` table in the `test_db` database of TiDB, in the full data plus incremental data mode.
+The following example assumes that you need to migrate all the `test_table` table data in the `test_db` database of both the upstream MySQL-1 and MySQL-2 instances, to the downstream `test_table` table in the `test_db` database of TiDB, in the full data plus incremental data mode.
 
 Copy the `{ansible deploy}/conf/task.yaml.example` file and edit it to generate the `task.yaml` task configuration file as below:
 
@@ -70,7 +76,7 @@ Copy the `{ansible deploy}/conf/task.yaml.example` file and edit it to generate 
 # The task name. You need to use a different name for each of the multiple tasks that
 # run simultaneously.
 name: "test"
-# The full data plus incremental data (all) replication mode.
+# The full data plus incremental data (all) migration mode.
 task-mode: "all"
 # The downstream TiDB configuration information.
 target-database:
@@ -85,7 +91,7 @@ mysql-instances:
   # The ID of upstream instances or the replication group. You can refer to the configuration of `source_id` in the "inventory.ini" file or in the "dm-master.toml" file.
   source-id: "mysql-replica-01"
   # The configuration item name of the block and allow lists of the name of the
-  # database/table to be replicated, used to quote the global block and allow
+  # database/table to be migrated, used to quote the global block and allow
   # lists configuration that is set in the global block-allow-list below.
   block-allow-list: "global"  # Use black-white-list if the DM's version <= v1.0.6.
   # The configuration item name of Mydumper, used to quote the global Mydumper configuration.
@@ -100,9 +106,9 @@ mysql-instances:
 # configuration item name.
 block-allow-list:                     # Use black-white-list if the DM's version <= v1.0.6.
   global:
-    do-tables:                        # The allow list of upstream tables to be replicated.
-    - db-name: "test_db"              # The database name of the table to be replicated.
-      tbl-name: "test_table"          # The name of the table to be replicated.
+    do-tables:                        # The allow list of upstream tables to be migrated.
+    - db-name: "test_db"              # The database name of the table to be migrated.
+      tbl-name: "test_table"          # The name of the table to be migrated.
 
 # Mydumper global configuration. Each instance can quote it by the configuration item name.
 mydumpers:

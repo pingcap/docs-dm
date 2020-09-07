@@ -1,11 +1,18 @@
 ---
+<<<<<<< HEAD
 title: Merge and Replicate Data from Sharded Tables
 summary: Learn how DM merges and replicates data from sharded tables.
 aliases: ['/docs/tidb-data-migration/stable/feature-shard-merge/','/docs/tidb-data-migration/v1.0/feature-shard-merge/','/docs/dev/reference/tools/data-migration/features/shard-merge/','/docs/v3.1/reference/tools/data-migration/features/shard-merge/','/docs/v3.0/reference/tools/data-migration/features/shard-merge/','/docs/v2.1/reference/tools/data-migration/features/shard-merge/','/docs/stable/reference/tools/data-migration/features/shard-merge']
+=======
+title: Merge and Migrate Data from Sharded Tables
+summary: Learn how DM merges and migrates data from sharded tables.
+aliases: ['/docs/tidb-data-migration/dev/feature-shard-merge/']
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
 ---
 
-# Merge and Replicate Data from Sharded Tables
+# Merge and Migrate Data from Sharded Tables
 
+<<<<<<< HEAD
 This document introduces the sharding support feature provided by Data Migration (DM). This feature allows you to merge and replicate the data of tables with the same table schema in the upstream MySQL or MariaDB instances into one same table in the downstream TiDB. It supports not only replicating the upstream DML statements, but also coordinating to replicate the table schema change using DDL statements in multiple upstream sharded tables.
 
 > **Note:**
@@ -97,10 +104,24 @@ Because data comes from the same MySQL instance, all the data is obtained from t
 If the DDL statements are not processed particularly during the data replication, when the DDL statement of `table_1` is replicated to the downstream and changes the downstream table schema, the DML statement of `schema V1` from `table_2` cannot be replicated successfully. Therefore, within a single DM-worker, a logical sharding group similar to that within `DM-master` is created, except that members of this group are different sharded tables in the same upstream MySQL instance.
 
 But when a DM-worker coordinates the replication of the sharding group within itself, it is not totally the same as that performed by `DM-master`. The reasons are as follows:
+=======
+This document introduces the sharding support feature provided by Data Migration (DM). This feature allows you to merge and migrate the data of tables with the same or different table schemas in the upstream MySQL or MariaDB instances into one same table in the downstream TiDB. It supports not only migrating the upstream DML statements, but also coordinating to migrate the table schema change using DDL statements in multiple upstream sharded tables.
+
+## Overview
+
+DM supports merging and migrating the data of multiple upstream sharded tables into one table in TiDB. During the migration, the DDL of each sharded table, and the DML before and after the DDL need to be coordinated. For the usage scenarios, DM supports two different modes: pessimistic mode and optimistic mode.
+
+> **Note:**
+>
+> - To merge and migrate data from sharded tables,  you must set `shard-mode` in the task configuration file. 
+> - DM uses the pessimistic mode by default for the merge of the sharding support feature. (If there is no special description in the document, use the pessimistic mode by default.)
+> - It is not recommended to use this mode if you do not understand the principles and restrictions of the optimistic mode. Otherwise, it may cause serious consequences such as migration interruption and even data inconsistency.
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
 
 - When the DM-worker receives the DDL statement of `table_1`, it cannot pause the replication and needs to continue parsing the binlog to get the subsequent DDL statements of `table_2`. This means it needs to continue parsing between `t2` and `t3`.
 - During the binlog parsing process between `t2` and `t3`, the DML statements of `schema V2` from `table_1` cannot be replicated to the downstream until the sharding DDL statement is replicated and successfully executed.
 
+<<<<<<< HEAD
 In DM, the simplified replication process of sharding DDL statements within the DM worker is as follows:
 
 1. When receiving the DDL statement of `table_1` at `t1`, the DM-worker records the DDL information and the current position of the binlog.
@@ -113,9 +134,17 @@ In DM, the simplified replication process of sharding DDL statements within the 
 8. DM-worker replicates the DML statement with the `schema V2` schema that belongs to `table_1` to the downstream, and ignores the DML statement with the `schema V1` schema that belongs to `table_2`.
 9. After parsing the binlog position saved at Step #4, the DM-worker decides that all DML statements that have been ignored in Step #3 have been replicated to the downstream again.
 10. DM-worker resumes the replication starting from the binlog position at `t4`.
+=======
+When an upstream sharded table executes a DDL statement, the migration of this sharded table will be suspended. After all other sharded tables execute the same DDL, the DDL will be executed in the downstream and the data migration task will restart. The advantage of this mode is that it can ensure that the data migrated to the downstream will not go wrong. For details, refer to [shard merge in pessimistic mode](feature-shard-merge-pessimistic.md).
+ 
+### The optimistic mode
+
+DM will automatically modify the DDL executed on a sharded table into a statement compatible with other sharded tables, and then migrate to the downstream. This will not block the DML migration of any sharded tables. The advantage of this mode is that it will not block data migration when processing DDL. However, improper use will cause migration interruption or even data inconsistency. For details, refer to [shard merge in optimistic mode](feature-shard-merge-optimistic.md).
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
 
 You can conclude from the above analysis that DM mainly uses two-level sharding groups for coordination and control when handling replication of the sharding DDL. Here is the simplified process:
 
+<<<<<<< HEAD
 1. Each DM-worker independently coordinates the DDL statements replication for the corresponding sharding group composed of multiple sharded tables within the upstream MySQL instance.
 2. After the DM-worker receives the DDL statements of all sharded tables, it sends the DDL information to `DM-master`.
 3. `DM-master` coordinates the DDL replication of the sharding group composed of the DM-workers based on the received DDL information.
@@ -124,3 +153,11 @@ You can conclude from the above analysis that DM mainly uses two-level sharding 
 6. After `DM-master` confirms that the owner has successfully executed the DDL statement, it asks all other DM-workers to continue the replication.
 7. All other DM-workers separately restart the replication of the previously ignored DML statements during the internal coordination of DDL replication.
 8. After finishing replicating the ignored DML statements again, all DM-workers resume the normal replication process.
+=======
+| Pessimistic mode   | Optimistic mode   |
+| :----------- | :----------- |
+| Sharded tables that executes DDL suspend DML migration | Sharded tables that executes DDL continue DML migration |
+| The DDL execution order and statements of each sharded table must be the same | Each sharded table only needs to keep the table schema compatible with each other  |
+| The DDL is migrated to the downstream after the entire shard group is consistent | The DDL of each sharded table immediately affects the downstream |
+| Wrong DDL operations can be intercepted after the detection | Wrong DDL operations will be migrated to the downstream, which may cause inconsistency between the upstream and downstream data before the detection  |
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)

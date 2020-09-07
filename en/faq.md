@@ -8,7 +8,7 @@ aliases: ['/docs/tidb-data-migration/stable/faq/','/docs/tidb-data-migration/v1.
 
 This document collects the frequently asked questions (FAQs) about TiDB Data Migration (DM).
 
-## Does DM support replicating data from Alibaba RDS or other cloud databases?
+## Does DM support migrating data from Alibaba RDS or other cloud databases?
 
 Currently, DM only supports decoding the standard version of MySQL or MariaDB binlog. It has not been tested for Alibaba Cloud RDS or other cloud databases. If you are confirmed that its binlog is in standard format, then it is supported.
 
@@ -16,7 +16,7 @@ Currently, DM only supports decoding the standard version of MySQL or MariaDB bi
 
 Currently, DM does not support it and only supports the regular expressions of the Golang standard library. See regular expressions supported by Golang via [re2-syntax](https://github.com/google/re2/wiki/Syntax).
 
-## If a statement executed upstream contains multiple DDL operations, does DM support such replication?
+## If a statement executed upstream contains multiple DDL operations, does DM support such migration?
 
 DM will attempt to split a single statement containing multiple DDL change operations into multiple statements containing only one DDL operation, but might not cover all cases. It is recommended to include only one DDL operation in a statement executed upstream, or verify it in the test environment. If it is not supported, you can file an [issue](https://github.com/pingcap/dm/issues) to the DM repository.
 
@@ -30,6 +30,7 @@ When you encounter a DDL statement unsupported by TiDB, you need to manually han
 
 ## How to reset the data migration task?
 
+<<<<<<< HEAD
 ### Reset the data migration task when the relay log is in the normal state
 
 If the relay log required by the data migration task is normal, you can use the following steps to reset the data migration task:
@@ -37,6 +38,15 @@ If the relay log required by the data migration task is normal, you can use the 
 1. Use `stop-task` to stop abnormal data migration tasks.
 
 2. Clean up the downstream migrated data. 
+=======
+When an exception occurs during data migration and the data migration task cannot be resumed, you need to reset the task and re-migrate the data:
+
+1. Execute the `stop-task` command to stop the abnormal data migration task.
+
+2. Purge the data migrated to the downstream.
+
+3. Use one of the following ways to restart the data migration task.
+>>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312)
 
 3. Choose one of the following methods to restart the data migration task:
 
