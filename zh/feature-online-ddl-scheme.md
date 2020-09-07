@@ -28,7 +28,7 @@ name: test                      # 任务名称，需要全局唯一
 task-mode: all                  # 任务模式，可设为 "full"、"incremental"、"all"
 is-sharding: true               # 是否为分库分表合并任务
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
-remove-meta: false              # 是否在任务迁移开始前移除该任务名对应的 `meta`（`checkpoint` 和 `onlineddl` 等）。
+remove-meta: false              # 是否在开始运行任务前移除该任务名对应的 `meta`（`checkpoint` 和 `onlineddl` 等）。
 enable-heartbeat: false         # 是否开启 `heartbeat` 功能
 online-ddl-scheme: "gh-ost"     # 目前仅支持 gh-ost 、pt
 
