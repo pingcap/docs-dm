@@ -40,8 +40,8 @@ aliases: ['/docs-cn/tidb-data-migration/stable/error-handling/','/docs-cn/tidb-d
     | `dm-master`      | DM-master 服务内部出现错误   | `[code=38008:class=dm-master:scope=internal:level=high] grpc request error: rpc error: code = Unavailable desc = all SubConns are in TransientFailure, latest connection error: connection error: desc = "transport: Error while dialing dial tcp 172.17.0.2:8262: connect: connection refused"` |
     | `dm-worker`      | DM-worker 服务内部出现错误   | `[code=40066:class=dm-worker:scope=internal:level=high] ExecuteDDL timeout, try use query-status to query whether the DDL is still blocking` |
     | `dm-tracer`      | DM-tracer 服务内部出现错误   | `[code=42004:class=dm-tracer:scope=internal:level=medium] trace event test.1 not found` |
-    | `schema-tracker` | 增量同步时记录 schema 变更出现错误   | `[code=44006:class=schema-tracker:scope=internal:level=high],"cannot track DDL: ALTER TABLE test DROP COLUMN col1"` |
-    | `scheduler`      | 数据同步任务调度相关操作出错操作   | `[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
+    | `schema-tracker` | 增量复制时记录 schema 变更出现错误   | `[code=44006:class=schema-tracker:scope=internal:level=high],"cannot track DDL: ALTER TABLE test DROP COLUMN col1"` |
+    | `scheduler`      | 数据迁移任务调度相关操作出错操作   | `[code=46001:class=scheduler:scope=internal:level=high],"the scheduler has not started"` |
     | `dmctl`          | dmctl 内部或与其他组件交互出现错误   | `[code=48001:class=dmctl:scope=internal:level=high],"can not create grpc connection"` |
 
 - `scope`：错误作用域。
@@ -54,7 +54,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/error-handling/','/docs-cn/tidb-d
 
     错误的严重级别，包括低级别 (`low`)、中级别 (`medium`)、高级别 (`high`) 三种。
 
-    低级别通常是用户操作、输入错误，不影响正常同步任务；中级别通常是用户配置等错误，会影响部分新启动服务，不影响已有系统同步状态；高级别通常是用户需要关注的一些错误，可能存在同步任务中断等风险，需要用户进行处理。
+    低级别通常是用户操作、输入错误，不影响正常迁移任务；中级别通常是用户配置等错误，会影响部分新启动服务，不影响已有系统迁移状态；高级别通常是用户需要关注的一些错误，可能存在迁移任务中断等风险，需要用户进行处理。
 
 - `message`：错误描述。
 
@@ -88,7 +88,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/error-handling/','/docs-cn/tidb-d
     resume-task ${task name}
     ```
 
-但在某些情况下，你还需要重置数据同步任务。有关何时需要重置以及如何重置，详见[重置数据同步任务](faq.md#如何重置数据同步任务)。
+但在某些情况下，你还需要重置数据迁移任务。有关何时需要重置以及如何重置，详见[重置数据迁移任务](faq.md#如何重置数据迁移任务)。
 
 ## 常见故障处理方法
 
@@ -105,26 +105,26 @@ aliases: ['/docs-cn/tidb-data-migration/stable/error-handling/','/docs-cn/tidb-d
 | `code=32001` | dump 处理单元异常                                            | 如果报错 `msg` 包含 `mydumper: argument list too long.`，则需要用户根据 block-allow-list，在 `task.yaml` 的 mydumper `extra-args` 参数中手动加上 `--regex` 正则表达式设置要导出的库表。例如，如果要导出所有库中表名字为 `hello` 的表，可加上 `--regex '.*\\.hello$'`，如果要导出所有表，可加上 `--regex '.*'`。 |
 | `code=38008` | DM 组件间的 gRPC 通信出错                                      |  检查 `class`， 定位错误发生在哪些组件的交互环节，根据错误 message 判断是哪类通信错误。如果是 gRPC 建立连接出错，可检查通信服务端是否运行正常。 |
 
-### 同步任务中断并包含 `invalid connection` 错误
+### 迁移任务中断并包含 `invalid connection` 错误
 
 发生 `invalid connection` 错误时，通常表示 DM 到下游 TiDB 的数据库连接出现了异常（如网络故障、TiDB 重启、TiKV busy 等）且当前请求已有部分数据发送到了 TiDB。
 
-由于 DM 中存在同步任务并发向下游复制数据的特性，因此在任务中断时可能同时包含多个错误（可通过 `query-status` 或 `query-error` 查询当前错误）。
+由于 DM 中存在迁移任务并发向下游复制数据的特性，因此在任务中断时可能同时包含多个错误（可通过 `query-status` 或 `query-error` 查询当前错误）。
 
 - 如果错误中仅包含 `invalid connection` 类型的错误且当前处于增量复制阶段，则 DM 会自动进行重试。
 - 如果 DM 由于版本问题等未自动进行重试或自动重试未能成功，则可尝试先使用 `stop-task` 停止任务，然后再使用 `start-task` 重启任务。
 
-### 同步任务中断并包含 `driver: bad connection` 错误
+### 迁移任务中断并包含 `driver: bad connection` 错误
 
 发生 `driver: bad connection` 错误时，通常表示 DM 到下游 TiDB 的数据库连接出现了异常（如网络故障、TiDB 重启等）且当前请求的数据暂时未能发送到 TiDB。
 
 当前版本 DM 会自动进行重试，如果由于版本问题等未自动重试，可先使用 `stop-task` 停止任务后再使用 `start-task` 重启任务。
 
-### relay 处理单元报错 `event from * in * diff from passed-in event *` 或同步任务中断并包含 `get binlog error ERROR 1236 (HY000)`、`binlog checksum mismatch, data may be corrupted` 等 binlog 获取或解析失败错误
+### relay 处理单元报错 `event from * in * diff from passed-in event *` 或迁移任务中断并包含 `get binlog error ERROR 1236 (HY000)`、`binlog checksum mismatch, data may be corrupted` 等 binlog 获取或解析失败错误
 
-在 DM 进行 relay log 拉取与增量同步过程中，如果遇到了上游超过 4GB 的 binlog 文件，就可能出现这两个错误。
+在 DM 进行 relay log 拉取与增量复制过程中，如果遇到了上游超过 4GB 的 binlog 文件，就可能出现这两个错误。
 
-原因是 DM 在写 relay log 时需要依据 binlog position 及文件大小对 event 进行验证，且需要保存同步的 binlog position 信息作为 checkpoint。但是 MySQL binlog position 官方定义使用 uint32 存储，所以超过 4G 部分的 binlog position 的 offset 值会溢出，进而出现上面的错误。
+原因是 DM 在写 relay log 时需要依据 binlog position 及文件大小对 event 进行验证，且需要保存迁移的 binlog position 信息作为 checkpoint。但是 MySQL binlog position 官方定义使用 uint32 存储，所以超过 4G 部分的 binlog position 的 offset 值会溢出，进而出现上面的错误。
 
 对于 relay 处理单元，可通过以下步骤手动恢复：
 
@@ -139,16 +139,16 @@ aliases: ['/docs-cn/tidb-data-migration/stable/error-handling/','/docs-cn/tidb-d
 对于 binlog replication 处理单元，可通过以下步骤手动恢复：
 
 1. 在上游确认出错时对应的 binlog 文件的大小超出了 4GB。
-2. 通过 `stop-task` 停止同步任务。
-3. 将下游 `dm_meta` 数据库中 global checkpoint 与每个 table 的 checkpoint 中的 `binlog_name` 更新为出错的 binlog 文件，将 `binlog_pos` 更新为已同步过的一个合法的 position 值，比如 4。
+2. 通过 `stop-task` 停止迁移任务。
+3. 将下游 `dm_meta` 数据库中 global checkpoint 与每个 table 的 checkpoint 中的 `binlog_name` 更新为出错的 binlog 文件，将 `binlog_pos` 更新为已迁移过的一个合法的 position 值，比如 4。
 
     例如：出错任务名为 `dm_test`，对应的 `source-id` 为 `replica-1`，出错时对应的 binlog 文件为 `mysql-bin|000001.004451`，则执行 `UPDATE dm_test_syncer_checkpoint SET binlog_name='mysql-bin|000001.004451', binlog_pos = 4 WHERE id='replica-1';`。
-4. 在同步任务配置中为 `syncers` 部分设置 `safe-mode: true` 以保证可重入执行。
-5. 通过 `start-task` 启动同步任务。
-6. 通过 `query-status` 观察同步任务状态，当原造成出错的 relay log 文件同步完成后，即可还原 `safe-mode` 为原始值并重启同步任务。
+4. 在迁移任务配置中为 `syncers` 部分设置 `safe-mode: true` 以保证可重入执行。
+5. 通过 `start-task` 启动迁移任务。
+6. 通过 `query-status` 观察迁移任务状态，当原造成出错的 relay log 文件迁移完成后，即可还原 `safe-mode` 为原始值并重启迁移任务。
 
 ### 执行 `query-status` 或查看日志时出现 `Access denied for user 'root'@'172.31.43.27' (using password: YES)`
 
 在所有 DM 配置文件中，数据库相关的密码都推荐使用经 dmctl 加密后的密文（若数据库密码为空，则无需加密）。有关如何使用 dmctl 加密明文密码，参见[使用 dmctl 加密上游 MySQL 用户密码](deploy-a-dm-cluster-using-ansible.md#使用-dmctl-加密上游-mysql-用户密码)。
 
-此外，在 DM 运行过程中，上下游数据库的用户必须具备相应的读写权限。在启动同步任务过程中，DM 会自动进行相应权限的前置检查，详见[上游 MySQL 实例配置前置检查](precheck.md)。
+此外，在 DM 运行过程中，上下游数据库的用户必须具备相应的读写权限。在启动迁移任务过程中，DM 会自动进行相应权限的前置检查，详见[上游 MySQL 实例配置前置检查](precheck.md)。

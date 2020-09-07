@@ -5,7 +5,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/config-overview/','/docs-cn/tidb-
 
 # DM 配置简介
 
-本文档简要介绍 DM (Data Migration) 的配置文件和数据同步任务的配置。
+本文档简要介绍 DM (Data Migration) 的配置文件和数据迁移任务的配置。
 
 ## 配置文件
 
@@ -13,19 +13,19 @@ aliases: ['/docs-cn/tidb-data-migration/stable/config-overview/','/docs-cn/tidb-
 - `dm-master.toml`：DM-master 进程的配置文件，包括 DM 集群的拓扑信息、MySQL 实例与 DM-worker 之间的关系（必须为一对一的关系）。使用 DM-Ansible 部署 DM 集群时，会自动生成 `dm-master.toml` 文件，各项配置说明详见 [DM-master 配置文件介绍](dm-master-configuration-file.md)
 - `dm-worker.toml`：DM-worker 进程的配置文件，包括上游 MySQL 实例的配置和 relay log 的配置。使用 DM-Ansible 部署 DM 集群时，会自动生成 `dm-worker.toml` 文件，各项配置说明详见 [DM-worker 配置文件介绍](dm-worker-configuration-file.md)
 
-## 同步任务配置
+## 迁移任务配置
 
 ### 任务配置文件
 
-使用 DM-Ansible 部署 DM 集群时，`<path-to-dm-ansible>/conf` 中提供了任务配置文件模板：`task.yaml.exmaple` 文件。该文件是 DM 同步任务配置的标准文件，每一个具体的任务对应一个 `task.yaml` 文件。关于该配置文件的详细介绍，参见 [任务配置文件](task-configuration-file.md)。
+使用 DM-Ansible 部署 DM 集群时，`<path-to-dm-ansible>/conf` 中提供了任务配置文件模板：`task.yaml.exmaple` 文件。该文件是 DM 迁移任务配置的标准文件，每一个具体的任务对应一个 `task.yaml` 文件。关于该配置文件的详细介绍，参见 [任务配置文件](task-configuration-file.md)。
 
-### 创建数据同步任务
+### 创建数据迁移任务
 
-你可以基于 `task.yaml.example` 文件来创建数据同步任务，具体步骤如下：
+你可以基于 `task.yaml.example` 文件来创建数据迁移任务，具体步骤如下：
 
 1. 复制 `task.yaml.example` 为 `your_task.yaml`。
 2. 参考[任务配置文件](task-configuration-file.md)来修改 `your_task.yaml` 文件。
-3. [使用 dmctl 创建数据同步任务](manage-replication-tasks.md#创建数据同步任务)。
+3. [使用 dmctl 创建数据迁移任务](manage-replication-tasks.md#创建数据迁移任务)。
 
 ### 关键概念
 
