@@ -5,11 +5,11 @@ summary: Learn how to test the performance of DM clusters.
 
 # DM Cluster Performance Test
 
-This document describes how to build a test scenario to do a performance test on the DM cluster, including the speed test and latency test regarding data replication.
+This document describes how to build a test scenario to do a performance test on the DM cluster, including the speed test and latency test regarding data migration.
 
-## Replication data flow
+## Migration data flow
 
-You can use a simple replication data flow, that is, MySQL -> DM -> TiDB, to test the data replication performance of the DM cluster.
+You can use a simple migration data flow, that is, MySQL -> DM -> TiDB, to test the data migration performance of the DM cluster.
 
 ## Deploy test environment
 
@@ -48,18 +48,18 @@ Use `sysbench` to create test tables upstream and generate test data for full im
 sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=3306 --mysql-user=root --mysql-db=dm_benchmark --db-driver=mysql --table-size=50000000 prepare
 ```
 
-#### Create a data replication task
+#### Create a data migration task
 
 1. Create an upstream MySQL source and set `source-id` to `source-1`. For details, see [Load the Data Source Configurations](manage-source.md#load-the-data-source-configurations).
 
-2. Create a replication task (in `full` mode). The following is a task configuration template:
+2. Create a migration task (in `full` mode). The following is a task configuration template:
 
   ```yaml
   ---
   name: test-full
   task-mode: full
 
-  # Configure the replication task using the TiDB information of your actual test environment.
+  # Configure the migration task using the TiDB information of your actual test environment.
   target-database:
     host: "192.168.0.1"
     port: 4000
@@ -84,7 +84,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
       threads: 32
   ```
 
-For details about how to create a replication task, see [Create a Data Replication Task](create-task.md).
+For details about how to create a migration task, see [Create a Data Migration Task](create-task.md).
 
 > **Note:**
 >
@@ -99,7 +99,7 @@ Observe the DM-worker log. When you see `all data files have been finished`, it 
  [INFO] [loader.go:604] ["all data files have been finished"] [task=test] [unit=load] ["cost time"=52.439796ms]
 ```
 
-According to the size of the test data and the time consumed to import data, you can calculate the replication speed of the full data.
+According to the size of the test data and the time consumed to import data, you can calculate the migration speed of the full data.
 
 ### Incremental replication benchmark case
 
@@ -107,18 +107,18 @@ According to the size of the test data and the time consumed to import data, you
 
 Use `sysbench` to create test tables in the upstream.
 
-#### Create a data replication task
+#### Create a data migration task
 
 1. Create the source of the upstream MySQL. Set `source-id` to `source-1` (if the source has been created in the [full import benchmark case](#full-import-benchmark-case), you do not need to create it again). For details, see [Load the Data Source Configurations](manage-source.md#load-the-data-source-configurations).
 
-2. Create a DM replication task (in `all` mode). The following is an example of the task configuration file:
+2. Create a DM migration task (in `all` mode). The following is an example of the task configuration file:
 
   ```yaml
   ---
   name: test-all
   task-mode: all
 
-  # Configure the replication task using the TiDB information of your actual test environment.
+  # Configure the migration task using the TiDB information of your actual test environment.
   target-database:
     host: "192.168.0.1"
     port: 4000
@@ -142,7 +142,7 @@ Use `sysbench` to create test tables in the upstream.
       batch: 100
   ```
 
-For details about how to create a data replication task, see [Create a Data Replication Task](create-task.md).
+For details about how to create a data migration task, see [Create a Data Migration Task](create-task.md).
 
 > **Note:**
 >
@@ -160,8 +160,8 @@ sysbench --test=oltp_insert --tables=4 --num-threads=32 --mysql-host=172.17.4.40
 
 > **Note:**
 >
-> You can test the data replication performance under different scenarios by using different `sysbench` statements.
+> You can test the data migration performance under different scenarios by using different `sysbench` statements.
 
 #### Get test results
 
-To observe the replication status of DM, you can run the `query-status` command. To observe the monitoring metrics of DM, you can use Grafana. Here the monitoring metrics refer to `finished sqls jobs` (the number of jobs finished per unit time), etc. For more information, see [Binlog Replication Monitoring Metrics](monitor-a-dm-cluster.md#binlog-replication).
+To observe the migration status of DM, you can run the `query-status` command. To observe the monitoring metrics of DM, you can use Grafana. Here the monitoring metrics refer to `finished sqls jobs` (the number of jobs finished per unit time), etc. For more information, see [Binlog Migration Monitoring Metrics](monitor-a-dm-cluster.md#binlog-replication).
