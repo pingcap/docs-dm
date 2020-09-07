@@ -1,4 +1,4 @@
-name: link-check
+name: external-link-check
 
 on: [pull_request]
 
