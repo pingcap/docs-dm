@@ -17,13 +17,13 @@ jobs:
       - name: Link check for zh
         uses: peter-evans/link-checker@v1
         with:
-          args: -c 32 -d /github/workspace -r -x http://172.* zh*
+          args: -c 32 -d /github/workspace -r -x "http://172.*|https://github.com/pingcap/dm/pull/.*" zh*
 
       - name: Link check for en
         id: lc
         uses: peter-evans/link-checker@v1
         with:
-          args: -c 32 -d /github/workspace -r -x http://172.* en*
+          args: -c 32 -d /github/workspace -r -x "http://172.*|https://github.com/pingcap/dm/pull/.*" en*
 
       - name: Fail if there were link errors
         run: exit ${{ steps.lc.outputs.exit_code }}
