@@ -5,7 +5,7 @@ summary: Learn how to manage the data replication task using dmctl.
 
 # Introduction to dmctl
 
-dmctl is a command line tool used to manage the data replication task. For DM clusters deployed using TiUP, you can directly use [`tiup dmctl`](maintain-dm-using-tiup.md#dmctl).
+dmctl is a command line tool used to manage the data migration task. For DM clusters deployed using TiUP, you can directly use [`tiup dmctl`](maintain-dm-using-tiup.md#dmctl).
 
 The dmctl component supports the interactive mode and the command mode.
 

@@ -115,15 +115,15 @@ Currently, the `unlock-ddl-lock` command only supports handling sharding DDL loc
 
 #### The reason for the abnormal lock
 
-Before `DM-master` tries to automatically unlock the sharding DDL lock, all the MySQL sources need to receive the sharding DDL events (for details, see [shard merge principles](feature-shard-merge-pessimistic.md#principles)). If the sharding DDL event is already in the replication process, and some MySQL sources have been removed and are not to be reloaded (these MySQL sources have been removed according to the application demand), then the sharding DDL lock cannot be automatically replicated and unlocked because not all the DM-workers can receive the DDL event.
+Before `DM-master` tries to automatically unlock the sharding DDL lock, all the MySQL sources need to receive the sharding DDL events (for details, see [shard merge principles](feature-shard-merge-pessimistic.md#principles)). If the sharding DDL event is already in the migration process, and some MySQL sources have been removed and are not to be reloaded (these MySQL sources have been removed according to the application demand), then the sharding DDL lock cannot be automatically migrated and unlocked because not all the DM-workers can receive the DDL event.
 
 > **Note:**
 >
-> If you need to make some DM-workers offline when not in the process of replicating sharding DDL events, a better solution is to use `stop-task` to stop the running tasks first, make the DM-workers go offline, remove the corresponding configuration information from the task configuration file, and finally use `start-task` and the new task configuration to restart the replication task.
+> If you need to make some DM-workers offline when not in the process of migrating sharding DDL events, a better solution is to use `stop-task` to stop the running tasks first, make the DM-workers go offline, remove the corresponding configuration information from the task configuration file, and finally use `start-task` and the new task configuration to restart the migration task.
 
 #### Manual solution
 
-Suppose that there are two instances `MySQL-1` (`mysql-replica-01`) and `MySQL-2` (`mysql-replica-02`) in the upstream, and there are two tables `shard_db_1`.`shard_table_1` and `shard_db_1`.`shard_table_2` in `MySQL-1` and two tables `shard_db_2`.`shard_table_1` and `shard_db_2`.`shard_table_2` in `MySQL-2`. Now we need to merge the four tables and replicate them into the table `shard_db`.`shard_table` in the downstream TiDB.
+Suppose that there are two instances `MySQL-1` (`mysql-replica-01`) and `MySQL-2` (`mysql-replica-02`) in the upstream, and there are two tables `shard_db_1`.`shard_table_1` and `shard_db_1`.`shard_table_2` in `MySQL-1` and two tables `shard_db_2`.`shard_table_1` and `shard_db_2`.`shard_table_2` in `MySQL-2`. Now we need to merge the four tables and migrate them into the table `shard_db`.`shard_table` in the downstream TiDB.
 
 The initial table structure is:
 
@@ -185,7 +185,7 @@ The operation processes of MySQL and DM are as follows:
     }
     ```
 
-4. Due to the application demand, the data corresponding to `mysql-replica-02` is no longer needed to be replicated to the downstream TiDB, and `mysql-replica-02` is removed.
+4. Due to the application demand, the data corresponding to `mysql-replica-02` is no longer needed to be migrated to the downstream TiDB, and `mysql-replica-02` is removed.
 5. The lock whose ID is ```test-`shard_db`.`shard_table` ``` on `DM-master` cannot receive the DDL information of `mysql-replica-02`.
 
     - The returned result `unsynced` by `show-ddl-locks` has always included the information of `mysql-replica-02`.
@@ -232,11 +232,11 @@ The operation processes of MySQL and DM are as follows:
     +-------------+--------------------------------------------------+
     ```
 
-9. Use `query-status` to confirm if the replication task is normal.
+9. Use `query-status` to confirm if the migration task is normal.
 
 #### Impact
 
-After you have manually unlocked the lock by using `unlock-ddl-lock`, if you don't deal with the offline MySQL sources included in the task configuration information, the lock might still be unable to be replicated automatically when the next sharding DDL event is received.
+After you have manually unlocked the lock by using `unlock-ddl-lock`, if you don't deal with the offline MySQL sources included in the task configuration information, the lock might still be unable to be migrated automatically when the next sharding DDL event is received.
 
 Therefore, after you have manually unlocked the DDL lock, you should perform the following operations:
 
@@ -246,7 +246,7 @@ Therefore, after you have manually unlocked the DDL lock, you should perform the
 
 > **Note:**
 >
-> After you run `unlock-ddl-lock`, if the MySQL source that went offline is reloaded and the DM-worker tries to replicate the data of the sharded tables, a match error between the data and the downstream table structure might occur.
+> After you run `unlock-ddl-lock`, if the MySQL source that went offline is reloaded and the DM-worker tries to migrate the data of the sharded tables, a match error between the data and the downstream table structure might occur.
 
 ### Scenario 2: Some DM-workers stop abnormally or the network failure occurs during the DDL unlocking process
 
@@ -265,11 +265,11 @@ When the MySQL source corresponding to the non-owner restores data migration, th
 
 #### Manual solution
 
-Suppose that now we have the same upstream and downstream table structures and the same demand for merging tables and replication as in the manual solution of [Some MySQL sources are removed](#scenario-1-some-mysql-sources-are-removed).
+Suppose that now we have the same upstream and downstream table structures and the same demand for merging tables and migration as in the manual solution of [Some MySQL sources are removed](#scenario-1-some-mysql-sources-are-removed).
 
-When `DM-master` automatically executes the unlocking process, the owner (`mysql-replica-01`) successfully executes the DDL and continues the replication process. However, in the process of requesting the non-owner (`mysql-replica-02`) to skip the DDL operation, the checkpoint fails to update after the DM-worker skips the DDL operation because the corresponding DM-worker was restarted.
+When `DM-master` automatically executes the unlocking process, the owner (`mysql-replica-01`) successfully executes the DDL and continues the migration process. However, in the process of requesting the non-owner (`mysql-replica-02`) to skip the DDL operation, the checkpoint fails to update after the DM-worker skips the DDL operation because the corresponding DM-worker was restarted.
 
-After the data migration subtask corresponding to `mysql-replica-02` restores, a new lock is created on the DM-master, but other MySQL sources have executed or skipped DDL operations and are performing subsequent replication.
+After the data migration subtask corresponding to `mysql-replica-02` restores, a new lock is created on the DM-master, but other MySQL sources have executed or skipped DDL operations and are performing subsequent migration.
 
 The operation processes are:
 
@@ -315,8 +315,8 @@ The operation processes are:
         ```
 
 3. Use `show-ddl-locks` to confirm if the DDL lock has been successfully unlocked.
-4. Use `query-status` to confirm if the replication task is normal.
+4. Use `query-status` to confirm if the migration task is normal.
 
 #### Impact
 
-After manually unlocking the lock, the following sharding DDL can be replicated automatically and normally.
+After manually unlocking the lock, the following sharding DDL can be migrated automatically and normally.

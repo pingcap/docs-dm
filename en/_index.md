@@ -5,12 +5,12 @@ summary: Learn about TiDB Data Migration documentation.
 
 # TiDB Data Migration Documentation
 
-[TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data replication task management platform that supports the full data migration and the incremental data migration from MySQL/MariaDB into TiDB. It can help to reduce the operations cost and simplify the troubleshooting process.
+[TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data migration task management platform that supports the full data migration and the incremental data replication from MySQL/MariaDB into TiDB. It can help to reduce the operations cost and simplify the troubleshooting process.
 
 **What's new in DM v2.0:**
 
 - High availability. The data migration task can run normally even when some DM-master or DM-worker nodes fail.
-- [Sharding DDL support in the optimistic mode](feature-shard-merge-optimistic.md). In this mode, replication latency can be reduced in some scenarios and you can make A/B changes in the upstream database.
+- [Sharding DDL support in the optimistic mode](feature-shard-merge-optimistic.md). In this mode, migration latency can be reduced in some scenarios and you can make A/B changes in the upstream database.
 - Better usability, including the new [error handling mechanism](handle-failed-sql-statements.md) and the easier-to-read error messages and error handling suggestions.
 - [TLS support](enable-tls.md) for connections between the upstream and the downstream, and for connections between DM components.
 - Support for migrating data from MySQL 8.0 (experimental).
@@ -33,7 +33,7 @@ summary: Learn about TiDB Data Migration documentation.
 
 - [Usage Scenarios](usage-scenario-shard-merge.md)
 - [Quick Start with DM](quick-start-with-dm.md)
-- [Replicate Data Using DM](replicate-data-using-dm.md)
+- [Migrate Data Using DM](migrate-data-using-dm.md)
 
 </NavColumn>
 
@@ -42,7 +42,7 @@ summary: Learn about TiDB Data Migration documentation.
 
 - [Deploy DM Using TiUP](deploy-a-dm-cluster-using-tiup.md)
 - [Deploy DM Using Binary](deploy-a-dm-cluster-using-binary.md)
-- [Use DM to Replicate Data](replicate-data-using-dm.md)
+- [Use DM to Migrate Data](migrate-data-using-dm.md)
 - [Monitor and Alert](monitor-a-dm-cluster.md)
 
 </NavColumn>
@@ -63,7 +63,7 @@ summary: Learn about TiDB Data Migration documentation.
 <NavColumn>
 <ColumnTitle>Tutorials</ColumnTitle>
 
-- [Simple Usage Scenario](usage-scenario-simple-replication.md)
+- [Simple Usage Scenario](usage-scenario-simple-migration.md)
 - [Shard Merge Scenario](usage-scenario-shard-merge.md)
 - [Migrate from MySQL (Amazon Aurora)](migrate-from-mysql-aurora.md)
 - [Shard Merge Scenario Best Practices](shard-merge-best-practices.md)
