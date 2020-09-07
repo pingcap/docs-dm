@@ -107,6 +107,6 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 尝试将
 
 - TiDB Server 的全局变量 `max_allowed_packet`
-- 任务配置文件 `mydumpers` 条目下 `max-allowed-packet` 
+- 数据源配置文件中 `target-database.max-allowed-packet` 
 
 设置为比默认 67108864 (64M) 更大的值。详见 [Loader 解决方案](https://docs.pingcap.com/zh/tidb/stable/loader-overview#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)。
