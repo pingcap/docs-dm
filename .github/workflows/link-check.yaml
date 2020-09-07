@@ -14,7 +14,7 @@ jobs:
       #    but if `-c` is too large then `Too Many Requests (HTTP error 429)` may be reported from `https://github.com/*`.
       #  - we hardcode `--document-root` to `/github/workspace` in the container now.
       #  - we use `http://172.*` as sample addresses in some docs, so we need to exclude them.
-      - name: Link check for zh
+      - name: Check external links in zh files
         uses: peter-evans/link-checker@v1
         with:
           args: -c 32 -d /github/workspace -r -x "http://172.*|https://github.com/pingcap/dm/pull/.*|.*.md" zh*
