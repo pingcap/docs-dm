@@ -1,12 +1,7 @@
 ---
-<<<<<<< HEAD:en/replicate-data-using-dm.md
-title: Replicate Data Using Data Migration
-summary: Use the Data Migration tool to replicate the full data and the incremental data.
-=======
 title: Migrate Data Using Data Migration
 summary: Use the Data Migration tool to migrate the full data and the incremental data.
-aliases: ['/docs/tidb-data-migration/dev/replicate-data-using-dm/','/tidb-data-migration/dev/replicate-data-using-dm']
->>>>>>> e32acdc... en: Update descriptions about 迁移 & 同步 to make it clearer (#312):en/migrate-data-using-dm.md
+aliases: ['/docs/tidb-data-migration/v2.0/replicate-data-using-dm/','/tidb-data-migration/v2.0/replicate-data-using-dm']
 ---
 
 # Migrate Data Using Data Migration
