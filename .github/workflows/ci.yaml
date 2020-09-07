@@ -17,7 +17,18 @@ jobs:
       with:
         config: './.markdownlint.yaml'
         args: '.'
-    - name: Verify links
+    - name: Verify internal links
       run: ./hack/verify-links.sh
+<<<<<<< HEAD
     - name: Verify link anchors
       run: ./hack/verify-link-anchors.sh 
+=======
+    - name: Verify internal link anchors
+      run: ./hack/verify-link-anchors.sh
+    - name: "Check unclosed tags"
+      run: 
+        git remote add upstream https://github.com/pingcap/docs-dm.git;
+        git fetch upstream;
+        echo "checked files are $(git diff-tree --name-only --no-commit-id -r upstream/master...HEAD -- 'zh/' 'en/' '.md' ':(exclude).github/*')";
+        python3 ./hack/check-tags.py $(git diff-tree --name-only --no-commit-id -r upstream/master...HEAD -- 'zh/' 'en/' '.md' ':(exclude).github/*')
+>>>>>>> 6ae07ea... *: check link via GitHub action (#353)
