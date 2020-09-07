@@ -5,12 +5,12 @@ aliases: ['/docs-cn/tidb-data-migration/stable/get-started/','/docs-cn/tidb-data
 
 # TiDB Data Migration 教程
 
-TiDB Data Migration (DM) 是一体化的数据同步任务管理平台，支持将大量、复杂的生产环境中的数据从 MySQL 或 MariaDB 迁移到 TiDB。
+TiDB Data Migration (DM) 是一体化的数据迁移任务管理平台，支持将大量、复杂的生产环境中的数据从 MySQL 或 MariaDB 迁移到 TiDB。
 
 DM 功能如下：
 
 - 数据迁移
-    - 支持导出与导入源数据库的初始全量数据，并在数据迁移过程中读取、应用来自源数据库存储的 binlog，从而保持数据的同步。
+    - 支持导出与导入源数据库的初始全量数据，并在数据迁移过程中读取、应用来自源数据库存储的 binlog，从而保持数据的迁移。
     - 通过合并上游的多个 MySQL 或 MariaDB 实例或集群的表，DM 能迁移生产环境中的分库分表。
 - 将 TiDB 作为 MySQL 或 MariaDB 的从库时，DM 能持续提高数据库水平扩展的能力，或在无需 ETL 作业的情况下，在 TiDB 上进行数据实时分析。
 
@@ -31,11 +31,11 @@ DM 功能如下：
 
 TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl。
 
-* DM-master 负责管理和调度数据同步任务的操作。
-* DM-worker 负责执行特定的数据同步任务。
+* DM-master 负责管理和调度数据迁移任务的操作。
+* DM-worker 负责执行特定的数据迁移任务。
 * dmctl 是一个命令行工具，用于控制 DM 集群。
 
-`.yaml` 文件中定义了各个数据同步任务，dmctl 会读取这些文件，并且这些文件会被提交给 DM-master。DM-master 再将关于给定任务的相应职责告知每个 DM-worker 实例。
+`.yaml` 文件中定义了各个数据迁移任务，dmctl 会读取这些文件，并且这些文件会被提交给 DM-master。DM-master 再将关于给定任务的相应职责告知每个 DM-worker 实例。
 
 详情参见 [Data Migration 简介](overview.md)。
 
@@ -134,7 +134,7 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
     17782 mysqld --defaults-group-suffix=3
     ```
 
-## 同步分片数据
+## 迁移分片数据
 
 本示例场景包含 3 个分片，这些分片表结构相同，但自增主键并不重叠。
 
@@ -340,9 +340,9 @@ loaders:
 
 以上文件包含一些全局配置项和几组定义各种行为的配置项。
 
-* `task-mode: all`：DM 导入上游实例的全量备份，并使用上游 MySQL Server 的 binlog 进行增量同步。
+* `task-mode: all`：DM 导入上游实例的全量备份，并使用上游 MySQL Server 的 binlog 进行增量复制。
 
-    * 此外，可将 `task-mode` 设置为 `full` 或 `incremental` 以分别进行全量备份或增量同步。
+    * 此外，可将 `task-mode` 设置为 `full` 或 `incremental` 以分别进行全量迁移或增量复制。
 
 * `is-sharding: true`：多个 DM-worker 实例进行同一个任务，这些实例将上游的若干分片合并到一个下游的表中。
 
@@ -405,7 +405,7 @@ start-task dm-cnf/dmtask1.yaml
 }
 ```
 
-启动该任务意味着启动任务配置文件中定义的行为，包括执行 mydumper 和 loader 实例，加载初次 dump 的数据后，将 DM-worker 作为同步任务的 slave 连接到上游的 MySQL Server。
+启动该任务意味着启动任务配置文件中定义的行为，包括执行 mydumper 和 loader 实例，加载初次 dump 的数据后，将 DM-worker 作为迁移任务的 slave 连接到上游的 MySQL Server。
 
 所有的行数据都被迁移到 TiDB Server：
 
@@ -431,7 +431,7 @@ mysql -h 127.0.0.1 -P 4000 -u root -e 'select * from t1' dmtest1 | tail
 1858    d7fd118e6f226a71b5f1ffe10efd0a78        3309
 ```
 
-现在 DM 正作为每个 MySQL Server 的 slave，读取 MySQL Server 的 binlog，将更新的数据实时同步到下游的 TiDB Server：
+现在 DM 正作为每个 MySQL Server 的 slave，读取 MySQL Server 的 binlog，将更新的数据实时迁移到下游的 TiDB Server：
 
 {{< copyable "shell-regular" >}}
 
@@ -488,7 +488,7 @@ mysql -h 127.0.0.1 -P 4000 -u root -e 'select * from t1' dmtest1 | tail
 6328    NULL    NULL
 ```
 
-更新这些行，则可见更新的数据已同步到 TiDB 中：
+更新这些行，则可见更新的数据已迁移到 TiDB 中：
 
 {{< copyable "shell-regular" >}}
 
@@ -514,10 +514,10 @@ mysql -h 127.0.0.1 -P 4000 -u root -e 'select * from t1' dmtest1 | tail
 6328    b294504229c668e750dfcc4ea9617f0a        3309
 ```
 
-只要 DM-master 和 DM-worker 运行 `dmtest1` 任务，下游的 TiDB Server 将持续和上游的 MySQL Server 实例保持同步的状态。
+只要 DM-master 和 DM-worker 运行 `dmtest1` 任务，下游的 TiDB Server 将持续和上游的 MySQL Server 实例保持迁移的状态。
 
 ## 结论
 
-本教程完成了上游 3 个 MySQL Server 实例的分片迁移，介绍了分片迁移中，DM 如何在集群中导入初始数据，以及如何读取 MySQL 的 binlog 来同步增量数据，从而使下游 TiDB 集群与上游实例保持同步。
+本教程完成了上游 3 个 MySQL Server 实例的分片迁移，介绍了分片迁移中，DM 如何在集群中导入初始数据，以及如何读取 MySQL 的 binlog 来复制增量数据，从而使下游 TiDB 集群与上游实例保持迁移。
 
 关于 DM 的更多详情，请参考 [Data Migration 简介](overview.md)，或加入 [TiDB Community Slack](https://pingcap.com/tidbslack/) channel 参与讨论。

@@ -1,12 +1,12 @@
 ---
-title: 数据同步功能
+title: 数据迁移功能
 summary: DM 提供的功能及其配置介绍
 aliases: ['/docs-cn/tidb-data-migration/stable/feature-overview/','/docs-cn/tidb-data-migration/v1.0/feature-overview/','/docs-cn/dev/reference/tools/data-migration/features/overview/','/docs-cn/v3.1/reference/tools/data-migration/features/overview/','/docs-cn/v3.0/reference/tools/data-migration/features/overview/','/docs-cn/v2.1/reference/tools/data-migration/features/overview/','/docs-cn/stable/reference/tools/data-migration/features/overview/']
 ---
 
-# 数据同步功能
+# 数据迁移功能
 
-本文将详细介绍 DM 提供的数据同步功能，以及相关的配置选项。
+本文将详细介绍 DM 提供的数据迁移功能，以及相关的配置选项。
 
 Table Routing、Block & Allow Lists、Binlog Event Filter 在匹配库表名时，有以下版本差异：
 
@@ -17,12 +17,12 @@ Table Routing、Block & Allow Lists、Binlog Event Filter 在匹配库表名时�
 
 ## Table routing
 
-Table routing 提供将上游 MySQL/MariaDB 实例的某些表同步到下游指定表的功能。
+Table routing 提供将上游 MySQL/MariaDB 实例的某些表迁移到下游指定表的功能。
 
 > **注意：**
 >
 > - 不支持对同一个表设置多个不同的路由规则。
-> - Schema 的匹配规则需要单独设置，用来同步 `create/drop schema xx`，例如下面[参数配置](#参数配置)中的 rule-2。
+> - Schema 的匹配规则需要单独设置，用来迁移 `create/drop schema xx`，例如下面[参数配置](#参数配置)中的 rule-2。
 
 ### 参数配置
 
@@ -42,7 +42,7 @@ routes:
 
 ### 参数解释
 
-将根据 [`schema-pattern`/`table-pattern`](table-selector.md) 匹配上该规则的上游 MySQL/MariaDB 实例的表同步到下游的 `target-schema`/`target-table`。
+将根据 [`schema-pattern`/`table-pattern`](table-selector.md) 匹配上该规则的上游 MySQL/MariaDB 实例的表迁移到下游的 `target-schema`/`target-table`。
 
 ### 使用示例
 
@@ -50,17 +50,17 @@ routes:
 
 #### 分库分表合并
 
-假设存在分库分表场景，需要将上游两个 MySQL 实例的表 `test_{1,2,3...}`.`t_{1,2,3...}` 同步到下游 TiDB 的一张表 `test`.`t`。
+假设存在分库分表场景，需要将上游两个 MySQL 实例的表 `test_{1,2,3...}`.`t_{1,2,3...}` 迁移到下游 TiDB 的一张表 `test`.`t`。
 
-为了同步到下游实例的表 `test`.`t` 需要创建两个 table routing 规则：
+为了迁移到下游实例的表 `test`.`t` 需要创建两个 table routing 规则：
 
-- `rule-1` 用来同步匹配上 `schema-pattern: "test_*"` 和 `table-pattern: "t_*"` 的表的 DML/DDL 语句到下游的 `test`.`t`。
-- `rule-2` 用来同步匹配上 `schema-pattern: "test_*"` 的库的 DDL 语句，例如 `create/drop schema xx`。
+- `rule-1` 用来迁移匹配上 `schema-pattern: "test_*"` 和 `table-pattern: "t_*"` 的表的 DML/DDL 语句到下游的 `test`.`t`。
+- `rule-2` 用来迁移匹配上 `schema-pattern: "test_*"` 的库的 DDL 语句，例如 `create/drop schema xx`。
 
 > **注意：**
 >
 > - 如果下游 TiDB `schema: test` 已经存在， 并且不会被删除，则可以省略 `rule-2`。
-> - 如果下游 TiDB `schema: test` 不存在，只设置了 `rule_1`，则同步会报错 `schema test doesn't exist`。
+> - 如果下游 TiDB `schema: test` 不存在，只设置了 `rule_1`，则迁移会报错 `schema test doesn't exist`。
 
 {{< copyable "" >}}
 
@@ -77,7 +77,7 @@ routes:
 
 #### 分库合并
 
-假设存在分库场景，将上游两个 MySQL 实例 `test_{1,2,3...}`.`t_{1,2,3...}` 同步到下游 TiDB 的 `test`.`t_{1,2,3...}`，创建一条路由规则即可：
+假设存在分库场景，将上游两个 MySQL 实例 `test_{1,2,3...}`.`t_{1,2,3...}` 迁移到下游 TiDB 的 `test`.`t_{1,2,3...}`，创建一条路由规则即可：
 
 {{< copyable "" >}}
 
@@ -111,7 +111,7 @@ routes:
 
 ## Block & allow table lists
 
-上游数据库实例表的黑白名单过滤规则，可以用来过滤或者只同步某些 `database/table` 的所有操作。
+上游数据库实例表的黑白名单过滤规则，可以用来过滤或者只迁移某些 `database/table` 的所有操作。
 
 ### 参数配置
 
@@ -141,10 +141,10 @@ block-allow-list:             # 如果 DM 版本 <= v1.0.6 则使用 black-white
 
 ### 参数解释
 
-- `do-dbs`：要同步的库的白名单，类似于 MySQL 中的 [`replicate-do-db`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-do-db)。
-- `ignore-dbs`：要同步的库的黑名单，类似于 MySQL 中的 [`replicate-ignore-db`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-ignore-db)。
-- `do-tables`：要同步的表的白名单，类似于 MySQL 中的 [`replicate-do-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-do-table)。
-- `ignore-tables`：要同步的表的黑名单，类似于 MySQL 中的 [`replicate-ignore-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-ignore-table)。
+- `do-dbs`：要迁移的库的白名单，类似于 MySQL 中的 [`replicate-do-db`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-do-db)。
+- `ignore-dbs`：要迁移的库的黑名单，类似于 MySQL 中的 [`replicate-ignore-db`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-ignore-db)。
+- `do-tables`：要迁移的表的白名单，类似于 MySQL 中的 [`replicate-do-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-do-table)。
+- `ignore-tables`：要迁移的表的黑名单，类似于 MySQL 中的 [`replicate-ignore-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html#option_mysqld_replicate-ignore-table)。
 
 以上参数值以 `~` 开头时均支持使用[正则表达式](https://golang.org/pkg/regexp/syntax/#hdr-syntax)来匹配库名、表名。
 
@@ -180,15 +180,15 @@ block-allow-list:             # 如果 DM 版本 <= v1.0.6 则使用 black-white
 
     1. 如果 `do-tables` 不为空，判断 `do-tables` 中是否存在一个匹配的 table。
 
-        - 如果存在，则同步 `test`.`t`。
+        - 如果存在，则迁移 `test`.`t`。
         - 如果不存在，则过滤 `test`.`t`。
 
     2. 如果 `ignore-tables` 不为空，判断 `ignore-tables` 中是否存在一个匹配的 table。
 
         - 如果存在，则过滤 `test`.`t`.
-        - 如果不存在，则同步 `test`.`t`。
+        - 如果不存在，则迁移 `test`.`t`。
 
-    3. 如果 `do-tables` 和 `ignore-tables` 都为空，则同步 `test`.`t`。
+    3. 如果 `do-tables` 和 `ignore-tables` 都为空，则迁移 `test`.`t`。
 
 > **注意：**
 >
@@ -243,7 +243,7 @@ block-allow-list:    # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
 
 ## Binlog event filter
 
-Binlog event filter 是比同步表黑白名单更加细粒度的过滤规则，可以指定只同步或者过滤掉某些 `schema / table` 的指定类型 binlog，比如 `INSERT`，`TRUNCATE TABLE`。
+Binlog event filter 是比迁移表黑白名单更加细粒度的过滤规则，可以指定只迁移或者过滤掉某些 `schema / table` 的指定类型 binlog，比如 `INSERT`，`TRUNCATE TABLE`。
 
 > **注意：**
 >
@@ -325,16 +325,16 @@ filters:
     action: Ignore
 ```
 
-#### 只同步分库分表的 DML 操作
+#### 只迁移分库分表的 DML 操作
 
-需要设置下面两个 `Binlog event filter rule` 只同步 DML 操作：
+需要设置下面两个 `Binlog event filter rule` 只迁移 DML 操作：
 
-- `do-table-rule` 只同步所有匹配到 pattern `test_*`.`t_*` 的 table 的 `create table`、`insert`、`update`、`delete` 操作。
-- `do-schema-rule` 只同步所有匹配到 pattern `test_*` 的 schema 的 `create database` 操作。
+- `do-table-rule` 只迁移所有匹配到 pattern `test_*`.`t_*` 的 table 的 `create table`、`insert`、`update`、`delete` 操作。
+- `do-schema-rule` 只迁移所有匹配到 pattern `test_*` 的 schema 的 `create database` 操作。
 
 > **注意：**
 >
-> 同步 `create database/table` 的原因是创建库和表后才能同步 `DML`。
+> 迁移 `create database/table` 的原因是创建库和表后才能迁移 `DML`。
 
 {{< copyable "" >}}
 
@@ -372,7 +372,7 @@ filters:
 
 > **注意：**
 >
-> 全局过滤规则的设置必须尽可能严格，以避免预期之外地过滤掉需要同步的数据。
+> 全局过滤规则的设置必须尽可能严格，以避免预期之外地过滤掉需要迁移的数据。
 
 可设置如下规则过滤 TiDB parser 不支持的 `PARTITION` 语句：
 
@@ -429,7 +429,7 @@ column-mappings:
 
 #### `partition id` 表达式
 
-`partition id` 目的是为了解决分库分表合并同步的自增主键的冲突。
+`partition id` 目的是为了解决分库分表合并迁移的自增主键的冲突。
 
 **`partition id` 限制**
 
@@ -480,7 +480,7 @@ column-mappings:
 
 ### 使用示例
 
-假设存在分库分表场景：将上游两个 MySQL 实例的 `test_{1,2,3...}`.`t_{1,2,3...}` 同步到下游 TiDB 的 `test`.`t`，并且这些表都有自增主键。
+假设存在分库分表场景：将上游两个 MySQL 实例的 `test_{1,2,3...}`.`t_{1,2,3...}` 迁移到下游 TiDB 的 `test`.`t`，并且这些表都有自增主键。
 
 需要设置下面两个规则：
 
@@ -507,14 +507,14 @@ column-mappings:
 - MySQL instance 1 的表 `test_1`.`t_1` 的 `ID = 1` 的行经过转换后 ID = 1 变为 `1 << (64-1-4) | 1 << (64-1-4-7) | 1 << 44 | 1 = 580981944116838401`
 - MySQL instance 2 的表 `test_1`.`t_2` 的 `ID = 1` 的行经过转换后 ID = 2 变为 `2 << (64-1-4) | 1 << (64-1-4-7) | 2 << 44 | 2 = 1157460288606306306`
 
-## 同步延迟监控
+## 迁移延迟监控
 
-DM 支持通过 heartbeat 真实同步数据来计算每个同步任务与 MySQL/MariaDB 的实时同步延迟。
+DM 支持通过 heartbeat 真实迁移数据来计算每个迁移任务与 MySQL/MariaDB 的实时迁移延迟。
 
 > **注意：**
 >
-> - 同步延迟的估算的精度在秒级别。
-> - heartbeat 相关的 binlog 不会同步到下游，在计算延迟后会被丢弃。
+> - 迁移延迟的估算的精度在秒级别。
+> - heartbeat 相关的 binlog 不会迁移到下游，在计算延迟后会被丢弃。
 
 ### 系统权限
 
@@ -538,7 +538,7 @@ enable-heartbeat: true
 - DM-worker 在对应的上游 MySQL/MariaDB 创建库 `dm_heartbeat`（当前不可配置）
 - DM-worker 在对应的上游 MySQL/MariaDB 创建表 `heartbeat`（当前不可配置）
 - DM-worker 每秒钟（当前不可配置）在对应的上游 MySQL/MariaDB 的 `dm_heartbeat`.`heartbeat` 表中，利用 `replace statement` 更新当前时间戳 `TS_master`
-- DM-worker 每个任务拿到 `dm_heartbeat`.`heartbeat` 的 binlog 后，更新自己的同步时间 `TS_slave_task`
+- DM-worker 每个任务拿到 `dm_heartbeat`.`heartbeat` 的 binlog 后，更新自己的迁移时间 `TS_slave_task`
 - DM-worker 每 10 秒在对应的上游 MySQL/MariaDB 的 `dm_heartbeat`.`heartbeat` 查询当前的 `TS_master`，并且对每个任务计算 `task_lag` = `TS_master` - `TS_slave_task`
 
 可以在 metrics 的 [binlog replication](monitor-a-dm-cluster.md#binlog-replication) 处理单元找到 replicate lag 监控项。

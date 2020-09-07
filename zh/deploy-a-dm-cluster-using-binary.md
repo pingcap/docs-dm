@@ -34,7 +34,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/deploy-a-dm-cluster-using-binary/
 | DM-worker1 | 192.168.0.5 |
 | DM-worker2 | 192.168.0.6 |
 
-MySQL1 和 MySQL2 中需要开启 binlog。DM-worker1 负责同步 MySQL1 的数据，DM-worker2 负责同步 MySQL2 的数据。下面以此为例，说明如何部署 DM。
+MySQL1 和 MySQL2 中需要开启 binlog。DM-worker1 负责迁移 MySQL1 的数据，DM-worker2 负责迁移 MySQL2 的数据。下面以此为例，说明如何部署 DM。
 
 ### DM-worker 的部署
 
@@ -74,7 +74,7 @@ Usage of worker:
   -checker-backoff-rollback duration
         任务检查模块中，调整自动恢复等待时间的间隔（默认值："5m0s"，一般情况下不需要修改，如果对该参数的作用没有深入的了解，不建议修改该参数）
   -checker-check-enable
-        是否开启任务状态检查。开启后 DM 会尝试自动恢复因错误而暂停的数据同步任务（默认值：true）
+        是否开启任务状态检查。开启后 DM 会尝试自动恢复因错误而暂停的数据迁移任务（默认值：true）
   -config string
         配置文件的路径
   -log-file string
@@ -212,11 +212,11 @@ dm-worker = "192.168.0.6:8262"
 bin/dm-master -config conf/dm-master.toml
 ```
 
-这样，DM 集群就部署成功了。下面创建简单的数据同步任务来使用 DM 集群。
+这样，DM 集群就部署成功了。下面创建简单的数据迁移任务来使用 DM 集群。
 
-### 创建数据同步任务
+### 创建数据迁移任务
 
-假设在 MySQL1 和 MySQL2 实例中有若干个分表，这些分表的结构相同，所在库的名称都以 "sharding" 开头，表名称都以 "t" 开头，并且主键或唯一键不存在冲突（即每张分表的主键或唯一键各不相同）。现在需要把这些分表同步到 TiDB 中的 `db_target.t_target` 表中。
+假设在 MySQL1 和 MySQL2 实例中有若干个分表，这些分表的结构相同，所在库的名称都以 "sharding" 开头，表名称都以 "t" 开头，并且主键或唯一键不存在冲突（即每张分表的主键或唯一键各不相同）。现在需要把这些分表迁移到 TiDB 中的 `db_target.t_target` 表中。
 
 首先创建任务的配置文件：
 
@@ -240,14 +240,14 @@ mysql-instances:
     route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量，在 v1.0.2 版本引入
     loader-thread: 16              # loader 用于导入数据的线程数量，在 v1.0.2 版本引入
-    syncer-thread: 16              # syncer 用于同步增量数据的线程数量，在 v1.0.2 版本引入
+    syncer-thread: 16              # syncer 用于复制增量数据的线程数量，在 v1.0.2 版本引入
 
   - source-id: "mysql-replica-02"
     block-allow-list:  "instance"  # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
     route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量，在 v1.0.2 版本引入
     loader-thread: 16              # loader 用于导入数据的线程数量，在 v1.0.2 版本引入
-    syncer-thread: 16              # syncer 用于同步增量数据的线程数量，在 v1.0.2 版本引入
+    syncer-thread: 16              # syncer 用于复制增量数据的线程数量，在 v1.0.2 版本引入
 
 block-allow-list:                  # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
   instance:
@@ -311,4 +311,4 @@ Go Version: go version go1.12 linux/amd64
 }
 ```
 
-这样就成功创建了一个将 MySQL1 和 MySQL2 实例中的分表数据同步到 TiDB 的任务。
+这样就成功创建了一个将 MySQL1 和 MySQL2 实例中的分表数据迁移到 TiDB 的任务。

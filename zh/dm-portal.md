@@ -7,23 +7,23 @@ aliases: ['/docs-cn/tidb-data-migration/stable/dm-portal/','/docs-cn/tidb-data-m
 
 当前版本的 DM 提供了丰富多样的功能特性，包括 [Table Routing](feature-overview.md#table-routing)，[Block & Allow Lists](feature-overview.md#block--allow-table-lists)，[Binlog Event Filter](feature-overview.md#binlog-event-filter) 等。但这些功能特性同时也增加了用户使用 DM 的复杂度，尤其在编写 [DM 任务配置](task-configuration-file.md)的时候。
 
-针对这个问题，DM 提供了一个精简的网页程序 DM Portal，能够帮助用户以可视化的方式去配置需要的同步任务，并且生成可以直接让 DM 直接执行的 `task.yaml` 文件。
+针对这个问题，DM 提供了一个精简的网页程序 DM Portal，能够帮助用户以可视化的方式去配置需要的迁移任务，并且生成可以直接让 DM 直接执行的 `task.yaml` 文件。
 
 ## 功能描述
 
 本节简要介绍 DM Portal 的各项功能。
 
-### 同步模式配置
+### 迁移模式配置
 
-支持 DM 的三种同步模式：
+支持 DM 的三种迁移模式：
 
-- 全量同步
-- 增量同步
+- 全量迁移
+- 增量复制
 - All（全量+增量）
 
 ### 实例信息配置
 
-支持配置库表同步路由方式，能够支持 DM 中分库分表合并的配置方式。
+支持配置库表迁移路由方式，能够支持 DM 中分库分表合并的配置方式。
 
 ### binlog 过滤配置
 
@@ -80,7 +80,7 @@ DM Portal 可以在 [dm-portal-latest-linux-amd64.tar.gz](https://download.pingc
 
 #### 前置条件
 
-已选择**新建同步规则**。
+已选择**新建迁移规则**。
 
 #### 操作步骤
 
@@ -141,7 +141,7 @@ DM Portal 可以在 [dm-portal-latest-linux-amd64.tar.gz](https://download.pingc
 
 #### 功能描述
 
-可以选择需要同步的数据库和数据表，并且进行修改名称、合并库、合并表等操作。可以对上一步操作进行撤销，可以对库表路由配置进行全部重置。在完成任务配置后，DM Portal 会帮忙生成对应的 `task.yaml` 文件。
+可以选择需要迁移的数据库和数据表，并且进行修改名称、合并库、合并表等操作。可以对上一步操作进行撤销，可以对库表路由配置进行全部重置。在完成任务配置后，DM Portal 会帮忙生成对应的 `task.yaml` 文件。
 
 #### 前置条件
 
@@ -154,13 +154,13 @@ DM Portal 可以在 [dm-portal-latest-linux-amd64.tar.gz](https://download.pingc
 
 #### 操作步骤
 
-1. 在**上游实例**处，选择需要同步的数据库和数据表。
-2. 点击移动按钮，将需要同步的库表移动至**下游实例**处。
+1. 在**上游实例**处，选择需要迁移的数据库和数据表。
+2. 点击移动按钮，将需要迁移的库表移动至**下游实例**处。
 3. 点击右键按钮，可以对库表进行改名操作。
 4. 选中需要操作的数据表，可以拖动至别的数据表图标上创建出合并表；可以拖动到数据库图标上移动至该库下；可以拖动到 target-instance 图标上移动到一个新的数据库下。
 5. 点击**完成**，自动下载 `task.yaml` 到本地，并且在 DM Portal 服务器上的 `/tmp/` 目录下自动创建一份 `task.yaml` 配置文件。
 
-##### 移动同步库表
+##### 移动迁移库表
 
 ![DM Portal TableRoute 1](/media/zh/dm-portal-tableroute-1-zh.png)
 

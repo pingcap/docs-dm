@@ -22,19 +22,19 @@ overview 下包含运行当前选定 task 的所有 DM-worker instance 的部分
 
 | metric 名称 | 说明 | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
-| task state | 同步子任务的状态 | N/A | N/A |
+| task state | 迁移子任务的状态 | N/A | N/A |
 | storage capacity | relay log 占有的磁盘的总容量  | N/A | N/A |
 | storage remain | relay log 占有的磁盘的剩余可用容量  | N/A | N/A |
 | binlog file gap between master and relay | relay 与上游 master 相比落后的 binlog file 个数 | N/A | N/A |
 | load progress | load unit 导入过程的进度百分比，值变化范围为：0% - 100%  | N/A | N/A |
 | binlog file gap between master and syncer | 与上游 master 相比 binlog replication unit 落后的 binlog file 个数 | N/A | N/A |
-| shard lock resolving | 当前子任务是否正在等待 shard DDL 同步，大于 0 表示正在等待同步 | N/A | N/A |
+| shard lock resolving | 当前子任务是否正在等待 shard DDL 迁移，大于 0 表示正在等待迁移 | N/A | N/A |
 
 ### task 状态
 
 | metric 名称 | 说明 | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
-| task state | 同步子任务的状态 | 当子任务状态处于 `Paused` 超过 20 分钟时| critical |
+| task state | 迁移子任务的状态 | 当子任务状态处于 `Paused` 超过 20 分钟时| critical |
 
 ### Relay log
 
@@ -94,7 +94,7 @@ overview 下包含运行当前选定 task 的所有 DM-worker instance 的部分
 | DML conflict detect duration | binlog replication unit 检测 DML 间冲突的耗时，单位：秒 | N/A | N/A |
 | skipped event duration | binlog replication unit 跳过 binlog event 的耗时，单位：秒 | N/A | N/A |
 | unsynced tables | 当前子任务内还未收到 shard DDL 的分表数量 | N/A | N/A |
-| shard lock resolving | 当前子任务是否正在等待 shard DDL 同步，大于 0 表示正在等待同步 | N/A | N/A |
+| shard lock resolving | 当前子任务是否正在等待 shard DDL 迁移，大于 0 表示正在等待迁移 | N/A | N/A |
 
 ## Instance
 
@@ -121,7 +121,7 @@ overview 下包含运行当前选定 task 的所有 DM-worker instance 的部分
 
 | metric 名称 | 说明 | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
-| task state | 同步子任务的状态 | 当子任务状态处于 paused 超过 10 分钟时 | critical |
+| task state | 迁移子任务的状态 | 当子任务状态处于 paused 超过 10 分钟时 | critical |
 | load progress | load unit 导入过程的进度百分比，值变化范围为：0% - 100%  | N/A | N/A |
 | binlog file gap between master and syncer | 与上游 master 相比 binlog replication unit 落后的 binlog file 个数 | N/A | N/A |
-| shard lock resolving | 当前子任务是否正在等待 shard DDL 同步，大于 0 表示正在等待同步 | N/A | N/A |
+| shard lock resolving | 当前子任务是否正在等待 shard DDL 迁移，大于 0 表示正在等待迁移 | N/A | N/A |

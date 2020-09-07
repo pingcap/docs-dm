@@ -9,7 +9,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/benchmark-v1.0-ga/','/docs-cn/tid
 
 ## 测试目的
 
-该性能测试用于评估使用 DM 进行全量数据导入和增量数据同步的性能上限，并根据测试结果提供 DM 同步任务的参考配置。
+该性能测试用于评估使用 DM 进行全量数据导入和增量数据复制的性能上限，并根据测试结果提供 DM 迁移任务的参考配置。
 
 ## 测试环境
 
@@ -59,13 +59,13 @@ aliases: ['/docs-cn/tidb-data-migration/stable/benchmark-v1.0-ga/','/docs-cn/tid
 
 ## 测试场景
 
-### 同步数据流
+### 迁移数据流
 
 MySQL1 (172.16.4.40) -> DM-worker1 (172.16.4.39) -> TiDB (172.16.4.41)
 
 ### 公共配置信息
 
-#### 同步数据表结构
+#### 迁移数据表结构
 
 {{< copyable "sql" >}}
 
@@ -90,7 +90,7 @@ CREATE TABLE `sbtest` (
 
 - 部署测试环境
 - 使用 `sysbench` 在上游创建测试表，并生成全量导入的测试数据
-- 在 `full` 模式下启动 DM 同步任务
+- 在 `full` 模式下启动 DM 迁移任务
 
 `sysbench` 生成数据的命令如下所示：
 
@@ -145,16 +145,16 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 |            618             | -s 125000 -r 320000       |   0.683           |  299.9       |     12.9        |         0.73         |
 |            310             |  -s 62500 -r 320000       |   0.413           |  322.6       |     12.0        |         0.49         |
 
-### 增量同步性能测试用例
+### 增量复制性能测试用例
 
 #### 测试过程
 
 - 部署测试环境
 - 使用 `sysbench` 在上游创建测试表，并生成全量导入的测试数据
-- 在 `all` 模式下启动 DM 同步任务，等待同步任务进入 `sync` 同步阶段
-- 使用 `sysbench` 在上游持续生成增量数据，通过 `query-status` 命令观测 DM 的同步状态，通过 Grafana 观测 DM 和 TiDB 的监控指标。
+- 在 `all` 模式下启动 DM 迁移任务，等待迁移任务进入 `sync` 迁移阶段
+- 使用 `sysbench` 在上游持续生成增量数据，通过 `query-status` 命令观测 DM 的复制状态，通过 Grafana 观测 DM 和 TiDB 的监控指标。
 
-#### 增量同步性能测试结果
+#### 增量复制性能测试结果
 
 上游 `sysbench` 生成增量数据命令
 
@@ -164,7 +164,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 sysbench --test=oltp_insert --tables=4 --num-threads=32 --mysql-host=172.17.4.40 --mysql-port=3306 --mysql-user=root --mysql-db=dm_benchmark --db-driver=mysql --report-interval=10 --time=1800 run
 ```
 
-该性能测试中同步任务 `sync` 处理单元 `worker-count` 设置为 32，`batch` 大小设置为 100。
+该性能测试中迁移任务 `sync` 处理单元 `worker-count` 设置为 32，`batch` 大小设置为 100。
 
 | 组件                       | qps                                                          | tps                                                             | 95% 延迟                     |
 | :------------------------: | :----------------------------------------------------------: | :-------------------------------------------------------------: | :--------------------------: |
@@ -184,14 +184,14 @@ sysbench --test=oltp_insert --tables=4 --num-threads=32 --mysql-host=172.17.4.40
 | 64                            | 23302           | 30                        | 31.2k    | 16                    |
 | 1024                          | 22225           | 70                        | 56.9k    | 70                    |
 
-#### 不同数据分布的增量同步性能测试对比
+#### 不同数据分布的增量复制性能测试对比
 
 | sysbench 语句类型| DM relay log 持久化速率 (MB/s) | DM 内部 job tps | DM 事务执行时间 (ms) | TiDB qps | TiDB 99 duration (ms) |
 | :--------------: | :----------------------------: | :-------------: | :------------------: | :------: | :-------------------: |
 | insert_only      | 11.3                           | 23345           | 28                   | 29.2k    | 10                    |
 | write_only       | 18.7                           | 33470           | 129                  | 34.6k    | 11                    |
 
-## 推荐同步任务参数配置
+## 推荐迁移任务参数配置
 
 ### dump 处理单元
 

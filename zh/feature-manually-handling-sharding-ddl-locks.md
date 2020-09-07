@@ -10,7 +10,7 @@ DM (Data Migration) 使用 sharding DDL lock 来确保分库分表的 DDL 操作
 > **注意：**
 >
 > - 不要轻易使用 `unlock-ddl-lock`/`break-ddl-lock` 命令，除非完全明确当前场景下使用这些命令可能会造成的影响，并能接受这些影响。
-> - 在手动处理异常的 DDL lock 前，请确保已经了解 DM 的[分库分表合并同步原理](feature-shard-merge.md#实现原理)。
+> - 在手动处理异常的 DDL lock 前，请确保已经了解 DM 的[分库分表合并迁移原理](feature-shard-merge.md#实现原理)。
 
 ## 命令介绍
 
@@ -183,11 +183,11 @@ break-ddl-lock -w 127.0.0.1:8262 --exec test
 
 #### Lock 异常原因
 
-在 DM-master 尝试自动 unlock sharding DDL lock 之前，需要等待所有 DM-worker 的 sharding DDL events 全部到达（详见[分库分表合并同步原理](feature-shard-merge.md#实现原理)）。如果 sharding DDL 已经在同步过程中，且有部分 DM-worker 下线，并且不再计划重启它们（按业务需求移除了这部分 DM-worker），则会由于永远无法等齐所有的 DDL 而造成 lock 无法自动 unlock。
+在 DM-master 尝试自动 unlock sharding DDL lock 之前，需要等待所有 DM-worker 的 sharding DDL events 全部到达（详见[分库分表合并迁移原理](feature-shard-merge.md#实现原理)）。如果 sharding DDL 已经在迁移过程中，且有部分 DM-worker 下线，并且不再计划重启它们（按业务需求移除了这部分 DM-worker），则会由于永远无法等齐所有的 DDL 而造成 lock 无法自动 unlock。
 
 #### 手动处理示例
 
-假设上游有 MySQL-1 和 MySQL-2 两个实例，其中 MySQL-1 中有 `shard_db_1`.`shard_table_1` 和 `shard_db_1`.`shard_table_2` 两个表，MySQL-2 中有 `shard_db_2`.`shard_table_1` 和 `shard_db_2`.`shard_table_2` 两个表。现在需要将这 4 个表合并后同步到下游 TiDB 的 `shard_db`.`shard_table` 表中。
+假设上游有 MySQL-1 和 MySQL-2 两个实例，其中 MySQL-1 中有 `shard_db_1`.`shard_table_1` 和 `shard_db_1`.`shard_table_2` 两个表，MySQL-2 中有 `shard_db_2`.`shard_table_1` 和 `shard_db_2`.`shard_table_2` 两个表。现在需要将这 4 个表合并后迁移到下游 TiDB 的 `shard_db`.`shard_table` 表中。
 
 初始表结构如下：
 
@@ -264,7 +264,7 @@ MySQL 及 DM 操作与处理流程如下：
     }
     ```
 
-4. 由于业务需要，DM-worker-2 对应的 MySQL-2 的数据不再需要同步到下游 TiDB，对 DM-worker-2 执行了下线处理。
+4. 由于业务需要，DM-worker-2 对应的 MySQL-2 的数据不再需要迁移到下游 TiDB，对 DM-worker-2 执行了下线处理。
 5. DM-master 上 ID 为 ```test-`shard_db`.`shard_table` ``` 的 lock 无法等到 DM-worker-2 的 DDL 操作信息。
 
     `show-ddl-locks` 返回的 `unsynced` 中一直包含 DM-worker-2 的信息（`127.0.0.1:8263`）。
@@ -336,11 +336,11 @@ MySQL 及 DM 操作与处理流程如下：
     +-------------+--------------------------------------------------+
     ```
 
-9. 使用 `query-status` 确认同步任务是否正常。
+9. 使用 `query-status` 确认迁移任务是否正常。
 
 #### 手动处理后的影响
 
-使用 `unlock-ddl-lock` 手动执行 unlock 操作后，由于该任务的配置信息中仍然包含了已下线的 DM-worker，如果不进行处理，则当下次 sharding DDL 到达时，仍会出现 lock 无法自动完成同步的情况。
+使用 `unlock-ddl-lock` 手动执行 unlock 操作后，由于该任务的配置信息中仍然包含了已下线的 DM-worker，如果不进行处理，则当下次 sharding DDL 到达时，仍会出现 lock 无法自动完成迁移的情况。
 
 因此，在手动解锁 DDL lock 后，需要再执行以下操作：
 
@@ -350,7 +350,7 @@ MySQL 及 DM 操作与处理流程如下：
 
 > **注意：**
 >
-> 在 `unlock-ddl-lock` 之后，如果已下线的 DM-worker 重新上线并尝试对其中的分表进行数据同步，则会由于数据与下游的表结构不匹配而发生错误。
+> 在 `unlock-ddl-lock` 之后，如果已下线的 DM-worker 重新上线并尝试对其中的分表进行数据迁移，则会由于数据与下游的表结构不匹配而发生错误。
 
 ### 场景二：unlock 过程中部分 DM-worker 重启
 
@@ -364,15 +364,15 @@ MySQL 及 DM 操作与处理流程如下：
 
 上述 unlock DDL lock 的操作不是原子的，当 owner 执行 DDL 操作成功后，请求其他 DM-worker 跳过 DDL 操作时，如果该 DM-worker 发生了重启，则会造成该 DM-worker 跳过 DDL 操作失败。
 
-此时 DM-master 上的 lock 信息被移除，但该 DM-worker 重启后将尝试继续重新同步该 DDL 操作。但是，由于其他 DM-worker（包括原 owner）已经同步完该 DDL 操作，并已经在继续后续的同步，该 DM-worker 将永远无法等待该 DDL 操作对应 lock 的自动 unlock。
+此时 DM-master 上的 lock 信息被移除，但该 DM-worker 重启后将尝试继续重新迁移该 DDL 操作。但是，由于其他 DM-worker（包括原 owner）已经迁移完该 DDL 操作，并已经在继续后续的迁移，该 DM-worker 将永远无法等待该 DDL 操作对应 lock 的自动 unlock。
 
 #### 手动处理示例
 
-仍然假设是 [部分 DM-worker 下线](#场景一部分-dm-worker-下线) 示例中的上下游表结构及合表同步需求。
+仍然假设是 [部分 DM-worker 下线](#场景一部分-dm-worker-下线) 示例中的上下游表结构及合表迁移需求。
 
-当在 DM-master 自动执行 unlock 操作的过程中，owner (DM-worker-1) 成功执行了 DDL 操作且开始继续进行后续同步，并移除了 DM-master 上的 DDL lock 信息；但在请求 DM-worker-2 跳过 DDL 操作的过程中，由于 DM-worker-2 发生了重启而跳过 DDL 操作失败。
+当在 DM-master 自动执行 unlock 操作的过程中，owner (DM-worker-1) 成功执行了 DDL 操作且开始继续进行后续迁移，并移除了 DM-master 上的 DDL lock 信息；但在请求 DM-worker-2 跳过 DDL 操作的过程中，由于 DM-worker-2 发生了重启而跳过 DDL 操作失败。
 
-DM-worker-2 重启后，将尝试重新同步重启前已经在等待的 DDL lock。此时将在 DM-master 上创建一个新的 lock，并且该 DM-worker 将成为 lock 的 owner（其他 DM-worker 此时已经执行或跳过 DDL 操作并在进行后续同步）。
+DM-worker-2 重启后，将尝试重新迁移重启前已经在等待的 DDL lock。此时将在 DM-master 上创建一个新的 lock，并且该 DM-worker 将成为 lock 的 owner（其他 DM-worker 此时已经执行或跳过 DDL 操作并在进行后续迁移）。
 
 处理流程如下：
 
@@ -435,11 +435,11 @@ DM-worker-2 重启后，将尝试重新同步重启前已经在等待的 DDL loc
         ```
 
 3. 使用 `show-ddl-locks` 确认 DDL lock 是否被成功 unlock。
-4. 使用 `query-status` 确认同步任务是否正常。
+4. 使用 `query-status` 确认迁移任务是否正常。
 
 #### 手动处理后的影响
 
-手动 unlock sharding DDL lock 后，后续的 sharding DDL 将可以自动正常同步。
+手动 unlock sharding DDL lock 后，后续的 sharding DDL 将可以自动正常迁移。
 
 ### 场景三：unlock 过程中部分 DM-worker 临时不可达
 
@@ -451,14 +451,14 @@ DM-worker-2 重启后，将尝试重新同步重启前已经在等待的 DDL loc
 
 #### 手动处理示例
 
-仍然假设是 [部分 DM-worker 下线](#场景一部分-dm-worker-下线) 示例中的上下游表结构及合表同步需求。
+仍然假设是 [部分 DM-worker 下线](#场景一部分-dm-worker-下线) 示例中的上下游表结构及合表迁移需求。
 
-在 DM-master 自动执行 unlock 操作的过程中，owner (DM-worker-1) 成功执行了 DDL 操作且开始继续进行后续同步，并移除了 DM-master 上的 DDL lock 信息，但在请求 DM-worker-2 跳过 DDL 操作的过程中，由于网络原因等临时不可达而跳过 DDL 操作失败。
+在 DM-master 自动执行 unlock 操作的过程中，owner (DM-worker-1) 成功执行了 DDL 操作且开始继续进行后续迁移，并移除了 DM-master 上的 DDL lock 信息，但在请求 DM-worker-2 跳过 DDL 操作的过程中，由于网络原因等临时不可达而跳过 DDL 操作失败。
 
 处理流程如下：
 
 1. 使用 `show-ddl-locks` 确认 DM-master 上不再存在该 DDL 操作对应的 lock。
-2. 使用 `query-status` 确认 DM-worker 仍在等待 lock 同步。
+2. 使用 `query-status` 确认 DM-worker 仍在等待 lock 迁移。
 
     {{< copyable "shell-regular" >}}
 
@@ -533,8 +533,8 @@ DM-worker-2 重启后，将尝试重新同步重启前已经在等待的 DDL loc
     }
     ```
 
-4. 使用 `query-status` 确认同步任务是否正常且不再处于等待 lock 的状态。
+4. 使用 `query-status` 确认迁移任务是否正常且不再处于等待 lock 的状态。
 
 #### 手动处理后的影响
 
-手动强制 break lock 后，后续 sharding DDL 将可以自动正常同步。
+手动强制 break lock 后，后续 sharding DDL 将可以自动正常迁移。

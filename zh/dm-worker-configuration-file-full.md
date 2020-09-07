@@ -71,8 +71,8 @@ backoff-max = "5m"
 | `flavor` | 上游数据库的类型，目前值可以为 "mysql" 或者 "mariadb"。v1.0.2 及以上版本的 DM 会自动判断上游版本，不需要手动配置该项。 |
 | `relay-dir` | 存储 relay log 的目录，默认值为 "./relay_log"。 |
 | `enable-gtid` | 是否使用 GTID 方式从上游拉取 binlog，默认值为 false。一般情况下不需要手动配置，如果上游数据库启用了 GTID 支持，且需要做主从切换，则将该配置项设置为 true。 |
-| `relay-binlog-name` | 拉取上游 binlog 的起始文件名，例如 "mysql-bin.000002"，该配置在 `enable-gtid` 为 false 的情况下生效。如果不配置该项，v1.0.2 之前版本的 DM-worker 将从上游 MySQL 或 MariaDB 现有最早时间点的 binlog 文件开始拉取 binlog，拉取到数据同步任务需要的最新 binlog 可能需要很长时间；v1.0.2 及之后版本的 DM-worker 将从最新时间点的 binlog 文件开始拉取 binlog，一般情况下不需要手动配置。 |
-| `relay-binlog-gtid` | 拉取上游 binlog 的起始 GTID，例如 "e9a1fc22-ec08-11e9-b2ac-0242ac110003:1-7849"，该配置在 `enable-gtid` 为 true 的情况下生效。如果不配置该项，v1.0.2 之前版本的 DM-worker 将从上游 MySQL 或 MariaDB 现有最早时间点的 binlog GTID 开始拉取 binlog，拉取到数据同步任务需要的最新 binlog 可能需要很长时间；v1.0.2 及之后版本的 DM-worker 将从最新时间点的 binlog GTID 开始拉取 binlog，一般情况下不需要手动配置。 |
+| `relay-binlog-name` | 拉取上游 binlog 的起始文件名，例如 "mysql-bin.000002"，该配置在 `enable-gtid` 为 false 的情况下生效。如果不配置该项，v1.0.2 之前版本的 DM-worker 将从上游 MySQL 或 MariaDB 现有最早时间点的 binlog 文件开始拉取 binlog，拉取到数据迁移任务需要的最新 binlog 可能需要很长时间；v1.0.2 及之后版本的 DM-worker 将从最新时间点的 binlog 文件开始拉取 binlog，一般情况下不需要手动配置。 |
+| `relay-binlog-gtid` | 拉取上游 binlog 的起始 GTID，例如 "e9a1fc22-ec08-11e9-b2ac-0242ac110003:1-7849"，该配置在 `enable-gtid` 为 true 的情况下生效。如果不配置该项，v1.0.2 之前版本的 DM-worker 将从上游 MySQL 或 MariaDB 现有最早时间点的 binlog GTID 开始拉取 binlog，拉取到数据迁移任务需要的最新 binlog 可能需要很长时间；v1.0.2 及之后版本的 DM-worker 将从最新时间点的 binlog GTID 开始拉取 binlog，一般情况下不需要手动配置。 |
 
 ### 数据库链接配置（from 配置项）
 
@@ -101,7 +101,7 @@ backoff-max = "5m"
 
 | 配置项        | 说明                                    |
 | :------------ | :--------------------------------------- |
-| `check-enable` | 是否开启任务状态检查。开启后 DM 会尝试自动恢复因错误而暂停的数据同步任务，默认值：true。 |
+| `check-enable` | 是否开启任务状态检查。开启后 DM 会尝试自动恢复因错误而暂停的数据迁移任务，默认值：true。 |
 | `backoff-rollback` | 任务检查模块中，定时调整恢复等待时间的间隔，默认值："5m0s"。 |
 | `backoff-max` | 任务检查模块中，检查出错误后等待自动恢复的最长时间间隔，默认值："5m0s"。 |
 
