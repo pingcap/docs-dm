@@ -9,7 +9,12 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Link check
+      - name: Link check for zh
         uses: peter-evans/link-checker@v1
         with:
-          args: -d GITHUB_WORKSPACE -r -v *
+          args: -d GITHUB_WORKSPACE -r -v -x http://172.* zh*
+
+      - name: Link check for eh
+        uses: peter-evans/link-checker@v1
+        with:
+          args: -d GITHUB_WORKSPACE -r -v -x http://172.* en*
