@@ -71,7 +71,7 @@ After the cluster is successfully deployed, start the cluster by running the fol
 {{< copyable "shell-regular" >}}
 
 ```shell
-tiup start start prod-cluster
+tiup dm start prod-cluster
 ```
 
 If you forget the name of your cluster, view the cluster list by running `tiup dm list`.
