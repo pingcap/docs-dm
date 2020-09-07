@@ -35,6 +35,16 @@ aliases: ['/docs-cn/tidb-data-migration/dev/deploy-a-dm-cluster-using-binary/']
 
 下面以此为例，说明如何部署 DM。
 
+> **注意：**
+>
+> - 需要确保以下组件间端口可正常连通：
+>
+>     - 各 DM-master 节点间的 `8291` 端口可互相连通。
+>
+>     - 各 DM-master 节点可连通所有 DM-worker 节点的 `8262` 端口。
+>
+>     - 各 DM-worker 节点可连通所有 DM-master 节点的 `8261` 端口。
+
 ### 部署 DM-master
 
 DM-master 提供[命令行参数](#使用命令行参数部署-dm-master)和[配置文件](#使用配置文件部署-dm-master)两种配置方式。

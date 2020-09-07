@@ -8,7 +8,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/skip-or-replace-abnormal-sql-stateme
 
 本文介绍了如何使用 DM 来处理出错的 SQL 语句。
 
-目前，TiDB 并不完全兼容所有的 MySQL 语法（详见 [TiDB 已支持的 DDL 语句](https://pingcap.com/docs-cn/dev/reference/mysql-compatibility/#ddl)）。当使用 DM 从 MySQL 同步数据到 TiDB 时，如果 TiDB 不支持对应的 SQL 语句，可能会造成错误并中断同步任务。在这种情况下，DM 提供 `handle-error` 命令来恢复同步。
+目前，TiDB 并不完全兼容所有的 MySQL 语法（详见 [TiDB 已支持的 DDL 语句](https://pingcap.com/docs-cn/dev/reference/mysql-compatibility/#ddl)）。当使用 DM 从 MySQL 迁移数据到 TiDB 时，如果 TiDB 不支持对应的 SQL 语句，可能会造成错误并中断迁移任务。在这种情况下，DM 提供 `handle-error` 命令来恢复迁移。
 
 ## 使用限制
 
@@ -18,10 +18,10 @@ aliases: ['/docs-cn/tidb-data-migration/dev/skip-or-replace-abnormal-sql-stateme
 
 ## 支持场景
 
-同步过程中，上游执行了 TiDB 不支持的 DDL 语句并同步到了 DM，造成同步任务中断。
+迁移过程中，上游执行了 TiDB 不支持的 DDL 语句并迁移到了 DM，造成迁移任务中断。
 
-- 如果业务能接受下游 TiDB 不执行该 DDL 语句，则使用 `handle-error <task-name> skip` 跳过对该 DDL 语句的同步以恢复同步任务。
-- 如果业务能接受下游 TiDB 执行其他 DDL 语句来作为替代，则使用 `handle-error <task-name> replace` 替代该 DDL 的同步以恢复同步任务。
+- 如果业务能接受下游 TiDB 不执行该 DDL 语句，则使用 `handle-error <task-name> skip` 跳过对该 DDL 语句的迁移以恢复迁移任务。
+- 如果业务能接受下游 TiDB 执行其他 DDL 语句来作为替代，则使用 `handle-error <task-name> replace` 替代该 DDL 的迁移以恢复迁移任务。
 
 ## 命令介绍
 
@@ -73,15 +73,15 @@ Global Flags:
     - flag 参数，string，`--binlog-pos`；
     - 若不指定，DM 会自动处理当前出错的 SQL 语句
     - 在指定时表示操作将在 `binlog-pos` 与 binlog event 的 position 匹配时生效，格式为 `binlog-filename:binlog-pos`，如 `mysql-bin|000001.000003:3270`。
-    - 在同步执行出错后，binlog position 可直接从 `query-status` 返回的 `startLocation` 中的 `position` 获得。
+    - 在迁移执行出错后，binlog position 可直接从 `query-status` 返回的 `startLocation` 中的 `position` 获得。
 
 ## 使用示例
 
-### 同步中断执行跳过操作
+### 迁移中断执行跳过操作
 
 #### 非合库合表场景
 
-假设现在需要将上游的 `db1.tbl1` 表同步到下游 TiDB，初始时表结构为：
+假设现在需要将上游的 `db1.tbl1` 表迁移到下游 TiDB，初始时表结构为：
 
 {{< copyable "sql" >}}
 
@@ -109,13 +109,13 @@ SHOW CREATE TABLE db1.tbl1;
 ALTER TABLE db1.tbl1 CHANGE c2 c2 DECIMAL (10, 3);
 ```
 
-则会由于 TiDB 不支持该 DDL 语句而导致 DM 同步任务中断，使用 `query-status <task-name>` 命令可看到如下错误：
+则会由于 TiDB 不支持该 DDL 语句而导致 DM 迁移任务中断，使用 `query-status <task-name>` 命令可看到如下错误：
 
 ```
 ERROR 8200 (HY000): Unsupported modify column: can't change decimal column precision
 ```
 
-假设业务上可以接受下游 TiDB 不执行此 DDL 语句（即继续保持原有的表结构），则可以通过使用 `handle-error <task-name> skip` 命令跳过该 DDL 语句以恢复同步任务。操作步骤如下：
+假设业务上可以接受下游 TiDB 不执行此 DDL 语句（即继续保持原有的表结构），则可以通过使用 `handle-error <task-name> skip` 命令跳过该 DDL 语句以恢复迁移任务。操作步骤如下：
 
 1. 使用 `handle-error <task-name> skip` 跳过当前错误的 DDL 语句
 
@@ -199,7 +199,7 @@ ERROR 8200 (HY000): Unsupported modify column: can't change decimal column preci
 
 #### 合库合表场景
 
-假设现在存在如下四个上游表需要合并同步到下游的同一个表 ``` `shard_db`.`shard_table` ```，任务模式为悲观协调模式：
+假设现在存在如下四个上游表需要合并迁移到下游的同一个表 ``` `shard_db`.`shard_table` ```，任务模式为悲观协调模式：
 
 初始时表结构为：
 
@@ -228,7 +228,7 @@ SHOW CREATE TABLE shard_db.shard_table;
 ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DANISH_CI;
 ```
 
-则会由于 TiDB 不支持该 DDL 语句而导致 DM 同步任务中断，使用 `query-status` 命令可以看到 MySQL 实例 1 的 `shard_db_1`.`shard_table_1` 表和 MySQL 实例 2 的 `shard_db_2`.`shard_table_1` 表报错：
+则会由于 TiDB 不支持该 DDL 语句而导致 DM 迁移任务中断，使用 `query-status` 命令可以看到 MySQL 实例 1 的 `shard_db_1`.`shard_table_1` 表和 MySQL 实例 2 的 `shard_db_2`.`shard_table_1` 表报错：
 
 ```
 {
@@ -244,7 +244,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
 }
 ```
 
-假设业务上可以接受下游 TiDB 不执行此 DDL 语句（即继续保持原有的表结构），则可以通过使用 `handle-error <task-name> skip` 命令跳过该 DDL 语句以恢复同步任务。操作步骤如下：
+假设业务上可以接受下游 TiDB 不执行此 DDL 语句（即继续保持原有的表结构），则可以通过使用 `handle-error <task-name> skip` 命令跳过该 DDL 语句以恢复迁移任务。操作步骤如下：
 
 1. 使用 `handle-error <task-name> skip` 跳过 MySQL 实例 1 和实例 2 当前错误的 DDL 语句
 
@@ -411,11 +411,11 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
 
     可以看到任务运行正常，无错误信息。四条 DDL 全部被跳过。
 
-### 同步中断执行替代操作
+### 迁移中断执行替代操作
 
 #### 非合库合表场景
 
-假设现在需要将上游的 `db1.tbl1` 表同步到下游 TiDB，初始时表结构为：
+假设现在需要将上游的 `db1.tbl1` 表迁移到下游 TiDB，初始时表结构为：
 
 {{< copyable "sql" >}}
 
@@ -442,7 +442,7 @@ SHOW CREATE TABLE db1.tbl1;
 ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
 ```
 
-则会由于 TiDB 不支持该 DDL 语句而导致 DM 同步任务中断，使用 `query-status` 命令可看到如下错误：
+则会由于 TiDB 不支持该 DDL 语句而导致 DM 迁移任务中断，使用 `query-status` 命令可看到如下错误：
 
 ```
 {
@@ -535,7 +535,7 @@ ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
 
 #### 合库合表场景
 
-假设现在存在如下四个上游表需要合并同步到下游的同一个表 ``` `shard_db`.`shard_table` ```，任务模式为悲观协调模式：
+假设现在存在如下四个上游表需要合并迁移到下游的同一个表 ``` `shard_db`.`shard_table` ```，任务模式为悲观协调模式：
 
 - MySQL 实例 1 内有 `shard_db_1` 逻辑库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
 - MySQL 实例 2 内有 `shard_db_2` 逻辑库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
@@ -567,7 +567,7 @@ SHOW CREATE TABLE shard_db.shard_table;
 ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
 ```
 
-则会由于 TiDB 不支持该 DDL 语句而导致 DM 同步任务中断，使用 `query-status` 命令可以看到 MySQL 实例 1 的 `shard_db_1`.`shard_table_1` 表和 MySQL 实例 2 的 `shard_db_2`.`shard_table_1` 表报错：
+则会由于 TiDB 不支持该 DDL 语句而导致 DM 迁移任务中断，使用 `query-status` 命令可以看到 MySQL 实例 1 的 `shard_db_1`.`shard_table_1` 表和 MySQL 实例 2 的 `shard_db_2`.`shard_table_1` 表报错：
 
 ```
 {
