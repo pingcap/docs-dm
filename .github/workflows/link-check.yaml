@@ -28,7 +28,7 @@ jobs:
       - name: Fail if there were external link errors
         if: ${{ steps.lc.outputs.exit_code }}
         run: |
-          echo "please check previous steps: \"Link check for zh\" and \"Link check for en\""
+          echo "Please check the broken links reported in previous steps \"Check external links in zh files\" and \"Check external links in en files\"."
           exit ${{ steps.lc.outputs.exit_code }}
 
       # Debug via SSH if previous steps failed
