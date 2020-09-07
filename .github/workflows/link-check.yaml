@@ -12,4 +12,4 @@ jobs:
       - name: Link check
         uses: peter-evans/link-checker@v1
         with:
-          args: -d ${{ env.GITHUB_WORKSPACE }} -r -x /media/.* -v *
+          args: -d GITHUB_WORKSPACE -r -v *
