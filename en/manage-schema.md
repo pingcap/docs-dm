@@ -22,7 +22,7 @@ When you migrate tables using DM, DM performs the following operations on the ta
 
     In most cases, the four table schemas above are the same.
 
-When the upstream database performs a DDL operation to change the table schema, `schema-U` is changed. By applying the DDL operation to the internal schema tracker component and the downstream TiDB cluster, DM updates `schema-I` and `schema-D` in an orderly manner to keep them consistent with `schema-U`. Therefore, DM can then normally consume the binlog event corresponding to the `schema-B` table schema. That is, after the DDL operation is successfully replicated, `schema-U`, `schema-B`, `schema-I`, and `schema-D` are still consistent.
+When the upstream database performs a DDL operation to change the table schema, `schema-U` is changed. By applying the DDL operation to the internal schema tracker component and the downstream TiDB cluster, DM updates `schema-I` and `schema-D` in an orderly manner to keep them consistent with `schema-U`. Therefore, DM can then normally consume the binlog event corresponding to the `schema-B` table schema. That is, after the DDL operation is successfully migrated, `schema-U`, `schema-B`, `schema-I`, and `schema-D` are still consistent.
 
 However, during the migration with [optimistic mode sharding DDL support](feature-shard-merge-optimistic.md) enabled, the `schema-D` of the downstream table might be inconsistent with the `schema-B` and `schema-I` of some upstream sharded tables. In such cases, DM still keeps `schema-I` and `schema-B` consistent to ensure that the binlog event corresponding to DML can be parsed normally.
 
@@ -144,7 +144,7 @@ operate-schema set -s mysql-replica-01 task_single -d db_single -t t1 db_single.
 
 > **Note:**
 >
-> After the table schema maintained in DM is deleted, if a DDL/DML statement related to this table needs to be replicated to the downstream, DM will try to get the table schema from the following three sources in an orderly manner:
+> After the table schema maintained in DM is deleted, if a DDL/DML statement related to this table needs to be migrated to the downstream, DM will try to get the table schema from the following three sources in an orderly manner:
 >
 > * The `table_info` field in the checkpoint table
 > * The meta information in the optimistic sharding DDL

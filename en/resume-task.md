@@ -1,11 +1,11 @@
 ---
-title: Resume a Data Replication Task
-summary: Learn how to resume a data replication task.
+title: Resume a Data Migration Task
+summary: Learn how to resume a data migration task.
 ---
 
-# Resume a Data Replication Task
+# Resume a Data Migration Task
 
-You can use the `resume-task` command to resume a data replication task in the `Paused` state. This is generally used in scenarios where you want to manually resume a data replication task after handling the error that get the task paused.
+You can use the `resume-task` command to resume a data migration task in the `Paused` state. This is generally used in scenarios where you want to manually resume a data migration task after handling the error that get the task paused.
 
 {{< copyable "" >}}
 
@@ -36,7 +36,7 @@ resume-task [-s "mysql-replica-01"] task-name
 
 ## Flags description
 
-- `-s`: (Optional) Specifies the MySQL source where you want to resume the subtask of the replication task. If it is set, the command resumes only the subtasks on the specified MySQL source.
+- `-s`: (Optional) Specifies the MySQL source where you want to resume the subtask of the migration task. If it is set, the command resumes only the subtasks on the specified MySQL source.
 - `task-name | task-file`: (Required) Specifies the task name or task file path.
 
 ## Returned results

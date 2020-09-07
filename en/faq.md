@@ -8,7 +8,7 @@ aliases: ['/docs/tidb-data-migration/dev/faq/']
 
 This document collects the frequently asked questions (FAQs) about TiDB Data Migration (DM).
 
-## Does DM support replicating data from Alibaba RDS or other cloud databases?
+## Does DM support migrating data from Alibaba RDS or other cloud databases?
 
 Currently, DM only supports decoding the standard version of MySQL or MariaDB binlog. It has not been tested for Alibaba Cloud RDS or other cloud databases. If you are confirmed that its binlog is in standard format, then it is supported.
 
@@ -16,7 +16,7 @@ Currently, DM only supports decoding the standard version of MySQL or MariaDB bi
 
 Currently, DM does not support it and only supports the regular expressions of the Golang standard library. See regular expressions supported by Golang via [re2-syntax](https://github.com/google/re2/wiki/Syntax).
 
-## If a statement executed upstream contains multiple DDL operations, does DM support such replication?
+## If a statement executed upstream contains multiple DDL operations, does DM support such migration?
 
 DM will attempt to split a single statement containing multiple DDL change operations into multiple statements containing only one DDL operation, but might not cover all cases. It is recommended to include only one DDL operation in a statement executed upstream, or verify it in the test environment. If it is not supported, you can file an [issue](https://github.com/pingcap/dm/issues) to the DM repository.
 
@@ -28,15 +28,15 @@ When you encounter a DDL statement unsupported by TiDB, you need to manually han
 >
 > Currently, TiDB is not compatible with all the DDL statements that MySQL supports. See [MySQL Compatibility](https://pingcap.com/docs/dev/reference/mysql-compatibility/#ddl).
 
-## How to reset the data replication task?
+## How to reset the data migration task?
 
-When an exception occurs during data replication and the data replication task cannot be resumed, you need to reset the task and re-migrate the data:
+When an exception occurs during data migration and the data migration task cannot be resumed, you need to reset the task and re-migrate the data:
 
-1. Execute the `stop-task` command to stop the abnormal data replication task.
+1. Execute the `stop-task` command to stop the abnormal data migration task.
 
-2. Purge the data replicated to the downstream.
+2. Purge the data migrated to the downstream.
 
-3. Use one of the following ways to restart the data replication task.
+3. Use one of the following ways to restart the data migration task.
 
    - Specify a new task name in the task configuration file. Then execute `start-task {task-config-file}`.
    - Execute `start-task --remove-meta {task-config-file}`.
