@@ -64,7 +64,7 @@ For each start of DM-worker (or the relay log resuming migration after a pause),
 
 - If a valid local relay log does not exist, and `relay-binlog-name` or `relay-binlog-gtid` is not specified in the DM configuration file:
 
-    - In the non-GTID mode, DM-worker starts replication from the initial upstream binlog and replicates all the upstream binlog files to the latest successively.
+    - In the non-GTID mode, DM-worker starts migration from the initial upstream binlog and migrates all the upstream binlog files to the latest successively.
 
     - In the GTID mode, DM-worker starts migration from the initial upstream GTID.
 
@@ -74,8 +74,8 @@ For each start of DM-worker (or the relay log resuming migration after a pause),
 
 - If a valid local relay log does not exist:
 
-    - In the non-GTID mode, if `relay-binlog-name` is specified, DM-worker starts replication from the specified binlog file.
-    - In the GTID mode, if `relay-binlog-gtid` is specified, DM-worker starts replication from the specified GTID.
+    - In the non-GTID mode, if `relay-binlog-name` is specified, DM-worker starts migration from the specified binlog file.
+    - In the GTID mode, if `relay-binlog-gtid` is specified, DM-worker starts migration from the specified GTID.
 
 ## Data purge
 

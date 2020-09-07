@@ -24,7 +24,7 @@ Upstream and downstream database users must have the corresponding read and writ
 + MySQL binlog configuration
 
     - Whether the binlog is enabled (DM requires that the binlog must be enabled)
-    - Whether `binlog_format=ROW` (DM only supports replication of the binlog in the ROW format)
+    - Whether `binlog_format=ROW` (DM only supports migration of the binlog in the ROW format)
     - Whether `binlog_row_image=FULL` (DM only supports `binlog_row_image=FULL`)
 
 + The privileges of the upstream MySQL instance users

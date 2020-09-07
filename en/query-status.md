@@ -105,7 +105,7 @@ The status of a DM migration task depends on the status of each subtask assigned
                         "syncerBinlog": "(bin.000001, 2525)",                               # The position of the binlog that has been replicated
                                                                                             # in the `Sync` processing unit.
                         "syncerBinlogGtid": "",                                             # It is always empty because `Sync` does not use GTID to
-                                                                                            # replicate data.
+                                                                                            # migrate data.
                         "blockingDDLs": [       # The DDL list that is blocked currently. It is not empty only when all the upstream tables of this
                                                 # DM-worker are in the "synced" status. In this case, it indicates the sharding DDL statements to be executed or that are skipped.
                             "USE `test`; ALTER TABLE `test`.`t_target` DROP COLUMN `age`;"

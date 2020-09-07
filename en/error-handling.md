@@ -143,13 +143,13 @@ For relay units, manually recover migration using the following solution:
 
 5. Restart the DM-worker.
 
-For binlog replication processing units, manually recover replication using the following solution:
+For binlog replication processing units, manually recover migration using the following solution:
 
 1. Identify in the upstream that the size of the corresponding binlog file has exceeded 4GB when the error occurs.
 
-2. Stop the replication task using `stop-task`.
+2. Stop the migration task using `stop-task`.
 
-3. Update the `binlog_name` in the global checkpoints and in each table checkpoint of the downstream `dm_meta` database to the name of the binlog file in error; update `binlog_pos` to a valid position value for which replication has completed, for example, 4.
+3. Update the `binlog_name` in the global checkpoints and in each table checkpoint of the downstream `dm_meta` database to the name of the binlog file in error; update `binlog_pos` to a valid position value for which migration has completed, for example, 4.
 
     Example: the name of the task in error is `dm_test`, the corresponding s`source-id` is `replica-1`, and the corresponding binlog file is `mysql-bin|000001.004451`. Execute the following command:
 
@@ -159,11 +159,11 @@ For binlog replication processing units, manually recover replication using the 
     UPDATE dm_test_syncer_checkpoint SET binlog_name='mysql-bin|000001.004451', binlog_pos = 4 WHERE id='replica-1';
     ```
 
-4. Specify `safe-mode: true` in the `syncers` section of the replication task configuration to ensure re-entrant.
+4. Specify `safe-mode: true` in the `syncers` section of the migration task configuration to ensure re-entrant.
 
 5. Start the migration task using `start-task`.
 
-6. View the status of the replication task using `query-status`. You can restore `safe-mode` to the original value and restart the replication task when replication is done for the original error-triggering relay log files.
+6. View the status of the migration task using `query-status`. You can restore `safe-mode` to the original value and restart the migration task when migration is done for the original error-triggering relay log files.
 
 ### `Access denied for user 'root'@'172.31.43.27' (using password: YES)` shows when you query the task or check the log
 
