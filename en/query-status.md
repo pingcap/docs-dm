@@ -1,12 +1,12 @@
 ---
-title: Data Migration Query Status
+title: Query Status
 summary: Learn the DM query result and subtask status.
 aliases: ['/docs/tidb-data-migration/stable/query-status/','/docs/tidb-data-migration/v1.0/query-status/','/docs/dev/reference/tools/data-migration/query-status/','/docs/v3.1/reference/tools/data-migration/query-status/','/docs/v3.0/reference/tools/data-migration/query-status/','/docs/v2.1/reference/tools/data-migration/query-status/','/docs/stable/reference/tools/data-migration/query-status/']
 ---
 
-# Data Migration Query Status
+# Query Status
 
-This document introduces the query result, task status, and subtask status of Data Migration (DM).
+This document introduces the query result, task status, and subtask status of DM.
 
 ## Query result
 
@@ -141,7 +141,7 @@ The status of a DM migration task depends on the status of each subtask assigned
                 "relayBinlog": "(bin.000001, 3234)",                                # The position of the binlog that has been pulled to the local storage.
                 "relayBinlogGtid": "c0149e17-dff1-11e8-b6a8-0242ac110004:1-14",     # The GTID information of the binlog that has been pulled to the local
                                                                                     # storage.
-                "relayCatchUpMaster": true,     # Whether the progress of replicating the relay log in the local storage has been the same as that in
+                "relayCatchUpMaster": true,     # Whether the progress of migrating the relay log in the local storage has been the same as that in
                                                 # the upstream.
                 "stage": "Running",             # The status of the `Sync` processing unit of the relay log.
                 "result": null

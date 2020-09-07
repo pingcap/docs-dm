@@ -43,5 +43,5 @@ dm-worker = "172.16.10.73:8262"
 
 | 配置项        | 说明                                    |
 | :------------ | :--------------------------------------- |
-| `source-id` | 一个 replication group 或者 MySQL/MariaDB 实例的标识，需要和 DM-worker 中的 `source-id` 一致。 |
+| `source-id` | 一个 migration group 或者 MySQL/MariaDB 实例的标识，需要和 DM-worker 中的 `source-id` 一致。 |
 | `dm-worker` | DM-worker 的服务地址。 |

@@ -6,7 +6,7 @@ aliases: ['/docs/tidb-data-migration/stable/precheck/','/docs/tidb-data-migratio
 
 # Precheck the upstream MySQL instance configuration
 
-This document introduces the precheck feature provided by DM. This feature is used to detect possible errors in the upstream MySQL instance configuration when the data replication task is started.
+This document introduces the precheck feature provided by DM. This feature is used to detect possible errors in the upstream MySQL instance configuration when the data migration task is started.
 
 ## Command
 
@@ -14,7 +14,7 @@ This document introduces the precheck feature provided by DM. This feature is us
 
 ## Checking items
 
-Upstream and downstream database users must have the corresponding read and write privileges. DM checks the following privileges and configuration automatically while the data replication task is started:
+Upstream and downstream database users must have the corresponding read and write privileges. DM checks the following privileges and configuration automatically while the data migration task is started:
 
 + Database version
 

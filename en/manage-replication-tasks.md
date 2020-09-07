@@ -1,12 +1,12 @@
 ---
-title: Manage the Data Replication Task
-summary: Use dmctl to manage the data replication task.
 aliases: ['/docs/tidb-data-migration/stable/manage-replication-tasks/','/docs/tidb-data-migration/v1.0/manage-replication-tasks/','/docs/dev/reference/tools/data-migration/manage-tasks/','/docs/v3.1/reference/tools/data-migration/manage-tasks/','/docs/v3.0/reference/tools/data-migration/manage-tasks/','/docs/v2.1/reference/tools/data-migration/manage-tasks/','/docs/tools/dm/manage-task/']
+title: Manage the Data Migration Task
+summary: Use dmctl to manage the data migration task.
 ---
 
-# Manage the Data Replication Task
+# Manage the Data Migration Task
 
-This document describes how to manage and maintain the data replication task using the [dmctl](overview.md#dmctl) component. For the Data Migration cluster deployed using DM-Ansible, the dmctl binary file is in `dm-ansible/dmctl`.
+This document describes how to manage and maintain the data migration task using the [dmctl](overview.md#dmctl) component. For the Data Migration cluster deployed using DM-Ansible, the dmctl binary file is in `dm-ansible/dmctl`.
 
 The dmctl component supports the interactive mode for manual operations, and also supports the command mode for the script.
 
@@ -102,13 +102,13 @@ Flags:
 # Use "dmctl [command] --help" for more information about a command.
 ```
 
-## Manage the data replication task
+## Manage the data migration task
 
 This section describes how to use the task management commands to execute corresponding operations.
 
-### Create the data replication task
+### Create the data migration task
 
-You can use the `start-task` command to create the data replication task. Data Migration [prechecks the corresponding privileges and configuration automatically](precheck.md) while starting the data replication.
+You can use the `start-task` command to create the data migration task. Data Migration [prechecks the corresponding privileges and configuration automatically](precheck.md) while starting the data migration.
 
 {{< copyable "" >}}
 
@@ -163,9 +163,9 @@ start-task [ -w "172.16.30.15:8262"] ./task.yaml
 }
 ```
 
-### Check the data replication task status
+### Check the data migration task status
 
-You can use the `query-status` task management command to check the status of the data replication task. For details about the query result and subtask status, see [Query Status](query-status.md).
+You can use the `query-status` task management command to check the status of the data migration task. For details about the query result and subtask status, see [Query Status](query-status.md).
 
 ```bash
 help query-status
@@ -192,8 +192,8 @@ query-status
 
 #### Flags description
 
-- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the replication task (that you want to query) run.
-- `task-name`: (Optional) Specifies the task name. If it is not set, the results of all data replication tasks are returned.
+- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the migration task (that you want to query) run.
+- `task-name`: (Optional) Specifies the task name. If it is not set, the results of all data migration tasks are returned.
 
 #### Returned results
 
@@ -201,13 +201,13 @@ For detailed description of query parameters and a complete list of returned res
 
 ### Check query errors
 
-You can use `query-error` to check error information on replication tasks or relay units. Compared to `query-status`, `query-error` only retrieves information related to the error itself.
+You can use `query-error` to check error information on migration tasks or relay units. Compared to `query-status`, `query-error` only retrieves information related to the error itself.
 
 `query-error` is often used to obtain the binlog position information required by `sql-skip`/`sql-replace`. For details on the flags and results of `query-error`, refer to [`query-error` in Skip or Replace Abnormal SQL Statements](skip-or-replace-abnormal-sql-statements.md#query-error).
 
-### Pause the data replication task
+### Pause the data migration task
 
-You can use the `pause-task` command to pause a data replication task.
+You can use the `pause-task` command to pause a data migration task.
 
 {{< copyable "" >}}
 
@@ -232,9 +232,9 @@ Global Flags:
 >
 > The differences between `pause-task` and `stop-task` are:
 >
-> - `pause-task` only pauses a replication task, and the task information is retained in the memory, so that you can query using `query-status`. `stop-task` terminates a replication task and removes all task related information from the memory. This means you cannot use `query-status` to query. Data and the corresponding `dm_meta` like "checkpoint" that have been replicated to the downstream are not affected.
+> - `pause-task` only pauses a migration task, and the task information is retained in the memory, so that you can query using `query-status`. `stop-task` terminates a migration task and removes all task related information from the memory. This means you cannot use `query-status` to query. Data and the corresponding `dm_meta` like "checkpoint" that have been migrated to the downstream are not affected.
 >
-> - `pause-task` is generally used to pause the task for troubleshooting, while `stop-task` is used to permanently end a replication task, or co-work with `start-task` to update the configuration information.
+> - `pause-task` is generally used to pause the task for troubleshooting, while `stop-task` is used to permanently end a migration task, or co-work with `start-task` to update the configuration information.
 
 #### Command usage example
 
@@ -244,7 +244,7 @@ pause-task [-w "127.0.0.1:8262"] task-name
 
 #### Flags description
 
-- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the replication task (that you want to pause) run. If it is set, only subtasks on the specified DM-workers are paused.
+- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the migration task (that you want to pause) run. If it is set, only subtasks on the specified DM-workers are paused.
 - `task-name | task-file`: (Required) Specifies the task name or task file path.
 
 #### Returned results
@@ -281,9 +281,9 @@ pause-task test
 }
 ```
 
-### Resume the data replication task
+### Resume the data migration task
 
-You can use the `resume-task` command to resume the data replication task in the `Paused` state. This is generally used in scenarios where you want to manually resume a data replication task after you handle the errors that cause the task to pause.
+You can use the `resume-task` command to resume the data migration task in the `Paused` state. This is generally used in scenarios where you want to manually resume a data migration task after you handle the errors that cause the task to pause.
 
 ```bash
 help resume-task
@@ -310,7 +310,7 @@ resume-task [-w "127.0.0.1:8262"] task-name
 
 #### Flags description
 
-- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the replication task (that you want to restart) run. If it is set, only subtasks on the specified DM-workers are restarted.
+- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the migration task (that you want to restart) run. If it is set, only subtasks on the specified DM-workers are restarted.
 - `task-name | task-file`: (Required) Specifies the task name or task file path.
 
 #### Returned results
@@ -347,9 +347,9 @@ resume-task test
 }
 ```
 
-### Stop the data replication task
+### Stop the data migration task
 
-You can use the `stop-task` command to stop a data replication task. For differences between `stop-task` and `pause-task`, refer to [Pause the data replication task](#pause-the-data-replication-task).
+You can use the `stop-task` command to stop a data migration task. For differences between `stop-task` and `pause-task`, refer to [Pause the data migration task](#pause-the-data-migration-task).
 
 ```bash
 help stop-task
@@ -376,7 +376,7 @@ stop-task [-w "127.0.0.1:8262"]  task-name
 
 #### Flags description
 
-- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the replication task (that you want to stop) run. If it is set, only subtasks on the specified DM-workers are stopped.
+- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the migration task (that you want to stop) run. If it is set, only subtasks on the specified DM-workers are stopped.
 - `task-name | task-file`: (Required) Specifies the task name or task file path.
 
 #### Returned results
@@ -413,9 +413,9 @@ stop-task test
 }
 ```
 
-### Update the data replication task
+### Update the data migration task
 
-You can use the `update-task` command to update the data replication task. The following items support online update, while all other items do not support online update.
+You can use the `update-task` command to update the data migration task. The following items support online update, while all other items do not support online update.
 
 - table route rules
 - block allow list
@@ -423,11 +423,11 @@ You can use the `update-task` command to update the data replication task. The f
 
 > **Note:**
 >
-> If you can make sure that the relay log required by the replication task will not be removed when the task is stopped, it is recommended that you use [Update items that do not support online update](#update-items-that-do-not-support-online-update) to update task configurations.
+> If you can make sure that the relay log required by the migration task will not be removed when the task is stopped, it is recommended that you use [Update items that do not support online update](#update-items-that-do-not-support-online-update) to update task configurations.
 
 #### Update items that support online update
 
-1. Check the status of the corresponding data replication task using `query-status <task-name>`.
+1. Check the status of the corresponding data migration task using `query-status <task-name>`.
 
     If `stage` is not `Paused`, use `pause-task <task-name | task-file>` to pause the task.
 
@@ -439,7 +439,7 @@ You can use the `update-task` command to update the data replication task. The f
 
 #### Update items that do not support online update
 
-1. Check the status of the corresponding data replication task using `query-status <task-name>`.
+1. Check the status of the corresponding data migration task using `query-status <task-name>`.
 
     If the task exists, use `stop-task <task-name | task-file>` to stop the task.
 
@@ -474,7 +474,7 @@ update-task [-w "127.0.0.1:8262"] ./task.yaml
 
 #### Flags description
 
-- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the replication task (that you want to update) run. If it is set, only subtasks on the specified DM-workers are updated.
+- `-w`: (Optional) Specifies the group of DM-workers where the subtasks of the migration task (that you want to update) run. If it is set, only subtasks on the specified DM-workers are updated.
 - `config-file`: (Required) Specifies the file path of `task.yaml`.
 
 #### Returned results
@@ -508,13 +508,13 @@ Currently, DDL lock related commands mainly include `show-ddl-locks`, `unlock-dd
 
 ## Other task and cluster management commands
 
-In addition to the common task management commands above, DM also provides some other commands to manage data replication tasks and DM clusters.
+In addition to the common task management commands above, DM also provides some other commands to manage data migration tasks and DM clusters.
 
 ### Check the task configuration file
 
-You can use the `check-task` command to check whether a specified configuration file (`task.yaml`) of the replication task is valid, or whether the configuration of upstream/downstream database, permission setting, and schema meet the replication requirements. For more details, refer to [Precheck the upstream MySQL instance configuration](precheck.md).
+You can use the `check-task` command to check whether a specified configuration file (`task.yaml`) of the migration task is valid, or whether the configuration of upstream/downstream database, permission setting, and schema meet the migration requirements. For more details, refer to [Precheck the upstream MySQL instance configuration](precheck.md).
 
-When you use `start-task` to start a replication task, DM also executes all checks done by `check-task`.
+When you use `start-task` to start a migration task, DM also executes all checks done by `check-task`.
 
 {{< copyable "" >}}
 

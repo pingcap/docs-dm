@@ -8,7 +8,7 @@ aliases: ['/docs/tidb-data-migration/stable/get-started/','/docs/tidb-data-migra
 
 TiDB DM (Data Migration) is a platform that supports migrating large, complex, production data sets from MySQL or MariaDB to TiDB.
 
-DM supports creating and importing an initial dump of data, as well as keeping data replicated during migration by reading and applying binary logs from the source data store. DM can migrate sharded topologies from in-production databases by merging tables from multiple separate upstream MySQL/MariaDB instances/clusters. In addition to its use for migrations, DM is often used on an ongoing basis by existing MySQL or MariaDB users who deploy a TiDB cluster as a secondary library, to either provide improved horizontal scalability or run real-time analytical workloads on TiDB without needing to manage an ETL pipeline.
+DM supports creating and importing an initial dump of data, as well as keeping data migrated during migration by reading and applying binary logs from the source data store. DM can migrate sharded topologies from in-production databases by merging tables from multiple separate upstream MySQL/MariaDB instances/clusters. In addition to its use for migrations, DM is often used on an ongoing basis by existing MySQL or MariaDB users who deploy a TiDB cluster as a secondary library, to either provide improved horizontal scalability or run real-time analytical workloads on TiDB without needing to manage an ETL pipeline.
 
 In this tutorial, we'll see how to migrate a sharded table from multiple upstream MySQL instances. We'll do this a couple of different ways. First, we'll merge several tables/shards that do not conflict; that is, they're partitioned using a scheme that does not result in conflicting unique key values. Then, we'll merge several tables that **do** have conflicting unique key values.
 
@@ -24,8 +24,8 @@ This tutorial assumes you're using a new, clean CentOS 7 instance. You can virtu
 
 The TiDB DM (Data Migration) platform consists of 3 components: DM-master, DM-worker, and dmctl.
 
-* DM-master manages and schedules the operation of data replication tasks.
-* DM-worker executes specific data replication tasks.
+* DM-master manages and schedules the operation of data migration tasks.
+* DM-worker executes specific data migration tasks.
 * dmctl is the command line tool used to control the DM cluster.
 
 Individual tasks are defined in .yaml files that are read by dmctl and submitted to DM-master. DM-master then informs each instance of DM-worker of its responsibilities for a given task.
@@ -115,7 +115,7 @@ We're going to deploy 3 instances of MySQL Server, and 1 instance each of pd-ser
     17782 mysqld --defaults-group-suffix=3
     ```
 
-## Replicating shards
+## Migrating shards
 
 Our first scenario consists of 3 "shards" with the same schema, but non-overlapping auto-increment primary keys.
 
@@ -352,7 +352,7 @@ To start dmtask1, execute `start-task dm-cnf/dmtask1.yaml`:
 }
 ```
 
-Starting the task will kick off the actions defined in the task configuration file. That includes executing instances of Mydumper and loader, and connecting the workers to the upstream MySQL servers as replication secondaries after the initial data dump has been loaded.
+Starting the task will kick off the actions defined in the task configuration file. That includes executing instances of Mydumper and loader, and connecting the workers to the upstream MySQL servers as migration secondaries after the initial data dump has been loaded.
 
 We can see that all rows have been migrated to the TiDB server:
 
@@ -453,7 +453,7 @@ Expect this output:
 6328    b294504229c668e750dfcc4ea9617f0a        3309
 ```
 
-As long as the DM master and workers are running the "dmtest1" task, they'll continue to keep the downstream TiDB server replicated with the upstream MySQL server instances.
+As long as the DM master and workers are running the "dmtest1" task, they'll continue to keep the downstream TiDB server migrated with the upstream MySQL server instances.
 
 ## Conclusion
 

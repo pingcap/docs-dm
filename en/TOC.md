@@ -14,7 +14,7 @@
   - [Table Routing](feature-overview.md#table-routing)
   - [Block and Allow Lists](feature-overview.md#block-and-allow-table-lists)
   - [Binlog Event Filter](feature-overview.md#binlog-event-filter)
-  - [Replication Delay Monitoring](feature-overview.md#replication-delay-monitoring)
+  - [Migration Delay Monitoring](feature-overview.md#migration-delay-monitoring)
   - [Online-ddl-scheme](feature-online-ddl-scheme.md)
   + Sharding Support
     - [Introduction](feature-shard-merge.md)
@@ -24,7 +24,7 @@
   - [DM 1.0-GA Benchmark Report](benchmark-v1.0-ga.md)
   - [DM 1.0-alpha Benchmark Report](benchmark-v1-alpha.md)
 + Usage Scenarios
-  - [Simple Scenario](usage-scenario-simple-replication.md)
+  - [Simple Scenario](usage-scenario-simple-migration.md)
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
   - [Switch DM-worker Connection between MySQL Instances](usage-scenario-master-slave-switch.md)
@@ -33,7 +33,7 @@
   + Deploy a DM Cluster
     - [Use DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
-  + [Replicate Data Using DM](replicate-data-using-dm.md)
+  + [Migrate Data Using DM](migrate-data-using-dm.md)
 + Configure
   - [Overview](config-overview.md)
   - [DM-master Configuration](dm-master-configuration-file.md)
@@ -44,8 +44,8 @@
 + Manage the DM Cluster
   - [Cluster Operations](cluster-operations.md)
   - [Cluster Upgrade](dm-upgrade.md)
-+ Manage Replication Tasks
-  - [Manage Tasks](manage-replication-tasks.md)
++ Manage Migration Tasks
+  - [Manage Tasks](manage-migration-tasks.md)
   - [Precheck Tasks](precheck.md)
   - [Query Task Status](query-status.md)
   - [Skip or Replace Abnormal SQL Statements](skip-or-replace-abnormal-sql-statements.md)
