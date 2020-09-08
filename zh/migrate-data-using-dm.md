@@ -1,6 +1,6 @@
 ---
 title: 使用 DM 迁移数据
-aliases: ['/docs-cn/tidb-data-migration/stable/replicate-data-using-dm/','/docs-cn/tidb-data-migration/v1.0/replicate-data-using-dm/','/docs-cn/dev/reference/tools/data-migration/deploy/','/docs-cn/v3.1/reference/tools/data-migration/deploy/','/docs-cn/v3.0/reference/tools/data-migration/deploy/','/docs-cn/v2.1/reference/tools/data-migration/deploy/','/zh/tidb-data-migration/stable/replicate-data-using-dm']
+aliases: ['/docs-cn/tidb-data-migration/stable/replicate-data-using-dm/','/docs-cn/tidb-data-migration/v1.0/replicate-data-using-dm/','/docs-cn/dev/reference/tools/data-migration/deploy/','/docs-cn/v3.1/reference/tools/data-migration/deploy/','/docs-cn/v3.0/reference/tools/data-migration/deploy/','/docs-cn/v2.1/reference/tools/data-migration/deploy/','/zh/tidb-data-migration/stable/replicate-data-using-dm/']
 ---
 
 # 使用 DM 迁移数据
