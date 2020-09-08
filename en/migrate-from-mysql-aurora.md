@@ -161,8 +161,8 @@ mydumpers:
         },
         {
             "id": 5,
-            "name": "source db migration privilege chcker",
-            "desc": "check migration privileges of source DB",
+            "name": "source db replication privilege chcker",
+            "desc": "check replication privileges of source DB",
             "state": "fail",
             "errorMsg": "line 1 column 285 near \"LOAD FROM S3, SELECT INTO S3 ON *.* TO 'root'@'%' WITH GRANT OPTION\" ...",
             "instruction": "",

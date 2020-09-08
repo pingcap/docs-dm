@@ -81,7 +81,7 @@ When DM-master is restarted, it automatically requests the task information from
 
 > **Note:**
 >
-> Try to avoid restarting DM-worker during the process of migratingF sharding DDL statements.
+> Try to avoid restarting DM-worker during the process of migrating sharding DDL statements.
 
 To restart the DM-worker component, you can use either of the following two approaches:
 
