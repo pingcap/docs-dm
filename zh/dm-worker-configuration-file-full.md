@@ -19,11 +19,11 @@ log-file = "dm-worker.log"
 # DM-worker listening address.
 worker-addr = ":8262"
 
-# Represents a MySQL/MariaDB instance or a migration group.
+# Represents a MySQL/MariaDB instance or a replication group.
 source-id = "mysql-replica-01"
 
 # Server id of slave for binlog replication.
-# Each instance (master and slave) in the migration group should have a different server id.
+# Each instance (master and slave) in the replication group should have a different server id.
 server-id = 101
 
 # flavor: mysql/mariadb
@@ -66,8 +66,8 @@ backoff-max = "5m"
 | `log-level` | 日志等级，值可以为 "debug"、"info"、"warn"、"error"、"fatal"，默认值为 "info"。一般情况下不需要手动配置，如果需要排查问题，可以将等级设置为 "debug"。 |
 | `log-file` | 日志文件，如果不配置日志会输出到标准输出中。 |
 | `worker-addr` | DM-worker 服务的地址，可以省略 IP 信息，例如：":8262"。 |
-| `source-id` | 标识一个 MySQL/MariaDB 实例或者 migration group。 |
-| `server-id` | DM-worker 作为上游 MySQL/MariaDB slave 来获取 binlog 的 server id，该值在一个 migration group （包括 master 和 slave）中必须是唯一的。v1.0.2 及以上版本的 DM 会自动生成，不需要手动配置该项。 |
+| `source-id` | 标识一个 MySQL/MariaDB 实例或者 replication group。 |
+| `server-id` | DM-worker 作为上游 MySQL/MariaDB slave 来获取 binlog 的 server id，该值在一个 replication group （包括 master 和 slave）中必须是唯一的。v1.0.2 及以上版本的 DM 会自动生成，不需要手动配置该项。 |
 | `flavor` | 上游数据库的类型，目前值可以为 "mysql" 或者 "mariadb"。v1.0.2 及以上版本的 DM 会自动判断上游版本，不需要手动配置该项。 |
 | `relay-dir` | 存储 relay log 的目录，默认值为 "./relay_log"。 |
 | `enable-gtid` | 是否使用 GTID 方式从上游拉取 binlog，默认值为 false。一般情况下不需要手动配置，如果上游数据库启用了 GTID 支持，且需要做主从切换，则将该配置项设置为 true。 |

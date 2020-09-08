@@ -350,7 +350,7 @@ err:Error 1105: unsupported modify column length 10 is less than origin 11
     ```
     2018/12/28 11:17:51 operator.go:121: [info] [sql-operator] set a new operator
     uuid: 6bfcf30f-2841-4d70-9a34-28d7082bdbd7, pos: (mysql-bin|000001.000003, 34642), op: SKIP, args:
-    on migration unit
+    on replication unit
     ```
 
 3. 使用 `resume-task` 恢复之前出错中断的迁移任务。
@@ -478,7 +478,7 @@ err:Error 1105: can't drop column c2 with index covered now
     2018/12/28 15:33:13 operator.go:121: [info] [sql-operator] set a new operator
     uuid: c699a18a-8e75-47eb-8e7e-0e5abde2053c, pattern: ~(?i)ALTER\s+TABLE\s+`db2`.`tbl2`\s+DROP\s+COLUMN\s+`c2`,
     op: REPLACE, args: ALTER TABLE `db2`.`tbl2` DROP INDEX idx_c2; ALTER TABLE `db2`.`tbl2` DROP COLUMN `c2`
-    on migration unit
+    on replication unit
     ```
 
 4. 在上游 MySQL 执行该 DDL 语句。
@@ -622,7 +622,7 @@ err:Error 1105: can't drop column c2 with index covered now
     uuid: c959f2fb-f1c2-40c7-a1fa-e73cd51736dd,
     pattern: ~(?i)ALTER\s+TABLE\s+`shard_db`.`shard_table`\s+DROP\s+COLUMN\s+`c2`,
     op: REPLACE, args: ALTER TABLE `shard_db`.`shard_table` DROP INDEX idx_c2; ALTER TABLE `shard_db`.`shard_table` DROP COLUMN `c2`
-    on migration unit
+    on replication unit
     ```
 
     ```
