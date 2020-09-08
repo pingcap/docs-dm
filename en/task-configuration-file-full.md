@@ -67,7 +67,7 @@ filters:
     schema-pattern: "test_*"                    # The pattern of the upstream schema name, wildcard characters (*?) are supported
     table-pattern: "t_*"                        # The pattern of the upstream schema name, wildcard characters (*?) are supported
     events: ["truncate table", "drop table"]    # What event types to match
-    action: Ignore                              # Whether to migrate (Do) or ignore (Ignore) the binlog that matches the filtering rule
+    action: Ignore                              # Whether to replicate (Do) or ignore (Ignore) the binlog that matches the filtering rule
   filter-rule-2:
     schema-pattern: "test_*"
     events: ["all dml"]
@@ -115,7 +115,7 @@ syncers:
 # ----------- Instance configuration -----------
 mysql-instances:
   -
-    source-id: "mysql-replica-01"                                      # The ID of the upstream instance or migration group. It can be configured by referring to the `source_id` in the `inventory.ini` file or the `source-id` in the `dm-master.toml` file.
+    source-id: "mysql-replica-01"                                      # The ID of the upstream instance or replication group. It can be configured by referring to the `source_id` in the `inventory.ini` file or the `source-id` in the `dm-master.toml` file.
     meta:                                                              # The position where the binlog replication starts when `task-mode` is `incremental` and the downstream database checkpoint does not exist. If the checkpoint exists, the checkpoint is used.
 
       binlog-name: binlog.000001

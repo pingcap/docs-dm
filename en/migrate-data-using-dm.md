@@ -1,10 +1,10 @@
 ---
-aliases: ['/docs/tidb-data-migration/stable/replicate-data-using-dm/','/docs/tidb-data-migration/v1.0/replicate-data-using-dm/','/docs/dev/reference/tools/data-migration/deploy/','/docs/v3.1/reference/tools/data-migration/deploy/','/docs/v3.0/reference/tools/data-migration/deploy/','/docs/v2.1/reference/tools/data-migration/deploy/']
-title: migrate Data Using Data Migration
+title: Migrate Data Using Data Migration
 summary: Use the Data Migration tool to migrate the full data and the incremental data.
+aliases: ['/docs/tidb-data-migration/stable/replicate-data-using-dm/','/docs/tidb-data-migration/v1.0/replicate-data-using-dm/','/docs/dev/reference/tools/data-migration/deploy/','/docs/v3.1/reference/tools/data-migration/deploy/','/docs/v3.0/reference/tools/data-migration/deploy/','/docs/v2.1/reference/tools/data-migration/deploy/']
 ---
 
-# migrate Data Using Data Migration
+# Migrate Data Using Data Migration
 
 This guide shows how to migrate data using the Data Migration (DM) tool.
 

@@ -1,7 +1,7 @@
 ---
 title: Data Migration Simple Usage Scenario
-aliases: ['/docs/tidb-data-migration/stable/usage-scenario-simple-replication/','/docs/tidb-data-migration/v1.0/usage-scenario-simple-replication/','/docs/dev/reference/tools/data-migration/usage-scenarios/simple-replication/','/docs/v3.1/reference/tools/data-migration/usage-scenarios/simple-replication/','/docs/v3.0/reference/tools/data-migration/usage-scenarios/simple-replication/','/docs/v2.1/reference/tools/data-migration/usage-scenarios/simple-replication/']
 summary: Learn how to use Data Migration to migrate data in a simple scenario.
+aliases: ['/docs/tidb-data-migration/stable/usage-scenario-simple-replication/','/docs/tidb-data-migration/v1.0/usage-scenario-simple-replication/','/docs/dev/reference/tools/data-migration/usage-scenarios/simple-replication/','/docs/v3.1/reference/tools/data-migration/usage-scenarios/simple-replication/','/docs/v3.0/reference/tools/data-migration/usage-scenarios/simple-replication/','/docs/v2.1/reference/tools/data-migration/usage-scenarios/simple-replication/']
 ---
 
 # Data Migration Simple Usage Scenario
