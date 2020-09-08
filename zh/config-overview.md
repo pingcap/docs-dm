@@ -25,7 +25,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/config-overview/','/docs-cn/tidb-
 
 1. 复制 `task.yaml.example` 为 `your_task.yaml`。
 2. 参考[任务配置文件](task-configuration-file.md)来修改 `your_task.yaml` 文件。
-3. [使用 dmctl 创建数据迁移任务](manage-replication-tasks.md#创建数据迁移任务)。
+3. [使用 dmctl 创建数据迁移任务](manage-migration-tasks.md#创建数据迁移任务)。
 
 ### 关键概念
 

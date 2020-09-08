@@ -6,7 +6,7 @@ aliases: ['/docs-cn/tidb-data-migration/stable/alert-rules/','/docs-cn/tidb-data
 
 # DM 告警信息
 
-使用 DM-Ansible 部署 DM 集群的时候，会默认部署一套[告警系统](replicate-data-using-dm.md#第-7-步监控任务与查看日志)。
+使用 DM-Ansible 部署 DM 集群的时候，会默认部署一套[告警系统](migrate-data-using-dm.md#第-7-步监控任务与查看日志)。
 
 > **注意：**
 >

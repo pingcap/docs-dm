@@ -24,7 +24,7 @@
 + Benchmark
   - [DM 1.0-GA 性能测试](benchmark-v1.0-ga.md)
 + 使用场景
-  - [简单的从库迁移场景](usage-scenario-simple-replication.md)
+  - [简单的从库迁移场景](usage-scenario-simple-migration.md)
   - [分库分表合并场景](usage-scenario-shard-merge.md)
   - [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
   - [DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
@@ -33,7 +33,7 @@
   + 部署 DM 集群
     - [使用 DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
-  + [使用 DM 迁移数据](replicate-data-using-dm.md)
+  + [使用 DM 迁移数据](migrate-data-using-dm.md)
 + 配置
   - [概述](config-overview.md)
   - [DM-master 配置](dm-master-configuration-file.md)
@@ -45,7 +45,7 @@
   - [集群操作](cluster-operations.md)
   - [集群升级](dm-upgrade.md)
 + DM 迁移任务管理
-  - [管理数据迁移任务](manage-replication-tasks.md)
+  - [管理数据迁移任务](manage-migration-tasks.md)
   - [任务前置检查](precheck.md)
   - [任务状态查询](query-status.md)
   - [跳过或替代执行异常的 SQL 语句](skip-or-replace-abnormal-sql-statements.md)
