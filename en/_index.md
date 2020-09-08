@@ -58,7 +58,7 @@ The schema and table routing feature means that DM can migrate a certain table o
 
 ### Block and allow lists migration at the schema and table levels
 
-The block and allow lists filtering rule of the upstream database instance tables is similar to MySQL `migration-rules-db`/`migration-rules-table`, which can be used to filter or only migrate all operations of some databases or some tables.
+The block and allow lists filtering rule of the upstream database instance tables is similar to MySQL `replication-rules-db`/`replication-rules-table`, which can be used to filter or only migrate all operations of some databases or some tables.
 
 ### Binlog event filtering
 
