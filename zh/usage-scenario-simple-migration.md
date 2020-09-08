@@ -1,6 +1,6 @@
 ---
 title: Data Migration 简单使用场景
-aliases: ['/docs-cn/tidb-data-migration/stable/usage-scenario-simple-replication/','/docs-cn/tidb-data-migration/v1.0/usage-scenario-simple-replication/','/docs-cn/dev/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v3.1/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v3.0/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v2.1/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v3.0/reference/tools/data-migration/usage-scenarios/simple-replication',`/zh/tidb-data-migration/stable/usage-scenario-simple-replication`]
+aliases: ['/docs-cn/tidb-data-migration/stable/usage-scenario-simple-replication/','/docs-cn/tidb-data-migration/v1.0/usage-scenario-simple-replication/','/docs-cn/dev/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v3.1/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v3.0/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v2.1/reference/tools/data-migration/usage-scenarios/simple-synchronization/','/docs-cn/v3.0/reference/tools/data-migration/usage-scenarios/simple-replication','/zh/tidb-data-migration/stable/usage-scenario-simple-replication']
 ---
 
 # Data Migration 简单使用场景
