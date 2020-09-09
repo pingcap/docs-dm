@@ -6,7 +6,7 @@ aliases: ['/docs/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible/','/d
 
 # Deploy a DM Cluster Using TiUP (Experimental)
 
-> **Note:**
+> **Warning:**
 >
 > Using TiUP to deploy a DM cluster is still an experimental feature. It is **NOT** recommended to use TiUP to deploy a DM cluster in production.
 
