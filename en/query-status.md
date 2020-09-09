@@ -6,7 +6,7 @@ aliases: ['/docs/tidb-data-migration/stable/query-status/','/docs/tidb-data-migr
 
 # Data Migration Query Status
 
-This document introduces the query result, task status, and subtask status of DM.
+This document introduces the query result, task status, and subtask status of Data Migration (DM).
 
 ## Query result
 
