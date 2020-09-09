@@ -144,6 +144,7 @@ For example, to scale out a DM-worker node in the `prod-cluster` cluster, take t
     > **Note:**
     >
     > You need to create a topology file, which includes only the description of the new nodes, not the existing nodes.
+    > > For more configuration items (such as the deployment directory), refer to [TiUP configuration parameter examples](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml).
 
     ```yaml
     ---
