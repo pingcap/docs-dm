@@ -1,23 +1,23 @@
 ---
-title: Merge and Replicate Data from Sharded Tables in Optimistic Mode
-summary: Learn how DM merges and replicates data from sharded tables in the optimistic mode.
+title: Merge and Migrate Data from Sharded Tables in Optimistic Mode
+summary: Learn how DM merges and migrates data from sharded tables in the optimistic mode.
 ---
 
-# Merge and Replicate Data from Sharded Tables in Optimistic Mode
+# Merge and Migrate Data from Sharded Tables in Optimistic Mode
 
-This document introduces the sharding support feature provided by Data Migration (DM) in the optimistic mode. This feature allows you to merge and replicate the data of tables with the same or different table schema(s) in the upstream MySQL or MariaDB instances into one same table in the downstream TiDB.
+This document introduces the sharding support feature provided by Data Migration (DM) in the optimistic mode. This feature allows you to merge and migrate the data of tables with the same or different table schema(s) in the upstream MySQL or MariaDB instances into one same table in the downstream TiDB.
 
 > **Note:**
 >
-> If you do not have an in-depth understanding of the optimistic mode and its restrictions, it is **NOT** recommended to use this mode. Otherwise, replication interruption or even data inconsistency might occur.
+> If you do not have an in-depth understanding of the optimistic mode and its restrictions, it is **NOT** recommended to use this mode. Otherwise, migration interruption or even data inconsistency might occur.
 
 ## Background
 
-DM supports executing DDL statements on sharded tables online, which is called sharding DDL, and uses the "pessimistic mode" by default. In this mode, when a DDL statement is executed in an upstream sharded table, data replication of this table is paused until the same DDL statement is executed in all other sharded tables. Only by then this DDL statement is executed in the downstream and data replication resumes.
+DM supports executing DDL statements on sharded tables online, which is called sharding DDL, and uses the "pessimistic mode" by default. In this mode, when a DDL statement is executed in an upstream sharded table, data migration of this table is paused until the same DDL statement is executed in all other sharded tables. Only by then this DDL statement is executed in the downstream and data migration resumes.
 
-The pessimistic mode guarantees that the data replicated to the downstream is always correct, but it pauses the data replication, which is bad for making A/B changes in the upstream. In some cases, users might spend a long time executing DDL statements in a single sharded table and change the schemas of other sharded tables only after a period of validation. In the pessimistic mode, these DDL statements block data replication and cause many binlog events to pile up.
+The pessimistic mode guarantees that the data migrated to the downstream is always correct, but it pauses the data migration, which is bad for making A/B changes in the upstream. In some cases, users might spend a long time executing DDL statements in a single sharded table and change the schemas of other sharded tables only after a period of validation. In the pessimistic mode, these DDL statements block data migration and cause many binlog events to pile up.
 
-Therefore, an "optimistic mode" is needed. In this mode, a DDL statement executed on a sharded table is automatically converted to a statement that is compatible with other sharded tables, and then immediately replicated to the downstream. In this way, the DDL statement does not block any sharded table from executing DML replication.
+Therefore, an "optimistic mode" is needed. In this mode, a DDL statement executed on a sharded table is automatically converted to a statement that is compatible with other sharded tables, and then immediately migrated to the downstream. In this way, the DDL statement does not block any sharded table from executing DML migration.
 
 ## Configuration of the optimistic mode
 
@@ -33,7 +33,7 @@ It takes some risks to use the optimistic mode. Follow these rules when you use 
 
     For example, if you have executed `ADD COLUMN A INT; DROP COLUMN A; ADD COLUMN A FLOAT;` in a sharded table, you only need to execute `ADD COLUMN A FLOAT` in other sharded tables. You do not need to executed all of the three DDL statements again.
 
-- Observe the status of the DM replication when executing the DDL statement. When an error is reported, you need to determine whether this batch of DDL statements will cause data inconsistency.
+- Observe the status of the DM migration when executing the DDL statement. When an error is reported, you need to determine whether this batch of DDL statements will cause data inconsistency.
 
 Currently, the following statements are not supported in the optimistic mode:
 
@@ -52,7 +52,7 @@ In addition, the following restrictions apply to both the optimistic mode and th
 
 ## Risks
 
-When you use the optimistic mode for a replication task, a DDL statement is replicated to the downstream immediately. If this mode is misused, data inconsistency between the upstream and the downstream might occur.
+When you use the optimistic mode for a migration task, a DDL statement is migrated to the downstream immediately. If this mode is misused, data inconsistency between the upstream and the downstream might occur.
 
 ### Operations that cause data inconsistency
 
@@ -68,7 +68,7 @@ When you use the optimistic mode for a replication task, a DDL statement is repl
 
 ### Example
 
-Merge and replicate the following three sharded tables to TiDB:
+Merge and migrate the following three sharded tables to TiDB:
 
 ![optimistic-ddl-fail-example-1](/media/optimistic-ddl-fail-example-1.png)
 
@@ -92,13 +92,13 @@ By then, the `Age` column of `tbl00` is inconsistent because `DEFAULT 0` and `DE
 
 ## Implementation principle
 
-In the optimistic mode, after DM-worker receives the DDL statement from the upstream, it forwards the updated table schema to DM-master. DM-worker tracks the current schema of each sharded table, and DM-master merges these schemas into a composite schema that is compatible with DML statements of every sharded table. Then DM-master replicates the corresponding DDL statement to the downstream. DML statements are directly replicated to the downstream.
+In the optimistic mode, after DM-worker receives the DDL statement from the upstream, it forwards the updated table schema to DM-master. DM-worker tracks the current schema of each sharded table, and DM-master merges these schemas into a composite schema that is compatible with DML statements of every sharded table. Then DM-master migrates the corresponding DDL statement to the downstream. DML statements are directly migrated to the downstream.
 
 ![optimistic-ddl-flow](/media/optimistic-ddl-flow.png)
 
 ### Examples
 
-Assume the upstream MySQL has three sharded tables (`tbl00`, `tbl01`, and `tbl02`). Merge and replicate these sharded tables to the `tbl` table in the downstream TiDB. See the following image:
+Assume the upstream MySQL has three sharded tables (`tbl00`, `tbl01`, and `tbl02`). Merge and migrate these sharded tables to the `tbl` table in the downstream TiDB. See the following image:
 
 ![optimistic-ddl-example-1](/media/optimistic-ddl-example-1.png)
 
@@ -114,7 +114,7 @@ Then TiDB will receive the DML statement from `tbl00` (with the `Level` column) 
 
 ![optimistic-ddl-example-3](/media/optimistic-ddl-example-3.png)
 
-The following DML statements can be replicated to the downstream without any modification:
+The following DML statements can be migrated to the downstream without any modification:
 
 ```sql
 UPDATE `tbl00` SET `Level` = 9 WHERE `ID` = 1;
@@ -143,7 +143,7 @@ ALTER TABLE `tbl01` DROP COLUMN `Name`;
 
 Then the downstream will receive the DML statements from `tbl00` and `tbl02` with the `Name` column, so this column is not immediately dropped.
 
-In the same way, all DML statements can still be replicated to the downstream:
+In the same way, all DML statements can still be migrated to the downstream:
 
 ```sql
 INSERT INTO `tbl01` (`ID`, `Level`) VALUES (15, 7);
