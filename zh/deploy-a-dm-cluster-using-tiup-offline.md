@@ -1,7 +1,6 @@
 ---
 title: 使用 TiUP 离线镜像部署 DM 集群（实验特性）
 summary: 学习如何使用 TiUP DM 组件来部署 TiDB Data Migration 工具。
-aliases: ['/docs-cn/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible/','/zh/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible']
 ---
 
 # 使用 TiUP 离线镜像部署 DM 集群（实验特性）
@@ -14,7 +13,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible/',
 
 ## 第 1 步：准备 TiUP 离线组件包
 
-- 在线环境中安装 TiUP 包管理器工具
+- 在线环境中安装 TiUP 包管理器工具。
 
     1. 执行如下命令安装 TiUP 工具：
 
@@ -125,9 +124,9 @@ alertmanager_servers:
 >
 > - 对于需要某个节点生效的参数，请在具体节点的 `config` 中配置。
 >
-> - 配置的层次结构使用 `.` 表示。如：`log.slow-threshold`。更多格式参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml)。
+> - 配置的层次结构使用 `.` 表示。如：`log.slow-threshold`。更多格式说明，请参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml)。
 >
-> - 更多参数说明，请参考 [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml)、[worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml)
+> - 更多参数说明，请参考 [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml)、[worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml)。
 >
 > - 需要确保以下组件间端口可正常连通：
 >
