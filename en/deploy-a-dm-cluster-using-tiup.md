@@ -1,9 +1,13 @@
 ---
-title: Deploy a DM Cluster Using TiUP
+title: Deploy a DM Cluster Using TiUP (Experimental)
 summary: Learn how to deploy TiDB Data Migration using TiUP DM.
 ---
 
-# Deploy a DM Cluster Using TiUP
+# Deploy a DM Cluster Using TiUP (Experimental)
+
+> **Warning:**
+>
+> Using TiUP to deploy a DM cluster is still an experimental feature. It is **NOT** recommended to use TiUP to deploy a DM cluster in production.
 
 [TiUP](https://github.com/pingcap/tiup) is a cluster operation and maintenance tool introduced in TiDB 4.0. TiUP provides [TiUP DM](maintain-dm-using-tiup.md), a cluster management component written in Golang. By using TiUP DM, you can easily perform daily TiDB Data Migration (DM) operations, including deploying, starting, stopping, destroying, scaling, and upgrading a DM cluster, and manage DM cluster parameters.
 
