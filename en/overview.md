@@ -60,7 +60,7 @@ dmctl is the command line tool used to control the DM cluster.
 
 ### High availability
 
-When multiple DM-master nodes are deployed, all DM-master nodes will use the embedded etcd to form a cluster. The DM-master cluster is used to store metadata such as cluster node information and task configuration. The leader node elected through etcd is used to provide services related to cluster management and data migration task management. Therefore, if the number of available DM-master nodes exceeds half of the deployed nodes, services can be provided normally.
+When you deploy multiple DM-master nodes, all DM-master nodes use the embedded etcd to form a cluster. The DM-master cluster is used to store metadata such as cluster node information and task configuration. The leader node elected through etcd is used to provide services such as cluster management and data migration task management. Therefore, if the number of available DM-master nodes exceeds half of the deployed nodes, the DM cluster can normally provide services.
 
 When the number of deployed DM-worker nodes exceeds the number of upstream MySQL/MariaDB nodes, the related DM-worker nodes that exceed the number of upstream nodes will be idle by default. If a DM-worker node goes offline or is isolated from the DM-master leader, the DM-master can automatically schedule data migration tasks of the original DM-worker node to other idle DM-worker nodes. (If the worker node is isolated, the related data migration tasks will be automatically stopped); if no idle DM-worker nodes can be scheduled, the data migration tasks of the original DM-worker will not be performed.
 
