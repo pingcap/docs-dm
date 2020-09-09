@@ -91,7 +91,8 @@ Before starting a data migration task, you need to configure the MySQL data sour
 
 > **Note:**
 >
-> You can skip this step if the database does not have a password.
+> + You can skip this step if the database does not have a password.
+> + You can use the plaintext password to configure the source information in DM v1.0.6 and later versions.
 
 For safety reasons, it is recommended to configure and use encrypted passwords. You can use dmctl to encrypt the MySQL/TiDB password. Suppose the password is "123456":
 
