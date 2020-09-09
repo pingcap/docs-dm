@@ -10,7 +10,7 @@ This document introduces how to maintain a DM cluster using the TiUP DM componen
 
 > **Note:**
 >
-> - You need to make sure that the ports among the following components can be properly connected:
+> - Make sure that the ports among the following components are interconnected
 >     - The `peer_port` (`8291` by default) among the DM-master nodes are interconnected.
 >     - Each DM-master node can connect to the `port` of all DM-worker nodes (`8262` by default).
 >     - Each DM-worker node can connect to the `port` of all DM-master nodes (`8261` by default).
