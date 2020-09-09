@@ -1,12 +1,12 @@
 ---
 title: Data Migration Monitoring Metrics
-summary: Learn about the monitoring metrics when you use Data Migration to replicate data.
+summary: Learn about the monitoring metrics when you use Data Migration to migrate data.
 aliases: ['/docs/tidb-data-migration/stable/monitor-a-dm-cluster/','/docs/tidb-data-migration/v1.0/monitor-a-dm-cluster/','/docs/dev/reference/tools/data-migration/monitor/','/docs/v3.1/reference/tools/data-migration/monitor/','/docs/v3.0/reference/tools/data-migration/monitor/','/docs/v2.1/reference/tools/data-migration/monitor/']
 ---
 
 # Data Migration Monitoring Metrics
 
-If your DM cluster is deployed using DM-Ansible, the [monitoring system](replicate-data-using-dm.md#step-7-monitor-the-task-and-check-logs) is also deployed at the same time. This document describes the monitoring metrics provided by DM-worker.
+If your DM cluster is deployed using DM-Ansible, the [monitoring system](migrate-data-using-dm.md#step-7-monitor-the-task-and-check-logs) is also deployed at the same time. This document describes the monitoring metrics provided by DM-worker.
 
 > **Note:**
 >
@@ -22,13 +22,13 @@ In the Grafana dashboard, the default name of DM is `DM-task`.
 
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
-| task state | The state of subtasks for replication | N/A | N/A |
+| task state | The state of subtasks for migration | N/A | N/A |
 | storage capacity | The total storage capacity of the disk occupied by relay logs | N/A | N/A |
 | storage remain | The remaining storage capacity of the disk occupied by relay logs | N/A | N/A |
 | binlog file gap between master and relay | The number of binlog files by which the `relay` processing unit is behind the upstream master | N/A | N/A |
 | load progress | The percentage of the completed loading process of the load unit. The value is between 0%~100% | N/A | N/A |
 | binlog file gap between master and syncer | The number of binlog files by which the binlog replication unit is behind the upstream master | N/A | N/A |
-| shard lock resolving | Whether the current subtask is waiting for sharding DDL replication. A value greater than 0 means that the current subtask is waiting for sharding DDL replication | N/A | N/A |
+| shard lock resolving | Whether the current subtask is waiting for sharding DDL migration. A value greater than 0 means that the current subtask is waiting for sharding DDL migration | N/A | N/A |
 
 ### Task state
 
@@ -74,7 +74,7 @@ The following metrics show only when `task-mode` is in the `incremental` or `all
 
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
-| remaining time to sync | The predicted remaining time it takes `syncer` to be completely replicated with the master (in minutes) | N/A | N/A |
+| remaining time to sync | The predicted remaining time it takes `syncer` to be completely migrated with the master (in minutes) | N/A | N/A |
 | replicate lag | The latency time it takes to replicate the binlog from master to `syncer` (in seconds) | N/A | N/A |
 | process exist with error | The binlog replication unit encounters an error within the DM-worker and exits | Immediate alerts | critical |
 | binlog file gap between master and syncer | The number of binlog files by which the `syncer` processing unit is behind the master | An alert occurs when the number of binlog files by which the `syncer` processing unit is behind the master exceeds one (>1) and the condition lasts over 10 minutes | critical |
@@ -121,7 +121,7 @@ In the Grafana dashboard, the default name of an instance is `DM-instance`.
 
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
-| task state | The state of subtasks for replication | An alert occurs when the subtask has been paused for more than 10 minutes | critical |
+| task state | The state of subtasks for migration | An alert occurs when the subtask has been paused for more than 10 minutes | critical |
 | load progress | The percentage of the completed loading process of the load unit. The value range is 0%~100% | N/A | N/A |
 | binlog file gap between master and syncer | The number of binlog files by which the binlog replication unit is behind the upstream master | N/A | N/A |
-| shard lock resolving | Whether the current subtask is waiting for sharding DDL replication. A value greater than 0 means that the current subtask is waiting for sharding DDL replication | N/A | N/A |
+| shard lock resolving | Whether the current subtask is waiting for sharding DDL migration. A value greater than 0 means that the current subtask is waiting for sharding DDL migration | N/A | N/A |

@@ -111,7 +111,7 @@ The `[checker]` section contains parameters that affect the task status checker.
 
 | Parameter        | Description                           | Default value |
 | :------------ | :--------------------------------------- | :---------------|
-| `check-enable` | Determines whether to enable task status checker. If it is set to "true", DM tries to resume data replication task that is suspended due to errors. | `true` |
+| `check-enable` | Determines whether to enable task status checker. If it is set to "true", DM tries to resume data migration task that is suspended due to errors. | `true` |
 | `backoff-rollback` | Sets the time interval for adjusting the waiting time of the automatic recovery. | `"5m0s"`|
 | `backoff-max` | Sets the longest time interval for the automatic recovery after errors are detected. | `"5m0s"`|
 

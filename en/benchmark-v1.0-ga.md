@@ -144,14 +144,14 @@ Full import data size in this benchmark case is 3.78 GB, load unit pool size use
 |            618             | -s 125000 -r 320000  |            0.683             |  299.9          |     12.9            |         0.73         |
 |            310             |  -s 62500 -r 320000  |            0.413             |  322.6          |     12.0            |         0.49         |
 
-### Increase replication benchmark case
+### Increase migration benchmark case
 
 #### Test procedure
 
 - Set up environment
 - Use sysbench to create the table and generate the initial data in upstream MySQL
 - Start DM-task in the `all` mode, and wait until the task enters `sync` unit
-- Use sysbench to generate incremental data in upstream MySQL, use `query-status` to watch the DM replication status, and observe the monitoring metrics of DM and TiDB on Grafana
+- Use sysbench to generate incremental data in upstream MySQL, use `query-status` to watch the DM migration status, and observe the monitoring metrics of DM and TiDB on Grafana
 
 #### Benchmark result for incremental replication
 

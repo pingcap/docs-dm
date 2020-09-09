@@ -5,14 +5,14 @@ summary: Learn how to switch the DM-worker connection between upstream MySQL ins
 
 # Switch DM-worker Connection between Upstream MySQL Instances
 
-When the upstream MySQL instance that DM-worker connects to needs downtime maintenance or when the instance crashes unexpectedly, you need to switch the DM-worker connection to another MySQL instance within the same replication group.
+When the upstream MySQL instance that DM-worker connects to needs downtime maintenance or when the instance crashes unexpectedly, you need to switch the DM-worker connection to another MySQL instance within the same migration group.
 
 > **Note:**
 >
-> - You can switch the DM-worker connection to only an instance within the same primary-secondary replication cluster.
+> - You can switch the DM-worker connection to only an instance within the same primary-secondary migration cluster.
 > - The MySQL instance to be newly connected to must have the binlog required by DM-worker.
 > - DM-worker must operate in the GTID sets mode, which means you must specify `enable_gtid=true` when you deploy DM using DM-Ansible.
-> - The connection switch only supports the following two scenarios. Strictly follow the procedures for each scenario. Otherwise, you might have to re-deploy the DM cluster according to the newly connected MySQL instance and perform the data replication task all over again.
+> - The connection switch only supports the following two scenarios. Strictly follow the procedures for each scenario. Otherwise, you might have to re-deploy the DM cluster according to the newly connected MySQL instance and perform the data migration task all over again.
 
 For more details on GTID set, refer to [MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/replication-gtids-concepts.html#replication-gtids-concepts-gtid-sets).
 
@@ -33,11 +33,11 @@ To switch one upstream MySQL instance (when DM-worker connects to it via a VIP) 
     - `gtid-W` contains `gtid-P`. `gtid-P` can be empty.
     - `gtid-E` contains `gtid-W`.
 5. Use `pause-relay` to pause relay.
-6. Use `pause-task` to pause all running tasks of data replication.
+6. Use `pause-task` to pause all running tasks of data migration.
 7. Change the VIP for it to direct at the new MySQL instance.
 8. Use `switch-relay-master` to tell relay to execute the primary-secondary switch.
 9. Use `resume-relay` to make relay resume to read binlog from the new MySQL instance.
-10. Use `resume-task` to resume the previous replication task.
+10. Use `resume-task` to resume the previous migration task.
 
 ## Change the address of the upstream MySQL instance that DM-worker connects to
 
@@ -49,6 +49,6 @@ To make DM-worker connect to a new MySQL instance in the upstream by modifying t
 4. Make sure that the following conditions are met. Otherwise, you cannot switch the DM-work connection to the new MySQL instance:
     - `gtid-W` contains `gtid-P`. `gtid-P` can be empty.
     - `gtid-E` contains `gtid-W`.
-5. Use `stop-task` to stop all running tasks of data replication.
+5. Use `stop-task` to stop all running tasks of data migration.
 6. Update the DM-worker configuration in the `inventory.ini` file and use DM-Ansible to perform a rolling upgrade on DM-worker.
-7. Use `start-task` to restart the replication task.
+7. Use `start-task` to restart the migration task.

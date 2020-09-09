@@ -10,15 +10,15 @@ This document describes the features and limitations of [TiDB Data Migration](ht
 
 ## Use a separate data migration task
 
-In the [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md#principles) document, the definition of "sharding group" is given: A sharding group consists of all upstream tables that need to be merged and replicated into the same downstream table.
+In the [Merge and migrate Data from Sharded Tables](feature-shard-merge.md#principles) document, the definition of "sharding group" is given: A sharding group consists of all upstream tables that need to be merged and migrated into the same downstream table.
 
 The current sharding DDL mechanism has some [usage restrictions](feature-shard-merge.md#restrictions) to coordinate the schema changes brought by DDL operations in different sharded tables. If these restrictions are violated due to unexpected reasons, you need to [handle sharding DDL locks manually in DM](feature-manually-handling-sharding-ddl-locks.md), or even redo the entire data migration task.
 
-To mitigate the impact on data migration when an exception occurs, it is recommended to merge and replicate each sharding group as a separate data migration task. **This might enable that only a small number of data migration tasks need to be handled manually while others remain unaffected.**
+To mitigate the impact on data migration when an exception occurs, it is recommended to merge and migrate each sharding group as a separate data migration task. **This might enable that only a small number of data migration tasks need to be handled manually while others remain unaffected.**
 
 ## Handle sharding DDL locks manually
 
-You can easily conclude from [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md#principles) that DM's sharding DDL lock is a mechanism for coordinating the execution of DDL operations to the downstream from multiple upstream sharded tables.
+You can easily conclude from [Merge and migrate Data from Sharded Tables](feature-shard-merge.md#principles) that DM's sharding DDL lock is a mechanism for coordinating the execution of DDL operations to the downstream from multiple upstream sharded tables.
 
 Therefore, when you find any sharding DDL lock on `DM-master` through `show-ddl-locks` command, or any `unresolvedGroups` or `blockingDDLs` on some DM-workers through `query-status` command, do not rush to manually release the sharding DDL lock through `unlock-ddl-lock` or `break-ddl-lock` commands.
 
@@ -52,7 +52,7 @@ If the following requirements are satisfied:
 
 Then you can perform the following steps to fix the `ERROR 1062 (23000): Duplicate entry '***' for key 'PRIMARY'` error that is possibly caused by the `auto_pk_c1` column when you merge sharded tables.
 
-1. Before the full data migration, create a table in the downstream database for merging and replicating data, and modify the `PRIMARY KEY` attribute of the `auto_pk_c1` column to normal index.
+1. Before the full data migration, create a table in the downstream database for merging and migrating data, and modify the `PRIMARY KEY` attribute of the `auto_pk_c1` column to normal index.
 
     ```sql
     CREATE TABLE `tbl_no_pk_2` (
@@ -72,7 +72,7 @@ Then you can perform the following steps to fix the `ERROR 1062 (23000): Duplica
 
 3. Start the full and incremental data migration task.
 
-4. Run `query-status` to verify whether the data migration task is successfully processed and whether the data from the upstream has already been merged and replicated to the downstream database.
+4. Run `query-status` to verify whether the data migration task is successfully processed and whether the data from the upstream has already been merged and migrated to the downstream database.
 
 ### Use a composite primary key
 
@@ -95,7 +95,7 @@ If the following requirements are satisfied:
 
 Then you can perform the following steps to fix the `ERROR 1062 (23000): Duplicate entry '***' for key 'PRIMARY'` error that is possibly caused by the `auto_pk_c1` column when you merge sharded tables.
 
-1. Before the full data migration, create a table in the downstream database for merging and replicating data. Do not specify the `PRIMARY KEY` attribute for the `auto_pk_c1` column, but use the `auto_pk_c1` and `uuid_c2` columns to make up a composite primary key.
+1. Before the full data migration, create a table in the downstream database for merging and migrating data. Do not specify the `PRIMARY KEY` attribute for the `auto_pk_c1` column, but use the `auto_pk_c1` and `uuid_c2` columns to make up a composite primary key.
 
     ```sql
     CREATE TABLE `tbl_multi_pk_c2` (
@@ -108,11 +108,11 @@ Then you can perform the following steps to fix the `ERROR 1062 (23000): Duplica
 
 2. Start the full and incremental data migration task.
 
-3. Run `query-status` to verify whether the data migration task is successfully processed and whether the data from upstream has already been merged and replicated to the downstream database.
+3. Run `query-status` to verify whether the data migration task is successfully processed and whether the data from upstream has already been merged and migrated to the downstream database.
 
 ## Create/drop tables in the upstream
 
-In [Merge and Replicate Data from Sharded Tables](feature-shard-merge.md#principles), it is clear that the coordination of sharding DDL lock depends on whether the downstream database receives the DDL statements of all upstream sharded tables. In addition, DM currently **does not support** dynamically creating or dropping sharded tables in the upstream. Therefore, to create or drop sharded tables in the upstream, it is recommended to perform the following steps.
+In [Merge and migrate Data from Sharded Tables](feature-shard-merge.md#principles), it is clear that the coordination of sharding DDL lock depends on whether the downstream database receives the DDL statements of all upstream sharded tables. In addition, DM currently **does not support** dynamically creating or dropping sharded tables in the upstream. Therefore, to create or drop sharded tables in the upstream, it is recommended to perform the following steps.
 
 ### Create sharded tables in the upstream
 
@@ -128,7 +128,7 @@ If you need to create a new sharded table in the upstream, perform the following
 
 5. Run `start-task` to start the task.
 
-6. Run `query-status` to verify whether the data migration task is successfully processed and whether the data from upstream has already been merged and replicated to the downstream database.
+6. Run `query-status` to verify whether the data migration task is successfully processed and whether the data from upstream has already been merged and migrated to the downstream database.
 
 ### Drop sharded tables in the upstream
 
@@ -138,7 +138,7 @@ If you need to drop a sharded table in the upstream, perform the following steps
 
 2. Run `query-status` to fetch the position (`syncerBinlog`) corresponding to the binlog event that has been processed by DM, and mark it as *Pos-S*.
 
-3. When *Pos-S* is greater than *Pos-M*, it means that DM has processed all of the `DROP TABLE` statements, and the data of the table before dropping has been replicated to the downstream, so the subsequent operation can be performed. Otherwise, wait for DM to finish replicating the data.
+3. When *Pos-S* is greater than *Pos-M*, it means that DM has processed all of the `DROP TABLE` statements, and the data of the table before dropping has been migrated to the downstream, so the subsequent operation can be performed. Otherwise, wait for DM to finish migrating the data.
 
 4. Run `stop-task` to stop the task.
 
@@ -150,4 +150,4 @@ If you need to drop a sharded table in the upstream, perform the following steps
 
 ## Speed limits and traffic flow control
 
-When data from multiple upstream MySQL or MariaDB instances is merged and replicated to the same TiDB cluster in the downstream, every DM-worker corresponding to each upstream instance executes full and incremental data migration concurrently. This means that the default degree of concurrency (`pool-size` in full data migration and `worker-count` in incremental data migration) accumulates as the number of DM-workers increases, which might overload the downstream database. In this case, you need to conduct a preliminary performance analysis based on TiDB and DM monitoring metrics and adjust the value of each concurrency parameter. In the future, DM is expected to support partially automated traffic flow control.
+When data from multiple upstream MySQL or MariaDB instances is merged and migrated to the same TiDB cluster in the downstream, every DM-worker corresponding to each upstream instance executes full and incremental data migration concurrently. This means that the default degree of concurrency (`pool-size` in full data migration and `worker-count` in incremental data replication) accumulates as the number of DM-workers increases, which might overload the downstream database. In this case, you need to conduct a preliminary performance analysis based on TiDB and DM monitoring metrics and adjust the value of each concurrency parameter. In the future, DM is expected to support partially automated traffic flow control.

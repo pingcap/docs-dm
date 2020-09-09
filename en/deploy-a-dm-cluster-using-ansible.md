@@ -405,13 +405,13 @@ dm-worker2 ansible_host=172.16.10.73 source_id="mysql-replica-02" server_id=102 
 >
 > If `relay_binlog_name` is not specified, DM-worker pulls the binlog starting from the earliest existing binlog file of the upstream MySQL or MariaDB by default. In this event, it may take a significant amount of time to retrieve all of the binlog files. In v1.0.2 and later versions, DM defaults to pulling the binlog starting from the latest file.
 
-### Enable the relay log GTID replication mode
+### Enable the relay log GTID migration mode
 
 In a DM cluster, the relay log processing unit of DM-worker communicates with the upstream MySQL or MariaDB to pull its binlog to the local file system.
 
-You can enable the relay log GTID replication mode by configuring the following items. Currently, DM supports MySQL GTID and MariaDB GTID.
+You can enable the relay log GTID migration mode by configuring the following items. Currently, DM supports MySQL GTID and MariaDB GTID.
 
-- `enable_gtid`: to enable the GTID mode. This helps improve the handling of replication topology changes, such as a switch between primary and secondary
+- `enable_gtid`: to enable the GTID mode. This helps improve the handling of migration topology changes, such as a switch between primary and secondary
 - `relay_binlog_gtid`: to specify the position where DM-worker starts to pull the corresponding upstream MySQL or MariaDB binlog
 
 ```yaml

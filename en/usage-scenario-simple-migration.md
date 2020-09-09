@@ -1,12 +1,12 @@
 ---
 title: Data Migration Simple Usage Scenario
-summary: Learn how to use Data Migration to replicate data in a simple scenario.
-aliases: ['/docs/tidb-data-migration/stable/usage-scenario-simple-replication/','/docs/tidb-data-migration/v1.0/usage-scenario-simple-replication/','/docs/dev/reference/tools/data-migration/usage-scenarios/simple-replication/','/docs/v3.1/reference/tools/data-migration/usage-scenarios/simple-replication/','/docs/v3.0/reference/tools/data-migration/usage-scenarios/simple-replication/','/docs/v2.1/reference/tools/data-migration/usage-scenarios/simple-replication/','/docs/stable/reference/tools/data-migration/usage-scenarios/simple-replication']
+summary: Learn how to use Data Migration to migrate data in a simple scenario.
+aliases: ['/docs/tidb-data-migration/stable/usage-scenario-simple-replication/','/docs/tidb-data-migration/v1.0/usage-scenario-simple-replication/','/docs/dev/reference/tools/data-migration/usage-scenarios/simple-replication/','/docs/v3.1/reference/tools/data-migration/usage-scenarios/simple-replication/','/docs/v3.0/reference/tools/data-migration/usage-scenarios/simple-replication/','/docs/v2.1/reference/tools/data-migration/usage-scenarios/simple-replication/','/docs/stable/reference/tools/data-migration/usage-scenarios/simple-replication','/tidb-data-migration/stable/usage-scenario-simple-replication/']
 ---
 
 # Data Migration Simple Usage Scenario
 
-This document shows how to use Data Migration (DM) in a simple data replication scenario where the data of three upstream MySQL instances needs to be replicated to a downstream TiDB cluster (no sharding data).
+This document shows how to use Data Migration (DM) in a simple data migration scenario where the data of three upstream MySQL instances needs to be migrated to a downstream TiDB cluster (no sharding data).
 
 ## Upstream instances
 
@@ -36,21 +36,21 @@ Assume that the upstream schemas are as follows:
     | store | store_gz, store_sz |
     | log   | messages |
 
-## Replication requirements
+## Migration requirements
 
 1. Do not merge the `user` schema.
-    1. Replicate the `user` schema of instance 1 to the `user_north` of TiDB.
-    2. Replicate the `user` schema of instance 2 to the `user_east` of TiDB.
-    3. Replicate the `user` schema of instance 3 to the `user_south` of TiDB.
+    1. Migrate the `user` schema of instance 1 to the `user_north` of TiDB.
+    2. Migrate the `user` schema of instance 2 to the `user_east` of TiDB.
+    3. Migrate the `user` schema of instance 3 to the `user_south` of TiDB.
     4. Never delete the table `log`.
-2. Replicate the upstream `store` schema to the downstream `store` schema without merging tables.
-    1. `store_sz` exists in both instances 2 and 3, which is replicated to `store_suzhou` and `store_shenzhen` respectively.
+2. Migrate the upstream `store` schema to the downstream `store` schema without merging tables.
+    1. `store_sz` exists in both instances 2 and 3, which is migrated to `store_suzhou` and `store_shenzhen` respectively.
     2. Never delete `store`.
 3. The `log` schema needs to be filtered out.
 
 ## Downstream instances
 
-Assume that the schemas replicated to the downstream are as follows:
+Assume that the schemas migrated to the downstream are as follows:
 
 | Schema | Tables|
 |:------|:------|
@@ -59,9 +59,9 @@ Assume that the schemas replicated to the downstream are as follows:
 | user_south | information, log|
 | store | store_bj, store_tj, store_sh, store_suzhou, store_gz, store_shenzhen |
 
-## Replication solution
+## Migration solution
 
-- To satisfy replication Requirements #1-i, #1-ii and #1-iii, configure the [table routing rules](feature-overview.md#table-routing) as follows:
+- To satisfy migration Requirements #1-i, #1-ii and #1-iii, configure the [table routing rules](feature-overview.md#table-routing) as follows:
 
     ```yaml
     routes:
@@ -77,7 +77,7 @@ Assume that the schemas replicated to the downstream are as follows:
         target-schema: "user_south"
     ```
 
-- To satisfy the replication Requirement #2-i, configure the [table routing rules](feature-overview.md#table-routing) as follows:
+- To satisfy the migration Requirement #2-i, configure the [table routing rules](feature-overview.md#table-routing) as follows:
 
     ```yaml
     routes:
@@ -94,7 +94,7 @@ Assume that the schemas replicated to the downstream are as follows:
         target-table:  "store_shenzhen"
     ```
 
-- To satisfy the replication Requirement #1-iv, configure the [binlog filtering rules](feature-overview.md#binlog-event-filter) as follows:
+- To satisfy the migration Requirement #1-iv, configure the [binlog filtering rules](feature-overview.md#binlog-event-filter) as follows:
 
     ```yaml
     filters:
@@ -110,7 +110,7 @@ Assume that the schemas replicated to the downstream are as follows:
         action: Ignore
     ```
 
-- To satisfy the replication Requirement #2-ii, configure the [binlog filtering rule](feature-overview.md#binlog-event-filter) as follows:
+- To satisfy the migration Requirement #2-ii, configure the [binlog filtering rule](feature-overview.md#binlog-event-filter) as follows:
 
     ```yaml
     filters:
@@ -125,7 +125,7 @@ Assume that the schemas replicated to the downstream are as follows:
     >
     > `store-filter-rule` is different from `log-filter-rule & user-filter-rule`. `store-filter-rule` is a rule for the whole `store` schema, while `log-filter-rule` and `user-filter-rule` are rules for the `log` table in the `user` schema.
 
-- To satisfy the replication Requirement #3, configure the [block and allow lists](feature-overview.md#block-and-allow-table-lists) as follows:
+- To satisfy the migration Requirement #3, configure the [block and allow lists](feature-overview.md#block-and-allow-table-lists) as follows:
 
     ```yaml
     block-allow-list:  # Use black-white-list if the DM's version <= v1.0.6.
@@ -133,9 +133,9 @@ Assume that the schemas replicated to the downstream are as follows:
         ignore-dbs: ["log"]
     ```
 
-## Replication task configuration
+## Migration task configuration
 
-The complete replication task configuration is shown below. For more details, see [configuration explanations](task-configuration-file.md).
+The complete migration task configuration is shown below. For more details, see [configuration explanations](task-configuration-file.md).
 
 ```yaml
 name: "one-tidb-secondary"

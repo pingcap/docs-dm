@@ -12,7 +12,7 @@ This document introduces how to upgrade your Data Migration (DM) version to an i
 >
 > - Unless otherwise stated, DM version upgrade means upgrading DM from the previous version with an upgrade procedure to the current version.
 > - Unless otherwise stated, all the following upgrade examples assume that you have downloaded the corresponding DM version and DM-Ansible version, and the DM binary exists in the corresponding directory of DM-Ansible. (For how to download the DM binary, see [Upgrade the component version](cluster-operations.md#upgrade-the-component-version)).
-> - Unless otherwise stated, all the following upgrade examples assume that all the data replication tasks have been stopped before the upgrade and all the replication tasks are restarted manually after DM upgrade is finished.
+> - Unless otherwise stated, all the following upgrade examples assume that all the data migration tasks have been stopped before the upgrade and all the migration tasks are restarted manually after DM upgrade is finished.
 > - The following shows the upgrade procedure of DM versions in reverse chronological order.
 
 ## Upgrade to v1.0.3
@@ -30,7 +30,7 @@ Go Version: go version go1.13 linux/amd64
 ### Main changes
 
 - Add the command mode in dmctl
-- Support replicating the `ALTER DATABASE` DDL statement
+- Support migrating the `ALTER DATABASE` DDL statement
 - Optimize the error message output
 - Fix the panic-causing data race issue occurred when the full import unit pauses or exits
 - Fix the issue that `stop-task` and `pause-task` might not take effect when retrying SQL operations to the downstream
@@ -122,7 +122,7 @@ Go Version: go version go1.12 linux/amd64
 
 ### Main changes
 
-- Support automatically recovering replication tasks for some abnormal situations
+- Support automatically recovering migration tasks for some abnormal situations
 - Improve compatibility with DDL syntaxes
 - Fix the bug that the abnormal connection to the upstream database might cause data loss
 

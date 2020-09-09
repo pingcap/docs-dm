@@ -19,11 +19,11 @@ log-file = "dm-worker.log"
 # DM-worker listen address.
 worker-addr = ":8262"
 
-# Represents a MySQL/MariaDB instance or a replication group.
+# Represents a MySQL/MariaDB instance or a migration group.
 source-id = "mysql-replica-01"
 
 # Server ID of secondary library for binlog replication.
-# Each instance (primary and secondary) in replication groups should have a different server ID.
+# Each instance (primary and secondary) in migration groups should have a different server ID.
 server-id = 101
 
 # flavor: mysql/mariadb

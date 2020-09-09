@@ -8,7 +8,7 @@ aliases: ['/docs/tidb-data-migration/stable/faq/','/docs/tidb-data-migration/v1.
 
 This document collects the frequently asked questions (FAQs) about TiDB Data Migration (DM).
 
-## Does DM support replicating data from Alibaba RDS or other cloud databases?
+## Does DM support migrating data from Alibaba RDS or other cloud databases?
 
 Currently, DM only supports decoding the standard version of MySQL or MariaDB binlog. It has not been tested for Alibaba Cloud RDS or other cloud databases. If you are confirmed that its binlog is in standard format, then it is supported.
 
@@ -16,7 +16,7 @@ Currently, DM only supports decoding the standard version of MySQL or MariaDB bi
 
 Currently, DM does not support it and only supports the regular expressions of the Golang standard library. See regular expressions supported by Golang via [re2-syntax](https://github.com/google/re2/wiki/Syntax).
 
-## If a statement executed upstream contains multiple DDL operations, does DM support such replication?
+## If a statement executed upstream contains multiple DDL operations, does DM support such migration?
 
 DM will attempt to split a single statement containing multiple DDL change operations into multiple statements containing only one DDL operation, but might not cover all cases. It is recommended to include only one DDL operation in a statement executed upstream, or verify it in the test environment. If it is not supported, you can file an [issue](https://github.com/pingcap/dm/issues) to the DM repository.
 

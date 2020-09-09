@@ -1,12 +1,12 @@
 ---
-title: Data Replication Features
-summary: Learn about the data replication features provided by the Data Migration tool.
+title: Data Migration Features
+summary: Learn about the data migration features provided by the Data Migration tool.
 aliases: ['/docs/tidb-data-migration/stable/feature-overview/','/docs/tidb-data-migration/v1.0/feature-overview/','/docs/dev/reference/tools/data-migration/features/overview/','/docs/v3.1/reference/tools/data-migration/features/overview/','/docs/v3.0/reference/tools/data-migration/features/overview/','/docs/v2.1/reference/tools/data-migration/features/overview/']
 ---
 
-# Data Replication Features
+# Data Migration Features
 
-This document describes the data replication features provided by the Data Migration tool and explains the configuration of corresponding parameters.
+This document describes the data migration features provided by the Data Migration tool and explains the configuration of corresponding parameters.
 
 For different DM versions, pay attention to the different match rules of schema or table names in the table routing, block & allow lists, and binlog event filter features:
 
@@ -17,12 +17,12 @@ It is recommended that you use the wildcard for matching in simple scenarios.
 
 ## Table routing
 
-The table routing feature enables DM to replicate a certain table of the upstream MySQL or MariaDB instance to the specified table in the downstream.
+The table routing feature enables DM to migrate a certain table of the upstream MySQL or MariaDB instance to the specified table in the downstream.
 
 > **Note:**
 >
 > - Configuring multiple different routing rules for a single table is not supported.
-> - The match rule of schema needs to be configured separately, which is used to replicate `create/drop schema xx`, as shown in `rule-2` of the [parameter configuration](#parameter-configuration).
+> - The match rule of schema needs to be configured separately, which is used to migrate `create/drop schema xx`, as shown in `rule-2` of the [parameter configuration](#parameter-configuration).
 
 ### Parameter configuration
 
@@ -40,7 +40,7 @@ routes:
 
 ### Parameter explanation
 
-DM replicates the upstream MySQL or MariaDB instance table that matches the [`schema-pattern`/`table-pattern` rule provided by Table selector](table-selector.md) to the downstream `target-schema`/`target-table`.
+DM migrates the upstream MySQL or MariaDB instance table that matches the [`schema-pattern`/`table-pattern` rule provided by Table selector](table-selector.md) to the downstream `target-schema`/`target-table`.
 
 ### Usage examples
 
@@ -48,17 +48,17 @@ This sections shows the usage examples in different scenarios.
 
 #### Merge sharded schemas and tables
 
-Assuming in the scenario of sharded schemas and tables, you want to replicate the `test_{1,2,3...}`.`t_{1,2,3...}` tables in two upstream MySQL instances to the `test`.`t` table in the downstream TiDB instance.
+Assuming in the scenario of sharded schemas and tables, you want to migrate the `test_{1,2,3...}`.`t_{1,2,3...}` tables in two upstream MySQL instances to the `test`.`t` table in the downstream TiDB instance.
 
-To replicate the upstream instances to the downstream `test`.`t`, you must create two routing rules:
+To migrate the upstream instances to the downstream `test`.`t`, you must create two routing rules:
 
-- `rule-1` is used to replicate DML or DDL statements of the table that matches `schema-pattern: "test_*"` and `table-pattern: "t_*"` to the downstream `test`.`t`.
-- `rule-2` is used to replicate DDL statements of the schema that matches `schema-pattern: "test_*"`, such as `create/drop schema xx`.
+- `rule-1` is used to migrate DML or DDL statements of the table that matches `schema-pattern: "test_*"` and `table-pattern: "t_*"` to the downstream `test`.`t`.
+- `rule-2` is used to migrate DDL statements of the schema that matches `schema-pattern: "test_*"`, such as `create/drop schema xx`.
 
 > **Note:**
 >
 > - If the downstream `schema: test` already exists and will not be deleted, you can omit `rule-2`.
-> - If the downstream `schema: test` does not exist and only `rule-1` is configured, then it reports the `schema test doesn't exist` error during replication.
+> - If the downstream `schema: test` does not exist and only `rule-1` is configured, then it reports the `schema test doesn't exist` error during migration.
 
 ```yaml
   rule-1:
@@ -73,9 +73,9 @@ To replicate the upstream instances to the downstream `test`.`t`, you must creat
 
 #### Merge sharded schemas
 
-Assuming in the scenario of sharded schemas, you want to replicate the `test_{1,2,3...}`.`t_{1,2,3...}` tables in the two upstream MySQL instances to the `test`.`t_{1,2,3...}` tables in the downstream TiDB instance.
+Assuming in the scenario of sharded schemas, you want to migrate the `test_{1,2,3...}`.`t_{1,2,3...}` tables in the two upstream MySQL instances to the `test`.`t_{1,2,3...}` tables in the downstream TiDB instance.
 
-To replicate the upstream schemas to the downstream `test`.`t_[1,2,3]`, you only need to create one routing rule.
+To migrate the upstream schemas to the downstream `test`.`t_[1,2,3]`, you only need to create one routing rule.
 
 ```yaml
   rule-1:
@@ -102,7 +102,7 @@ Assuming that the following two routing rules are configured and `test_1_bak`.`t
 
 ## Block and allow table lists
 
-The block and allow lists filtering rule of the upstream database instance tables is similar to MySQL replication-rules-db/tables, which can be used to filter or only replicate all operations of some databases or some tables.
+The block and allow lists filtering rule of the upstream database instance tables is similar to MySQL replication-rules-db/tables, which can be used to filter or only migrate all operations of some databases or some tables.
 
 ### Parameter configuration
 
@@ -170,15 +170,15 @@ The filtering process is as follows:
 
     1. If `do-tables` is not empty, judge whether a matched table exists in `do-tables`.
 
-        - If yes, replicate `test`.`t`.
+        - If yes, migrate `test`.`t`.
         - If not, filter `test`.`t`.
 
     2. If `ignore-tables` is not empty, judge whether a matched table exists in `ignore-tables`.
 
         - If yes, filter `test`.`t`.
-        - If not, replicate `test`.`t`.
+        - If not, migrate `test`.`t`.
 
-    3. If both `do-tables` and `ignore-tables` are empty, replicate `test`.`t`.
+    3. If both `do-tables` and `ignore-tables` are empty, migrate `test`.`t`.
 
 > **Note:**
 >
@@ -231,7 +231,7 @@ After using the `bw-rule` rule:
 
 ## Binlog event filter
 
-Binlog event filter is a more fine-grained filtering rule than the block and allow lists filtering rule. You can use statements like `INSERT` or `TRUNCATE TABLE` to specify the binlog events of `schema/table` that you need to replicate or filter out.
+Binlog event filter is a more fine-grained filtering rule than the block and allow lists filtering rule. You can use statements like `INSERT` or `TRUNCATE TABLE` to specify the binlog events of `schema/table` that you need to migrate or filter out.
 
 > **Note:**
 >
@@ -311,16 +311,16 @@ filters:
     action: Ignore
 ```
 
-#### Only replicate sharding DML statements
+#### Only migrate sharding DML statements
 
-To only replicate sharding DML statements, configure the following two filtering rules:
+To only migrate sharding DML statements, configure the following two filtering rules:
 
-- `do-table-rule` only replicates the `create table`, `insert`, `update` and `delete` statements of all tables that match the `test_*`.`t_*` pattern.
-- `do-schema-rule` only replicates the `create database` statement of all schemas that match the `test_*` pattern.
+- `do-table-rule` only migrates the `create table`, `insert`, `update` and `delete` statements of all tables that match the `test_*`.`t_*` pattern.
+- `do-schema-rule` only migrates the `create database` statement of all schemas that match the `test_*` pattern.
 
 > **Note:**
 >
-> The reason why the `create database/table` statement is replicated is that you can replicate DML statements only after the schema and table are created.
+> The reason why the `create database/table` statement is migrated is that you can migrate DML statements only after the schema and table are created.
 
 ```yaml
 filters:
@@ -356,7 +356,7 @@ For the SQL statements that the TiDB parser does not support, DM cannot parse th
 
 > **Note:**
 >
-> To avoid unexpectedly filtering out data that need to be replicated, you must configure the global filtering rule as strictly as possible.
+> To avoid unexpectedly filtering out data that need to be migrated, you must configure the global filtering rule as strictly as possible.
 
 To filter out the `PARTITION` statements that the TiDB parser does not support, configure the following filtering rule:
 
@@ -460,7 +460,7 @@ Any of `instance_id`, `schema prefix` and `table prefix` can be set to an empty 
 
 ### Usage example
 
-Assuming in the sharding scenario where all tables have the auto-increment primary key, you want to replicate two upstream MySQL instances `test_{1,2,3...}`.`t_{1,2,3...}` to the downstream TiDB instances `test`.`t`.
+Assuming in the sharding scenario where all tables have the auto-increment primary key, you want to migrate two upstream MySQL instances `test_{1,2,3...}`.`t_{1,2,3...}` to the downstream TiDB instances `test`.`t`.
 
 Configure the following two rules:
 
@@ -485,14 +485,14 @@ column-mappings:
 - The column ID of the MySQL instance 1 table `test_1`.`t_1` is converted from `1` to `1 << (64-1-4) | 1 << (64-1-4 -7) | 1 << 44 | 1 = 580981944116838401`.
 - The row ID of the MySQL instance 2 table `test_1`.`t_2` is converted from `2` to `2 << (64-1-4) | 1 << (64-1-4 -7) | 2 << 44 | 2 = 1157460288606306306`.
 
-## Replication delay monitoring
+## Migration delay monitoring
 
-The heartbeat feature supports calculating the real-time replication delay between each replication task and MySQL or MariaDB based on real replication data.
+The heartbeat feature supports calculating the real-time migration delay between each migration task and MySQL or MariaDB based on real migration data.
 
 > **Note:**
 >
-> - The estimation accuracy of the replication delay is at the second level.
-> - The heartbeat related binlog will not be replicated into the downstream, which is discarded after calculating the replication delay.
+> - The estimation accuracy of the migration delay is at the second level.
+> - The heartbeat related binlog will not be migrated into the downstream, which is discarded after calculating the migration delay.
 
 ### System privileges
 
@@ -516,7 +516,7 @@ enable-heartbeat: true
 - DM-worker creates the `dm_heartbeat` (currently unconfigurable) schema in the corresponding upstream MySQL or MariaDB.
 - DM-worker creates the `heartbeat` (currently unconfigurable) table in the corresponding upstream MySQL or MariaDB.
 - DM-worker uses `replace statement` to update the current `TS_primary` timestamp every second (currently unconfigurable) in the corresponding upstream MySQL or MariaDB `dm_heartbeat`.`heartbeat` tables.
-- DM-worker updates the `TS_secondary_task` replication time after each replication task obtains the `dm_heartbeat`.`heartbeat` binlog.
+- DM-worker updates the `TS_secondary_task` migration time after each migration task obtains the `dm_heartbeat`.`heartbeat` binlog.
 - DM-worker queries the current `TS_primary` timestamp in the corresponding upstream MySQL or MariaDB `dm_heartbeat`.`heartbeat` tables every 10 seconds, and calculates `task_lag` = `TS_primary` - `TS_secondary_task` for each task.
 
 See the `replicate lag` in the [binlog replication](monitor-a-dm-cluster.md#binlog-replication) processing unit of DM monitoring metrics.

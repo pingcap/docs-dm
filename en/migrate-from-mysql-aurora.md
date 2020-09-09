@@ -18,7 +18,7 @@ Assuming that you want to migrate data from two Aurora clusters to TiDB, the inf
 | Aurora-1 | pingcap-1-us-east-2a.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | Reader |
 | Aurora-2 | pingcap-2.h8emfqdptyc4.us-east-2.rds.amazonaws.com | 3306 | Writer |
 
-DM relies on the `ROW` format of binlog during the incremental replication process, so you need to set the binlog format as `ROW`. If binlog is not enabled or is incorrectly configured, DM cannot replicate data normally. For more details, see [Checking items](precheck.md#checking-items).
+DM relies on the `ROW` format of binlog during the incremental replication process, so you need to set the binlog format as `ROW`. If binlog is not enabled or is incorrectly configured, DM cannot migrate data normally. For more details, see [Checking items](precheck.md#checking-items).
 
 > **Note:**
 >
@@ -85,7 +85,7 @@ After a DM cluster is deployed using DM-Ansible, the configuration information i
 
 ## Step 4: Configure the task
 
-This section assumes that you need to replicate data of the `test_table` table in the `test_db` schema of Aurora-1 and Aurora-2 instances, in both full data migration and incremental replication modes, to the `test_table` table of the `test_db` schema in one downstream TiDB instance.
+This section assumes that you need to migrate data of the `test_table` table in the `test_db` schema of Aurora-1 and Aurora-2 instances, in both full data migration and incremental replication modes, to the `test_table` table of the `test_db` schema in one downstream TiDB instance.
 
 Copy and edit `{ansible deploy}/conf/task.yaml.example` to generate the following `task.yaml` configuration file:
 
@@ -101,12 +101,12 @@ target-database:
   user: "root"
   password: ""
 
-# Configuration of all the upstream MySQL instances required by the current data replication task.
+# Configuration of all the upstream MySQL instances required by the current data migration task.
 mysql-instances:
 -
-  # ID of the upstream instance or the replication group. Refer to the configuration of `source_id` in the `inventory.ini` file or configuration of `source-id` in the `dm-master.toml` file.
+  # ID of the upstream instance or the migration group. Refer to the configuration of `source_id` in the `inventory.ini` file or configuration of `source-id` in the `dm-master.toml` file.
   source-id: "mysql-replica-01"
-  # The configuration item name of the block and allow lists of the schema or table to be replicated, used to quote the global block and allow lists configuration. For global configuration, see the `block-allow-list` below.
+  # The configuration item name of the block and allow lists of the schema or table to be migrated, used to quote the global block and allow lists configuration. For global configuration, see the `block-allow-list` below.
   block-allow-list: "global"  # Use black-white-list if the DM's version <= v1.0.6.
   # The configuration item name of Mydumper, used to quote the global Mydumper configuration.
   mydumper-config-name: "global"
@@ -119,9 +119,9 @@ mysql-instances:
 # The global configuration of block and allow lists. Each instance can quote it by the configuration item name.
 block-allow-list:                     # Use black-white-list if the DM's version <= v1.0.6.
   global:
-    do-tables:                        # The allow list of the upstream table to be replicated
-    - db-name: "test_db"              # The database name of the table to be replicated
-      tbl-name: "test_table"          # The name of the table to be replicated
+    do-tables:                        # The allow list of the upstream table to be migrated
+    - db-name: "test_db"              # The database name of the table to be migrated
+      tbl-name: "test_table"          # The name of the table to be migrated
 
 # Mydumper global configuration. Each instance can quote it by the configuration item name.
 mydumpers:
@@ -139,7 +139,7 @@ mydumpers:
     ./dmctl --master-addr 172.16.10.71:8261
     ```
 
-3. Start data replication task using the following command:
+3. Start data migration task using the following command:
 
     ```bash
     # `task.yaml` is the previously edited configuration file.
@@ -180,7 +180,7 @@ mydumpers:
 
 ## Step 6: Query the task
 
-To view the on-going data replication task(s) in the DM cluster or the task status, run the following command in dmctl to query:
+To view the on-going data migration task(s) in the DM cluster or the task status, run the following command in dmctl to query:
 
 ```bash
 query-status
