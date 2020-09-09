@@ -42,10 +42,10 @@ Based on this scenario, the following sections describe how to deploy the DM clu
 
 > **Note:**
 >
-> - You need to make sure that the ports among the following components can be properly connected:
->     - The `8291` ports among the DM-master nodes can connect with each other.
->     - Each DM-master node can connect to the `8262` port of all DM-worker nodes.
->     - Each DM-master node can connect to the `8261` port of all DM-worker nodes.
+> - Make sure that the ports among the following components are interconnected:
+>     - The `8291` ports among the DM-master nodes are interconnected.
+>     - Each DM-master node can connect to the `8262` ports of all DM-worker nodes.
+>     - Each DM-worker node can connect to the `8261` port of all DM-master nodes.
 
 ### Deploy DM-master
 
