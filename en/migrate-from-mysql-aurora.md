@@ -57,19 +57,21 @@ To ensure a successful migration, you need to do prechecks before starting the m
 
 ### DM nodes deployment 
 
-As the hub of data migration, DM needs to connect to the upstream Aurora cluster and the downstream TiDB cluster. Therefore, you need to use the MySQL client to check whether the nodes in which DM is to be deployed can connect to the upstream and downstream. In addition, for software and hardware requirements for DM deployments, see [DM Cluster Software and Hardware Recommendations](hardware-and-software-requirements.md).
+As the hub of data migration, DM needs to connect to the upstream Aurora cluster and the downstream TiDB cluster. Therefore, you need to use the MySQL client to check whether the nodes in which DM is to be deployed can connect to the upstream and downstream. In addition, for software and hardware requirements ,and the node number for DM deployments, see [DM Cluster Software and Hardware Recommendations](hardware-and-software-requirements.md).
 
 ### Aurora
 
 DM relies on the `ROW`-formatted binlog for incremental replication. See [Enable binary for an Aurora Cluster](https://aws.amazon.com/premiumsupport/knowledge-center/enable-binary-logging-aurora/?nc1=h_ls) for the configuration instruction.
 
-To migrate data based on GTID, set both `gtid-mode` and `enforce_gtid_consistency` to `ON`. See [Configuring GTID-Based Replication for an Aurora MySQL Cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora) for details.
+If Aurora enables GTID, then you can migrate data based on it. For the method to enable GTID, see [Configuring GTID-Based Replication for an Aurora MySQL Cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora). To migrate data based on GTID, you need to set the `enable-gtid` in the data source configuration file of step 3 to `true`.
 
 > **Note:**
 >
 > GTID-based data migration requires MySQL 5.7 (Aurora 2.04) version or later.
 
-In addition to the Aurora-specific configuration above, the upstream database must meet other requirements for migrating from MySQL. See [Checking Items](precheck.md#checking-items).
+> **Note:**
+>
+> In addition to the Aurora-specific configuration above, the upstream database must meet other requirements for migrating from MySQL, such as table schemas, character sets and privileges. See [Checking Items](precheck.md#checking-items).
 
 ## Step 2: Deploy the DM cluster
 
@@ -132,7 +134,10 @@ The content of `source1.yaml`:
 ```yaml
 # Aurora-1
 source-id: "aurora-replica-01"
+
+# To migrate data based on GTID, you need to set this items to true.
 enable-gtid: false
+
 from:
   host: "test-dm-2-0.cluster-czrtqco96yc6.us-east-2.rds.amazonaws.com"
   user: "root"
@@ -145,7 +150,9 @@ The content of `source2.yaml`:
 ```yaml
 # Aurora-2
 source-id: "aurora-replica-02"
+
 enable-gtid: false
+
 from:
   host: "test-dm-2-0-2.cluster-czrtqco96yc6.us-east-2.rds.amazonaws.com"
   user: "root"
@@ -225,10 +232,14 @@ mydumpers:
 
 Start the task using `dmctl` through TiUP.
 
+> **Note:**
+>
+> Currently, when using `dmctl` through TiUP, you need to use the absolute path of `task.yaml`. TiUP properly supports relative paths in subsequent updates.
+
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dmctl --master-addr 127.0.0.1:8261 start-task task.yaml --remove-meta
+tiup dmctl --master-addr 127.0.0.1:8261 start-task /absolute/path/to/task.yaml --remove-meta
 ```
 
 If the task is successfully started, the following information is returned:
@@ -252,6 +263,18 @@ If the task is successfully started, the following information is returned:
         }
     ]
 }
+```
+
+If `source db replication privilege checker` and `source db dump privilege checker` errors are in the returned information, check whether unrecognized privileges exits in the `errorMsg` field. For example: 
+
+```
+line 1 column 287 near \"INVOKE LAMBDA ON *.* TO...
+```
+
+The returned information above shows that the `INVOKE LAMBDA` privilege causes an error. If the privilege is unique to Aurora, add the following content into the configuration file to skip the check. DM improves the automatic processing of Aurora privileges in version updates.
+
+```
+ignore-checking-items: ["replication_privilege","dump_privilege"]
 ```
 
 ## Step 6: Query the task and validate the data

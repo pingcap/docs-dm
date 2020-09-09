@@ -122,13 +122,13 @@ alertmanager_servers:
 {{< copyable "shell-regular" >}}
 
 ```shell
-tiup dm deploy dm-test v2.0.0 ./topology.yaml --user root [-p] [-i /home/root/.ssh/gcp_rsa]
+tiup dm deploy dm-test v2.0.0-rc ./topology.yaml --user root [-p] [-i /home/root/.ssh/gcp_rsa]
 ```
 
 In the above command:
 
 - The name of the deployed DM cluster is `dm-test`.
-- The version of the DM cluster is `v2.0.0`, You can see other supported versions by running `tiup list dm-master`.
+- The version of the DM cluster is `v2.0.0-rc`, You can see other supported versions by running `tiup list dm-master`.
 - The initialization configuration file is `topology.yaml`.
 - `--user root`: Log in to the target machine through the `root` key to complete the cluster deployment, or you can use other users with `ssh` and `sudo` privileges to complete the deployment.
 - `[-i]` and `[-p]`: optional. If you have configured login to the target machine without password, these parameters are not required. If not, choose one of the two parameters. `[-i]` is the private key of the `root` user (or other users specified by `--user`) that has access to the target machine. `[-p]` is used to input the user password interactively.
@@ -149,7 +149,7 @@ TiUP supports managing multiple DM clusters. The command above outputs informati
 ```log
 Name  User  Version  Path                                  PrivateKey
 ----  ----  -------  ----                                  ----------
-dm-test  tidb  v2.0.0  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/storage/dm/clusters/dm-test/ssh/id_rsa
+dm-test  tidb  v2.0.0-rc  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/storage/dm/clusters/dm-test/ssh/id_rsa
 ```
 
 ## Step 5: Check the status of the deployed DM cluster
