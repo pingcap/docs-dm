@@ -40,7 +40,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible/',
         which tiup
         ```
 
-- 使用 TiUP 制作离线镜像
+- 使用 TiUP 制作离线镜像。
 
     1. 在一台和外网相通的机器上拉取需要的组件：
 
