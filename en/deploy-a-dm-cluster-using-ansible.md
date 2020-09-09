@@ -368,6 +368,11 @@ cd /home/tidb/dm-ansible/resources/bin &&
 MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
 
+> **Note:**
+>
+> + If the database has no password, you can skip this step. 
+> + DM v1.0.6 and later versions can configure the plaintext database password.
+
 ## Step 8: Edit variables in the `inventory.ini` file
 
 This step shows how to make configuration changes to the `inventory.ini` file.
