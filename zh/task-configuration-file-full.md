@@ -42,6 +42,7 @@ target-database:                # 下游数据库实例配置
   port: 4000
   user: "root"
   password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # 推荐使用经 dmctl 加密后的密码
+  max-allowed-packet: 67108864                  # 设置 DM 内部连接 TiDB 时客户端的 "max_allowed_packet" 限制，单位为字节，默认 67108864 (64 MB)
   session:                                      # 设置 TiDB 的 session 变量，在 v1.0.6 版本引入。更多变量及解释参见 `https://docs.pingcap.com/zh/tidb/stable/system-variables`
     sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE"
     tidb_skip_utf8_check: 1
