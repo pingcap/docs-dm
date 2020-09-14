@@ -107,6 +107,13 @@ alertmanager_servers:
 > - Use `.` to indicate the subcategory of the configuration, such as `log.slow-threshold`. For more formats, see [TiUP configuration template](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml).
 >
 > - For more parameter description, see [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml) and [worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml).
+>
+> - Make sure that the ports among the following components are interconnected:
+>     - The `peer_port` (`8291` by default) among the DM-master nodes are interconnected.
+>     - Each DM-master node can connect to the `port` of all DM-worker nodes (`8262` by default).
+>     - Each DM-worker node can connect to the `port` of all DM-master nodes (`8261` by default).
+>     - The TiUP nodes can connect to the `port` of all DM-master nodes (`8261` by default).
+>     - The TiUP nodes can connect to the `port` of all DM-worker nodes (`8262` by default).
 
 ## Step 3: Execute the deployment command
 
