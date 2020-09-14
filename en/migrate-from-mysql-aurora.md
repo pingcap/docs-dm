@@ -70,7 +70,6 @@ If GTID is enabled in Aurora, you can migrate data based on GTID. For how to ena
 > + GTID-based data migration requires MySQL 5.7 (Aurora 2.04) version or later.
 > + In addition to the Aurora-specific configuration above, the upstream database must meet other requirements for migrating from MySQL, such as table schemas, character sets, and privileges. See [Checking Items](precheck.md#checking-items) for details.
 
-
 ## Step 2: Deploy the DM cluster
 
 DM can be deployed in multiple ways. Currently, it is recommended to use TiUP to deploy a DM cluster. For the specific deployment method, see [Deploy DM cluster using TiUP](deploy-a-dm-cluster-using-tiup.md). This example has two data sources, so at least two DM-worker nodes need to be deployed. 
