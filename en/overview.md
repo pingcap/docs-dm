@@ -11,7 +11,7 @@ summary: Learn about the Data Migration tool, the architecture, the key componen
 
 **What's new in DM v2.0:**
 
-- High availability. The data migration task can run normally even when some DM-master or DM-worker nodes fail.
+- [High availability of data migration task](#high-availability). The data migration task can run normally even when some DM-master or DM-worker nodes fail.
 - [Sharding DDL support in the optimistic mode](feature-shard-merge-optimistic.md). In this mode, migration latency can be reduced in some scenarios and you can make A/B changes in the upstream database.
 - Better usability, including the new [error handling mechanism](handle-failed-sql-statements.md) and the easier-to-read error messages and error handling suggestions.
 - [TLS support](enable-tls.md) for connections between the upstream and the downstream, and for connections between DM components.
@@ -56,6 +56,12 @@ dmctl is the command line tool used to control the DM cluster.
 - Checking the state of data migration tasks
 - Handling the errors during data migration tasks
 - Verifying the configuration correctness of data migration tasks
+
+### High availability
+
+When you deploy multiple DM-master nodes, all DM-master nodes use the embedded etcd to form a cluster. The DM-master cluster is used to store metadata such as cluster node information and task configuration. The leader node elected through etcd is used to provide services such as cluster management and data migration task management. Therefore, if the number of available DM-master nodes exceeds half of the deployed nodes, the DM cluster can normally provide services.
+
+When the number of deployed DM-worker nodes exceeds the number of upstream MySQL/MariaDB nodes, the extra DM-worker nodes are idle by default. If a DM-worker node goes offline or is isolated from the DM-master leader, DM-master automatically schedules data migration tasks of the original DM-worker node to other idle DM-worker nodes. (If a DM-worker node is isolated, it automatically stops the data migration tasks on it); if there are no available idle DM-worker nodes, the data migration tasks of the original DM-worker cannot be performed.
 
 ## Data migration features
 
