@@ -133,7 +133,7 @@ tiup dm scale-in <cluster-name> -N <node-id>
 
 To use this command, you need to specify at least two arguments: the cluster name and the node ID. The node ID can be obtained by using the `tiup dm display` command in the previous section.
 
-For example, to scale in the DM-worker node on `172.16.5.140`, run the following command:
+For example, to scale in the DM-worker node on `172.16.5.140` (similar to scaling in DM-master), run the following command:
 
 {{< copyable "shell-regular" >}}
 
@@ -145,7 +145,7 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
 
 The scale-out operation has an inner logic similar to that of deployment: the TiUP DM component first ensures the SSH connection of the node, creates the required directories on the target node, then executes the deployment operation, and starts the node service.
 
-For example, to scale out a DM-worker node in the `prod-cluster` cluster, take the following steps:
+For example, to scale out a DM-worker node in the `prod-cluster` cluster, take the following steps (scaling out DM-master has similar steps):
 
 1. Create a `scale.yaml` file and add information of the new worker node:
 
@@ -258,8 +258,10 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 >
 > - TiUP does not support importing the DM Portal component in a DM 1.0 cluster.
 > - You need to stop the original cluster before importing. 
+> - TiUP only supports importing to a DM cluster of v2.0.0-rc.2 or a later version.
 > - The deployment directories of some components are different from those of the original cluster. You can execute the `display` command to view the details. 
 > - Run `tiup update --self && tiup update dm` before importing to make sure that the TiUP DM component is the latest version.
+> - Only one DM-master node exists in the cluster after importing. Refer to [Scale out a cluster](#scale-out-a-cluster) to scale out the DM-master.
 
 Before TiUP is released, DM-Ansible is often used to deploy DM clusters. To enable TiUP to take over the DM 1.0 cluster deployed by DM-Ansible, use the `import` command.
 
@@ -268,7 +270,7 @@ For example, to import a cluster deployed using DM Ansible:
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dm import --dir=/path/to/tidb-ansible --cluster-version v2.0.0-rc
+tiup dm import --dir=/path/to/dm-ansible --cluster-version v2.0.0-rc.2
 ```
 
 Execute `tiup list dm-master` to view the latest cluster version supported by TiUP.
