@@ -78,7 +78,7 @@ sh tidb-dm-${version}-linux-amd64/local_install.sh
 source /home/tidb/.bash_profile
 ```
 
-The `local_install.sh` script automatically executes the `tiup mirror set dm-${version}-linux-amd64` command to set the current mirror address to `dm-${version}-linux-amd64`.
+The `local_install.sh` script automatically executes the `tiup mirror set tidb-dm-${version}-linux-amd64` command to set the current mirror address to `tidb-dm-${version}-linux-amd64`.
 
 To switch the mirror to another directory, you can manually execute the `tiup mirror set <mirror-dir>` command. If you want to switch back to the official mirror, execute `tiup mirror set https://tiup-mirrors.pingcap.com`.
 
