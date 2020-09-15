@@ -138,13 +138,13 @@ alertmanager_servers:
 {{< copyable "shell-regular" >}}
 
 ```shell
-tiup dm deploy dm-test v2.0.0-rc ./topology.yaml --user root [-p] [-i /home/root/.ssh/gcp_rsa]
+tiup dm deploy dm-test ${version} ./topology.yaml --user root [-p] [-i /home/root/.ssh/gcp_rsa]
 ```
 
 以上部署命令中：
 
 - 通过 TiUP DM 部署的集群名称为 `dm-test`。
-- 部署版本为 `v2.0.0-rc`，可以通过执行 `tiup list dm-master` 来查看 TiUP 支持的最新版本。
+- 部署版本为 `${version}`，可以通过执行 `tiup list dm-master` 来查看 TiUP 支持的最新版本。
 - 初始化配置文件为 `topology.yaml`。
 - --user root：通过 root 用户登录到目标主机完成集群部署，该用户需要有 ssh 到目标机器的权限，并且在目标机器有 sudo 权限。也可以用其他有 ssh 和 sudo 权限的用户完成部署。
 - -i 及 -p：非必选项，如果已经配置免密登陆目标机，则不需填写，否则选择其一即可。-i 为可登录到目标机的 root 用户（或 --user 指定的其他用户）的私钥，也可使用 -p 交互式输入该用户的密码。
