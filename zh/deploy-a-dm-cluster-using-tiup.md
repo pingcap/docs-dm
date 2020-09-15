@@ -14,6 +14,10 @@ aliases: ['/docs-cn/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible/',
 
 目前 TiUP 可以支持部署 v2.0 及以上版本的 DM。本文将介绍不同集群拓扑的具体部署步骤。
 
+> **注意：**
+>
+> 如果部署机器的操作系统支持 SELinux，请确保 SELinux 处于关闭状态。
+
 ## 第 1 步：在中控机上安装 TiUP 组件
 
 使用普通用户登录中控机，以 `tidb` 用户为例，后续安装 TiUP 及集群管理操作均通过该用户完成：
