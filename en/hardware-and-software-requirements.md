@@ -36,7 +36,7 @@ DM can be deployed and run on a 64-bit generic hardware server platform (Intel x
 >
 > - In the test environment, DM-master and DM-worker used for functional verification can be deployed on the same server.
 > - To prevent interference with the accuracy of the performance test results, it is **not recommended** to use low-performance storage and network hardware configurations.
-> - If you need to verify the function only, you can deploy a DM-master on a single machine. The number of DM-worker deployed depends on the number of upstream MySQL instances to be migrated.
+> - If you need to verify the function only, you can deploy a DM-master on a single machine. The number of DM-worker deployed must be greater than or equal to the number of upstream MySQL instances. To ensure high availability, it is recommended to deploy more DM-workers.
 > - DM-worker stores full data in the `dump` and `load` phases. Therefore, the disk space for DM-worker needs to be greater than the total amount of data to be migrated. If the relay log is enabled for the migration task, DM-worker needs additional disk space to store upstream binlog data.
 
 ### Production environment
