@@ -262,7 +262,7 @@ If the task is successfully started, the following information is returned:
 }
 ```
 
-If `source db replication privilege checker` and `source db dump privilege checker` errors are in the returned information, check whether unrecognized privileges exits in the `errorMsg` field. For example: 
+If `source db replication privilege checker` and `source db dump privilege checker` errors are in the returned information, check whether unrecognized privileges exsit in the `errorMsg` field. For example: 
 
 ```
 line 1 column 287 near \"INVOKE LAMBDA ON *.* TO...
