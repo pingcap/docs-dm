@@ -53,7 +53,7 @@ This document describes how to deploy a DM cluster offline using TiUP.
             --tiup=$(tiup --version|grep 'tiup'|awk -F ' ' '{print $1}') --dm=$(tiup --version|grep 'tiup'|awk -F ' ' '{print $1}')
         ```
 
-        The command above creates a directory named `tidb-community-server-${version}-linux-amd64` in the current directory, which contains the component package managed by TiUP.
+        The command above creates a directory named `tidb-dm-${version}-linux-amd64` in the current directory, which contains the component package managed by TiUP.
 
     2. Pack the component package by using the `tar` command and send the package to the control machine in the isolated environment:
 
@@ -63,7 +63,7 @@ This document describes how to deploy a DM cluster offline using TiUP.
         tar czvf tidb-dm-${version}-linux-amd64.tar.gz tidb-dm-${version}-linux-amd64
         ```
 
-        `tidb-community-server-${version}-linux-amd64.tar.gz` is an independent offline environment package.
+        `tidb-dm-${version}-linux-amd64.tar.gz` is an independent offline environment package.
 
 ## Step 2: Deploy the offline TiUP component
 
@@ -78,7 +78,7 @@ sh tidb-dm-${version}-linux-amd64/local_install.sh
 source /home/tidb/.bash_profile
 ```
 
-The `local_install.sh` script automatically executes the `tiup mirror set tidb-community-server-${version}-linux-amd64` command to set the current mirror address to `tidb-community-server-${version}-linux-amd64`.
+The `local_install.sh` script automatically executes the `tiup mirror set dm-${version}-linux-amd64` command to set the current mirror address to `dm-${version}-linux-amd64`.
 
 To switch the mirror to another directory, you can manually execute the `tiup mirror set <mirror-dir>` command. If you want to switch back to the official mirror, execute `tiup mirror set https://tiup-mirrors.pingcap.com`.
 
