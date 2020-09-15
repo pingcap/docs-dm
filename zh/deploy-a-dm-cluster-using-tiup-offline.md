@@ -1,72 +1,88 @@
 ---
-title: 使用 TiUP 部署 DM 集群（实验特性）
-summary: 学习如何使用 TiUP DM 组件来部署 TiDB Data Migration 工具。
-aliases: ['/docs-cn/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible/','/zh/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible']
+title: 使用 TiUP 离线镜像部署 DM 集群（实验特性）
+summary: 学习如何使用 TiUP DM 组件来离线部署 TiDB Data Migration 工具。
 ---
 
-# 使用 TiUP 部署 DM 集群（实验特性）
+# 使用 TiUP 离线镜像部署 DM 集群（实验特性）
 
 > **注意：**
 >
-> 本文描述特性仍为实验特性，不建议在生产环境下使用 TiUP 部署 DM 集群。
+> 本文描述特性仍为实验特性，不建议在生产环境下使用 TiUP 离线镜像部署 DM 集群。
 
-[TiUP](https://github.com/pingcap/tiup) 是 TiDB 4.0 版本引入的集群运维工具，[TiUP DM](maintain-dm-using-tiup.md) 是 TiUP 提供的使用 Golang 编写的集群管理组件，通过 TiUP DM 组件就可以进行日常的运维工作，包括部署、启动、关闭、销毁、扩缩容、升级 DM 集群以及管理 DM 集群参数。
+本文介绍如何使用 TiUP 离线部署 DM 集群，具体的操作步骤如下。
 
-目前 TiUP 可以支持部署 v2.0 及以上版本的 DM。本文将介绍不同集群拓扑的具体部署步骤。
+## 第 1 步：准备 TiUP 离线组件包
 
-> **注意：**
->
-> 如果部署机器的操作系统支持 SELinux，请确保 SELinux 处于关闭状态。
+- 在线环境中安装 TiUP 包管理器工具。
 
-## 第 1 步：在中控机上安装 TiUP 组件
+    1. 执行如下命令安装 TiUP 工具：
 
-使用普通用户登录中控机，以 `tidb` 用户为例，后续安装 TiUP 及集群管理操作均通过该用户完成：
+        {{< copyable "shell-regular" >}}
 
-1. 执行如下命令安装 TiUP 工具：
+        ```shell
+        curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
+        ```
 
-    {{< copyable "shell-regular" >}}
+    2. 重新声明全局环境变量：
 
-    ```shell
-    curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
-    ```
+        {{< copyable "shell-regular" >}}
 
-2. 按如下步骤设置 TiUP 环境变量：
+        ```shell
+        source .bash_profile
+        ```
 
-    重新声明全局环境变量：
+    3. 确认 TiUP 工具是否安装：
 
-    {{< copyable "shell-regular" >}}
+        {{< copyable "shell-regular" >}}
 
-    ```shell
-    source .bash_profile
-    ```
+        ```shell
+        which tiup
+        ```
 
-    确认 TiUP 工具是否安装：
+- 使用 TiUP 制作离线镜像。
 
-    {{< copyable "shell-regular" >}}
+    1. 在一台和外网相通的机器上拉取需要的组件：
 
-    ```shell
-    which tiup
-    ```
+        {{< copyable "shell-regular" >}}
 
-3. 安装 TiUP DM 组件
+        ```bash
+        export version=v2.0.0-rc  # 可修改成实际需要的版本
+        tiup mirror clone tidb-dm-${version}-linux-amd64 --os=linux --arch=amd64 \
+            --dm-master=${version} --dm-worker=${version} --dmctl=${version} \
+            --alertmanager=v0.17.0 --grafana=v4.0.3 --prometheus=v4.0.3 \
+            --tiup=$(tiup --version|grep 'tiup'|awk -F ' ' '{print $1}') --dm=$(tiup --version|grep 'tiup'|awk -F ' ' '{print $1}')
+        ```
 
-    {{< copyable "shell-regular" >}}
+        该命令会在当前目录下创建一个名叫 `tidb-dm-${version}-linux-amd64` 的目录，里面包含 TiUP 管理的组件包。
 
-    ```shell
-    tiup install dm
-    ```
+    2. 通过 tar 命令将该组件包打包然后发送到隔离环境的中控机：
 
-4. 如果已经安装，则更新 TiUP DM 组件至最新版本：
+        {{< copyable "shell-regular" >}}
 
-    {{< copyable "shell-regular" >}}
+        ```bash
+        tar czvf tidb-dm-${version}-linux-amd64.tar.gz tidb-dm-${version}-linux-amd64
+        ```
 
-    ```shell
-    tiup update --self && tiup update dm
-    ```
+        此时，`tidb-dm-${version}-linux-amd64.tar.gz` 就是一个独立的离线环境包。
 
-    预期输出 `Update successfully!` 字样。
+## 第 2 步: 部署离线环境 TiUP 组件
 
-## 第 2 步：编辑初始化配置文件
+将离线包发送到目标集群的中控机后，执行以下命令安装 TiUP 组件：
+
+{{< copyable "shell-regular" >}}
+
+```bash
+export version=v2.0.0-rc # 可修改成实际需要的版本
+tar xzvf tidb-dm-${version}-linux-amd64.tar.gz
+sh tidb-dm-${version}-linux-amd64/local_install.sh
+source /home/tidb/.bash_profile
+```
+
+`local_install.sh` 脚本会自动执行 `tiup mirror set tidb-dm-${version}-linux-amd64` 命令将当前镜像地址设置为 `tidb-dm-${version}-linux-amd64`。
+
+若需将镜像切换到其他目录，可以通过手动执行 `tiup mirror set <mirror-dir>` 进行切换，切换后如果再想切换成官方镜像，可执行 `tiup mirror set https://tiup-mirrors.pingcap.com`。
+
+## 第 3 步：编辑初始化配置文件
 
 请根据不同的集群拓扑，编辑 TiUP 所需的集群初始化配置文件。
 
@@ -109,9 +125,9 @@ alertmanager_servers:
 >
 > - 对于需要某个节点生效的参数，请在具体节点的 `config` 中配置。
 >
-> - 配置的层次结构使用 `.` 表示。如：`log.slow-threshold`。更多格式参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml)。
+> - 配置的层次结构使用 `.` 表示。如：`log.slow-threshold`。更多格式说明，请参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml)。
 >
-> - 更多参数说明，请参考 [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml)、[worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml)
+> - 更多参数说明，请参考 [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml)、[worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml)。
 >
 > - 需要确保以下组件间端口可正常连通：
 >
@@ -125,7 +141,7 @@ alertmanager_servers:
 >
 >     - TiUP 节点可连通所有 DM-worker 节点的 `port`（默认为 `8262`）。
 
-## 第 3 步：执行部署命令
+## 第 4 步：执行部署命令
 
 > **注意：**
 >
@@ -152,7 +168,7 @@ tiup dm deploy dm-test ${version} ./topology.yaml --user root [-p] [-i /home/roo
 
 预期日志结尾输出会有 ```Deployed cluster `dm-test` successfully``` 关键词，表示部署成功。
 
-## 第 4 步：查看 TiUP 管理的集群情况
+## 第 5 步：查看 TiUP 管理的集群情况
 
 {{< copyable "shell-regular" >}}
 
@@ -168,7 +184,7 @@ Name  User  Version  Path                                  PrivateKey
 dm-test  tidb  v2.0.0-rc  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/storage/dm/clusters/dm-test/ssh/id_rsa
 ```
 
-## 第 5 步：检查部署的 DM 集群情况
+## 第 6 步：检查部署的 DM 集群情况
 
 例如，执行如下命令检查 `dm-test` 集群情况：
 
@@ -180,7 +196,7 @@ tiup dm display dm-test
 
 预期输出包括 `dm-test` 集群中实例 ID、角色、主机、监听端口和状态（由于还未启动，所以状态为 Down/inactive）、目录信息。
 
-## 第 6 步：启动集群
+## 第 7 步：启动集群
 
 {{< copyable "shell-regular" >}}
 
@@ -190,7 +206,7 @@ tiup dm start dm-test
 
 预期结果输出 ```Started cluster `dm-test` successfully``` 表示启动成功。
 
-## 第 7 步：验证集群运行状态
+## 第 8 步：验证集群运行状态
 
 通过以下 TiUP 命令检查集群状态：
 
