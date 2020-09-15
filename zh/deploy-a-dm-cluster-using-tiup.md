@@ -145,8 +145,8 @@ tiup dm deploy dm-test v2.0.0-rc ./topology.yaml --user root [-p] [-i /home/root
 - 通过 TiUP DM 部署的集群名称为 `dm-test`。
 - 部署版本为 `v2.0.0-rc`，可以通过执行 `tiup list dm-master` 来查看 TiUP 支持的最新版本。
 - 初始化配置文件为 `topology.yaml`。
-- --user root：通过 root 用户登录到目标主机完成集群部署，该用户需要有 ssh 到目标机器的权限，并且在目标机器有 sudo 权限。也可以用其他有 ssh 和 sudo 权限的用户完成部署。
-- -i 及 -p：非必选项，如果已经配置免密登陆目标机，则不需填写，否则选择其一即可。-i 为可登录到目标机的 root 用户（或 --user 指定的其他用户）的私钥，也可使用 -p 交互式输入该用户的密码。
+- `--user root`：通过 root 用户登录到目标主机完成集群部署，该用户需要有 ssh 到目标机器的权限，并且在目标机器有 sudo 权限。也可以用其他有 ssh 和 sudo 权限的用户完成部署。
+- `-i` 及 `-p`：非必选项，如果已经配置免密登陆目标机，则不需填写，否则选择其一即可。`-i` 为可登录到目标机的 root 用户（或 `--user` 指定的其他用户）的私钥，也可使用 `-p` 交互式输入该用户的密码。
 - TiUP DM 使用内置的 SSH 客户端，如需使用系统自带的 SSH 客户端，请参考 TiUP DM 文档中[使用中控机系统自带的 SSH 客户端连接集群](maintain-dm-using-tiup.md#使用中控机系统自带的-ssh-客户端连接集群)章节进行设置。
 
 预期日志结尾输出会有 ```Deployed cluster `dm-test` successfully``` 关键词，表示部署成功。
