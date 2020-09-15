@@ -1,15 +1,15 @@
 ---
-title: Deploy a TiDB Cluster Offline Using TiUP (Experimental)
-summary: Introduce how to deploy a TiDB cluster offline using TiUP.
+title: Deploy a DM Cluster Offline Using TiUP (Experimental)
+summary: Introduce how to deploy a DM cluster offline using TiUP.
 ---
 
-# Deploy a TiDB Cluster Offline Using TiUP (Experimental)
+# Deploy a DM Cluster Offline Using TiUP (Experimental)
 
 > **Warning:**
 >
 > Using TiUP to deploy a DM cluster offline is still an experimental feature. It is **NOT** recommended to use this feature in production.
 
-This document describes how to deploy a TiDB cluster offline using TiUP.
+This document describes how to deploy a DM cluster offline using TiUP.
 
 ## Step 1: Prepare the TiUP offline component package
 
