@@ -40,6 +40,13 @@ Here is the address of each node:
 
 Based on this scenario, the following sections describe how to deploy the DM cluster.
 
+> **Note:**
+>
+> - Make sure that the ports among the following components are interconnected:
+>     - The `8291` ports among the DM-master nodes are interconnected.
+>     - Each DM-master node can connect to the `8262` ports of all DM-worker nodes.
+>     - Each DM-worker node can connect to the `8261` port of all DM-master nodes.
+
 ### Deploy DM-master
 
 You can configure DM-master by using [command-line parameters](#dm-master-command-line-parameters) or [the configuration file](#dm-master-configuration-file).

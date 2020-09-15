@@ -1,10 +1,14 @@
 ---
-title: Deploy a DM Cluster Using TiUP
+title: Deploy a DM Cluster Using TiUP (Experimental)
 summary: Learn how to deploy TiDB Data Migration using TiUP DM.
 aliases: ['/docs/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible/','/docs/tools/dm/deployment/','/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible']
 ---
 
-# Deploy a DM Cluster Using TiUP
+# Deploy a DM Cluster Using TiUP (Experimental)
+
+> **Warning:**
+>
+> Using TiUP to deploy a DM cluster is still an experimental feature. It is **NOT** recommended to use TiUP to deploy a DM cluster in production.
 
 [TiUP](https://github.com/pingcap/tiup) is a cluster operation and maintenance tool introduced in TiDB 4.0. TiUP provides [TiUP DM](maintain-dm-using-tiup.md), a cluster management component written in Golang. By using TiUP DM, you can easily perform daily TiDB Data Migration (DM) operations, including deploying, starting, stopping, destroying, scaling, and upgrading a DM cluster, and manage DM cluster parameters.
 
@@ -104,6 +108,13 @@ alertmanager_servers:
 > - Use `.` to indicate the subcategory of the configuration, such as `log.slow-threshold`. For more formats, see [TiUP configuration template](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml).
 >
 > - For more parameter description, see [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml) and [worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml).
+>
+> - Make sure that the ports among the following components are interconnected:
+>     - The `peer_port` (`8291` by default) among the DM-master nodes are interconnected.
+>     - Each DM-master node can connect to the `port` of all DM-worker nodes (`8262` by default).
+>     - Each DM-worker node can connect to the `port` of all DM-master nodes (`8261` by default).
+>     - The TiUP nodes can connect to the `port` of all DM-master nodes (`8261` by default).
+>     - The TiUP nodes can connect to the `port` of all DM-worker nodes (`8262` by default).
 
 ## Step 3: Execute the deployment command
 
