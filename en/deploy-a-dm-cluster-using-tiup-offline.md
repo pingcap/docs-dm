@@ -1,74 +1,94 @@
 ---
-title: Deploy a DM Cluster Using TiUP (Experimental)
-summary: Learn how to deploy TiDB Data Migration using TiUP DM.
-aliases: ['/docs/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible/','/docs/tools/dm/deployment/','/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible']
+title: Deploy a TiDB Cluster Offline Using TiUP (Experimental)
+summary: Introduce how to deploy a TiDB cluster offline using TiUP.
 ---
 
-# Deploy a DM Cluster Using TiUP (Experimental)
+# Deploy a TiDB Cluster Offline Using TiUP (Experimental)
 
 > **Warning:**
 >
-> Using TiUP to deploy a DM cluster is still an experimental feature. It is **NOT** recommended to use TiUP to deploy a DM cluster in production.
+> Using TiUP to deploy a DM cluster offline is still an experimental feature. It is **NOT** recommended to use this feature in production.
 
-[TiUP](https://github.com/pingcap/tiup) is a cluster operation and maintenance tool introduced in TiDB 4.0. TiUP provides [TiUP DM](maintain-dm-using-tiup.md), a cluster management component written in Golang. By using TiUP DM, you can easily perform daily TiDB Data Migration (DM) operations, including deploying, starting, stopping, destroying, scaling, and upgrading a DM cluster, and manage DM cluster parameters.
+This document describes how to deploy a TiDB cluster offline using TiUP.
 
-TiUP supports deploying DM v2.0 or later DM versions. This document introduces how to deploy DM clusters of different topologies.
+## Step 1: Prepare the TiUP offline component package
 
-## Step 1: Install TiUP on the control machine
+- Install the TiUP package manager online.
 
-Log in to the control machine using a regular user account (take the `tidb` user as an example). All the following TiUP installation and cluster management operations can be performed by the `tidb` user.
+    1. Install the TiUP tool:
 
-1. Install TiUP by executing the following command:
+        {{< copyable "shell-regular" >}}
 
-    {{< copyable "shell-regular" >}}
+        ```shell
+        curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
+        ```
 
-    ```shell
-    curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
-    ```
+    2. Redeclare the global environment variables:
 
-2. Set the TiUP environment variables:
+        {{< copyable "shell-regular" >}}
 
-    Redeclare the global environment variables:
+        ```shell
+        source .bash_profile
+        ```
 
-    {{< copyable "shell-regular" >}}
+    3. Confirm whether TiUP is installed:
 
-    ```shell
-    source .bash_profile
-    ```
+        {{< copyable "shell-regular" >}}
 
-    Confirm whether TiUP is installed:
+        ```shell
+        which tiup
+        ```
 
-    {{< copyable "shell-regular" >}}
+- Pull the mirror using TiUP
 
-    ```shell
-    which tiup
-    ```
+    1. Pull the needed components on a machine that has access to the Internet:
 
-3. Install the TiUP DM component:
+        {{< copyable "shell-regular" >}}
 
-    {{< copyable "shell-regular" >}}
+        ```bash
+        export version=v2.0.0-rc  # You can modify it to the needed version.
+        tiup mirror clone tidb-dm-${version}-linux-amd64 --os=linux --arch=amd64 \
+            --dm-master=${version} --dm-worker=${version} --dmctl=${version} \
+            --alertmanager=v0.17.0 --grafana=v4.0.3 --prometheus=v4.0.3 \
+            --tiup=$(tiup --version|grep 'tiup'|awk -F ' ' '{print $1}') --dm=$(tiup --version|grep 'tiup'|awk -F ' ' '{print $1}')
+        ```
 
-    ```shell
-    tiup install dm
-    ```
+        The command above creates a directory named `tidb-community-server-${version}-linux-amd64` in the current directory, which contains the component package managed by TiUP.
 
-4. If TiUP is already installed, update the TiUP DM component to the latest version:
+    2. Pack the component package by using the `tar` command and send the package to the control machine in the isolated environment:
 
-    {{< copyable "shell-regular" >}}
+        {{< copyable "shell-regular" >}}
 
-    ```shell
-    tiup update --self && tiup update dm
-    ```
+        ```bash
+        tar czvf tidb-dm-${version}-linux-amd64.tar.gz tidb-dm-${version}-linux-amd64
+        ```
 
-    Expected output includes `Update successfully!`.
+        `tidb-community-server-${version}-linux-amd64.tar.gz` is an independent offline environment package.
 
-## Step 2: Edit the initialization configuration file
+## Step 2: Deploy the offline TiUP component
 
-According to the intended cluster topology, you need to manually create and edit the cluster initialization configuration file.
+After sending the package to the control machine of the target cluster, install the TiUP component by running the following command:
 
-You need to create a YAML configuration file (named `topology.yaml` for example) according to the [configuration file template](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml). For other scenarios, edit the configuration accordingly.
+{{< copyable "shell-regular" >}}
 
-The configuration file of a minimal deployment topology (3 DM-master instances, 3 DM-worker instances, and 1 monitoring component) is as follows:
+```bash
+export version=v2.0.0-rc # You can modify it to the needed version.
+tar xzvf tidb-dm-${version}-linux-amd64.tar.gz
+sh tidb-dm-${version}-linux-amd64/local_install.sh
+source /home/tidb/.bash_profile
+```
+
+The `local_install.sh` script automatically executes the `tiup mirror set tidb-community-server-${version}-linux-amd64` command to set the current mirror address to `tidb-community-server-${version}-linux-amd64`.
+
+To switch the mirror to another directory, you can manually execute the `tiup mirror set <mirror-dir>` command. If you want to switch back to the official mirror, execute `tiup mirror set https://tiup-mirrors.pingcap.com`.
+
+## Step 3: Edit the initialization configuration file
+
+You need to edit the cluster initialization configuration file according to different cluster typologies. 
+
+For the full configuration template, refer to the [TiUP configuration parameter template](https://github.com/pingcap/tiup/blob/master/examples/topology.example.yaml). Create a configuration file `topology.yaml`. If you need to edit the configuration files in other combined scenarios, adjust them according to multiple templates.
+
+The configuration of a minimal deployment (3 dm-master, 3 dm-worker and 1 monitoring component) is as follows:
 
 ```yaml
 ---
@@ -78,23 +98,18 @@ global:
   deploy_dir: "/home/tidb/dm/deploy"
   data_dir: "/home/tidb/dm/data"
   # arch: "amd64"
-
 master_servers:
   - host: 172.19.0.101
   - host: 172.19.0.102
   - host: 172.19.0.103
-
 worker_servers:
   - host: 172.19.0.101
   - host: 172.19.0.102
   - host: 172.19.0.103
-
 monitoring_servers:
   - host: 172.19.0.101
-
 grafana_servers:
   - host: 172.19.0.101
-
 alertmanager_servers:
   - host: 172.19.0.101
 ```
@@ -116,7 +131,7 @@ alertmanager_servers:
 >     - The TiUP nodes can connect to the `port` of all DM-master nodes (`8261` by default).
 >     - The TiUP nodes can connect to the `port` of all DM-worker nodes (`8262` by default).
 
-## Step 3: Execute the deployment command
+## Step 4: Execute the deployment command
 
 > **Note:**
 >
@@ -143,7 +158,7 @@ In the above command:
 
 At the end of the output log, you will see ```Deployed cluster `dm-test` successfully```. This indicates that the deployment is successful.
 
-## Step 4: Check the clusters managed by TiUP
+## Step 5: Check the clusters managed by TiUP
 
 {{< copyable "shell-regular" >}}
 
@@ -156,10 +171,10 @@ TiUP supports managing multiple DM clusters. The command above outputs informati
 ```log
 Name  User  Version  Path                                  PrivateKey
 ----  ----  -------  ----                                  ----------
-dm-test  tidb  v2.0.0  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/storage/dm/clusters/dm-test/ssh/id_rsa
+dm-test  tidb  v2.0.0-rc  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/storage/dm/clusters/dm-test/ssh/id_rsa
 ```
 
-## Step 5: Check the status of the deployed DM cluster
+## Step 6: Check the status of the deployed DM cluster
 
 To check the status of the `dm-test` cluster, execute the following command:
 
@@ -169,9 +184,9 @@ To check the status of the `dm-test` cluster, execute the following command:
 tiup dm display dm-test
 ```
 
-Expected output includes the instance ID, role, host, listening port, and status (because the cluster is not started yet, so the status is `Down`/`inactive`), and directory information.
+Expected output includes the instance ID, role, host, listening port, and status (because the cluster is not started yet, so the status is `Down`/`inactive`), and directory information of the `dm-test` cluster.
 
-## Step 6: Start the TiDB cluster
+## Step 7: Start the TiDB cluster
 
 {{< copyable "shell-regular" >}}
 
@@ -181,7 +196,7 @@ tiup dm start dm-test
 
 If the output log includes ```Started cluster `dm-test` successfully```, the start is successful.
 
-## Step 7: Verify the running status of the TiDB cluster
+## Step 8: Verify the running status of the TiDB cluster
 
 Check the DM cluster status using TiUP:
 
