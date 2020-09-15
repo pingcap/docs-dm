@@ -43,6 +43,7 @@ DM 2.0 相比于 1.0，主要有以下改进：
 
 - [软硬件要求](hardware-and-software-requirements.md)
 - [使用 TiUP 部署集群](deploy-a-dm-cluster-using-tiup.md)
+- [使用 TiUP 离线镜像部署集群](deploy-a-dm-cluster-using-tiup-offline.md)
 - [使用 Binary 部署集群](deploy-a-dm-cluster-using-binary.md)
 - [使用 DM 迁移数据](migrate-data-using-dm.md)
 - [监控与告警设置](monitor-a-dm-cluster.md)
