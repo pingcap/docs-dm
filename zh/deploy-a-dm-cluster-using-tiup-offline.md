@@ -153,7 +153,7 @@ alertmanager_servers:
 {{< copyable "shell-regular" >}}
 
 ```shell
-tiup dm deploy dm-test v2.0.0-rc ./topology.yaml --user root [-p] [-i /home/root/.ssh/gcp_rsa]
+tiup dm deploy dm-test ${version} ./topology.yaml --user root [-p] [-i /home/root/.ssh/gcp_rsa]
 ```
 
 以上部署命令中：
