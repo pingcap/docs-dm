@@ -42,6 +42,7 @@ target-database:                # Configuration of the downstream database insta
   port: 4000
   user: "root"
   password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # It is recommended to use a password encrypted with dmctl
+  max-allowed-packet: 67108864                  # When setting the DM to internally connect to the TiDB server, the "max_allowed_packet" limit of the TiDB client (the limit of the maximum accepted packet). The unit is bytes. (67108864 by default)
   session:                                      # The session variables of TiDB, supported since v1.0.6. For details, go to `https://pingcap.com/docs/stable/system-variables`
     sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE"
     tidb_skip_utf8_check: 1
