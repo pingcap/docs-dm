@@ -80,13 +80,13 @@ source /home/tidb/.bash_profile
 
 The `local_install.sh` script automatically executes the `tiup mirror set tidb-dm-${version}-linux-amd64` command to set the current mirror address to `tidb-dm-${version}-linux-amd64`.
 
-To switch the mirror to another directory, you can manually execute the `tiup mirror set <mirror-dir>` command. If you want to switch back to the official mirror, execute `tiup mirror set https://tiup-mirrors.pingcap.com`.
+To switch the mirror to another directory, manually execute the `tiup mirror set <mirror-dir>` command. If you want to switch back to the official mirror, execute `tiup mirror set https://tiup-mirrors.pingcap.com`.
 
 ## Step 3: Edit the initialization configuration file
 
-You need to edit the cluster initialization configuration file according to different cluster typologies. 
+You need to edit the cluster initialization configuration file according to different cluster topologies. 
 
-For the full configuration template, refer to the [TiUP configuration parameter template](https://github.com/pingcap/tiup/blob/master/examples/topology.example.yaml). Create a configuration file `topology.yaml`. If you need to edit the configuration files in other combined scenarios, adjust them according to multiple templates.
+For the full configuration template, refer to the [TiUP configuration parameter template](https://github.com/pingcap/tiup/blob/master/examples/topology.example.yaml). Create a configuration file `topology.yaml`. In other combined scenarios, edit the configuration file as needed according to the templates.
 
 The configuration of a minimal deployment (3 dm-master, 3 dm-worker and 1 monitoring component) is as follows:
 
