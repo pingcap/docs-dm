@@ -135,7 +135,7 @@ tiup dm deploy dm-test ${version} ./topology.yaml --user root [-p] [-i /home/roo
 In the above command:
 
 - The name of the deployed DM cluster is `dm-test`.
-- The version of the DM cluster is `${version}`, You can see other supported versions by running `tiup list dm-master`.
+- The version of the DM cluster is `${version}`. You can see other supported versions by running `tiup list dm-master`.
 - The initialization configuration file is `topology.yaml`.
 - `--user root`: Log in to the target machine through the `root` key to complete the cluster deployment, or you can use other users with `ssh` and `sudo` privileges to complete the deployment.
 - `[-i]` and `[-p]`: optional. If you have configured login to the target machine without password, these parameters are not required. If not, choose one of the two parameters. `[-i]` is the private key of the `root` user (or other users specified by `--user`) that has access to the target machine. `[-p]` is used to input the user password interactively.

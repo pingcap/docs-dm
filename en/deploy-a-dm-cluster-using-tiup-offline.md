@@ -98,18 +98,23 @@ global:
   deploy_dir: "/home/tidb/dm/deploy"
   data_dir: "/home/tidb/dm/data"
   # arch: "amd64"
+
 master_servers:
   - host: 172.19.0.101
   - host: 172.19.0.102
   - host: 172.19.0.103
+
 worker_servers:
   - host: 172.19.0.101
   - host: 172.19.0.102
   - host: 172.19.0.103
+
 monitoring_servers:
   - host: 172.19.0.101
+
 grafana_servers:
   - host: 172.19.0.101
+
 alertmanager_servers:
   - host: 172.19.0.101
 ```
@@ -135,7 +140,7 @@ alertmanager_servers:
 
 > **Note:**
 >
-> You can use secret keys or interactive passwords for security authentication when you deploy TiDB using TiUP:
+> You can use secret keys or interactive passwords for security authentication when you deploy DM using TiUP:
 >
 > - If you use secret keys, you can specify the path of the keys through `-i` or `--identity_file`;
 > - If you use passwords, add the `-p` flag to enter the password interaction window;
@@ -150,7 +155,7 @@ tiup dm deploy dm-test ${version} ./topology.yaml --user root [-p] [-i /home/roo
 In the above command:
 
 - The name of the deployed DM cluster is `dm-test`.
-- The version of the DM cluster is `${version}`, You can see other supported versions by running `tiup list dm-master`.
+- The version of the DM cluster is `${version}`. You can view the latest versions supported by TiUP by running `tiup list dm-master`.
 - The initialization configuration file is `topology.yaml`.
 - `--user root`: Log in to the target machine through the `root` key to complete the cluster deployment, or you can use other users with `ssh` and `sudo` privileges to complete the deployment.
 - `[-i]` and `[-p]`: optional. If you have configured login to the target machine without password, these parameters are not required. If not, choose one of the two parameters. `[-i]` is the private key of the `root` user (or other users specified by `--user`) that has access to the target machine. `[-p]` is used to input the user password interactively.
@@ -186,7 +191,7 @@ tiup dm display dm-test
 
 Expected output includes the instance ID, role, host, listening port, and status (because the cluster is not started yet, so the status is `Down`/`inactive`), and directory information of the `dm-test` cluster.
 
-## Step 7: Start the TiDB cluster
+## Step 7: Start the cluster
 
 {{< copyable "shell-regular" >}}
 
@@ -196,7 +201,7 @@ tiup dm start dm-test
 
 If the output log includes ```Started cluster `dm-test` successfully```, the start is successful.
 
-## Step 8: Verify the running status of the TiDB cluster
+## Step 8: Verify the running status of the cluster
 
 Check the DM cluster status using TiUP:
 
