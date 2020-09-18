@@ -112,7 +112,7 @@ Record the position information in the global checkpoint (`is_global=1`) corresp
 
 ## How to handle the error `packet for query is too large. Try adjusting the 'max_allowed_packet' variable` that occurs during the full import?
 
-- The  global variable of TiDB Server: `max_allowed_packet`.
-- The configuration item in the data source configuration file: `from.max-allowed-packet`.
+- The global variable of TiDB Server: `max_allowed_packet`.
+- The configuration item in the data source configuration files: `from.max-allowed-packet`.
 
 Set the value of the parameters above larger than the default 67108864 (64M). For details, see [Loader solution](https://docs.pingcap.com/tidb/stable/loader-overview#solution).
