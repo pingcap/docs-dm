@@ -109,3 +109,10 @@ Record the position information in the global checkpoint (`is_global=1`) corresp
 4. Start the task using `start-task`.
 
 5. Observe the task status through `query-status`. When `syncerBinlog` exceeds the larger value of `checkpoint-T` and `checkpoint-S`, restore `safe-mode` to the original value and restart the task. In this example, it is `(mysql-bin.000100, 1234)`.
+
+## How to handle the error `packet for query is too large. Try adjusting the 'max_allowed_packet' variable` that occurs during the full import?
+
+- The  global variable of TiDB Server: `max_allowed_packet`.
+- The configuration item in the data source configuration file: `from.max-allowed-packet`.
+
+Set the value of the parameters above larger than the default 67108864 (64M). For details, see [Loader solution](https://docs.pingcap.com/tidb/stable/loader-overview#solution).
