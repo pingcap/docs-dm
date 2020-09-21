@@ -26,6 +26,7 @@
   + [Software and Hardware Requirements](hardware-and-software-requirements.md)
   + Deploy a DM Cluster
     - [Use TiUP](deploy-a-dm-cluster-using-tiup.md)
+    - [Use TiUP Offline](deploy-a-dm-cluster-using-tiup-offline.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
   - [Migrate Data Using DM](migrate-data-using-dm.md)
   - [Monitor](monitor-a-dm-cluster.md)
