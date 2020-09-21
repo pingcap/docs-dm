@@ -41,6 +41,7 @@ summary: Learn about TiDB Data Migration documentation.
 <ColumnTitle>Deploy and Use</ColumnTitle>
 
 - [Deploy DM Using TiUP](deploy-a-dm-cluster-using-tiup.md)
+- [Deploy DM Using TiUP Offline](deploy-a-dm-cluster-using-tiup-offline.md)
 - [Deploy DM Using Binary](deploy-a-dm-cluster-using-binary.md)
 - [Use DM to Migrate Data](migrate-data-using-dm.md)
 - [Monitor and Alert](monitor-a-dm-cluster.md)
