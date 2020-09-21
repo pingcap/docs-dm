@@ -13,6 +13,10 @@ summary: Learn how to deploy TiDB Data Migration using TiUP DM.
 
 TiUP supports deploying DM v2.0 or later DM versions. This document introduces how to deploy DM clusters of different topologies.
 
+> **Note:**
+>
+> If your target machine's operating system supports SELinux, make sure that SELinux is **disabled**.
+
 ## Step 1: Install TiUP on the control machine
 
 Log in to the control machine using a regular user account (take the `tidb` user as an example). All the following TiUP installation and cluster management operations can be performed by the `tidb` user.
