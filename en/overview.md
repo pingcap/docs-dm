@@ -64,6 +64,14 @@ When you deploy multiple DM-master nodes, all DM-master nodes use the embedded e
 
 When the number of deployed DM-worker nodes exceeds the number of upstream MySQL/MariaDB nodes, the extra DM-worker nodes are idle by default. If a DM-worker node goes offline or is isolated from the DM-master leader, DM-master automatically schedules data migration tasks of the original DM-worker node to other idle DM-worker nodes. (If a DM-worker node is isolated, it automatically stops the data migration tasks on it); if there are no available idle DM-worker nodes, the data migration tasks of the original DM-worker cannot be performed.
 
+> **Note:**
+>
+> When the data migration task is in the process of full export or import, the migration task does not support high availability. Here are the main reasons:
+>
+> - For the full export, MySQL does not support exporting from a specific snapshot point yet. This means that after the data migration task is rescheduled or restarted, the export cannot resume from the previous interruption point.
+>
+> - For the full import, DM-worker does not support reading exported full data across the nodes yet. This means that after the data migration task is scheduled to a new DM-worker node, you cannot read the exported full data on the original DM-worker node before the scheduling happens.
+
 ## Data migration features
 
 This section describes the data migration features provided by the Data Migration tool.
