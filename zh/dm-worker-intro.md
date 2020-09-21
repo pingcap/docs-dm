@@ -1,6 +1,6 @@
 ---
 title: DM-worker 简介
-aliases: ['/docs-cn/tidb-data-migration/stable/dm-worker-intro/','/docs-cn/tidb-data-migration/v1.0/dm-worker-intro/','/docs-cn/dev/reference/tools/data-migration/dm-worker-intro/','/docs-cn/v3.1/reference/tools/data-migration/dm-worker-intro/','/docs-cn/v3.0/reference/tools/data-migration/dm-worker-intro/','/docs-cn/v2.1/reference/tools/data-migration/dm-worker-intro/']
+aliases: ['/docs-cn/tidb-data-migration/stable/dm-worker-intro/','/docs-cn/tidb-data-migration/v1.0/dm-worker-intro/','/docs-cn/dev/reference/tools/data-migration/dm-worker-intro/','/docs-cn/v3.1/reference/tools/data-migration/dm-worker-intro/','/docs-cn/v3.0/reference/tools/data-migration/dm-worker-intro/','/docs-cn/v2.1/reference/tools/data-migration/dm-worker-intro/','/docs-cn/stable/reference/tools/data-migration/dm-worker-intro/']
 ---
 
 # DM-worker 简介

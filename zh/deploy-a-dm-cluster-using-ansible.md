@@ -1,6 +1,6 @@
 ---
 title: 使用 DM-Ansible 部署 DM 集群
-aliases: ['/docs-cn/tidb-data-migration/stable/deploy-a-dm-cluster-using-ansible/','/docs-cn/tidb-data-migration/v1.0/deploy-a-dm-cluster-using-ansible/','/docs-cn/dev/how-to/deploy/data-migration-with-ansible/','/docs-cn/v3.1/how-to/deploy/data-migration-with-ansible/','/docs-cn/v3.0/how-to/deploy/data-migration-with-ansible/','/docs-cn/v2.1/how-to/deploy/data-migration-with-ansible/']
+aliases: ['/docs-cn/tidb-data-migration/stable/deploy-a-dm-cluster-using-ansible/','/docs-cn/tidb-data-migration/v1.0/deploy-a-dm-cluster-using-ansible/','/docs-cn/dev/how-to/deploy/data-migration-with-ansible/','/docs-cn/v3.1/how-to/deploy/data-migration-with-ansible/','/docs-cn/v3.0/how-to/deploy/data-migration-with-ansible/','/docs-cn/v2.1/how-to/deploy/data-migration-with-ansible/','/docs-cn/stable/reference/tools/data-migration/deploy/']
 ---
 
 # 使用 DM-Ansible 部署 DM 集群
