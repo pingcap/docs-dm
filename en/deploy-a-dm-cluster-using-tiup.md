@@ -16,7 +16,7 @@ TiUP supports deploying DM v2.0 or later DM versions. This document introduces h
 
 > **Note:**
 >
-> If the operating system for the deployment supports SELinux, make sure that SELinux is enabled.
+> If your target machine's operating system supports SELinux, make sure that SELinux is **disabled**.
 
 ## Step 1: Install TiUP on the control machine
 
