@@ -159,24 +159,24 @@ mysql-instances:
 | :------------ | :--------------------------------------- |
 | `routes` | 上游和下游表之间的路由 table routing 规则集。如果上游与下游的库名、表名一致，则不需要配置该项。使用场景及示例配置参见 [Table Routing](key-features.md#table-routing) |
 | `filters` | 上游数据库实例匹配的表的 binlog event filter 规则集。如果不需要对 binlog 进行过滤，则不需要配置该项。使用场景及示例配置参见 [Binlog Event Filter](key-features.md#binlog-event-filter) |
-| `block-allow-list` | 该上游数据库实例匹配的表的 block & allow lists 过滤规则集。建议通过该项指定需要迁移的库和表，否则会迁移所有的库和表。使用场景及示例配置参见 [Block & Allow Lists](key-features.md#block--allow-table-lists) |	
-| `mydumpers` | mydumper 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `mydumper-thread` 对 `thread` 配置项单独进行配置。 |	
-| `loaders` | loader 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `loader-thread` 对 `pool-size` 配置项单独进行配置。 |	
-| `syncers` | syncer 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `syncer-thread` 对 `worker-count` 配置项单独进行配置。 |	
+| `block-allow-list` | 该上游数据库实例匹配的表的 block & allow lists 过滤规则集。建议通过该项指定需要迁移的库和表，否则会迁移所有的库和表。使用场景及示例配置参见 [Block & Allow Lists](key-features.md#block--allow-table-lists) |
+| `mydumpers` | mydumper 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `mydumper-thread` 对 `thread` 配置项单独进行配置。 |
+| `loaders` | loader 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `loader-thread` 对 `pool-size` 配置项单独进行配置。 |
+| `syncers` | syncer 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `syncer-thread` 对 `worker-count` 配置项单独进行配置。 |
 
-各个功能配置集的参数及解释参见[完整配置文件示例](#完整配置文件示例)中的注释说明。	
+各个功能配置集的参数及解释参见[完整配置文件示例](#完整配置文件示例)中的注释说明。
 
-## 实例配置	
+## 实例配置
 
-本小节定义具体的数据迁移子任务，DM 支持从单个或者多个上游 MySQL 实例迁移数据到同一个下游数据库实例。	
+本小节定义具体的数据迁移子任务，DM 支持从单个或者多个上游 MySQL 实例迁移数据到同一个下游数据库实例。
 
-在该项配置中设置数据迁移子任务中各个功能对应的配置集中的配置名称，关于这些配置项的更多配置细节，参见[功能配置集](#功能配置集)的相关配置项，对应关系如下：	
+在该项配置中设置数据迁移子任务中各个功能对应的配置集中的配置名称，关于这些配置项的更多配置细节，参见[功能配置集](#功能配置集)的相关配置项，对应关系如下：
 
-| 配置项 | 相关配置项 |	
-| :------ | :------------------ |	
-| `route-rules` | `routes` |	
-| `filter-rules` | `filters` |	
-| `block-allow-list` | `block-allow-list` |	
-| `mydumper-config-name` | `mydumpers` |	
-| `loader-config-name` | `loaders` |	
+| 配置项 | 相关配置项 |
+| :------ | :------------------ |
+| `route-rules` | `routes` |
+| `filter-rules` | `filters` |
+| `block-allow-list` | `block-allow-list` |
+| `mydumper-config-name` | `mydumpers` |
+| `loader-config-name` | `loaders` |
 | `syncer-config-name` | `syncers`  |
