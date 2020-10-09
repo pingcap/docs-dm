@@ -40,14 +40,14 @@ mysql-instances:
   - source-id: "mysql-replica-01"  # 上游实例或者复制组 ID，参考 `dm-master.toml` 的 `source-id` 配置
     block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量
-    loader-thread: 16              # loader 用于导入数据的线程数量
-    syncer-thread: 16              # syncer 用于复制增量数据的线程数量
+    loader-thread: 16              # loader 用于导入数据的线程数量，当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
+    syncer-thread: 16              # syncer 用于复制增量数据的线程数量，当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
 
   - source-id: "mysql-replica-02" # 上游实例或者复制组 ID，参考 `dm-master.toml` 的 `source-id` 配置
     block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量
-    loader-thread: 16              # loader 用于导入数据的线程数量
-    syncer-thread: 16              # syncer 用于复制增量数据的线程数量
+    loader-thread: 16              # loader 用于导入数据的线程数量，当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
+    syncer-thread: 16              # syncer 用于复制增量数据的线程数量，当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
 ```
 
 ## 配置顺序

@@ -6,6 +6,10 @@ title: 使用 DM binary 部署 DM 集群
 
 本文将介绍如何使用 DM binary 快速部署 DM 集群。
 
+> **注意：**
+>
+> 对于生产环境，推荐[使用 TiUP 部署 DM 集群及相关监控组件](deploy-a-dm-cluster-using-tiup.md)。
+
 ## 准备工作
 
 使用下表中的链接下载官方 binary：
