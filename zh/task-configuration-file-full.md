@@ -29,12 +29,11 @@ DM 会根据任务类型进行相应检查。可以参考[关闭检查项](prech
 name: test                      # 任务名称，需要全局唯一
 task-mode: all                  # 任务模式，可设为 "full"、"incremental"、"all"
 shard-mode: "pessimistic"       # 如果为分库分表合并任务则需要配置该项。默认使用悲观协调模式 "pessimistic"，在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
-ignore-checking-items: []       # 忽略的检测项，可包含 "all"、"dump_privilege"、"replication_privilege"、"version"、"binlog_enable"、"binlog_format"、"binlog_row_image"、"table_schema"、"schema_of_shard_tables"、"auto_increment_ID"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
 timezone: "Asia/Shanghai"       # 时区
 case-sensitive: false           # schema/table 是否大小写敏感
 online-ddl-scheme: "gh-ost"     # 目前仅支持 "gh-ost" 、"pt"
-ignore-checking-items: []       # 不关闭任何检查项
+ignore-checking-items: []       # 不关闭任何检查项。可选的检查项有 "all"、"dump_privilege"、"replication_privilege"、"version"、"binlog_enable"、"binlog_format"、"binlog_row_image"、"table_schema"、"schema_of_shard_tables"、"auto_increment_ID"
 clean-dump-file: true           # 是否清理 dump 阶段产生的文件，包括 metadata 文件、建库建表 SQL 文件以及数据导入 SQL 文件
 
 target-database:                # 下游数据库实例配置

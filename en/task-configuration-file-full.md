@@ -29,12 +29,11 @@ The following is the task configuration file template which allows you to perfor
 name: test                      # The name of the task. Should be globally unique.
 task-mode: all                  # The task mode. Can be set to `full`/`incremental`/`all`.
 shard-mode: "pessimistic"       # This needs to be configured if it is a shard merge task. The "pessimistic" mode is used by default. After understanding the principles and restrictions of the "optimistic" mode, you can set to the "optimistic" mode.
-ignore-checking-items: []       # The checking items that are ignored, including `all`/`dump_privilege`/`replication_privilege`/`version`/`binlog_enable`/`binlog_format`/`binlog_row_image`/`table_schema`/`schema_of_shard_tables`/`auto_increment_ID`.
 meta-schema: "dm_meta"          # The downstream database that stores the `meta` information.
 timezone: "Asia/Shanghai"       # The timezone.
 case-sensitive: false           # Determines whether the schema/table is case-sensitive.
 online-ddl-scheme: "gh-ost"     # Only "gh-ost" and "pt" are currently supported.
-ignore-checking-items: []       # No element, which means not to disable any checking items.
+ignore-checking-items: []       # No element, which means not to disable any checking items. Available items are `all`/`dump_privilege`/`replication_privilege`/`version`/`binlog_enable`/`binlog_format`/`binlog_row_image`/`table_schema`/`schema_of_shard_tables`/`auto_increment_ID`.
 clean-dump-file: true           # Whether to clean up the files generated during data dump. Note that these include `metadata` files.
 
 target-database:                # Configuration of the downstream database instance.
