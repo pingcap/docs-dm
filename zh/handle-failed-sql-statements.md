@@ -201,8 +201,8 @@ ERROR 8200 (HY000): Unsupported modify column: can't change decimal column preci
 
 假设现在存在如下四个上游表需要合并迁移到下游的同一个表 ``` `shard_db`.`shard_table` ```，任务模式为悲观协调模式：
 
-- MySQL 实例 1 内有 `shard_db_1` 逻辑库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
-- MySQL 实例 2 内有 `shard_db_2` 逻辑库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
+- MySQL 实例 1 内有 `shard_db_1` 库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
+- MySQL 实例 2 内有 `shard_db_2` 库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
 
 初始时表结构为：
 
@@ -540,8 +540,8 @@ ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
 
 假设现在存在如下四个上游表需要合并迁移到下游的同一个表 ``` `shard_db`.`shard_table` ```，任务模式为悲观协调模式：
 
-- MySQL 实例 1 内有 `shard_db_1` 逻辑库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
-- MySQL 实例 2 内有 `shard_db_2` 逻辑库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
+- MySQL 实例 1 内有 `shard_db_1` 库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
+- MySQL 实例 2 内有 `shard_db_2` 库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
 
 初始时表结构为：
 
