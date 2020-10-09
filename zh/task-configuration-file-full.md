@@ -127,7 +127,7 @@ mysql-instances:
     source-id: "mysql-replica-02"  # 对应 source.toml 中的 `source-id`
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量，等同于 mydumper 处理单元配置中的 `threads`，当同时指定它们时 `mydumper-thread` 优先级更高
     loader-thread: 16              # loader 用于导入数据的线程数量，等同于 loader 处理单元配置中的 `pool-size`，当同时指定它们时 `loader-thread` 优先级更高。当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值.
-    syncer-thread: 16              # syncer 用于复制增量数据的线程数量，等同于 syncer 处理单元配置中的 `worker-count`，当同时指定它们时 `syncer-thread` 优先级更高；当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
+    syncer-thread: 16              # syncer 用于复制增量数据的线程数量，等同于 syncer 处理单元配置中的 `worker-count`，当同时指定它们时 `syncer-thread` 优先级更高。当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
 ```
 
 ## 配置顺序
