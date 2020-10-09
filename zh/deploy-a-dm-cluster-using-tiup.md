@@ -6,10 +6,6 @@ aliases: ['/docs-cn/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible/',
 
 # 使用 TiUP 部署 DM 集群（实验特性）
 
-> **注意：**
->
-> 本文描述特性仍为实验特性，不建议在生产环境下使用 TiUP 部署 DM 集群。
-
 [TiUP](https://github.com/pingcap/tiup) 是 TiDB 4.0 版本引入的集群运维工具，[TiUP DM](maintain-dm-using-tiup.md) 是 TiUP 提供的使用 Golang 编写的集群管理组件，通过 TiUP DM 组件就可以进行日常的运维工作，包括部署、启动、关闭、销毁、扩缩容、升级 DM 集群以及管理 DM 集群参数。
 
 目前 TiUP 可以支持部署 v2.0 及以上版本的 DM。本文将介绍不同集群拓扑的具体部署步骤。
