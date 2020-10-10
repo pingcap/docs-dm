@@ -88,7 +88,7 @@ source /home/tidb/.bash_profile
 
 请根据[配置文件模板](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml)，新建一个配置文件 `topology.yaml`。如果有其他组合场景的需求，请根据多个模板自行调整。
 
-一个最小化部署（3 个 dm-master、3 个 dm-worker 与 1 个监控组件）的配置如下：
+部署 3 个 DM-master、3 个 DM-worker 与 1 个监控组件的配置如下：
 
 ```yaml
 ---
@@ -122,6 +122,8 @@ alertmanager_servers:
 > **注意：**
 >
 > - 如果不需要确保 DM 集群高可用，则可只部署 1 个 DM-master 节点、不少于上游待迁移的 MySQL/MariaDB 实例数的 DM-worker 节点。
+>
+> - 如果需要确保 DM 集群高可用，则推荐部署 3 个 DM-master 节点、大于上游待迁移的 MySQL/MariaDB 实例数的 DM-worker 节点（如比上游实例数多 2 个 DM-worker 节点）。
 >
 > - 对于需要全局生效的参数，请在配置文件中 `server_configs` 的对应组件下配置。
 >
