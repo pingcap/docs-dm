@@ -41,6 +41,8 @@ aliases: ['/docs-cn/tidb-data-migration/dev/deploy-a-dm-cluster-using-binary/']
 
 > **注意：**
 >
+> - 如果不需要确保 DM 集群高可用，则可只部署 1 个 DM-master 节点、不少于上游待迁移的 MySQL/MariaDB 实例数的 DM-worker 节点。
+>
 > - 需要确保以下组件间端口可正常连通：
 >
 >     - 各 DM-master 节点间的 `8291` 端口可互相连通。

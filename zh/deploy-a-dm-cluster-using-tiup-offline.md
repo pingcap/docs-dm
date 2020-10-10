@@ -121,6 +121,8 @@ alertmanager_servers:
 
 > **注意：**
 >
+> - 如果不需要确保 DM 集群高可用，则可只部署 1 个 DM-master 节点、不少于上游待迁移的 MySQL/MariaDB 实例数的 DM-worker 节点。
+>
 > - 对于需要全局生效的参数，请在配置文件中 `server_configs` 的对应组件下配置。
 >
 > - 对于需要某个节点生效的参数，请在具体节点的 `config` 中配置。
