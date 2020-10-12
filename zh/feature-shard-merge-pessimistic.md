@@ -27,10 +27,16 @@ DM 在悲观模式下进行分表 DDL 的迁移有以下几点使用限制：
 
     - DM-worker 中的 binlog 复制单元（sync）会自动忽略掉上游分表的 `DROP DATABASE` 和 `DROP TABLE` 语句。
 
+- sharding group 数据迁移任务不支持 `TRUNCATE TABLE` 语句。
+
+    - DM-worker 中的 binlog 复制单元（sync）会自动忽略掉上游分表的 `TRUNCATE TABLE` 语句。
+
 - sharding group 数据迁移任务支持 `RENAME TABLE` 语句，但有如下限制（online DDL 中的 `RENAME` 有特殊方案进行支持）：
 
     - 只支持 `RENAME TABLE` 到一个不存在的表。
     - 一条 `RENAME TABLE` 语句只能包含一个 `RENAME` 操作。
+
+- sharding group 数据迁移任务要求一个 DDL 语句仅包含对一张表的操作。
 
 - 增量复制任务需要确认开始迁移的 binlog position 上各分表的表结构必须一致，才能确保来自不同分表的 DML 语句能够迁移到表结构确定的下游，并且后续各分表的 DDL 语句能够正确匹配与迁移。
 
