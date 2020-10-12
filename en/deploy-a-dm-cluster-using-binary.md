@@ -42,9 +42,9 @@ Based on this scenario, the following sections describe how to deploy the DM clu
 
 > **Note:**
 >
-> - If the DM cluster does not need to be highly available, deploy only one DM-master node. The number of deployed DM-worker nodes must be no less than the number of upstream MySQL/MariaDB instances to be migrated.
+> - If you do not need to ensure high availability of the DM cluster, deploy only one DM-master node. The number of deployed DM-worker nodes must be no less than the number of upstream MySQL/MariaDB instances to be migrated.
 >
-> - If the DM cluster needs to be highly available, it is recommended to deploy three DM-master nodes. The number of deployed DM-worker nodes must be greater than the number of upstream MySQL/MariaDB instances to be migrated (e.g. there are two more DM-worker nodes than upstream instances).
+> - If you need to ensure high availability of the DM cluster, it is recommended to deploy three DM-master nodes. The number of deployed DM-worker nodes must be greater than the number of upstream MySQL/MariaDB instances to be migrated (e.g. there are two more DM-worker nodes than upstream instances).
 >
 > - Make sure that the ports among the following components are interconnected:
 >     - The `8291` ports among the DM-master nodes are interconnected.
