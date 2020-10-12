@@ -72,7 +72,7 @@ According to the intended cluster topology, you need to manually create and edit
 
 You need to create a YAML configuration file (named `topology.yaml` for example) according to the [configuration file template](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml). For other scenarios, edit the configuration accordingly.
 
-The configuration file of a minimal deployment topology (3 DM-master instances, 3 DM-worker instances, and 1 monitoring component) is as follows:
+The configuration file of deploying three DM-masters, three DM-workers and one monitoring component is as follows:
 
 ```yaml
 ---
@@ -104,6 +104,10 @@ alertmanager_servers:
 ```
 
 > **Note:**
+>
+> - If the DM cluster does not need to be highly available, deploy only one DM-master node. The number of deployed DM-worker nodes must be no less than the number of upstream MySQL/MariaDB instances to be migrated.
+>
+> - If the DM cluster needs to be highly available, it is recommended to deploy three DM-master nodes. The number of deployed DM-worker nodes must be greater than the number of upstream MySQL/MariaDB instances to be migrated (e.g. there are two more DM-worker nodes than upstream instances).
 >
 > - For parameters that should be globally effective, configure these parameters of corresponding components in the `server_configs` section of the configuration file.
 >
