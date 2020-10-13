@@ -42,6 +42,8 @@ title: 使用 DM binary 部署 DM 集群
 >
 > - 如果不需要确保 DM 集群高可用，则可只部署 1 个 DM-master 节点，且部署的 DM-worker 节点数量不少于上游待迁移的 MySQL/MariaDB 实例数。
 >
+> - 如果需要确保 DM 集群高可用，则推荐部署 3 个 DM-master 节点，且部署的 DM-worker 节点数量大于上游待迁移的 MySQL/MariaDB 实例数（如 DM-worker 节点数量比上游实例数多 2 个）。
+>
 > - 需要确保以下组件间端口可正常连通：
 >
 >     - 各 DM-master 节点间的 `8291` 端口可互相连通。
