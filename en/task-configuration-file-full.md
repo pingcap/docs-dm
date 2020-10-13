@@ -101,14 +101,13 @@ mydumpers:
 # Configuration arguments of the Loader processing unit.
 loaders:
   global:                            # The configuration name of the processing unit.
-    pool-size: 16                    # The number of threads that execute Mydumper SQL files concurrently in Loader (16 by default).
-    # The directory output by Mydumper that Loader reads ("./dumped_data" by default). Directories for different tasks of the same instance must be different (Mydumper outputs the SQL file based on the directory).
-    dir: "./dumped_data"
+    pool-size: 16                    # The number of threads that execute Mydumper SQL files concurrently in Loader (16 by default). When multiple instances are migrating data to TiDB at the same time, slightly reduce the value according to the load condition.
+    dir: "./dumped_data"             # The directory output by Mydumper that Loader reads ("./dumped_data" by default). Directories for different tasks of the same instance must be different (Mydumper outputs the SQL file based on the directory).
 
 # Configuration arguments of the Syncer processing unit.
 syncers:
   global:                            # The configuration name of the processing unit.
-    worker-count: 16                 # The number of threads that replicate binlog events concurrently in Syncer.
+    worker-count: 16                 # The number of threads that replicate binlog events concurrently in Syncer. When multiple instances are migrating data to TiDB at the same time, slightly reduce the value according to the lo a d.
     batch: 100                       # The number of SQL statements in a transaction batch that Syncer replicates to the downstream database (100 by default).
     enable-ansi-quotes: true         # Enable this argument if `sql-mode: "ANSI_QUOTES"` is set in the `session`
     safe-mode: false                 # If set to true, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. This ensures that DML statements can be imported repeatedly during data migration when there is any primary key or unique index in the table schema. TiDB DM automatically enables safe mode within the first 5 minutes after starting or resuming migration tasks.
@@ -133,9 +132,9 @@ mysql-instances:
 
   -
     source-id: "mysql-replica-02"                   # The `source-id` in source.toml.
-    mydumper-thread: 4                              # The number of threads that Mydumper uses for dumping data. `mydumper-thread` corresponds to `threads` in the configuration of mydumper processing unit.
-    loader-thread: 16                               # The number of threads that Loader uses for loading data. `loader-thread` corresponds to `pool-size` in the configuration of loader processing unit.
-    syncer-thread: 16                               # The number of threads that Syncer uses for replicating incremental data. `syncer-thread` corresponds to `worker-count` in the configuration of the syncer processing unit.
+    mydumper-thread: 4                              # The number of threads that Mydumper uses for dumping data. `mydumper-thread` corresponds to `threads` in the configuration of mydumper processing unit, while `mydumper-thread` has higher priority they are both configured.
+    loader-thread: 16                               # The number of threads that Loader uses for loading data. `loader-thread` corresponds to `pool-size` in the configuration of loader processing unit, while `loader-thread` has higher priority when they are both configured. When multiple instances are migrating data to TiDB at the same time, slightly reduce the value according to the load condition.
+    syncer-thread: 16                               # The number of threads that Syncer uses for replicating incremental data. `syncer-thread` corresponds to `worker-count` in the configuration of the syncer processing unit, while `syncer-thread`  has higher priority when they are both configured. When multiple instances are migrating data to TiDB at the same time, slightly reduce the value according to the load condition.
 ```
 
 ## Configuration order

@@ -8,6 +8,10 @@ aliases: ['/docs/tidb-data-migration/dev/deploy-a-dm-cluster-using-binary/']
 
 This document introduces how to quickly deploy the Data Migration (DM) cluster using DM binary.
 
+> **Note:**
+>
+> In production, it is recommended to [use TiUP to deploy a DM cluster](deploy-a-dm-cluster-using-tiup.md).
+
 ## Preparations
 
 Download the official binary using the download link in the following table:
