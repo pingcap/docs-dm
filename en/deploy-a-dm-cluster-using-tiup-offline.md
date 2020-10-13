@@ -88,7 +88,7 @@ You need to edit the cluster initialization configuration file according to diff
 
 For the full configuration template, refer to the [TiUP configuration parameter template](https://github.com/pingcap/tiup/blob/master/examples/topology.example.yaml). Create a configuration file `topology.yaml`. In other combined scenarios, edit the configuration file as needed according to the templates.
 
-he configuration of deploying three DM-masters, three DM-workers, and one monitoring component instance is as follows:
+The configuration of deploying three DM-masters, three DM-workers, and one monitoring component instance is as follows:
 
 ```yaml
 ---
