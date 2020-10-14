@@ -73,7 +73,7 @@ Global Flags:
     - Flag parameter, string, `--binlog-pos`
     - If it is not specified, DM automatically handles the currently failed SQL statement.
     - If it is specified, the skip operation is executed when `binlog-pos` matches with the position of the binlog event. The format is `binlog-filename:binlog-pos`, for example, `mysql-bin|000001.000003:3270`.
-    - After the migration returns an error, the binlog position can be obtained from `position` in `startLocation` returned by `query-status`, while before the migration returns an error, the binlog position can be obtained by using [`SHOW BINLOG EVENTS`](https://dev.mysql.com/doc/refman/5.7/en/show-binlog-events.html) in the upstream MySQL.
+    - After the migration returns an error, the binlog position can be obtained from `position` in `startLocation` returned by `query-status`. Before the migration returns an error, the binlog position can be obtained by using [`SHOW BINLOG EVENTS`](https://dev.mysql.com/doc/refman/5.7/en/show-binlog-events.html) in the upstream MySQL instance.
 
 ## Usage examples
 
