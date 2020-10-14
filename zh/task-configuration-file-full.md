@@ -92,7 +92,7 @@ mydumpers:                           # mydumper 处理单元运行配置参数
     threads: 4                       # mydumper 从上游数据库实例导出数据的线程数量，默认值为 4
     chunk-filesize: 64               # mydumper 生成的数据文件大小，默认值为 64，单位为 MB
     skip-tz-utc: true                # 忽略对时间类型数据进行时区转化，默认值为 true
-    extra-args: "--no-locks"         # mydumper 的其他参数，不需要在 extra-args 中配置 table-list，DM 会自动生成
+    extra-args: "--consistency none" # mydumper 的其他参数，不需要在 extra-args 中配置 table-list，DM 会自动生成
 
 loaders:                             # loader 处理单元运行配置参数
   global:                            # 配置名称
