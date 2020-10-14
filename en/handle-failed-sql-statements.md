@@ -201,8 +201,8 @@ Assume that it is acceptable in the actual production environment that this DDL 
 
 Assume that you need to merge and migrate the following four tables in the upstream to one same table ``` `shard_db`.`shard_table` ``` in the downstream. The task mode is "pessimistic".
 
-- MySQL instance 1 contains the `shard_db_1` library, which includes the `shard_table_1` and `shard_table_2` tables.
-- MySQL instance 2 contains the `shard_db_2` library, which includes the `shard_table_1` and `shard_table_2` tables.
+- MySQL instance 1 contains the `shard_db_1` schema, which includes the `shard_table_1` and `shard_table_2` tables.
+- MySQL instance 2 contains the `shard_db_2` schema, which includes the `shard_table_1` and `shard_table_2` tables.
 
 The initial table schema is:
 
