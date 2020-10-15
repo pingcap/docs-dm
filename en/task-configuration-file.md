@@ -45,8 +45,8 @@ mysql-instances:
   - source-id: "mysql-replica-01"
     block-allow-list:  "bw-rule-1"
     mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data.
-    loader-thread: 16              # The number of threads that Loader uses for loading data. When multiple instances are migrating data to TiDB at the same time, slightly reduce the value according to the load.
-    syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data. When multiple instances are migrating data to TiDB at the same time, slightly reduce the value according to the load.
+    loader-thread: 16              # The number of threads that Loader uses for loading data. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
+    syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
 
   - source-id: "mysql-replica-02"
     block-allow-list:  "bw-rule-1" # Use black-white-list if the DM's version <= v2.0.0-beta.2.

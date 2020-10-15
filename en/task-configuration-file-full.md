@@ -107,7 +107,7 @@ loaders:
 # Configuration arguments of the Syncer processing unit.
 syncers:
   global:                            # The configuration name of the processing unit.
-    worker-count: 16                 # The number of threads that replicate binlog events concurrently in Syncer. When multiple instances are migrating data to TiDB at the same time, slightly reduce the value according to the load.
+    worker-count: 16                 # The number of threads that replicate binlog events concurrently in Syncer. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
     batch: 100                       # The number of SQL statements in a transaction batch that Syncer replicates to the downstream database (100 by default).
     enable-ansi-quotes: true         # Enable this argument if `sql-mode: "ANSI_QUOTES"` is set in the `session`
     safe-mode: false                 # If set to true, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. This ensures that DML statements can be imported repeatedly during data migration when there is any primary key or unique index in the table schema. TiDB DM automatically enables safe mode within the first 5 minutes after starting or resuming migration tasks.
@@ -133,8 +133,8 @@ mysql-instances:
   -
     source-id: "mysql-replica-02"                   # The `source-id` in source.toml.
     mydumper-thread: 4                              # The number of threads that Mydumper uses for dumping data. `mydumper-thread` corresponds to the `threads` configuration of the mydumper processing unit. `mydumper-thread` has overriding priority when the two items are both configured.
-    loader-thread: 16                               # The number of threads that Loader uses for loading data. `loader-thread` corresponds to the `pool-size` configuration of the loader processing unit. `loader-thread` has overriding priority when the two items are both configured. When multiple instances are migrating data to TiDB at the same time, slightly reduce the value according to the load.
-    syncer-thread: 16                               # The number of threads that Syncer uses for replicating incremental data. `syncer-thread` corresponds to the `worker-count` configuration of the syncer processing unit. `syncer-thread`  has overriding priority when the two items are both configured. When multiple instances are migrating data to TiDB at the same time, slightly reduce the value according to the load.
+    loader-thread: 16                               # The number of threads that Loader uses for loading data. `loader-thread` corresponds to the `pool-size` configuration of the loader processing unit. `loader-thread` has overriding priority when the two items are both configured. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
+    syncer-thread: 16                               # The number of threads that Syncer uses for replicating incremental data. `syncer-thread` corresponds to the `worker-count` configuration of the syncer processing unit. `syncer-thread` has overriding priority when the two items are both configured. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
 ```
 
 ## Configuration order
