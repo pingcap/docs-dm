@@ -72,7 +72,7 @@ Global Flags:
     - Flag parameter, string, `--binlog-pos`
     - If it is not specified, DM automatically handles the currently failed SQL statement.
     - If it is specified, the skip operation is executed when `binlog-pos` matches with the position of the binlog event. The format is `binlog-filename:binlog-pos`, for example, `mysql-bin|000001.000003:3270`.
-    - When the migration returns an error, the binlog position can be obtained from `position` in `startLocation` returned by `query-status`.
+    - After the migration returns an error, the binlog position can be obtained from `position` in `startLocation` returned by `query-status`. Before the migration returns an error, the binlog position can be obtained by using [`SHOW BINLOG EVENTS`](https://dev.mysql.com/doc/refman/5.7/en/show-binlog-events.html) in the upstream MySQL instance.
 
 ## Usage examples
 
@@ -199,6 +199,9 @@ Assume that it is acceptable in the actual production environment that this DDL 
 #### Shard merge scenario
 
 Assume that you need to merge and migrate the following four tables in the upstream to one same table ``` `shard_db`.`shard_table` ``` in the downstream. The task mode is "pessimistic".
+
+- MySQL instance 1 contains the `shard_db_1` schema, which includes the `shard_table_1` and `shard_table_2` tables.
+- MySQL instance 2 contains the `shard_db_2` schema, which includes the `shard_table_1` and `shard_table_2` tables.
 
 The initial table schema is:
 
