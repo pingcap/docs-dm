@@ -7,6 +7,10 @@ summary: Learn how to deploy a Data Migration cluster using DM binary.
 
 This document introduces how to quickly deploy the Data Migration (DM) cluster using DM binary.
 
+> **Note:**
+>
+> In the production environment, it is recommended to [use TiUP to deploy a DM cluster](deploy-a-dm-cluster-using-tiup.md).
+
 ## Preparations
 
 Download the official binary using the download link in the following table:

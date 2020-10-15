@@ -96,7 +96,8 @@ mydumpers:                           # mydumper 处理单元运行配置参数
 loaders:                             # loader 处理单元运行配置参数
   global:                            # 配置名称
     pool-size: 16                    # loader 并发执行 mydumper 的 SQL 文件的线程数量，默认值为 16，当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
-    dir: "./dumped_data"             # loader 读取 mydumper 输出文件的地址，同实例对应的不同任务必须不同（mydumper 会根据这个地址输出 SQL 文件），默认值为 "./dumped_data"
+    dir: "./dumped_data"             # mydumper 输出 SQL 文件的目录，同时也是 loader 读取文件的目录。该配置项的默认值为 "./dumped_data"。同实例对应的不同任务必须配置不同的目录
+    
 
 syncers:                             # syncer 处理单元运行配置参数
   global:                            # 配置名称
@@ -125,7 +126,7 @@ mysql-instances:
   -
     source-id: "mysql-replica-02"  # 对应 source.toml 中的 `source-id`
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量，等同于 mydumper 处理单元配置中的 `threads`，当同时指定它们时 `mydumper-thread` 优先级更高
-    loader-thread: 16              # loader 用于导入数据的线程数量，等同于 loader 处理单元配置中的 `pool-size`，当同时指定它们时 `loader-thread` 优先级更高。当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值.
+    loader-thread: 16              # loader 用于导入数据的线程数量，等同于 loader 处理单元配置中的 `pool-size`，当同时指定它们时 `loader-thread` 优先级更高。当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
     syncer-thread: 16              # syncer 用于复制增量数据的线程数量，等同于 syncer 处理单元配置中的 `worker-count`，当同时指定它们时 `syncer-thread` 优先级更高。当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
 ```
 
