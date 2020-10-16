@@ -77,7 +77,7 @@ To verify component caller's identity, you need to mark the certificate user ide
 
 ### Reload certificates
 
-To reload the certificates and the keys, DM-master, DM-worker, and dmctl reread the current certificates and the key files each time a new connection is created. Currently, you cannot reload the CA certificate.
+To reload the certificates and the keys, DM-master, DM-worker, and dmctl reread the current certificates and the key files each time a new connection is created.
 
 ## Enable encrypted data transmission between DM components and the upstream or downstream database
 
