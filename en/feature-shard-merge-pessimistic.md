@@ -19,9 +19,12 @@ DM has the following sharding DDL usage restrictions in the pessimistic mode:
     - For example, if DDL statements are not executed on one or more upstream sharded tables corresponding to `DM-worker-2`, then other DM-workers that have executed the DDL statements pause their migration task and wait for `DM-worker-2` to receive the upstream DDL statements.
 - The sharding group migration task does not support `DROP DATABASE`/`DROP TABLE`.
     - The Syncer unit in DM-worker automatically ignores the `DROP DATABASE`/`DROP TABLE` statement of upstream sharded tables.
+- The sharding group migration task does not support `TRUNCATE TABLE`.
+    - The Syncer unit in DM-worker automatically ignores the `TRUNCATE TABLE` statement of upstream sharded tables.
 - The sharding group migration task supports `RENAME TABLE`, but with the following limitations (Online DDL is supported in another solution):
     - A table can only be renamed to a new name that is not used by any other table.
     - A single `RENAME TABLE` statement can only involve a single `RENAME` operation.
+- The sharding group migration task requires each DDL statement to involve operations on only one table.
 - The table schema of each sharded table must be the same at the starting point of the incremental replication task, so as to make sure the DML statements of different sharded tables can be migrated into the downstream with a definite table schema, and the subsequent sharding DDL statements can be correctly matched and migrated.
 - If you need to change the [table routing](key-features.md#table-routing) rule, you have to wait for the migration of all sharding DDL statements to complete.
     - During the migration of sharding DDL statements, an error is reported if you use `dmctl` to change `router-rules`.
