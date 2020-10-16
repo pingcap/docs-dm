@@ -1,9 +1,9 @@
 ---
-title: 切换 DM-worker 与上游 MySQL 实例的连接
+title: DM-worker 在上游 MySQL 主从间切换
 summary: 了解如何切换 DM-worker 与上游 MySQL 实例的连接。
 ---
 
-# 切换 DM-worker 与上游 MySQL 实例的连接
+# DM-worker 在上游 MySQL 主从间切换
 
 当需要对 DM-worker 所连接的上游 MySQL 实例进行停机维护或该实例意外宕机时，需要将 DM-worker 的连接切换到同一个主从复制集群内的另一个 MySQL 实例上。本文介绍如何将 DM-worker 的连接从一个 MySQL 实例切换到另一个 MySQL 实例上。
 
