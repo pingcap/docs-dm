@@ -4,6 +4,7 @@ This repository stores all the source files of [TiDB Data Migration (DM) documen
 
 - `en`: [documentation in English](/en/TOC.md)
 - `zh`: [documentation in Chinese](/zh/TOC.md)
+- `id`: [documentation in Indonesian](http://translate.google.com/translate?hl=en&sl=en&tl=id&u=https%3A%2F%2Fgithub.com%2Fpingcap%2Fdocs-dm%2Fblob%2Fmaster%2Fen%2FTOC.md)
 
 ## Documentation versions
 
