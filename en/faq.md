@@ -115,6 +115,6 @@ Record the position information in the global checkpoint (`is_global=1`) corresp
 Set the parameters below to a value larger than the default 67108864 (64M).
 
 - The global variable of the TiDB server: `max_allowed_packet`.
-- The configuration item in the data source configuration file: `target-database.max-allowed-packet`. Please refer to [DM Advanced Task Configuration File](task-configuration-file-full.md)
+- The configuration item in the data source configuration file: `target-database.max-allowed-packet`. For details, refer to [DM Advanced Task Configuration File](task-configuration-file-full.md).
 
 For details, see [Loader solution](https://docs.pingcap.com/tidb/stable/loader-overview#solution).
