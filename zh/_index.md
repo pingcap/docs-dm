@@ -50,15 +50,7 @@ dmctl 是用来控制 DM 集群的命令行工具。
 
 ## 迁移功能介绍
 
-<<<<<<< HEAD
 下面简单介绍 DM 数据迁移功能的核心特性。
-=======
-- [Data Migration 简单使用场景](usage-scenario-simple-migration.md)
-- [分库分表合并场景](usage-scenario-shard-merge.md)
-- [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
-- [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
-- [DM-worker 在上游 MySQL 主从间切换](usage-scenario-master-slave-switch.md)
->>>>>>> 10abeaa... Update usage-scenario-simple-migration.md (#420)
 
 ### Table routing
 
