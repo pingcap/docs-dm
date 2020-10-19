@@ -50,15 +50,7 @@ dmctl is the command line tool used to control the DM cluster.
 
 ## Data migration features
 
-<<<<<<< HEAD
 This section describes the data migration features provided by the Data Migration tool.
-=======
-- [Simple Usage Scenario](usage-scenario-simple-migration.md)
-- [Shard Merge Scenario](usage-scenario-shard-merge.md)
-- [Migrate from a MySQL-compatible Database](migrate-from-mysql-aurora.md)
-- [Shard Merge Scenario Best Practices](shard-merge-best-practices.md)
-- [Switch DM-worker connection between MySQL Instances](usage-scenario-master-slave-switch.md)
->>>>>>> 9488ec1... Update migrate-from-mysql-aurora.md (#421)
 
 ### Schema and table routing
 
