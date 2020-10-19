@@ -47,6 +47,8 @@ In addition, the following restrictions apply to both the optimistic mode and th
 - In an incremental replication task, ensure that each sharded table's schema that corresponds to the binlog position at the start of the task is consistent with each other.
 - The new table added to a sharding group must have a consistent table schema with that of other members. The `CREATE/RENAME TABLE` statement is forbidden when a batch of DDL statements is being executed.
 - `DROP TABLE` or `DROP DATABASE` is not supported.
+- `TRUNCATE TABLE` is not supported.
+- Each DDL statement must involve operations on only one table.
 - The DDL statement that is not supported in TiDB is also not supported in DM.
 - The default value of a newly added column must not contain `current_timestamp`, `rand()`, `uuid()`; otherwise, data inconsistency between the upstream and the downstream might occur.
 
