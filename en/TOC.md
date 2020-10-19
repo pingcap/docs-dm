@@ -24,7 +24,7 @@
   - [DM 1.0-GA Benchmark Report](benchmark-v1.0-ga.md)
   - [DM 1.0-alpha Benchmark Report](benchmark-v1-alpha.md)
 + Usage Scenarios
-  - [Simple Scenario](usage-scenario-simple-migration.md)
+  - [Data Migration Simple Usage Scenario](usage-scenario-simple-migration.md)
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
   - [Switch DM-worker Connection between MySQL Instances](usage-scenario-master-slave-switch.md)
