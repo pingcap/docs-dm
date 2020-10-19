@@ -69,7 +69,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 - [Shard Merge Scenario](usage-scenario-shard-merge.md)
 - [Migrate from MySQL (Amazon Aurora)](migrate-from-mysql-aurora.md)
 - [Shard Merge Scenario Best Practices](shard-merge-best-practices.md)
-- [Switch DM-worker connection](usage-scenario-master-slave-switch.md)
+- [Switch DM-worker connection between MySQL Instances](usage-scenario-master-slave-switch.md)
 
 </NavColumn>
 
