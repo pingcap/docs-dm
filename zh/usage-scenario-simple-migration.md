@@ -1,9 +1,9 @@
 ---
-title: 简单的从库迁移场景
+title: Data Migration 简单使用场景
 aliases: ['/zh/tidb-data-migration/v2.0/usage-scenario-simple-replication']
 ---
 
-# 简单的从库迁移场景
+# Data Migration 简单使用场景
 
 本文介绍了 DM 工具的一个简单使用场景（非分库分表合并场景）：将三个上游 MySQL 实例的数据迁移到一个下游 TiDB 集群中。
 
