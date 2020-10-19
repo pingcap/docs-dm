@@ -52,7 +52,7 @@
   - [故障及处理方法](error-handling.md)
   - [性能问题及处理方法](handle-performance-issues.md)
 + 教程
-  - [简单的从库迁移场景](usage-scenario-simple-migration.md)
+  - [Data Migration 简单使用场景](usage-scenario-simple-migration.md)
   - [分库分表合并场景](usage-scenario-shard-merge.md)
   - [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
   - [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
