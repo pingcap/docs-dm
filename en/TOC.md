@@ -50,7 +50,7 @@
   - [Query Task Status](query-status.md)
   - [Skip or Replace Abnormal SQL Statements](skip-or-replace-abnormal-sql-statements.md)
 - [Monitor](monitor-a-dm-cluster.md)
-+ Migrate from MySQL compatible database
++ Migrate from MySQL-compatible Database
   - [Migrate from Amazon Aurora](migrate-from-mysql-aurora.md)
 + [DM Portal](dm-portal.md)
 + Alert
