@@ -1,10 +1,10 @@
 ---
-title: Simple Migration Scenario
+title: Data Migration Simple Usage Scenario
 summary: Learn how to use Data Migration to migrate data in a simple scenario.
 aliases: ['/docs/tidb-data-migration/dev/usage-scenario-simple-replication/','/tidb-data-migration/dev/usage-scenario-simple-replication']
 ---
 
-# Simple Migration Scenario
+# Data Migration Simple Usage Scenario
 
 This document shows how to use Data Migration (DM) in a simple data migration scenario where the data of three upstream MySQL instances needs to be migrated to a downstream TiDB cluster (no sharding data).
 

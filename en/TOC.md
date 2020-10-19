@@ -54,7 +54,7 @@
   - [Handle Errors](error-handling.md)
   - [Handle Performance Issues](handle-performance-issues.md)
 + Tutorials
-  - [Simple Migration Scenario](usage-scenario-simple-migration.md)
+  - [Data Migration Simple Usage Scenario](usage-scenario-simple-migration.md)
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Migrate from a MySQL-compatible database](migrate-from-mysql-aurora.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
