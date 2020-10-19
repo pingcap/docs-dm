@@ -59,7 +59,39 @@
 + 故障处理
   - [故障及处理方法](error-handling.md)
   - [性能问题及处理方法](handle-performance-issues.md)
+<<<<<<< HEAD
 - [DM FAQ](faq.md)
+=======
++ 教程
+  - [Data Migration 简单使用场景](usage-scenario-simple-migration.md)
+  - [分库分表合并场景](usage-scenario-shard-merge.md)
+  - [从 Aurora 迁移到 TiDB](migrate-from-mysql-aurora.md)
+  - [分表合并数据迁移最佳实践](shard-merge-best-practices.md)
+  - [下游表结构存在更多列的迁移场景](usage-scenario-downstream-more-columns.md)
+  - [切换 DM-worker 与上游 MySQL 实例的连接](usage-scenario-master-slave-switch.md)
++ 性能调优
+  - [配置调优](tune-configuration.md)
++ 参考指南
+  + 架构
+    - [DM 简介](overview.md)
+    - [DM-worker 简介](dm-worker-intro.md)
+  - [DM 命令行参数](command-line-flags.md)
+  + 配置
+    - [概述](config-overview.md)
+    - [DM-master 配置](dm-master-configuration-file.md)
+    - [DM-worker 配置](dm-worker-configuration-file.md)
+    - [上游数据库配置](source-configuration-file.md)
+    - [任务配置](task-configuration-file.md)
+    - [完整任务配置](task-configuration-file-full.md)
+  + 安全
+    - [为 DM 的连接开启加密传输](enable-tls.md)
+    - [生成自签名证书](generate-self-signed-certificates.md)
+  - [监控指标](monitor-a-dm-cluster.md)
+  - [告警信息](alert-rules.md)
+  - [错误码](error-handling.md#常见故障处理方法)
++ [常见问题](faq.md)
++ [术语表](glossary.md)
+>>>>>>> 3bfa0e7... Update usage-scenario-master-slave-switch.md (#422)
 + 版本发布历史
   + v1.0
     - [1.0.6](releases/1.0.6.md)
