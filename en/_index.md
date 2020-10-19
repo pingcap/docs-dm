@@ -66,7 +66,7 @@ summary: Learn about TiDB Data Migration documentation.
 
 - [Simple Usage Scenario](usage-scenario-simple-migration.md)
 - [Shard Merge Scenario](usage-scenario-shard-merge.md)
-- [Migrate from MySQL (Amazon Aurora)](migrate-from-mysql-aurora.md)
+- [Migrate from a MySQL-compatible Database](migrate-from-mysql-aurora.md)
 - [Shard Merge Scenario Best Practices](shard-merge-best-practices.md)
 - [Switch DM-worker connection between MySQL Instances](usage-scenario-master-slave-switch.md)
 
