@@ -56,7 +56,7 @@
 + Tutorials
   - [Data Migration Simple Usage Scenario](usage-scenario-simple-migration.md)
   - [Shard Merge Scenario](usage-scenario-shard-merge.md)
-  - [Migrate from a MySQL-compatible database](migrate-from-mysql-aurora.md)
+  - [Migrate from a MySQL-compatible Database](migrate-from-mysql-aurora.md)
   - [Shard Merge Best Practices](shard-merge-best-practices.md)
   - [Migration When the Downstream Table Has More Columns](usage-scenario-downstream-more-columns.md)
   - [Switch DM-worker Connection between MySQL Instances](usage-scenario-master-slave-switch.md)
