@@ -4,7 +4,7 @@ summary: Learn about TiDB Data Migration documentation.
 aliases: ['/docs/tidb-data-migration/','/docs/tidb-data-migration/stable/','/docs/tidb-data-migration/v1.0/']
 ---
 
-# TiDB Data Migration Documentation
+# TiDB Data Migration Documentation   
 
 [TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data migration task management platform that supports the full data migration and the incremental data replication from MySQL/MariaDB into TiDB. It can help to reduce the operations cost and simplify the troubleshooting process.
 
