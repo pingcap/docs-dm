@@ -120,15 +120,15 @@ mysql-instances:
     filter-rules: ["filter-rule-1"]                # 该上游数据库实例匹配的表的 binlog event filter 规则名称
     block-allow-list:  "bw-rule-1"                 # 该上游数据库实例匹配的表的 block-allow-list 过滤规则名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
 
-    mydumper-config-name: "global"          # mydumper 配置名称
-    loader-config-name: "global"            # loader 配置名称
-    syncer-config-name: "global"            # Syncer 配置名称
+    mydumper-config-name: "global"          # mydumpers 配置名称
+    loader-config-name: "global"            # loaders 配置名称
+    syncer-config-name: "global"            # syncers 配置名称
 
   -
     source-id: "mysql-replica-02"  # 对应 source.toml 中的 `source-id`
-    mydumper-thread: 4             # mydumper 用于导出数据的线程数量，等同于 mydumper 处理单元配置中的 `threads`，当同时指定它们时 `mydumper-thread` 优先级更高
-    loader-thread: 16              # loader 用于导入数据的线程数量，等同于 loader 处理单元配置中的 `pool-size`，当同时指定它们时 `loader-thread` 优先级更高。当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
-    syncer-thread: 16              # syncer 用于复制增量数据的线程数量，等同于 syncer 处理单元配置中的 `worker-count`，当同时指定它们时 `syncer-thread` 优先级更高。当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
+    mydumper-thread: 4             # mydumper 用于导出数据的线程数量，等同于 mydumpers 处理单元配置中的 `threads`，当同时指定它们时 `mydumper-thread` 优先级更高
+    loader-thread: 16              # loader 用于导入数据的线程数量，等同于 loaders 处理单元配置中的 `pool-size`，当同时指定它们时 `loader-thread` 优先级更高。当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
+    syncer-thread: 16              # syncer 用于复制增量数据的线程数量，等同于 syncers 处理单元配置中的 `worker-count`，当同时指定它们时 `syncer-thread` 优先级更高。当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
 ```
 
 ## 配置顺序
