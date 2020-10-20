@@ -65,7 +65,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 <NavColumn>
 <ColumnTitle>Tutorials</ColumnTitle>
 
-- [Simple Usage Scenario](usage-scenario-simple-migration.md)
+- [Data Migration Simple Usage Scenario](usage-scenario-simple-migration.md)
 - [Shard Merge Scenario](usage-scenario-shard-merge.md)
 - [Migrate from a MySQL-compatible Database](migrate-from-mysql-aurora.md)
 - [Shard Merge Scenario Best Practices](shard-merge-best-practices.md)
