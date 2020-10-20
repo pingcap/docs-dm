@@ -52,7 +52,7 @@ TiDB Data Migration 平台由 3 部分组成：DM-master、DM-worker 和 dmctl�
     sudo yum install -y mysql-community-server &&
     curl https://download.pingcap.org/tidb-v3.0-linux-amd64.tar.gz | tar xzf - &&
     curl https://download.pingcap.org/dm-v1.0.2-linux-amd64.tar.gz | tar xzf - &&
-    curl -L https://github.com/pingcap/docs/raw/master/dev/how-to/get-started/dm-cnf/dm-cnf.tgz | tar xvzf -
+    curl -L https://github.com/pingcap/docs/raw/a164f19957e4cd2126961fad2fc8d96965b1651c/dev/how-to/get-started/dm-cnf/dm-cnf.tgz | tar xvzf -
     ```
 
 2. 创建目录和符号链接：
