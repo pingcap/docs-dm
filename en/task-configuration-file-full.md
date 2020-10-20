@@ -126,15 +126,15 @@ mysql-instances:
     filter-rules: ["filter-rule-1"]                 # The name of the binlog event filtering rule of the table matching the upstream database instance.
     block-allow-list:  "bw-rule-1"                  # The name of the block and allow lists filtering rule of the table matching the upstream database instance. Use black-white-list if the DM's version <= v2.0.0-beta.2.
 
-    mydumper-config-name: "global"                  # The configuration name of the Mydumper processing unit.
-    loader-config-name: "global"                    # The configuration name of the Loader processing unit.
-    syncer-config-name: "global"                    # The configuration name of the Syncer processing unit.
+    mydumper-config-name: "global"                  # The configuration name of the mydumpers processing unit.
+    loader-config-name: "global"                    # The configuration name of the loaders processing unit.
+    syncer-config-name: "global"                    # The configuration name of the syncers processing unit.
 
   -
     source-id: "mysql-replica-02"                   # The `source-id` in source.toml.
-    mydumper-thread: 4                              # The number of threads that Dumpling uses for dumping data. `mydumper-thread` corresponds to the `threads` configuration of the Mydumper processing unit. `mydumper-thread` has overriding priority when the two items are both configured.
-    loader-thread: 16                               # The number of threads that Loader uses for loading data. `loader-thread` corresponds to the `pool-size` configuration of the Loader processing unit. `loader-thread` has overriding priority when the two items are both configured. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
-    syncer-thread: 16                               # The number of threads that Syncer uses for replicating incremental data. `syncer-thread` corresponds to the `worker-count` configuration of the Syncer processing unit. `syncer-thread` has overriding priority when the two items are both configured. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
+    mydumper-thread: 4                              # The number of threads that Dumpling uses for dumping data. `mydumper-thread` corresponds to the `threads` configuration of the mydumpers processing unit. `mydumper-thread` has overriding priority when the two items are both configured.
+    loader-thread: 16                               # The number of threads that Loader uses for loading data. `loader-thread` corresponds to the `pool-size` configuration of the loaders processing unit. `loader-thread` has overriding priority when the two items are both configured. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
+    syncer-thread: 16                               # The number of threads that Syncer uses for replicating incremental data. `syncer-thread` corresponds to the `worker-count` configuration of the syncers processing unit. `syncer-thread` has overriding priority when the two items are both configured. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
 ```
 
 ## Configuration order
