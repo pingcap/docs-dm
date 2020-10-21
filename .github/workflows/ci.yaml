@@ -16,7 +16,6 @@ jobs:
       run:
         git remote add upstream https://github.com/pingcap/docs-dm.git;
         git fetch upstream;
-        echo "checked files are $(git diff-tree --name-only --no-commit-id -r upstream/master...HEAD -- 'zh/' 'en/' '.md' ':(exclude).github/*')";
         python3 ./hack/check-conflicts.py $(git diff-tree --name-only --no-commit-id -r upstream/master...HEAD -- 'zh/' 'en/' '.md' ':(exclude).github/*')
     - name: Markdown lint
       uses: avto-dev/markdown-lint@v1
