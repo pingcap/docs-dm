@@ -6,7 +6,7 @@
 ## 文档目录
 
 + 关于 DM
-  + [性能数据](benchmark-v1.0-ga.md)
+  + [性能数据](benchmark-v2.0-ga.md)
   + 主要特性
     - [Table routing](key-features.md#table-routing)
     - [Block & Allow Lists](key-features.md#block--allow-table-lists)
