@@ -52,10 +52,10 @@ summary: 了解 DM 2.0-GA 版本的性能。
 
 ### 各服务版本信息
 
-- MySQL 版本: 5.7.31-log
-- TiDB 版本: v4.0.7
-- DM 版本: v2.0.0
-- Sysbench 版本: 1.0.17
+- MySQL 版本：5.7.31-log
+- TiDB 版本：v4.0.7
+- DM 版本：v2.0.0
+- Sysbench 版本：1.0.17
 
 ## 测试场景
 
