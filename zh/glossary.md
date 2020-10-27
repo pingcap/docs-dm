@@ -98,6 +98,7 @@ DM-worker 内部用于从上游拉取 Binlog 并写入数据到 Relay log 的处
 指增量复制过程中，用于支持在表结构中存在主键或唯一索引的条件下可重复导入 DML 的模式。该模式的主要特点是：将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE` 后再向下游执行。
 
 该模式会在满足如下任一条件时启用：
+
 - 启动或恢复增量复制任务的前 5 分钟保持启用
 - 任务配置文件中设置 `safe-mode: true` 时会始终启用
 - 全量迁移 Dump 处理单元配置 `--consistency none` 后，在增量复制阶段处理可能不一致的 binlog 时保持启用
