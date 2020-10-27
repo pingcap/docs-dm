@@ -122,7 +122,7 @@ CA 的作用是签发证书。实际情况中，请联系你的管理员签发�
     >
     > 如果要使用 `0.0.0.0` 等特殊 IP 用于连接通讯，也需要将其加入到 `alt_names` 中。
 
-4. 保存 `openssl.cnf` 文件后，生成证书请求文件（在这一步当提供输入 `Common Name (e.g. server FQDN or YOUR name) []:` 时，可以为该证书指定 Common Name，如 `dm`。其作用是让服务端验证接入的客户端的身份，各个组件默认不会开启验证，需要在配置文件中启用该功能才生效）：
+4. 保存 `openssl.cnf` 文件后，生成证书请求文件（在这一步当提供输入 `Common Name (e.g. server FQDN or YOUR name) []:` 时，可以为该证书指定 Common Name (CN)，如 `dm`。其作用是让服务端验证接入的客户端的身份，各个组件默认不会开启验证，需要在配置文件中启用该功能才生效）：
 
     {{< copyable "shell-regular" >}}
 
