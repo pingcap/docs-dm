@@ -39,6 +39,7 @@ Currently, the following statements are not supported in the optimistic mode:
 
 - `ALTER TABLE table_name ADD COLUMN column_name datatype NOT NULL` (To add a `NOT NULL` column without a default value).
 - `ALTER TABLE table_name ADD COLUMN column_name datetime DEFAULT NOW()` (To add a column with a varying value).
+- `ALTER TABLE table_name ADD COLUMN col1 INT, DROP COLUMN col2` (Contain both `ADD COLUMN` and `DROP COLUMN` in one DDL statement).
 - `ALTER TABLE table_name RENAME COLUMN column_1 TO column_2;` (To rename a column).
 - `ALTER TABLE table_name RENAME INDEX index_1 TO index_2;` (To rename an index).
 
