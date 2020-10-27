@@ -110,3 +110,12 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 - 任务配置文件中的配置项 `target-database.max-allowed-packet`（详情参见 [DM 任务完整配置文件介绍](task-configuration-file-full.md)）
 
 设置为比默认 67108864 (64M) 更大的值。详见 [Loader 解决方案](https://docs.pingcap.com/zh/tidb/stable/loader-overview#解决方案)。
+
+### 2.0 集群运行 1.0 已有数据迁移任务时报错 "Error 1054: Unknown column 'binlog_gtid' in 'field list'"
+
+在 DM 2.0 中，为 checkpoint 等元信息表引入了更多的字段。如果直接使用 1.0 集群的任务配置文件在 2.0 中通过 `start-task` 从增量复制阶段继续运行，则会出现 "Error 1054: Unknown column 'binlog_gtid' in 'field list'" 错误。
+
+对于此错误，可使用以下方式之一进行处理：
+
+- [使用 TiUP 导入 DM 1.0 集群到全新的 2.0 集群](maintain-dm-using-tiup.md#导入-dm-ansible-部署的-dm-10-集群并升级)。
+- [手动将 DM 1.0 的数据迁移任务导入到 2.0 集群](manually-upgrade-dm-1.0-to-2.0.md)。
