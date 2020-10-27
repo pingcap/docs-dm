@@ -6,7 +6,7 @@ aliases: ['/docs/tidb-data-migration/dev/benchmark-v1.0-ga/']
 
 # DM 1.0-GA Benchmark Report
 
-This benchmark report describes the test purpose, environment, scenario, and result for DM 1.0-GA.
+This benchmark report describes the test purpose, environment, scenario, and results for DM 1.0-GA.
 
 ## Test purpose
 
@@ -60,7 +60,7 @@ Others:
 
 ## Test scenario
 
-You can refer to the test scenario described in the [performance test](performance-test.md), namely, MySQL1 (172.16.4.40) -> DM-worker -> TiDB (172.16.4.41).
+You can use a simple data migration flow, that is, MySQL1 (172.16.4.40) -> DM-worker -> TiDB (172.16.4.41), to do the test. For detailed test scenario description, see [performance test](performance-test.md).
 
 ### Full import benchmark case
 
@@ -68,12 +68,12 @@ For details, see [Full Import Benchmark Case](performance-test.md#full-import-be
 
 #### Full import benchmark result
 
-| item                            | dump thread | mydumper extra-args             | dump speed (MB/s) |
+| Items                            | Dump thread | mydumper extra-args             | Dump speed (MB/s) |
 | :-----------------------------: | :---------: | :-----------------------------: | :---------------: |
 | enable single table concurrent  | 32          | "-r 320000 --regex '^sbtest.*'" | 191.03            |
 | disable single table concurrent | 32          | "--regex '^sbtest.*'"           | 72.22             |
 
-| item      | latency of execute transaction (s) | statement per transaction | data size (GB) | time (s) | import speed (MB/s) |
+| Item      | Highest latency of txn execution (s) | Statement per transaction | Data size (GB) | Time (s) | Import speed (MB/s) |
 | :-------: | :--------------------------------: | :-----------------------: | :------------: | :------: | :-----------------: |
 | load data | 1.737                              | 4878                      | 38.14          | 2346.9   | 16.64               |
 
@@ -81,7 +81,7 @@ For details, see [Full Import Benchmark Case](performance-test.md#full-import-be
 
 In this test, the size of data imported using `sysbench` is 3.78 GB. The following is detailed information of the test data:
 
-| load pool size | latency of execution txn (s) | import time (s) | import speed (MB/s) | TiDB 99 duration (s) |
+| load unit pool size | Highest latency of execution txn (s) | Import time (s) | Import speed (MB/s) | TiDB 99 duration (s) |
 | :------------: | :--------------------------: | :-------------: | :-----------------: | :------------------: |
 | 2              | 0.250                        | 425.9           | 9.1                 | 0.23                 |
 | 4              | 0.523                        | 360.1           | 10.7                | 0.41                 |
@@ -90,11 +90,11 @@ In this test, the size of data imported using `sysbench` is 3.78 GB. The followi
 | 32             | 3.778                        | 262.3           | 14.7                | 6.39                 |
 | 64             | 7.452                        | 281.9           | 13.7                | 8.00                 |
 
-#### Benchmark result with different row count in per statement
+#### Benchmark results with different row count in per statement
 
 Full import data size in this benchmark case is 3.78 GB, load unit pool size uses 32. The statement count is controlled by mydumper parameters.
 
-| row count in per statement | mydumper extra-args  | latency of execution txn (s) | import time (s) | import speed (MB/s) | TiDB 99 duration (s) |
+| Row count in per statement | mydumper extra-args  | Highest latency of txn execution (s) | Import time (s) | Import speed (MB/s) | TiDB 99 duration (s) |
 | :------------------------: | :------------------: | :--------------------------: | :-------------: | :-----------------: | :------------------: |
 |            7426            | -s 1500000 -r 320000 |            6.982             |  258.3          |     15.0            |        10.34         |
 |            4903            | -s 1000000 -r 320000 |            3.778             |  262.3          |     14.7            |         6.39         |
@@ -111,16 +111,16 @@ For details about the test method, see [Incremental Replication Benchmark Case](
 
 DM sync unit `worker-count` is 32, and `batch` size is 100 in this benchmark case.
 
-| items                      | qps                                                            | tps                                                          | 95% Latency                  |
+| Items                      | QPS                                                            | TPS                                                          | 95% latency                  |
 | :------------------------: | :------------------------------------------------------------: | :----------------------------------------------------------: | :--------------------------: |
 | MySQL                      | 42.79k                                                         | 42.79k                                                       | 1.18ms                       |
 | DM relay log unit          | -                                                              | 11.3MB/s                                                     | 45us (read duration)         |
-| DM binlog replication unit | 22.97k (binlog event received qps, not including skipped events) | -                                                            | 20ms (txn execution latency) |
+| DM replication unit | 22.97k (The number of binlog events received per unit of time, not including skipped events) | -                                                            | 20ms (txn execution latency) |
 | TiDB                       | 31.30k (Begin/Commit 3.93k Insert 22.76k)                      | 4.16k                                                        | 95%: 6.4ms 99%: 9ms          |
 
 #### Benchmark result with different sync unit concurrency
 
-| sync unit worker-count | DM tps | DM execution latency (ms) | TiDB qps | TiDB 99 duration (ms) |
+| sync unit worker-count | DM TPS | Highest latency of txn execution (ms) | TiDB QPS | TiDB 99 duration (ms) |
 | :--------------------: | :----: | :-----------------------: | :------: | :-------------------: |
 | 4                      | 7074   | 63                        | 7.1k     | 3                     |
 | 8                      | 14684  | 64                        | 14.9k    | 4                     |
@@ -131,7 +131,7 @@ DM sync unit `worker-count` is 32, and `batch` size is 100 in this benchmark cas
 
 #### Benchmark result with different SQL distribution
 
-| sysbench type | relay log flush speed (MB/s) | DM tps | DM execution latency (ms) | TiDB qps | TiDB 99 duration (ms) |
+| sysbench type | relay log flush speed (MB/s) | DM TPS | Highest latency of txn execution (ms) | TiDB QPS | TiDB 99 duration (ms) |
 | :-----------: | :--------------------------: | :----: | :-----------------------: | :------: | :-------------------: |
 | insert_only   | 11.3                         | 23345  | 28                        | 29.2k    | 10                    |
 | write_only    | 18.7                         | 33470  | 129                       | 34.6k    | 11                    |

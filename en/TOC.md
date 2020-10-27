@@ -7,8 +7,7 @@
 
 + About DM
   + Benchmarks
-    - [DM 1.0-GA Benchmark Report](benchmark-v1.0-ga.md)
-    - [DM 1.0-alpha Benchmark Report](benchmark-v1-alpha.md)
+    - [DM 2.0-GA Benchmark Report](benchmark-v2.0-ga.md)
   + Features
     - [Table Routing](key-features.md#table-routing)
     - [Block and Allow Lists](key-features.md#block-and-allow-table-lists)
