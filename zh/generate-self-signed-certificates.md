@@ -102,7 +102,7 @@ CA 的作用是签发证书。实际情况中，请联系你的管理员签发�
     find / -name openssl.cnf
     ```
 
-3. 编辑 `openssl.cnf`，在 `[ req ]` 字段下加入 `req_extensions = v3_req`，然后在 `[ v3_req ]` 字段下加入 `subjectAltName = @alt_names`。最后新建一个字段，并编辑 SAN 的信息：
+3. 编辑 `openssl.cnf`，在 `[ req ]` 字段下加入 `req_extensions = v3_req`，然后在 `[ v3_req ]` 字段下加入 `subjectAltName = @alt_names`。最后新建一个字段，根据前述的集群拓扑并编辑 `Subject Alternative Name` (SAN) 的信息：
 
     ```
     [ alt_names ]
@@ -112,7 +112,17 @@ CA 的作用是签发证书。实际情况中，请联系你的管理员签发�
     IP.4 = 172.16.10.13
     ```
 
-4. 保存 `openssl.cnf` 文件后，生成证书请求文件（在这一步也可以为该证书指定 Common Name，其作用是让服务端验证接入的客户端的身份，各个组件默认不会开启验证，需要在配置文件中启用该功能才生效）：
+    目前支持以下 SAN 检查项：
+    
+    - `IP`
+    - `DNS`
+    - `URI`
+
+    > **注意：**
+    >
+    > 如果要使用 `0.0.0.0` 等特殊 IP 用于连接通讯，也需要将其加入到 `alt_names` 中。
+
+4. 保存 `openssl.cnf` 文件后，生成证书请求文件（在这一步当提供输入 `Common Name (e.g. server FQDN or YOUR name) []:` 时，可以为该证书指定 Common Name，如 `dm`。其作用是让服务端验证接入的客户端的身份，各个组件默认不会开启验证，需要在配置文件中启用该功能才生效）：
 
     {{< copyable "shell-regular" >}}
 
@@ -144,7 +154,9 @@ CA 的作用是签发证书。实际情况中，请联系你的管理员签发�
     master-key.pem
     ```
 
-为 DM-worker 组件签发证书的过程类似，此文档不再赘述。
+> **注意：**
+>
+> 为 DM-worker 组件签发证书的过程类似，此文档不再赘述。
 
 ### 为 dmctl 签发证书
 

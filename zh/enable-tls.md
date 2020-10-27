@@ -23,6 +23,10 @@ summary: 了解如何为 DM 的连接开启加密传输。
 
 2. 配置证书。
 
+    > **注意：**
+    >
+    > DM-master、DM-worker 与 dmctl 三个组件可使用同一套证书。
+
     - DM-master
 
         在 DM-master 配置文件或命令行参数中设置：
@@ -57,7 +61,7 @@ summary: 了解如何为 DM 的连接开启加密传输。
 
 通常被调用者除了校验调用者提供的密钥、证书和 CA 有效性外，还需要校验调用者身份以防止拥有有效证书的非法访问者进行访问（例如：DM-worker 只能被 DM-master 访问，需阻止拥有合法证书但非 DM-master 的其他访问者访问 DM-worker）。
 
-如希望进行组件调用者身份认证，需要在生证书时通过 `Common Name` 标识证书使用者身份，并在被调用者配置检查证书 `Common Name` 列表时检查调用者身份。
+如希望进行组件调用者身份认证，需要在生成证书时通过 `Common Name` (CN) 标识证书使用者身份，并在被调用者配置检查证书 `Common Name` 列表时检查调用者身份。
 
 - DM-master
 
@@ -79,6 +83,8 @@ summary: 了解如何为 DM 的连接开启加密传输。
 
 DM-master、DM-worker 和 dmctl 都会在每次新建相互通讯的连接时重新读取当前的证书和密钥文件内容，实现证书和密钥的重加载。
 
+当 `ssl-ca`、`ssl-cert` 或 `ssl-key` 的文件内容更新后，可通过重启 DM 组件使其重新加载证书与密钥内容并重新建立连接。
+
 ## DM 组件与上下游数据库之间的连接开启加密传输
 
 本节介绍如何为 DM 组件与上下游数据库之间的连接开启加密传输。
@@ -87,26 +93,34 @@ DM-master、DM-worker 和 dmctl 都会在每次新建相互通讯的连接时重
 
 1. 配置上游数据库，启用加密连接支持并设置 Server 证书，具体可参考 [Using encrypted connections](https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html)
 
-2. 在 source 配置文件中设置 Client 证书：
+2. 在 source 配置文件中设置 MySQL Client 证书：
+
+    > **注意：**
+    >
+    > 请确保所有 DM-master 与 DM-worker 组件能通过指定路径读取到证书与密钥文件的内容。
 
     ```yaml
     from:
         security:
-            ssl-ca: "/path/to/ca.pem"
-            ssl-cert: "/path/to/client-cert.pem"
-            ssl-key: "/path/to/client-key.pem"
+            ssl-ca: "/path/to/mysql-ca.pem"
+            ssl-cert: "/path/to/mysql-client-cert.pem"
+            ssl-key: "/path/to/mysql-client-key.pem"
     ```
 
 ### 为下游 TiDB 连接开启加密传输
 
 1. 配置下游 TiDB 启用加密连接支持，具体可参考 [配置 TiDB 启用加密连接支持](https://docs.pingcap.com/zh/tidb/stable/enable-tls-between-clients-and-servers#配置-tidb-启用加密连接支持)
 
-2. 在 task 配置文件中设置 Client 证书：
+2. 在 task 配置文件中设置 TiDB Client 证书：
+
+    > **注意：**
+    >
+    > 请确保所有 DM-master 与 DM-worker 组件能通过指定路径读取到证书与密钥文件的内容。
 
     ```yaml
     target-database:
         security:
-            ssl-ca: "/path/to/ca.pem"
-            ssl-cert: "/path/to/client-cert.pem"
-            ssl-key: "/path/to/client-key.pem"
+            ssl-ca: "/path/to/tidb-ca.pem"
+            ssl-cert: "/path/to/titdb-client-cert.pem"
+            ssl-key: "/path/to/tidb-client-key.pem"
     ```
