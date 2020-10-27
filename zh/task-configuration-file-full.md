@@ -42,9 +42,10 @@ target-database:                # 下游数据库实例配置
   user: "root"
   password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # 推荐使用经 dmctl 加密后的密码
   max-allowed-packet: 67108864                  # 设置 DM 内部连接 TiDB 服务器时，TiDB 客户端的 "max_allowed_packet" 限制（即接受的最大数据包限制），单位为字节，默认 67108864 (64 MB)
+                                                # 该配置项从 DM v2.0.0 版本起弃用，DM 会自动获取连接 TiDB 的 "max_allowed_packet"
   session:                                      # 设置 TiDB 的 session 变量，在 v1.0.6 版本引入。更多变量及解释参见 `https://docs.pingcap.com/zh/tidb/stable/system-variables`
-    sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE"
-    tidb_skip_utf8_check: 1
+    sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE" # 从 DM v2.0.0 版本起，如果配置文件中没有出现该项，DM 会尝试自动处理 "sql_mode"。手动配置该项具有更高优先级
+    tidb_skip_utf8_check: 1                              # 从 DM v2.0.0 版本起，如果配置文件中没有出现该项，DM 会尝试自动处理 "tidb_skip_utf8_check"。手动配置该项具有更高优先级
     tidb_constraint_check_in_place: 0
   security:                       # 下游 TiDB TLS 相关配置                             
     ssl-ca: "/path/to/ca.pem"
