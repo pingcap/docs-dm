@@ -121,6 +121,6 @@ DM-master、DM-worker 和 dmctl 都会在每次新建相互通讯的连接时重
     target-database:
         security:
             ssl-ca: "/path/to/tidb-ca.pem"
-            ssl-cert: "/path/to/titdb-client-cert.pem"
+            ssl-cert: "/path/to/tidb-client-cert.pem"
             ssl-key: "/path/to/tidb-client-key.pem"
     ```
