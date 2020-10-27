@@ -17,7 +17,7 @@ summary: 了解如何为 DM 的连接开启加密传输。
 
     推荐为 DM-master、DM-worker 分别准备一个 Server 证书，并保证可以相互验证，而 dmctl 工具则可选择共用 Client 证书。
 
-    有多种工具可以生成自签名证书，如 `openssl`，`easy-rsa`，`cfssl`。
+    有多种工具可以生成自签名证书，如 `openssl`，`cfssl` 及 `easy-rsa` 等基于 `openssl` 的工具。
 
     这里提供一个使用 `openssl` 生成证书的示例：[生成自签名证书](generate-self-signed-certificates.md)。
 
@@ -29,8 +29,8 @@ summary: 了解如何为 DM 的连接开启加密传输。
 
         ```toml
         ssl-ca = "/path/to/ca.pem"
-        ssl-cert = "/path/to/cert.pem"
-        ssl-key = "/path/to/key.pem"
+        ssl-cert = "/path/to/master-cert.pem"
+        ssl-key = "/path/to/master-key.pem"
         ```
 
     - DM-worker
@@ -39,8 +39,8 @@ summary: 了解如何为 DM 的连接开启加密传输。
 
         ```toml
         ssl-ca = "/path/to/ca.pem"
-        ssl-cert = "/path/to/cert.pem"
-        ssl-key = "/path/to/key.pem"
+        ssl-cert = "/path/to/worker-cert.pem"
+        ssl-key = "/path/to/worker-key.pem"
         ```
 
     - dmctl
@@ -50,7 +50,7 @@ summary: 了解如何为 DM 的连接开启加密传输。
         {{< copyable "shell-regular" >}}
 
         ```bash
-        ./dmctl -master-addr=127.0.0.1:8261 --ssl-ca /path/to/client-ca.pem --ssl-cert /path/to/client-cert.pem --ssl-key /path/to/client-key.pem
+        ./dmctl -master-addr=127.0.0.1:8261 --ssl-ca /path/to/ca.pem --ssl-cert /path/to/client-cert.pem --ssl-key /path/to/client-key.pem
         ```
 
 ### 认证组件调用者身份
@@ -92,7 +92,7 @@ DM-master、DM-worker 和 dmctl 都会在每次新建相互通讯的连接时重
     ```yaml
     from:
         security:
-            ssl-ca: "/path/to/client-ca.pem"
+            ssl-ca: "/path/to/ca.pem"
             ssl-cert: "/path/to/client-cert.pem"
             ssl-key: "/path/to/client-key.pem"
     ```
@@ -106,7 +106,7 @@ DM-master、DM-worker 和 dmctl 都会在每次新建相互通讯的连接时重
     ```yaml
     target-database:
         security:
-            ssl-ca: "/path/to/client-ca.pem"
+            ssl-ca: "/path/to/ca.pem"
             ssl-cert: "/path/to/client-cert.pem"
             ssl-key: "/path/to/client-key.pem"
     ```

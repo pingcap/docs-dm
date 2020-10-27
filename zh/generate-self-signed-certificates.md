@@ -36,34 +36,34 @@ apt install openssl
 yum install openssl
 ```
 
-也可以参考 OpenSSL 官方的[下载文档](https://www.openssl.org/source/) 进行安装。
+也可以参考 OpenSSL 官方的[下载文档](https://www.openssl.org/source/)进行安装。
 
 ## 生成 CA 证书
 
 CA 的作用是签发证书。实际情况中，请联系你的管理员签发证书或者使用信任的 CA 机构。CA 会管理多个证书对，这里只需生成原始的一对证书，步骤如下：
 
-1. 生成 root 密钥：
+1. 生成 CA 密钥：
 
     {{< copyable "shell-regular" >}}
 
     ```bash
-    openssl genrsa -out root.key 4096
+    openssl genrsa -out ca-key.pem 4096
     ```
 
-2. 生成 root 证书：
+2. 生成 CA 证书：
 
     {{< copyable "shell-regular" >}}
 
     ```bash
-    openssl req -new -x509 -days 1000 -key root.key -out root.crt
+    openssl req -new -x509 -days 1000 -key ca-key.pem -out ca.pem
     ```
 
-3. 验证 root 证书：
+3. 验证 CA 证书：
 
     {{< copyable "shell-regular" >}}
 
     ```bash
-    openssl x509 -text -in root.crt -noout
+    openssl x509 -text -in ca.pem -noout
     ```
 
 ## 签发各个组件的证书
@@ -83,7 +83,7 @@ CA 的作用是签发证书。实际情况中，请联系你的管理员签发�
     {{< copyable "shell-regular" >}}
 
     ```bash
-    openssl genrsa -out master.key 2048
+    openssl genrsa -out master-key.pem 2048
     ```
 
 2. 拷贝一份 OpenSSL 的配置模板文件。
@@ -117,7 +117,7 @@ CA 的作用是签发证书。实际情况中，请联系你的管理员签发�
     {{< copyable "shell-regular" >}}
 
     ```bash
-    openssl req -new -key master.key -out master.csr -config openssl.cnf
+    openssl req -new -key master-key.pem -out master-cert.pem -config openssl.cnf
     ```
 
 5. 签发生成证书：
@@ -125,7 +125,7 @@ CA 的作用是签发证书。实际情况中，请联系你的管理员签发�
     {{< copyable "shell-regular" >}}
 
     ```bash
-    openssl x509 -req -days 365 -CA root.crt -CAkey root.key -CAcreateserial -in master.csr -out master.crt -extensions v3_req -extfile openssl.cnf
+    openssl x509 -req -days 365 -CA ca.pem -CAkey ca-key.pem -CAcreateserial -in master-cert.pem -out master-cert.pem -extensions v3_req -extfile openssl.cnf
     ```
 
 6. 验证证书携带 SAN 字段信息（可选）：
@@ -133,15 +133,15 @@ CA 的作用是签发证书。实际情况中，请联系你的管理员签发�
     {{< copyable "shell-regular" >}}
 
     ```bash
-    openssl x509 -text -in master.crt -noout
+    openssl x509 -text -in master-cert.pem -noout
     ```
 
 7. 确认在当前目录下得到如下文件：
 
     ```
-    root.crt
-    master.crt
-    master.key
+    ca.pem
+    master-cert.pem
+    master-key.pem
     ```
 
 为 DM-worker 组件签发证书的过程类似，此文档不再赘述。
@@ -155,7 +155,7 @@ CA 的作用是签发证书。实际情况中，请联系你的管理员签发�
     {{< copyable "shell-regular" >}}
 
     ```bash
-    openssl genrsa -out client.key 2048
+    openssl genrsa -out client-key.pem 2048
     ```
 
 2. 生成证书请求文件（在这一步也可以为该证书指定 Common Name，其作用是让服务端验证接入的客户端的身份，默认不会开启对各个组件的验证，需要在配置文件中启用该功能才生效）
@@ -163,7 +163,7 @@ CA 的作用是签发证书。实际情况中，请联系你的管理员签发�
     {{< copyable "shell-regular" >}}
 
     ```bash
-    openssl req -new -key client.key -out client.csr
+    openssl req -new -key client-key.pem -out client-cert.pem
     ```
 
 3. 签发生成证书：
@@ -171,5 +171,5 @@ CA 的作用是签发证书。实际情况中，请联系你的管理员签发�
     {{< copyable "shell-regular" >}}
 
     ```bash
-    openssl x509 -req -days 365 -CA root.crt -CAkey root.key -CAcreateserial -in client.csr -out client.crt
+    openssl x509 -req -days 365 -CA ca.pem -CAkey ca-key.pem -CAcreateserial -in client-cert.pem -out client-cert.pem
     ```
