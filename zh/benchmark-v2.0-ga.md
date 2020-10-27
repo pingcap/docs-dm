@@ -59,7 +59,7 @@ summary: 了解 DM 2.0-GA 版本的性能。
 
 ## 测试场景
 
-可以参考[性能测试](performance-test.md)中介绍的测试场景进行测试，即 MySQL1 (172.16.5.33) -> DM-worker(172.16.5.32) -> TiDB (172.16.5.34)。
+可以参考[性能测试](performance-test.md)中介绍的测试场景，测试单个 MySQL 实例到 TiDB 的数据迁移： MySQL1 (172.16.5.33) -> DM-worker(172.16.5.32) -> TiDB (172.16.5.34)。
 
 ### 全量导入性能测试
 
