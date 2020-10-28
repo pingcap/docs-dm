@@ -35,6 +35,7 @@ DM 支持在线上执行分库分表的 DDL 语句（通称 Sharding DDL），�
 
 - `ALTER TABLE table_name ADD COLUMN column_name datatype NOT NULL`（添加无默认值的 not null 的列）。
 - `ALTER TABLE table_name ADD COLUMN column_name datetime DEFAULT NOW()`（增加的列默认值不固定）。
+- `ALTER TABLE table_name ADD COLUMN col1 INT, DROP COLUMN col2`（在一个 DDL 语句中同时包含 `ADD COLUMN` 与 `DROP COLUMN`）。
 - `ALTER TABLE table_name RENAME COLUMN column_1 TO column_2;`（重命名列）。
 - `ALTER TABLE table_name RENAME INDEX index_1 TO index_2;`（重命名索引）。
 
