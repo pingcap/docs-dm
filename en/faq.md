@@ -125,5 +125,5 @@ DM 2.0 introduces more fields to meta-information tables such as checkpoint. In 
 
 This error can be handled in any of the following ways:
 
-- [Import a DM 1.0 cluster into a new DM 2.0 cluster using TiUP](maintain-dm-using-tiup.md#import-and-upgrade-a-DM-1.0-cluster-deployed-using-DM-Ansible).
+- [Import a DM 1.0 cluster into a new DM 2.0 cluster using TiUP](maintain-dm-using-tiup.md#import-and-upgrade-a-dm-10-cluster-deployed-using-dm-ansible).
 - [Manually import DM migration tasks of a DM 1.0 cluster to a DM 2.0 cluster](manually-upgrade-dm-1.0-to-2.0.md)。
