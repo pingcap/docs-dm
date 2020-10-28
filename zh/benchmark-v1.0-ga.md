@@ -116,7 +116,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/benchmark-v1.0-ga/']
 | :------------------------: | :----------------------------------------------------------: | :-------------------------------------------------------------: | :--------------------------: |
 | MySQL                      | 42.79k                                                       | 42.79k                                                          | 1.18ms                       |
 | DM relay log unit          | -                                                            | 11.3MB/s                                                        | 45us (binlog 读延迟)         |
-| DM binlog replication unit | 22.97k (binlog event 接收qps，不包括忽略的 event)            | -                                                               | 20ms (事务执行时间)          |
+| DM binlog replication unit | 22.97k (单位时间内接收到的不被忽略的 binlog event 数量)            | -                                                               | 20ms (事务执行时间)          |
 | TiDB                       | 31.30k (Begin/Commit 3.93k Insert 22.76k)                    | 4.16k                                                           | 95%: 6.4ms 99%: 9ms          |
 
 #### 在 sync 处理单元使用不同并发度的性能测试对比
