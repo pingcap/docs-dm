@@ -25,7 +25,7 @@ This section introduces how to enable encrypted data transmission between DM-mas
 
     > **Note:**
     >
-    > DM-master, DM-worker and dmctl shares the same set of certificates.
+    > You can configure DM-master, DM-worker, and dmctl to use the same set of certificates.
 
     - DM-master
 
@@ -83,7 +83,7 @@ To verify component caller's identity, you need to mark the certificate user ide
 
 To reload the certificates and the keys, DM-master, DM-worker, and dmctl reread the current certificates and the key files each time a new connection is created.
 
-When files specified in `ssl-ca`, `ssl-cert` or `ssl-key` are updated, you can restart DM components to reconnect and reload the certificates and the key files.
+When the files specified by `ssl-ca`, `ssl-cert` or `ssl-key` are updated, restart DM components to reconnect and reload the certificates and the key files.
 
 ## Enable encrypted data transmission between DM components and the upstream or downstream database
 
@@ -93,7 +93,7 @@ This section introduces how to enable encrypted data transmission between DM com
 
 1. Configure the upstream database, enable the encryption support, and set the server certificate. For detailed operations, see [Using encrypted connections](https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html).
 
-2. Set the MySQL Client Certificate in the source configuration file:
+2. Set the MySQL client certificate in the source configuration file:
 
     > **Note:**
     >
@@ -111,7 +111,7 @@ This section introduces how to enable encrypted data transmission between DM com
 
 1. Configure the downstream TiDB to use encrypted connections. For detailed operatons,  refer to [Configure TiDB to use encrypted connections](https://docs.pingcap.com/tidb/stable/enable-tls-between-clients-and-servers#configure-tidb-to-use-encrypted-connections).
 
-2. Set the TiDB Client Certificate in the task configuration file:
+2. Set the TiDB client certificate in the task configuration file:
 
     > **Note:**
     >

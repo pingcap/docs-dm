@@ -118,9 +118,9 @@ To issue a certificate to a DM-master instance, perform the following steps:
 
     > **Note:**
     >
-    > If a special IP such as `0.0.0.0` is to be used for connection communication, you must also add it to `alt_names`.
+    > If a special IP such as `0.0.0.0` is to be used for connection or communication, you must also add it to `alt_names`.
 
-4. Save the `openssl.cnf` file, and generate the certificate request file (in this step, you can set the value of `Common Name (e.g. server FQDN or YOUR name) []:` to assign a Common Name (CN) to the certificate, such as `dm`, which is used to allow the server to validate the identity of the client. Each component does not enable the validation by default, and you can enable it in the configuration file):
+4. Save the `openssl.cnf` file, and generate the certificate request file: (When giving input to `Common Name (e.g. server FQDN or YOUR name) []:`, you assign a Common Name (CN) to the certificate, such as `dm`. It is used by the server to validate the identity of the client. Each component does not enable the validation by default. You can enable it in the configuration file.)
 
     {{< copyable "shell-regular" >}}
 

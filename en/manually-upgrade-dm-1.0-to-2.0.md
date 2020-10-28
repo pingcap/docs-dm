@@ -104,7 +104,7 @@ For [data migration task configuration file](task-configuration-file.md), v2.0.x
 
 > **Note:**
 >
-> You can skip this step if there are other v2.0.x clusters available.
+> Skip this step if you have other v2.0.x clusters available.
 
 [Use TiUP](deploy-a-dm-cluster-using-tiup.md) to deploy a new v2.0.x cluster according to the required number of nodes.
 
