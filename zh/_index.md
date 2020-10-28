@@ -20,7 +20,7 @@ DM 2.0 相比于 1.0，主要有以下改进：
 <NavColumn>
 <ColumnTitle>关于 TiDB Data Migration</ColumnTitle>
 
-- [性能数据](benchmark-v1.0-ga.md)
+- [性能数据](benchmark-v2.0-ga.md)
 - [Table routing](key-features.md#table-routing)
 - [Block & Allow Lists](key-features.md#block--allow-table-lists)
 - [Binlog Event Filter](key-features.md#binlog-event-filter)
