@@ -17,7 +17,7 @@ This section introduces how to enable encrypted data transmission between DM-mas
 
     It is recommended to prepare a server certificate for DM-master and DM-worker separately. Make sure that the two components can authenticate each other. You can choose to share one client certificate for dmctl.
 
-    To generate self-signed certificates, you can use tools based on `openssl`, such as `openssl`, `easy-rsa` and `cfssl`.
+    To generate self-signed certificates, you can use `openssl`, `cfssl` and other tools based on `openssl`, such as `easy-rsa`.
 
     If you choose `openssl`, you can refer to [generating self-signed certificates](generate-self-signed-certificates.md).
 
@@ -83,7 +83,7 @@ To verify component caller's identity, you need to mark the certificate user ide
 
 To reload the certificates and the keys, DM-master, DM-worker, and dmctl reread the current certificates and the key files each time a new connection is created.
 
-When the files specified by `ssl-ca`, `ssl-cert` or `ssl-key` are updated, restart DM components to reconnect and reload the certificates and the key files.
+When the files specified by `ssl-ca`, `ssl-cert` or `ssl-key` are updated, restart DM components to reload the certificates and the key files and reconnect with each other.
 
 ## Enable encrypted data transmission between DM components and the upstream or downstream database
 

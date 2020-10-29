@@ -47,7 +47,7 @@ A certificate authority (CA) is a trusted entity that issues digital certificate
     {{< copyable "shell-regular" >}}
 
     ```bash
-    openssl genrsa -out ca.key.pem 4096
+    openssl genrsa -out ca-key.pem 4096
     ```
 
 2. Generate the CA certificates:
