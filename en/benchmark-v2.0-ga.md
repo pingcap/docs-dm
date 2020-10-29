@@ -35,7 +35,7 @@ Hardware information:
 | Disk         | Intel SSD DC P4800X 375G NVMe * 2                   |
 | Network card | 10 Gigabit Ethernet                                 |
 
-Others
+Others:
 
 * Network rtt between servers: rtt min/avg/max/mdev = 0.074/0.116/0.158/0.042 ms
 
