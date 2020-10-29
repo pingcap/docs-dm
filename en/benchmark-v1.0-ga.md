@@ -73,7 +73,7 @@ For details, see [Full Import Benchmark Case](performance-test.md#full-import-be
 | enable single table concurrent  | 32          | "-r 320000 --regex '^sbtest.*'" | 191.03            |
 | disable single table concurrent | 32          | "--regex '^sbtest.*'"           | 72.22             |
 
-| Item      | Highest latency of txn execution (s) | Statement per transaction | Data size (GB) | Time (s) | Import speed (MB/s) |
+| Item      | Max latency of TXN execution (s) | Statement per transaction | Data size (GB) | Time (s) | Import speed (MB/s) |
 | :-------: | :--------------------------------: | :-----------------------: | :------------: | :------: | :-----------------: |
 | load data | 1.737                              | 4878                      | 38.14          | 2346.9   | 16.64               |
 
@@ -81,7 +81,7 @@ For details, see [Full Import Benchmark Case](performance-test.md#full-import-be
 
 In this test, the size of data imported using `sysbench` is 3.78 GB. The following is detailed information of the test data:
 
-| load unit pool size | Highest latency of execution txn (s) | Import time (s) | Import speed (MB/s) | TiDB 99 duration (s) |
+| load unit pool size | Max latency of TXN execution (s) | Import time (s) | Import speed (MB/s) | TiDB 99 duration (s) |
 | :------------: | :--------------------------: | :-------------: | :-----------------: | :------------------: |
 | 2              | 0.250                        | 425.9           | 9.1                 | 0.23                 |
 | 4              | 0.523                        | 360.1           | 10.7                | 0.41                 |
@@ -94,7 +94,7 @@ In this test, the size of data imported using `sysbench` is 3.78 GB. The followi
 
 Full import data size in this benchmark case is 3.78 GB, load unit pool size uses 32. The statement count is controlled by mydumper parameters.
 
-| Row count in per statement | mydumper extra-args  | Highest latency of txn execution (s) | Import time (s) | Import speed (MB/s) | TiDB 99 duration (s) |
+| Row count in per statement | mydumper extra-args  | Max latency of TXN execution (s) | Import time (s) | Import speed (MB/s) | TiDB 99 duration (s) |
 | :------------------------: | :------------------: | :--------------------------: | :-------------: | :-----------------: | :------------------: |
 |            7426            | -s 1500000 -r 320000 |            6.982             |  258.3          |     15.0            |        10.34         |
 |            4903            | -s 1000000 -r 320000 |            3.778             |  262.3          |     14.7            |         6.39         |
@@ -120,7 +120,7 @@ DM sync unit `worker-count` is 32, and `batch` size is 100 in this benchmark cas
 
 #### Benchmark result with different sync unit concurrency
 
-| sync unit worker-count | DM TPS | Highest latency of txn execution (ms) | TiDB QPS | TiDB 99 duration (ms) |
+| sync unit worker-count | DM TPS | Max latency of TXN execution (ms) | TiDB QPS | TiDB 99 duration (ms) |
 | :--------------------: | :----: | :-----------------------: | :------: | :-------------------: |
 | 4                      | 7074   | 63                        | 7.1k     | 3                     |
 | 8                      | 14684  | 64                        | 14.9k    | 4                     |
@@ -131,7 +131,7 @@ DM sync unit `worker-count` is 32, and `batch` size is 100 in this benchmark cas
 
 #### Benchmark result with different SQL distribution
 
-| sysbench type | relay log flush speed (MB/s) | DM TPS | Highest latency of txn execution (ms) | TiDB QPS | TiDB 99 duration (ms) |
+| sysbench type | relay log flush speed (MB/s) | DM TPS | Max latency of TXN execution (ms) | TiDB QPS | TiDB 99 duration (ms) |
 | :-----------: | :--------------------------: | :----: | :-----------------------: | :------: | :-------------------: |
 | insert_only   | 11.3                         | 23345  | 28                        | 29.2k    | 10                    |
 | write_only    | 18.7                         | 33470  | 129                       | 34.6k    | 11                    |

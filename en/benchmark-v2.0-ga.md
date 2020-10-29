@@ -73,7 +73,7 @@ To enable multi-thread concurrent data export via Dumpling, you can configure th
 | :----------: | :---------: |:-------: | :-----: | :-------------: | :----------: | :---------------: |
 | dump data    | 38.1       | 32       | 320000   | 1000000         | 106.73       | 359.43           |
 
-| Item    | Data size (GB)  | Pool size | Statement per TXN | Highest latency of TXN execution (s) | Time (s) | Import speed (MB/s) |
+| Item    | Data size (GB)  | Pool size | Statement per TXN | Max latency of TXN execution (s) | Time (s) | Import speed (MB/s) |
 | :-------: | :--------: | :-------: | :-------------------: | :----------------: | :----------: | :-------------: |
 | load data | 38.1       | 32        | 4878                  | 20.95              | 1580.54       | 24.11          |
 
@@ -81,7 +81,7 @@ To enable multi-thread concurrent data export via Dumpling, you can configure th
 
 In this test, the full amount of data imported using `sysbench` is 3.78 GB. The following is detailed information of the test data:
 
-| load unit pool size| Highest latency of TXN execution (s) | Import time (s) | Import Speed (MB/s) | TiDB 99 duration (s) |
+| load unit pool size| Max latency of TXN execution (s) | Import time (s) | Import Speed (MB/s) | TiDB 99 duration (s) |
 | :---------------------: | :---------------: | :----------: | :-------------: | :------------------: |
 | 2                       | 0.35              | 438         | 8.63             | 0.32                 |
 | 4                       | 0.65              | 305         | 12.30            | 0.55                 |
@@ -94,7 +94,7 @@ In this test, the full amount of data imported using `sysbench` is 3.78 GB. The 
 
 In this test, the full amount of imported data is 3.78 GB and the `pool-size` of load unit is set to 32. The statement count is controlled by `statement-size`, `rows`, or `extra-args` parameters in the `mydumpers` configuration item.
 
-| Row count per statement       | mydumpers extra-args | Highest latency of TXN execution (s) | Import time (s) | Import speed (MB/s) | TiDB 99 duration (s) |
+| Row count per statement       | mydumpers extra-args | Max latency of TXN execution (s) | Import time (s) | Import speed (MB/s) | TiDB 99 duration (s) |
 | :------------------------: | :-----------------------: | :--------------: | :----------: | :-------------: | :------------------: |
 |            7506            | -s 1500000 -r 320000      |   8.74           |  218         |     17.3        |        10.49         |
 |            5006            | -s 1000000 -r 320000      |   5.92           |  208         |     18.1        |         6.56         |
@@ -119,7 +119,7 @@ In this test, the `worker-count` of sync unit is set to 32 and `batch` is set to
 
 #### Benchmark results with different sync unit concurrency
 
-| sync unit worker-count | DM QPS           | Highest DM execution Latency (ms)   | TiDB QPS | TiDB 99 duration (ms) |
+| sync unit worker-count | DM QPS           | Max DM execution latency (ms)   | TiDB QPS | TiDB 99 duration (ms) |
 | :---------------------------: | :-------------: | :-----------------------: | :------: | :-------------------: |
 | 4                             | 11.83k           | 56                       | 12.1k    | 4                     |
 | 8                             | 18.34k           | 58                       | 18.9k    | 5                     |
@@ -130,7 +130,7 @@ In this test, the `worker-count` of sync unit is set to 32 and `batch` is set to
 
 #### Benchmark results with different SQL distribution
 
-| Sysbench type| DM QPS | Highest DM execution Latency (ms) | TiDB QPS | TiDB 99 duration (ms) |
+| Sysbench type| DM QPS | Max DM execution latency (ms) | TiDB QPS | TiDB 99 duration (ms) |
 | :--------------: | :-------------: | :------------------: | :------: | :-------------------: |
 | insert_only      | 21.33k          | 66                   | 21.9k    | 8                    |
 | write_only       | 10.2k           | 87                  | 11.2k     | 8                    |
