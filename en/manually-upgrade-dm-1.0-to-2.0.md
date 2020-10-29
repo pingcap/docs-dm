@@ -102,6 +102,10 @@ For [data migration task configuration file](task-configuration-file.md), v2.0.x
 
 ## Step 2: Deploy the v2.0.x cluster
 
+> **Note:**
+>
+> Skip this step if you have other v2.0.x clusters available.
+
 [Use TiUP](deploy-a-dm-cluster-using-tiup.md) to deploy a new v2.0.x cluster according to the required number of nodes.
 
 ## Step 3：Stop the v1.0.x cluster
@@ -141,9 +145,9 @@ If the original v1.0.x cluster is deployed by binary, you can stop the DM-worker
             mysql-instances:
               - source-id: "mysql-replica-01"        # Corresponds to the `id` of the checkpoint information.
                 meta:
-                  binlog-name: "mysql-bin.000123"    # Corresponds to the `binlog_name` in the checkpoint information, excluding the part of `|000001`. 
+                  binlog-name: "mysql-bin.000123"    # Corresponds to the `binlog_name` in the checkpoint information, excluding the part of `|000001`.
                   binlog-pos: 15847                  # Corresponds to `binlog_pos` in the checkpoint information.
-            
+
               - source-id: "mysql-replica-02"
                 meta:
                   binlog-name: "mysql-bin.000456"
