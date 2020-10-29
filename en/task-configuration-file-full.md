@@ -101,7 +101,7 @@ mydumpers:
 # Configuration arguments of the load processing unit.
 loaders:
   global:                            # The configuration name of the processing unit.
-    pool-size: 16                    # The number of threads that concurrently execute the dump processing unit SQL files in the load processing unit (16 by default). When multiple instances are migrating data to TiDB at the same time, slightly reduce the value according to the load.
+    pool-size: 16                    # The number of threads that concurrently execute dumped SQL files in the load processing unit (16 by default). When multiple instances are migrating data to TiDB at the same time, slightly reduce the value according to the load.
     dir: "./dumped_data"             # The directory that the load processing unit reads from and the dump processing unit outputs SQL files to ("./dumped_data" by default). The directories for different tasks of the same instance must be different.
 
 # Configuration arguments of the sync processing unit.

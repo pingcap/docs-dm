@@ -30,7 +30,7 @@ dump 处理单元从上游 MySQL 或 MariaDB 导出全量数据到本地磁盘�
 
 ### load 处理单元
 
-load 处理单元读取 dump 处理单元的数据文件，然后加载到下游 TiDB。
+load 处理单元读取 dump 处理单元导出的数据文件，然后加载到下游 TiDB。
 
 ### Binlog replication/sync 处理单元
 
