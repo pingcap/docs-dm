@@ -51,8 +51,8 @@ The above error can be caused by the following reason:
 
 In the last `rename ghost_table to origin table` step, DM reads the DDL information in memory, and restores it to the DDL of the origin table.
 
-However, the DDL information in memory is obtained in either of the two ways: 
-    
+However, the DDL information in memory is obtained in either of the two ways:
+
 - DM [processes the gh-ost table during the `alter ghost_table` operation](feature-online-ddl-scheme.md#online-schema-change-gh-ost) and records the DDL information of `ghost_table`;
 - When DM-worker is restarted to start the task, DM reads the DDL from `dm_meta.{task_name}_onlineddl`.
 
@@ -118,3 +118,12 @@ Set the parameters below to a value larger than the default 67108864 (64M).
 - The configuration item in the task configuration file: `target-database.max-allowed-packet`. For details, refer to [DM Advanced Task Configuration File](task-configuration-file-full.md).
 
 For details, see [Loader solution](https://docs.pingcap.com/tidb/stable/loader-overview#solution).
+
+## How to handle the error `Error 1054: Unknown column 'binlog_gtid' in 'field list'` that occurs when existing DM migration tasks of an DM 1.0 cluster are running on a DM 2.0 cluster?
+
+DM 2.0 introduces more fields to metadata tables such as checkpoint. In DM 2.0, if you directly run the `start-task` command with the task configuration file of the DM 1.0 cluster to continue the incremental data replication, the error `Error 1054: Unknown column 'binlog_gtid' in 'field list'` occurs.
+
+This error can be handled in any of the following ways:
+
+- [Import a DM 1.0 cluster into a new DM 2.0 cluster using TiUP](maintain-dm-using-tiup.md#import-and-upgrade-a-dm-10-cluster-deployed-using-dm-ansible).
+- [Manually import DM migration tasks of a DM 1.0 cluster to a DM 2.0 cluster](manually-upgrade-dm-1.0-to-2.0.md)。
