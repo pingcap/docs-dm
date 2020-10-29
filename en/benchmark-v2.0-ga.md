@@ -17,7 +17,7 @@ The purpose of this test is to evaluate the performance of DM full import and in
 
 System information:
 
-| Machine IP  | Operation System           | Kernel version           | File system type |
+| Machine IP  | Operating System           | Kernel version           | File system type |
 | :---------: | :---------------------------: | :-------------------: | :--------------: |
 | 172.16.5.32 | CentOS Linux release 7.8.2003 | 3.10.0-957.el7.x86_64 | ext4             |
 | 172.16.5.33 | CentOS Linux release 7.8.2003 | 3.10.0-957.el7.x86_64 | ext4             |
@@ -41,7 +41,7 @@ Others
 
 ### Cluster topology
 
-| Machine IP  | Deployment instance                |
+| Machine IP  | Deployed instance                |
 | :---------: | :--------------------------------: |
 | 172.16.5.32 | PD1, DM-worker1, DM-master         |
 | 172.16.5.33 | PD2, MySQL1                        |
@@ -67,7 +67,7 @@ For detailed full import test method, see [Full Import Benchmark Case](performan
 
 #### Full import benchmark results
 
-To enable multi-thread concurrent data export via Dumpling, you can configure the `threads` parameter in the `mydumper` configuration item. This speeds up data export.
+To enable multi-thread concurrent data export via Dumpling, you can configure the `threads` parameter in the `mydumpers` configuration item. This speeds up data export.
 
 | Item       | Data size (GB)  | Threads  | Rows    | Statement-size  | Time (s)  | Dump speed (MB/s)   |
 | :----------: | :---------: |:-------: | :-----: | :-------------: | :----------: | :---------------: |
@@ -90,11 +90,11 @@ In this test, the full amount of data imported using `sysbench` is 3.78 GB. The 
 | 32                      | 5.92              | 208         | 18.17            | 6.56                 |
 | 64                      | 8.59              | 221         | 17.10            | 9.62                 |
 
-#### Benchmark results with different row count in per statement
+#### Benchmark results with different row count per statement
 
-In this test, the full amount of imported data is 3.78 GB and the `pool-size` of load unit is set to 32. The statement count is controlled by `statement-size`, `rows`, or `extra-args` parameters in the `mydumper` configuration item.
+In this test, the full amount of imported data is 3.78 GB and the `pool-size` of load unit is set to 32. The statement count is controlled by `statement-size`, `rows`, or `extra-args` parameters in the `mydumpers` configuration item.
 
-| Row count per statement       | mydumper extra-args | Highest latency of TXN execution (s) | Import time (s) | Import speed (MB/s) | TiDB 99 duration (s) |
+| Row count per statement       | mydumpers extra-args | Highest latency of TXN execution (s) | Import time (s) | Import speed (MB/s) | TiDB 99 duration (s) |
 | :------------------------: | :-----------------------: | :--------------: | :----------: | :-------------: | :------------------: |
 |            7506            | -s 1500000 -r 320000      |   8.74           |  218         |     17.3        |        10.49         |
 |            5006            | -s 1000000 -r 320000      |   5.92           |  208         |     18.1        |         6.56         |
@@ -139,7 +139,7 @@ In this test, the `worker-count` of sync unit is set to 32 and `batch` is set to
 
 ### dump unit
 
-We recommend that the statement size be 200 KB ~ 1 MB, and row count in each statement be approximately 1000 ~ 5000, which is based on the actual row size in your scenario.
+We recommend that the statement size be 200 KB~1 MB, and row count in each statement be approximately 1000~5000, which is based on the actual row size in your scenario.
 
 ### load unit
 

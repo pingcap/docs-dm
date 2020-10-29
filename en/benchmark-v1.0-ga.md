@@ -18,7 +18,7 @@ The purpose of this test is to test the performance of DM full import and increm
 
 System information:
 
-| Machine IP  | Operation system              | Kernel version            | File system type |
+| Machine IP  | Operating system              | Kernel version            | File system type |
 | :---------: | :---------------------------: | :-----------------------: | :--------------: |
 | 172.16.4.39 | CentOS Linux release 7.6.1810 | 3.10.0-957.1.3.el7.x86_64 | ext4             |
 | 172.16.4.40 | CentOS Linux release 7.6.1810 | 3.10.0-957.1.3.el7.x86_64 | ext4             |
@@ -42,7 +42,7 @@ Others:
 
 ### Cluster topology
 
-| Machine IP  | Deployment instance                |
+| Machine IP  | Deployed instance                |
 | :---------: | :--------------------------------: |
 | 172.16.4.39 | PD1, DM-worker1, DM-master         |
 | 172.16.4.40 | PD2, MySQL1                        |
@@ -90,7 +90,7 @@ In this test, the size of data imported using `sysbench` is 3.78 GB. The followi
 | 32             | 3.778                        | 262.3           | 14.7                | 6.39                 |
 | 64             | 7.452                        | 281.9           | 13.7                | 8.00                 |
 
-#### Benchmark results with different row count in per statement
+#### Benchmark results with different row count per statement
 
 Full import data size in this benchmark case is 3.78 GB, load unit pool size uses 32. The statement count is controlled by mydumper parameters.
 
