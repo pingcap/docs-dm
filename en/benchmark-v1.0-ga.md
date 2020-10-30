@@ -103,7 +103,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 
 #### Full import benchmark result
 
-| item                            | dump thread | mydumper extra-args             | dump speed (MB/s) |
+| item                            | dump thread | mydumpers extra-args             | dump speed (MB/s) |
 | :-----------------------------: | :---------: | :-----------------------------: | :---------------: |
 | enable single table concurrent  | 32          | "-r 320000 --regex '^sbtest.*'" | 191.03            |
 | disable single table concurrent | 32          | "--regex '^sbtest.*'"           | 72.22             |
@@ -133,9 +133,9 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 
 #### Benchmark result with different row count in per statement
 
-Full import data size in this benchmark case is 3.78 GB, load unit pool size uses 32. The statement count is controlled by mydumper parameters.
+Full import data size in this benchmark case is 3.78 GB, load unit pool size uses 32. The statement count is controlled by parameters of the dump unit.
 
-| row count in per statement | mydumper extra-args  | latency of execution txn (s) | import time (s) | import speed (MB/s) | TiDB 99 duration (s) |
+| row count in per statement | mydumpers extra-args  | latency of execution txn (s) | import time (s) | import speed (MB/s) | TiDB 99 duration (s) |
 | :------------------------: | :------------------: | :--------------------------: | :-------------: | :-----------------: | :------------------: |
 |            7426            | -s 1500000 -r 320000 |            6.982             |  258.3          |     15.0            |        10.34         |
 |            4903            | -s 1000000 -r 320000 |            3.778             |  262.3          |     14.7            |         6.39         |

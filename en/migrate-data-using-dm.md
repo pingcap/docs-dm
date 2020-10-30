@@ -43,7 +43,7 @@ After the DM cluster is deployed using DM-Ansible, the configuration information
 
     ```toml
     # Master configuration.
-    
+
     # This indicates that whether DM-worker uses Global Transaction Identifier (GTID) to pull binlog. Before you use this configuration item, make sure that the GTID mode is enabled in the upstream MySQL.
     enable-gtid = false
 
@@ -88,7 +88,7 @@ mysql-instances:
   # database/table to be migrated, used to quote the global block and allow
   # lists configuration that is set in the global block-allow-list below.
   block-allow-list: "global"  # Use black-white-list if the DM's version <= v1.0.6.
-  # The configuration item name of Mydumper, used to quote the global Mydumper configuration.
+  # The configuration item name of the dump unit, used to quote the global dump unit configuration.
   mydumper-config-name: "global"
 
 -
@@ -104,11 +104,11 @@ block-allow-list:                     # Use black-white-list if the DM's version
     - db-name: "test_db"              # The database name of the table to be migrated.
       tbl-name: "test_table"          # The name of the table to be migrated.
 
-# Mydumper global configuration. Each instance can quote it by the configuration item name.
+# The global configuration of the dump unit. Each instance can quote it by the configuration item name.
 mydumpers:
   global:
-    mydumper-path: "./bin/mydumper"   # The file path of the Mydumper binary.
-    extra-args: "-B test_db -T test_table"  # The extra Mydumper argument. Since DM 1.0.2, DM automatically generates the "--tables-list" configuration. For versions earlier than 1.0.2, you need to configure this option manually.
+    mydumper-path: "./bin/mydumper"   # The file path of the dump unit binary.
+    extra-args: "-B test_db -T test_table"  # Extra arguments of the dump unit. Since DM 1.0.2, DM automatically generates the "--tables-list" configuration. For versions earlier than 1.0.2, you need to configure this option manually.
 ```
 
 ## Step 4: Start the data migration task
