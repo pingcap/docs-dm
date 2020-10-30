@@ -24,17 +24,17 @@ Relay log 持久化保存从上游 MySQL 或 MariaDB 读取的 binlog，并对 b
 
 其原理和功能与 MySQL relay log 类似，详见 [MySQL Relay Log](https://dev.mysql.com/doc/refman/5.7/en/replica-logs-relaylog.html)。
 
-### Dumper
+### dump 处理单元
 
-Dumper 从上游 MySQL 或 MariaDB 导出全量数据到本地磁盘。
+dump 处理单元从上游 MySQL 或 MariaDB 导出全量数据到本地磁盘。
 
-### Loader
+### load 处理单元
 
-Loader 读取 dumper 处理单元的数据文件，然后加载到下游 TiDB。
+load 处理单元读取 dump 处理单元导出的数据文件，然后加载到下游 TiDB。
 
-### Binlog replication/Syncer
+### Binlog replication/sync 处理单元
 
-Binlog replication/Syncer 读取上游 MySQL/MariaDB 的 binlog event 或 relay log 处理单元的 binlog event，将这些 event 转化为 SQL 语句，再将这些 SQL 语句应用到下游 TiDB。
+Binlog replication/sync 处理单元读取上游 MySQL/MariaDB 的 binlog event 或 relay log 处理单元的 binlog event，将这些 event 转化为 SQL 语句，再将这些 SQL 语句应用到下游 TiDB。
 
 ## DM-worker 所需权限
 
@@ -90,8 +90,8 @@ GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER,INDEX  ON db.table TO 'your_
 | 处理单元 | 最小上游 (MySQL/MariaDB) 权限 | 最小下游 (TiDB) 权限 | 最小系统权限 |
 |:----|:--------------------|:------------|:----|
 | Relay log | `REPLICATION SLAVE` (读取 binlog）<br/>`REPLICATION CLIENT` (`show master status`, `show slave status`) | 无 | 本地读/写磁盘 |
-| Dumper | `SELECT`<br/>`RELOAD`（获取读锁将表数据刷到磁盘，进行一些操作后，再释放读锁对表进行解锁）| 无 | 本地写磁盘 |
-| Loader | 无 | `SELECT`（查询 checkpoint 历史）<br/>`CREATE`（创建数据库或表）<br/>`DELETE`（删除 checkpoint）<br/>`INSERT`（插入 dump 数据）| 读/写本地文件 |
+| Dump | `SELECT`<br/>`RELOAD`（获取读锁将表数据刷到磁盘，进行一些操作后，再释放读锁对表进行解锁）| 无 | 本地写磁盘 |
+| Load | 无 | `SELECT`（查询 checkpoint 历史）<br/>`CREATE`（创建数据库或表）<br/>`DELETE`（删除 checkpoint）<br/>`INSERT`（插入 dump 数据）| 读/写本地文件 |
 | Binlog replication | `REPLICATION SLAVE`（读 binlog）<br/>`REPLICATION CLIENT` (`show master status`, `show slave status`) | `SELECT`（显示索引和列）<br/>`INSERT` (DML)<br/>`UPDATE` (DML)<br/>`DELETE` (DML)<br/>`CREATE`（创建数据库或表）<br/>`DROP`（删除数据库或表）<br/>`ALTER`（修改表）<br/>`INDEX`（创建或删除索引）| 本地读/写磁盘 |
 
 > **注意：**

@@ -42,12 +42,12 @@ aliases: ['/docs-cn/tidb-data-migration/dev/replicate-data-using-dm/','/zh/tidb-
 
     ```yaml
     # MySQL1 Configuration.
-    
+
     source-id: "mysql-replica-01"
 
     # DM-worker 是否使用全局事务标识符 (GTID) 拉取 binlog。使用前提是在上游 MySQL 已开启 GTID 模式。
     enable-gtid: false
-    
+
     from:
       host: "172.16.10.81"
       user: "root"
@@ -90,7 +90,7 @@ mysql-instances:
   source-id: "mysql-replica-01"
   # 需要迁移的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置。
   block-allow-list: "global"          # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
-  # Mydumper 的配置项名称，用于引用全局的 Mydumper 配置。
+  # dump 处理单元的配置项名称，用于引用全局的 dump 处理单元配置。
   mydumper-config-name: "global"
 
 -
@@ -105,10 +105,10 @@ block-allow-list:                     # 如果 DM 版本 <= v2.0.0-beta.2 则使
     - db-name: "test_db"              # 需要迁移的表的库名。
       tbl-name: "test_table"          # 需要迁移的表的名称。
 
-# Mydumper 全局配置，各实例通过配置项名引用。
+# dump 处理单元全局配置，各实例通过配置项名引用。
 mydumpers:
   global:
-    extra-args: "-B test_db -T test_table"  # mydumper 的其他参数，从 DM 1.0.2 版本开始，DM 会自动生成 table-list 配置，在其之前的版本仍然需要人工配置。
+    extra-args: "-B test_db -T test_table"  # dump 处理单元的其他参数，从 DM 1.0.2 版本开始，DM 会自动生成 table-list 配置，在其之前的版本仍然需要人工配置。
 ```
 
 ## 第 5 步：启动任务
