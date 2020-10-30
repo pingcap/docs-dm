@@ -7,7 +7,7 @@ summary: Learn about common performance issues that might exist in DM and how to
 
 This document introduces common performance issues that might exist in DM and how to deal with them.
 
-Before diagnosing an issue, you can refer to the [DM 1.0-GA Benchmark Report](benchmark-v1.0-ga.md).
+Before diagnosing an issue, you can refer to the [DM 2.0-GA Benchmark Report](benchmark-v2.0-ga.md).
 
 When diagnosing and handling performance issues, make sure that:
 
@@ -55,7 +55,7 @@ The main operations of the Load unit are to read the SQL file data from the loca
 
 ## Binlog replication unit
 
-To diagnose performance issues in the Binlog replication unit, you can check the `binlog file gap between master and syncer` monitoring metric. For more information about this metric, refer to [monitoring metrics of the Binlog replication](monitor-a-dm-cluster.md#binlog-replication). 
+To diagnose performance issues in the Binlog replication unit, you can check the `binlog file gap between master and syncer` monitoring metric. For more information about this metric, refer to [monitoring metrics of the Binlog replication](monitor-a-dm-cluster.md#binlog-replication).
 
 - If this metric is greater than 1 for a long time, it usually indicates that there is a performance issue.
 - If this metric is 0, it usually indicates that there is no performance issue.
