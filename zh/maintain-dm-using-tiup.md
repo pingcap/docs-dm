@@ -275,7 +275,7 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dm import --dir=/path/to/dm-ansible --cluster-version v2.0.0-rc.2
+tiup dm import --dir=/path/to/dm-ansible --cluster-version v2.0.0
 ```
 
 可以通过执行 `tiup list dm-master` 来查看 TiUP 支持的最新集群版本。
