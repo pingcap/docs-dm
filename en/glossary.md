@@ -26,7 +26,7 @@ Binlog events are information about data modification made to a MySQL or MariaDB
 
 The binlog position is the offset information of a binlog event in a binlog file. Refer to [MySQL `SHOW BINLOG EVENTS`](https://dev.mysql.com/doc/refman/8.0/en/show-binlog-events.html) and [MariaDB `SHOW BINLOG EVENTS`](https://mariadb.com/kb/en/library/show-binlog-events/) for details.
 
-### Binlog replication processing unit
+### Binlog replication processing unit/sync unit
 
 Binlog replication processing unit is the processing unit used in DM-worker to read upstream binlogs or local relay logs, and to migrate these logs to the downstream. Each subtask corresponds to a binlog replication processing unit. In the current documentation, the binlog replication processing unit is also referred to as the sync processing unit.
 
@@ -47,7 +47,7 @@ In addition, the `relay.meta` information corresponding to a [relay processing u
 
 ## D
 
-### Dump processing unit
+### Dump processing unit/dump unit
 
 The dump processing unit is the processing unit used in DM-worker to export all data from the upstream. Each subtask corresponds to a dump processing unit.
 
@@ -59,7 +59,7 @@ The GTID is the global transaction ID of MySQL or MariaDB. With this feature ena
 
 ## L
 
-### Load processing unit
+### Load processing unit/load unit
 
 The load processing unit is the processing unit used in DM-worker to import the fully exported data to the downstream. Each subtask corresponds to a load processing unit. In the current documentation, the load processing unit is also referred to as the import processing unit.
 
@@ -87,15 +87,19 @@ The relay processing unit is the processing unit used in DM-worker to pull binlo
 
 The process of using the TiDB Data Migration tool to copy the **incremental data** of the upstream database to the downstream database.
 
-In the case of clearly mentioning "incremental", use replicate/replication instead of migrate/migration. 
+In the case of clearly mentioning "incremental", use replicate/replication instead of migrate/migration.
 
 ## S
 
 ### Safe mode
 
-Safe mode is the mode in which DML statements can be imported more than once when the primary key or unique index exists in the table schema.
+Safe mode is the mode in which DML statements can be imported more than once when the primary key or unique index exists in the table schema. In this mode, some statements from the upstream are migrated to the downstream only after they are re-written. The `INSERT` statement is re-written as `REPLACE`; the `UPDATE` statement is re-written as `DELETE` and `REPLACE`.
 
-In this mode, some statements from the upstream are migrated to the downstream only after they are re-written. The `INSERT` statement is re-written as `REPLACE`; the `UPDATE` statement is re-written as `DELETE` and `REPLACE`. TiDB DM automatically enables the safe mode within 5 minutes after the migration task is started or resumed. You can manually enable the mode by modifying the `safe-mode` parameter in the task configuration file.
+This mode is enabled in any of the following situations:
+
+- TiDB DM automatically enables the safe mode within 5 minutes immediately after the incremental replication task is started or resumed.
+- The safe mode remains enabled when the `safe-mode` parameter in the task configuration file is set to `true`.
+- If the argument `--consistency none` is configured for the dump processing unit of a full migration task, it cannot be determined whether the binlog changes at the beginning of the export affect the exported data or not. Therefore, the safe mode remains enabled for the incremental replication of these binlog changes.
 
 ### Shard DDL
 
