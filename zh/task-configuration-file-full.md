@@ -84,7 +84,7 @@ block-allow-list:                    # 上游数据库实例匹配的表的 bloc
     - db-name: "user"
       tbl-name: "log"
 
-mydumpers:                           # dump 处理单元处理单元运行配置参数
+mydumpers:                           # dump 处理单元运行配置参数
   global:                            # 配置名称
     mydumper-path: "./bin/mydumper"  # dump 处理单元 binary 文件地址，默认值为 "./bin/mydumper"
     threads: 4                       # dump 处理单元从上游数据库实例导出数据的线程数量，默认值为 4
@@ -95,7 +95,7 @@ mydumpers:                           # dump 处理单元处理单元运行配置
 loaders:                             # load 处理单元运行配置参数
   global:                            # 配置名称
     pool-size: 16                    # load 处理单元并发执行 dump 处理单元导出的 SQL 文件的线程数量，默认值为 16
-    dir: "./dumped_data"             # load 处理单元读取 dump 处理单元输出文件的地址，同实例对应的不同任务必须不同（ dump 处理单元会根据这个地址输出 SQL 文件），默认值为 "./dumped_data"
+    dir: "./dumped_data"             # load 处理单元读取 dump 处理单元输出文件的地址，同实例对应的不同任务必须不同（dump 处理单元会根据这个地址输出 SQL 文件），默认值为 "./dumped_data"
 
 syncers:                             # sync 处理单元运行配置参数
   global:                            # 配置名称

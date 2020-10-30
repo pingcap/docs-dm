@@ -31,11 +31,11 @@ The dump processing unit dumps the full data from the upstream MySQL/MariaDB to 
 
 ### Load processing unit/load unit
 
-The load processing reads the files of the dump unit and then loads these files to the downstream TiDB.
+The load processing unit reads the files of the dump unit and then loads these files to the downstream TiDB.
 
 ### Binlog replication/sync processing unit
 
-Binlog replication/sync processing unit reads the binlog events of the relay log, transforms these events to SQL statements, and then applies these statements to the downstream TiDB.
+Binlog replication processing unit (namely, sync processing unit), reads the binlog events of the relay log, transforms these events to SQL statements, and then applies these statements to the downstream TiDB.
 
 ## Privileges required by DM-worker
 

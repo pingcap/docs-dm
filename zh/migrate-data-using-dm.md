@@ -101,7 +101,7 @@ block-allow-list:                     # 如果 DM 版本 <= v1.0.6 则使用 bla
 mydumpers:
   global:
     mydumper-path: "./bin/mydumper"   # dump 处理单元二进制文件的路径。
-    extra-args: "-B test_db -T test_table"  #d ump 处理单元的其他参数，从 DM 1.0.2 版本开始，DM 会自动生成 table-list 配置，在其之前的版本仍然需要人工配置。
+    extra-args: "-B test_db -T test_table"  # dump 处理单元的其他参数，从 DM 1.0.2 版本开始，DM 会自动生成 table-list 配置，在其之前的版本仍然需要人工配置。
 ```
 
 ## 第 4 步：启动任务
