@@ -44,9 +44,9 @@ mysql-instances:
   # The ID of the upstream instance or migration group. It can be configured by referring to the `source-id` in the `dm-master.toml` file.
   - source-id: "mysql-replica-01"
     block-allow-list:  "bw-rule-1"
-    mydumper-thread: 4             # The number of threads that Dumpling uses for dumping data.
-    loader-thread: 16              # The number of threads that Loader uses for loading data. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
-    syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
+    mydumper-thread: 4             # The number of threads that the dump processing unit uses for dumping data.
+    loader-thread: 16              # The number of threads that the load processing unit uses for loading data. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
+    syncer-thread: 16              # The number of threads that the sync processing unit uses for replicating incremental data. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
 
   - source-id: "mysql-replica-02"
     block-allow-list:  "bw-rule-1" # Use black-white-list if the DM's version <= v2.0.0-beta.2.

@@ -18,9 +18,9 @@ DM has the following sharding DDL usage restrictions in the pessimistic mode:
 - In a sharding group, the corresponding DDL statements should be executed in all upstream sharded tables.
     - For example, if DDL statements are not executed on one or more upstream sharded tables corresponding to `DM-worker-2`, then other DM-workers that have executed the DDL statements pause their migration task and wait for `DM-worker-2` to receive the upstream DDL statements.
 - The sharding group migration task does not support `DROP DATABASE`/`DROP TABLE`.
-    - The Syncer unit in DM-worker automatically ignores the `DROP DATABASE`/`DROP TABLE` statement of upstream sharded tables.
+    - The sync unit in DM-worker automatically ignores the `DROP DATABASE`/`DROP TABLE` statement of upstream sharded tables.
 - The sharding group migration task does not support `TRUNCATE TABLE`.
-    - The Syncer unit in DM-worker automatically ignores the `TRUNCATE TABLE` statement of upstream sharded tables.
+    - The sync unit in DM-worker automatically ignores the `TRUNCATE TABLE` statement of upstream sharded tables.
 - The sharding group migration task supports `RENAME TABLE`, but with the following limitations (Online DDL is supported in another solution):
     - A table can only be renamed to a new name that is not used by any other table.
     - A single `RENAME TABLE` statement can only involve a single `RENAME` operation.
@@ -46,13 +46,13 @@ In the above example, the merging process is simplified, where only two MySQL in
 
 Now assume that in the migration process, the binlog data received from the two upstream sharded tables has the following time sequence:
 
-1. When the migration begins, the Syncer unit in DM-worker receives the DML events of `schema V1` from the two sharded tables.
+1. When the migration begins, the sync unit in DM-worker receives the DML events of `schema V1` from the two sharded tables.
 2. At `t1`, the sharding DDL events from instance 1 are received.
-3. From `t2` on, the Syncer unit receives the DML events of `schema V2` from instance 1; but from instance 2, it still receives the DML events of `schema V1`.
+3. From `t2` on, the sync unit receives the DML events of `schema V2` from instance 1; but from instance 2, it still receives the DML events of `schema V1`.
 4. At `t3`, the sharding DDL events from instance 2 are received.
-5. From `t4` on, the Syncer unit receives the DML events of `schema V2` from instance 2 as well.
+5. From `t4` on, the sync unit receives the DML events of `schema V2` from instance 2 as well.
 
-Assume that the DDL statements of sharded tables are not processed during the migration process. After DDL statements of instance 1 are migrated to the downstream, the downstream table schema is changed to `schema V2`. But for instance 2, the Syncer unit in DM-worker is still receiving DML events of `schema V1` from `t2` to `t3`. Therefore, when the DML statements of `schema V1` are migrated to the downstream, the inconsistency between the DML statements and the table schema can cause errors and the data cannot be migrated successfully.
+Assume that the DDL statements of sharded tables are not processed during the migration process. After DDL statements of instance 1 are migrated to the downstream, the downstream table schema is changed to `schema V2`. But for instance 2, the sync unit in DM-worker is still receiving DML events of `schema V1` from `t2` to `t3`. Therefore, when the DML statements of `schema V1` are migrated to the downstream, the inconsistency between the DML statements and the table schema can cause errors and the data cannot be migrated successfully.
 
 ## Principles
 
@@ -86,11 +86,11 @@ Assume that there are two sharded tables, namely `table_1` and `table_2`, to be 
 
 Because data comes from the same MySQL instance, all the data is obtained from the same binlog stream. In this case, the time sequence is as follows:
 
-1. The Syncer unit in DM-worker receives the DML statements of `schema V1` from both sharded tables when the migration begins.
-2. At `t1`, the Syncer unit in DM-worker receives the DDL statements of `table_1`.
+1. The sync unit in DM-worker receives the DML statements of `schema V1` from both sharded tables when the migration begins.
+2. At `t1`, the sync unit in DM-worker receives the DDL statements of `table_1`.
 3. From `t2` to `t3`, the received data includes the DML statements of `schema V2` from `table_1` and the DML statements of `schema V1` from `table_2`.
-4. At `t3`, the Syncer unit in DM-worker receives the DDL statements of `table_2`.
-5. From `t4` on, the Syncer unit in DM-worker receives the DML statements of `schema V2` from both tables.
+4. At `t3`, the sync unit in DM-worker receives the DDL statements of `table_2`.
+5. From `t4` on, the sync unit in DM-worker receives the DML statements of `schema V2` from both tables.
 
 If the DDL statements are not processed particularly during the data migration, when the DDL statement of `table_1` is migrated to the downstream and changes the downstream table schema, the DML statement of `schema V1` from `table_2` cannot be migrated successfully. Therefore, within a single DM-worker, a logical sharding group similar to that within `DM-master` is created, except that members of this group are different sharded tables in the same upstream MySQL instance.
 
