@@ -273,7 +273,7 @@ For example, to import a cluster deployed using DM Ansible:
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dm import --dir=/path/to/dm-ansible --cluster-version v2.0.0-rc.2
+tiup dm import --dir=/path/to/dm-ansible --cluster-version v2.0.0
 ```
 
 Execute `tiup list dm-master` to view the latest cluster version supported by TiUP.
