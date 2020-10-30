@@ -109,7 +109,7 @@ block-cache-size = "4GB"
 [raftdb.defaultcf]
 block-cache-size = "4GB"
 
-// DM task syncer unit configuration
+// DM task sync processing unit configuration
 syncer:
     worker-count: 256
     batch: 100

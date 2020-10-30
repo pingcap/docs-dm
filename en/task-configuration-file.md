@@ -47,9 +47,9 @@ mysql-instances:
   # The ID of the upstream instance or migration group. It can be configured by referring to the `source-id` in the `dm-master.toml` file.
   - source-id: "mysql-replica-01"
     block-allow-list:  "bw-rule-1"     # Use black-white-list if the DM's version <= v1.0.6.
-        mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data, new in v1.0.2 and later versions
-        loader-thread: 16              # The number of threads that Loader uses for loading data, new in v1.0.2 and later versions
-        syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data, new in v1.0.2 and later versions
+        mydumper-thread: 4             # The number of threads that the dump unit uses for dumping data, new in v1.0.2 and later versions
+        loader-thread: 16              # The number of threads that the load unit uses for loading data, new in v1.0.2 and later versions
+        syncer-thread: 16              # The number of threads that the sync unit uses for replicating incremental data, new in v1.0.2 and later versions
   - source-id: "mysql-replica-02"
     block-allow-list:  "bw-rule-1"     # Use black-white-list if the DM's version <= v1.0.6.
     mydumper-thread: 4
