@@ -238,16 +238,16 @@ mysql-instances:
   - source-id: "mysql-replica-01"
     block-allow-list:  "instance"  # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
     route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
-    mydumper-thread: 4             # mydumper 用于导出数据的线程数量，在 v1.0.2 版本引入
-    loader-thread: 16              # loader 用于导入数据的线程数量，在 v1.0.2 版本引入
-    syncer-thread: 16              # syncer 用于复制增量数据的线程数量，在 v1.0.2 版本引入
+    mydumper-thread: 4             # dump 处理单元用于导出数据的线程数量，在 v1.0.2 版本引入
+    loader-thread: 16              # load 处理单元用于导入数据的线程数量，在 v1.0.2 版本引入
+    syncer-thread: 16              # sync 处理单元用于复制增量数据的线程数量，在 v1.0.2 版本引入
 
   - source-id: "mysql-replica-02"
     block-allow-list:  "instance"  # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
     route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
-    mydumper-thread: 4             # mydumper 用于导出数据的线程数量，在 v1.0.2 版本引入
-    loader-thread: 16              # loader 用于导入数据的线程数量，在 v1.0.2 版本引入
-    syncer-thread: 16              # syncer 用于复制增量数据的线程数量，在 v1.0.2 版本引入
+    mydumper-thread: 4             # dump 处理单元用于导出数据的线程数量，在 v1.0.2 版本引入
+    loader-thread: 16              # load 处理单元用于导入数据的线程数量，在 v1.0.2 版本引入
+    syncer-thread: 16              # sync 处理单元用于复制增量数据的线程数量，在 v1.0.2 版本引入
 
 block-allow-list:                  # 如果 DM 版本 <= v1.0.6 则使用 black-white-list
   instance:

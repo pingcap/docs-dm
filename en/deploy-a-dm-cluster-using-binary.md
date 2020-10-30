@@ -248,9 +248,9 @@ Now you need to migrate these sharded tables to the `db_target.t_target` table i
       - source-id: "mysql-replica-01"
         block-allow-list:  "instance"  # Use black-white-list if the DM's version <= v1.0.6.
         route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
-        mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data, new in v1.0.2 and later versions.
-        loader-thread: 16              # The number of threads that Loader uses for loading data, new in v1.0.2 and later versions.
-        syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data, new in v1.0.2 and later versions.
+        mydumper-thread: 4             # The number of threads that the dump unit uses for dumping data, new in v1.0.2 and later versions.
+        loader-thread: 16              # The number of threads that the load unit uses for loading data, new in v1.0.2 and later versions.
+        syncer-thread: 16              # The number of threads that the sync unit uses for replicating incremental data, new in v1.0.2 and later versions.
 
       - source-id: "mysql-replica-02"
         block-allow-list:  "instance"  # Use black-white-list if the DM's version <= v1.0.6.
