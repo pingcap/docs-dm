@@ -259,7 +259,8 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 > - TiUP does not support importing the DM Portal component in a DM 1.0 cluster.
 > - You need to stop the original cluster before importing. 
 > - TiUP only supports importing to a DM cluster of v2.0.0-rc.2 or a later version.
-> - The deployment directories of some components are different from those of the original cluster. You can execute the `display` command to view the details. 
+> - The `import` command is used to import data from a DM 1.0 cluster to a new DM 2.0 cluster. If you need to import DM migration tasks to an existing DM 2.0 cluster, refer to [Manually Upgrade TiDB Data Migration from v1.0.x to v2.0.x](manually-upgrade-dm-1.0-to-2.0.md).
+> - The deployment directories of some components are different from those of the original cluster. You can execute the `display` command to view the details.
 > - Run `tiup update --self && tiup update dm` before importing to make sure that the TiUP DM component is the latest version.
 > - Only one DM-master node exists in the cluster after importing. Refer to [Scale out a cluster](#scale-out-a-cluster) to scale out the DM-master.
 
