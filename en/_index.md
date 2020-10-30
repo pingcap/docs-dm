@@ -19,7 +19,7 @@ summary: Learn about TiDB Data Migration documentation.
 <NavColumn>
 <ColumnTitle>About TiDB Data Migration</ColumnTitle>
 
-- [Performance](benchmark-v1.0-ga.md)
+- [Performance](benchmark-v2.0-ga.md)
 - [Table routing](key-features.md#table-routing)
 - [Block & Allow Lists](key-features.md#block-and-allow-table-lists)
 - [Binlog Event Filter](key-features.md#binlog-event-filter)
