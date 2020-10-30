@@ -38,11 +38,30 @@ aliases: ['/docs-cn/tidb-data-migration/stable/replicate-data-using-dm/','/docs-
 
 - dm-master 进程配置文件 `{ansible deploy}/conf/dm-master.toml` 中的配置
 
+<<<<<<< HEAD
     ```toml
     # Master 配置
     
     # DM-worker 是否使用全局事务标识符 (GTID) 拉取 binlog。使用前提是在上游 MySQL 已开启 GTID 模式。
     enable-gtid = false
+=======
+1. 将 MySQL-1 的相关信息写入到 `conf/source1.yaml` 中：
+
+    ```yaml
+    # MySQL1 Configuration.
+
+    source-id: "mysql-replica-01"
+
+    # DM-worker 是否使用全局事务标识符 (GTID) 拉取 binlog。使用前提是在上游 MySQL 已开启 GTID 模式。
+    enable-gtid: false
+
+    from:
+      host: "172.16.10.81"
+      user: "root"
+      password: "VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU="
+      port: 3306
+    ```
+>>>>>>> 316cc7d... *: unify names of processing units (#456)
 
     [[deploy]]
     source-id = "mysql-replica-01"
@@ -81,8 +100,13 @@ mysql-instances:
   # 上游实例或者复制组 ID，参考 `inventory.ini` 的 `source_id` 或者 `dm-master.toml` 的 `source-id 配置`。
   source-id: "mysql-replica-01"
   # 需要迁移的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置。
+<<<<<<< HEAD
   block-allow-list: "global"          # 如果 DM 版本 <= v1.0.6 则使用 black-white-list。
   # Mydumper 的配置项名称，用于引用全局的 Mydumper 配置。
+=======
+  block-allow-list: "global"          # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
+  # dump 处理单元的配置项名称，用于引用全局的 dump 处理单元配置。
+>>>>>>> 316cc7d... *: unify names of processing units (#456)
   mydumper-config-name: "global"
 
 -
@@ -97,11 +121,15 @@ block-allow-list:                     # 如果 DM 版本 <= v1.0.6 则使用 bla
     - db-name: "test_db"              # 需要迁移的表的库名。
       tbl-name: "test_table"          # 需要迁移的表的名称。
 
-# Mydumper 全局配置，各实例通过配置项名引用。
+# dump 处理单元全局配置，各实例通过配置项名引用。
 mydumpers:
   global:
+<<<<<<< HEAD
     mydumper-path: "./bin/mydumper"   # Mydumper 二进制文件的路径。
     extra-args: "-B test_db -T test_table"  # mydumper 的其他参数，从 DM 1.0.2 版本开始，DM 会自动生成 table-list 配置，在其之前的版本仍然需要人工配置。
+=======
+    extra-args: "-B test_db -T test_table"  # dump 处理单元的其他参数，从 DM 1.0.2 版本开始，DM 会自动生成 table-list 配置，在其之前的版本仍然需要人工配置。
+>>>>>>> 316cc7d... *: unify names of processing units (#456)
 ```
 
 ## 第 4 步：启动任务

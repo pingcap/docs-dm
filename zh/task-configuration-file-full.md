@@ -46,7 +46,14 @@ target-database:                # 下游数据库实例配置
     sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE"
     tidb_skip_utf8_check: 1
     tidb_constraint_check_in_place: 0
+<<<<<<< HEAD
 
+=======
+  security:                       # 下游 TiDB TLS 相关配置
+    ssl-ca: "/path/to/ca.pem"
+    ssl-cert: "/path/to/cert.pem"
+    ssl-key: "/path/to/key.pem"
+>>>>>>> 316cc7d... *: unify names of processing units (#456)
 
 ## ******** 功能配置集 **********
 
@@ -84,6 +91,7 @@ block-allow-list:                    # 上游数据库实例匹配的表的 bloc
     - db-name: "user"
       tbl-name: "log"
 
+<<<<<<< HEAD
 mydumpers:                           # mydumper 处理单元运行配置参数
   global:                            # 配置名称
     mydumper-path: "./bin/mydumper"  # mydumper binary 文件地址，默认值为 "./bin/mydumper"
@@ -101,6 +109,25 @@ syncers:                             # syncer 处理单元运行配置参数
   global:                            # 配置名称
     worker-count: 16                 # syncer 并发迁移 binlog event 的线程数量，默认值为 16
     batch: 100                       # syncer 迁移到下游数据库的一个事务批次 SQL 语句数，默认值为 100
+=======
+mydumpers:                           # dump 处理单元的运行配置参数
+  global:                            # 配置名称
+    threads: 4                       # dump 处理单元从上游数据库实例导出数据的线程数量，默认值为 4
+    chunk-filesize: 64               # dump 处理单元生成的数据文件大小，默认值为 64，单位为 MB
+    skip-tz-utc: true                # 忽略对时间类型数据进行时区转化，默认值为 true
+    extra-args: "--consistency none" # dump 处理单元的其他参数，不需要在 extra-args 中配置 table-list，DM 会自动生成
+
+loaders:                             # load 处理单元的运行配置参数
+  global:                            # 配置名称
+    pool-size: 16                    # load 处理单元并发执行 dump 处理单元的 SQL 文件的线程数量，默认值为 16，当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
+    dir: "./dumped_data"             # dump 处理单元输出 SQL 文件的目录，同时也是 load 处理单元读取文件的目录。该配置项的默认值为 "./dumped_data"。同实例对应的不同任务必须配置不同的目录
+
+
+syncers:                             # sync 处理单元的运行配置参数
+  global:                            # 配置名称
+    worker-count: 16                 # sync 并发迁移 binlog event 的线程数量，默认值为 16，当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
+    batch: 100                       # sync 迁移到下游数据库的一个事务批次 SQL 语句数，默认值为 100
+>>>>>>> 316cc7d... *: unify names of processing units (#456)
     enable-ansi-quotes: true         # 若 `session` 中设置 `sql-mode: "ANSI_QUOTES"`，则需开启此项
     safe-mode: false                 # 设置为 true，则将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。在启动或恢复增量复制任务的前 5 分钟内 TiDB DM 会自动启动 safe mode
 
@@ -121,10 +148,17 @@ mysql-instances:
     syncer-config-name: "global"            # Syncer 配置名称
 
   -
+<<<<<<< HEAD
     source-id: "mysql-replica-02"  # 上游实例或者复制组 ID，参考 `inventory.ini` 的 `source_id` 或者 `dm-master.toml` 的 `source-id` 配置
     mydumper-thread: 4             # mydumper 用于导出数据的线程数量，等同于 mydumper 处理单元配置中的 `threads`，在 v1.0.2 版本引入
     loader-thread: 16              # loader 用于导入数据的线程数量，等同于 loader 处理单元配置中的 `pool-size`, 在 v1.0.2 版本引入
     syncer-thread: 16              # syncer 用于复制增量数据的线程数量，等同于 syncer 处理单元配置中的 `worker-count`，在 v1.0.2 版本引入
+=======
+    source-id: "mysql-replica-02"  # 对应 source.toml 中的 `source-id`
+    mydumper-thread: 4             # dump 处理单元用于导出数据的线程数量，等同于 mydumpers 配置中的 `threads`，当同时指定它们时 `mydumper-thread` 优先级更高
+    loader-thread: 16              # load 处理单元用于导入数据的线程数量，等同于 loaders 配置中的 `pool-size`，当同时指定它们时 `loader-thread` 优先级更高。当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
+    syncer-thread: 16              # sync 处理单元用于复制增量数据的线程数量，等同于 syncers 配置中的 `worker-count`，当同时指定它们时 `syncer-thread` 优先级更高。当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
+>>>>>>> 316cc7d... *: unify names of processing units (#456)
 ```
 
 ## 配置顺序
@@ -154,12 +188,21 @@ mysql-instances:
 
 | 配置项        | 说明                                    |
 | :------------ | :--------------------------------------- |
+<<<<<<< HEAD
 | `routes` | 上游和下游表之间的路由 table routing 规则集。如果上游与下游的库名、表名一致，则不需要配置该项。使用场景及示例配置参见 [Table Routing](feature-overview.md#table-routing) |
 | `filters` | 上游数据库实例匹配的表的 binlog event filter 规则集。如果不需要对 binlog 进行过滤，则不需要配置该项。使用场景及示例配置参见 [Binlog Event Filter](feature-overview.md#binlog-event-filter) |
 | `block-allow-list` | 该上游数据库实例匹配的表的 block & allow list 过滤规则集。建议通过该项指定需要迁移的库和表，否则会迁移所有的库和表。使用场景及示例配置参见 [Block & Allow Lists](feature-overview.md#block--allow-table-lists) |
 | `mydumpers` | mydumper 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `mydumper-thread` 对 `thread` 配置项单独进行配置。 |
 | `loaders` | loader 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `loader-thread` 对 `pool-size` 配置项单独进行配置。 |
 | `syncers` | syncer 处理单元运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `syncer-thread` 对 `worker-count` 配置项单独进行配置。 |
+=======
+| `routes` | 上游和下游表之间的路由 table routing 规则集。如果上游与下游的库名、表名一致，则不需要配置该项。使用场景及示例配置参见 [Table Routing](key-features.md#table-routing) |
+| `filters` | 上游数据库实例匹配的表的 binlog event filter 规则集。如果不需要对 binlog 进行过滤，则不需要配置该项。使用场景及示例配置参见 [Binlog Event Filter](key-features.md#binlog-event-filter) |
+| `block-allow-list` | 该上游数据库实例匹配的表的 block & allow lists 过滤规则集。建议通过该项指定需要迁移的库和表，否则会迁移所有的库和表。使用场景及示例配置参见 [Block & Allow Lists](key-features.md#block--allow-table-lists) |
+| `mydumpers` | dump 处理单元的运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `mydumper-thread` 对 `thread` 配置项单独进行配置。 |
+| `loaders` | load 处理单元的运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `loader-thread` 对 `pool-size` 配置项单独进行配置。 |
+| `syncers` | sync 处理单元的运行配置参数。如果默认配置可以满足需求，则不需要配置该项，也可以只使用 `syncer-thread` 对 `worker-count` 配置项单独进行配置。 |
+>>>>>>> 316cc7d... *: unify names of processing units (#456)
 
 各个功能配置集的参数及解释参见[完整配置文件示例](#完整配置文件示例)中的注释说明。
 

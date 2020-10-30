@@ -46,10 +46,18 @@ block-allow-list:        # Use black-white-list if the DM's version <= v1.0.6.
 mysql-instances:
   # The ID of the upstream instance or migration group. It can be configured by referring to the `source-id` in the `dm-master.toml` file.
   - source-id: "mysql-replica-01"
+<<<<<<< HEAD
     block-allow-list:  "bw-rule-1"     # Use black-white-list if the DM's version <= v1.0.6.
         mydumper-thread: 4             # The number of threads that Mydumper uses for dumping data, new in v1.0.2 and later versions
         loader-thread: 16              # The number of threads that Loader uses for loading data, new in v1.0.2 and later versions
         syncer-thread: 16              # The number of threads that Syncer uses for replicating incremental data, new in v1.0.2 and later versions
+=======
+    block-allow-list:  "bw-rule-1"
+    mydumper-thread: 4             # The number of threads that the dump processing unit uses for dumping data.
+    loader-thread: 16              # The number of threads that the load processing unit uses for loading data. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
+    syncer-thread: 16              # The number of threads that the sync processing unit uses for replicating incremental data. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
+
+>>>>>>> 316cc7d... *: unify names of processing units (#456)
   - source-id: "mysql-replica-02"
     block-allow-list:  "bw-rule-1"     # Use black-white-list if the DM's version <= v1.0.6.
     mydumper-thread: 4

@@ -87,8 +87,13 @@ mysql-instances:
   # The configuration item name of the block and allow lists of the name of the
   # database/table to be migrated, used to quote the global block and allow
   # lists configuration that is set in the global block-allow-list below.
+<<<<<<< HEAD
   block-allow-list: "global"  # Use black-white-list if the DM's version <= v1.0.6.
   # The configuration item name of Mydumper, used to quote the global Mydumper configuration.
+=======
+  block-allow-list: "global"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+  # The configuration item name of the dump processing unit, used to quote the global configuration of the dump unit.
+>>>>>>> 316cc7d... *: unify names of processing units (#456)
   mydumper-config-name: "global"
 
 -
@@ -104,11 +109,15 @@ block-allow-list:                     # Use black-white-list if the DM's version
     - db-name: "test_db"              # The database name of the table to be migrated.
       tbl-name: "test_table"          # The name of the table to be migrated.
 
-# Mydumper global configuration. Each instance can quote it by the configuration item name.
+# The global configuration of the dump unit. Each instance can quote it by the configuration item name.
 mydumpers:
   global:
+<<<<<<< HEAD
     mydumper-path: "./bin/mydumper"   # The file path of the Mydumper binary.
     extra-args: "-B test_db -T test_table"  # The extra Mydumper argument. Since DM 1.0.2, DM automatically generates the "--tables-list" configuration. For versions earlier than 1.0.2, you need to configure this option manually.
+=======
+    extra-args: "-B test_db -T test_table"  # Extra arguments of the dump unit. Since DM 1.0.2, DM automatically generates the "--tables-list" configuration. For versions earlier than 1.0.2, you need to configure this option manually.
+>>>>>>> 316cc7d... *: unify names of processing units (#456)
 ```
 
 ## Step 4: Start the data migration task
