@@ -26,7 +26,7 @@ MySQL/MariaDB 生成的 Binlog 文件中的数据变更信息，具体请参考 
 
 特定 Binlog event 在 Binlog 文件中的位置偏移信息，具体请参考 [MySQL `SHOW BINLOG EVENTS`](https://dev.mysql.com/doc/refman/8.0/en/show-binlog-events.html) 与 [MariaDB `SHOW BINLOG EVENTS`](https://mariadb.com/kb/en/library/show-binlog-events/)。
 
-### Binlog replication 处理单元
+### Binlog replication 处理单元/ sync 处理单元
 
 DM-worker 内部用于读取上游 Binlog 或本地 Relay log 并迁移到下游的处理单元，每个 Subtask 对应一个 Binlog replication 处理单元。在当前文档中，有时也称作 Sync 处理单元。
 
@@ -95,9 +95,13 @@ DM-worker 内部用于从上游拉取 Binlog 并写入数据到 Relay log 的处
 
 ### Safe mode
 
-指增量复制过程中，用于支持在表结构中存在主键或唯一索引的条件下可重复导入 DML 的模式。
+指增量复制过程中，用于支持在表结构中存在主键或唯一索引的条件下可重复导入 DML 的模式。该模式的主要特点是：将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE` 后再向下游执行。
 
-该模式的主要特点为将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE` 后再向下游执行。在启动或恢复增量复制任务的前 5 分钟 TiDB DM 会自动启动 Safe mode，另外也可以在任务配置文件中通过 `safe-mode` 参数手动开启。
+该模式会在满足如下任一条件时启用：
+
+- 启动或恢复增量复制任务的前 5 分钟保持启用
+- 任务配置文件中设置 `safe-mode: true` 时会始终启用
+- 在全量迁移任务中的 dump 处理单元配置 `--consistency none` 后，不能确定导出开始时的 binlog 变动是否影响了导出数据。Safe mode 会在增量复制这部分 binlog 时保持启用
 
 ### Shard DDL
 

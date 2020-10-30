@@ -55,7 +55,7 @@ After migration, the ``` `migrate_me`.`t1` ``` and ``` `migrate_me`.`t2` ``` tab
 
 To ensure a successful migration, you need to do prechecks before starting the migration. This section provides the precheck list and solutions to DM and Aurora components.
 
-### DM nodes deployment 
+### DM nodes deployment
 
 As the hub of data migration, DM needs to connect to the upstream Aurora cluster and the downstream TiDB cluster. Therefore, you need to use the MySQL client to check whether the nodes in which DM is to be deployed can connect to the upstream and downstream. In addition, for details of DM requirements on hardware, software, and the node number, see [DM Cluster Software and Hardware Recommendations](hardware-and-software-requirements.md).
 
@@ -72,7 +72,7 @@ If GTID is enabled in Aurora, you can migrate data based on GTID. For how to ena
 
 ## Step 2: Deploy the DM cluster
 
-DM can be deployed in multiple ways. Currently, it is recommended to use TiUP to deploy a DM cluster. For the specific deployment method, see [Deploy DM cluster using TiUP](deploy-a-dm-cluster-using-tiup.md). This example has two data sources, so at least two DM-worker nodes need to be deployed. 
+DM can be deployed in multiple ways. Currently, it is recommended to use TiUP to deploy a DM cluster. For the specific deployment method, see [Deploy DM cluster using TiUP](deploy-a-dm-cluster-using-tiup.md). This example has two data sources, so at least two DM-worker nodes need to be deployed.
 
 After deployment, you need to record the IP and service port of any DM-master node (`8261` by default) for `dmctl` to connect. This example uses `127.0.0.1:8261`. Check the DM status through TiUP using `dmctl`:
 
@@ -124,7 +124,7 @@ The number of `master`s and `worker`s in the returned result is consistent with 
 >
 > The configuration file used by DM supports database passwords in plaintext or ciphertext. It is recommended to use password encrypted using dmctl. To obtain the ciphertext password, see [Encrypt the database password using dmctl](manage-source.md#encrypt-the-database-password).
 
-Save the following configuration files of data source according to the example, in which the value of `source-id` will be used in the task configuration in [step 4](#step-4-configure-the-task). 
+Save the following configuration files of data source according to the example, in which the value of `source-id` will be used in the task configuration in [step 4](#step-4-configure-the-task).
 
 The content of `source1.yaml`:
 
@@ -187,7 +187,7 @@ When the data sources are successfully added, the return information of each dat
 
 > **Note:**
 >
-> Because Aurora does not support FTWRL, write operations have to be paused when you only perform the full data migration to export data. See [AWS documentation](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls) for details. In this example, both full data migration and incremental replication are performed, and DM automatically enables the `safe mode` to solve this pause issue. To ensure data consistency in other combinations of task mode, see [AWS documentation](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls).
+> Because Aurora does not support FTWRL, write operations have to be paused when you only perform the full data migration to export data. See [AWS documentation](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls) for details. In this example, both full data migration and incremental replication are performed, and DM automatically enables the [`safe mode`](glossary.md#safe-mode) to solve this pause issue. To ensure data consistency in other combinations of task mode, see [AWS documentation](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls).
 
 This example migrates the existing data in Aurora and replicates incremental data to TiDB in real time, which is the **full data migration plus incremental replication** mode. According to the TiDB cluster information above, the added `source-id`, and the table to be migrated, save the following task configuration file `task.yaml`:
 
@@ -252,7 +252,7 @@ If the task is successfully started, the following information is returned:
             "source": "aurora-replica-01",
             "worker": "one-dm-worker-ID"
         },
-        {       
+        {
             "result": true,
             "msg": "",
             "source": "aurora-replica-02",
@@ -262,7 +262,7 @@ If the task is successfully started, the following information is returned:
 }
 ```
 
-If `source db replication privilege checker` and `source db dump privilege checker` errors are in the returned information, check whether unrecognized privileges exsit in the `errorMsg` field. For example: 
+If `source db replication privilege checker` and `source db dump privilege checker` errors are in the returned information, check whether unrecognized privileges exsit in the `errorMsg` field. For example:
 
 ```
 line 1 column 287 near \"INVOKE LAMBDA ON *.* TO...
