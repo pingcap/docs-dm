@@ -92,7 +92,7 @@ In this test, the size of data imported using `sysbench` is 3.78 GB. The followi
 
 #### Benchmark results with different row count per statement
 
-Full import data size in this benchmark case is 3.78 GB, load unit pool size uses 32. The statement count is controlled by mydumper parameters.
+Full import data size in this benchmark case is 3.78 GB, load unit pool size uses 32. The statement count is controlled by the parameters of the dump unit.
 
 | Row count in per statement | mydumper extra-args  | Max latency of TXN execution (s) | Import time (s) | Import speed (MB/s) | TiDB 99 duration (s) |
 | :------------------------: | :------------------: | :--------------------------: | :-------------: | :-----------------: | :------------------: |

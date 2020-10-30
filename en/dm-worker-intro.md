@@ -17,7 +17,7 @@ It has the following features:
 
 ## DM-worker processing unit
 
-A DM-worker task contains multiple logic units, including relay log, Dumper, Loader, and binlog replication.
+A DM-worker task contains multiple logic units, including relay log, the dump processing unit, the load processing unit, and binlog replication.
 
 ### Relay log
 
@@ -25,17 +25,17 @@ The relay log persistently stores the binlog data from the upstream MySQL/MariaD
 
 Its rationale and features are similar to the relay log of MySQL. For details, see [MySQL Relay Log](https://dev.mysql.com/doc/refman/5.7/en/replica-logs-relaylog.html).
 
-### Dumper
+### Dump processing unit
 
-Dumper dumps the full data from the upstream MySQL/MariaDB to the local disk.
+The dump processing unit dumps the full data from the upstream MySQL/MariaDB to the local disk.
 
-### Loader
+### Load processing unit
 
-Loader reads the files of Dumper and then loads these files to the downstream TiDB.
+The load processing unit reads the dumped files of the dump processing unit and then loads these files to the downstream TiDB.
 
-### Binlog replication/Syncer
+### Binlog replication/sync processing unit
 
-Binlog replication/Syncer reads the binlog events of the upstream MySQL/MariaDB or the binlog events of the relay log, transforms these events to SQL statements, and then applies these statements to the downstream TiDB.
+Binlog replication/sync processing unit reads the binlog events of the upstream MySQL/MariaDB or the binlog events of the relay log, transforms these events to SQL statements, and then applies these statements to the downstream TiDB.
 
 ## Privileges required by DM-worker
 
@@ -87,8 +87,8 @@ GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER,INDEX  ON db.table TO 'your_
 | Processing unit | Minimal upstream (MySQL/MariaDB) privilege | Minimal downstream (TiDB) privilege | Minimal system privilege |
 |:----|:--------------------|:------------|:----|
 | Relay log | `REPLICATION SLAVE` (reads the binlog)<br/>`REPLICATION CLIENT` (`show master status`, `show slave status`) | NULL | Read/Write local files |
-| Dumper | `SELECT`<br/>`RELOAD` (flushes tables with Read lock and unlocks tables）| NULL | Write local files |
-| Loader | NULL | `SELECT` (Query the checkpoint history)<br/>`CREATE` (creates a database/table)<br/>`DELETE` (deletes checkpoint)<br/>`INSERT` (Inserts the Dump data) | Read/Write local files |
+| Dump | `SELECT`<br/>`RELOAD` (flushes tables with Read lock and unlocks tables）| NULL | Write local files |
+| Load | NULL | `SELECT` (Query the checkpoint history)<br/>`CREATE` (creates a database/table)<br/>`DELETE` (deletes checkpoint)<br/>`INSERT` (Inserts the Dump data) | Read/Write local files |
 | Binlog replication | `REPLICATION SLAVE` (reads the binlog)<br/>`REPLICATION CLIENT` (`show master status`, `show slave status`) | `SELECT` (shows the index and column)<br/>`INSERT` (DML)<br/>`UPDATE` (DML)<br/>`DELETE` (DML)<br/>`CREATE` (creates a database/table)<br/>`DROP` (drops databases/tables)<br/>`ALTER` (alters a table)<br/>`INDEX` (creates/drops an index)| Read/Write local files |
 
 > **Note:**
