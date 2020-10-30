@@ -1,6 +1,6 @@
 ---
 title: 管理数据迁移任务
-aliases: ['/zh/tidb-data-migration/stable/manage-migration-tasks','/docs-cn/tidb-data-migration/stable/manage-replication-tasks/','/docs-cn/tidb-data-migration/v1.0/manage-replication-tasks/','/docs-cn/dev/reference/tools/data-migration/manage-tasks/','/docs-cn/v3.1/reference/tools/data-migration/manage-tasks/','/docs-cn/v3.0/reference/tools/data-migration/manage-tasks/','/docs-cn/v2.1/reference/tools/data-migration/manage-tasks/','/docs-cn/stable/reference/tools/data-migration/manage-tasks/','/zh/tidb-data-migration/stable/manage-replication-tasks/']
+aliases: ['/docs-cn/tidb-data-migration/stable/manage-replication-tasks/','/docs-cn/tidb-data-migration/v1.0/manage-replication-tasks/','/docs-cn/dev/reference/tools/data-migration/manage-tasks/','/docs-cn/v3.1/reference/tools/data-migration/manage-tasks/','/docs-cn/v3.0/reference/tools/data-migration/manage-tasks/','/docs-cn/v2.1/reference/tools/data-migration/manage-tasks/','/docs-cn/stable/reference/tools/data-migration/manage-tasks/','/zh/tidb-data-migration/stable/manage-replication-tasks/']
 ---
 
 # 管理数据迁移任务

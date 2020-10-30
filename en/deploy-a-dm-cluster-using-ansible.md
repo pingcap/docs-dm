@@ -1,7 +1,7 @@
 ---
 title: Deploy Data Migration Using DM-Ansible
 summary: Use DM-Ansible to deploy the Data Migration cluster.
-aliases: ['/tidb-data-migration/stable/deploy-a-dm-cluster-using-ansible','/docs/tidb-data-migration/stable/deploy-a-dm-cluster-using-ansible/','/docs/tidb-data-migration/v1.0/deploy-a-dm-cluster-using-ansible/','/docs/dev/how-to/deploy/data-migration-with-ansible/','/docs/v3.1/how-to/deploy/data-migration-with-ansible/','/docs/v3.0/how-to/deploy/data-migration-with-ansible/','/docs/v2.1/how-to/deploy/data-migration-with-ansible/']
+aliases: ['/docs/tidb-data-migration/stable/deploy-a-dm-cluster-using-ansible/','/docs/tidb-data-migration/v1.0/deploy-a-dm-cluster-using-ansible/','/docs/dev/how-to/deploy/data-migration-with-ansible/','/docs/v3.1/how-to/deploy/data-migration-with-ansible/','/docs/v3.0/how-to/deploy/data-migration-with-ansible/','/docs/v2.1/how-to/deploy/data-migration-with-ansible/']
 
 ---
 
@@ -370,7 +370,7 @@ MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 
 > **Note:**
 >
-> + If the database has no password, you can skip this step.
+> + If the database has no password, you can skip this step. 
 > + DM v1.0.6 and later versions can configure the plaintext database password.
 
 ## Step 8: Edit variables in the `inventory.ini` file
@@ -474,7 +474,7 @@ The following example uses `tidb` as the user who runs the service.
     ```bash
     ansible-playbook deploy.yml
     ```
-
+    
     > **Note:**
     >
     > Currently, both DM and TiDB overwrite the original running configuration of the monitoring components during deployment and rolling upgrade. Therefore, it is highly recommended to deploy independent monitoring components for DM and TiDB.
