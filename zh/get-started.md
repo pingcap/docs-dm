@@ -1,6 +1,6 @@
 ---
 title: TiDB Data Migration 教程
-aliases: ['/docs-cn/tidb-data-migration/stable/get-started/','/docs-cn/tidb-data-migration/v1.0/get-started/','/docs-cn/dev/how-to/get-started/data-migration/','/docs-cn/v3.0/how-to/get-started/data-migration/','/docs-cn/v3.1/how-to/get-started/data-migration/','/docs-cn/v2.1/how-to/get-started/data-migration/']
+aliases: ['/zh/tidb-data-migration/stable/get-started','/docs-cn/tidb-data-migration/stable/get-started/','/docs-cn/tidb-data-migration/v1.0/get-started/','/docs-cn/dev/how-to/get-started/data-migration/','/docs-cn/v3.0/how-to/get-started/data-migration/','/docs-cn/v3.1/how-to/get-started/data-migration/','/docs-cn/v2.1/how-to/get-started/data-migration/']
 ---
 
 # TiDB Data Migration 教程

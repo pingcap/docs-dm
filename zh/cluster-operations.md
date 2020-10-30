@@ -1,6 +1,6 @@
 ---
 title: DM 集群操作
-aliases: ['/docs-cn/tidb-data-migration/stable/cluster-operations/','/docs-cn/tidb-data-migration/v1.0/cluster-operations/','/docs-cn/dev/reference/tools/data-migration/cluster-operations/','/docs-cn/v3.1/reference/tools/data-migration/cluster-operations/','/docs-cn/v3.0/reference/tools/data-migration/cluster-operations/','/docs-cn/v2.1/reference/tools/data-migration/cluster-operations/','/docs-cn/stable/reference/tools/data-migration/cluster-operations/']
+aliases: ['/zh/tidb-data-migration/stable/cluster-operations','/docs-cn/tidb-data-migration/stable/cluster-operations/','/docs-cn/tidb-data-migration/v1.0/cluster-operations/','/docs-cn/dev/reference/tools/data-migration/cluster-operations/','/docs-cn/v3.1/reference/tools/data-migration/cluster-operations/','/docs-cn/v3.0/reference/tools/data-migration/cluster-operations/','/docs-cn/v2.1/reference/tools/data-migration/cluster-operations/','/docs-cn/stable/reference/tools/data-migration/cluster-operations/']
 ---
 
 # DM 集群操作

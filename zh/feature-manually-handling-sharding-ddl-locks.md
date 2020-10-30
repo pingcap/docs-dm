@@ -1,6 +1,6 @@
 ---
 title: 手动处理 Sharding DDL Lock
-aliases: ['/docs-cn/tidb-data-migration/stable/feature-manually-handling-sharding-ddl-locks/','/docs-cn/tidb-data-migration/v1.0/feature-manually-handling-sharding-ddl-locks/','/docs-cn/dev/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/','/docs-cn/v3.1/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/','/docs-cn/v3.0/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/','/docs-cn/v2.1/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/','/docs-cn/stable/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/']
+aliases: ['/zh/tidb-data-migration/stable/feature-manually-handling-sharding-ddl-locks','/docs-cn/tidb-data-migration/stable/feature-manually-handling-sharding-ddl-locks/','/docs-cn/tidb-data-migration/v1.0/feature-manually-handling-sharding-ddl-locks/','/docs-cn/dev/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/','/docs-cn/v3.1/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/','/docs-cn/v3.0/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/','/docs-cn/v2.1/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/','/docs-cn/stable/reference/tools/data-migration/features/manually-handling-sharding-ddl-locks/']
 ---
 
 # 手动处理 Sharding DDL Lock
