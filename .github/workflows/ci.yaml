@@ -35,7 +35,7 @@ jobs:
       with:
         # Optional
         styles: |
-          https://github.com/errata-ai/Microsoft/releases/latest/download/Google.zip
+          https://github.com/errata-ai/Google/releases/latest/download/Google.zip
 
         # Optional
         config: https://raw.githubusercontent.com/errata-ai/vale/master/.vale.ini
