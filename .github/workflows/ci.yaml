@@ -30,19 +30,4 @@ jobs:
       run:
         echo "checked files are $(git diff-tree --name-only --no-commit-id -r upstream/master...HEAD -- 'zh/' 'en/' '.md' ':(exclude).github/*')";
         python3 ./hack/check-tags.py $(git diff-tree --name-only --no-commit-id -r upstream/master...HEAD -- 'zh/' 'en/' '.md' ':(exclude).github/*')
-    - name: Vale Linter
-      uses: errata-ai/vale-action@v1.3.0
-      with:
-        # Optional
-        styles: |
-          https://github.com/errata-ai/Google/releases/latest/download/Google.zip
-
-        # Optional
-        config: https://raw.githubusercontent.com/errata-ai/vale/master/.vale.ini
-
-        # Optional
-        files: ../../en
-      env:
-        # Required
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
