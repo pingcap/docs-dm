@@ -1,15 +1,13 @@
 ---
-title: TiDB Monitoring API
+title: test file
 summary: Learn the API of TiDB monitoring services.
-aliases: ['/docs/dev/tidb-monitoring-api/']
 ---
 
 # TiDB Monitoring API
 
 You can use the following two types of interfaces to monitor the TiDB cluster state:
 
-- [The state interface](#use-the-state-interface): this interface uses the HTTP interface to get the component information.
-- [The metrics interface](#use-the-metrics-interface): this interface uses Prometheus to record the detailed information of the various operations in components and views these metrics using Grafana.
+this interface uses Prometheus to record the detailed information of the various operations in components and views these metrics using Grafana.
 
 ## Use the state interface
 
@@ -76,6 +74,5 @@ curl http://127.0.0.1:2379/pd/api/v1/stores
 The metrics interface monitors the state and performance of the entire TiDB cluster.
 
 - If you use TiDB Ansible to deploy the TiDB cluster, the monitoring system (Prometheus and Grafana) is deployed at the same time.
-- If you use other deployment ways, [deploy Prometheus and Grafana](/deploy-monitoring-services.md) before using this interface.
 
 After Prometheus and Grafana are successfully deployed, [configure Grafana](/deploy-monitoring-services.md#configure-grafana).
