@@ -1,6 +1,7 @@
 ---
 title: Data Migration Monitoring Metrics
 summary: Learn about the monitoring metrics when you use Data Migration to migrate data.
+aliases: ['/docs/stable/reference/tools/data-migration/monitor/']
 ---
 
 # Data Migration Monitoring Metrics

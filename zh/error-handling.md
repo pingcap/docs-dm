@@ -1,6 +1,7 @@
 ---
 title: 故障及处理方法
 summary: 了解 DM 的错误系统及常见故障的处理方法。
+aliases: ['/docs-cn/dev/reference/tools/data-migration/troubleshoot/error-system/']
 ---
 
 # 故障及处理方法
