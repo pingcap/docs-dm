@@ -11,7 +11,8 @@ Currently, we maintain the following versions for TiDB DM documentation, each wi
 
 | Branch name | Version description |
 | :--- | :-- |
-| `master` | the latest development version, including v2.0 changes for now |
+| `master` | the latest development version, including v3.0 changes for now |
+| `release-2.0` | the latest 2.0 stable version |
 | `release-1.0` | the latest 1.0 stable version |
 
 > **Note:**
