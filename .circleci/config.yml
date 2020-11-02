@@ -14,16 +14,12 @@ jobs:
       - run:
           name: "Lint"
           command: |
-            markdownlint
+            markdownlint .
       - run:
           name: "Vale linter"
           command: |
             curl -sfL https://install.goreleaser.com/github.com/ValeLint/vale.sh | sh -s v2.5.1
             vale $(git diff-tree --name-only --no-commit-id -r upstream/master...HEAD -- 'en/' '.md' ':(exclude).github/*')
-
-
-
-
 
   build:
     docker:
