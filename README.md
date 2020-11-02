@@ -2,8 +2,15 @@
 
 This repository stores all the source files of [TiDB Data Migration (DM) documentation](https://pingcap.com/docs/tidb-data-migration/stable/) at the PingCAP website. That is, the documentation for [TiDB DM](https://github.com/pingcap/dm).
 
+Currently, the official documentation supports two languages:
+
 - `en`: [documentation in English](/en/TOC.md)
 - `zh`: [documentation in Chinese](/zh/TOC.md)
+
+You can use Google Translate to view the documentation in different languages. For example:
+
+- `id`: [documentation in Indonesian](http://translate.google.com/translate?hl=en&sl=en&tl=id&u=https%3A%2F%2Fgithub.com%2Fpingcap%2Fdocs-dm%2Fblob%2Fmaster%2Fen%2FTOC.md)
+- `ja`: [documentation in Japanese](http://translate.google.com/translate?hl=en&sl=en&tl=ja&u=https%3A%2F%2Fgithub.com%2Fpingcap%2Fdocs-dm%2Fblob%2Fmaster%2Fen%2FTOC.md)
 
 ## Documentation versions
 
