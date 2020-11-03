@@ -14,3 +14,7 @@ The load processing unit is the processing unit used in DM-worker to import the 
 ### Subtask
 
 The subtask is a part of a data migration task that is running on each DM-worker instance. In different task configurations, a single data migration task might have one subtask or multiple subtasks.
+
+### Subtask status
+
+The subtask status is the status of a data migration subtask. The current status options include `New`, `Running`, `Paused`, `Stopped`, and `Finished`. Refer to [subtask status](query-status.md#subtask-status) for more details about the status of a data migration task or subtask.
