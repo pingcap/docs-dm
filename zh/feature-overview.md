@@ -445,7 +445,6 @@ column-mappings:
     - 每个实例的每个 schema 支持最多 256 个 table，且需要满足 0 <= table ID <= 255。
     - 进行 Column mapping 的列的范围需要满足 0 <= ID <= 17592186044415。
     - `{instance ID, schema ID, table ID}` 组合需要保持唯一。
-- 目前该功能是定制功能，如果需要调整请联系相关开发人员进行调整
 
 **`partition id` 参数配置**
 

@@ -425,7 +425,6 @@ Note the following restrictions:
     - Each schema of each instance supports 256 tables at most (Requirement: 0 <= table ID <= 255).
     - The range of the mapped column should meet the requirement: 0 <= ID <= 17592186044415.
     - The `{instance ID, schema ID, table ID}` group must be unique.
-- Currently, the `partition id` expression is a customized feature. If you want to modify this feature, contact the corresponding developers.
 
 **`partition id` arguments configuration**
 
