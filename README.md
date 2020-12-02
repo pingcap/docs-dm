@@ -9,10 +9,10 @@ Currently, the official documentation supports two languages:
 
 You can use Google Translate to view the documentation in different languages. For example:
 
-- `fr`: [documentation in French](http://translate.google.com/translate?hl=en&sl=en&tl=fr&u=https%3A%2F%2Fgithub.com%2Fpingcap%2Fdocs-dm%2Fblob%2Fmaster%2Fen%2FTOC.md)
-- `ja`: [documentation in Japanese](http://translate.google.com/translate?hl=en&sl=en&tl=ja&u=https%3A%2F%2Fgithub.com%2Fpingcap%2Fdocs-dm%2Fblob%2Fmaster%2Fen%2FTOC.md)
-- `ko`: [documentation in Korean](http://translate.google.com/translate?hl=en&sl=en&tl=ko&u=https%3A%2F%2Fgithub.com%2Fpingcap%2Fdocs-dm%2Fblob%2Fmaster%2Fen%2FTOC.md)
-- `id`: [documentation in Indonesian](http://translate.google.com/translate?hl=en&sl=en&tl=id&u=https%3A%2F%2Fgithub.com%2Fpingcap%2Fdocs-dm%2Fblob%2Fmaster%2Fen%2FTOC.md)
+- `fr`: [documentation in French](http://translate.google.com/translate?hl=en&sl=en&tl=fr&u=https%3A%2F%2Fgithub.com%2Fpingcap%2Fdocs-dm%2Fblob%2Frelease-2.0%2Fen%2FTOC.md)
+- `ja`: [documentation in Japanese](http://translate.google.com/translate?hl=en&sl=en&tl=ja&u=https%3A%2F%2Fgithub.com%2Fpingcap%2Fdocs-dm%2Fblob%2Frelease-2.0%2Fen%2FTOC.md)
+- `ko`: [documentation in Korean](http://translate.google.com/translate?hl=en&sl=en&tl=ko&u=https%3A%2F%2Fgithub.com%2Fpingcap%2Fdocs-dm%2Fblob%2Frelease-2.0%2Fen%2FTOC.md)
+- `id`: [documentation in Indonesian](http://translate.google.com/translate?hl=en&sl=en&tl=id&u=https%3A%2F%2Fgithub.com%2Fpingcap%2Fdocs-dm%2Fblob%2Frelease-2.0%2Fen%2FTOC.md)
 
 ## Documentation versions
 
