@@ -124,7 +124,7 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 
 你可以通过 `tiup list dm-master` 命令查看 TiUP 支持部署的 DM 版本。该命令未展示的版本（如 v2.0.0-hotfix）不能由 TiUP 管理。
 
-## DM 同步报错 parse mydumper metadata error: EOF
+## DM 同步报错 `parse mydumper metadata error: EOF`
 
 该错误需要查看报错信息以及日志进一步分析。报错原因可能是 dump 单元由于缺少权限没有产生正确的 metadata 文件。
 
