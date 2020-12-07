@@ -120,7 +120,7 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 - [使用 TiUP 将 DM 1.0 集群导入到全新的 2.0 集群](maintain-dm-using-tiup.md#导入-dm-ansible-部署的-dm-10-集群并升级)。
 - [手动将 DM 1.0 的数据迁移任务导入到 2.0 集群](manually-upgrade-dm-1.0-to-2.0.md)。
 
-## TiUP 无法部署 DM v2.0.0-hotfix 版本
+## TiUP 无法部署 DM 的某个版本（如 v2.0.0-hotfix）
 
 你可以通过 `tiup list dm-master` 命令查看 TiUP 支持部署的 DM 版本。该命令未展示的版本（如 v2.0.0-hotfix）不能由 TiUP 管理。
 
