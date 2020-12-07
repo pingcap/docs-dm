@@ -149,8 +149,6 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 4. 通过 `start-task` 启动迁移任务。
 
 5. 通过 `query-status` 观察迁移任务状态，当 `syncerBinlog` 超过 `checkpoint-T` 与 `checkpoint-S` 中的较大值后（在本例中，为 `(mysql-bin.000100, 1234)`），即可还原 `safe-mode` 为原始值并重启迁移任务。
-<<<<<<< HEAD
-=======
 
 ## 全量导入过程中遇到报错 `packet for query is too large. Try adjusting the 'max_allowed_packet' variable`
 
@@ -188,4 +186,3 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 ## DM 上游无写入，replicate lag 监控无数据
 
 在 DM v1.0 中，需要开启 `enable-heartbeat` 才会产生该监控数据。v2.0 中，尚未启用该功能，replicate lag 监控无数据是预期行为。
->>>>>>> c913493... Update FAQ (#505)
