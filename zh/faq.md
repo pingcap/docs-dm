@@ -122,7 +122,7 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 
 ## TiUP 无法部署 DM v2.0.0-hotfix 版本
 
-TiUP 只能部署 `tiup list dm-master` 所展示的版本，其他地方发布的版本不能由 TiUP 管理。
+你可以通过 `tiup list dm-master` 命令查看 TiUP 支持部署的 DM 版本。该命令未展示的版本（如 v2.0.0-hotfix）不能由 TiUP 管理。
 
 ## DM 同步报错 parse mydumper metadata error: EOF
 
