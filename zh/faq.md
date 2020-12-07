@@ -126,7 +126,7 @@ TiUP 只能部署 `tiup list dm-master` 所展示的版本，其他地方发布�
 
 ## DM 同步报错 parse mydumper metadata error: EOF
 
-该错误需要查看报错信息以及日志进一步分析。可能的原因有：dump 单元由于缺少权限没有产生正确的 metadata 文件。
+该错误需要查看报错信息以及日志进一步分析。报错原因可能是 dump 单元由于缺少权限没有产生正确的 metadata 文件。
 
 ## DM 分库分表同步中没有明显报错，但是下游数据丢失
 
