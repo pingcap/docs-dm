@@ -127,3 +127,22 @@ This error can be handled in any of the following ways:
 
 - [Import a DM 1.0 cluster into a new DM 2.0 cluster using TiUP](maintain-dm-using-tiup.md#import-and-upgrade-a-dm-10-cluster-deployed-using-dm-ansible).
 - [Manually import DM migration tasks of a DM 1.0 cluster to a DM 2.0 cluster](manually-upgrade-dm-1.0-to-2.0.md)。
+
+## Why does TiUP fail to deploy some versions of DM (for example, v2.0.0-hotfix)？
+
+You can use the `tiup list dm-master` command to view the DM versions that TiUP supports to deploy. TiUP does not manage DM versions which are not shown by this command.
+
+## How to handle the error `parse mydumper metadata error: EOF` that occurs when DM is replicating data？
+
+You need to check the error message and log files to further analyze this error. The cause might be that the dump unit does not produce the correct metadata file due to a lack of permissions.
+
+## Why does DM report no fatal error when replicating sharded schemas and tables, but downstream data is lost?
+
+Check the configuration items `block-allow-list` and `table-route`:
+
+- You need to configure the names of upstream databases and tables under `block-allow-list`. You can add "~" before `do-tables` to use regular expressions to match names.
+- `table-route` uses wildcard characters instead of regular expressions to match table names. For example, `table_parttern_[0-63]` only matches 7 tables, from `table_parttern_0` to `table_pattern_6`.
+
+## Why does the `replicate lag` monitor metric show no data when DM is not replicating from upstream?
+
+In DM 1.0, you need to enable `enable-heartbeat` to generate the monitor data. In DM 2.0, it is expected to have no data in the monitor metric `replicate lag` because this feature is not supported.
