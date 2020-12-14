@@ -145,7 +145,7 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 
 ## DM 同步中报错 `duplicate entry`
 
-用户需要检查没有在任务中配置 `disable-detect`，没有其他同步程序或手动插入该数据，没有配置该表相关的 DML 过滤。
+用户需要先检查确认没有在任务中配置 `disable-detect`，没有其他同步程序或手动插入该数据，以及没有配置该表相关的 DML 过滤。
 为了便于排查问题，用户可以在收集到下游 TiDB 相关 general log 后在 [AskTUG 社区](https://asktug.com/tags/dm) 联系专家进行排查。收集 general log 的方式为
 
 ```bash
