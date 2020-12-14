@@ -157,6 +157,6 @@ curl -X POST -d "tidb_general_log=0" http://{TiDBIP}:10080/settings
 
 在发生 `duplicate entry` 报错时，确认日志中包含冲突数据的记录。
 
-## 监控中部分面板显示 No data point
+## 监控中部分面板显示 `No data point`
 
-请参照 [DM 监控指标](monitor-a-dm-cluster.md)查看各面板含义，部分面板没有数据是正常现象。例如没有发生错误、不存在 DDL lock、没有启用 relay 功能。
+请参照 [DM 监控指标](monitor-a-dm-cluster.md)查看各面板含义，部分面板没有数据是正常现象。例如没有发生错误、不存在 DDL lock、没有启用 relay 功能等情况，均可能使得对应面板没有数据。
