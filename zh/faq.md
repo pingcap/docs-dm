@@ -7,7 +7,9 @@ aliases: ['/docs-cn/tidb-data-migration/dev/faq/']
 
 ## DM 是否支持迁移阿里 RDS 以及其他云数据库的数据？
 
-DM 仅支持解析标准版本的 MySQL/MariaDB 的 binlog，对于阿里云 RDS 以及其他云数据库没有进行过测试，如果确认其 binlog 为标准格式，则可以支持。已知阿里云 RDS 在部分场景中 binlog 会包含隐藏列，与表结构不一致。
+DM 仅支持解析标准版本的 MySQL/MariaDB 的 binlog，对于阿里云 RDS 以及其他云数据库没有进行过测试，如果确认其 binlog 为标准格式，则可以支持。
+
+已知阿里云 RDS 在上游表没有主键时，binlog 中会包含隐藏的主键列，与表结构不一致。
 
 ## task 配置中的黑白名单的正则表达式是否支持`非获取匹配`（?!）？
 
