@@ -155,7 +155,7 @@ curl -X POST -d "tidb_general_log=1" http://{TiDBIP}:10080/settings
 curl -X POST -d "tidb_general_log=0" http://{TiDBIP}:10080/settings
 ```
 
-在发生 duplicate entry 报错时，确认日志中包含冲突数据的记录。
+在发生 `duplicate entry` 报错时，确认日志中包含冲突数据的记录。
 
 ## 监控中部分面板显示 No data point
 
