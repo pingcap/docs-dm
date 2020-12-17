@@ -1,6 +1,7 @@
 ---
 title: Handle Errors
 summary: Learn about the error system and how to handle common errors when you use DM.
+aliases: ['/docs/stable/reference/tools/data-migration/troubleshoot/error-system/']
 ---
 
 # Handle Errors
