@@ -9,6 +9,8 @@ aliases: ['/docs-cn/tidb-data-migration/dev/faq/']
 
 DM 仅支持解析标准版本的 MySQL/MariaDB 的 binlog，对于阿里云 RDS 以及其他云数据库没有进行过测试，如果确认其 binlog 为标准格式，则可以支持。
 
+已知即使上游表没有主键，阿里云 RDS 的 binlog 中也会包含隐藏的主键列，与上游表结构不一致。
+
 ## task 配置中的黑白名单的正则表达式是否支持`非获取匹配`（?!）？
 
 目前不支持，DM 仅支持 golang 标准库的正则，可以通过 [re2-syntax](https://github.com/google/re2/wiki/Syntax) 了解 golang 支持的正则表达式。
@@ -138,3 +140,26 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 ## DM 上游无写入，replicate lag 监控无数据
 
 在 DM v1.0 中，需要开启 `enable-heartbeat` 才会产生该监控数据。v2.0 中，尚未启用该功能，replicate lag 监控无数据是预期行为。
+
+## DM v2.0.0 启动任务时出现 `fail to initial unit Sync of subtask`，报错信息的 `RawCause` 显示 `context deadline exceeded`
+
+该问题是 DM v2.0.0 版本的已知问题，在同步任务的表数目较多时触发，将在 v2.0.1 修复。使用 TiUP 部署的用户可以升级到开发版 nightly 解决该问题，或者访问 GitHub 上 [DM 仓库的 release 页面](https://github.com/pingcap/dm/releases)下载 v2.0.0-hotfix 版本手动替换可执行文件。
+
+## DM 同步中报错 `duplicate entry`
+
+用户需要先检查确认没有在任务中配置 `disable-detect`，没有其他同步程序或手动插入该数据，以及没有配置该表相关的 DML 过滤。
+
+为了便于排查问题，用户收集到下游 TiDB 相关 general log 后可以在 [AskTUG 社区](https://asktug.com/tags/dm) 联系专家进行排查。收集 general log 的方式如下：
+
+```bash
+# 开启 general log
+curl -X POST -d "tidb_general_log=1" http://{TiDBIP}:10080/settings
+# 关闭 general log
+curl -X POST -d "tidb_general_log=0" http://{TiDBIP}:10080/settings
+```
+
+在发生 `duplicate entry` 报错时，确认日志中包含冲突数据的记录。
+
+## 监控中部分面板显示 `No data point`
+
+请参照 [DM 监控指标](monitor-a-dm-cluster.md)查看各面板含义，部分面板没有数据是正常现象。例如没有发生错误、不存在 DDL lock、没有启用 relay 功能等情况，均可能使得对应面板没有数据。
