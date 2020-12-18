@@ -6,10 +6,6 @@ aliases: ['/docs/tidb-data-migration/dev/relay-log/']
 
 # Data Migration Relay Log
 
-> **Note:**
->
-> In DM v2.0, the relay log feature is not supported.
-
 The Data Migration (DM) relay log consists of a set of numbered files containing events that describe database changes, and an index file that contains the names of all used relay log files.
 
 After DM-worker is started, it automatically migrates the upstream binlog to the local configuration directory (the default migration directory is `<deploy_dir>/relay_log` if DM is deployed using TiUP). When DM-worker is running, it migrates the upstream binlog to the local file in real time. The sync processing unit of DM-worker, reads the binlog events of the local relay log in real time, transforms these events to SQL statements, and then migrates these statements to the downstream database.
@@ -89,9 +85,15 @@ The data purge methods for the relay log include automatic purge and manual purg
 
 ### Automatic data purge
 
-You can configure the automatic data purge strategy of DM-worker using the following two methods:
+You can configure the automatic data purge strategy in source configuration file.
 
-Method 1: Use the command-line options.
+```yaml
+# relay log purge strategy
+purge:
+    interval: 3600
+    expires: 24
+    remain-space: 15
+```
 
 + `purge-interval`
     - The interval of automatic purge in the background, in seconds.
@@ -104,16 +106,6 @@ Method 1: Use the command-line options.
 + `purge-remain-space`
     - The amount of remaining disk space in GB less than which the specified DM-worker machine tries to purge the relay log that can be purged securely in the automatic background purge. If it is set to `0`, data purge is not performed according to the remaining disk space.
     - "15" by default, indicating when the available disk space is less than 15GB, DM-master tries to purge the relay log securely.
-
-Method 2: Add the `[purge]` section in the configuration file of DM-worker.
-
-```toml
-# relay log purge strategy
-[purge]
-interval = 3600
-expires = 24
-remain-space = 15
-```
 
 ### Manual data purge
 
@@ -148,7 +140,7 @@ deb76a2b-09cc-11e9-9129-5242cf3bb246.000003
     {{< copyable "" >}}
 
     ```bash
-    » purge-relay -w 10.128.16.223:10081 --filename mysql-bin.000001 --sub-dir e4e0e8ab-09cc-11e9-9220-82cc35207219.000002
+    » purge-relay -s mysql-replica-01 --filename mysql-bin.000001 --sub-dir e4e0e8ab-09cc-11e9-9220-82cc35207219.000002
     ```
 
 + Executing the following `purge-relay` command in dmctl purges all relay log file **before the current** (`deb76a2b-09cc-11e9-9129-5242cf3bb246.000003`) directory's `mysql-bin.000001`, which is all relay log files in `deb76a2b-09cc-11e9-9129-5242cf3bb246.000001` and `e4e0e8ab-09cc-11e9-9220-82cc35207219.000002`.
@@ -156,5 +148,5 @@ deb76a2b-09cc-11e9-9129-5242cf3bb246.000003
     {{< copyable "" >}}
 
     ```bash
-    » purge-relay -w 10.128.16.223:10081 --filename mysql-bin.000001
+    » purge-relay -s mysql-replica-01 --filename mysql-bin.000001
     ```
