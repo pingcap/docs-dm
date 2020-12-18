@@ -12,7 +12,7 @@ This document collects the frequently asked questions (FAQs) about TiDB Data Mig
 
 Currently, DM only supports decoding the standard version of MySQL or MariaDB binlog. It has not been tested for Alibaba Cloud RDS or other cloud databases. If you are confirmed that its binlog is in standard format, then it is supported.
 
-It is known that even if an upstream table in in Alibaba Cloud RDS has no primary key, its binlog still contains a hidden primary key column, which is inconsistent with the original table structure.
+It is a known issue that for an upstream table with no primary key in Alibaba Cloud RDS, its binlog still contains a hidden primary key column, which is inconsistent with the original table structure.
 
 ## Does the regular expression of the block and allow list in the task configuration support `non-capturing (?!)`?
 
@@ -149,7 +149,7 @@ Check the configuration items `block-allow-list` and `table-route`:
 
 In DM 1.0, you need to enable `enable-heartbeat` to generate the monitor data. In DM 2.0, it is expected to have no data in the monitor metric `replicate lag` because this feature is not supported.
 
-## How to handle the error`fail to initial unit Sync of subtask` when DM is starting a task, with the `RawCause` in the error message showing `context deadline exceeded`?
+## How to handle the error `fail to initial unit Sync of subtask` when DM is starting a task, with the `RawCause` in the error message showing `context deadline exceeded`?
 
 This is a known issue in DM 2.0.0 version and will be fixed in DM 2.0.1 version. It is likely to be triggered when a replication task has a lot of tables to process. If you use TiUP to deploy DM, you can upgrade DM to the nightly version to fix this issue. Or you can download the 2.0.0-hotfix version from [the release page of DM](https://github.com/pingcap/dm/releases) on GitHub and manually replace the executable files.
 
@@ -158,7 +158,7 @@ This is a known issue in DM 2.0.0 version and will be fixed in DM 2.0.1 version.
 You need to first check and confirm the following things:
 
 - `disable-detect` is not configured in the replication task.
-- The data is not inserted manually or by other replication procedures.
+- The data is not inserted manually or by other replication programs.
 - No DML filter associated with this table is configured.
 
 To facilitate troubleshooting, you can first collect general log files of the downstream TiDB instance and then ask for technical support at [TiDB Community slack channel](https://tidbcommunity.slack.com/archives/CH7TTLL7P). The following example shows how to collect general log files:
