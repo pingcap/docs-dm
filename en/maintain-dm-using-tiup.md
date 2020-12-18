@@ -366,7 +366,7 @@ The previous dmctl command to add a source is `dmctl --master-addr master1:8261 
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml
+tiup dmctl --master-addr master1:8261,master2:8261 operate-source create /tmp/source1.yml
 ```
 
 ## Use the system's native SSH client to connect to cluster

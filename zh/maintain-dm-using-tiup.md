@@ -363,12 +363,12 @@ tiup dmctl [args]
 tiup dmctl:v2.0.0 [args]
 ```
 
-例如，以前添加 source 命令为 `dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml`，集成到 TiUP 中的命令为：
+例如，以前添加 source 命令为 `dmctl --master-addr master1:8261,master2:8261 operate-source create /tmp/source1.yml`，集成到 TiUP 中的命令为：
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml
+tiup dmctl --master-addr master1:8261,master2:8261 operate-source create /tmp/source1.yml
 ```
 
 ## 使用中控机系统自带的 SSH 客户端连接集群
