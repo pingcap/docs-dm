@@ -22,7 +22,7 @@ DM will attempt to split a single statement containing multiple DDL change opera
 
 ## How to handle incompatible DDL statements?
 
-When you encounter a DDL statement unsupported by TiDB, you need to manually handle it using dmctl (skipping the DDL statement or replacing the DDL statement with a specified DDL statement). For details, see [Handle failed SQL statements](handle-failed-sql-statements.md).
+When you encounter a DDL statement unsupported by TiDB, you need to manually handle it using dmctl (skipping the DDL statement or replacing the DDL statement with a specified DDL statement). For details, see [Handle failed DDL statements](handle-failed-ddl-statements.md).
 
 > **Note:**
 >

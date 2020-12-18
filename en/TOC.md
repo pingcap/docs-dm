@@ -44,7 +44,7 @@
     - [Pause a Task](pause-task.md)
     - [Resume a Task](resume-task.md)
     - [Stop a Task](stop-task.md)
-    - [Handle Failed SQL Statements](handle-failed-sql-statements.md)
+    - [Handle Failed DDL Statements](handle-failed-ddl-statements.md)
   - [Manually Handle Sharding DDL Locks](manually-handling-sharding-ddl-locks.md)
   - [Manage Table Schema during Migration](manage-schema.md)
   - [Handle Alerts](handle-alerts.md)
