@@ -21,7 +21,7 @@ dmctl 同时支持交互模式和命令模式。
 {{< copyable "shell-regular" >}}
 
 ```bash
-./dmctl -master-addr 172.16.30.14:8261,127.16.30.15:8261
+./dmctl -master-addr 172.16.30.14:8261
 ```
 
 ```

@@ -21,7 +21,7 @@ Enter the interactive mode to interact with DM-master:
 {{< copyable "shell-regular" >}}
 
 ```bash
-./dmctl -master-addr 172.16.30.14:8261,172.16.30.15:8261
+./dmctl -master-addr 172.16.30.14:8261
 ```
 
 ```
