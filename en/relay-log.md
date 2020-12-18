@@ -95,15 +95,15 @@ purge:
     remain-space: 15
 ```
 
-+ `purge-interval`
++ `purge.interval`
     - The interval of automatic purge in the background, in seconds.
     - "3600" by default, indicating a background purge task is performed every 3600 seconds.
 
-+ `purge-expires`
++ `purge.expires`
     - The number of hours for which the relay log (that has been previously written to the relay processing unit, and that is not being used or will not be read later by the currently running data migration task) can be retained before being purged in the automatic background purge.
     - "0" by default, indicating data purge is not performed according to the update time of the relay log.
 
-+ `purge-remain-space`
++ `purge.remain-space`
     - The amount of remaining disk space in GB less than which the specified DM-worker machine tries to purge the relay log that can be purged securely in the automatic background purge. If it is set to `0`, data purge is not performed according to the remaining disk space.
     - "15" by default, indicating when the available disk space is less than 15GB, DM-master tries to purge the relay log securely.
 

@@ -103,15 +103,15 @@ purge:
     remain-space: 15
 ```
 
-- `purge-interval`
+- `purge.interval`
     - 后台自动清理的时间间隔，以秒为单位。
     - 默认为 "3600"，表示每 3600 秒执行一次后台清理任务。
 
-- `purge-expires`
+- `purge.expires`
     - 当前 relay 处理单元没有写入、或已有数据迁移任务当前或未来不需要读取的 relay log 在被后台清理前可保留的小时数。
     - 默认为 "0"，表示不按 relay log 的更新时间执行数据清理。
 
-- `purge-remain-space`
+- `purge.remain-space`
     - 剩余磁盘空间，单位为 GB。若剩余磁盘空间小于该配置，则指定的 DM-worker 机器会在后台尝试自动清理可被安全清理的 relay-log。若这一数字被设为 "0"，则表示不按剩余磁盘空间来清理数据。
     - 默认为 "15"，表示可用磁盘空间小于 15GB 时，DM-master 会尝试安全地清理 relay log。
 
