@@ -49,7 +49,7 @@ This section describes each configuration parameter in the configuration file.
 | :------------ | :--------------------------------------- |
 | `source-id` | Represents a MySQL instance ID. |
 | `enable-gtid` | Determines whether to pull binlog from the upstream using GTID. The default value is `false`. In general, you do not need to configure `enable-gtid` manually. However, if GTID is enabled in the upstream database, and the primary/secondary switch is required, you need to set `enable-gtid` to `true`. |
-| `enable-relay` | Determines whether to enable relay log. The default value is `false`. |
+| `enable-relay` | Determines whether to enable the relay log feature. The default value is `false`. |
 | `relay-binlog-name` | Specifies the file name from which DM-worker starts to pull the binlog. For example, `"mysql-bin.000002"`. It only works when `enable_gtid` is `false`. If this parameter is not specified, DM-worker will pull the binlogs starting from the latest one. |
 | `relay-binlog-gtid` | Specifies the GTID from which DM-worker starts to pull the binlog. For example, `"e9a1fc22-ec08-11e9-b2ac-0242ac110003:1-7849"`. It only works when `enable_gtid` is `true`. If this parameter is not specified, DM-worker will pull the binlogs starting from the latest GTID. |
 | `host` | Specifies the host of the upstream database. |
