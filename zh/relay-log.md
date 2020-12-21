@@ -93,7 +93,7 @@ Relay log 的数据清理包括自动清理和手动清理这两种方法。
 
 ### 自动数据清理
 
-自动数据清理需对 source 配置文件中的以下三项进行配置：
+启用自动数据清理需在 source 配置文件中进行以下配置：
 
 ```yaml
 # relay log purge strategy
