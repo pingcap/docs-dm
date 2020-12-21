@@ -70,4 +70,4 @@ Generally, there is no need to manually configure these parameters unless there 
 
 > **Note:**
 >
-> The automatic cleanup policy will only take effect when `interval` is not 0 and at least one of the two configuration items `expires` and `remain-space` is not 0.
+> The automatic data purge strategy only takes effect when `interval` is not 0 and at least one of the two configuration items `expires` and `remain-space` is not 0.
