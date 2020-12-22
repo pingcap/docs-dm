@@ -31,10 +31,10 @@ Upstream and downstream database users must have the corresponding read and writ
 
     MySQL users in DM configuration need to have the following privileges at least:
 
-    - REPLICATION SLAVE
-    - REPLICATION CLIENT
-    - RELOAD
-    - SELECT
+    - REPLICATION SLAVE of global level
+    - REPLICATION CLIENT of global level
+    - RELOAD of global level
+    - SELECT of global level, or database level, or table level
 
 + The compatibility of the upstream MySQL table schema
 
