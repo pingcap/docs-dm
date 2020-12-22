@@ -34,7 +34,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/precheck/']
     - 全局级别的 REPLICATION SLAVE
     - 全局级别的 REPLICATION CLIENT
     - 全局级别的 RELOAD
-    - 全局级别，或库级别，或表级别的 SELECT
+    - 全局级别/库级别/表级别的 SELECT
 
 + 上游 MySQL 表结构的兼容性
 
