@@ -31,10 +31,10 @@ aliases: ['/docs-cn/tidb-data-migration/dev/precheck/']
 
     DM 配置中的 MySQL 用户至少需要具备以下权限：
 
-    - REPLICATION SLAVE
-    - REPLICATION CLIENT
-    - RELOAD
-    - SELECT
+    - 全局级别的 REPLICATION SLAVE
+    - 全局级别的 REPLICATION CLIENT
+    - 全局级别的 RELOAD
+    - 全局级别，或库级别，或表级别的 SELECT
 
 + 上游 MySQL 表结构的兼容性
 
