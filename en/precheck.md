@@ -34,7 +34,7 @@ Upstream and downstream database users must have the corresponding read and writ
     - REPLICATION SLAVE of global level
     - REPLICATION CLIENT of global level
     - RELOAD of global level
-    - SELECT of global level, or database level, or table level
+    - SELECT of global level, database level, or table level
 
 + The compatibility of the upstream MySQL table schema
 
