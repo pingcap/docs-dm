@@ -85,7 +85,7 @@ The data purge methods for the relay log include automatic purge and manual purg
 
 ### Automatic data purge
 
-You can configure the automatic data purge strategy in the source configuration file. See the following example:
+You can enable automatic data purge and configure its strategy in the source configuration file. See the following example:
 
 ```yaml
 # relay log purge strategy
