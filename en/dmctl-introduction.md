@@ -95,7 +95,7 @@ Available Commands:
   operate-source        operate-source <operate-type> [config-file ...] [--print-sample-config]
   pause-relay           pause-relay <-s source ...>
   pause-task            pause-task [-s source ...] <task-name | task-file>
-  purge-relay           purge-relay <-s source> [--filename] [--sub-dir]
+  purge-relay           purge-relay <-s source> <-f filename> [--sub-dir directory]
   query-status          query-status [-s source ...] [task-name | task-file] [--more]
   resume-relay          resume-relay <-s source ...>
   resume-task           resume-task [-s source ...] <task-name | task-file>
