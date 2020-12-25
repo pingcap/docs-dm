@@ -21,6 +21,10 @@ Upstream and downstream database users must have the corresponding read and writ
     - 5.5 < MySQL version < 8.0
     - MariaDB version >= 10.1.2
 
++ Database configuration
+
+    - Whether `server_id` is configured
+
 + MySQL binlog configuration
 
     - Whether the binlog is enabled (DM requires that the binlog must be enabled)
@@ -75,6 +79,7 @@ DM checks items according to the task type, and you can use `ignore-checking-ite
 | dump_privilege | Disables checking dump-related privileges of the upstream MySQL instance user |
 | replication_privilege | Disables checking replication-related privileges of the upstream MySQL instance user |
 | version | Disables checking the upstream database version |
+| server_id | Disables checking the upstream database server_id |
 | binlog_enable | Disables checking whether the upstream database has binlog enabled |
 | binlog_format | Disables checking whether the binlog format of the upstream database is ROW |
 | binlog_row_image |  Disables checking whether the binlog_row_image of the upstream database is FULL |
