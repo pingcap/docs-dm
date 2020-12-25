@@ -179,11 +179,12 @@ curl -X POST -d "tidb_general_log=0" http://{TiDBIP}:10080/settings
 if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to ignore it.\n\t : parse statement: line 1 column 11 near \"EVENT `event_del_big_table` \r\nDISABLE\" %!!(MISSING)(EXTRA string=ALTER EVENT `event_del_big_table` \r\nDISABLE
 ```
 
-出现报错的原因是 TiDB parser 无法解析上游的 DDL，例如 `ALTER EVENT`，所以 `sql-skip` 不会按预期生效。可以在任务配置文件中添加 [Binlog 过滤规则](key-features.md#binlog-event-filter)进行过滤，并设置 `schema-pattern: "*"`。在 DM v2.0.1 中，已预设过滤了 `EVENT` 相关语句。
+出现报错的原因是 TiDB parser 无法解析上游的 DDL，例如 `ALTER EVENT`，所以 `sql-skip` 不会按预期生效。可以在任务配置文件中添加 [Binlog 过滤规则](key-features.md#binlog-event-filter)进行过滤，并设置 `schema-pattern: "*"`。从 DM 2.0.1 版本开始，已预设过滤了 `EVENT` 相关语句。
 
 在 DM v2.0 版本中 `sql-skip` 已经被 `handle-error` 替代，`handle-error` 可以跳过该类错误。
 
 ## DM 同步时下游长时间出现 REPLACE 语句
 
 请检查是否符合 [safe mode 触发条件](glossary.md#safe-mode)。如果任务发生错误并自动恢复，或者发生高可用调度，会满足“启动或恢复任务的前 5 分钟“这一条件，因此启用 safe mode。
-可以检查 DM-worker 日志，在其中搜索包含 `change count` 的行，该行的 `new count` 非零时会启用 safe mode。检查 safe mode 启用时间以及启用前是否有报错定位启用原因。
+
+可以检查 DM-worker 日志，在其中搜索包含 `change count` 的行，该行的 `new count` 非零时会启用 safe mode。检查 safe mode 启用时间以及启用前是否有报错，以定位启用原因。
