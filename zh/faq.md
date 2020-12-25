@@ -20,7 +20,7 @@ DM 会尝试将包含多个 DDL 变更操作的单条语句拆分成只包含一
 
 ## 如何处理不兼容的 DDL 语句？
 
-你需要使用 dmctl 手动处理 TiDB 不兼容的 DDL 语句（包括手动跳过该 DDL 语句或使用用户指定的 DDL 语句替换原 DDL 语句，详见[处理出错的 SQL 语句](handle-failed-sql-statements.md)）。
+你需要使用 dmctl 手动处理 TiDB 不兼容的 DDL 语句（包括手动跳过该 DDL 语句或使用用户指定的 DDL 语句替换原 DDL 语句，详见[处理出错的 DDL 语句](handle-failed-ddl-statements.md)）。
 
 > **注意：**
 >

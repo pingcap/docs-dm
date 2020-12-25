@@ -11,7 +11,7 @@ summary: Learn about TiDB Data Migration documentation.
 
 - [High availability of data migration tasks](overview.md#high-availability). The data migration task can run normally even when some DM-master or DM-worker nodes fail.
 - [Sharding DDL support in the optimistic mode](feature-shard-merge-optimistic.md). In this mode, migration latency can be reduced in some scenarios and you can make A/B changes in the upstream database.
-- Better usability, including the new [error handling mechanism](handle-failed-sql-statements.md) and the easier-to-read error messages and error handling suggestions.
+- Better usability, including the new [error handling mechanism](handle-failed-ddl-statements.md) and the easier-to-read error messages and error handling suggestions.
 - [TLS support](enable-tls.md) for connections between the upstream and the downstream, and for connections between DM components.
 - Support for migrating data from MySQL 8.0 (experimental).
 
