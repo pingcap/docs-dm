@@ -1,40 +1,46 @@
 ---
-title: 处理出错的 SQL 语句
-summary: 了解在使用 TiDB Data Migration 迁移数据时，如何处理出错的 SQL 语句。
+<<<<<<< HEAD:en/handle-failed-sql-statements.md
+title: Handle Failed SQL Statements
+summary: Learn how to handle failed SQL statements when you're using the TiDB Data Migration tool to migrate data.
+=======
+title: Handle Failed DDL Statements
+summary: Learn how to handle failed DDL statements when you're using the TiDB Data Migration tool to migrate data.
+aliases: ['/docs/tidb-data-migration/dev/skip-or-replace-abnormal-sql-statements/','/tidb-data-migration/dev/skip-or-replace-abnormal-sql-statements','/tidb-data-migration/dev/handle-failed-sql-statements']
+>>>>>>> 340e653... zh,en: change `sql` to `DDL` for handle-error command (#516):en/handle-failed-ddl-statements.md
 ---
 
-# 处理出错的 SQL 语句
+# Handle Failed DDL Statements
 
-本文介绍了如何使用 DM 来处理出错的 SQL 语句。
+This document introduces how to handle failed DDL statements when you're using the TiDB Data Migration (DM) tool to migrate data.
 
-目前，TiDB 并不完全兼容所有的 MySQL 语法（详见 [TiDB 已支持的 DDL 语句](https://pingcap.com/docs-cn/dev/reference/mysql-compatibility/#ddl)）。当使用 DM 从 MySQL 迁移数据到 TiDB 时，如果 TiDB 不支持对应的 SQL 语句，可能会造成错误并中断迁移任务。在这种情况下，DM 提供 `handle-error` 命令来恢复迁移。
+Currently, TiDB is not completely compatible with all MySQL syntax (see [the DDL statements supported by TiDB](https://pingcap.com/docs/dev/reference/mysql-compatibility/#ddl)). Therefore, when DM is migrating data from MySQL to TiDB and TiDB does not support the corresponding DDL statement, an error might occur and break the migration process. In this case, you can use the `handle-error` command of DM to resume the migration.
 
-## 使用限制
+## Restrictions
 
-如果业务不能接受下游 TiDB 跳过异常的 DDL 语句，也不接受使用其他 DDL 语句作为替代，则不适合使用此方式进行处理。
+If it is unacceptable in the actual production environment that the failed DDL statement is skipped in the downstream TiDB and it cannot be replaced with other DDL statements, then do not use this command.
 
-比如：`DROP PRIMARY KEY`，这种情况下，只能在下游重建一个（DDL 执行完后的）新表结构对应的表，并将原表的全部数据重新导入该新表。
+For example, `DROP PRIMARY KEY`. In this scenario, you can only create a new table in the downstream with the new table schema (after executing the DDL statement), and re-import all the data into this new table.
 
-## 支持场景
+## Supported scenarios
 
-迁移过程中，上游执行了 TiDB 不支持的 DDL 语句并迁移到了 DM，造成迁移任务中断。
+During the migration, the DDL statement unsupported by TiDB is executed in the upstream and migrated to the downstream, and as a result, the migration task gets interrupted.
 
-- 如果业务能接受下游 TiDB 不执行该 DDL 语句，则使用 `handle-error <task-name> skip` 跳过对该 DDL 语句的迁移以恢复迁移任务。
-- 如果业务能接受下游 TiDB 执行其他 DDL 语句来作为替代，则使用 `handle-error <task-name> replace` 替代该 DDL 的迁移以恢复迁移任务。
+- If it is acceptable that this DDL statement is skipped in the downstream TiDB, then you can use `handle-error <task-name> skip` to skip migrating this DDL statement and resume the migration.
+- If it is acceptable that this DDL statement is replaced with other DDL statements, then you can use `handle-error <task-name> replace` to replace this DDL statement and resume the migration.
 
-## 命令介绍
+## Command
 
-使用 dmctl 手动处理出错的 SQL 语句时，主要使用的命令包括 `query-status`、`handle-error`。
+When you use dmctl to manually handle the failed DDL statements, the commonly used commands include `query-status` and `handle-error`.
 
 ### query-status
 
-`query-status` 命令用于查询当前 MySQL 实例内子任务及 relay 单元等的状态和错误信息，详见[查询状态](query-status.md)。
+The `query-status` command is used to query the current status of items such as the subtask and the relay unit in each MySQL instance. For details, see [query status](query-status.md).
 
 ### handle-error
 
-`handle-error` 命令用于处理错误的 sql 语句。
+The `handle-error` command is used to handle the failed DDL statements.
 
-### 命令用法
+### Command usage
 
 ```bash
 » handle-error -h
@@ -52,35 +58,35 @@ Global Flags:
   -s, --source strings   MySQL Source ID
 ```
 
-### 参数解释
+### Flags descriptions
 
-+ `task-name`：
-    - 非 flag 参数，string，必选；
-    - 指定预设的操作将生效的任务。
++ `task-name`:
+    - Non-flag parameter, string, required
+    - `task-name` specifies the name of the task in which the presetted operation is going to be executed.
 
-+ `source`：
-    - flag 参数，string，`--source`；
-    - `source` 指定预设操作将生效的 MySQL 实例。
++ `source`:
+    - Flag parameter, string, `--source`
+    - `source` specifies the MySQL instance in which the preset operation is to be executed.
 
-+ `skip`：跳过该错误
++ `skip`: Skip the error
 
-+ `replace`：替代错误的 DDL 语句
++ `replace`: Replace the failed DDL statement
 
-+ `revert`：重置该错误先前的 skip/replace 操作, 仅在先前的操作没有最终生效前执行
++ `revert`: Reset the previous skip/replace operation before the error occurs (only reset it when the previous skip/replace operation has not finally taken effect)
 
-+ `binlog-pos`：
-    - flag 参数，string，`--binlog-pos`；
-    - 若不指定，DM 会自动处理当前出错的 SQL 语句
-    - 在指定时表示操作将在 `binlog-pos` 与 binlog event 的 position 匹配时生效，格式为 `binlog-filename:binlog-pos`，如 `mysql-bin|000001.000003:3270`。
-    - 在迁移执行出错后，binlog position 可直接从 `query-status` 返回的 `startLocation` 中的 `position` 获得；在迁移执行出错前，binlog position 可在上游 MySQL 中使用 [`SHOW BINLOG EVENTS`](https://dev.mysql.com/doc/refman/5.7/en/show-binlog-events.html) 获得。
++ `binlog-pos`:
+    - Flag parameter, string, `--binlog-pos`
+    - If it is not specified, DM automatically handles the currently failed DDL statement.
+    - If it is specified, the skip operation is executed when `binlog-pos` matches with the position of the binlog event. The format is `binlog-filename:binlog-pos`, for example, `mysql-bin|000001.000003:3270`.
+    - After the migration returns an error, the binlog position can be obtained from `position` in `startLocation` returned by `query-status`. Before the migration returns an error, the binlog position can be obtained by using [`SHOW BINLOG EVENTS`](https://dev.mysql.com/doc/refman/5.7/en/show-binlog-events.html) in the upstream MySQL instance.
 
-## 使用示例
+## Usage examples
 
-### 迁移中断执行跳过操作
+### Skip DDL if the migration gets interrupted
 
-#### 非合库合表场景
+#### Non-shard-merge scenario
 
-假设现在需要将上游的 `db1.tbl1` 表迁移到下游 TiDB，初始时表结构为：
+Assume that you need to migrate the upstream table `db1.tbl1` to the downstream TiDB. The initial table schema is:
 
 {{< copyable "sql" >}}
 
@@ -88,7 +94,7 @@ Global Flags:
 SHOW CREATE TABLE db1.tbl1;
 ```
 
-```
+```sql
 +-------+--------------------------------------------------+
 | Table | Create Table                                     |
 +-------+--------------------------------------------------+
@@ -100,7 +106,7 @@ SHOW CREATE TABLE db1.tbl1;
 +-------+--------------------------------------------------+
 ```
 
-此时，上游执行以下 DDL 操作修改表结构（将列的 DECIMAL(11, 3) 修改为 DECIMAL(10, 3)）：
+Now, the following DDL statement is executed in the upstream to alter the table schema (namely, alter DECIMAL(11, 3) of c2 into DECIMAL(10, 3)):
 
 {{< copyable "sql" >}}
 
@@ -108,15 +114,15 @@ SHOW CREATE TABLE db1.tbl1;
 ALTER TABLE db1.tbl1 CHANGE c2 c2 DECIMAL (10, 3);
 ```
 
-则会由于 TiDB 不支持该 DDL 语句而导致 DM 迁移任务中断，使用 `query-status <task-name>` 命令可看到如下错误：
+Because this DDL statement is not supported by TiDB, the migration task of DM gets interrupted. Execute the `query-status <task-name>` command, and you can see the following error:
 
 ```
 ERROR 8200 (HY000): Unsupported modify column: can't change decimal column precision
 ```
 
-假设业务上可以接受下游 TiDB 不执行此 DDL 语句（即继续保持原有的表结构），则可以通过使用 `handle-error <task-name> skip` 命令跳过该 DDL 语句以恢复迁移任务。操作步骤如下：
+Assume that it is acceptable in the actual production environment that this DDL statement is not executed in the downstream TiDB (namely, the original table schema is retained). Then you can use `handle-error <task-name> skip` to skip this DDL statement to resume the migration. The procedures are as follows:
 
-1. 使用 `handle-error <task-name> skip` 跳过当前错误的 DDL 语句
+1. Execute `handle-error <task-name> skip` to skip the currently failed DDL statement:
 
     {{< copyable "" >}}
 
@@ -139,7 +145,7 @@ ERROR 8200 (HY000): Unsupported modify column: can't change decimal column preci
     }
     ```
 
-2. 使用 `query-status <task-name>` 查看任务状态
+2. Execute `query-status <task-name>` to view the task status:
 
     {{< copyable "" >}}
 
@@ -147,7 +153,7 @@ ERROR 8200 (HY000): Unsupported modify column: can't change decimal column preci
     » query-status test
     ```
 
-    <details><summary> 执行结果 </summary>
+    <details><summary> See the execution result.</summary>
 
     ```
     {
@@ -194,16 +200,16 @@ ERROR 8200 (HY000): Unsupported modify column: can't change decimal column preci
 
     </details>
 
-    可以看到任务运行正常，错误的 DDL 被跳过。
+    You can see that the task runs normally and the wrong DDL is skipped.
 
-#### 合库合表场景
+#### Shard merge scenario
 
-假设现在存在如下四个上游表需要合并迁移到下游的同一个表 ``` `shard_db`.`shard_table` ```，任务模式为悲观协调模式：
+Assume that you need to merge and migrate the following four tables in the upstream to one same table ``` `shard_db`.`shard_table` ``` in the downstream. The task mode is "pessimistic".
 
-- MySQL 实例 1 内有 `shard_db_1` 库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
-- MySQL 实例 2 内有 `shard_db_2` 库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
+- MySQL instance 1 contains the `shard_db_1` schema, which includes the `shard_table_1` and `shard_table_2` tables.
+- MySQL instance 2 contains the `shard_db_2` schema, which includes the `shard_table_1` and `shard_table_2` tables.
 
-初始时表结构为：
+The initial table schema is:
 
 {{< copyable "sql" >}}
 
@@ -211,7 +217,7 @@ ERROR 8200 (HY000): Unsupported modify column: can't change decimal column preci
 SHOW CREATE TABLE shard_db.shard_table;
 ```
 
-```
+```sql
 +-------+-----------------------------------------------------------------------------------------------------------+
 | Table | Create Table                                                                                              |
 +-------+-----------------------------------------------------------------------------------------------------------+
@@ -222,7 +228,7 @@ SHOW CREATE TABLE shard_db.shard_table;
 +-------+-----------------------------------------------------------------------------------------------------------+
 ```
 
-此时，在上游所有分表上都执行以下 DDL 操作修改表字符集
+Now, execute the following DDL statement to all upstream sharded tables to alter their character set:
 
 {{< copyable "sql" >}}
 
@@ -230,7 +236,7 @@ SHOW CREATE TABLE shard_db.shard_table;
 ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DANISH_CI;
 ```
 
-则会由于 TiDB 不支持该 DDL 语句而导致 DM 迁移任务中断，使用 `query-status` 命令可以看到 MySQL 实例 1 的 `shard_db_1`.`shard_table_1` 表和 MySQL 实例 2 的 `shard_db_2`.`shard_table_1` 表报错：
+Because this DDL statement is not supported by TiDB, the migration task of DM gets interrupted. Execute the `query-status` command, and you can see the following errors reported by the `shard_db_1`.`shard_table_1` table in MySQL instance 1 and the `shard_db_2`.`shard_table_1` table in MySQL instance 2:
 
 ```
 {
@@ -246,9 +252,9 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
 }
 ```
 
-假设业务上可以接受下游 TiDB 不执行此 DDL 语句（即继续保持原有的表结构），则可以通过使用 `handle-error <task-name> skip` 命令跳过该 DDL 语句以恢复迁移任务。操作步骤如下：
+Assume that it is acceptable in the actual production environment that this DDL statement is not executed in the downstream TiDB (namely, the original table schema is retained). Then you can use `handle-error <task-name> skip` to skip this DDL statement to resume the migration. The procedures are as follows:
 
-1. 使用 `handle-error <task-name> skip` 跳过 MySQL 实例 1 和实例 2 当前错误的 DDL 语句
+1. Execute `handle-error <task-name> skip` to skip the currently failed DDL statements in MySQL instance 1 and 2:
 
     {{< copyable "" >}}
 
@@ -277,7 +283,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
     }
     ```
 
-2. 使用 `query-status <task-name>` 查看任务状态，可以看到 MySQL 实例 1 的 `shard_db_1`.`shard_table_2` 表和 MySQL 实例 2 的 `shard_db_2`.`shard_table_2` 表报错：
+2. Execute the `query-status` command, and you can see the errors reported by the `shard_db_1`.`shard_table_2` table in MySQL instance 1 and the `shard_db_2`.`shard_table_2` table in MySQL instance 2:
 
     ```
     {
@@ -293,7 +299,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
     }
     ```
 
-3. 继续使用 `handle-error <task-name> skip` 跳过 MySQL 实例 1 和实例 2 当前错误的 DDL 语句
+3. Execute `handle-error <task-name> skip` again to skip the currently failed DDL statements in MySQL instance 1 and 2:
 
     {{< copyable "" >}}
 
@@ -322,7 +328,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
     }
     ```
 
-4. 使用 `query-status <task-name>` 查看任务状态
+4. Use `query-status <task-name>` to view the task status:
 
     {{< copyable "" >}}
 
@@ -330,7 +336,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
     » query-status test
     ```
 
-    <details><summary> 执行结果 </summary>
+    <details><summary> See the execution result.</summary>
 
     ```
     {
@@ -411,13 +417,13 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
 
     </details>
 
-    可以看到任务运行正常，无错误信息。四条 DDL 全部被跳过。
+    You can see that the task runs normally with no error and all four wrong DDL statements are skipped.
 
-### 迁移中断执行替代操作
+### Replace DDL if the migration gets interrupted
 
-#### 非合库合表场景
+#### Non-shard-merge scenario
 
-假设现在需要将上游的 `db1.tbl1` 表迁移到下游 TiDB，初始时表结构为：
+Assume that you need to migrate the upstream table `db1.tbl1` to the downstream TiDB. The initial table schema is:
 
 {{< copyable "sql" >}}
 
@@ -425,7 +431,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` CHARACTER SET LATIN1 COLLATE LATIN1_DAN
 SHOW CREATE TABLE db1.tbl1;
 ```
 
-```
+```SQL
 +-------+-----------------------------------------------------------------------------------------------------------+
 | Table | Create Table                                                                                              |
 +-------+-----------------------------------------------------------------------------------------------------------+
@@ -436,7 +442,7 @@ SHOW CREATE TABLE db1.tbl1;
 +-------+-----------------------------------------------------------------------------------------------------------+
 ```
 
-此时，上游执行以下 DDL 操作增加新列，并添加 UNIQUE 约束
+Now, perform the following DDL operation in the upstream to add a new column with the UNIQUE constraint:
 
 {{< copyable "sql" >}}
 
@@ -444,7 +450,7 @@ SHOW CREATE TABLE db1.tbl1;
 ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
 ```
 
-则会由于 TiDB 不支持该 DDL 语句而导致 DM 迁移任务中断，使用 `query-status` 命令可看到如下错误：
+Because this DDL statement is not supported by TiDB, the migration task gets interrupted. Execute the `query-status` command, and you can see the following error:
 
 ```
 {
@@ -453,9 +459,9 @@ ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
 }
 ```
 
-我们将该 DDL 替换成两条等价的 DDL。操作步骤如下：
+You can replace this DDL statement with two equivalent DDL statements. The steps are as follows:
 
-1. 使用如下命令替换错误的 DDL 语句
+1. Replace the wrong DDL statement by the following command:
 
     {{< copyable "" >}}
 
@@ -478,7 +484,7 @@ ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
     }
     ```
 
-2. 使用 `query-status <task-name>` 查看任务状态
+2. Use `query-status <task-name>` to view the task status:
 
     {{< copyable "" >}}
 
@@ -486,7 +492,7 @@ ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
     » query-status test
     ```
 
-    <details><summary> 执行结果 </summary>
+    <details><summary> See the execution result.</summary>
 
     ```
     {
@@ -533,16 +539,16 @@ ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
 
     </details>
 
-    可以看到任务运行正常，错误的 DDL 已被替换且执行成功。
+    You can see that the task runs normally and the wrong DDL statement is replaced by new DDL statements that execute successfully.
 
-#### 合库合表场景
+#### Shard merge scenario
 
-假设现在存在如下四个上游表需要合并迁移到下游的同一个表 ``` `shard_db`.`shard_table` ```，任务模式为悲观协调模式：
+Assume that you need to merge and migrate the following four tables in the upstream to one same table ``` `shard_db`.`shard_table` ``` in the downstream. The task mode is "pessimistic".
 
-- MySQL 实例 1 内有 `shard_db_1` 库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
-- MySQL 实例 2 内有 `shard_db_2` 库，包括 `shard_table_1` 和 `shard_table_2` 两个表。
+- In the MySQL instance 1, there is a schema `shard_db_1`, which has two tables `shard_table_1` and `shard_table_2`.
+- In the MySQL instance 2, there is a schema `shard_db_2`, which has two tables `shard_table_1` and `shard_table_2`.
 
-初始时表结构为：
+The initial table schema is:
 
 {{< copyable "sql" >}}
 
@@ -550,7 +556,7 @@ ALTER TABLE `db1`.`tbl1` ADD COLUMN new_col INT UNIQUE;
 SHOW CREATE TABLE shard_db.shard_table;
 ```
 
-```
+```sql
 +-------+-----------------------------------------------------------------------------------------------------------+
 | Table | Create Table                                                                                              |
 +-------+-----------------------------------------------------------------------------------------------------------+
@@ -561,7 +567,7 @@ SHOW CREATE TABLE shard_db.shard_table;
 +-------+-----------------------------------------------------------------------------------------------------------+
 ```
 
-此时，在上游所有分表上都执行以下 DDL 操作增加新列，并添加 UNIQUE 约束：
+Now, perform the following DDL operation to all upstream sharded tables to add a new column with the UNIQUE constraint:
 
 {{< copyable "sql" >}}
 
@@ -569,7 +575,7 @@ SHOW CREATE TABLE shard_db.shard_table;
 ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
 ```
 
-则会由于 TiDB 不支持该 DDL 语句而导致 DM 迁移任务中断，使用 `query-status` 命令可以看到 MySQL 实例 1 的 `shard_db_1`.`shard_table_1` 表和 MySQL 实例 2 的 `shard_db_2`.`shard_table_1` 表报错：
+Because this DDL statement is not supported by TiDB, the migration task gets interrupted. Execute the `query-status` command, and you can see the following errors reported by the `shard_db_1`.`shard_table_1` table in MySQL instance 1 and the `shard_db_2`.`shard_table_1` table in MySQL instance 2:
 
 ```
 {
@@ -585,9 +591,9 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
 }
 ```
 
-我们将该 DDL 替换成两条等价的 DDL。操作步骤如下：
+You can replace this DDL statement with two equivalent DDL statements. The steps are as follows:
 
-1. 使用如下命令分别替换 MySQL 实例 1 和实例 2 中错误的 DDL 语句
+1. Replace the wrong DDL statements respectively in MySQL instance 1 and MySQL instance 2 by the following commands:
 
     {{< copyable "" >}}
 
@@ -631,7 +637,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
     }
     ```
 
-2. 使用 `query-status <task-name>` 查看任务状态，可以看到 MySQL 实例 1 的 `shard_db_1`.`shard_table_2` 表和 MySQL 实例 2 的 `shard_db_2`.`shard_table_2` 表报错：
+2. Use `query-status <task-name>` to view the task status, and you can see the following errors reported by the `shard_db_1`.`shard_table_2` table in MySQL instance 1 and the `shard_db_2`.`shard_table_2` table in MySQL instance 2:
 
     ```
     {
@@ -645,7 +651,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
     }
     ```
 
-3. 使用如下命令继续分别替换 MySQL 实例 1 和实例 2 中错误的 DDL 语句
+3. Execute `handle-error <task-name> replace` again to replace the wrong DDL statements in MySQL instance 1 and 2:
 
     {{< copyable "" >}}
 
@@ -689,7 +695,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
     }
     ```
 
-4. 使用 `query-status <task-name>` 查看任务状态
+4. Use `query-status <task-name>` to view the task status:
 
     {{< copyable "" >}}
 
@@ -697,7 +703,7 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
     » query-status test
     ```
 
-    <details><summary> 执行结果 </summary>
+    <details><summary> See the execution result.</summary>
 
     ```
     {
@@ -782,4 +788,4 @@ ALTER TABLE `shard_db_*`.`shard_table_*` ADD COLUMN new_col INT UNIQUE;
 
     </details>
 
-    可以看到任务运行正常，无错误信息。四条 DDL 全部被替换。
+    You can see that the task runs normally with no error and all four wrong DDL statements are replaced.
