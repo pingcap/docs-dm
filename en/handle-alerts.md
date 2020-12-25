@@ -57,10 +57,6 @@ This document introduces how to deal with the alert information in DM.
 
 ## Alert rules related to relay log
 
-> **Note:**
->
-> Currently, DM v2.0 does not support enabling the relay log feature.
-
 ### `DM_relay_process_exits_with_error`
 
 - Description:
