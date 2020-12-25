@@ -1,12 +1,7 @@
 ---
-<<<<<<< HEAD:en/handle-failed-sql-statements.md
-title: Handle Failed SQL Statements
-summary: Learn how to handle failed SQL statements when you're using the TiDB Data Migration tool to migrate data.
-=======
 title: Handle Failed DDL Statements
 summary: Learn how to handle failed DDL statements when you're using the TiDB Data Migration tool to migrate data.
 aliases: ['/docs/tidb-data-migration/dev/skip-or-replace-abnormal-sql-statements/','/tidb-data-migration/dev/skip-or-replace-abnormal-sql-statements','/tidb-data-migration/dev/handle-failed-sql-statements']
->>>>>>> 340e653... zh,en: change `sql` to `DDL` for handle-error command (#516):en/handle-failed-ddl-statements.md
 ---
 
 # Handle Failed DDL Statements
