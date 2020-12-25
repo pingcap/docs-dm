@@ -167,7 +167,7 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to ignore it.\n\t : parse statement: line 1 column 11 near \"EVENT `event_del_big_table` \r\nDISABLE\" %!!(MISSING)(EXTRA string=ALTER EVENT `event_del_big_table` \r\nDISABLE
 ```
 
-出现报错的原因是 TiDB parser 无法解析上游的 DDL，例如 `ALTER EVENT`，所以 `sql-skip` 不会按预期生效。可以在任务配置文件中添加 [Binlog 过滤规则](key-features.md#binlog-event-filter)进行过滤，并设置 `schema-pattern: "*"`。
+出现报错的原因是 TiDB parser 无法解析上游的 DDL，例如 `ALTER EVENT`，所以 `sql-skip` 不会按预期生效。可以在任务配置文件中添加 [Binlog 过滤规则](feature-overview.md#binlog-event-filter)进行过滤，并设置 `schema-pattern: "*"`。
 
 ## DM 同步时下游长时间出现 REPLACE 语句
 
