@@ -8,7 +8,12 @@ title: Data Migration 常见问题
 
 DM 仅支持解析标准版本的 MySQL/MariaDB 的 binlog，对于阿里云 RDS 以及其他云数据库没有进行过测试，如果确认其 binlog 为标准格式，则可以支持。
 
-已知即使上游表没有主键，阿里云 RDS 的 binlog 中也会包含隐藏的主键列，与上游表结构不一致。
+已知问题的兼容情况：
+
+- 阿里云 RDS
+    - 即使上游表没有主键，阿里云 RDS 的 binlog 中也会包含隐藏的主键列，与上游表结构不一致。
+- 华为云 RDS
+    - 不支持，详见：[华为云数据库 RDS 是否支持直接读取 Binlog 备份文件](https://support.huaweicloud.com/rds_faq/rds_faq_0210.html)。
 
 ## task 配置中的黑白名单的正则表达式是否支持`非获取匹配`（?!）？
 
@@ -162,3 +167,23 @@ curl -X POST -d "tidb_general_log=0" http://{TiDBIP}:10080/settings
 ## 监控中部分面板显示 `No data point`
 
 请参照 [DM 监控指标](monitor-a-dm-cluster.md)查看各面板含义，部分面板没有数据是正常现象。例如没有发生错误、不存在 DDL lock、没有启用 relay 功能等情况，均可能使得对应面板没有数据。
+
+## DM v1.0 在任务出错时使用 `sql-skip` 命令无法跳过某些语句
+
+首先需要检查执行 `sql-skip` 之后 binlog 位置是否在推进，如果是的话表示 `sql-skip` 已经生效。重复出错的原因是上游发送了多个不支持的 DDL，可以通过 `sql-skip -s <sql-pattern>` 进行模式匹配。
+
+对于类似下面这种报错（报错中包含 `parse statement`）：
+
+```
+if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to ignore it.\n\t : parse statement: line 1 column 11 near \"EVENT `event_del_big_table` \r\nDISABLE\" %!!(MISSING)(EXTRA string=ALTER EVENT `event_del_big_table` \r\nDISABLE
+```
+
+出现报错的原因是 TiDB parser 无法解析上游的 DDL，例如 `ALTER EVENT`，所以 `sql-skip` 不会按预期生效。可以在任务配置文件中添加 [Binlog 过滤规则](key-features.md#binlog-event-filter)进行过滤，并设置 `schema-pattern: "*"`。从 DM 2.0.1 版本开始，已预设过滤了 `EVENT` 相关语句。
+
+在 DM v2.0 版本中 `sql-skip` 已经被 `handle-error` 替代，`handle-error` 可以跳过该类错误。
+
+## DM 同步时下游长时间出现 REPLACE 语句
+
+请检查是否符合 [safe mode 触发条件](glossary.md#safe-mode)。如果任务发生错误并自动恢复，或者发生高可用调度，会满足“启动或恢复任务的前 5 分钟“这一条件，因此启用 safe mode。
+
+可以检查 DM-worker 日志，在其中搜索包含 `change count` 的行，该行的 `new count` 非零时会启用 safe mode。检查 safe mode 启用时间以及启用前是否有报错，以定位启用原因。
