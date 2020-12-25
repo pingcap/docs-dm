@@ -5,10 +5,6 @@ summary: 了解目录结构、初始迁移规则和 DM relay log 的数据清理
 
 # DM Relay Log
 
-> **注意：**
->
-> 当前 DM v2.0 版本暂不支持开启 relay log 功能。
-
 DM (Data Migration) 工具的 relay log 由一组有编号的文件和一个索引文件组成。这些有编号的文件包含了描述数据库更改的事件。索引文件包含所有使用过的 relay log 的文件名。
 
 DM-worker 在启动后，会自动将上游 binlog 迁移到本地配置目录（若使用 TiUP 部署 DM，则迁移目录默认为 `<deploy_dir> / relay_log` ）。DM-worker 在运行过程中，会将上游 binlog 实时迁移到本地文件。DM-worker 的 sync 处理单元会实时读取本地 relay log 的 binlog 事件，将这些事件转换为 SQL 语句，再将 SQL 语句迁移到下游数据库。
@@ -96,29 +92,27 @@ Relay log 的数据清理包括自动清理和手动清理这两种方法。
 
 ### 自动数据清理
 
-自动数据清理需对 DM-worker 命令行配置中的以下三项进行配置：
+启用自动数据清理需在 source 配置文件中进行以下配置：
 
-- `purge-interval`
+```yaml
+# relay log purge strategy
+purge:
+    interval: 3600
+    expires: 24
+    remain-space: 15
+```
+
+- `purge.interval`
     - 后台自动清理的时间间隔，以秒为单位。
     - 默认为 "3600"，表示每 3600 秒执行一次后台清理任务。
 
-- `purge-expires`
+- `purge.expires`
     - 当前 relay 处理单元没有写入、或已有数据迁移任务当前或未来不需要读取的 relay log 在被后台清理前可保留的小时数。
     - 默认为 "0"，表示不按 relay log 的更新时间执行数据清理。
 
-- `purge-remain-space`
+- `purge.remain-space`
     - 剩余磁盘空间，单位为 GB。若剩余磁盘空间小于该配置，则指定的 DM-worker 机器会在后台尝试自动清理可被安全清理的 relay-log。若这一数字被设为 "0"，则表示不按剩余磁盘空间来清理数据。
     - 默认为 "15"，表示可用磁盘空间小于 15GB 时，DM-master 会尝试安全地清理 relay log。
-
-或者在 DM-woker 的配置文件中加入 purge 配置：
-
-```toml
-# relay log purge strategy
-[purge]
-interval = 3600
-expires = 24
-remain-space = 15
-```
 
 ### 手动数据清理
 
@@ -167,7 +161,7 @@ deb76a2b-09cc-11e9-9129-5242cf3bb246.000003
     {{< copyable "" >}}
 
     ```bash
-    » purge-relay -w 10.128.16.223:10081 --filename mysql-bin.000001 --sub-dir e4e0e8ab-09cc-11e9-9220-82cc35207219.000002
+    » purge-relay -s mysql-replica-01 --filename mysql-bin.000001 --sub-dir e4e0e8ab-09cc-11e9-9220-82cc35207219.000002
     ```
 
 + 以下命令默认 `--sub-dir` 为最新的 `deb76a2b-09cc-11e9-9129-5242cf3bb246.000003` 子目录。该目录之前的 relay log 子目录为 `deb76a2b-09cc-11e9-9129-5242cf3bb246.000001` 和 `e4e0e8ab-09cc-11e9-9220-82cc35207219.000002`，所以该命令实际清空了这两个子目录，保留了 `deb76a2b-09cc-11e9-9129-5242cf3bb246.000003`。
@@ -175,5 +169,5 @@ deb76a2b-09cc-11e9-9129-5242cf3bb246.000003
     {{< copyable "" >}}
 
     ```bash
-    » purge-relay -w 10.128.16.223:10081 --filename mysql-bin.000001
+    » purge-relay -s mysql-replica-01 --filename mysql-bin.000001
     ```
