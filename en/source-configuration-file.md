@@ -17,6 +17,11 @@ source-id: "mysql-replica-01"
 # Whether to enable GTID.
 enable-gtid: false
 
+# Whether to enable relay log.
+enable-relay: false
+relay-binlog-name = "" # The file name from which DM-worker starts to pull the binlog.
+relay-binlog-gtid = "" # The GTID from which DM-worker starts to pull the binlog.
+
 from:
   host: "127.0.0.1"
   port: 3306
@@ -26,6 +31,11 @@ from:
     ssl-ca: "/path/to/ca.pem"
     ssl-cert: "/path/to/cert.pem"
     ssl-key: "/path/to/key.pem"
+
+# purge:
+#   interval: 3600
+#   expires: 0
+#   remain-space: 15
 ```
 
 ## Configuration parameters
@@ -38,8 +48,25 @@ This section describes each configuration parameter in the configuration file.
 | :------------ | :--------------------------------------- |
 | `source-id` | Represents a MySQL instance ID. |
 | `enable-gtid` | Determines whether to pull binlog from the upstream using GTID. The default value is `false`. In general, you do not need to configure `enable-gtid` manually. However, if GTID is enabled in the upstream database, and the primary/secondary switch is required, you need to set `enable-gtid` to `true`. |
+| `enable-relay` | Determines whether to enable the relay log feature. The default value is `false`. |
+| `relay-binlog-name` | Specifies the file name from which DM-worker starts to pull the binlog. For example, `"mysql-bin.000002"`. It only works when `enable_gtid` is `false`. If this parameter is not specified, DM-worker will pull the binlogs starting from the latest one. |
+| `relay-binlog-gtid` | Specifies the GTID from which DM-worker starts to pull the binlog. For example, `"e9a1fc22-ec08-11e9-b2ac-0242ac110003:1-7849"`. It only works when `enable_gtid` is `true`. If this parameter is not specified, DM-worker will pull the binlogs starting from the latest GTID. |
 | `host` | Specifies the host of the upstream database. |
 | `port` | Specifies the port of the upstream database. |
 | `user` | Specifies the username of the upstream database. |
 | `password` | Specifies the user password of the upstream database. It is recommended to use the password encrypted with dmctl. |
 | `security` | Specifies the TLS config of the upstream database. |
+
+### Relay log cleanup strategy configuration (`purge`)
+
+Generally, there is no need to manually configure these parameters unless there is a large amount of relay logs and disk capacity is insufficient.
+
+| Parameter        | Description                           | Default value |
+| :------------ | :--------------------------------------- | :-------------|
+| `interval` | Sets the time interval at which relay logs are regularly checked for expiration, in seconds. | `3600`  |
+| `expires` | Sets the expiration time for relay logs, in hours. The relay log that is not written by the relay processing unit, or does not need to be read by the existing data migration task will be deleted by DM if it exceeds the expiration time. If this parameter is not specified, the automatic purge is not performed. | `0` |
+| `remain-space` | Sets the minimum amount of free disk space, in gigabytes. When the available disk space is smaller than this value, DM-worker tries to delete relay logs. | `15` |
+
+> **Note:**
+>
+> The automatic data purge strategy only takes effect when `interval` is not 0 and at least one of the two configuration items `expires` and `remain-space` is not 0.

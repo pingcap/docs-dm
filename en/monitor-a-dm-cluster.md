@@ -41,10 +41,6 @@ In the Grafana dashboard, the default name of DM is `DM-task`.
 
 ### High availability
 
-> **Note:**
->
-> In DM v2.0, the relay log feature is not supported.
-
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
 | number of dm-masters start leader components per minute | The number of DM-master attempts to enable leader related components per minute | N/A | N/A |
@@ -129,10 +125,6 @@ The following metrics show only when `task-mode` is in the `incremental` or `all
 In the Grafana dashboard, the default name of an instance is `DM-instance`.
 
 ### Relay log
-
-> **Note:**
->
-> Currently, DM v2.0 does not support enabling the relay log feature.
 
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
