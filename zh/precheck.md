@@ -21,6 +21,10 @@ aliases: ['/docs-cn/tidb-data-migration/dev/precheck/']
     - 5.5 < MySQL 版本 < 8.0
     - MariaDB 版本 >= 10.1.2
 
++ 数据库配置
+
+    - 是否设置 `server_id`
+
 + MySQL binlog 配置
 
     - binlog 是否开启（DM 要求 binlog 必须开启）
@@ -75,6 +79,7 @@ DM 会根据任务类型进行相应检查，用户可以在任务配置文件�
 | dump_privilege | 关闭检查上游 MySQL 实例用户的 dump 相关权限 |
 | replication_privilege | 关闭检查上游 MySQL 实例用户的 replication 相关权限 |
 | version | 关闭检查上游数据库版本 |
+| server_id | 关闭检查上游数据库是否设置 server_id |
 | binlog_enable | 关闭检查上游数据库是否已启用 binlog |
 | binlog_format | 关闭检查上游数据库 binlog 格式是否为 ROW |
 | binlog_row_image | 关闭检查上游数据库 binlog_row_image 是否为 FULL|
