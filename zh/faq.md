@@ -10,6 +10,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/faq/']
 DM 仅支持解析标准版本的 MySQL/MariaDB 的 binlog，对于阿里云 RDS 以及其他云数据库没有进行过测试，如果确认其 binlog 为标准格式，则可以支持。
 
 已知问题的兼容情况：
+
 - 阿里云 RDS
     - 即使上游表没有主键，阿里云 RDS 的 binlog 中也会包含隐藏的主键列，与上游表结构不一致。
 - 华为云 RDS
