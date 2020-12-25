@@ -11,7 +11,7 @@ DM 2.0 相比于 1.0，主要有以下改进：
 
 - [数据迁移任务的高可用](#高可用)，部分 DM-master、DM-worker 节点异常后仍能保证数据迁移任务的正常运行。
 - [乐观协调模式下的 sharding DDL](feature-shard-merge-optimistic.md) 可以在部分场景下减少 sharding DDL 同步过程中的延迟、支持上游数据库灰度变更等场景。
-- 更好的易用性，包括新的[错误处理机制](handle-failed-sql-statements.md)及更清晰易读的错误信息与错误处理建议。
+- 更好的易用性，包括新的[错误处理机制](handle-failed-ddl-statements.md)及更清晰易读的错误信息与错误处理建议。
 - 与上下游数据库及 DM 各组件间连接的 [TLS 支持](enable-tls.md)。
 - 实验性地支持从 MySQL 8.0 迁移数据。
 
