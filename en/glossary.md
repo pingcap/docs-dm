@@ -93,22 +93,19 @@ The relay processing unit is the processing unit used in DM-worker to pull binlo
 
 The process of using the TiDB Data Migration tool to copy the **incremental data** of the upstream database to the downstream database.
 
-In the case of clearly mentioning "incremental", use replicate/replication instead of migrate/migration. 
+In the case of clearly mentioning "incremental", use replicate/replication instead of migrate/migration.
 
 ## S
 
 ### Safe mode
 
-Safe mode is the mode in which DML statements can be imported more than once when the primary key or unique index exists in the table schema.
+Safe mode is the mode in which DML statements can be imported more than once when the primary key or unique index exists in the table schema. In this mode, some statements from the upstream are migrated to the downstream only after they are re-written. The `INSERT` statement is re-written as `REPLACE`; the `UPDATE` statement is re-written as `DELETE` and `REPLACE`.
 
-<<<<<<< HEAD
-In this mode, some statements from the upstream are migrated to the downstream only after they are re-written. The `INSERT` statement is re-written as `REPLACE`; the `UPDATE` statement is re-written as `DELETE` and `REPLACE`. TiDB DM automatically enables the safe mode within 5 minutes after the migration task is started or resumed. You can manually enable the mode by modifying the `safe-mode` parameter in the task configuration file.
-=======
+This mode is enabled in any of the following situations:
+
 - TiDB DM automatically enables the safe mode within 5 minutes immediately after the incremental replication task is started or resumed.
 - The safe mode remains enabled when the `safe-mode` parameter in the task configuration file is set to `true`.
 - In shard merge scenarios, the safe mode remains enabled before DDL statements are replicated in all sharded tables.
-- If the argument `--consistency none` is configured for the dump processing unit of a full migration task, it cannot be determined whether the binlog changes at the beginning of the export affect the exported data or not. Therefore, the safe mode remains enabled for the incremental replication of these binlog changes.
->>>>>>> 453f234... en: add a case of safe-mode being enabled (#532)
 
 ### Shard DDL
 
