@@ -37,7 +37,7 @@ This document introduces DM's command-line flags.
 
 - The `"{node name}={external address}"` list used to bootstrap DM-master cluster
 - The default value is `"{name}={advertise-peer-urls}"`
-- This flag needs to be specified if the `join` flag is not specified. A configuration example of a 3-node cluster is `"dm-master-1=http://172.16.15.11:8291,dm-master-2-=http://172.16.15.12:8291,dm-master-3=http://172.16.15.13:8291"`
+- This flag needs to be specified if the `join` flag is not specified. A configuration example of a 3-node cluster is `"dm-master-1=http://172.16.15.11:8291,dm-master-2=http://172.16.15.12:8291,dm-master-3=http://172.16.15.13:8291"`
 
 ### `--join`
 
