@@ -37,7 +37,7 @@ summary: 介绍 DM 各组件的主要命令行参数。
 
 - 用于 bootstrap DM-master 集群的 `"{节点名}={外部地址}"` 列表
 - 默认值为 `"{name}={advertise-peer-urls}"`
-- 在未指定 `join` 参数时需要指定该参数。一个 3 节点集群的配置示例为 `"dm-master-1=http://172.16.15.11:8291,dm-master-2-=http://172.16.15.12:8291,dm-master-3=http://172.16.15.13:8291"`
+- 在未指定 `join` 参数时需要指定该参数。一个 3 节点集群的配置示例为 `"dm-master-1=http://172.16.15.11:8291,dm-master-2=http://172.16.15.12:8291,dm-master-3=http://172.16.15.13:8291"`
 
 ### `--join`
 
