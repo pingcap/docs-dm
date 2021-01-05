@@ -17,7 +17,7 @@ It is a known issue that for an upstream table with no primary key in Alibaba Cl
 Here are some known incompatible issues:
 
 - In **Alibaba Cloud RDS**, for an upstream table with no primary key, its binlog still contains a hidden primary key column, which is inconsistent with the original table structure.
-- In **HUAWEI Cloud RDS**, directly reading binlog files is not supported. For more details, see [Can HUAWEI Cloud RDS Directly Read Binlog Files?](https://support.huaweicloud.com/en-us/rds_faq/rds_faq_0210.html)
+- In **HUAWEI Cloud RDS**, directly reading binlog files is not supported. For more details, see [Can HUAWEI Cloud RDS Directly Read Binlog Backup Files?](https://support.huaweicloud.com/en-us/rds_faq/rds_faq_0210.html)
 
 ## Does the regular expression of the block and allow list in the task configuration support `non-capturing (?!)`?
 
