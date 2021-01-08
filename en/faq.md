@@ -14,6 +14,11 @@ Currently, DM only supports decoding the standard version of MySQL or MariaDB bi
 
 It is a known issue that for an upstream table with no primary key in Alibaba Cloud RDS, its binlog still contains a hidden primary key column, which is inconsistent with the original table structure.
 
+Here are some known incompatible issues:
+
+- In **Alibaba Cloud RDS**, for an upstream table with no primary key, its binlog still contains a hidden primary key column, which is inconsistent with the original table structure.
+- In **HUAWEI Cloud RDS**, directly reading binlog files is not supported. For more details, see [Can HUAWEI Cloud RDS Directly Read Binlog Backup Files?](https://support.huaweicloud.com/en-us/rds_faq/rds_faq_0210.html)
+
 ## Does the regular expression of the block and allow list in the task configuration support `non-capturing (?!)`?
 
 Currently, DM does not support it and only supports the regular expressions of the Golang standard library. See regular expressions supported by Golang via [re2-syntax](https://github.com/google/re2/wiki/Syntax).
@@ -175,3 +180,23 @@ When the `duplicate entry` error occurs, you need to check the log files for the
 ## Why do some monitoring panels show `No data point`?
 
 It is normal for some panels to have no data. For example, when there is no error reported, no DDL lock, or the relay log feature is not enabled, the corresponding panels show `No data point`. For detailed description of each panel, see [DM Monitoring Metrics](monitor-a-dm-cluster.md).
+
+## In DM v1.0, why does the command `sql-skip` fail to skip some statements when the task is in error?
+
+You need to first check whether the binlog position is still advancing after you execute `sql-skip`. If so, it means that `sql-skip` has taken effect. The reason why this error keeps occurring is that the upstream sends multiple unsupported DDL statements. You can use `sql-skip -s <sql-pattern>` to set a pattern to match these statements.
+
+Sometimes, the error message contains the `parse statement` information, for example:
+
+```
+if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to ignore it.\n\t : parse statement: line 1 column 11 near \"EVENT `event_del_big_table` \r\nDISABLE\" %!!(MISSING)(EXTRA string=ALTER EVENT `event_del_big_table` \r\nDISABLE
+```
+
+The reason for this type of error is that the TiDB parser cannot parse DDL statements sent by the upstream, such as `ALTER EVENT`, so `sql-skip` does not take effect as expected. You can add [binlog event filters](key-features.md#binlog-event-filter) in the configuration file to filter those statements and set `schema-pattern: "*"`. Starting from DM v2.0.1, DM pre-filters statements related to `EVENT`.
+
+In DM v2.0, `handle-error` replaces `sql-skip`. You can use `handle-error` instead to avoid this issue.
+
+## Why do `REPLACE` statements keep appearing in the downstream when DM is replicating?
+
+You need to check whether the [safe mode](glossary.md#safe-mode) is automatically enabled for the task. If the task is automatically resumed after an error, or if there is high availability scheduling, then the safe mode is enabled because it is within 5 minutes after the task is started or resumed.
+
+You can check the DM-worker log file and search for a line containing `change count`. If the `new count` in the line is not zero, the safe mode is enabled. To find out why it is enabled, check when it happens and if any errors are reported before.
