@@ -12,6 +12,11 @@ This document collects the frequently asked questions (FAQs) about TiDB Data Mig
 
 Currently, DM only supports decoding the standard version of MySQL or MariaDB binlog. It has not been tested for Alibaba Cloud RDS or other cloud databases. If you are confirmed that its binlog is in standard format, then it is supported.
 
+Here are some known incompatible issues:
+
+- In **Alibaba Cloud RDS**, for an upstream table with no primary key, its binlog still contains a hidden primary key column, which is inconsistent with the original table structure.
+- In **HUAWEI Cloud RDS**, directly reading binlog files is not supported. For more details, see [Can HUAWEI Cloud RDS Directly Read Binlog Backup Files?](https://support.huaweicloud.com/en-us/rds_faq/rds_faq_0210.html)
+
 ## Does the regular expression of the block and allow list in the task configuration support `non-capturing (?!)`?
 
 Currently, DM does not support it and only supports the regular expressions of the Golang standard library. See regular expressions supported by Golang via [re2-syntax](https://github.com/google/re2/wiki/Syntax).
@@ -36,11 +41,11 @@ If the relay log required by the data migration task is normal, you can use the 
 
 1. Use `stop-task` to stop abnormal data migration tasks.
 
-2. Clean up the downstream migrated data. 
+2. Clean up the downstream migrated data.
 
 3. Choose one of the following methods to restart the data migration task:
 
-    - Modify the task configuration file to specify a new task name, and then use `start-task` to restart the migration task. 
+    - Modify the task configuration file to specify a new task name, and then use `start-task` to restart the migration task.
     - Modify the task configuration file to set `remove-meta` to `true`, and then use `start-task` to restart the migration task.
 
 ### Reset the data migration task when the relay log is in the abnormal state
@@ -49,7 +54,7 @@ If the relay log required by the data migration task is normal, you can use the 
 
 If the relay log required by the migration task is abnormal in the DM-worker, but is normal in the upstream MySQL, you can use the following steps to restore the data migration task:
 
-1. Use the `stop-task` command to stop all the migration tasks that are currently running. 
+1. Use the `stop-task` command to stop all the migration tasks that are currently running.
 
 2. Refer to [restart DM-worker](cluster-operations.md#restart-dm-worker) to **stop** the abnormal DM-worker node.
 
@@ -60,7 +65,7 @@ If the relay log required by the migration task is abnormal in the DM-worker, bu
 
 4. Modify the information of `relay.meta` in the relay log directory of DM-worker to the information corresponding to the next binlog file.
 
-    - If `enable-gtid` is not enabled, set `binlog-name` to the file name of the next binlog file, and set `binlog-pos` to `4`. If you copy `mysq-bin.000100` from the upstream MySQL to the relay directory, and want to continue to pull binlog from `mysql-bin.000101` later, set `binlog-name` to `mysql-bin.000101`. 
+    - If `enable-gtid` is not enabled, set `binlog-name` to the file name of the next binlog file, and set `binlog-pos` to `4`. If you copy `mysq-bin.000100` from the upstream MySQL to the relay directory, and want to continue to pull binlog from `mysql-bin.000101` later, set `binlog-name` to `mysql-bin.000101`.
 
     - If `enable-gtid` is enabled, set `binlog-gtid` to the value corresponding to `Previous_gtids` at the beginning of the next binlog file. You can obtain the value by executing [SHOW BINLOG EVENTS](https://dev.mysql.com/doc/refman/5.7/en/show-binlog-events.html).
 
@@ -87,7 +92,7 @@ If the relay log required by the migration task is abnormal in the DM-worker, an
 
 6. Choose one of the following methods to restart the data migration task:
 
-    - Modify the task configuration file to specify a new task name, and then use `start-task` to restart the migration task. 
+    - Modify the task configuration file to specify a new task name, and then use `start-task` to restart the migration task.
     - Modify the task configuration file to set `remove-meta` to `true`, and then use `start-task` to restart the migration task.
 
 ## How to handle the error returned by the DDL operation related to the gh-ost table, after `online-ddl-scheme: "gh-ost"` is set?
@@ -100,7 +105,7 @@ The above error can be caused by the following reason:
 
 In the last `rename ghost_table to origin table` step, DM reads the DDL information in memory, and restores it to the DDL of the origin table.
 
-However, the DDL information in memory is obtained in either of the two ways: 
+However, the DDL information in memory is obtained in either of the two ways:
 
 - DM [processes the gh-ost table during the `alter ghost_table` operation](feature-online-ddl-scheme.md#online-schema-change-gh-ost) and records the DDL information of `ghost_table`;
 - When DM-worker is restarted to start the task, DM reads the DDL from `dm_meta.{task_name}_onlineddl`.
@@ -158,3 +163,21 @@ Record the position information in the global checkpoint (`is_global=1`) corresp
 4. Start the task using `start-task`.
 
 5. Observe the task status through `query-status`. When `syncerBinlog` exceeds the larger value of `checkpoint-T` and `checkpoint-S`, restore `safe-mode` to the original value and restart the task. In this example, it is `(mysql-bin.000100, 1234)`.
+
+## In DM v1.0, why does the command `sql-skip` fail to skip some statements when the task is in error?
+
+You need to first check whether the binlog position is still advancing after you execute `sql-skip`. If so, it means that `sql-skip` has taken effect. The reason why this error keeps occurring is that the upstream sends multiple unsupported DDL statements. You can use `sql-skip -s <sql-pattern>` to set a pattern to match these statements.
+
+Sometimes, the error message contains the `parse statement` information, for example:
+
+```
+if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to ignore it.\n\t : parse statement: line 1 column 11 near \"EVENT `event_del_big_table` \r\nDISABLE\" %!!(MISSING)(EXTRA string=ALTER EVENT `event_del_big_table` \r\nDISABLE
+```
+
+The reason for this type of error is that the TiDB parser cannot parse DDL statements sent by the upstream, such as `ALTER EVENT`, so `sql-skip` does not take effect as expected. You can add [binlog event filters](feature-overview.md#binlog-event-filter) in the configuration file to filter those statements and set `schema-pattern: "*"`.
+
+## Why do `REPLACE` statements keep appearing in the downstream when DM is replicating?
+
+You need to check whether the [safe mode](glossary.md#safe-mode) is automatically enabled for the task. If the task is automatically resumed after an error, or if there is high availability scheduling, then the safe mode is enabled because it is within 5 minutes after the task is started or resumed.
+
+You can check the DM-worker log file and search for a line containing `change count`. If the `new count` in the line is not zero, the safe mode is enabled. To find out why it is enabled, check when it happens and if any errors are reported before.
