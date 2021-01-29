@@ -191,16 +191,16 @@ if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to
 
 ## 使用 DM v2.0 同步数据时重启 DM 进程，出现全量数据导入失败错误
 
-<= 2.0.1 版本的 DM，在全量导出 + 导入操作未完成时如果发生重启，DM 重启后的 source 与 worker 的 bound 关系可能会发生变化，出现数据在 worker A 机器上但却由 worker B 进行 load 的情况进而导致失败。
+<= 2.0.1 版本的 DM，在全量导入操作未完成时如果发生重启，重启后的上游数据源与 DM worker 的绑定关系可能会发生变化，出现 dump 单元中间数据在 DM worker A 机器上但却由 DM worker B 进行 load 单元的情况进而导致失败。
 
 该情况有两种解决方案：
 
 1. 如果数据量较小（TB 级以下）或任务有合库合表：清空下游数据库的已导入数据，同时清空导出数据目录，使用 dmctl 删除并 `start-task --remove-meta` 重建任务。后续尽量保证全量导出导入阶段 dm 没有冗余 worker 以及避免在该时段内重启或升级 DM 集群。
-2. 如果数据量较大（数 TB 或更多）：清空下游数据库的已导入数据，将 lightning 部署到数据所在的 dm-worker 节点，使用 [lightning](https://docs.pingcap.com/zh/tidb/dev/deploy-tidb-lightning) 导入 dm 导出的数据。全量导入完成后，更新 dm checkpoint 到 sync 阶段并更新 pos 为导出数据 metadata 里的 pos 位置，或者填写 `mysql-instance.meta.pos` 重开一个增量任务。
+2. 如果数据量较大（数 TB 或更多）：清空下游数据库的已导入数据，将 lightning 部署到数据所在的 DM worker 节点，使用 [lightning](https://docs.pingcap.com/zh/tidb/dev/deploy-tidb-lightning) 导入 DM dump 单元导出的数据。全量导入完成后，修改任务的 `task-mode` 为 `incremental`，修改 `mysql-instance.meta.pos` 为 dump 单元导出数据 `metadata` 中记录的位置，启动一个增量任务。
 
 ## 使用 DM 同步数据时重启 DM 进程，增量任务出现 `ERROR 1236 (HY000): The slave is connecting using CHANGE MASTER TO MASTER_AUTO_POSITION = 1, but the master has purged binary logs containing GTIDs that the slave requires.` 错误
 
-该错误表明全量期间，metadata 中的 pos 到当前时间到 binlog 已经有被 purge 丢失的情况。
+该错误表明全量期间，dump 单元记录 metadata 中的 binlog 位置已经被上游清理。
 
 解决方案：出现该问题时只能清空下游数据库与任务信息后加上 `--remove-meta` 参数重建任务。这个问题需要通过一些配置提前避免：
 
