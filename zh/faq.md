@@ -214,7 +214,7 @@ if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to
 处理方法: 
 
 1. 升级 TiUP 到更新版本
-2. 备份 deploy/grafana-<port>/bin/public 文件夹；下载 [TiUP DM 离线镜像包](https://download.pingcap.org/tidb-dm-v2.0.1-linux-amd64.tar.gz)，并进行解压，将其中的 grafana-v4.0.3-**.tar.gz 文件解压后，用解压出的 public/ 文件夹替换前面所描述的文件夹，运行 tiup dm restart <cluster-name> -R grafana 重启 grafana 服务监控恢复正常。
+2. 备份 `deploy/grafana-$port/bin/public` 文件夹；下载 [TiUP DM 离线镜像包](https://download.pingcap.org/tidb-dm-v2.0.1-linux-amd64.tar.gz)，并进行解压，将其中的 grafana-v4.0.3-**.tar.gz 文件解压后，用解压出的 public/ 文件夹替换前面所描述的文件夹，运行 `tiup dm restart $cluster_name -R grafana` 重启 grafana 服务监控恢复正常。
 
 ## 使用 DM v2.0 同时开启 relay 与 gtid 同步 MySQL 时 query-status 发现 syncer checkpoint 中 GTID 不连续
 
