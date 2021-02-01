@@ -191,35 +191,39 @@ if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to
 
 ## 使用 DM v2.0 同步数据时重启 DM 进程，出现全量数据导入失败错误
 
-<= 2.0.1 版本的 DM，在全量导入操作未完成时如果发生重启，重启后的上游数据源与 DM worker 的绑定关系可能会发生变化，出现 dump 单元中间数据在 DM worker A 机器上但却由 DM worker B 进行 load 单元的情况进而导致失败。
+在 DM v2.0.1 及更早版本中，如果全量导入操作未完成时发生重启，重启后的上游数据源与 DM worker 的绑定关系可能会发生变化。例如，可能出现 dump 单元的中间数据在 DM worker A 机器上，但却由 DM worker B 进行 load 单元的情况，进而导致操作失败。
 
 该情况有两种解决方案：
 
-1. 如果数据量较小（TB 级以下）或任务有合库合表：清空下游数据库的已导入数据，同时清空导出数据目录，使用 dmctl 删除并 `start-task --remove-meta` 重建任务。后续尽量保证全量导出导入阶段 dm 没有冗余 worker 以及避免在该时段内重启或升级 DM 集群。
-2. 如果数据量较大（数 TB 或更多）：清空下游数据库的已导入数据，将 lightning 部署到数据所在的 DM worker 节点，使用 [lightning local backend 模式](https://docs.pingcap.com/zh/tidb/dev/deploy-tidb-lightning) 导入 DM dump 单元导出的数据。全量导入完成后，修改任务的 `task-mode` 为 `incremental`，修改 `mysql-instance.meta.pos` 为 dump 单元导出数据 `metadata` 中记录的位置，启动一个增量任务。
+- 如果数据量较小（TB 级以下）或任务有合库合表：清空下游数据库的已导入数据，同时清空导出数据目录，使用 dmctl 删除并 `start-task --remove-meta` 重建任务。后续尽量保证全量导出导入阶段 DM 没有冗余 worker 以及避免在该时段内重启或升级 DM 集群。
+- 如果数据量较大（数 TB 或更多）：清空下游数据库的已导入数据，将 lightning 部署到数据所在的 DM worker 节点，使用 [lightning local backend 模式](https://docs.pingcap.com/zh/tidb/dev/deploy-tidb-lightning) 导入 DM dump 单元导出的数据。全量导入完成后，修改任务的 `task-mode` 为 `incremental`，修改 `mysql-instance.meta.pos` 为 dump 单元导出数据 `metadata` 中记录的位置，启动一个增量任务。
 
 ## 使用 DM 同步数据时重启 DM 进程，增量任务出现 `ERROR 1236 (HY000): The slave is connecting using CHANGE MASTER TO MASTER_AUTO_POSITION = 1, but the master has purged binary logs containing GTIDs that the slave requires.` 错误
 
-该错误表明全量期间，dump 单元记录 metadata 中的 binlog 位置已经被上游清理。
+该错误表明全量迁移期间，dump 单元记录 metadata 中的 binlog 位置已经被上游清理。
 
-解决方案：出现该问题时只能清空下游数据库已同步数据，并在停止任务后加上 `--remove-meta` 参数重建任务。这个问题需要通过一些配置提前避免：
+解决方案：出现该问题时只能清空下游数据库已同步数据，并在停止任务后加上 `--remove-meta` 参数重建任务。
+
+如要提前避免该问题，需要进行以下配置：
 
 1. 在 DM 全量未完成时调大上游 MySQL 的 `expire_logs_days` 变量，保证全量进行结束时 metadata 中的 binlog 位置到当前时间的 binlog 都还没有被清理掉。如果数据量较大应该使用 dumpling + lightning 的方式加快全量速度。
-2. DM 任务开启 relay log 选项，保证 binlog purge 后 DM 仍有 relay log 读取。
+2. DM 任务开启 relay log 选项，保证 binlog 被清理后 DM 仍有 relay log 读取。
 
 ## 使用 TiUP v1.3.0, v1.3.1 部署 DM 集群，DM 集群的 grafana 监控报错显示 `failed to fetch dashboard`
 
-该问题为 TiUP 已知 bug，TiUP v1.3.2 已进行修复。可采取下列处理方法之一解决：
+该问题为 TiUP 已知 bug，在 TiUP v1.3.2 中已进行修复。可采取以下任一方法解决：
 
-1. 使用 `tiup update --self && tiup update dm` 升级 TiUP 到更新版本，随后先 scale-in 再 scale-out grafana 节点重建 grafana 服务。
-2. 备份 `deploy/grafana-$port/bin/public` 文件夹；下载 [TiUP DM 离线镜像包](https://download.pingcap.org/tidb-dm-v2.0.1-linux-amd64.tar.gz)，并进行解压，将其中的 grafana-v4.0.3-**.tar.gz 文件解压后，用解压出的 public/ 文件夹替换前面所描述的文件夹，运行 `tiup dm restart $cluster_name -R grafana` 重启 grafana 服务监控。
+- 方法一：使用 `tiup update --self && tiup update dm` 升级 TiUP 到更新版本，随后先 scale-in 再 scale-out grafana 节点，重建 grafana 服务。
+- 方法二：
+    1. 备份 `deploy/grafana-$port/bin/public` 文件夹。
+    2. 下载 [TiUP DM 离线镜像包](https://download.pingcap.org/tidb-dm-v2.0.1-linux-amd64.tar.gz)，并进行解压，将其中的 grafana-v4.0.3-**.tar.gz 文件解压后，用解压出的 public/ 文件夹替换前面所描述的文件夹，运行 `tiup dm restart $cluster_name -R grafana` 重启 grafana 服务监控。
 
-## 使用 DM v2.0 同时开启 relay 与 gtid 同步 MySQL 时 query-status 发现 syncer checkpoint 中 GTID 不连续
+## 在 DM v2.0 中，同时开启 relay 与 gtid 同步 MySQL 时，query-status 发现 syncer checkpoint 中 GTID 不连续
 
 该问题为 DM 已知 bug，在完全满足以下两个条件时将会触发，DM 将在 v2.0.2 修复该问题：
 
 1. DM 配置的 source 同时设置了 `enable-relay` 与 `enable-gtid` 为 `true`
-2. DM 同步上游为 **MySQL 从库**，并且该从库通过 `show binlog events in '<newest-binlog>' limit 2` 查询出的 previous_gtids 区间不连续，例如：
+2. DM 同步上游为 **MySQL 从库**，并且该从库通过 `show binlog events in '<newest-binlog>' limit 2` 查询出的 `previous_gtids` 区间不连续，例如：
 
 ```
 mysql> show binlog events in 'mysql-bin.000005' limit 2;
@@ -298,20 +302,22 @@ query-status test
 其中 mysql1 的 `syncerBinlogGtid` 不连续，已有数据丢失需要按下述方案之一处理：
 下述处理中，针对正常同步的 source（如上例 mysql2），重设增量任务时起始点需设置 `mysql-instances.meta` 为 `subTaskStatus.sync` 的 `syncerBinlog` 与 `syncerBinlogGtid`。
 
-1. 如果全量 metadata pos 到当前时间的上游数据库的 binlog 仍未被 purge：
-    a. 停止当前任务并删除所有 GTID 不连续的 source
-    b. 设置所有 source 的 `enable-relay` 为 `false`
-    c. 针对 GTID 不连续的 source（上例 mysql1），重启任务并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出 metadata 的 binlog name, pos, gtid 信息
-    d. 配置 `task.yaml` 中的 `syncers.safe-mode` 为 `true`
-    e. 待增量同步追上后，重启 task 并设置 `safe-mode` 为 false
-2. 如果上游数据库 binlog 已被 purge 但是本地 relay log 仍未被 purge：
-    a. 停止当前任务
-    b. 针对 GTID 不连续的 source（上例 mysql1），重启任务并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出 metadata 的 binlog name, pos, gtid 信息
-    c. 修改其中的 GTID 信息的 `1-y` 为 previous gtids 的前段值，例如上述例子需要改为 `6-y`
-    d. 配置 `task.yaml` 中的 `syncers.safe-mode` 为 `true`
-    e. 待增量同步追上后，重启 task 并设置 `safe-mode` 为 false
-    f. 重启 source 并关闭 gtid 或 relay
-3. 如果上述条件均不满足或任务同步数据量较小：
-    a. 清空下游数据库中数据
-    b. 重启 source 并关闭 gtid 或 relay
-    c. 重建任务并通过 `start-task task.yaml --remove-meta` 重新同步
+- 如果全量 metadata pos 到当前时间的上游数据库的 binlog 仍未被清理：
+    1. 停止当前任务并删除所有 GTID 不连续的 source
+    2. 设置所有 source 的 `enable-relay` 为 `false`
+    3. 针对 GTID 不连续的 source（上例 mysql1），重启任务并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出 metadata 的 binlog name, pos, gtid 信息
+    4. 配置 `task.yaml` 中的 `syncers.safe-mode` 为 `true`
+    5. 待增量同步追上后，重启任务并设置 `safe-mode` 为 `false`
+- 如果上游数据库 binlog 已被清理但是本地 relay log 仍未被清理：
+    1. 停止当前任务
+    2. 针对 GTID 不连续的 source（上例 mysql1），重启任务并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出 metadata 的 binlog name, pos, gtid 信息
+    3. 修改其中的 GTID 信息的 `1-y` 为 `previous_gtids` 的前段值，例如，上述例子需要改为 `6-y`
+    4. 配置 `task.yaml` 中的 `syncers.safe-mode` 为 `true`
+    5. 待增量同步追上后，重启任务并设置 `safe-mode` 为 `false`
+    6. 重启 source 并关闭 gtid 或 relay
+- 如果上述条件均不满足或任务同步数据量较小：
+    1. 清空下游数据库中数据
+    2. 重启 source 并关闭 gtid 或 relay
+    3. 重建任务并通过 `start-task task.yaml --remove-meta` 重新同步
+    
+上述处理方案中，针对正常同步的 source（如上例 mysql2），重设增量任务时起始点需设置 `mysql-instances.meta` 为 `subTaskStatus.sync` 的 `syncerBinlog` 与 `syncerBinlogGtid`。
