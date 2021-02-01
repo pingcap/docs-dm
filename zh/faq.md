@@ -204,7 +204,7 @@ if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to
 
 解决方案：出现该问题时只能清空下游数据库与任务信息后加上 `--remove-meta` 参数重建任务。这个问题需要通过一些配置提前避免：
 
-1. 在 DM 全量未完成时尽量设置较长的 mysql gc 时间，保证全量进行结束时 metadata 中的 pos 到当前时间的 binlog 都还没有被 purge 掉。如果数据量较大应该使用 dumpling + lightning 的方式加快全量速度。
+1. 在 DM 全量未完成时调大上游 MySQL 的 `expire_logs_days` 变量，保证全量进行结束时 metadata 中的 binlog 位置到当前时间的 binlog 都还没有被清理掉。如果数据量较大应该使用 dumpling + lightning 的方式加快全量速度。
 2. DM 任务开启 relay log 选项，保证 binlog purge 后 DM 仍有 relay log 读取。
 
 ## 使用 TiUP v1.3.0, v1.3.1 部署 DM 集群，DM 集群的 grafana 监控报错显示 `failed to fetch dashboard`
