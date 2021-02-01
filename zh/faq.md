@@ -300,7 +300,6 @@ query-status test
 ```
 
 其中 mysql1 的 `syncerBinlogGtid` 不连续，已有数据丢失需要按下述方案之一处理：
-下述处理中，针对正常同步的 source（如上例 mysql2），重设增量任务时起始点需设置 `mysql-instances.meta` 为 `subTaskStatus.sync` 的 `syncerBinlog` 与 `syncerBinlogGtid`。
 
 - 如果全量 metadata pos 到当前时间的上游数据库的 binlog 仍未被清理：
     1. 停止当前任务并删除所有 GTID 不连续的 source
