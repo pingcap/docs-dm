@@ -202,7 +202,7 @@ if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to
 
 该错误表明全量期间，dump 单元记录 metadata 中的 binlog 位置已经被上游清理。
 
-解决方案：出现该问题时只能清空下游数据库与任务信息后加上 `--remove-meta` 参数重建任务。这个问题需要通过一些配置提前避免：
+解决方案：出现该问题时只能清空下游数据库已同步数据，并在停止任务后加上 `--remove-meta` 参数重建任务。这个问题需要通过一些配置提前避免：
 
 1. 在 DM 全量未完成时尽量设置较长的 mysql gc 时间，保证全量进行结束时 metadata 中的 pos 到当前时间的 binlog 都还没有被 purge 掉。如果数据量较大应该使用 dumpling + lightning 的方式加快全量速度。
 2. DM 任务开启 relay log 选项，保证 binlog purge 后 DM 仍有 relay log 读取。
@@ -299,7 +299,7 @@ query-status test
 下述处理中，针对正常同步的 source（如上例 mysql2），重设增量任务时起始点需设置 `mysql-instances.meta` 为 `subTaskStatus.sync` 的 `syncerBinlog` 与 `syncerBinlogGtid`。
 
 1. 如果全量 metadata pos 到当前时间的上游数据库的 binlog 仍未被 purge：
-    a. 停止当前任务并删除所有相关 source
+    a. 停止当前任务并删除所有 GTID 不连续的 source
     b. 设置所有 source 的 `enable-relay` 为 `false`
     c. 针对 GTID 不连续的 source（上例 mysql1），重启任务并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出 metadata 的 binlog name, pos, gtid 信息
     d. 配置 `task.yaml` 中的 `syncers.safe-mode` 为 `true`
