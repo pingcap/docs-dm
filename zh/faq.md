@@ -218,7 +218,7 @@ if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to
     1. 备份 `deploy/grafana-$port/bin/public` 文件夹。
     2. 下载 [TiUP DM 离线镜像包](https://download.pingcap.org/tidb-dm-v2.0.1-linux-amd64.tar.gz)，并进行解压，将其中的 grafana-v4.0.3-**.tar.gz 文件解压后，用解压出的 public/ 文件夹替换前面所描述的文件夹，运行 `tiup dm restart $cluster_name -R grafana` 重启 grafana 服务监控。
 
-## 在 DM v2.0 中，同时开启 relay 与 gtid 同步 MySQL 时，query-status 发现 syncer checkpoint 中 GTID 不连续
+## 在 DM v2.0 中，同时开启 relay 与 gtid 同步 MySQL 时，运行 `query-status` 发现 syncer checkpoint 中 GTID 不连续
 
 该问题为 DM 已知 bug，在完全满足以下两个条件时将会触发，DM 将在 v2.0.2 修复该问题：
 
@@ -301,15 +301,15 @@ query-status test
 
 其中 mysql1 的 `syncerBinlogGtid` 不连续，已有数据丢失需要按下述方案之一处理：
 
-- 如果全量 metadata pos 到当前时间的上游数据库的 binlog 仍未被清理：
+- 如果全量导出任务 metadata 中的 position 到当前时间的上游数据库的 binlog 仍未被清理：
     1. 停止当前任务并删除所有 GTID 不连续的 source
     2. 设置所有 source 的 `enable-relay` 为 `false`
-    3. 针对 GTID 不连续的 source（上例 mysql1），重启任务并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出 metadata 的 binlog name, pos, gtid 信息
+    3. 针对 GTID 不连续的 source（上例 mysql1），重启任务并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出任务 metadata 的 binlog name，position 和 gtid 信息
     4. 配置 `task.yaml` 中的 `syncers.safe-mode` 为 `true`
     5. 待增量同步追上后，重启任务并设置 `safe-mode` 为 `false`
 - 如果上游数据库 binlog 已被清理但是本地 relay log 仍未被清理：
     1. 停止当前任务
-    2. 针对 GTID 不连续的 source（上例 mysql1），重启任务并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出 metadata 的 binlog name, pos, gtid 信息
+    2. 针对 GTID 不连续的 source（上例 mysql1），重启任务并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出任务 metadata 的 binlog name，position 和 gtid 信息
     3. 修改其中的 GTID 信息的 `1-y` 为 `previous_gtids` 的前段值，例如，上述例子需要改为 `6-y`
     4. 配置 `task.yaml` 中的 `syncers.safe-mode` 为 `true`
     5. 待增量同步追上后，重启任务并设置 `safe-mode` 为 `false`
