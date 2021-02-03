@@ -37,6 +37,10 @@ from:
 #   remain-space: 15
 ```
 
+> **注意：**
+>
+> 在 DM v2.0.1 版本中，请勿同时配置 `enable-gtid` 与 `enable-relay` 为 `true`，否则可能引发增量数据丢失问题。
+
 ## 配置项说明
 
 ### Global 配置
