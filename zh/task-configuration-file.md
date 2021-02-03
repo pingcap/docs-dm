@@ -91,4 +91,4 @@ mysql-instances:
 
 3. 通过 `start-task` 命令启动任务：`start-task <config-file>`
 
-4. 通过 `get-config` 命令检查配置是否生效：`get-config task <task-name>`
+4. dm v2.0.1 及其以后版本，可通过 `get-config` 命令检查配置是否生效：`get-config task <task-name>`
