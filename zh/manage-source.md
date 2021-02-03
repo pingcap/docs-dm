@@ -99,7 +99,7 @@ operate-source create ./source.yaml
 {{< copyable "" >}}
 
 ```bash
-get-config source  mysql-replica-01
+get-config source mysql-replica-01
 ```
 
 ```
