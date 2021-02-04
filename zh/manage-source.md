@@ -94,6 +94,7 @@ operate-source create ./source.yaml
     ]
 }
 ```
+
 ### 查看数据源配置
 
 如果直到 source-id，可以通过 `dmctl --master-addr <master-addr> get-config source <source-name>` 命令直接查看源数据库配置

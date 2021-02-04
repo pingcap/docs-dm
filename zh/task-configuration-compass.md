@@ -58,6 +58,7 @@ target-database:       # 目标 TiDB 配置
 配置从数据源迁移表的黑白名单，则需要添加两个定义，详细配置规则参考 [Block & Allow Lists](key-features.md#block--allow-table-lists)：
 
 1. 定义全局的黑白名单规则
+
     ```yaml
     block-allow-list:
       bw-rule-1:                          # 规则名称，dbs 和 tables
@@ -73,7 +74,9 @@ target-database:       # 目标 TiDB 配置
         - db-name: "user"
           tbl-name: "log"
     ```
+
 2. 在数据源配置中引用黑白名规则，过滤该数据源需要迁移的表
+
     ```yaml
     mysql-instances:
         - source-id: "mysql-replica-01"  # 从 `source-id = mysql-replica-01 的数据源迁移数据
@@ -89,6 +92,7 @@ target-database:       # 目标 TiDB 配置
 配置过滤特定操作，则需要添加两个定义，详细配置规则参考 [Binlog Event Filter](key-features.md#binlog-event-filter)：
 
 1. 定义全局的数据源操作过滤规则
+
     ```yaml
     filters:                                        # 定义过滤数据源特定操作的规则，可以定义多个规则
       filter-rule-1:                                # 规则名称
@@ -101,7 +105,9 @@ target-database:       # 目标 TiDB 配置
         events: ["all dml"]
         action: Do
     ```
+
 2. 在数据源配置中引用数据源操作过滤规则，过滤该数据源的指定库或表的指定操作
+
     ```yaml
     mysql-instances:
         - source-id: "mysql-replica-01"    # 从 `source-id = mysql-replica-01 的数据源迁移数据
@@ -119,6 +125,7 @@ target-database:       # 目标 TiDB 配置
 配置数据源表迁移到目标 TiDB 表的路由规则，则需要添加两个定义，详细配置规则参考 [Table Routing](key-features.md#table-routing)：
 
 1. 定义全局的路由规则
+
     ```yaml
     routes:                           # 定义数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则
       route-rule-1:                   # 规则名称
@@ -130,7 +137,9 @@ target-database:       # 目标 TiDB 配置
         schema-pattern: "test_*"
         target-schema: "test"
     ```
+
 2. 在数据源配置中引用黑白名规则，过滤该数据源需要迁移的表
+
     ```yaml
     mysql-instances:
         - source-id: "mysql-replica-01"                     # 从 `source-id = mysql-replica-01 的数据源迁移数据
