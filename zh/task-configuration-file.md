@@ -89,3 +89,5 @@ mysql-instances:
 2. 通过 `stop-task` 命令停止任务：`stop-task <task-name | task-file>`
 
 3. 通过 `start-task` 命令启动任务：`start-task <config-file>`
+
+4. 在 DM v2.0.1 及其以后版本中，可通过 `get-config` 命令检查配置是否生效：`get-config task <task-name>`
