@@ -46,7 +46,7 @@ Global Flags:
   -s, --source strings   MySQL Source ID
 ```
 
-## 命令用法示例
+### 命令用法示例
 
 {{< copyable "" >}}
 
@@ -56,7 +56,7 @@ operate-source create ./source.yaml
 
 其中 `source.toml` 的配置参考[上游数据库配置文件介绍](source-configuration-file.md)。
 
-## 参数解释
+### 参数解释
 
 + `create`：创建一个或多个上游的数据库源。创建多个数据源失败时，会尝试回滚到执行命令之前的状态
 
@@ -72,7 +72,7 @@ operate-source create ./source.yaml
     
 + `--print-sample-config`：打印示例配置文件。该参数会忽视其余参数
 
-## 返回结果示例
+### 创建数据源
 
 {{< copyable "" >}}
 
@@ -85,6 +85,59 @@ operate-source create ./source.yaml
     "result": true,
     "msg": "",
     "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "dm-worker-1"
+        }
+    ]
+}
+```
+### 查看数据源配置
+
+如果直到 source-id，可以通过 `dmctl --master-addr <master-addr> get-config source <source-name>` 命令直接查看源数据库配置
+
+{{< copyable "" >}}
+
+```bash
+get-config source mysql-replica-01
+```
+
+```
+{
+  "result": true,
+  "msg": "",
+  "cfg": "enable-gtid: false
+    flavor: mysql
+    source-id: mysql-replica-01
+    from:
+      host: 127.0.0.1
+      port: 8407
+      user: root
+      password: '******'
+}
+```
+
+如果不知道 source-id，可以先通过 `dmctl --master-addr <master-addr> operate-source show` 查看源数据库列表
+
+{{< copyable "" >}}
+
+```bash
+operate-source show
+```
+
+```
+{
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "source is added but there is no free worker to bound",
+            "source": "mysql-replica-02",
+            "worker": ""
+        },
         {
             "result": true,
             "msg": "",

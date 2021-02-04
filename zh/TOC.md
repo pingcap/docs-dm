@@ -21,6 +21,7 @@
 + 快速上手
   - [部署集群](quick-start-with-dm.md)
   - [使用 DM 迁移数据](migrate-data-using-dm.md)
+  - [数据迁移任务配置向导](task-configuration-compass.md)
 + 使用场景
   - [简单数据迁移场景](usage-scenario-simple-migration.md)
   - [分库分表合并场景](usage-scenario-shard-merge.md)
@@ -69,8 +70,7 @@
     - [DM-master 配置](dm-master-configuration-file.md)
     - [DM-worker 配置](dm-worker-configuration-file.md)
     - [上游数据库配置](source-configuration-file.md)
-    - [任务配置](task-configuration-file.md)
-    - [完整任务配置](task-configuration-file-full.md)
+    - [数据迁移任务配置向导](task-configuration-compass.md)
   + 安全
     - [为 DM 的连接开启加密传输](enable-tls.md)
     - [生成自签名证书](generate-self-signed-certificates.md)

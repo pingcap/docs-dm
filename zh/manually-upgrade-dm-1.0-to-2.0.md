@@ -101,7 +101,7 @@ from:
 
 ### 数据迁移任务配置文件
 
-对于[数据迁移任务配置文件](task-configuration-file.md)，v2.0.x 基本与 v1.0.x 保持兼容，可直接复制 v1.0.x 的配置。
+对于[数据迁移任务配置向导](task-configuration-compass.md)，v2.0.x 基本与 v1.0.x 保持兼容，可直接复制 v1.0.x 的配置。
 
 ## 第 2 步：部署 v2.0.x 集群
 

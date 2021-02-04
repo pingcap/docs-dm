@@ -152,7 +152,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
 
 ## 迁移任务配置
 
-以下是完整的迁移任务配置，详见[配置介绍](task-configuration-file.md)。
+以下是完整的迁移任务配置，更多详情请参阅 [数据迁移任务配置向导](task-configuration-compass.md)。
 
 {{< copyable "" >}}
 
