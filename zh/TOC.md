@@ -16,7 +16,7 @@
       - [概述](feature-shard-merge.md)
       - [悲观模式](feature-shard-merge-pessimistic.md)
       - [乐观模式](feature-shard-merge-optimistic.md)
-    + - [Online-ddl-scheme](feature-online-ddl-scheme.md)
+      - [Online-ddl-scheme](feature-online-ddl-scheme.md)
   + [性能数据](benchmark-v2.0-ga.md)
 + 快速上手
   - [部署集群](quick-start-with-dm.md)
