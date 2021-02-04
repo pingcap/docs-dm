@@ -7,7 +7,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/task-configuration-file-full/','/zh/
 
 本文档主要介绍 Data Migration (DM) 的任务完整的配置文件，包含[全局配置](#全局配置) 和[实例配置](#实例配置) 两部分。
 
-关于各配置项的功能和配置，请参阅[数据迁移功能](overview.md#迁移功能介绍)。
+关于各配置项的功能和配置，请参阅[数据迁移功能](overview.md#功能特性介绍)。
 
 ## 关键概念
 
