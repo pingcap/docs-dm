@@ -37,7 +37,7 @@ DM 支持对源数据的分库分表进行合并迁移，但需要满足一些�
 
 ### 对第三方 Online Schema Change 工具变更过程的同步优化
 
-在 MySQL 生态中，gh-ost 与 pt-osc 等工具较广泛地被使用，DM 对其变更过程进行了特殊的优化，以避免对不必要的中间数据进行迁移。详细信息可参考 [online-ddl](key-features.md#online-DDL-工具支持)。
+在 MySQL 生态中，gh-ost 与 pt-osc 等工具较广泛地被使用，DM 对其变更过程进行了特殊的优化，以避免对不必要的中间数据进行迁移。详细信息可参考 [online-ddl](key-features.md#online-ddl-工具支持)。
 
 ## 使用限制
 
