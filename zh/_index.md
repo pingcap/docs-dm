@@ -6,7 +6,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/']
 
 # TiDB Data Migration 用户文档
 
-[TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据迁移任务管理工具，支持从 MySQL、Aurora、MariaDB 到 TiDB 的数据迁移。使用 DM 工具有利于数据迁移的降低运维成本。
+[TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据迁移任务管理工具，支持从 MySQL、Aurora、MariaDB 到 TiDB 的数据迁移。使用 DM 工具有利于降低数据迁移的运维成本。
 
 DM 2.0 相比于 1.0 版本变动比较大，支持了以下特性：
 
