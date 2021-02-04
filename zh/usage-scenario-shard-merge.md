@@ -8,7 +8,6 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 本文介绍如何在分库分表合并场景中使用 Data Migration (DM)。 下面介绍了一个简单的场景，三个上游 MySQL 实例的分库和分表数据需要迁移至下游 TiDB 集群。
 更详尽了建议建议阅读 [分表合并数据迁移最佳实践](shard-merge-best-practices.md)。
 
-
 ## 上游实例
 
 假设上游库结构如下：
