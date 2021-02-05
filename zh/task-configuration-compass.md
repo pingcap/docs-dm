@@ -175,7 +175,7 @@ shard-mode: "pessimistic"       # 如果为分库分表合并任务则需要配�
 ## ********* 任务信息配置 *********
 name: test                      # 任务名称，需要全局唯一
 shard-mode: "pessimistic"       # 如果为分库分表合并任务则需要配置该项。默认使用悲观协调模式 "pessimistic"，在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
-task-mode: all                  # 任务模式，可设为 "full" - "只进行全量数据迁移"、"incremental" - "Binlog 实时同步"、"all" - "全龄 + Binlog 迁移"
+task-mode: all                  # 任务模式，可设为 "full" - "只进行全量数据迁移"、"incremental" - "Binlog 实时同步"、"all" - "全量 + Binlog 迁移"
 
 ## ******** 数据源配置 **********
 mysql-instances:
