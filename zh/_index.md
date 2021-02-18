@@ -16,6 +16,11 @@ DM 2.0 相比于 1.0 版本变动比较大，支持了以下特性：
 - 与上下游数据库及 DM 各组件间连接的 [TLS 支持](enable-tls.md)。
 - 实验性地支持从 MySQL 8.0 迁移数据。
 
+> **注意：**
+>
+> DM 以 SQL 语句的形式将数据迁移到 TiDB 中，因此各个版本的 DM 都分别兼容**所有版本**的 TiDB。在生产环境中，推荐使用 DM 的最新已发布版本。已发布版本的下载方式参见 [DM 下载链接](https://pingcap.com/docs-cn/stable/reference/tools/download/#tidb-dm-data-migration)。
+> 目前 DM 工具没有图形化管理界面，对大量数据迁移任务管理的支持有限，如果您需要操作大量数据迁移任务,请谨慎选择使用 DM。
+
 <NavColumns>
 <NavColumn>
 <ColumnTitle>关于 TiDB Data Migration</ColumnTitle>
