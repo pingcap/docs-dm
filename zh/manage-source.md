@@ -93,3 +93,23 @@ operate-source create ./source.yaml
     ]
 }
 ```
+
+## 查看 DM-master 中生效参数
+
+{{< copyable "" >}}
+
+```bash
+get-config source mysql-replica-01
+```
+
+```
+{
+    "result": true,
+    "msg": "",
+    "cfg": "enable-gtid: false\nauto-fix-gtid: false\nrelay-dir: \"\"\nmeta-dir: \"\"\nflavor: mysql\ncharset: \"\"\nenable-relay: false\nrelay-binlog-name: \"\"\nrelay-binlog-gtid: \"\"\nsource-id: mysql-replica-01\nfrom:\n  host: 172.16.4.222\n  port: 3306\n  user: dm_user\n  password: '******'\n  max-allowed-packet: null\n  session: {}\n  security: null\npurge:\n  interval: 3600\n  expires: 0\n  remain-space: 15\nchecker:\n  check-enable: true\n  backoff-rollback: 5m0s\n  backoff-max: 5m0s\n  check-interval: 5s\n  backoff-min: 1s\n  backoff-jitter: true\n  backoff-factor: 2\nserver-id: 429595182\ntracer: {}\n"
+}
+```
+
+> **注意：**
+>
+> `get-config` 命令仅在 DM v2.0.1 及其以后版本支持。
