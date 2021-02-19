@@ -95,7 +95,8 @@ operate-source create ./source.yaml
 }
 ```
 
-## 检查在 dm-master 中生效参数
+## 查看 DM-master 中生效参数
+
 {{< copyable "" >}}
 
 ```bash
@@ -111,4 +112,5 @@ get-config source mysql-replica-01
 ```
 
 > **注意：**
-> get-config 命令，在 dm v2.0.1 及其以后版本支持。
+>
+> `get-config` 命令仅在 DM v2.0.1 及其以后版本支持。
