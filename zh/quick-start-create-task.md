@@ -111,12 +111,12 @@ MySQL1 的配置文件：
 
 ```yaml
 # MySQL1 Configuration.
- 
+
 source-id: "mysql-replica-01"
 
 # 是否开启 GTID
 enable-gtid: true
- 
+
 from:
   host: "127.0.0.1"
   user: "root"
