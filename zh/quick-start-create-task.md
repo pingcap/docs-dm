@@ -151,7 +151,6 @@ from:
 name: test
 task-mode: all
 shard-mode: "pessimistic"
-ignore-checking-items: ["auto_increment_ID"] ＃添加忽略“主键检查”选项
 
 target-database:
   host: "127.0.0.1"
