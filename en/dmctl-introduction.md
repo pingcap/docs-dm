@@ -41,18 +41,18 @@ Usage:
 Available Commands:
   check-task      Checks the configuration file of the task.
   get-config      Gets the configuration.
-  handle-error    skip/replace/revert the current error event or a specific binlog position (binlog-pos) event.
-  help            Help about any command.
+  handle-error    `skip`/`replace`/`revert` the current error event or a specific binlog position (binlog-pos) event.
+  help            Help about any command
   list-member     Lists member information.
   offline-member  Offlines member which has been closed.
-  operate-leader  evict/cancel-evict the leader.
-  operate-schema  get/set/remove the schema for an upstream table.
-  operate-source  create/update/stop/show upstream MySQL/MariaDB source.
-  pause-relay     Pauses DM-worker's relay unit.
+  operate-leader  `evict`/`cancel-evict` the leader.
+  operate-schema  `get`/`set`/`remove` the schema for an upstream table.
+  operate-source  `create`/`update`/`stop`/`show` upstream MySQL/MariaDB source.
+  pause-relay     Pauses DM-worker's relay unit
   pause-task      Pauses a specified running task.
-  purge-relay     Purges relay log files of the DM-worker according to the specified filename.
+  purge-relay     Purges relay log files of the DM-worker according to the specified filename
   query-status    Queries task status.
-  resume-relay    Resumes DM-worker's relay unit.
+  resume-relay    Resumes DM-worker's relay unit
   resume-task     Resumes a specified paused task.
   show-ddl-locks  Shows un-resolved DDL locks.
   start-task      Starts a task as defined in the configuration file.
