@@ -50,7 +50,7 @@ Available Commands:
   operate-source  `create`/`update`/`stop`/`show` upstream MySQL/MariaDB source.
   pause-relay     Pauses DM-worker's relay unit.
   pause-task      Pauses a specified running task.
-  purge-relay     Purges relay log files of the DM-worker according to the specified filename
+  purge-relay     Purges relay log files of the DM-worker according to the specified filename.
   query-status    Queries task status.
   resume-relay    Resumes DM-worker's relay unit.
   resume-task     Resumes a specified paused task.
