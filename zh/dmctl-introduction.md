@@ -52,7 +52,7 @@ Available Commands:
   pause-task      Pauses a specified running task.
   purge-relay     Purges relay log files of the DM-worker according to the specified filename
   query-status    Queries task status.
-  resume-relay    Resumes DM-worker's relay unit
+  resume-relay    Resumes DM-worker's relay unit.
   resume-task     Resumes a specified paused task.
   show-ddl-locks  Shows un-resolved DDL locks.
   start-task      Starts a task as defined in the configuration file.
