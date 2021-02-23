@@ -6,8 +6,8 @@
 ## 文档目录
 
 + 关于 DM
-  + [什么是 DM?](overview.md)
-  + 核心功能
+  + [什么是 DM？](overview.md)
+  + 功能
     - [Table routing](key-features.md#table-routing)
     - [Block & Allow Lists](key-features.md#block--allow-table-lists)
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
@@ -16,12 +16,9 @@
       - [概述](feature-shard-merge.md)
       - [悲观模式](feature-shard-merge-pessimistic.md)
       - [乐观模式](feature-shard-merge-optimistic.md)
-      - [Online-ddl-scheme](feature-online-ddl-scheme.md)
+    - [在源数据库使用 GH-ost/PT-osc 的数据同步](feature-online-ddl-scheme.md)
   + [性能数据](benchmark-v2.0-ga.md)
-+ 快速上手
-  - [部署集群](quick-start-with-dm.md)
-  - [使用 DM 迁移数据](migrate-data-using-dm.md)
-  - [数据迁移任务配置向导](task-configuration-compass.md)
+- [快速上手](migrate-data-using-dm.md)
 + 使用场景
   - [简单数据迁移场景](usage-scenario-simple-migration.md)
   - [分库分表合并场景](usage-scenario-shard-merge.md)
@@ -42,6 +39,7 @@
     - [1.0.x 版本间升级](upgrade-dm-1.0.md)
   - [使用 TiUP 运维集群](maintain-dm-using-tiup.md)
   + 任务管理
+    - [数据迁移任务配置向导](task-configuration-compass.md)
     - [dmctl 简介](dmctl-introduction.md)
     - [管理上游数据源](manage-source.md)
     - [任务前置检查](precheck.md)

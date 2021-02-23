@@ -26,7 +26,7 @@ DM 2.0 相比于 1.0 版本变动比较大，支持了以下特性：
 <NavColumn>
 <ColumnTitle>关于 TiDB Data Migration</ColumnTitle>
 
-- [什么是 DM](overview.md)
+- [什么是 DM？](overview.md)
 - [性能数据](benchmark-v2.0-ga.md)
 
 </NavColumn>

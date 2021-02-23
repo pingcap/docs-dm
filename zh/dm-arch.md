@@ -2,13 +2,13 @@
 title: Data Migration 设计简介
 ---
 
-# Data Migration 设计简介
-
-## DM 架构
+# Data Migration 架构
 
 DM 主要包括三个组件：DM-master，DM-worker 和 dmctl。
 
 ![Data Migration architecture](/media/dm-architecture-2.0.png)
+
+## 架构组件
 
 ### DM-master
 
@@ -39,6 +39,8 @@ dmctl 是用来控制 DM 集群的命令行工具。
 - 查看数据迁移任务状态
 - 处理数据迁移任务错误
 - 校验数据迁移任务配置的正确性
+
+## 架构特性
 
 ### 高可用
 
