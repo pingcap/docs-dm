@@ -72,7 +72,7 @@ operate-source create ./source.yaml
     
 + `--print-sample-config`：打印示例配置文件。该参数会忽视其余参数
 
-### 创建数据源
+### 加载数据源配置
 
 {{< copyable "" >}}
 
