@@ -7,11 +7,11 @@
 
 + 关于 DM
   + [什么是 DM？](overview.md)
-  + 功能
+  + 基本功能
     - [Table routing](key-features.md#table-routing)
     - [Block & Allow Lists](key-features.md#block--allow-table-lists)
     - [Binlog Event Filter](key-features.md#binlog-event-filter)
-  + 高级特性
+  + 高级功能
     + 分库分表合并迁移
       - [概述](feature-shard-merge.md)
       - [悲观模式](feature-shard-merge-pessimistic.md)
@@ -19,29 +19,24 @@
     - [在源数据库使用 GH-ost/PT-osc 的数据同步](feature-online-ddl-scheme.md)
   + [性能数据](benchmark-v2.0-ga.md)
 - [快速上手](migrate-data-using-dm.md)
-+ 使用场景
-  - [简单数据迁移场景](usage-scenario-simple-migration.md)
-  - [分库分表合并场景](usage-scenario-shard-merge.md)
-  - [从 Aurora 迁移数据到 TiDB](migrate-from-mysql-aurora.md)
-  - [TiDB 表结构存在更多列的迁移场景](usage-scenario-downstream-more-columns.md)
-  - [变更同步的 MySQL 实例](usage-scenario-master-slave-switch.md)
 + 部署使用
   - [软硬件要求](hardware-and-software-requirements.md)
   + 部署 DM 集群
     - [使用 TiUP](deploy-a-dm-cluster-using-tiup.md)
     - [使用 TiUP 离线镜像](deploy-a-dm-cluster-using-tiup-offline.md)
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
-  + [监控与告警设置](monitor-a-dm-cluster.md)
-  + [DM 性能测试](performance-test.md)
+  + [使用 DM 迁移数据](migrate-data-using-dm.md)
+  + [设置监控告警](monitor-a-dm-cluster.md)
+  + [测试 DM 性能](performance-test.md)
 + 运维操作
   + 版本升级
     - [1.0.x 到 2.0.x 手动升级](manually-upgrade-dm-1.0-to-2.0.md)
     - [1.0.x 版本间升级](upgrade-dm-1.0.md)
   - [使用 TiUP 运维集群](maintain-dm-using-tiup.md)
+  - [管理上游数据源](manage-source.md)
   + 任务管理
-    - [数据迁移任务配置向导](task-configuration-compass.md)
-    - [dmctl 简介](dmctl-introduction.md)
-    - [管理上游数据源](manage-source.md)
+    - [任务配置](task-configuration-compass.md)
+    - [任务管理入口 dmctl 使用](dmctl-introduction.md)
     - [任务前置检查](precheck.md)
     - [创建任务](create-task.md)
     - [查询状态](query-status.md)
@@ -53,6 +48,12 @@
   - [管理迁移中表的表结构](manage-schema.md)
   - [告警处理](handle-alerts.md)
   - [日常巡检](daily-check.md)
++ 使用场景
+  - [简单数据迁移场景](usage-scenario-simple-migration.md)
+  - [分库分表合并场景](usage-scenario-shard-merge.md)
+  - [从 Aurora 迁移数据到 TiDB](migrate-from-mysql-aurora.md)
+  - [TiDB 表结构存在更多列的迁移场景](usage-scenario-downstream-more-columns.md)
+  - [变更同步的 MySQL 实例](usage-scenario-master-slave-switch.md)
 + 故障处理
   - [故障及处理方法](error-handling.md)
   - [性能问题及处理方法](handle-performance-issues.md)

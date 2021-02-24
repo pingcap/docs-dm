@@ -22,7 +22,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/manage-source/']
 MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
 
-## 加载数据源配置
+## 加载数据源
 
 `operate-source` 命令用于将数据源配置加载到 DM 集群中。
 
@@ -72,7 +72,7 @@ operate-source create ./source.yaml
     
 + `--print-sample-config`：打印示例配置文件。该参数会忽视其余参数
 
-### 加载数据源配置
+### 创建数据源配置示例
 
 {{< copyable "" >}}
 
@@ -95,7 +95,7 @@ operate-source create ./source.yaml
 }
 ```
 
-### 查看数据源配置
+### 查看数据源配置示例
 
 > **注意：**
 >
@@ -124,7 +124,7 @@ get-config source mysql-replica-01
 }
 ```
 
-如果不知道 source-id，可以先通过 `dmctl --master-addr <master-addr> operate-source show` 查看源数据库列表
+如果不知道 source-id，可以先通过 `dmctl --master-addr <master-addr> operate-source show` 查看源数据库列表。
 
 {{< copyable "" >}}
 

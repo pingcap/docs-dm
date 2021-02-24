@@ -5,35 +5,35 @@ aliases: ['/docs-cn/tidb-data-migration/dev/overview/','/docs-cn/tools/dm/overvi
 
 # Data Migration 简介
 
-[TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据迁移任务管理工具，支持从 MySQL 或 MySQL 协议兼容的数据库（MariaDB、Aurora MySQL）到 TiDB 的数据迁移。使用 DM 工具有利于降低数据迁移的运维成本。
+[TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据迁移任务管理工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的数据迁移。DM 工具旨在降低数据迁移的运维成本。
 
-## 核心功能模块
+## 基本功能
 
-下面简单介绍 DM 数据迁移功能的核心功能模块。
+本节介绍 DM 工具的核心功能模块。
 
 ![DM Core Features](/media/dm-core-features.png)
 
 ### Block & allow lists
 
-[Block & Allow Lists](key-features.md#block--allow-table-lists) 其过滤规则类似于 MySQL `replication-rules-db`/`replication-rules-table`，被用来过滤掉或指定只迁移某些数据库或某些表的所有操作。
+[Block & Allow Lists](key-features.md#block--allow-table-lists) 的过滤规则类似于 MySQL `replication-rules-db`/`replication-rules-table`，用于过滤或指定只迁移某些数据库或某些表的所有操作。
 
 ### Binlog event filter
 
-[Binlog Event Filter](key-features.md#binlog-event-filter) 可以被用来过滤掉源数据库的特定表的特定类型的操作，比如过滤掉表 `test`.`sbtest` 的 `INSERT` 操作和库 `test` 下所有表的 `TRUNCATE TABLE` 操作。
+[Binlog Event Filter](key-features.md#binlog-event-filter) 用于过滤源数据库中特定表的特定类型操作，比如过滤掉表 `test`.`sbtest` 的 `INSERT` 操作或者过滤掉库 `test` 下所有表的 `TRUNCATE TABLE` 操作。
 
 ### Table routing
 
-[Table Routing](key-features.md#table-routing) 是可以将源数据库的表迁移到下游指定表的路由功能，比如源数据表 `test`.`sbtest1` 的数据同步到 TiDB 的表 `test`.`sbtest2`。它也是分库分表合并迁移所需的一个核心功能。
+[Table Routing](key-features.md#table-routing) 是将源数据库的表迁移到下游指定表的路由功能，比如将源数据表 `test`.`sbtest1` 的数据同步到 TiDB 的表 `test`.`sbtest2`。它也是分库分表合并迁移所需的一个核心功能。
 
-## 高级特性
+## 核心功能
 
 ### 分库分表合并迁移
 
-DM 支持对源数据的分库分表进行合并迁移，但需要满足一些使用限制，详细信息请参考[悲观模式分库分表合并迁移使用限制](feature-shard-merge-pessimistic.md#使用限制)和[乐观模式分库分表合并迁移使用限制](feature-shard-merge-optimistic.md#使用限制)。
+DM 支持对源数据的分库分表进行合并迁移，但有一些使用限制，详细信息请参考[悲观模式分库分表合并迁移使用限制](feature-shard-merge-pessimistic.md#使用限制)和[乐观模式分库分表合并迁移使用限制](feature-shard-merge-optimistic.md#使用限制)。
 
 ### 对第三方 Online Schema Change 工具变更过程的同步优化
 
-在 MySQL 生态中，gh-ost 与 pt-osc 等工具较广泛地被使用，DM 对其变更过程进行了特殊的优化，以避免对不必要的中间数据进行迁移。详细信息可参考 [online-ddl](key-features.md#online-ddl-工具支持)。
+在 MySQL 生态中，gh-ost 与 pt-osc 等工具被广泛使用，DM 对其变更过程进行了特殊的优化，以避免对不必要的中间数据进行迁移。详细信息可参考 [online-ddl](key-features.md#online-ddl-工具支持)。
 
 ## 使用限制
 
@@ -47,8 +47,6 @@ DM 支持对源数据的分库分表进行合并迁移，但需要满足一些�
     > **注意：**
     >
     > 如果上游 MySQL/MariaDB server 间构成主从复制结构，则需要 5.7.1 < MySQL 版本 < 8.0 或者 MariaDB 版本大于等于 10.1.3。
-
-    在使用 dmctl 启动任务时，DM 会自动对任务上下游数据库的配置、权限等进行[前置检查](precheck.md)。
 
 + DDL 语法兼容性
 
