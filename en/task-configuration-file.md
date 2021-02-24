@@ -107,3 +107,11 @@ To illustrate how to modify the task configuration, the following is an example 
     ```bash
     start-task <config-file>
     ```
+
+4. In DM v2.0.1 and later versions, you can check whether the configuration takes effect by executing the `get-config` command:
+
+    {{< copyable "" >}}
+
+    ```bash
+    get-config task <task-name>
+    ```
