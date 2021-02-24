@@ -25,7 +25,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/overview/','/docs-cn/tools/dm/overvi
 
 [Table Routing](key-features.md#table-routing) 是将源数据库的表迁移到下游指定表的路由功能，比如将源数据表 `test`.`sbtest1` 的数据同步到 TiDB 的表 `test`.`sbtest2`。它也是分库分表合并迁移所需的一个核心功能。
 
-## 核心功能
+## 高级功能
 
 ### 分库分表合并迁移
 

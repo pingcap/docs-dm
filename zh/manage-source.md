@@ -22,7 +22,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/manage-source/']
 MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
 
-## 加载数据源
+## 加载数据源配置
 
 `operate-source` 命令用于将数据源配置加载到 DM 集群中。
 

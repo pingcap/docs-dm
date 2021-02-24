@@ -10,7 +10,7 @@ title: DM 数据迁移任务配置向导
 
 配置需要迁移的数据源之前，首先应该确认已经在 DM 创建相应数据源
 
-- 查看数据源可以参考 [查看数据源配置](manage-source.md#查看数据源配置)
+- 查看数据源可以参考 [查看数据源配置](manage-source.md#查看数据源配置示例)
 - 创建数据源可以参考 [在 DM 创建数据源](migrate-data-using-dm.md#第-3-步创建数据源)
 - 数据源配置可以参考 [数据源配置文件介绍](source-configuration-file.md)
 
