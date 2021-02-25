@@ -101,7 +101,7 @@ operate-source create ./source.yaml
 >
 > `get-config` 命令仅在 DM v2.0.1 及其以后版本支持。
 
-如果知道 source-id，可以通过 `dmctl --master-addr <master-addr> get-config source <source-name>` 命令直接查看源数据库配置
+如果知道 source-id，可以通过 `dmctl --master-addr <master-addr> get-config source <source-name>` 命令直接查看源数据库配置。
 
 {{< copyable "" >}}
 

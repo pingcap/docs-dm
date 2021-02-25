@@ -6,7 +6,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/quick-start-with-dm/','/docs-cn/tidb
 
 # TiDB Data Migration 快速上手指南
 
-本文将介绍如何快速上手体验数据迁移工具 [TiDB Data Migration](https://github.com/pingcap/dm) (DM)。体验方式为使用 binary 包部署 DM。
+本文介绍如何快速体验使用数据迁移工具 [TiDB Data Migration](https://github.com/pingcap/dm) (DM) 从 MySQL 迁移数据到 TiDB。
 
 ## 使用样例
 
@@ -19,7 +19,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/quick-start-with-dm/','/docs-cn/tidb
 | MySQL-3306 | 127.0.0.1 | 3306 |
 | TiDB       | 127.0.0.1 | 4000 |
 
-## 数据 DM
+## 使用 binary 包部署 DM
 
 ### 准备 DM binary 包
 
@@ -55,43 +55,22 @@ DM_PATH=`pwd` && export PATH=$PATH:$DM_PATH
 
 ### 部署 DM-master
 
-在目录下创建 DM-master 的配置文件 `dm-master.toml`，配置文件如下：
-
-```toml
-# DM-master1 Configuration.
-name = "master1"
-master-addr = ":8261"
-advertise-addr = "127.0.0.1:8261"
-peer-urls = "127.0.0.1:8291"
-initial-cluster = "master1=http://127.0.0.1:8291"
-```
-
 执行如下命令启动 DM-master：
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-nohup bin/dm-master --config=dm-master.toml --log-file=dm-master1.log >> dm-master1.log 2>&1 &
+nohup bin/dm-master --master-addr='127.0.0.1:8261' --log-file=/tmp/dm-master.log  >> /tmp/dm-master.log 2>&1 &
 ```
 
 ### 部署 DM-worker
-
-在目录下创建 DM-worker 的配置文件 `dm-worker.toml`，配置文件如下：
-
-```toml
-# DM-worker1 Configuration
-name = "worker1"
-worker-addr="0.0.0.0:8262"
-advertise-addr="127.0.0.1:8262"
-join = "127.0.0.1:8261"
-```
 
 执行如下命令启动 DM-worker：
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-nohup bin/dm-worker --config=dm-worker.toml --log-file=dm-worker1.log >> dm-worker1.log 2>&1 &
+nohup bin/dm-worker --worker-addr='127.0.0.1:8262' --log-file=/tmp/dm-worker.log --join='127.0.0.1:8261' >> /tmp/dm-worker.log 2>&1 &
 ```
 
 ### 检查 DM 集群部署是否正常
@@ -204,9 +183,6 @@ MySQL1 的配置文件：
 # MySQL Configuration.
 
 source-id: "mysql-replica-01"
-
-# 是否开启 GTID
-enable-gtid: true
 
 from:
   host: "127.0.0.1"
