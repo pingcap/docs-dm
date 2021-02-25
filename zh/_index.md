@@ -65,7 +65,7 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 
 - [简单数据迁移场景](usage-scenario-simple-migration.md)
 - [分库分表合并场景](usage-scenario-shard-merge.md)
-- [从 Aurora 的数据库迁移到 TiDB](migrate-from-mysql-aurora.md)
+- [从 Aurora 迁移数据到 TiDB](migrate-from-mysql-aurora.md)
 - [变更同步的 MySQL 实例](usage-scenario-master-slave-switch.md)
 
 </NavColumn>
