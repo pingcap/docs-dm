@@ -157,7 +157,7 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
     >
     > 需要新建一个拓扑文件，文件中只写入扩容节点的描述信息，不要包含已存在的节点。
     >
-    > 其他更多配置项（如：部署目录等）请参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml)。
+    > 其他更多配置项（如：部署目录等）请参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/embed/templates/examples/dm/topology.example.yaml)。
 
     ```yaml
     ---
@@ -284,7 +284,7 @@ tiup dm import --dir=/path/to/dm-ansible --cluster-version v2.0.0
 
 `import` 命令的工作流程如下：
 
-- 根据 DM-Ansible 部署的集群生成一个拓扑文件 [topology.yml](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml) 用于 TiUP 部署。
+- 根据 DM-Ansible 部署的集群生成一个拓扑文件 [topology.yml](https://github.com/pingcap/tiup/blob/master/embed/templates/examples/dm/topology.example.yaml) 用于 TiUP 部署。
 - 确认该生成的部署拓扑文件无误后，使用该文件部署 2.0 以上版本的集群。
 
 部署成功后可以使用 `tiup dm start` 命令启动集群后进入 DM 内核升级流程。
