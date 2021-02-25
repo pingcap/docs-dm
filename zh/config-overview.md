@@ -20,7 +20,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/config-overview/']
 具体步骤如下：
 
 1. [使用 dmctl 将数据源配置加载到 DM 集群](manage-source.md#加载数据源配置)；
-2. 参考[数据任务配置向导](task-configuration-compass.md)来创建 `your_task.yaml`；
+2. 参考[数据任务配置向导](task-configuration-guide.md)来创建 `your_task.yaml`；
 3. [使用 dmctl 创建数据迁移任务](create-task.md)。
 
 ### 关键概念
