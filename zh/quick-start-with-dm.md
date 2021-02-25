@@ -246,10 +246,10 @@ target-database:
 
 mysql-instances:
   - source-id: "mysql-replica-01"
-    block-allow-list:  "instance"
+    block-allow-list:  "ba-rule1"
 
 block-allow-list:
-  instance:
+  ba-rule1:
     do-dbs: ["testdm"]
 ```
 
