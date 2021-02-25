@@ -1,13 +1,21 @@
 ---
+<<<<<<< HEAD
 title: dmctl 简介
 summary: 了解如何使用 dmctl 管理数据迁移任务。
+=======
+title: 使用 dmctl 运维集群
+summary: 了解如何使用 dmctl 运维 DM 集群。
+aliases: ['/docs-cn/tidb-data-migration/dev/dmctl-introduction/','/docs-cn/tidb-data-migration/dev/manage-replication-tasks/']
+>>>>>>> 37eee7a... adjust dm docs structure (#557)
 ---
 
-# dmctl 简介
+# 使用 dmctl 运维集群
 
-dmctl 是用来控制 DM 集群的命令行工具。对于用 TiUP 部署的 DM 集群，可以直接使用 [`tiup dmctl`](maintain-dm-using-tiup.md#集群控制工具-dmctl)。
+> **注意：**
+>
+> 对于用 TiUP 部署的 DM 集群，推荐直接使用 [`tiup dmctl` 命令](maintain-dm-using-tiup.md#集群控制工具-dmctl)。
 
-dmctl 同时支持交互模式和命令模式。
+dmctl 是用来运维 DM 集群的命令行工具，支持交互模式和命令模式。
 
 ## dmctl 交互模式
 
