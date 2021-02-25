@@ -23,6 +23,7 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 <ColumnTitle>关于 TiDB Data Migration</ColumnTitle>
 
 - [什么是 DM？](overview.md)
+- [DM 架构](overview.md)
 - [性能数据](benchmark-v2.0-ga.md)
 
 </NavColumn>
@@ -30,7 +31,7 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 <NavColumn>
 <ColumnTitle>快速上手</ColumnTitle>
 
-- [快速上手](migrate-data-using-dm.md)
+- [快速上手](quick-start-with-dm.md)
 - [数据迁移任务配置向导](task-configuration-compass.md)
 
 </NavColumn>
@@ -48,12 +49,12 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 <NavColumn>
 <ColumnTitle>部署使用</ColumnTitle>
 
-- [DM 架构](overview.md)
 - [软硬件要求](hardware-and-software-requirements.md)
 - [使用 TiUP 部署集群](deploy-a-dm-cluster-using-tiup.md)
 - [使用 TiUP 离线镜像部署集群](deploy-a-dm-cluster-using-tiup-offline.md)
 - [使用 Binary 部署集群](deploy-a-dm-cluster-using-binary.md)
 - [监控与告警设置](monitor-a-dm-cluster.md)
+- [使用 DM 迁移数据](migrate-data-using-dm.md)
 - [DM 性能测试](performance-test.md)
 
 </NavColumn>

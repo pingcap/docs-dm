@@ -17,10 +17,10 @@
       - [悲观模式](feature-shard-merge-pessimistic.md)
       - [乐观模式](feature-shard-merge-optimistic.md)
     - [在源数据库使用 GH-ost/PT-osc 的数据同步](feature-online-ddl-scheme.md)
+  + [DM 架构](dm-arch.md)
   + [性能数据](benchmark-v2.0-ga.md)
-- [快速上手](migrate-data-using-dm.md)
+- [快速上手](quick-start-with-dm.md)
 + 部署使用
-  - [DM 架构](dm-arch.md)
   - [软硬件要求](hardware-and-software-requirements.md)
   + 部署 DM 集群
     - [使用 TiUP](deploy-a-dm-cluster-using-tiup.md)
