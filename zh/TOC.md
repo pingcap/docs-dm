@@ -30,12 +30,13 @@
   + [使用 DM 迁移数据](migrate-data-using-dm.md)
   + [测试 DM 性能](performance-test.md)
 + 运维操作
+  + 运维工具
+    - [使用 TiUP 运维集群（推荐）](maintain-dm-using-tiup.md)
+    - [使用 dmctl 运维集群](dmctl-introduction.md)
   + 版本升级
     - [1.0.x 到 2.0.x 手动升级](manually-upgrade-dm-1.0-to-2.0.md)
     - [1.0.x 版本间升级](upgrade-dm-1.0.md)
-  - [使用 TiUP 运维集群](maintain-dm-using-tiup.md)
-  - [运维入口 dmctl 使用](dmctl-introduction.md)
-  - [管理上游数据源配置](manage-source.md)
+  - [数据源配置管理](manage-source.md)
   + 任务管理
     - [任务配置](task-configuration-compass.md)
     - [任务前置检查](precheck.md)

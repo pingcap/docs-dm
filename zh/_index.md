@@ -62,8 +62,8 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 <NavColumn>
 <ColumnTitle>运维操作</ColumnTitle>
 
+- [使用 TiUP 运维集群（推荐）](maintain-dm-using-tiup.md)
 - [版本升级](manually-upgrade-dm-1.0-to-2.0.md)
-- [集群操作](maintain-dm-using-tiup.md)
 - [任务管理](dmctl-introduction.md)
 - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
 - [告警处理](handle-alerts.md)
