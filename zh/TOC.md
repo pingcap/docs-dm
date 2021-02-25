@@ -26,7 +26,7 @@
     - [使用 TiUP](deploy-a-dm-cluster-using-tiup.md)
     - [使用 TiUP 离线镜像](deploy-a-dm-cluster-using-tiup-offline.md)
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
-  + [设置监控告警](monitor-a-dm-cluster.md)
+    - [设置监控告警](monitor-a-dm-cluster.md)
   + [使用 DM 迁移数据](migrate-data-using-dm.md)
   + [测试 DM 性能](performance-test.md)
 + 运维操作
@@ -38,7 +38,7 @@
     - [1.0.x 版本间升级](upgrade-dm-1.0.md)
   - [数据源配置管理](manage-source.md)
   + 任务管理
-    - [任务配置](task-configuration-compass.md)
+    - [任务配置向导](task-configuration-compass.md)
     - [任务前置检查](precheck.md)
     - [创建任务](create-task.md)
     - [查询状态](query-status.md)
