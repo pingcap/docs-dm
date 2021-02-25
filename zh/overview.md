@@ -5,15 +5,7 @@ aliases: ['/docs-cn/dev/syncer-overview/','/docs-cn/dev/reference/tools/syncer/'
 
 # Data Migration 简介
 
-<<<<<<< HEAD
-> **注意：**
->
-> TiDB Data Migration 完全替代了 [Syncer](https://docs.pingcap.com/zh/tidb/v4.0/syncer-overview) 工具（自 TiDB v4.0 起不再维护）的功能。
-
-[TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据迁移任务管理平台，支持从 MySQL 或 MariaDB 到 TiDB 的全量数据迁移和增量数据复制。使用 DM 工具有利于简化错误处理流程，降低运维成本。
-=======
 [TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据迁移任务管理工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的数据迁移。DM 工具旨在降低数据迁移的运维成本。
->>>>>>> 37eee7a... adjust dm docs structure (#557)
 
 ## 基本功能
 
