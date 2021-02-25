@@ -26,7 +26,6 @@
     - [使用 TiUP](deploy-a-dm-cluster-using-tiup.md)
     - [使用 TiUP 离线镜像](deploy-a-dm-cluster-using-tiup-offline.md)
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
-    - [设置监控告警](monitor-a-dm-cluster.md)
   + [使用 DM 迁移数据](migrate-data-using-dm.md)
   + [测试 DM 性能](performance-test.md)
 + 运维操作

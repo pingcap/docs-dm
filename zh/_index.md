@@ -16,7 +16,7 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 - 与上下游数据库及 DM 各组件间连接的 [TLS 支持](enable-tls.md)。
 - 实验性地支持从 MySQL 8.0 迁移数据。
 
-目前 DM 工具没有图形化管理界面，对大量数据迁移任务管理的支持有限。 如果您需要操作大量数据迁移任务，请谨慎选择使用 DM。
+目前 DM 工具没有图形化管理界面，对大量数据迁移任务管理的支持有限。**如果您需要操作大量数据迁移任务，请谨慎选择使用 DM。**
 
 <NavColumns>
 <NavColumn>
@@ -37,37 +37,36 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 </NavColumn>
 
 <NavColumn>
-<ColumnTitle>使用场景</ColumnTitle>
-
-- [简单数据迁移场景](usage-scenario-simple-migration.md)
-- [分库分表合并场景](usage-scenario-shard-merge.md)
-- [从 Aurora 的数据库迁移到 TiDB](migrate-from-mysql-aurora.md)
-- [变更同步的 MySQL 实例](usage-scenario-master-slave-switch.md)
-
-</NavColumn>
-
-<NavColumn>
 <ColumnTitle>部署使用</ColumnTitle>
 
 - [软硬件要求](hardware-and-software-requirements.md)
 - [使用 TiUP 部署集群](deploy-a-dm-cluster-using-tiup.md)
 - [使用 TiUP 离线镜像部署集群](deploy-a-dm-cluster-using-tiup-offline.md)
 - [使用 Binary 部署集群](deploy-a-dm-cluster-using-binary.md)
-- [监控与告警设置](monitor-a-dm-cluster.md)
 - [使用 DM 迁移数据](migrate-data-using-dm.md)
-- [DM 性能测试](performance-test.md)
+- [测试 DM 性能](performance-test.md)
 
 </NavColumn>
 
 <NavColumn>
 <ColumnTitle>运维操作</ColumnTitle>
 
-- [使用 TiUP 运维集群](maintain-dm-using-tiup.md)
+- [使用 TiUP 运维集群（推荐）](maintain-dm-using-tiup.md)
+- [使用 dmctl 运维集群](dmctl-introduction.md)
 - [版本升级](manually-upgrade-dm-1.0-to-2.0.md)
-- [任务管理](dmctl-introduction.md)
 - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
 - [告警处理](handle-alerts.md)
 - [日常巡检](daily-check.md)
+
+</NavColumn>
+
+<NavColumn>
+<ColumnTitle>使用场景</ColumnTitle>
+
+- [简单数据迁移场景](usage-scenario-simple-migration.md)
+- [分库分表合并场景](usage-scenario-shard-merge.md)
+- [从 Aurora 的数据库迁移到 TiDB](migrate-from-mysql-aurora.md)
+- [变更同步的 MySQL 实例](usage-scenario-master-slave-switch.md)
 
 </NavColumn>
 
