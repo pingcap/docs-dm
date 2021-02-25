@@ -40,7 +40,7 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 <ColumnTitle>部署使用</ColumnTitle>
 
 - [软硬件要求](hardware-and-software-requirements.md)
-- [使用 TiUP 部署集群](deploy-a-dm-cluster-using-tiup.md)
+- [使用 TiUP 部署集群（推荐）](deploy-a-dm-cluster-using-tiup.md)
 - [使用 TiUP 离线镜像部署集群](deploy-a-dm-cluster-using-tiup-offline.md)
 - [使用 Binary 部署集群](deploy-a-dm-cluster-using-binary.md)
 - [使用 DM 迁移数据](migrate-data-using-dm.md)
@@ -53,9 +53,9 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 
 - [使用 TiUP 运维集群（推荐）](maintain-dm-using-tiup.md)
 - [使用 dmctl 运维集群](dmctl-introduction.md)
-- [版本升级](manually-upgrade-dm-1.0-to-2.0.md)
+- [升级版本](manually-upgrade-dm-1.0-to-2.0.md)
 - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
-- [告警处理](handle-alerts.md)
+- [处理告警](handle-alerts.md)
 - [日常巡检](daily-check.md)
 
 </NavColumn>
@@ -73,7 +73,7 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 <NavColumn>
 <ColumnTitle>参考指南</ColumnTitle>
 
-- [DM 架构](overview.md)
+- [DM 架构](dm-arch.md)
 - [DM 命令行参数](command-line-flags.md)
 - [配置概述](config-overview.md)
 - [监控指标](monitor-a-dm-cluster.md)

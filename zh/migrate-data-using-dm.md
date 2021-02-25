@@ -9,7 +9,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/replicate-data-using-dm/','/zh/tidb-
 
 ## 第 1 步：部署 DM 集群
 
-推荐使用 [TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)；也可以[使用 binary 部署 DM 集群](deploy-a-dm-cluster-using-binary.md)用于体验或测试。
+推荐[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)；也可以[使用 binary 部署 DM 集群](deploy-a-dm-cluster-using-binary.md)用于体验或测试。
 
 > **注意：**
 >
