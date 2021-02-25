@@ -1,12 +1,6 @@
 ---
-<<<<<<< HEAD
-title: dmctl 简介
-summary: 了解如何使用 dmctl 管理数据迁移任务。
-=======
 title: 使用 dmctl 运维集群
 summary: 了解如何使用 dmctl 运维 DM 集群。
-aliases: ['/docs-cn/tidb-data-migration/dev/dmctl-introduction/','/docs-cn/tidb-data-migration/dev/manage-replication-tasks/']
->>>>>>> 37eee7a... adjust dm docs structure (#557)
 ---
 
 # 使用 dmctl 运维集群
