@@ -263,7 +263,7 @@ block-allow-list:
 
 结果如下：
 
-```
+```bash
 {
     "result": true,
     "msg": "",
@@ -277,4 +277,5 @@ block-allow-list:
     ]
 }
 ```
+
 这样就成功创建了一个将 MySQL-3306 数据迁移到 TiDB 的任务。
