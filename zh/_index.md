@@ -32,7 +32,7 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 <ColumnTitle>快速上手</ColumnTitle>
 
 - [快速上手](quick-start-with-dm.md)
-- [数据迁移任务配置向导](task-configuration-compass.md)
+- [数据迁移任务配置向导](task-configuration-guide.md)
 
 </NavColumn>
 

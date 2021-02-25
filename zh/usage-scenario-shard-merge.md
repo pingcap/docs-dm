@@ -144,7 +144,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
 ## 迁移任务配置
 
-迁移任务的完整配置如下，更多详情请参阅 [数据迁移任务配置向导](task-configuration-compass.md)。
+迁移任务的完整配置如下，更多详情请参阅 [数据迁移任务配置向导](task-configuration-guide.md)。
 
 {{< copyable "" >}}
 

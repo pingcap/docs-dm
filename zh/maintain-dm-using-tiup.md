@@ -6,7 +6,9 @@ aliases: ['/docs-cn/tidb-data-migration/dev/cluster-operations/','/zh/tidb-data-
 
 # 使用 TiUP 运维 DM 集群
 
-本文介绍如何使用 TiUP 的 DM 组件运维 DM 集群。使用 TiUP 部署 DM 的完整步骤可参考[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。
+本文介绍如何使用 TiUP 的 DM 组件运维 DM 集群。
+
+如果你还未部署 DM 集群，可参考[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。
 
 > **注意：**
 >

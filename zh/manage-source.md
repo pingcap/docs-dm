@@ -1,12 +1,12 @@
 ---
-title: 管理上游 MySQL 实例
+title: 管理上游数据源配置
 summary: 了解如何管理上游 MySQL 实例。
 aliases: ['/docs-cn/tidb-data-migration/dev/manage-source/']
 ---
 
-# 管理上游 MySQL 实例
+# 管理上游数据源配置
 
-本文介绍了如何使用 [dmctl](dmctl-introduction.md) 组件来加密数据库密码和管理数据源配置。
+本文介绍了如何使用 [dmctl](dmctl-introduction.md) 组件来管理数据源配置，包括如何加密数据库密码、加载数据源配置。
 
 ## 加密数据库密码
 
@@ -69,7 +69,7 @@ operate-source create ./source.yaml
 + `config-file`：
     - 指定 `source.yaml` 的文件路径
     - 可传递多个文件路径
-    
+
 + `--print-sample-config`：打印示例配置文件。该参数会忽视其余参数
 
 ### 创建数据源配置示例

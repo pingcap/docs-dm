@@ -5,11 +5,11 @@ aliases: ['/docs-cn/tidb-data-migration/dev/replicate-data-using-dm/','/zh/tidb-
 
 # 使用 DM 迁移数据
 
-本文介绍如何使用 DM (Data Migration) 迁移数据。
+本文介绍如何使用 DM 工具迁移数据。
 
 ## 第 1 步：部署 DM 集群
 
-目前推荐使用 TiUP 部署 DM 集群，具体部署方法参照 [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)；也可以使用 binary 部署 DM 集群用于体验或者测试，具体部署方法参照[使用 DM binary 部署 DM 集群](deploy-a-dm-cluster-using-binary.md)。
+推荐使用 [TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)；也可以[使用 binary 部署 DM 集群](deploy-a-dm-cluster-using-binary.md)用于体验或测试。
 
 > **注意：**
 >
