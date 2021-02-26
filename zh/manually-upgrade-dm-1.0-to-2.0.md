@@ -100,12 +100,12 @@ from:
 
 ### 数据迁移任务配置文件
 
-对于[数据迁移任务配置文件](task-configuration-file.md)，v2.0.x 基本与 v1.0.x 保持兼容，可直接复制 v1.0.x 的配置。
+对于[数据迁移任务配置向导](task-configuration-guide.md)，v2.0.x 基本与 v1.0.x 保持兼容，可直接复制 v1.0.x 的配置。
 
 ## 第 2 步：部署 v2.0.x 集群
 
 > **注意：**
-> 
+>
 > 如果已有其他可用的 v2.0.x 集群，可跳过此步。
 
 [使用 TiUP](deploy-a-dm-cluster-using-tiup.md) 按所需要节点数部署新的 v2.0.x 集群。
@@ -149,13 +149,13 @@ from:
                 meta:
                   binlog-name: "mysql-bin.000123"    # 对应 checkpoint 信息中的 `binlog_name`，但不包含 `|000001` 部分
                   binlog-pos: 15847                  # 对应 checkpoint 信息中的 `binlog_pos`
-            
+
               - source-id: "mysql-replica-02"
                 meta:
                   binlog-name: "mysql-bin.000456"
                   binlog-pos: 10485
             ```
-            
+
             > **注意：**
             >
             > 如在 source 配置中启动了 `enable-gtid`，当前需要通过解析 binlog 或 relay log 文件获取 binlog position 对应的 GTID sets 并在 `meta` 中设置为 `binlog-gtid`。

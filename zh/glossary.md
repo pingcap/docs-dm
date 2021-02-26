@@ -31,7 +31,7 @@ DM-worker 内部用于读取上游 Binlog 或本地 Relay log 并迁移到下游
 
 ### Block & allow table list
 
-针对上游数据库实例表的黑白名单过滤功能，具体可参考 [Block & Allow Table Lists](overview.md#block--allow-table-lists)。该功能与 [MySQL Replication Filtering](https://dev.mysql.com/doc/refman/5.6/en/replication-rules.html) 及 [MariaDB Replication Filters](https://mariadb.com/kb/en/library/replication-filters/) 类似。
+针对上游数据库实例表的黑白名单过滤功能，具体可参考 [Block & Allow Table Lists](overview.md#block--allow-lists)。该功能与 [MySQL Replication Filtering](https://dev.mysql.com/doc/refman/5.6/en/replication-rules.html) 及 [MariaDB Replication Filters](https://mariadb.com/kb/en/library/replication-filters/) 类似。
 
 ## C
 

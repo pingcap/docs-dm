@@ -1,8 +1,8 @@
 ---
-title: online-ddl-scheme 功能介绍
+title: 迁移使用 GH-ost/PT-osc 的源数据库
 ---
 
-# DM online-ddl-scheme
+# 迁移使用 GH-ost/PT-osc 的源数据库
 
 ## 概述
 

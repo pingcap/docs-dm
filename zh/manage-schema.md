@@ -1,9 +1,9 @@
 ---
-title: 管理迁移中表的表结构
+title: 管理迁移表的表结构
 summary: 了解如何管理待迁移表在 DM 内部的表结构。
 ---
 
-# 管理迁移中表的表结构
+# 管理迁移表的表结构
 
 本文介绍如何使用 [dmctl](dmctl-introduction.md) 组件来管理通过 DM 迁移的表在 DM 内部的表结构。
 
@@ -81,7 +81,7 @@ Global Flags:
 ## 使用示例
 
 ### 获取表结构
- 
+
 假设要获取 `db_single` 任务对应于 `mysql-replica-01` MySQL 源的 ``` `db_single`.`t1` ``` 表的表结构，则执行如下命令：
 
 {{< copyable "" >}}
