@@ -45,14 +45,6 @@ cd dm
 make
 ```
 
-#### 可选项：将下载/编译的 binary 加入环境变量 PATH 中，方便部署使用
-
-{{< copyable "shell-regular" >}}
-
-```bash
-DM_PATH=`pwd` && export PATH=$PATH:$DM_PATH
-```
-
 ### 部署 DM-master
 
 执行如下命令启动 DM-master：
@@ -60,7 +52,7 @@ DM_PATH=`pwd` && export PATH=$PATH:$DM_PATH
 {{< copyable "shell-regular" >}}
 
 ```bash
-nohup bin/dm-master --master-addr='127.0.0.1:8261' --log-file=/tmp/dm-master.log  >> /tmp/dm-master.log 2>&1 &
+nohup bin/dm-master --master-addr='127.0.0.1:8261' --log-file=/tmp/dm-master.log --name="master1" >> /tmp/dm-master.log 2>&1 &
 ```
 
 ### 部署 DM-worker
@@ -70,7 +62,7 @@ nohup bin/dm-master --master-addr='127.0.0.1:8261' --log-file=/tmp/dm-master.log
 {{< copyable "shell-regular" >}}
 
 ```bash
-nohup bin/dm-worker --worker-addr='127.0.0.1:8262' --log-file=/tmp/dm-worker.log --join='127.0.0.1:8261' >> /tmp/dm-worker.log 2>&1 &
+nohup bin/dm-worker --worker-addr='127.0.0.1:8262' --log-file=/tmp/dm-worker.log --join='127.0.0.1:8261' --name="worker1" >> /tmp/dm-worker.log 2>&1 &
 ```
 
 ### 检查 DM 集群部署是否正常
@@ -200,6 +192,25 @@ from:
 ```bash
 ./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create mysql-source-conf.yaml
 ```
+
+结果如下：
+
+```bash
+{
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
+        }
+    ]
+}
+```
+
+这样就成功将 MySQL-3306 数据源添加到了 DM 集群。
 
 ### 创建数据迁移任务
 
