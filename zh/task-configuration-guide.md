@@ -62,9 +62,9 @@ target-database:       # 目标 TiDB 配置
     ```yaml
     block-allow-list:
       bw-rule-1:                           # 规则名称，dbs 和 tables
-        do-dbs: ["test.*", "user"]         # 迁移哪些库，支持通配符 "*" 和 "?"，do-dbs 和 ignore-dbs 建议只填写一个
+        do-dbs: ["test.*", "user"]         # 迁移哪些库，支持通配符 "*" 和 "?"，do-dbs 和 ignore-dbs 只需要配置一个，如果两者同时配置只有 do-dbs 会生效
         # ignore-dbs: ["mysql", "account"] # 忽略哪些库，支持通配符 "*" 和 "?"
-        do-tables:                         # 迁移哪些表，do-tables 和 ignore-tables 建议只填写一个
+        do-tables:                         # 迁移哪些表，do-tables 和 ignore-tables 只需要配置一个，如果两者同时配置只有 do-tables 会生效
         - db-name: "test.*"
           tbl-name: "t.*"
         - db-name: "user"
@@ -198,9 +198,9 @@ target-database:       # 目标 TiDB 配置
 ## ******** 功能配置 **********
 block-allow-list:                      # 定义数据源迁移表的过滤规则，可以定义多个规则。如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
   bw-rule-1:                           # 规则名称
-    do-dbs: ["test.*", "user"]         # 迁移哪些库，支持通配符 "*" 和 "?"，do-dbs 和 ignore-dbs 建议只填写一个
+    do-dbs: ["test.*", "user"]         # 迁移哪些库，支持通配符 "*" 和 "?"，do-dbs 和 ignore-dbs 只需要配置一个，如果两者同时配置只有 do-dbs 会生效
     # ignore-dbs: ["mysql", "account"] # 忽略哪些库，支持通配符 "*" 和 "?"
-    do-tables:                         # 迁移哪些表，do-tables 和 ignore-tables 建议只填写一个
+    do-tables:                         # 迁移哪些表，do-tables 和 ignore-tables 只需要配置一个，如果两者同时配置只有 do-tables 会生效
     - db-name: "test.*"
       tbl-name: "t.*"
     - db-name: "user"
