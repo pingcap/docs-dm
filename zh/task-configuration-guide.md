@@ -24,8 +24,8 @@ name: test             # 任务名称，需要全局唯一
 
 ## ******** 数据源配置 **********
 mysql-instances:
-  - source-id: "mysql-replica-01"  # 从 `source-id = mysql-replica-01 的数据源迁移数据
-  - source-id: "mysql-replica-02"  # 从 `source-id = mysql-replica-02 的数据源迁移数据
+  - source-id: "mysql-replica-01"  # 从 source-id = mysql-replica-01 的数据源迁移数据
+  - source-id: "mysql-replica-02"  # 从 source-id = mysql-replica-02 的数据源迁移数据
 ```
 
 ## 配置迁移的目标 TiDB 集群
@@ -40,8 +40,8 @@ name: test             # 任务名称，需要全局唯一
 
 ## ******** 数据源配置 **********
 mysql-instances:
-  - source-id: "mysql-replica-01"  # 从 `source-id = mysql-replica-01 的数据源迁移数据
-  - source-id: "mysql-replica-02"  # 从 `source-id = mysql-replica-02 的数据源迁移数据
+  - source-id: "mysql-replica-01"  # 从 source-id = mysql-replica-01 的数据源迁移数据
+  - source-id: "mysql-replica-02"  # 从 source-id = mysql-replica-02 的数据源迁移数据
 
 ## ******** 目标 TiDB 配置 **********
 target-database:       # 目标 TiDB 配置
@@ -61,10 +61,10 @@ target-database:       # 目标 TiDB 配置
 
     ```yaml
     block-allow-list:
-      bw-rule-1:                          # 规则名称，dbs 和 tables
-        do-dbs: ["test.*", "user"]        # 迁移哪些库，支持通配符 "*" 和 "?"
-        ignore-dbs: ["mysql", "account"]  # 忽略哪些库，支持通配符 "*" 和 "?"
-        do-tables:                        # 迁移哪些表
+      bw-rule-1:                           # 规则名称，dbs 和 tables
+        do-dbs: ["test.*", "user"]         # 迁移哪些库，支持通配符 "*" 和 "?"，do-dbs 和 ignore-dbs 只需要配置一个，如果两者同时配置只有 do-dbs 会生效
+        # ignore-dbs: ["mysql", "account"] # 忽略哪些库，支持通配符 "*" 和 "?"
+        do-tables:                         # 迁移哪些表，do-tables 和 ignore-tables 只需要配置一个，如果两者同时配置只有 do-tables 会生效
         - db-name: "test.*"
           tbl-name: "t.*"
         - db-name: "user"
@@ -79,9 +79,9 @@ target-database:       # 目标 TiDB 配置
 
     ```yaml
     mysql-instances:
-        - source-id: "mysql-replica-01"  # 从 `source-id = mysql-replica-01 的数据源迁移数据
+        - source-id: "mysql-replica-01"  # 从 source-id = mysql-replica-01 的数据源迁移数据
           block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-        - source-id: "mysql-replica-02"  # 从 `source-id = mysql-replica-02 的数据源迁移数据
+        - source-id: "mysql-replica-02"  # 从 source-id = mysql-replica-02 的数据源迁移数据
           block-allow-list:  "bw-rule-2" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
     ```
 
@@ -110,10 +110,10 @@ target-database:       # 目标 TiDB 配置
 
     ```yaml
     mysql-instances:
-        - source-id: "mysql-replica-01"    # 从 `source-id = mysql-replica-01 的数据源迁移数据
+        - source-id: "mysql-replica-01"    # 从 source-id = mysql-replica-01 的数据源迁移数据
           block-allow-list:  "bw-rule-1"   # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
           filter-rules: ["filter-rule-1"]  # 过滤数据源特定操作的规则，可以配置多个过滤规则
-        - source-id: "mysql-replica-02"    # 从 `source-id = mysql-replica-02 的数据源迁移数据
+        - source-id: "mysql-replica-02"    # 从 source-id = mysql-replica-02 的数据源迁移数据
           block-allow-list:  "bw-rule-2"   # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
           filter-rules: ["filter-rule-2"]  # 过滤数据源特定操作的规则，可以配置多个过滤规则
     ```
@@ -142,11 +142,11 @@ target-database:       # 目标 TiDB 配置
 
     ```yaml
     mysql-instances:
-        - source-id: "mysql-replica-01"                     # 从 `source-id = mysql-replica-01 的数据源迁移数据
+        - source-id: "mysql-replica-01"                     # 从 source-id = mysql-replica-01 的数据源迁移数据
           block-allow-list:  "bw-rule-1"                    # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
           filter-rules: ["filter-rule-1"]                   # 过滤数据源特定操作的规则，可以配置多个过滤规则
           route-rules: ["route-rule-1", "route-rule-2"]     # 数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则
-        - source-id: "mysql-replica-02"                     # 从 `source-id = mysql-replica-02 的数据源迁移数据
+        - source-id: "mysql-replica-02"                     # 从 source-id = mysql-replica-02 的数据源迁移数据
           block-allow-list:  "bw-rule-2"                    # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
           filter-rules: ["filter-rule-2"]                   # 过滤数据源特定操作的规则，可以配置多个过滤规则
     ```
@@ -179,11 +179,11 @@ task-mode: all                  # 任务模式，可设为 "full" - "只进行�
 
 ## ******** 数据源配置 **********
 mysql-instances:
-  - source-id: "mysql-replica-01"                   # 从 `source-id = mysql-replica-01 的数据源迁移数据
+  - source-id: "mysql-replica-01"                   # 从 source-id = mysql-replica-01 的数据源迁移数据
     block-allow-list:  "bw-rule-1"                  # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
     filter-rules: ["filter-rule-1"]                 # 过滤数据源特定操作的规则，可以配置多个过滤规则
     route-rules: ["route-rule-1", "route-rule-2"]   # 数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则
-  - source-id: "mysql-replica-02"                   # 从 `source-id = mysql-replica-02 的数据源迁移数据
+  - source-id: "mysql-replica-02"                   # 从 source-id = mysql-replica-02 的数据源迁移数据
     block-allow-list:  "bw-rule-2"                  # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
     filter-rules: ["filter-rule-2"]                 # 过滤数据源特定操作的规则，可以配置多个过滤规则
     route-rules: ["route-rule-2"]                   # 数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则
@@ -196,11 +196,11 @@ target-database:       # 目标 TiDB 配置
   password: ""         # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
 
 ## ******** 功能配置 **********
-block-allow-list:                    # 定义数据源迁移表的过滤规则，可以定义多个规则。如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-  bw-rule-1:                         # 规则名称
-    do-dbs: ["test.*", "user"]       # 迁移哪些库，支持通配符 "*" 和 "?"
-    ignore-dbs: ["mysql", "account"] # 忽略哪些库，支持通配符 "*" 和 "?"
-    do-tables:                       # 迁移哪些表
+block-allow-list:                      # 定义数据源迁移表的过滤规则，可以定义多个规则。如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+  bw-rule-1:                           # 规则名称
+    do-dbs: ["test.*", "user"]         # 迁移哪些库，支持通配符 "*" 和 "?"，do-dbs 和 ignore-dbs 只需要配置一个，如果两者同时配置只有 do-dbs 会生效
+    # ignore-dbs: ["mysql", "account"] # 忽略哪些库，支持通配符 "*" 和 "?"
+    do-tables:                         # 迁移哪些表，do-tables 和 ignore-tables 只需要配置一个，如果两者同时配置只有 do-tables 会生效
     - db-name: "test.*"
       tbl-name: "t.*"
     - db-name: "user"
