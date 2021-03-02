@@ -13,9 +13,9 @@ DM-worker 在启动后，会自动将上游 binlog 迁移到本地配置目录�
 
 > **注意：**
 >
-> 相较于不开启该功能，relay log 会额外使用磁盘 IO，导致同步延时上升。在部署环境的磁盘 IO 性能不佳时，开启 relay log 也可能会成为同步链路的瓶颈，导致同步速度变慢。
+> Relay log 功能会额外使用磁盘 IO，导致同步延时上升。在部署环境的磁盘 IO 性能不佳时，开启 relay log 也可能会成为同步链路的瓶颈，导致同步速度变慢。
 
-本文档介绍 DM relay log 的目录结构，初始迁移规则，暂停、恢复和清理 relay log。
+本文档介绍 DM relay log 的目录结构，初始迁移规则，以及如何暂停、恢复和清理 relay log。
 
 ## 目录结构
 
@@ -92,7 +92,7 @@ DM-worker 每次启动时（或在 DM-worker 暂停后 relay log 恢复迁移）
 
 ## 暂停、恢复 relay log
 
-`pause-relay` 与 `resume-relay` 命令可以暂停、恢复 relay log 拉取的拉取。这两个命令都需要指定上游数据源的 `source-id`，例如
+`pause-relay` 与 `resume-relay` 命令可以分别暂停及恢复 relay log 的拉取。这两个命令执行时都需要指定上游数据源的 `source-id`，例如：
 
 
 {{< copyable "" >}}
