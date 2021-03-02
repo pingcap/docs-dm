@@ -10,7 +10,6 @@ DM (Data Migration) 工具的 relay log 由一组有编号的文件和一个索�
 
 DM-worker 在启动后，会自动将上游 binlog 迁移到本地配置目录（若使用 TiUP 部署 DM，则迁移目录默认为 `<deploy_dir> / relay_log` ）。DM-worker 在运行过程中，会将上游 binlog 实时迁移到本地文件。DM-worker 的 sync 处理单元会实时读取本地 relay log 的 binlog 事件，将这些事件转换为 SQL 语句，再将 SQL 语句迁移到下游数据库。
 
-
 > **注意：**
 >
 > Relay log 功能会额外使用磁盘 IO，导致同步延时上升。在部署环境的磁盘 IO 性能不佳时，开启 relay log 也可能会成为同步链路的瓶颈，导致同步速度变慢。
@@ -93,7 +92,6 @@ DM-worker 每次启动时（或在 DM-worker 暂停后 relay log 恢复迁移）
 ## 暂停、恢复 relay log
 
 `pause-relay` 与 `resume-relay` 命令可以分别暂停及恢复 relay log 的拉取。这两个命令执行时都需要指定上游数据源的 `source-id`，例如：
-
 
 {{< copyable "" >}}
 
