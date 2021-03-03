@@ -153,134 +153,134 @@ bin/dmctl --master-addr=127.0.0.1:8261 operate-source show
 
 1. 创建任务配置文件 `task.yaml`，配置增量同步模式，以及每个上游的同步起点。示例如下：
 
-  {{< copyable "" >}}
-
-  ```yaml
-  name: test             # 任务名称，需要全局唯一
-  task-mode: incremental # 任务模式，可设为 "full"、"incremental"、"all"
-  
-  mysql-instances:
-    - source-id: "mysql-01" # 上游实例 ID
-      meta:                 # `task-mode` 为 `incremental` 且下游数据库的 `checkpoint` 不存在时 binlog 迁移开始的位置; 如果 `checkpoint` 存在，则以 `checkpoint` 为准
-        binlog-name: mysql-bin.000001
-        binlog-pos: 2022
-  ```
+   {{< copyable "" >}}
+ 
+   ```yaml
+   name: test             # 任务名称，需要全局唯一
+   task-mode: incremental # 任务模式，可设为 "full"、"incremental"、"all"
+    
+   mysql-instances:
+     - source-id: "mysql-01" # 上游实例 ID
+       meta:                 # `task-mode` 为 `incremental` 且下游数据库的 `checkpoint` 不存在时 binlog 迁移开始的位置; 如果 `checkpoint` 存在，则以 `checkpoint` 为准
+         binlog-name: mysql-bin.000001
+         binlog-pos: 2022
+   ```
 
 2. 配置需要同步的库：
 
-  {{< copyable "" >}}
+   {{< copyable "" >}}
 
-  ```yaml
-  block-allow-list:   # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-    bw-rule-1:        # 黑白名单配置项 ID
-      do-dbs: ["log"] # 迁移哪些库
-  
-  mysql-instances:
-    - source-id: "mysql-01"          # 上游实例或者复制组 ID
-      block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-  ```
+   ```yaml
+   block-allow-list:   # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+     bw-rule-1:        # 黑白名单配置项 ID
+       do-dbs: ["log"] # 迁移哪些库
+   
+   mysql-instances:
+     - source-id: "mysql-01"          # 上游实例或者复制组 ID
+       block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+   ```
 
 3. 补充下游数据库连接等信息。完整的任务配置文件如下：
 
-  {{< copyable "" >}}
+   {{< copyable "" >}}
 
-  ```yaml
-  name: test             # 任务名称，需要全局唯一
-  task-mode: incremental # 任务模式，可设为 "full"、"incremental"、"all"
-  
-  target-database:       # 下游数据库实例配置
-    host: "127.0.0.1"
-    port: 4000
-    user: "root"
-    password: ""         # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
-  
-  ## ******** 功能配置集 **********
-  block-allow-list:   # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-    bw-rule-1:        # 黑白名单配置项 ID
-      do-dbs: ["log"] # 迁移哪些库
-  
-  # ----------- 实例配置 -----------
-  mysql-instances:
-    - source-id: "mysql-01"         # 上游实例或者复制组 ID
-      block-allow-list: "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-      meta:                         # `task-mode` 为 `incremental` 且下游数据库的 `checkpoint` 不存在时 binlog 迁移开始的位置; 如果 `checkpoint` 存在，则以 `checkpoint` 为准
-        binlog-name: mysql-bin.000001
-        binlog-pos: 2022
-  ```
+   ```yaml
+   name: test             # 任务名称，需要全局唯一
+   task-mode: incremental # 任务模式，可设为 "full"、"incremental"、"all"
+   
+   target-database:       # 下游数据库实例配置
+     host: "127.0.0.1"
+     port: 4000
+     user: "root"
+     password: ""         # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
+   
+   ## ******** 功能配置集 **********
+   block-allow-list:   # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+     bw-rule-1:        # 黑白名单配置项 ID
+       do-dbs: ["log"] # 迁移哪些库
+   
+   # ----------- 实例配置 -----------
+   mysql-instances:
+     - source-id: "mysql-01"         # 上游实例或者复制组 ID
+       block-allow-list: "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+       meta:                         # `task-mode` 为 `incremental` 且下游数据库的 `checkpoint` 不存在时 binlog 迁移开始的位置; 如果 `checkpoint` 存在，则以 `checkpoint` 为 准
+         binlog-name: mysql-bin.000001
+         binlog-pos: 2022
+   ```
 
 4. 使用 `start-task` 命令创建同步任务：
 
-  {{< copyable "shell-regular" >}}
+   {{< copyable "shell-regular" >}}
 
-  ```bash
-  bin/dmctl --master-addr=127.0.0.1:8261 start-task task.yaml
-  ```
+   ```bash
+   bin/dmctl --master-addr=127.0.0.1:8261 start-task task.yaml
+   ```
 
-  ```
-  {
-      "result": true,
-      "msg": "",
-      "sources": [
-          {
-              "result": true,
-              "msg": "",
-              "source": "mysql-01",
-              "worker": "127.0.0.1:8262"
-          }
-      ]
-  }
-  ```
+   ```
+   {
+       "result": true,
+       "msg": "",
+       "sources": [
+           {
+               "result": true,
+               "msg": "",
+               "source": "mysql-01",
+               "worker": "127.0.0.1:8262"
+           }
+       ]
+   }
+   ```
 
 5. 使用 `query-status` 查看同步任务，确认无报错信息：
 
-  {{< copyable "shell-regular" >}}
+   {{< copyable "shell-regular" >}}
 
-  ```bash
-  bin/dmctl --master-addr=127.0.0.1:8261 query-status test
-  ```
+   ```bash
+   bin/dmctl --master-addr=127.0.0.1:8261 query-status test
+   ```
 
-  ```
-  {
-      "result": true,
-      "msg": "",
-      "sources": [
-          {
-              "result": true,
-              "msg": "",
-              "sourceStatus": {
-                  "source": "mysql-01",
-                  "worker": "127.0.0.1:8262",
-                  "result": null,
-                  "relayStatus": null
-              },
-              "subTaskStatus": [
-                  {
-                      "name": "test",
-                      "stage": "Running",
-                      "unit": "Sync",
-                      "result": null,
-                      "unresolvedDDLLockID": "",
-                      "sync": {
-                          "totalEvents": "0",
-                          "totalTps": "0",
-                          "recentTps": "0",
-                          "masterBinlog": "(mysql-bin.000001, 2022)",
-                          "masterBinlogGtid": "09bec856-ba95-11ea-850a-58f2b4af5188:1-9",
-                          "syncerBinlog": "(mysql-bin.000001, 2022)",
-                          "syncerBinlogGtid": "",
-                          "blockingDDLs": [
-                          ],
-                          "unresolvedGroups": [
-                          ],
-                          "synced": true,
-                          "binlogType": "remote"
-                      }
-                  }
-              ]
-          }
-      ]
-  }
-  ```
+   ```
+   {
+       "result": true,
+       "msg": "",
+       "sources": [
+           {
+               "result": true,
+               "msg": "",
+               "sourceStatus": {
+                   "source": "mysql-01",
+                   "worker": "127.0.0.1:8262",
+                   "result": null,
+                   "relayStatus": null
+               },
+               "subTaskStatus": [
+                   {
+                       "name": "test",
+                       "stage": "Running",
+                       "unit": "Sync",
+                       "result": null,
+                       "unresolvedDDLLockID": "",
+                       "sync": {
+                           "totalEvents": "0",
+                           "totalTps": "0",
+                           "recentTps": "0",
+                           "masterBinlog": "(mysql-bin.000001, 2022)",
+                           "masterBinlogGtid": "09bec856-ba95-11ea-850a-58f2b4af5188:1-9",
+                           "syncerBinlog": "(mysql-bin.000001, 2022)",
+                           "syncerBinlogGtid": "",
+                           "blockingDDLs": [
+                           ],
+                           "unresolvedGroups": [
+                           ],
+                           "synced": true,
+                           "binlogType": "remote"
+                       }
+                   }
+               ]
+           }
+       ]
+   }
+   ```
 
 ## 测试同步任务
 
