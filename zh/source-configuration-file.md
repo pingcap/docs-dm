@@ -89,5 +89,5 @@ from:
 
 | 配置项        | 说明                                    |
 | :------------ | :--------------------------------------- |
-| `case-sensitive` | Binlog event filter 标识符是否大小写敏感。默认值：false |
-| `filters` | 配置 Binlog event filter，含义见 [Binlog event filter 参数解释](key-features.md#参数解释-2) |
+| `case-sensitive` | Binlog event filter 标识符是否大小写敏感。默认值：false 。|
+| `filters` | 配置 Binlog event filter，含义见 [Binlog event filter 参数解释](key-features.md#参数解释-2)。 |
