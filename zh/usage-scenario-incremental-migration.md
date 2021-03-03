@@ -151,7 +151,7 @@ bin/dmctl --master-addr=127.0.0.1:8261 operate-source show
 
 ### 创建同步任务
 
-创建任务配置文件 `task.yaml`，配置增量同步模式，以及每个上游的同步起点。示例如下：
+1. 创建任务配置文件 `task.yaml`，配置增量同步模式，以及每个上游的同步起点。示例如下：
 
 {{< copyable "" >}}
 
@@ -166,7 +166,7 @@ mysql-instances:
       binlog-pos: 2022
 ```
 
-配置需要同步的库：
+2. 配置需要同步的库：
 
 {{< copyable "" >}}
 
@@ -180,7 +180,7 @@ mysql-instances:
     block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
 ```
 
-补充下游数据库连接等信息。完整的任务配置文件如下：
+3. 补充下游数据库连接等信息。完整的任务配置文件如下：
 
 {{< copyable "" >}}
 
@@ -208,7 +208,7 @@ mysql-instances:
       binlog-pos: 2022
 ```
 
-使用 `start-task` 命令创建同步任务：
+4. 使用 `start-task` 命令创建同步任务：
 
 {{< copyable "shell-regular" >}}
 
@@ -231,7 +231,7 @@ bin/dmctl --master-addr=127.0.0.1:8261 start-task task.yaml
 }
 ```
 
-使用 `query-status` 查看同步任务，确认无报错信息：
+5. 使用 `query-status` 查看同步任务，确认无报错信息：
 
 {{< copyable "shell-regular" >}}
 
@@ -286,7 +286,6 @@ bin/dmctl --master-addr=127.0.0.1:8261 query-status test
 
 在上游数据库插入新增数据：
 
-
 {{< copyable "" >}}
 
 ```sql
@@ -308,7 +307,6 @@ MySQL [log]> SELECT * FROM messages;
 ```
 
 查询下游数据库，可以发现 `(3, 'msg3')` 之后的数据已同步成功：
-
 
 {{< copyable "" >}}
 
