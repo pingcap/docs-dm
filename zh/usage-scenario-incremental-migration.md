@@ -31,6 +31,8 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-incremental-migration
 
 在开始迁移之前，我们向上游 MySQL 插入一些测试数据。假设 `log.messages` 的表结构如下：
 
+{{< copyable "" >}}
+
 ```sql
 CREATE TABLE `messages` (
   `id` int(11) NOT NULL,
@@ -40,6 +42,8 @@ CREATE TABLE `messages` (
 ```
 
 向表中插入以下数据：
+
+{{< copyable "" >}}
 
 ```sql
 INSERT INTO messages VALUES (1, 'msg1'), (2, 'msg2'), (3, 'msg3');
@@ -69,6 +73,8 @@ MySQL [log]> SHOW MASTER STATUS;
 
 由于建表 SQL 语句在同步起始位置之前，本次增量同步任务并不会自动在下游创建表。因此需要手动在上游使用 `SHOW CREATE TABLE` 查看表结构，并在下游创建该表。示例如下：
 
+{{< copyable "" >}}
+
 ```sql
 CREATE TABLE `messages` (
   `id` int(11) NOT NULL,
@@ -85,6 +91,8 @@ CREATE TABLE `messages` (
 
 创建上游数据源配置文件 `source.yaml`，写入上游数据库的连接参数和其他配置。示例如下：
 
+{{< copyable "" >}}
+
 ```yaml
 source-id: "mysql-01" # 数据源唯一 ID，在其他命令中标识数据源
 
@@ -97,8 +105,13 @@ from:
 
 使用 `operate-source create` 命令创建数据源：
 
+{{< copyable "shell-regular" >}}
+
 ```bash
-$ bin/dmctl --master-addr=127.0.0.1:8261 operate-source create source.yaml
+bin/dmctl --master-addr=127.0.0.1:8261 operate-source create source.yaml
+```
+
+```
 {
     "result": true,
     "msg": "",
@@ -115,8 +128,13 @@ $ bin/dmctl --master-addr=127.0.0.1:8261 operate-source create source.yaml
 
 可以使用 `operate-source show` 命令查看当前数据源列表：
 
+{{< copyable "shell-regular" >}}
+
 ```bash
-$ bin/dmctl --master-addr=127.0.0.1:8261 operate-source show
+bin/dmctl --master-addr=127.0.0.1:8261 operate-source show
+```
+
+```
 {
     "result": true,
     "msg": "",
@@ -135,6 +153,8 @@ $ bin/dmctl --master-addr=127.0.0.1:8261 operate-source show
 
 创建任务配置文件 `task.yaml`，配置增量同步模式，以及每个上游的同步起点。示例如下：
 
+{{< copyable "" >}}
+
 ```yaml
 name: test             # 任务名称，需要全局唯一
 task-mode: incremental # 任务模式，可设为 "full"、"incremental"、"all"
@@ -148,6 +168,8 @@ mysql-instances:
 
 配置需要同步的库：
 
+{{< copyable "" >}}
+
 ```yaml
 block-allow-list:   # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
   bw-rule-1:        # 黑白名单配置项 ID
@@ -159,6 +181,8 @@ mysql-instances:
 ```
 
 补充下游数据库连接等信息。完整的任务配置文件如下：
+
+{{< copyable "" >}}
 
 ```yaml
 name: test             # 任务名称，需要全局唯一
@@ -186,8 +210,13 @@ mysql-instances:
 
 使用 `start-task` 命令创建同步任务：
 
+{{< copyable "shell-regular" >}}
+
 ```bash
-$ bin/dmctl --master-addr=127.0.0.1:8261 start-task task.yaml
+bin/dmctl --master-addr=127.0.0.1:8261 start-task task.yaml
+```
+
+```
 {
     "result": true,
     "msg": "",
@@ -204,8 +233,13 @@ $ bin/dmctl --master-addr=127.0.0.1:8261 start-task task.yaml
 
 使用 `query-status` 查看同步任务，确认无报错信息：
 
+{{< copyable "shell-regular" >}}
+
 ```bash
-$ bin/dmctl --master-addr=127.0.0.1:8261 query-status test
+bin/dmctl --master-addr=127.0.0.1:8261 query-status test
+```
+
+```
 {
     "result": true,
     "msg": "",
@@ -252,6 +286,9 @@ $ bin/dmctl --master-addr=127.0.0.1:8261 query-status test
 
 在上游数据库插入新增数据：
 
+
+{{< copyable "" >}}
+
 ```sql
 MySQL [log]> INSERT INTO messages VALUES (4, 'msg4'), (5, 'msg5');
 Query OK, 2 rows affected (0.010 sec)
@@ -271,6 +308,9 @@ MySQL [log]> SELECT * FROM messages;
 ```
 
 查询下游数据库，可以发现 `(3, 'msg3')` 之后的数据已同步成功：
+
+
+{{< copyable "" >}}
 
 ```sql
 MySQL [log]> SELECT * FROM messages;
