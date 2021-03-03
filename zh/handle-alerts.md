@@ -12,7 +12,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/handle-alerts/']
 
 ### `DM_master_all_down`
 
-当全部 DM-master 离线时触发该告警。发生该错误时，需要检查集群环境、各节点日志排查错误。
+当全部 DM-master 离线时触发该告警。发生该错误时，需要检查集群环境，并通过各节点日志排查错误。
 
 ### `DM_worker_offline`
 
