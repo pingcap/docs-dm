@@ -5,7 +5,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-incremental-migration
 
 # Data Migration 增量数据迁移场景
 
-本文介绍使用 DM 将某时刻起的增量数据变动同步到下游 TiDB。本文以一个上游 MySQL 实例进行迁移为例，如需要其他功能，请参照其他使用场景和功能。
+本文介绍如何使用 DM 将某时刻起的增量数据变动同步到下游 TiDB。本文以一个上游 MySQL 实例进行迁移为例，如需要其他功能，请参照其他使用场景和功能。
 
 ## 上游实例
 
@@ -29,7 +29,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-incremental-migration
 
 ## 模拟上游迁移数据
 
-在开始迁移之前，我们向上游 MySQL 插入一些测试数据。假设 `log.messages` 的表结构为
+在开始迁移之前，我们向上游 MySQL 插入一些测试数据。假设 `log.messages` 的表结构如下：
 
 ```sql
 CREATE TABLE `messages` (
@@ -39,7 +39,7 @@ CREATE TABLE `messages` (
 )
 ```
 
-我们向表中插入若干数据
+向表中插入以下数据：
 
 ```sql
 INSERT INTO messages VALUES (1, 'msg1'), (2, 'msg2'), (3, 'msg3');
@@ -67,7 +67,7 @@ MySQL [log]> SHOW MASTER STATUS;
 
 ### 在下游创建表
 
-由于建表 SQL 语句在同步起始位置之前，本次增量同步任务并不会自动在下游创建表。这需要我们手动在上游使用 `SHOW CREATE TABLE` 查看表结构，并在下游创建该表。
+由于建表 SQL 语句在同步起始位置之前，本次增量同步任务并不会自动在下游创建表。因此需要手动在上游使用 `SHOW CREATE TABLE` 查看表结构，并在下游创建该表。示例如下：
 
 ```sql
 CREATE TABLE `messages` (
@@ -79,11 +79,11 @@ CREATE TABLE `messages` (
 
 ### 启动 DM 集群
 
-可以参照 [快速上手](quick-start-with-dm.md#使用-binary-包部署-dm) 使用 binary 包启动 DM 集群快速验证，或者参照[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)进行部署
+可以参照 [快速上手](quick-start-with-dm.md#使用-binary-包部署-dm) 使用 binary 包启动 DM 集群快速验证，或者参照[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)进行部署。
 
 ### 创建上游数据源
 
-创建上游数据源配置文件 `source.yaml`，写入上游数据库的连接参数和其他配置
+创建上游数据源配置文件 `source.yaml`，写入上游数据库的连接参数和其他配置。示例如下：
 
 ```yaml
 source-id: "mysql-01" # 数据源唯一 ID，在其他命令中标识数据源
@@ -95,7 +95,7 @@ from:
   password: "" # 推荐使用 dmctl 对上游数据库的用户密码加密之后的密码
 ```
 
-使用 `operate-source create` 命令创建数据源
+使用 `operate-source create` 命令创建数据源：
 
 ```bash
 $ bin/dmctl --master-addr=127.0.0.1:8261 operate-source create source.yaml
@@ -113,7 +113,7 @@ $ bin/dmctl --master-addr=127.0.0.1:8261 operate-source create source.yaml
 }
 ```
 
-可以使用 `operate-source show` 命令查看当前数据源列表
+可以使用 `operate-source show` 命令查看当前数据源列表：
 
 ```bash
 $ bin/dmctl --master-addr=127.0.0.1:8261 operate-source show
@@ -133,7 +133,7 @@ $ bin/dmctl --master-addr=127.0.0.1:8261 operate-source show
 
 ### 创建同步任务
 
-创建任务配置文件 `task.yaml`，配置增量同步模式，以及每个上游的同步起点
+创建任务配置文件 `task.yaml`，配置增量同步模式，以及每个上游的同步起点。示例如下：
 
 ```yaml
 name: test             # 任务名称，需要全局唯一
@@ -146,7 +146,7 @@ mysql-instances:
       binlog-pos: 2022
 ```
 
-配置要同步的库
+配置需要同步的库：
 
 ```yaml
 block-allow-list:   # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
@@ -158,7 +158,7 @@ mysql-instances:
     block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
 ```
 
-补充下游数据库连接等信息。完整的任务配置文件如下
+补充下游数据库连接等信息。完整的任务配置文件如下：
 
 ```yaml
 name: test             # 任务名称，需要全局唯一
@@ -184,7 +184,7 @@ mysql-instances:
       binlog-pos: 2022
 ```
 
-使用 `start-task` 命令创建同步任务
+使用 `start-task` 命令创建同步任务：
 
 ```bash
 $ bin/dmctl --master-addr=127.0.0.1:8261 start-task task.yaml
@@ -202,7 +202,7 @@ $ bin/dmctl --master-addr=127.0.0.1:8261 start-task task.yaml
 }
 ```
 
-使用 `query-status` 查看同步任务，确认无报错信息
+使用 `query-status` 查看同步任务，确认无报错信息：
 
 ```bash
 $ bin/dmctl --master-addr=127.0.0.1:8261 query-status test
@@ -250,14 +250,14 @@ $ bin/dmctl --master-addr=127.0.0.1:8261 query-status test
 
 ## 测试同步任务
 
-在上游数据库插入数据
+在上游数据库插入新增数据：
 
 ```sql
 MySQL [log]> INSERT INTO messages VALUES (4, 'msg4'), (5, 'msg5');
 Query OK, 2 rows affected (0.010 sec)
 Records: 2  Duplicates: 0  Warnings: 0
 
-MySQL [log]> select * from messages;
+MySQL [log]> SELECT * FROM messages;
 +----+---------+
 | id | message |
 +----+---------+
@@ -270,10 +270,10 @@ MySQL [log]> select * from messages;
 5 rows in set (0.001 sec)
 ```
 
-查询下游数据库，可以发现 `(3, 'msg3')` 以后的数据已经同步成功了
+查询下游数据库，可以发现 `(3, 'msg3')` 之后的数据已同步成功：
 
 ```sql
-MySQL [log]> select * from messages;
+MySQL [log]> SELECT * FROM messages;
 +----+---------+
 | id | message |
 +----+---------+
