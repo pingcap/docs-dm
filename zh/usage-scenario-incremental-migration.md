@@ -53,7 +53,7 @@ INSERT INTO messages VALUES (1, 'msg1'), (2, 'msg2'), (3, 'msg3');
 
 ### 确定增量同步起始位置
 
-首先需要确定开始迁移的上游 binlog 位置。本例从当前位置，即插入 `(3, 'msg3')` 这条记录的下一个位置开始同步，这可以通过 `SHOW MASTER STATUS` 命令进行查看
+首先需要确定开始迁移的上游 binlog 位置。本例从当前位置，即插入 `(3, 'msg3')` 这条记录的下一个位置开始同步。可以通过 `SHOW MASTER STATUS` 命令查看当前位置：
 
 ```sql
 MySQL [log]> SHOW MASTER STATUS;
@@ -65,7 +65,7 @@ MySQL [log]> SHOW MASTER STATUS;
 1 row in set (0.000 sec)
 ```
 
-我们将从 `(mysql-bin.000001, 2022)` 这个位置开始同步。
+本例将从 `(mysql-bin.000001, 2022)` 这个位置开始同步。
 
 如果需要从其他位置开始同步，可以使用 `SHOW BINLOG EVENTS` 语句，或者 `mysqlbinlog` 工具查看 binlog，选择合适的位置。
 
