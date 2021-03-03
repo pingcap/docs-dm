@@ -1,10 +1,10 @@
 ---
-title: 告警处理
+title: 处理告警
 summary: 了解 DM 中各主要告警信息的处理方法。
 aliases: ['/docs-cn/tidb-data-migration/dev/handle-alerts/']
 ---
 
-# 告警处理
+# 处理告警
 
 本文档介绍 DM 中各主要告警信息的处理方法。
 
@@ -44,6 +44,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/handle-alerts/']
 
 - 手动清理该磁盘上其他无用数据以增加可用容量。
 - 尝试调整 relay log 的[自动清理策略](relay-log.md#自动数据清理)或执行[手动清理](relay-log.md#手动数据清理)。
+- 使用 `pause-relay` 命令暂停 relay log 的拉取，并在磁盘空间合适之后使用 `resume-relay` 命令恢复。需要注意上游数据源不要清理尚未拉取的 binlog。
 
 ### `DM_relay_log_data_corruption`
 

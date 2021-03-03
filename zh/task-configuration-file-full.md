@@ -7,7 +7,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/task-configuration-file-full/','/zh/
 
 本文档主要介绍 Data Migration (DM) 的任务完整的配置文件，包含[全局配置](#全局配置) 和[实例配置](#实例配置) 两部分。
 
-关于各配置项的功能和配置，请参阅[数据迁移功能](overview.md#迁移功能介绍)。
+关于各配置项的功能和配置，请参阅[数据迁移功能](overview.md#基本功能)。
 
 ## 关键概念
 
@@ -27,7 +27,7 @@ DM 会根据任务类型进行相应检查。可以参考[关闭检查项](prech
 # ----------- 全局配置 -----------
 ## ********* 基本信息配置 *********
 name: test                      # 任务名称，需要全局唯一
-task-mode: all                  # 任务模式，可设为 "full"、"incremental"、"all"
+task-mode: all                  # 任务模式，可设为 "full" - "只进行全量数据迁移"、"incremental" - "Binlog 实时同步"、"all" - "全量 + Binlog 迁移"
 shard-mode: "pessimistic"       # 如果为分库分表合并任务则需要配置该项。默认使用悲观协调模式 "pessimistic"，在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
 timezone: "Asia/Shanghai"       # 时区
@@ -75,8 +75,8 @@ filters:                                        # 上游数据库实例匹配的
     events: ["all dml"]
     action: Do
 
-block-allow-list:                    # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-  bw-rule-1:                         # 配置名称
+block-allow-list:                    # 定义数据源迁移表的过滤规则，可以定义多个规则。如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+  bw-rule-1:                         # 规则名称
     do-dbs: ["~^test.*", "user"]     # 迁移哪些库
     ignore-dbs: ["mysql", "account"] # 忽略哪些库
     do-tables:                       # 迁移哪些表
@@ -84,6 +84,7 @@ block-allow-list:                    # 上游数据库实例匹配的表的 bloc
       tbl-name: "~^t.*"
     - db-name: "user"
       tbl-name: "information"
+  bw-rule-2:                         # 规则名称
     ignore-tables:                   # 忽略哪些表
     - db-name: "user"
       tbl-name: "log"
