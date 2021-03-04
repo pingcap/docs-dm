@@ -145,7 +145,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
     {{< copyable "" >}}
 
     ```yaml
-    block-allow-list:   # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:   # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
       log-ignored:
         ignore-dbs: ["log"]
     ```
@@ -172,7 +172,7 @@ mysql-instances:
     source-id: "instance-1"
     route-rules: ["instance-1-user-rule"]
     filter-rules: ["log-filter-rule", "user-filter-rule" , "store-filter-rule"]
-    block-allow-list:  "log-ignored"    # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:  "log-ignored"    # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -180,7 +180,7 @@ mysql-instances:
     source-id: "instance-2"
     route-rules: ["instance-2-user-rule", instance-2-store-rule]
     filter-rules: ["log-filter-rule", "user-filter-rule" , "store-filter-rule"]
-    block-allow-list:  "log-ignored"    # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:  "log-ignored"    # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -188,7 +188,7 @@ mysql-instances:
     source-id: "instance-3"
     route-rules: ["instance-3-user-rule", instance-3-store-rule]
     filter-rules: ["log-filter-rule", "user-filter-rule" , "store-filter-rule"]
-    block-allow-list:  "log-ignored"    # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:  "log-ignored"    # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -231,7 +231,7 @@ filters:
     events: ["drop database", "truncate table", "drop table", "delete"]
     action: Ignore
 
-block-allow-list:   # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+block-allow-list:   # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
   log-ignored:
     ignore-dbs: ["log"]
 

@@ -89,17 +89,17 @@ mysql-instances:
   # 上游实例或者复制组 ID，参考 `inventory.ini` 的 `source_id` 或者 `dm-master.toml` 的 `source-id 配置`。
   source-id: "mysql-replica-01"
   # 需要迁移的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置。
-  block-allow-list: "global"          # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
+  block-allow-list: "global"          # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list。
   # dump 处理单元的配置项名称，用于引用全局的 dump 处理单元配置。
   mydumper-config-name: "global"
 
 -
   source-id: "mysql-replica-02"
-  block-allow-list: "global"          # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
+  block-allow-list: "global"          # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list。
   mydumper-config-name: "global"
 
 # 黑白名单全局配置，各实例通过配置项名引用。
-block-allow-list:                     # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
+block-allow-list:                     # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list。
   global:
     do-tables:                        # 需要迁移的上游表的白名单。
     - db-name: "test_db"              # 需要迁移的表的库名。

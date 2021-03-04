@@ -171,13 +171,13 @@ bin/dmctl --master-addr=127.0.0.1:8261 operate-source show
    {{< copyable "" >}}
 
    ```yaml
-   block-allow-list:   # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+   block-allow-list:   # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
      bw-rule-1:        # 黑白名单配置项 ID
        do-dbs: ["log"] # 迁移哪些库
    
    mysql-instances:
      - source-id: "mysql-01"          # 上游实例或者复制组 ID
-       block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+       block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
    ```
 
 3. 补充下游数据库连接等信息。完整的任务配置文件如下：
@@ -195,14 +195,14 @@ bin/dmctl --master-addr=127.0.0.1:8261 operate-source show
      password: ""         # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
    
    ## ******** 功能配置集 **********
-   block-allow-list:   # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+   block-allow-list:   # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
      bw-rule-1:        # 黑白名单配置项 ID
        do-dbs: ["log"] # 迁移哪些库
    
    # ----------- 实例配置 -----------
    mysql-instances:
      - source-id: "mysql-01"         # 上游实例或者复制组 ID
-       block-allow-list: "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+       block-allow-list: "bw-rule-1" # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
        meta:                         # `task-mode` 为 `incremental` 且下游数据库的 `checkpoint` 不存在时 binlog 迁移开始的位置; 如果 `checkpoint` 存在，则以 `checkpoint` 为 准
          binlog-name: mysql-bin.000001
          binlog-pos: 2022
