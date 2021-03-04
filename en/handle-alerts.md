@@ -9,6 +9,19 @@ This document introduces how to deal with the alert information in DM.
 
 ## Alerts related to high availability
 
+### `DM_master_all_down`
+
+- Description:
+
+    If all DM-master nodes are offline, this alert is triggered.
+
+- Solution:
+
+    You can take the following steps to handle the alert:
+
+    1. Check the environment of the cluster.
+    2. Troubleshoot errors through logs.
+
 ### `DM_worker_offline`
 
 - Description:
@@ -97,6 +110,7 @@ This document introduces how to deal with the alert information in DM.
     If an error occurs when the relay log processing unit tries to read the binlog event from the upstream, this unit moves to the `Paused` state, and an alert is triggered immediately.
 
 - Solution:
+
     Refer to [Troubleshoot DM](error-handling.md#troubleshooting).
 
 ### `DM_fail_to_write_relay_log`
