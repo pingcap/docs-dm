@@ -6,9 +6,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/hardware-and-software-requirements/'
 
 # DM 集群软硬件环境需求
 
-DM 支持主流的 Linux 操作系统，可以部署和运行在 Intel 架构服务器环境及主流虚拟化环境中。
-
-## Linux 操作系统版本要求
+DM 支持主流的 Linux 操作系统，具体版本要求见下表：
 
 | Linux 操作系统平台       | 版本         |
 | :----------------------- | :----------: |
@@ -17,9 +15,7 @@ DM 支持主流的 Linux 操作系统，可以部署和运行在 Intel 架构服
 | Oracle Enterprise Linux  | 7.3 及以上   |
 | Ubuntu LTS               | 16.04 及以上 |
 
-> **注意：**
->
-> 以上 Linux 操作系统可运行在物理服务器以及 VMware、KVM、XEN 主流虚拟化环境上。在虚拟化环境中使用 DM 时，CPU、内存、磁盘的性能可能会产生损耗，从而导致 DM 性能下降。
+DM 可以在 Intel 架构服务器环境及主流虚拟化环境中部署和运行。
 
 ## 服务器建议配置
 
