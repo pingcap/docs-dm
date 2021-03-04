@@ -49,5 +49,5 @@ DM 支持部署和运行在 Intel x86-64 架构的 64 位通用硬件服务器�
 
 > **注意：**
 >
-> - 在生产环境中，DM-master 和 DM-worker 不建议部署和运行在同一个服务器上，以防 DM-worker 对磁盘的写入干扰 DM-master 高可用组件使用磁盘。
+> - 在生产环境中，不建议将 DM-master 和 DM-worker 部署和运行在同一个服务器上，以防 DM-worker 对磁盘的写入干扰 DM-master 高可用组件使用磁盘。
 > - 在遇到性能问题时可参照[配置调优](tune-configuration.md)尝试修改任务配置。调优效果不明显时，可以尝试升级服务器配置。
