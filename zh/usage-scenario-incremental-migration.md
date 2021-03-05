@@ -5,33 +5,27 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-incremental-migration
 
 # Data Migration 增量数据迁移场景
 
-本文介绍如何使用 DM 将某时刻起的增量数据变动同步到下游 TiDB。本文以一个上游 MySQL 实例进行迁移为例，如需要其他功能，请参照其他使用场景和功能。
+本文介绍如何使用 DM 将源数据库从指定位置开始的 Binlog 同步到下游 TiDB。本文以一个上游 MySQL 实例进行迁移为例。
 
 ## 上游实例
 
 假设上游实例为：
 
-- 实例 1
-
-    | Schema | Tables |
-    |:------|:------|
-    | user  | information, log |
-    | store | store_bj, store_tj |
-    | log   | messages |
+| Schema | Tables |
+|:------|:------|
+| user  | information, log |
+| store | store_bj, store_tj |
+| log   | messages |
 
 ## 迁移要求
 
-将 `log` 库从某个时间点起的数据变动同步到下游。
+将 `log` 库从某个时间点起的数据变动同步到 TiDB 集群。
 
-## 下游实例
-
-下游为全新部署的 TiDB 集群。
-
-## 模拟上游迁移数据
+## 模拟上游插入数据
 
 在开始迁移之前，我们向上游 MySQL 插入一些测试数据。假设 `log.messages` 的表结构如下：
 
-{{< copyable "" >}}
+{{< copyable "sql" >}}
 
 ```sql
 CREATE TABLE `messages` (
@@ -43,7 +37,7 @@ CREATE TABLE `messages` (
 
 向表中插入以下数据：
 
-{{< copyable "" >}}
+{{< copyable "sql" >}}
 
 ```sql
 INSERT INTO messages VALUES (1, 'msg1'), (2, 'msg2'), (3, 'msg3');
@@ -67,7 +61,7 @@ MySQL [log]> SHOW MASTER STATUS;
 
 本例将从 `(mysql-bin.000001, 2022)` 这个位置开始同步。
 
-如果需要从其他位置开始同步，可以使用 `SHOW BINLOG EVENTS` 语句，或者 `mysqlbinlog` 工具查看 binlog，选择合适的位置。
+如果需要从其他位置开始同步，可以使用 `SHOW BINLOG EVENTS` 语句，或者使用 `mysqlbinlog` 工具查看 binlog，选择合适的位置。
 
 ### 在下游创建表
 
