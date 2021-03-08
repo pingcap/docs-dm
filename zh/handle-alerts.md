@@ -10,6 +10,10 @@ aliases: ['/docs-cn/tidb-data-migration/dev/handle-alerts/']
 
 ## 高可用告警
 
+### `DM_master_all_down`
+
+当全部 DM-master 离线时触发该告警。发生该错误时，需要检查集群环境，并通过各节点日志排查错误。
+
 ### `DM_worker_offline`
 
 存在离线的 DM-worker 超过一小时会触发该告警。在高可用架构下，该告警可能不会直接中断任务，但是会提升任务中断的风险。处理告警可以查看对应 DM-worker 节点的工作状态，检查是否连通，并通过日志排查错误。
@@ -40,6 +44,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/handle-alerts/']
 
 - 手动清理该磁盘上其他无用数据以增加可用容量。
 - 尝试调整 relay log 的[自动清理策略](relay-log.md#自动数据清理)或执行[手动清理](relay-log.md#手动数据清理)。
+- 使用 `pause-relay` 命令暂停 relay log 的拉取，并在磁盘空间合适之后使用 `resume-relay` 命令恢复。需要注意上游数据源不要清理尚未拉取的 binlog。
 
 ### `DM_relay_log_data_corruption`
 
