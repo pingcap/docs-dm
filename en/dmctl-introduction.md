@@ -42,7 +42,7 @@ Available Commands:
   check-task      Checks the configuration file of the task.
   get-config      Gets the configuration.
   handle-error    `skip`/`replace`/`revert` the current error event or a specific binlog position (binlog-pos) event.
-  help            Help about any command
+  help            Gets help about any command.
   list-member     Lists member information.
   offline-member  Offlines member which has been closed.
   operate-leader  `evict`/`cancel-evict` the leader.
