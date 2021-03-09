@@ -21,8 +21,7 @@ jobs:
     - name: "Check git conflicts"
       run:
         wget https://raw.githubusercontent.com/CharLotteiu/pingcap-docs-checks/main/check-conflicts.py;
-        python3 check-conflicts.py $(git diff-tree --name-only --no-commit-id -r upstream/release-2.0
-..HEAD -- '*.md' '*.yml' '*.yaml')
+        python3 check-conflicts.py $(git diff-tree --name-only --no-commit-id -r upstream/release-2.0..HEAD -- '*.md' '*.yml' '*.yaml')
     - name: Markdown lint
       uses: avto-dev/markdown-lint@v1
       with:
