@@ -62,6 +62,7 @@ This document introduces how to deal with the alert information in DM.
     If an error occurs when the relay log processing unit tries to read the binlog event from the upstream, this unit moves to the `Paused` state, and an alert is triggered immediately.
 
 - Solution:
+
     Refer to [Troubleshoot DM](error-handling.md#troubleshooting).
 
 ### `DM_fail_to_write_relay_log`
