@@ -18,7 +18,7 @@ jobs:
         git fetch upstream;
         wget https://raw.githubusercontent.com/CharLotteiu/pingcap-docs-checks/main/check-file-encoding.py;
         python3 check-file-encoding.py $(git diff-tree --name-only --no-commit-id -r upstream/release-2.0
-..HEAD -- '*.md' ':(exclude).github/*')
+..HEAD -- '*.md' ':(exclude).github/*');
     - name: "Check git conflicts"
       run:
         wget https://raw.githubusercontent.com/CharLotteiu/pingcap-docs-checks/main/check-conflicts.py;
