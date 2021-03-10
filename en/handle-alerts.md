@@ -20,7 +20,8 @@ This document introduces how to deal with the alert information in DM.
     You can take the following steps to handle the alert:
 
     1. Check the environment of the cluster.
-    2. Troubleshoot errors through logs.
+    2. Check the logs of all DM-master nodes for troubleshooting.
+
 
 ### `DM_worker_offline`
 
