@@ -26,7 +26,7 @@ advertise-addr = "127.0.0.1:8262"
 join = "http://127.0.0.1:8261,http://127.0.0.1:8361,http://127.0.0.1:8461"
 
 keepalive-ttl = 60
-relay-keepalive-ttl = 1800 # New in v2.0.2.
+relay-keepalive-ttl = 1800 # New in DM v2.0.2.
 
 ssl-ca = "/path/to/ca.pem"
 ssl-cert = "/path/to/cert.pem"
@@ -47,7 +47,7 @@ cert-allowed-cn = ["dm"]
 | `advertise-addr` | Specifies the address that DM-worker advertises to the outside world. |
 | `join` | Corresponds to one or more [`master-addr`s](dm-master-configuration-file.md#global-configuration) in the DM-master configuration file. |
 | `keepalive-ttl` | The keepalive time (in seconds) of a DM-worker node to the DM-master node if the upstream data source of the DM-worker node does not enable the relay log. The default value is 60s.|
-| `relay-keepalive-ttl` | The keepalive time (in seconds) of a DM-worker node to the DM-master node if the upstream data source of the DM-worker node enables the relay log. The default value is 1800s. New in v2.0.2.|
+| `relay-keepalive-ttl` | The keepalive time (in seconds) of a DM-worker node to the DM-master node if the upstream data source of the DM-worker node enables the relay log. The default value is 1800s. New in DM v2.0.2.|
 | `ssl-ca` | The path of the file that contains list of trusted SSL CAs for DM-worker to connect with other components. |
 | `ssl-cert` | The path of the file that contains X509 certificate in PEM format for DM-worker to connect with other components. |
 | `ssl-key` | The path of the file that contains X509 key in PEM format for DM-worker to connect with other components. |
