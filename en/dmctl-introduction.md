@@ -26,11 +26,11 @@ Enter the interactive mode to interact with DM-master:
 
 ```
 Welcome to dmctl
-Release Version: v1.0.1
-Git Commit Hash: e63c6cdebea0edcf2ef8c91d84cff4aaa5fc2df7
-Git Branch: release-1.0
-UTC Build Time: 2019-09-10 06:15:05
-Go Version: go version go1.12 linux/amd64
+Release Version: v2.0.0
+Git Commit Hash: e6ca256257fbe6e744892841537a16eb84469116
+Git Branch: release-2.0
+UTC Build Time: 2020-10-30 07:43:00
+Go Version: go version go1.13 linux/amd64
 
 » help
 DM control
@@ -40,16 +40,19 @@ Usage:
 
 Available Commands:
   check-task      Checks the configuration file of the task.
-  get-task-config Gets the task configuration.
-  handle-error    skip/replace/revert the current error event or a specific binlog position (binlog-pos) event.
-  help            Help about any command.
+  get-config      Gets the configuration.
+  handle-error    `skip`/`replace`/`revert` the current error event or a specific binlog position (binlog-pos) event.
+  help            Gets help about any command.
   list-member     Lists member information.
   offline-member  Offlines member which has been closed.
-  operate-leader  evict/cancel-evict the leader.
-  operate-schema  get/set/remove the schema for an upstream table.
-  operate-source  create/update/stop/show upstream MySQL/MariaDB source.
+  operate-leader  `evict`/`cancel-evict` the leader.
+  operate-schema  `get`/`set`/`remove` the schema for an upstream table.
+  operate-source  `create`/`update`/`stop`/`show` upstream MySQL/MariaDB source.
+  pause-relay     Pauses DM-worker's relay unit.
   pause-task      Pauses a specified running task.
+  purge-relay     Purges relay log files of the DM-worker according to the specified filename.
   query-status    Queries task status.
+  resume-relay    Resumes DM-worker's relay unit.
   resume-task     Resumes a specified paused task.
   show-ddl-locks  Shows un-resolved DDL locks.
   start-task      Starts a task as defined in the configuration file.
@@ -83,15 +86,18 @@ The command mode differs from the interactive mode in that you need to append th
 ```
 Available Commands:
   check-task            check-task <config-file>
-  get-task-config       get-task-config <task-name | task-file> [--file filename]
+  get-config            get-config <task | master | worker | source> <name> [--file filename]
   handle-error          handle-error <task-name | task-file> [-s source ...] [-b binlog-pos] <skip/replace/revert> [replace-sql1;replace-sql2;]
   list-member           list-member [--leader] [--master] [--worker] [--name master-name/worker-name ...]
   offline-member        offline-member <--master/--worker> <--name master-name/worker-name>
   operate-leader        operate-leader <operate-type>
   operate-schema        operate-schema <operate-type> <-s source ...> <task-name | task-file> <-d database> <-t table> [schema-file]
   operate-source        operate-source <operate-type> [config-file ...] [--print-sample-config]
+  pause-relay           pause-relay <-s source ...>
   pause-task            pause-task [-s source ...] <task-name | task-file>
+  purge-relay           purge-relay <-s source> <-f filename> [--sub-dir directory]
   query-status          query-status [-s source ...] [task-name | task-file] [--more]
+  resume-relay          resume-relay <-s source ...>
   resume-task           resume-task [-s source ...] <task-name | task-file>
   show-ddl-locks        show-ddl-locks [-s source ...] [task-name | task-file]
   start-task            start-task [-s source ...] [--remove-meta] <config-file>

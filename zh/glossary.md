@@ -32,7 +32,7 @@ DM-worker 内部用于读取上游 Binlog 或本地 Relay log 并迁移到下游
 
 ### Block & allow table list
 
-针对上游数据库实例表的黑白名单过滤功能，具体可参考 [Block & Allow Table Lists](overview.md#block--allow-table-lists)。该功能与 [MySQL Replication Filtering](https://dev.mysql.com/doc/refman/5.6/en/replication-rules.html) 及 [MariaDB Replication Filters](https://mariadb.com/kb/en/library/replication-filters/) 类似。
+针对上游数据库实例表的黑白名单过滤功能，具体可参考 [Block & Allow Table Lists](overview.md#block--allow-lists)。该功能与 [MySQL Replication Filtering](https://dev.mysql.com/doc/refman/5.6/en/replication-rules.html) 及 [MariaDB Replication Filters](https://mariadb.com/kb/en/library/replication-filters/) 类似。
 
 ## C
 
@@ -101,6 +101,7 @@ DM-worker 内部用于从上游拉取 Binlog 并写入数据到 Relay log 的处
 
 - 启动或恢复增量复制任务的前 5 分钟保持启用
 - 任务配置文件中设置 `safe-mode: true` 时会始终启用
+- 合库合表模式下，DDL 尚未在所有分表完成同步时保持启用
 - 在全量迁移任务中的 dump 处理单元配置 `--consistency none` 后，不能确定导出开始时的 binlog 变动是否影响了导出数据。Safe mode 会在增量复制这部分 binlog 时保持启用
 
 ### Shard DDL

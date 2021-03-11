@@ -1,9 +1,9 @@
 ---
-title: online-ddl-scheme 功能介绍
+title: 迁移使用 GH-ost/PT-osc 的源数据库
 aliases: ['/docs-cn/tidb-data-migration/dev/feature-online-ddl-scheme/']
 ---
 
-# DM online-ddl-scheme
+# 迁移使用 GH-ost/PT-osc 的源数据库
 
 ## 概述
 

@@ -76,8 +76,7 @@ mysql-instances:
 
 ## 实例配置
 
-本小节定义具体的数据迁移子任务，DM 支持从单个或者多个上游 MySQL 实例迁移数据到同一个下游数据库实例。
-配置项说明参见以上示例配置文件中 `mysql-instances` 的注释。
+本小节定义具体的数据迁移子任务，DM 支持从单个或者多个上游 MySQL 实例迁移数据到同一个下游数据库实例。配置项说明参见以上示例配置文件中 `mysql-instances` 的注释。
 
 ## 修改任务配置
 
@@ -90,3 +89,5 @@ mysql-instances:
 2. 通过 `stop-task` 命令停止任务：`stop-task <task-name | task-file>`
 
 3. 通过 `start-task` 命令启动任务：`start-task <config-file>`
+
+4. 在 DM v2.0.1 及其以后版本中，可通过 `get-config` 命令检查配置是否生效：`get-config task <task-name>`

@@ -6,24 +6,20 @@ aliases: ['/docs-cn/tidb-data-migration/dev/quick-start-with-dm/','/docs-cn/tidb
 
 # TiDB Data Migration 快速上手指南
 
-本文将介绍如何快速上手体验数据迁移工具 [TiDB Data Migration](https://github.com/pingcap/dm) (DM)。体验方式为使用 binary 包部署 DM。
+本文介绍如何快速体验使用数据迁移工具 [TiDB Data Migration](https://github.com/pingcap/dm) (DM) 从 MySQL 迁移数据到 TiDB。
 
 ## 使用样例
 
-在本地部署 DM-master 与 DM-worker 实例。各个节点的信息如下：
+在本地部署的 DM 集群组件和访问的 MySQL 和 TiDB 节点的信息如下：
 
 | 实例        | 服务器地址   | 端口使用 |
 | :---------- | :----------- | :----------- |
-| DM-master1 | 127.0.0.1 | 8261, 8291 |
-| DM-master2 | 127.0.0.1 | 8361, 8292 |
-| DM-master3 | 127.0.0.1 | 8461, 8293 |
-| DM-worker1 | 127.0.0.1 | 8262 |
-| DM-worker2 | 127.0.0.1 | 8263 |
-| DM-worker3 | 127.0.0.1 | 8264 |
+| DM-master  | 127.0.0.1 | 8261, 8291（内部端口） |
+| DM-worker  | 127.0.0.1 | 8262 |
+| MySQL-3306 | 127.0.0.1 | 3306 |
+| TiDB       | 127.0.0.1 | 4000 |
 
-## 准备工作
-
-部署 DM 前需要下载 binary，搭建好上下游数据库，并准备好数据。
+## 使用 binary 包部署 DM
 
 ### 准备 DM binary 包
 
@@ -49,114 +45,33 @@ cd dm
 make
 ```
 
-#### 可选项：将下载/编译的 binary 加入环境变量 PATH 中，方便部署使用
+### 部署 DM-master
+
+执行如下命令启动 DM-master：
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-DM_PATH=`pwd` && export PATH=$PATH:$DM_PATH/bin
+nohup bin/dm-master --master-addr='127.0.0.1:8261' --log-file=/tmp/dm-master.log --name="master1" >> /tmp/dm-master.log 2>&1 &
 ```
 
-## 部署 DM-master
+### 部署 DM-worker
 
-分别创建 master1、master2、master3 三个目录，在每个目录下创建 DM-master 的配置文件，配置文件如下：
-
-`master1/dm-master1.toml`:
-
-```toml
-# DM-master1 Configuration.
-name = "master1"
-master-addr = ":8261"
-advertise-addr = "127.0.0.1:8261"
-peer-urls = "127.0.0.1:8291"
-initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,master3=http://127.0.0.1:8293"
-```
-
-`master2/dm-master2.toml`:
-
-```toml
-# DM-master2 Configuration.
-name = "master2"
-master-addr = ":8361"
-advertise-addr = "127.0.0.1:8361"
-peer-urls = "127.0.0.1:8292"
-initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,master3=http://127.0.0.1:8293"
-```
-
-`master3/dm-master3.toml`:
-
-```toml
-# DM-master3 Configuration.
-name = "master3"
-master-addr = ":8461"
-advertise-addr = "127.0.0.1:8461"
-peer-urls = "127.0.0.1:8293"
-initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,master3=http://127.0.0.1:8293"
-```
-
-分别进入 master1、master2、master3 三个目录，执行如下命令启动 DM-master：
+执行如下命令启动 DM-worker：
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-nohup dm-master --config=dm-master1.toml --log-file=dm-master1.log >> dm-master1.log 2>&1 &
-nohup dm-master --config=dm-master2.toml --log-file=dm-master2.log >> dm-master2.log 2>&1 &
-nohup dm-master --config=dm-master3.toml --log-file=dm-master3.log >> dm-master3.log 2>&1 &
+nohup bin/dm-worker --worker-addr='127.0.0.1:8262' --log-file=/tmp/dm-worker.log --join='127.0.0.1:8261' --name="worker1" >> /tmp/dm-worker.log 2>&1 &
 ```
 
-## 部署 DM-worker
-
-分别创建 worker1、worker2、worker3 三个目录，在每个目录下创建 DM-worker 的配置文件，配置文件如下：
-
-`worker1/dm-worker1.toml`:
-
-```toml
-# DM-worker1 Configuration
-name = "worker1"
-worker-addr="0.0.0.0:8262"
-advertise-addr="127.0.0.1:8262"
-join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
-```
-
-`worker2/dm-worker2.toml`:
-
-```toml
-# DM-worker2 Configuration
-name = "worker2"
-worker-addr="0.0.0.0:8263"
-advertise-addr="127.0.0.1:8263"
-join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
-```
-
-`worker3/dm-worker3.toml`:
-
-```toml
-# DM-worker3 Configuration
-name = "worke3"
-worker-addr="0.0.0.0:8264"
-advertise-addr="127.0.0.1:8264"
-join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
-```
-
-分别进入 worker1、worker2、worker3 三个目录，执行如下命令启动 DM-worker：
+### 检查 DM 集群部署是否正常
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-nohup dm-worker --config=dm-worker1.toml --log-file=dm-worker1.log >> dm-worker1.log 2>&1 &
-nohup dm-worker --config=dm-worker2.toml --log-file=dm-worker2.log >> dm-worker2.log 2>&1 &
-nohup dm-worker --config=dm-worker3.toml --log-file=dm-worker3.log >> dm-worker3.log 2>&1 &
+bin/dmctl --master-addr=127.0.0.1:8261 list-member
 ```
-
-## 检查 DM 集群部署是否正常
-
-{{< copyable "shell-regular" >}}
-
-```bash
-dmctl --master-addr=127.0.0.1:8261 list-member
-```
-
-检查返回结果中是否有 leader 项，同时检查 master 与 worker 项是否包含了所有的 master 与 worker 拓扑。
 
 一个正常 DM 集群的范例返回结果如下所示：
 
@@ -186,29 +101,7 @@ dmctl --master-addr=127.0.0.1:8261 list-member
                         "clientURLs": [
                             "http://127.0.0.1:8261"
                         ]
-                    },
-                    {
-                        "name": "master2",
-                        "memberID": "12007177379717800042",
-                        "alive": true,
-                        "peerURLs": [
-                            "http://127.0.0.1:8292"
-                        ],
-                        "clientURLs": [
-                            "http://127.0.0.1:8361"
-                        ]
-                    },
-                    {
-                        "name": "master3",
-                        "memberID": "13007157379717700087",
-                        "alive": true,
-                        "peerURLs": [
-                            "http://127.0.0.1:8293"
-                        ],
-                        "clientURLs": [
-                            "http://127.0.0.1:8461"
-                        ]
-                    },
+                    }
                 ]
             }
         },
@@ -221,18 +114,6 @@ dmctl --master-addr=127.0.0.1:8261 list-member
                         "addr": "127.0.0.1:8262",
                         "stage": "free",
                         "source": ""
-                    },
-                    {
-                        "name": "worker2",
-                        "addr": "127.0.0.1:8263",
-                        "stage": "free",
-                        "source": ""
-                    },
-                    {
-                        "name": "worker3",
-                        "addr": "127.0.0.1:8264",
-                        "stage": "free",
-                        "source": ""
                     }
                 ]
             }
@@ -240,3 +121,148 @@ dmctl --master-addr=127.0.0.1:8261 list-member
     ]
 }
 ```
+
+## 从 MySQL 同步数据到 TiDB
+
+### 准备数据
+
+使用 DM 之前，先准备好数据，向 mysql-3306 写入示例数据。
+
+{{< copyable "sql" >}}
+
+```sql
+drop database if exists `testdm`;
+create database `testdm`;
+use `testdm`;
+create table t1 (id bigint, uid int, name varchar(80), info varchar(100), primary key (`id`), unique key(`uid`)) DEFAULT CHARSET=utf8mb4;
+create table t2 (id bigint, uid int, name varchar(80), info varchar(100), primary key (`id`), unique key(`uid`)) DEFAULT CHARSET=utf8mb4;
+insert into t1 (id, uid, name) values (1, 10001, 'Gabriel García Márquez'), (2 ,10002, 'Cien años de soledad');
+insert into t2 (id, uid, name) values (3,20001, 'José Arcadio Buendía'), (4,20002, 'Úrsula Iguarán'), (5,20003, 'José Arcadio');
+```
+
+### 加载数据源 MySQL 配置
+
+运行数据迁移任务前，需要加载数据源的配置，也就是 MySQL 的相关设置，到 DM。
+
+#### 对数据源 MySQL 访问密码进行加密
+
+> **注意：**
+>
+> + 如果数据源没有设置密码，则可以跳过该步骤。
+> + DM v2.0 可以使用明文密码配置数据源的访问密码信息。
+
+为了安全，可配置及使用加密后的 MySQL 访问密码，以密码为 "123456" 为例：
+
+{{< copyable "shell-regular" >}}
+
+```bash
+./bin/dmctl --encrypt "123456"
+```
+
+```
+fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
+```
+
+记录该加密后的密码，用于下面新建 MySQL 数据源。
+
+#### 编写数据源 MySQL 配置
+
+把以下配置文件内容写入到 `mysql-source-conf.yaml` 中。
+
+MySQL1 的配置文件：
+
+```yaml
+# MySQL Configuration.
+
+source-id: "mysql-replica-01"
+
+from:
+  host: "127.0.0.1"
+  user: "root"
+  password: "fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg="
+  port: 3306
+```
+
+#### 加载数据源 MySQL 配置
+
+在终端中执行下面的命令，使用 dmctl 将 MySQL 的数据源配置加载到 DM 集群中：
+
+{{< copyable "shell-regular" >}}
+
+```bash
+./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create mysql-source-conf.yaml
+```
+
+结果如下：
+
+```bash
+{
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
+        }
+    ]
+}
+```
+
+这样就成功将 MySQL-3306 数据源添加到了 DM 集群。
+
+### 创建数据迁移任务
+
+在导入[准备数据](#准备数据)后，迁移 MySQL 的 `testdm`.`t1` 和  `testdm`.`t2` 两张表到 TiDB。
+
+创建任务的配置文件 `testdm-task.yaml`：
+
+{{< copyable "" >}}
+
+```yaml
+---
+name: testdm
+task-mode: all
+
+target-database:
+  host: "127.0.0.1"
+  port: 4000
+  user: "root"
+  password: "" # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
+
+mysql-instances:
+  - source-id: "mysql-replica-01"
+    block-allow-list:  "ba-rule1"
+
+block-allow-list:
+  ba-rule1:
+    do-dbs: ["testdm"]
+```
+
+使用 dmctl 创建任务：
+
+{{< copyable "shell-regular" >}}
+
+```bash
+./bin/dmctl -master-addr 127.0.0.1:8261 start-task testdm-task.yaml
+```
+
+结果如下：
+
+```bash
+{
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
+        }
+    ]
+}
+```
+
+这样就成功创建了一个将 MySQL-3306 数据迁移到 TiDB 的任务。
