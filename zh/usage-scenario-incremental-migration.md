@@ -196,6 +196,7 @@ CREATE TABLE `messages` (
 4. 启用 [Safe mode](glossary.md#safe-mode) 避免下游访问未同步记录报错
 
    {{< copyable "yaml" >}}
+
    ```yaml
    syncers:            # sync 处理单元的运行配置参数
      global:           # 配置名称
