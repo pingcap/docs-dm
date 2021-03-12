@@ -38,7 +38,7 @@ from:
 #   expires: 0
 #   remain-space: 15
 
-# Configure binlog event filters. (New in DM v2.0.2)
+# Configure binlog event filters. New in DM v2.0.2
 # case-sensitive: false
 # filters:
 # - schema-pattern: dmctl
