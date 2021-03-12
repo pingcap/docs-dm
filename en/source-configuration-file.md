@@ -27,7 +27,7 @@ from:
   host: "127.0.0.1"
   port: 3306
   user: "root"
-  password: "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # The user password of the upstream database. It is recommended to use the password encrypted with dmctl. 
+  password: "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # The user password of the upstream database. It is recommended to use the password encrypted with dmctl.
   security:                       # The TLS configuration of the upstream database
     ssl-ca: "/path/to/ca.pem"
     ssl-cert: "/path/to/cert.pem"
@@ -37,6 +37,16 @@ from:
 #   interval: 3600
 #   expires: 0
 #   remain-space: 15
+
+# Configure binlog event filters. New in DM v2.0.2
+# case-sensitive: false
+# filters:
+# - schema-pattern: dmctl
+#   table-pattern: t_1
+#   events: []
+#   sql-pattern:
+#   - alter table .* add column `aaa` int
+#   action: Ignore
 ```
 
 ## Configuration parameters
@@ -71,3 +81,12 @@ Generally, there is no need to manually configure these parameters unless there 
 > **Note:**
 >
 > The automatic data purge strategy only takes effect when `interval` is not 0 and at least one of the two configuration items `expires` and `remain-space` is not 0.
+
+### Binlog event filter
+
+Starting from DM v2.0.2, you can configure binlog event filters in the source configuration file.
+
+| Parameter        | Description                                    |
+| :------------ | :--------------------------------------- |
+| `case-sensitive` | Determines whether the filtering rules are case-sensitive. The default value is `false`. |
+| `filters` | Sets binlog event filtering rules. For details, see [Binlog event filter parameter explanation](key-features.md#parameter-explanation-2). |

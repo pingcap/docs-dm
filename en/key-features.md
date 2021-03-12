@@ -235,7 +235,8 @@ Binlog event filter is a more fine-grained filtering rule than the block and all
 
 > **Note:**
 >
-> If the same table matches multiple rules, these rules are applied in order and the block list has priority over the allow list. This means if both the `Ignore` and `Do` rules are applied to a single table, the `Ignore` rule takes effect.
+> - If the same table matches multiple rules, these rules are applied in order and the block list has priority over the allow list. This means if both the `Ignore` and `Do` rules are applied to a table, the `Ignore` rule takes effect.
+> - Starting from DM v2.0.2, you can configure binlog event filters in the source configuration file. For details, see [Upstream Database Configuration File](source-configuration-file.md).
 
 ### Parameter configuration
 
