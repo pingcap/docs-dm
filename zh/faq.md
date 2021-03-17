@@ -321,7 +321,7 @@ query-status test
     
 上述处理方案中，针对正常同步的 source（如上例 mysql2），重设增量任务时起始点需设置 `mysql-instances.meta` 为 `subTaskStatus.sync` 的 `syncerBinlog` 与 `syncerBinlogGtid`。
 
-## 在 DM 2.0 中开启 heartbeat，上游 MySQL 进行 vip 切换时，遇到 "heartbeat config is different from previous used: serverID not equal" 错误
+## 在 DM 2.0 中开启 heartbeat，虚拟 IP 环境下切换 DM-worker 与 MySQL 实例的连接，遇到 "heartbeat config is different from previous used: serverID not equal" 错误
 
 `heartbeat` 功能在 DM v2.0 已经默认关闭，如果用户在配置文件中开启会干扰高可用特性，在配置文件中关闭该项即可解决。步骤可参考 [AskTUG 该解决方案](https://asktug.com/t/topic/68351)。DM 将会在后续版本强制关闭该功能。
 
