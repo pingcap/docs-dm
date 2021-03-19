@@ -325,6 +325,6 @@ query-status test
 
 `heartbeat` 功能在 DM v2.0 已经默认关闭，如果用户在配置文件中开启会干扰高可用特性，在配置文件中关闭该项即可解决。步骤可参考 [AskTUG 该解决方案](https://asktug.com/t/topic/68351)。DM 将会在后续版本强制关闭该功能。
 
-## DM master 在重启后无法加入集群，报错信息为 "fail to start embed etcd, RawCause: member xxx has already been bootstrapped"
+## DM-master 在重启后无法加入集群，报错信息为 "fail to start embed etcd, RawCause: member xxx has already been bootstrapped"
 
 DM-master 会在启动时将 etcd 信息记录在当前目录，如果重启后当前目录发生变化，DM 缺失 etcd 信息从而启动失败。推荐使用 TiUP 运维 DM 避免这一问题。在需要使用二进制部署的场合，需要在 DM-master 配置文件中使用绝对路径配置 data-dir 项，或者注意运行命令的当前目录。
