@@ -327,4 +327,6 @@ query-status test
 
 ## DM-master 在重启后无法加入集群，报错信息为 "fail to start embed etcd, RawCause: member xxx has already been bootstrapped"
 
-DM-master 会在启动时将 etcd 信息记录在当前目录，如果重启后当前目录发生变化，DM 缺失 etcd 信息从而启动失败。推荐使用 TiUP 运维 DM 避免这一问题。在需要使用二进制部署的场合，需要在 DM-master 配置文件中使用绝对路径配置 data-dir 项，或者注意运行命令的当前目录。
+DM-master 会在启动时将 etcd 信息记录在当前目录。如果重启后当前目录发生变化，会导致 DM 缺失 etcd 信息，从而启动失败。
+
+推荐使用 TiUP 运维 DM 避免这一问题。在需要使用二进制部署的场合，需要在 DM-master 配置文件中使用绝对路径配置 data-dir 项，或者注意运行命令的当前目录。
