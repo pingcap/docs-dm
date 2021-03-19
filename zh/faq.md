@@ -323,7 +323,7 @@ query-status test
 
 ## 在 DM 2.0 中开启 heartbeat，虚拟 IP 环境下切换 DM-worker 与 MySQL 实例的连接，遇到 "heartbeat config is different from previous used: serverID not equal" 错误
 
-`heartbeat` 功能在 DM v2.0 已经默认关闭，如果用户在同步任务配置文件中开启会干扰高可用特性，在配置文件中关闭该项（通过设置 enable-heatbeat: false，然后更新任务配置）即可解决。DM 将会在后续版本强制关闭该功能。
+`heartbeat` 功能在 DM v2.0 已经默认关闭，如果用户在同步任务配置文件中开启会干扰高可用特性，在配置文件中关闭该项（通过设置 `enable-heartbeat: false`，然后更新任务配置）即可解决。DM 将会在后续版本强制关闭该功能。
 
 ## DM-master 在重启后无法加入集群，报错信息为 "fail to start embed etcd, RawCause: member xxx has already been bootstrapped"
 
