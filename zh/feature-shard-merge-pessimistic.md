@@ -12,7 +12,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/feature-shard-merge-pessimistic/']
 
 DM 在悲观模式下进行分表 DDL 的迁移有以下几点使用限制：
 
-- 对于每个逻辑 sharding group，只能使用一个独立的任务进行迁移。
+- 对于一个逻辑 sharding group，只能使用一个仅包含这些数据源的任务进行迁移。
 
 - 在一个逻辑 sharding group（需要合并迁移到下游同一个表的所有分表组成的 group）内，所有上游分表必须以相同的顺序执行相同的 DDL 语句（库名和表名可以不同），并且只有在所有分表执行完当前一条 DDL 语句后，下一条 DDL 语句才能执行。
 
