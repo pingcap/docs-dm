@@ -301,7 +301,7 @@ MySQL 及 DM 操作与处理流程如下：
         }
         ```
 
-7. 使用 `show-dd-locks` 确认 DDL lock 是否被成功 unlock。
+7. 使用 `show-ddl-locks` 确认 DDL lock 是否被成功 unlock。
 
     ```bash
     show-ddl-locks test
