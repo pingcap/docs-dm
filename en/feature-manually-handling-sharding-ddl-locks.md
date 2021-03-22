@@ -247,7 +247,7 @@ The operation processes of MySQL and DM are as follows:
 5. The lock whose ID is ```test-`shard_db`.`shard_table` ``` on `DM-master` cannot receive the DDL information of `DM-worker-2`.
 
     - The returned result `unsynced` by `show-ddl-locks` has always included the information of `DM-worker-2` (`127.0.0.1:8263`).
-6. Use `unlock-dll-lock` to ask `DM-master` to actively unlock the DDL lock.
+6. Use `unlock-ddl-lock` to ask `DM-master` to actively unlock the DDL lock.
     - If the owner of the DDL lock has gone offline, you can use the parameter `--owner` to specify another DM-worker as the new owner to execute the DDL.
     - If any DM-worker reports an error, `result` will be set to `false`, and at this point you should check carefully if the errors of each DM-worker is acceptable and within expectations.
 
