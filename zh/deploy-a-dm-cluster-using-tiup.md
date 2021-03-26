@@ -206,4 +206,4 @@ tiup dm display dm-test
 
 dmctl 是用来控制集群运行命令的工具，推荐[通过 TiUP 获取该工具](maintain-dm-using-tiup.md#集群控制工具-dmctl)。
 
-dmctl 支持命令模式与交互模式，具体请见[使用 dmctl 运维集群](dmctl-introduction.md#%E4%BD%BF%E7%94%A8-dmctl-%E8%BF%90%E7%BB%B4%E9%9B%86%E7%BE%A4)。
+dmctl 支持命令模式与交互模式，具体请见[使用 dmctl 运维集群](dmctl-introduction.md#使用-dmctl-运维集群)。
