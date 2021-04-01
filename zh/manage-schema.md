@@ -15,6 +15,8 @@ summary: 了解如何管理待迁移表在 DM 内部的表结构。
 
 对于增量复制，在整个数据链路中则包含以下几类可能相同或不同的表结构。
 
+![表结构](/media/operate-schema.png)
+
 - 上游当前时刻的表结构（记为 `schema-U`）。
 - 当前 DM 正在消费的 binlog event 的表结构（记为 `schema-B`，其对应于上游某个历史时刻的表结构）。
 - DM 内部（schema tracker 组件）当前维护的表结构（记为 `schema-I`）。
@@ -39,18 +41,20 @@ help operate-schema
 ```
 
 ```
-get/set/remove the schema for an upstream table
+`get`/`set`/`remove` the schema for an upstream table.
 
 Usage:
-  dmctl operate-schema <operate-type> <-s source ...> <task-name | task-file> <-d database> <-t table> [schema-file] [flags]
+  dmctl operate-schema <operate-type> <-s source ...> <task-name | task-file> <-d database> <-t table> [schema-file] [--flush] [--sync] [flags]
 
 Flags:
   -d, --database string   database name of the table
+      --flush             flush the table info and checkpoint immediately
   -h, --help              help for operate-schema
+      --sync              sync the table info to master to resolve shard ddl lock, only for optimistic mode now
   -t, --table string      table name
 
 Global Flags:
-  -s, --source strings   MySQL Source ID
+  -s, --source strings   MySQL Source ID.
 ```
 
 > **注意：**
@@ -77,6 +81,12 @@ Global Flags:
 + `schema-file`:
     - `set` 操作时必选，其他操作不需指定
     - 将被设置的表结构文件，文件内容应为一个合法的 `CREATE TABLE` 语句
++ `--flush`:
+    - 可选
+    - 同时将表结构写入 checkpoint，从而在任务重启后加载到该表结构
++ `--sync`:
+    - 可选
+    - 仅在乐观协调 DDL 出错时使用。使用该表结构更新乐观协调元数据中的表结构
 
 ## 使用示例
 

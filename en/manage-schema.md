@@ -15,6 +15,8 @@ When you migrate tables using DM, DM performs the following operations on the ta
 
 - For incremental replication, the whole data link contains the following table schemas, which might be the same or different:
 
+    ![schema](/media/operate-schema.png)
+
     * The upstream table schema at the current time, identified as `schema-U`.
     * The table schema of the binlog event currently being consumed by DM, identified as `schema-B`. This schema corresponds to the upstream table schema at a historical time.
     * The table schema currently maintained in DM (the schema tracker component), identified as `schema-I`.
@@ -39,18 +41,20 @@ help operate-schema
 ```
 
 ```
-get/set/remove the schema for an upstream table
+`get`/`set`/`remove` the schema for an upstream table.
 
 Usage:
-  dmctl operate-schema <operate-type> <-s source ...> <task-name | task-file> <-d database> <-t table> [schema-file] [flags]
+  dmctl operate-schema <operate-type> <-s source ...> <task-name | task-file> <-d database> <-t table> [schema-file] [--flush] [--sync] [flags]
 
 Flags:
   -d, --database string   database name of the table
+      --flush             flush the table info and checkpoint immediately
   -h, --help              help for operate-schema
+      --sync              sync the table info to master to resolve shard ddl lock, only for optimistic mode now
   -t, --table string      table name
 
 Global Flags:
-  -s, --source strings   MySQL Source ID
+  -s, --source strings   MySQL Source ID.
 ```
 
 > **Note:**
@@ -77,6 +81,13 @@ Global Flags:
 * `schema-file`:
     - Required when the operation type is `set`. Optional for other operation types.
     - The table schema file to be set. The file content should be a valid `CREATE TABLE` statement.
+* `--flush`:
+    - Optional
+    - Write the schema to checkpoint, so that DM could load it after restarting the task.
+* `--sync`:
+    - Optional
+    - Only used when an error occured in optimistic sharding DDL mode. Update the optimistic sharding metadata with this schema.
+
 
 ## Usage example
 
