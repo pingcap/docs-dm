@@ -55,8 +55,6 @@
   - [处理告警](handle-alerts.md)
   - [日常巡检](daily-check.md)
 + 使用场景
-  - [简单数据迁移场景](usage-scenario-simple-migration.md)
-  - [分库分表合并场景](usage-scenario-shard-merge.md)
   - [从 Aurora 迁移数据到 TiDB](migrate-from-mysql-aurora.md)
   - [TiDB 表结构存在更多列的迁移场景](usage-scenario-downstream-more-columns.md)
   - [变更同步的 MySQL 实例](usage-scenario-master-slave-switch.md)
