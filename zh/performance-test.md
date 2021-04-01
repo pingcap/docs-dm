@@ -51,7 +51,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 
 #### 创建数据迁移任务
 
-1. 创建上游 MySQL 的 source，将 `source-id` 配置为 `source-1`。详细操作方法参考：[加载数据源配置](manage-source.md#加载数据源配置)。
+1. 创建上游 MySQL 的 source，将 `source-id` 配置为 `source-1`。详细操作方法参考：[加载数据源配置](manage-source.md#加载、列出、移除数据源)。
 
 2. 创建 `full` 模式的 DM 迁移任务，示例任务配置文件如下：
 
@@ -110,7 +110,7 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
 
 #### 创建数据迁移任务
 
-1. 创建上游 MySQL 的 source, source-id 配置为 `source-1`（如果在全量迁移性能测试中已经创建，则不需要再次创建）。详细操作方法参考：[加载数据源配置](manage-source.md#加载数据源配置)。
+1. 创建上游 MySQL 的 source, source-id 配置为 `source-1`（如果在全量迁移性能测试中已经创建，则不需要再次创建）。详细操作方法参考：[加载数据源配置](manage-source.md#加载、列出、移除数据源)。
 
 2. 创建 `all` 模式的 DM 迁移任务，示例任务配置文件如下：
 
