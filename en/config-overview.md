@@ -24,7 +24,7 @@ This document gives an overview of configuration files of DM (Data Migration).
 
 You can take the following steps to create a data migration task:
 
-1. [Load the data source configuration into the DM cluster using dmctl](manage-source.md#load-the-data-source-configurations).
+1. [Load the data source configuration into the DM cluster using dmctl](manage-source.md#load-list-remove-the-data-source).
 2. Refer to the description in the [Task Configuration File](task-configuration-file.md) and create the configuration file `your_task.yaml`.
 3. [Create the data migration task using dmctl](create-task.md).
 
