@@ -5,7 +5,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
 
 # Data Migration 分库汇总迁移
 
-本文介绍了 DM 工具的一个简单使用场景（非分库分表合并场景）：将三个上游 MySQL 实例的数据迁移到一个下游 TiDB 集群中。
+本文介绍了 DM 工具的一个简单使用场景（分库汇总迁移场景）：将三个上游 MySQL 实例的数据迁移到一个下游 TiDB 集群中。
 
 ## 上游实例
 
