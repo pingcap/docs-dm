@@ -88,7 +88,6 @@ Global Flags:
     - Optional
     - Only used when an error occured in optimistic sharding DDL mode. Update the optimistic sharding metadata with this schema.
 
-
 ## Usage example
 
 ### Get the table schema
