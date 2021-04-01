@@ -5,7 +5,7 @@ summary: Learn how to manage upstream MySQL instances in TiDB Data Migration.
 
 # Manage Upstream MySQL Instances
 
-This document introduces how to manage upstream MySQL instances, including encrypting the MySQL password and managing data source configurations using [dmctl](dmctl-introduction.md).
+This document introduces how to manage upstream MySQL instances, including encrypting the MySQL password, managing data source configurations, and change binding relations of upstream MySQL instances and DM-workers using [dmctl](dmctl-introduction.md).
 
 ## Encrypt the database password
 
@@ -21,9 +21,9 @@ In DM configuration files, it is recommended to use the password encrypted with 
 MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
 
-## Load the data source configurations
+## Load, list, remove the data source
 
-You can use the `operate-source` command to load the data source configurations to the DM cluster.
+You can use the `operate-source` command to load, list or remove the data source configurations to the DM cluster.
 
 {{< copyable "" >}}
 
@@ -32,7 +32,7 @@ help operate-source
 ```
 
 ```
-create/update/stop/show upstream MySQL/MariaDB source
+`create`/`update`/`stop`/`show` upstream MySQL/MariaDB source.
 
 Usage:
   dmctl operate-source <operate-type> [config-file ...] [--print-sample-config] [flags]
@@ -45,7 +45,7 @@ Global Flags:
   -s, --source strings   MySQL Source ID
 ```
 
-## Usage example
+### Usage example
 
 {{< copyable "" >}}
 
@@ -55,7 +55,7 @@ operate-source create ./source.yaml
 
 For the configuration of `source.yaml`, refer to [Upstream Database Configuration File Introduction](source-configuration-file.md).
 
-## Flags description
+### Flags description
 
 + `create`: Creates one or more upstream database source(s). When creating multiple data sources fails, DM rolls back to the state where the command was not executed.
 
@@ -69,7 +69,7 @@ For the configuration of `source.yaml`, refer to [Upstream Database Configuratio
 
 + `--print-sample-config`: Prints the sample configuration file. This parameter ignores other parameters.
 
-## Returned results
+### Returned results
 
 {{< copyable "" >}}
 
@@ -92,7 +92,13 @@ operate-source create ./source.yaml
 }
 ```
 
-## Check effective parameters in DM-master
+## Check effective data source configurations in DM-master
+
+> **Note:**
+>
+> The `get-config` command is only supported in DM v2.0.1 and later versions.
+
+If you know the `source-id`, you could use `dmctl --master-addr <master-addr> get-config source <source-id>` to get the data source configuration.
 
 {{< copyable "" >}}
 
@@ -108,6 +114,143 @@ get-config source mysql-replica-01
 }
 ```
 
-> **Note:**
->
-> The `get-config` command is only supported in DM v2.0.1 and later versions.
+If you don't know the `source-id`, you could use `dmctl --master-addr <master-addr> operate-source show` to list all data sources.
+
+{{< copyable "" >}}
+
+```bash
+operate-source show
+```
+
+```
+{
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "source is added but there is no free worker to bound",
+            "source": "mysql-replica-02",
+            "worker": ""
+        },
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "dm-worker-1"
+        }
+    ]
+}
+```
+
+## Change the binding relations of upstream MySQL instances and DM-workers
+
+You can use the `transfer-source` command change the binding relations of upstream MySQL instances and DM-workers.
+
+{{< copyable "" >}}
+
+```bash
+help transfer-source
+```
+
+```
+Transfers a upstream MySQL/MariaDB source to a free worker.
+Usage:
+  dmctl transfer-source <source-id> <worker-id> [flags]
+Flags:
+  -h, --help   help for transfer-source
+Global Flags:
+  -s, --source strings   MySQL Source ID.
+```
+
+Before changing, DM will check if the unbinding worker is still has running tasks. If so, please [pause tasks](pause-task.md) before the changing, and [resume tasks](resume-task.md) after the changing.
+
+### Usage example
+
+
+If you don't know the binding relation of DM-workers, you could use `dmctl --master-addr <master-addr> list-member --worker` to list current binding relations.
+
+{{< copyable "" >}}
+
+```bash
+list-member --worker
+```
+
+```
+{
+    "result": true,
+    "msg": "",
+    "members": [
+        {
+            "worker": {
+                "msg": "",
+                "workers": [
+                    {
+                        "name": "dm-worker-1",
+                        "addr": "127.0.0.1:8262",
+                        "stage": "bound",
+                        "source": "mysql-replica-01"
+                    },
+                    {
+                        "name": "dm-worker-2",
+                        "addr": "127.0.0.1:8263",
+                        "stage": "free",
+                        "source": ""
+                    }
+                ]
+            }
+        }
+    ]
+}
+```
+
+In this example `mysql-replica-01` is bound to `dm-worker-1`. The below command should transfer the source to bind to `dm-worker-2`.
+
+{{< copyable "" >}}
+
+```bash
+transfer-source mysql-replica-01 dm-worker-2
+```
+
+```
+{
+    "result": true,
+    "msg": ""
+}
+```
+
+Check the command has taken effect by `dmctl --master-addr <master-addr> list-member --worker`.
+
+{{< copyable "" >}}
+
+```bash
+list-member --worker
+```
+
+```
+{
+    "result": true,
+    "msg": "",
+    "members": [
+        {
+            "worker": {
+                "msg": "",
+                "workers": [
+                    {
+                        "name": "dm-worker-1",
+                        "addr": "127.0.0.1:8262",
+                        "stage": "free",
+                        "source": ""
+                    },
+                    {
+                        "name": "dm-worker-2",
+                        "addr": "127.0.0.1:8263",
+                        "stage": "bound",
+                        "source": "mysql-replica-01"
+                    }
+                ]
+            }
+        }
+    ]
+}
+```

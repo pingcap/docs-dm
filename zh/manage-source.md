@@ -101,7 +101,7 @@ operate-source create ./source.yaml
 >
 > `get-config` 命令仅在 DM v2.0.1 及其以后版本支持。
 
-如果知道 source-id，可以通过 `dmctl --master-addr <master-addr> get-config source <source-name>` 命令直接查看数据源配置。
+如果知道 source-id，可以通过 `dmctl --master-addr <master-addr> get-config source <source-id>` 命令直接查看数据源配置。
 
 {{< copyable "" >}}
 
@@ -216,7 +216,7 @@ list-member --worker
 }
 ```
 
-可以看到 `mysql-replica-01` 绑定到了 `dm-worker-1` 上。使用如下命令可以将该数据源绑定到 `dm-worker-2` 上
+在本示例中 `mysql-replica-01` 绑定到了 `dm-worker-1` 上。使用如下命令可以将该数据源绑定到 `dm-worker-2` 上
 
 {{< copyable "" >}}
 
