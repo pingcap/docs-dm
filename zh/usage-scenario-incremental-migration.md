@@ -1,6 +1,5 @@
 ---
 title: Data Migration 增量数据迁移场景
-aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-incremental-migration/','/zh/tidb-data-migration/dev/usage-scenario-incremental-migration']
 ---
 
 # Data Migration 增量数据迁移场景
