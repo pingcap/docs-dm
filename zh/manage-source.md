@@ -1,12 +1,12 @@
 ---
-title: 管理上游数据源
+title: 管理上游数据源配置
 summary: 了解如何管理上游 MySQL 实例。
 aliases: ['/docs-cn/tidb-data-migration/dev/manage-source/']
 ---
 
 # 管理上游数据源配置
 
-本文介绍了如何使用 [dmctl](dmctl-introduction.md) 组件来管理数据源配置，包括如何加密数据库密码，加载、列出、移除数据源，查看数据源配置，改变数据源与 DM-worker 的绑定关系。
+本文介绍了如何使用 [dmctl](dmctl-introduction.md) 组件来管理数据源配置，包括如何加密数据库密码、加载数据源配置。
 
 ## 加密数据库密码
 
@@ -22,9 +22,9 @@ aliases: ['/docs-cn/tidb-data-migration/dev/manage-source/']
 MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
 
-## 加载、列出、移除数据源
+## 加载数据源配置
 
-`operate-source` 命令向 DM 集群加载、列出、移除数据源。
+`operate-source` 命令用于将数据源配置加载到 DM 集群中。
 
 {{< copyable "" >}}
 
@@ -33,7 +33,7 @@ help operate-source
 ```
 
 ```
-`create`/`update`/`stop`/`show` upstream MySQL/MariaDB source.
+create/update/stop/show upstream MySQL/MariaDB source
 
 Usage:
   dmctl operate-source <operate-type> [config-file ...] [--print-sample-config] [flags]
@@ -95,13 +95,13 @@ operate-source create ./source.yaml
 }
 ```
 
-## 查看数据源配置
+### 查看数据源配置示例
 
 > **注意：**
 >
 > `get-config` 命令仅在 DM v2.0.1 及其以后版本支持。
 
-如果知道 source-id，可以通过 `dmctl --master-addr <master-addr> get-config source <source-name>` 命令直接查看数据源配置。
+如果知道 source-id，可以通过 `dmctl --master-addr <master-addr> get-config source <source-name>` 命令直接查看源数据库配置。
 
 {{< copyable "" >}}
 
@@ -148,120 +148,6 @@ operate-source show
             "msg": "",
             "source": "mysql-replica-01",
             "worker": "dm-worker-1"
-        }
-    ]
-}
-```
-
-## 改变数据源与 DM-worker 的绑定关系
-
-`transfer-source` 用于改变数据源与 DM-worker 的绑定关系。
-
-{{< copyable "" >}}
-
-```bash
-help transfer-source
-```
-
-```
-Transfers a upstream MySQL/MariaDB source to a free worker.
-
-Usage:
-  dmctl transfer-source <source-id> <worker-id> [flags]
-
-Flags:
-  -h, --help   help for transfer-source
-
-Global Flags:
-  -s, --source strings   MySQL Source ID.
-```
-
-在进行改变之前，DM 会检查旧 worker 是否正在运行同步任务，如果正在运行则需要先[暂停任务](pause-task.md)，并在改变绑定关系后[恢复任务](resume-task.md)。
-
-### 命令用法示例
-
-如果不清楚 DM-worker 的绑定关系，可以通过 `dmctl --master-addr <master-addr> list-member --worker` 查看。
-
-{{< copyable "" >}}
-
-```bash
-list-member --worker
-```
-
-```
-{
-    "result": true,
-    "msg": "",
-    "members": [
-        {
-            "worker": {
-                "msg": "",
-                "workers": [
-                    {
-                        "name": "dm-worker-1",
-                        "addr": "127.0.0.1:8262",
-                        "stage": "bound",
-                        "source": "mysql-replica-01"
-                    },
-                    {
-                        "name": "dm-worker-2",
-                        "addr": "127.0.0.1:8263",
-                        "stage": "free",
-                        "source": ""
-                    }
-                ]
-            }
-        }
-    ]
-}
-```
-
-可以看到 `mysql-replica-01` 绑定到了 `dm-worker-1` 上。使用如下命令可以将该数据源绑定到 `dm-worker-2` 上
-
-{{< copyable "" >}}
-
-```bash
-transfer-source mysql-replica-01 dm-worker-2
-```
-
-```
-{
-    "result": true,
-    "msg": ""
-}
-```
-
-再次通过 `dmctl --master-addr <master-addr> list-member --worker` 查看，检查命令已生效。
-
-{{< copyable "" >}}
-
-```bash
-list-member --worker
-```
-
-```
-{
-    "result": true,
-    "msg": "",
-    "members": [
-        {
-            "worker": {
-                "msg": "",
-                "workers": [
-                    {
-                        "name": "dm-worker-1",
-                        "addr": "127.0.0.1:8262",
-                        "stage": "free",
-                        "source": ""
-                    },
-                    {
-                        "name": "dm-worker-2",
-                        "addr": "127.0.0.1:8263",
-                        "stage": "bound",
-                        "source": "mysql-replica-01"
-                    }
-                ]
-            }
         }
     ]
 }
