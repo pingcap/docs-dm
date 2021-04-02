@@ -218,7 +218,7 @@ transfer-source mysql-replica-01 dm-worker-2
 }
 ```
 
-Check the command has taken effect by `dmctl --master-addr <master-addr> list-member --worker`.
+Check whether the command takens effect by `dmctl --master-addr <master-addr> list-member --worker`.
 
 {{< copyable "" >}}
 
