@@ -143,7 +143,7 @@ operate-source show
 }
 ```
 
-## Change the binding relations of upstream MySQL instances and DM-workers
+## Change the bindings between upstream MySQL instances and DM-workers
 
 You can use the `transfer-source` command change the binding relations of upstream MySQL instances and DM-workers.
 
