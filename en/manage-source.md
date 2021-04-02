@@ -5,7 +5,7 @@ summary: Learn how to manage upstream MySQL instances in TiDB Data Migration.
 
 # Manage Upstream MySQL Instances
 
-This document introduces how to manage upstream MySQL instances, including encrypting the MySQL password, managing data source configurations, and change binding relations of upstream MySQL instances and DM-workers using [dmctl](dmctl-introduction.md).
+This document introduces how to manage upstream MySQL instances, including encrypting the MySQL password, managing data source configurations, and changing the bindings between upstream MySQL instances and DM-workers using [dmctl](dmctl-introduction.md).
 
 ## Encrypt the database password
 
