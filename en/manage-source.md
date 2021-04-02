@@ -114,7 +114,7 @@ get-config source mysql-replica-01
 }
 ```
 
-If you don't know the `source-id`, you could use `dmctl --master-addr <master-addr> operate-source show` to list all data sources.
+If you don't know the `source-id`, you can run `dmctl --master-addr <master-addr> operate-source show` to list all data sources.
 
 {{< copyable "" >}}
 
