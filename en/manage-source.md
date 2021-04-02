@@ -203,7 +203,7 @@ list-member --worker
 }
 ```
 
-In this example `mysql-replica-01` is bound to `dm-worker-1`. The below command should transfer the source to bind to `dm-worker-2`.
+In the above example, `mysql-replica-01` is bound to `dm-worker-1`. The below command transfers the binding worker of `mysql-replica-01` to `dm-worker-2`.
 
 {{< copyable "" >}}
 
