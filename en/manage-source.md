@@ -167,7 +167,7 @@ Before changing, DM will check if the unbinding worker is still has running task
 
 ### Usage example
 
-If you don't know the binding relation of DM-workers, you could use `dmctl --master-addr <master-addr> list-member --worker` to list current binding relations.
+If you do not know the bindings of DM-workers, you can run `dmctl --master-addr <master-addr> list-member --worker` to list the current bindings of all workers.
 
 {{< copyable "" >}}
 
