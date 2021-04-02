@@ -21,7 +21,7 @@ In DM configuration files, it is recommended to use the password encrypted with 
 MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
 
-## Load, list, remove the data source
+## Data source operations
 
 You can use the `operate-source` command to load, list or remove the data source configurations to the DM cluster.
 

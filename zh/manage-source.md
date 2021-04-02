@@ -6,7 +6,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/manage-source/']
 
 # 管理上游数据源配置
 
-本文介绍了如何使用 [dmctl](dmctl-introduction.md) 组件来管理数据源配置，包括如何加密数据库密码，加载、列出、移除数据源，查看数据源配置，改变数据源与 DM-worker 的绑定关系。
+本文介绍了如何使用 [dmctl](dmctl-introduction.md) 组件来管理数据源配置，包括如何加密数据库密码，数据源操作，查看数据源配置，改变数据源与 DM-worker 的绑定关系。
 
 ## 加密数据库密码
 
@@ -22,7 +22,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/manage-source/']
 MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
 
-## 加载、列出、移除数据源
+## 数据源操作
 
 `operate-source` 命令向 DM 集群加载、列出、移除数据源。
 
