@@ -154,7 +154,7 @@ help transfer-source
 ```
 
 ```
-Transfers a upstream MySQL/MariaDB source to a free worker.
+Transfers an upstream MySQL/MariaDB source to a free worker.
 Usage:
   dmctl transfer-source <source-id> <worker-id> [flags]
 Flags:
