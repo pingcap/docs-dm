@@ -98,7 +98,7 @@ operate-source create ./source.yaml
 >
 > The `get-config` command is only supported in DM v2.0.1 and later versions.
 
-If you know the `source-id`, you could use `dmctl --master-addr <master-addr> get-config source <source-id>` to get the data source configuration.
+If you know the `source-id`, you can run `dmctl --master-addr <master-addr> get-config source <source-id>` to get the data source configuration.
 
 {{< copyable "" >}}
 
