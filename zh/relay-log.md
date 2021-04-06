@@ -10,7 +10,11 @@ DM (Data Migration) 工具的 relay log 由若干组有编号的文件和一个�
 
 在 v2.0.2 之前的版本（不含 v2.0.2），DM-worker 在绑定上游数据源时，会检查上游数据源配置中的 `enable-relay` 项。如果 `enable-relay` 为 `true`，则为该数据源启用 relay log 功能。
 
-在 v2.0.2 及之后的版本，`start-relay` 命令用于配置一个或多个 DM-worker 为指定数据源迁移 relay log。
+在 v2.0.2 及之后的版本，`start-relay` 命令用于配置一个或多个 DM-worker 为指定数据源迁移 relay log。上游数据源配置中的 `enable-relay` 项已经失效。在[加载数据源配置](manage-source.md#加载数据源配置)时，如果发现配置中的 `enable-relay` 项为 `true`，会给出如下信息提示使用 `start-relay` 命令。
+
+```
+Please use `start-relay` to specify which workers should pull relay log of relay-enabled sources.
+```
 
 在启用 relay log 功能后，DM-worker 会自动将上游 binlog 迁移到本地配置目录（若使用 TiUP 部署 DM，则迁移目录默认为 `<deploy_dir> / relay_log` ）。DM-worker 在运行过程中，会将上游 binlog 实时迁移到本地文件。DM-worker 的 sync 处理单元会实时读取本地 relay log 的 binlog 事件，将这些事件转换为 SQL 语句，再将 SQL 语句迁移到下游数据库。
 
