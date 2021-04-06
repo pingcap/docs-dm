@@ -80,7 +80,7 @@ Relay log 本地存储的目录结构示例如下：
 
 Relay log 迁移的起始位置由如下规则决定：
 
-- 从下游数据库 sync 单元 checkpoint 中，获取各同步任务需要该数据源的最早位置。如果该位置比下述任何一个位置更加新，则从此位置开始迁移。
+- 从下游数据库 sync 单元 checkpoint 中，获取各同步任务需要该数据源的最早位置。如果该位置晚于下述任何一个位置，则从此位置开始迁移。
 
 - 若本地 relay log 有效（有效是指 relay log 具有有效的 `server-uuid.index`，`subdir` 和 `relay.meta` 文件），DM-worker 从 `relay.meta` 记录的位置恢复迁移。
 
