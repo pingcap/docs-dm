@@ -80,7 +80,7 @@ Relay log 迁移的起始位置由如下规则决定：
 
 - 若本地 relay log 有效（有效是指 relay log 具有有效的 `server-uuid.index`，`subdir` 和 `relay.meta` 文件），DM-worker 从 `relay.meta` 记录的位置恢复迁移。
 
-- 若不存在有效的本地 relay log，但上游数据源配置文件中指定 `relay-binlog-name` 或 `relay-binlog-gtid`：
+- 若不存在有效的本地 relay log，但上游数据源配置文件中指定了 `relay-binlog-name` 或 `relay-binlog-gtid`：
 
     - 在非 GTID 模式下，若指定了 `relay-binlog-name`，则 DM-worker 从指定的 binlog 文件开始迁移。
 
@@ -98,7 +98,7 @@ Relay log 迁移的起始位置由如下规则决定：
 
 ## 启动、停止 relay log
 
-在 v2.0.2 及之后的版本，`start-relay` 与 `stop-relay` 命令可以分别启动及停止 relay log 的拉取。`start-relay` 命令只能指定空闲或者已绑定了该上游数据源的 DM-worker 拉取 relay log。
+在 v2.0.2 及之后的版本中，`start-relay` 与 `stop-relay` 命令可以分别启动及停止 relay log 的拉取。`start-relay` 命令只能指定空闲或者已绑定了该上游数据源的 DM-worker 拉取 relay log。
 
 {{< copyable "" >}}
 
