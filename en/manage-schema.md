@@ -60,7 +60,7 @@ Global Flags:
 > **Note:**
 >
 > Because a table schema might change during data migration, to obtain a predictable table schema, currently the `operate-schema` command can be used only when the data migration task is in the `Paused` state.
-> It is strongly recommended to get and backup the table schema firstly before setting it, to avoid data loss due to mishandling.
+> To avoid data loss due to mishandling, it is **strongly recommended** to get and backup the table schema firstly before you set the schema.
 
 ## Parameters
 
@@ -83,11 +83,11 @@ Global Flags:
     - Required when the operation type is `set`. Optional for other operation types.
     - The table schema file to be set. The file content should be a valid `CREATE TABLE` statement.
 * `--flush`:
-    - Optional
-    - Write the schema to checkpoint, so that DM could load it after restarting the task.
+    - Optional.
+    - Writes the schema to the checkpoint so that DM can load it after restarting the task.
 * `--sync`:
-    - Optional
-    - Only used when an error occured in optimistic sharding DDL mode. Update the optimistic sharding metadata with this schema.
+    - Optional. Only used when an error occurs in the optimistic sharding DDL mode.
+    - Updates the optimistic sharding metadata with this schema.
 
 ## Usage example
 
