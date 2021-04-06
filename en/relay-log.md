@@ -10,7 +10,11 @@ The Data Migration (DM) relay log consists of a set of numbered files containing
 
 After DM-worker is started, it automatically migrates the upstream binlog to the local configuration directory (the default migration directory is `<deploy_dir>/relay_log` if DM is deployed using TiUP). When DM-worker is running, it migrates the upstream binlog to the local file in real time. The sync processing unit of DM-worker, reads the binlog events of the local relay log in real time, transforms these events to SQL statements, and then migrates these statements to the downstream database.
 
-This document introduces the directory structure, initial migration rules and data purge of DM relay logs.
+This document introduces the directory structure and initial migration rules DM relay logs, and how to pause, resume, and purge relay logs.
+
+> **Note:**
+>
+> The relay log feature requires additional disk I/O operations, resulting in higher latency of data migration. If the disk I/O performance in the deployment environment is poor, the relay log feature may become a bottleneck of the migration task and thus slows the migration.
 
 ## Directory structure
 
@@ -77,7 +81,61 @@ For each start of DM-worker (or the relay log resuming migration after a pause),
     - In the non-GTID mode, if `relay-binlog-name` is specified, DM-worker starts migration from the specified binlog file.
     - In the GTID mode, if `relay-binlog-gtid` is specified, DM-worker starts migration from the specified GTID.
 
-## Data purge
+## Pause and resume relay logs
+
+You can use the command `pause-relay` to pause the pulling process of relay logs and use the command `resume-relay` to resume the process. You need to specify the `source-id` of the upstream data source when executing these two commands. See the following example:
+
+{{< copyable "" >}}
+
+```bash
+» pause-relay -s mysql-replica-01 -s mysql-replica-02
+```
+
+```
+{
+    "op": "PauseRelay",
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
+        },
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-02",
+            "worker": "worker2"
+        }
+    ]
+}
+```
+
+{{< copyable "" >}}
+
+```bash
+» resume-relay -s mysql-replica-01
+```
+
+```
+{
+    "op": "ResumeRelay",
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
+        }
+    ]
+}
+```
+
+## Purge relay logs
 
 Through the detection mechanism of reading and writing files, DM-worker does not purge the relay log that is being used or will be used later by the currently running data migration task.
 
