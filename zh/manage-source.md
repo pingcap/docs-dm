@@ -176,7 +176,7 @@ Global Flags:
   -s, --source strings   MySQL Source ID.
 ```
 
-在进行改变之前，DM 会检查旧 worker 是否正在运行同步任务，如果正在运行则需要先[暂停任务](pause-task.md)，并在改变绑定关系后[恢复任务](resume-task.md)。
+在改变绑定关系前，DM 会检查待解绑的 worker 是否正在运行同步任务，如果正在运行则需要先[暂停任务](pause-task.md)，并在改变绑定关系后[恢复任务](resume-task.md)。
 
 ### 命令用法示例
 
