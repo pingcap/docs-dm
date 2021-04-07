@@ -46,6 +46,8 @@ Based on this scenario, the following sections describe how to deploy the DM clu
 
 > **Note:**
 >
+> - If you deploy multiple DM-master or DM-worker instances in a single server, ports and working directories of each instances must be unique.
+>
 > - If you do not need to ensure high availability of the DM cluster, deploy only one DM-master node, and the number of deployed DM-worker nodes must be no less than the number of upstream MySQL/MariaDB instances to be migrated.
 >
 > - To ensure high availability of the DM cluster, it is recommended to deploy three DM-master nodes, and the number of deployed DM-worker nodes must be greater than the number of upstream MySQL/MariaDB instances to be migrated (for example, the number of DM-worker nodes is two more than the number of upstream instances).
