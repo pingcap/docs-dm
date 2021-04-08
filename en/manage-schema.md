@@ -59,8 +59,8 @@ Global Flags:
 
 > **Note:**
 >
-> Because a table schema might change during data migration, to obtain a predictable table schema, currently the `operate-schema` command can be used only when the data migration task is in the `Paused` state.
-> To avoid data loss due to mishandling, it is **strongly recommended** to get and backup the table schema firstly before you set the schema.
+> - Because a table schema might change during data migration, to obtain a predictable table schema, currently the `operate-schema` command can be used only when the data migration task is in the `Paused` state.
+> - To avoid data loss due to mishandling, it is **strongly recommended** to get and backup the table schema firstly before you modify the schema.
 
 ## Parameters
 
