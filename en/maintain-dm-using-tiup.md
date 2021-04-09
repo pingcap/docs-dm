@@ -153,7 +153,7 @@ For example, to scale out a DM-worker node in the `prod-cluster` cluster, take t
     > **Note:**
     >
     > You need to create a topology file, which includes only the description of the new nodes, not the existing nodes.
-    > For more configuration items (such as the deployment directory), refer to this [TiUP configuration parameter example](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml).
+    > For more configuration items (such as the deployment directory), refer to this [TiUP configuration parameter example](https://github.com/pingcap/tiup/blob/master/embed/templates/examples/dm/topology.example.yaml).
 
     ```yaml
     ---
@@ -258,7 +258,7 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 > **Note:**
 >
 > - TiUP does not support importing the DM Portal component in a DM 1.0 cluster.
-> - You need to stop the original cluster before importing. 
+> - You need to stop the original cluster before importing.
 > - Don't run `stop-task` for tasks that need to be upgraded to 2.0.
 > - TiUP only supports importing to a DM cluster of v2.0.0-rc.2 or a later version.
 > - The `import` command is used to import data from a DM 1.0 cluster to a new DM 2.0 cluster. If you need to import DM migration tasks to an existing DM 2.0 cluster, refer to [Manually Upgrade TiDB Data Migration from v1.0.x to v2.0.x](manually-upgrade-dm-1.0-to-2.0.md).
@@ -280,7 +280,7 @@ Execute `tiup list dm-master` to view the latest cluster version supported by Ti
 
 The process of using the `import` command is as follows:
 
-1. TiUP generates a topology file [`topology.yml`](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml) based on the DM cluster previously deployed using DM-Ansible.
+1. TiUP generates a topology file [`topology.yml`](https://github.com/pingcap/tiup/blob/master/embed/templates/examples/dm/topology.example.yaml) based on the DM cluster previously deployed using DM-Ansible.
 2. After confirming that the topology file has been generated, you can use it to deploy the DM cluster of v2.0 or later versions.
 
 After the deployment is completed, you can execute the `tiup dm start` command to start the cluster and begin the process of upgrading the DM kernel.
