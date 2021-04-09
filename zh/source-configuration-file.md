@@ -35,6 +35,16 @@ from:
 #   interval: 3600
 #   expires: 0
 #   remain-space: 15
+
+# 从 DM v2.0.2 开始，Binlog event filter 也可以在上游数据库配置文件中进行配置
+# case-sensitive: false
+# filters:
+# - schema-pattern: dmctl
+#   table-pattern: t_1
+#   events: []
+#   sql-pattern:
+#   - alter table .* add column `aaa` int
+#   action: Ignore
 ```
 
 > **注意：**
@@ -71,3 +81,12 @@ from:
 > **注意：**
 >
 > 仅在 `interval` 不为 0 且 `expires` 和 `remain-space` 两个配置项中至少有一个不为 0 的情况下 DM 的自动清理策略才会生效。
+
+### Binlog event filter
+
+从 DM v2.0.2 开始，Binlog event filter 也可以在上游数据库配置文件中进行配置。
+
+| 配置项        | 说明                                    |
+| :------------ | :--------------------------------------- |
+| `case-sensitive` | Binlog event filter 标识符是否大小写敏感。默认值：false 。|
+| `filters` | 配置 Binlog event filter，含义见 [Binlog event filter 参数解释](key-features.md#参数解释-2)。 |
