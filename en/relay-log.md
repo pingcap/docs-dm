@@ -6,7 +6,15 @@ aliases: ['/docs/tidb-data-migration/dev/relay-log/']
 
 # Data Migration Relay Log
 
-The Data Migration (DM) relay log consists of a set of numbered files containing events that describe database changes, and an index file that contains the names of all used relay log files.
+The Data Migration (DM) relay log consists of several sets of numbered files containing events that describe database changes, and an index file that contains the names of all used relay log files.
+
+In DM v2.0.2 and earlier versions (not including v2.0.2), DM checks the configuration item `enable-relay` in the source configuration file when binding a DM-worker to an upstream data source. If `enable-relay` is set to `true`, DM enables the relay log feature for the data source.
+
+In DM v2.0.2 and later versions, the `start-relay` command is used to configure one or more DM-workers to migrate relay logs for the specified data source. The configuration item `enable-relay` in the source configuration file is no longer valid. If DM finds that `enable-relay` is set to `true` when [loading the data source configuration](manage-source.md#Operate-data-source), it outputs the following message to guide you to use the `start-relay` command:
+
+```
+Please use `start-relay` to specify which workers should pull relay log of relay-enabled sources.
+```
 
 After DM-worker is started, it automatically migrates the upstream binlog to the local configuration directory (the default migration directory is `<deploy_dir>/relay_log` if DM is deployed using TiUP). When DM-worker is running, it migrates the upstream binlog to the local file in real time. The sync processing unit of DM-worker, reads the binlog events of the local relay log in real time, transforms these events to SQL statements, and then migrates these statements to the downstream database.
 
@@ -62,9 +70,14 @@ An example of the directory structure of the local storage for a relay log:
 
 ## Initial migration rules
 
-For each start of DM-worker (or the relay log resuming migration after a pause), the starting position of migration includes the following conditions:
+The starting position of the relay log migration is determined by the following rules:
 
-- If a valid local relay log (a valid relay log is a relay log with valid `server-uuid.index`, `subdir` and `relay.meta` files), DM-worker resumes migration from a position recorded by `relay.meta`.
+- If a valid local relay log exists (a valid relay log is a relay log with valid `server-uuid.index`, `subdir` and `relay.meta` files), DM-worker resumes migration from a position recorded by `relay.meta`.
+
+- If a valid local relay log does not exist, but `relay-binlog-name` or `relay-binlog-gtid` is specified in the source configuration file:
+
+    - In the non-GTID mode, if `relay-binlog-name` is specified, DM-worker starts migration from the specified binlog file.
+    - In the GTID mode, if `relay-binlog-gtid` is specified, DM-worker starts migration from the specified GTID.
 
 - If a valid local relay log does not exist, and `relay-binlog-name` or `relay-binlog-gtid` is not specified in the DM configuration file:
 
@@ -76,14 +89,104 @@ For each start of DM-worker (or the relay log resuming migration after a pause),
         >
         > If the upstream relay log is purged, an error occurs. In this case, set `relay-binlog-gtid` to specify the starting position of migration.
 
-- If a valid local relay log does not exist:
+- From the checkpoint of the downstream sync unit, DM gets the earliest position from which the migration tasks need to replicate from the data source. If the position is later than any of the above positions, DM-worker starts the migration from this position.
 
-    - In the non-GTID mode, if `relay-binlog-name` is specified, DM-worker starts migration from the specified binlog file.
-    - In the GTID mode, if `relay-binlog-gtid` is specified, DM-worker starts migration from the specified GTID.
+## Start and stop the relay log feature
 
-## Pause and resume relay logs
+In DM v2.0.2 and later versions, you can use the command `start-relay` to start pulling relay logs and use `stop-relay` to stop the process. See the following examples:
 
-You can use the command `pause-relay` to pause the pulling process of relay logs and use the command `resume-relay` to resume the process. You need to specify the `source-id` of the upstream data source when executing these two commands. See the following example:
+{{< copyable "" >}}
+
+```bash
+» start-relay -s mysql-replica-01 worker1 worker2
+```
+
+In the command `start-relay`, you can only specify free DM-workers or DM-workers that have been bound to the upstream data source.
+
+```
+{
+    "result": true,
+    "msg": ""
+}
+```
+
+{{< copyable "" >}}
+
+```bash
+» stop-relay -s mysql-replica-01 worker1 worker2
+```
+
+```
+{
+    "result": true,
+    "msg": ""
+}
+```
+
+## Query relay logs
+
+You can use the command `query-status -s` to query the status of the relay log pulling process of an upstream data source. See the following example:
+
+{{< copyable "" >}}
+
+```bash
+» query-status -s mysql-replica-01
+```
+
+```
+{
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "no sub task started",
+            "sourceStatus": {
+                "source": "mysql-replica-01",
+                "worker": "worker2",
+                "result": null,
+                "relayStatus": {
+                    "masterBinlog": "(mysql-bin.000005, 916)",
+                    "masterBinlogGtid": "09bec856-ba95-11ea-850a-58f2b4af5188:1-28",
+                    "relaySubDir": "09bec856-ba95-11ea-850a-58f2b4af5188.000001",
+                    "relayBinlog": "(mysql-bin.000005, 4)",
+                    "relayBinlogGtid": "09bec856-ba95-11ea-850a-58f2b4af5188:1-28",
+                    "relayCatchUpMaster": false,
+                    "stage": "Running",
+                    "result": null
+                }
+            },
+            "subTaskStatus": [
+            ]
+        },
+        {
+            "result": true,
+            "msg": "no sub task started",
+            "sourceStatus": {
+                "source": "mysql-replica-01",
+                "worker": "worker1",
+                "result": null,
+                "relayStatus": {
+                    "masterBinlog": "(mysql-bin.000005, 916)",
+                    "masterBinlogGtid": "09bec856-ba95-11ea-850a-58f2b4af5188:1-28",
+                    "relaySubDir": "09bec856-ba95-11ea-850a-58f2b4af5188.000001",
+                    "relayBinlog": "(mysql-bin.000005, 916)",
+                    "relayBinlogGtid": "",
+                    "relayCatchUpMaster": true,
+                    "stage": "Running",
+                    "result": null
+                }
+            },
+            "subTaskStatus": [
+            ]
+        }
+    ]
+}
+```
+
+## Pause and resume the relay log feature
+
+You can use the command `pause-relay` to pause the pulling process of relay logs and use the command `resume-relay` to resume the process. You need to specify the `source-id` of the upstream data source when executing these two commands. See the following examples:
 
 {{< copyable "" >}}
 
