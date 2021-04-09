@@ -5,9 +5,17 @@ summary: 了解目录结构、初始迁移规则和 DM relay log 的数据清理
 
 # DM Relay Log
 
-DM (Data Migration) 工具的 relay log 由一组有编号的文件和一个索引文件组成。这些有编号的文件包含了描述数据库更改的事件。索引文件包含所有使用过的 relay log 的文件名。
+DM (Data Migration) 工具的 relay log 由若干组有编号的文件和一个索引文件组成。这些有编号的文件包含了描述数据库更改的事件。索引文件包含所有使用过的 relay log 的文件名。
 
-DM-worker 在启动后，会自动将上游 binlog 迁移到本地配置目录（若使用 TiUP 部署 DM，则迁移目录默认为 `<deploy_dir> / relay_log` ）。DM-worker 在运行过程中，会将上游 binlog 实时迁移到本地文件。DM-worker 的 sync 处理单元会实时读取本地 relay log 的 binlog 事件，将这些事件转换为 SQL 语句，再将 SQL 语句迁移到下游数据库。
+在 v2.0.2 之前的版本（不含 v2.0.2），DM-worker 在绑定上游数据源时，会检查上游数据源配置中的 `enable-relay` 项。如果 `enable-relay` 为 `true`，则为该数据源启用 relay log 功能。
+
+在 v2.0.2 及之后的版本，`start-relay` 命令用于配置一个或多个 DM-worker 为指定数据源迁移 relay log。上游数据源配置中的 `enable-relay` 项已经失效。在[加载数据源配置](manage-source.md#数据源操作)时，如果发现配置中的 `enable-relay` 项为 `true`，会给出如下信息提示使用 `start-relay` 命令。
+
+```
+Please use `start-relay` to specify which workers should pull relay log of relay-enabled sources.
+```
+
+在启用 relay log 功能后，DM-worker 会自动将上游 binlog 迁移到本地配置目录（若使用 TiUP 部署 DM，则迁移目录默认为 `<deploy_dir> / relay_log` ）。DM-worker 在运行过程中，会将上游 binlog 实时迁移到本地文件。DM-worker 的 sync 处理单元会实时读取本地 relay log 的 binlog 事件，将这些事件转换为 SQL 语句，再将 SQL 语句迁移到下游数据库。
 
 > **注意：**
 >
@@ -69,9 +77,17 @@ Relay log 本地存储的目录结构示例如下：
 
 ## 初始迁移规则
 
-DM-worker 每次启动时（或在 DM-worker 暂停后 relay log 恢复迁移），迁移的起始位置会出现以下几种情况：
+Relay log 迁移的起始位置由如下规则决定：
 
-- 若是有效的本地 relay log（有效是指 relay log 具有有效的 `server-uuid.index`，`subdir` 和 `relay.meta` 文件），DM-worker 从 `relay.meta` 记录的位置恢复迁移。
+- 从下游数据库 sync 单元 checkpoint 中，获取各同步任务需要该数据源的最早位置。如果该位置晚于下述任何一个位置，则从此位置开始迁移。
+
+- 若本地 relay log 有效（有效是指 relay log 具有有效的 `server-uuid.index`，`subdir` 和 `relay.meta` 文件），DM-worker 从 `relay.meta` 记录的位置恢复迁移。
+
+- 若不存在有效的本地 relay log，但上游数据源配置文件中指定了 `relay-binlog-name` 或 `relay-binlog-gtid`：
+
+    - 在非 GTID 模式下，若指定了 `relay-binlog-name`，则 DM-worker 从指定的 binlog 文件开始迁移。
+
+    - 在 GTID 模式下，若指定了 `relay-binlog-gtid`，则 DM-worker 从指定的 GTID 开始迁移。
 
 - 若不存在有效的本地 relay log，而且 DM 配置文件中未指定 `relay-binlog-name` 或 `relay-binlog-gtid`：
 
@@ -83,10 +99,96 @@ DM-worker 每次启动时（或在 DM-worker 暂停后 relay log 恢复迁移）
         >
         > 若上游的 relay log 被清理掉，则会发生错误。在这种情况下，需设置 `relay-binlog-gtid` 来指定迁移的起始位置。
 
-- 若不存在有效的本地 relay log：
+## 启动、停止 relay log
 
-    - 在非 GTID 模式下，若指定了 `relay-binlog-name`，则 DM-worker 从指定的 binlog 文件开始迁移。
-    - 在 GTID 模式下，若指定了 `relay-binlog-gtid`，则 DM-worker 从指定的 GTID 开始迁移。
+在 v2.0.2 及之后的版本中，`start-relay` 与 `stop-relay` 命令可以分别启动及停止 relay log 的拉取。`start-relay` 命令只能指定空闲或者已绑定了该上游数据源的 DM-worker 拉取 relay log。
+
+{{< copyable "" >}}
+
+```bash
+» start-relay -s mysql-replica-01 worker1 worker2
+```
+
+```
+{
+    "result": true,
+    "msg": ""
+}
+```
+
+{{< copyable "" >}}
+
+```bash
+» stop-relay -s mysql-replica-01 worker1 worker2
+```
+
+```
+{
+    "result": true,
+    "msg": ""
+}
+```
+
+## 查询 relay log
+
+`query-status -s` 命令可以查询 relay log 的状态。
+
+{{< copyable "" >}}
+
+```bash
+» query-status -s mysql-replica-01
+```
+
+```
+{
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "no sub task started",
+            "sourceStatus": {
+                "source": "mysql-replica-01",
+                "worker": "worker2",
+                "result": null,
+                "relayStatus": {
+                    "masterBinlog": "(mysql-bin.000005, 916)",
+                    "masterBinlogGtid": "09bec856-ba95-11ea-850a-58f2b4af5188:1-28",
+                    "relaySubDir": "09bec856-ba95-11ea-850a-58f2b4af5188.000001",
+                    "relayBinlog": "(mysql-bin.000005, 4)",
+                    "relayBinlogGtid": "09bec856-ba95-11ea-850a-58f2b4af5188:1-28",
+                    "relayCatchUpMaster": false,
+                    "stage": "Running",
+                    "result": null
+                }
+            },
+            "subTaskStatus": [
+            ]
+        },
+        {
+            "result": true,
+            "msg": "no sub task started",
+            "sourceStatus": {
+                "source": "mysql-replica-01",
+                "worker": "worker1",
+                "result": null,
+                "relayStatus": {
+                    "masterBinlog": "(mysql-bin.000005, 916)",
+                    "masterBinlogGtid": "09bec856-ba95-11ea-850a-58f2b4af5188:1-28",
+                    "relaySubDir": "09bec856-ba95-11ea-850a-58f2b4af5188.000001",
+                    "relayBinlog": "(mysql-bin.000005, 916)",
+                    "relayBinlogGtid": "",
+                    "relayCatchUpMaster": true,
+                    "stage": "Running",
+                    "result": null
+                }
+            },
+            "subTaskStatus": [
+            ]
+        }
+    ]
+}
+```
 
 ## 暂停、恢复 relay log
 
