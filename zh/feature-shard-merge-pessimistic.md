@@ -12,13 +12,11 @@ aliases: ['/docs-cn/tidb-data-migration/dev/feature-shard-merge-pessimistic/']
 
 DM 在悲观模式下进行分表 DDL 的迁移有以下几点使用限制：
 
-- 在一个逻辑 sharding group（需要合并迁移到下游同一个表的所有分表组成的 group）内，所有上游分表必须以相同的顺序执行相同的 DDL 语句（库名和表名可以不同），并且只有在所有分表执行完当前一条 DDL 语句后，下一条 DDL 语句才能执行。
+- 对于一个逻辑 sharding group（需要合并迁移到下游同一个表的所有分表组成的 group），只能使用一个仅包含这些分表所在数据源的任务进行迁移。
+
+- 在一个逻辑 sharding group 内，所有上游分表必须以相同的顺序执行相同的 DDL 语句（库名和表名可以不同），并且只有在所有分表执行完当前一条 DDL 语句后，下一条 DDL 语句才能执行。
 
     - 比如，如果在 table_1 表中先增加列 a 后再增加列 b，则在 table_2 表中就不能先增加列 b 后再增加列 a，因为 DM 不支持以不同的顺序来执行相同的 DDL 语句。
-
-- 对于每个逻辑 sharding group，推荐使用一个独立的任务进行迁移。
-
-    - 如果一个任务内存在多个 sharding group，则必须等待一个 sharding group 的 DDL 语句迁移完成后，才能开始对其他 sharding group 执行 DDL 语句。
 
 - 在一个逻辑 sharding group 内，所有上游分表都应该执行对应的 DDL 语句。
 

@@ -11,10 +11,9 @@ This document introduces the sharding support feature provided by Data Migration
 
 DM has the following sharding DDL usage restrictions in the pessimistic mode:
 
-- In a logical **sharding group** (composed of all sharded tables that need to be merged and migrated into one same downstream table), the same DDL statements must be executed in the same order in all upstream sharded tables (the schema name and the table name can be different), and the next DDL statement cannot be executed unless the current DDL operation is completely finished.
+- For a logical **sharding group** (composed of all sharded tables that need to be merged and migrated into one same downstream table), it is limited to use one task containing exactly the sources of sharded tables to perform the migration.
+- In a logical **sharding group**, the same DDL statements must be executed in the same order in all upstream sharded tables (the schema name and the table name can be different), and the next DDL statement cannot be executed unless the current DDL operation is completely finished.
     - For example, if you add `column A` to `table_1` before you add `column B`, then you cannot add `column B` to `table_2` before you add `column A`. Executing the DDL statements in a different order is not supported.
-- For each sharding group, it is recommended to use one independent task to perform the migration.
-    - If multiple sharding groups exist in a task, you cannot start to execute the DDL statements in other sharding groups until the DDL statements in one sharding group has been migrated successfully.
 - In a sharding group, the corresponding DDL statements should be executed in all upstream sharded tables.
     - For example, if DDL statements are not executed on one or more upstream sharded tables corresponding to `DM-worker-2`, then other DM-workers that have executed the DDL statements pause their migration task and wait for `DM-worker-2` to receive the upstream DDL statements.
 - The sharding group migration task does not support `DROP DATABASE`/`DROP TABLE`.
