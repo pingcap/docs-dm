@@ -21,7 +21,7 @@ In DM configuration files, it is recommended to use the password encrypted with 
 MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
 
-## Data source operations
+## Operate data source
 
 You can use the `operate-source` command to load, list or remove the data source configurations to the DM cluster.
 
@@ -92,7 +92,7 @@ operate-source create ./source.yaml
 }
 ```
 
-## Check effective data source configurations in DM-master
+## Check effective data source configuration in DM-master
 
 > **Note:**
 >
@@ -145,7 +145,7 @@ operate-source show
 
 ## Change the bindings between upstream MySQL instances and DM-workers
 
-You can use the command `transfer-source` command to change the bindings between upstream MySQL instances and DM-workers.
+You can use the `transfer-source` command to change the bindings between upstream MySQL instances and DM-workers.
 
 {{< copyable "" >}}
 
@@ -218,7 +218,7 @@ transfer-source mysql-replica-01 dm-worker-2
 }
 ```
 
-Check whether the command takens effect by `dmctl --master-addr <master-addr> list-member --worker`.
+Check whether the command takes effect by running `dmctl --master-addr <master-addr> list-member --worker`.
 
 {{< copyable "" >}}
 

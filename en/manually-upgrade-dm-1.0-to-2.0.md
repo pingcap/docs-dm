@@ -116,7 +116,7 @@ If the original v1.0.x cluster is deployed by binary, you can stop the DM-worker
 
 ## Step 4: Upgrade data migration task
 
-1. Use the [`operate-source`](manage-source.md#data-source-operations) command to load the upstream database source configuration from [step 1](#step-1-prepare-v20x-configuration-file) into the v2.0.x cluster.
+1. Use the [`operate-source`](manage-source.md#operate-data-source) command to load the upstream database source configuration from [step 1](#step-1-prepare-v20x-configuration-file) into the v2.0.x cluster.
 
 2. In the downstream TiDB cluster, obtain the corresponding global checkpoint information from the incremental checkpoint table of the v1.0.x data migration task.
 
