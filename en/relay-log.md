@@ -72,6 +72,8 @@ An example of the directory structure of the local storage for a relay log:
 
 The starting position of the relay log migration is determined by the following rules:
 
+- From the checkpoint of the downstream sync unit, DM firstly gets the earliest position from which the migration tasks need to replicate from the data source. If the position is later than any of the following positions, DM-worker starts the migration from this position.
+
 - If a valid local relay log exists (a valid relay log is a relay log with valid `server-uuid.index`, `subdir` and `relay.meta` files), DM-worker resumes migration from a position recorded by `relay.meta`.
 
 - If a valid local relay log does not exist, but `relay-binlog-name` or `relay-binlog-gtid` is specified in the source configuration file:
@@ -88,8 +90,6 @@ The starting position of the relay log migration is determined by the following 
         > **Note:**
         >
         > If the upstream relay log is purged, an error occurs. In this case, set `relay-binlog-gtid` to specify the starting position of migration.
-
-- From the checkpoint of the downstream sync unit, DM gets the earliest position from which the migration tasks need to replicate from the data source. If the position is later than any of the above positions, DM-worker starts the migration from this position.
 
 ## Start and stop the relay log feature
 
