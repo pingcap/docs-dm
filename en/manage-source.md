@@ -163,7 +163,7 @@ Global Flags:
   -s, --source strings   MySQL Source ID.
 ```
 
-Before transferring, DM checks whether the worker to be unbound still has running tasks. If the worker does have running tasks, you need to [pause tasks](pause-task.md) before changing the binding and [resume tasks](resume-task.md) after changing the binding.
+Before transferring, DM checks whether the worker to be unbound still has running tasks. If the worker has any running tasks, you need to [pause the tasks](pause-task.md) first, change the binding, and then [resume the tasks](resume-task.md).
 
 ### Usage example
 
