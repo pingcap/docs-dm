@@ -8,7 +8,7 @@ aliases: ['/docs/tidb-data-migration/dev/relay-log/']
 
 The Data Migration (DM) relay log consists of several sets of numbered files containing events that describe database changes, and an index file that contains the names of all used relay log files.
 
-In DM v2.0.2 and earlier versions (not including v2.0.2), DM checks the configuration item `enable-relay` in the source configuration file when binding a DM-worker to an upstream data source. If `enable-relay` is set to `true`, DM enables the relay log feature for the data source.
+In DM versions earlier than v2.0.2 (not including v2.0.2), DM checks the configuration item `enable-relay` in the source configuration file when binding a DM-worker to an upstream data source. If `enable-relay` is set to `true`, DM enables the relay log feature for the data source.
 
 In DM v2.0.2 and later versions, the `start-relay` command is used to configure one or more DM-workers to migrate relay logs for the specified data source. The configuration item `enable-relay` in the source configuration file is no longer valid. If DM finds that `enable-relay` is set to `true` when [loading the data source configuration](manage-source.md#Operate-data-source), it outputs the following message to guide you to use the `start-relay` command:
 
@@ -101,7 +101,7 @@ In DM v2.0.2 and later versions, you can use the command `start-relay` to start 
 » start-relay -s mysql-replica-01 worker1 worker2
 ```
 
-In the command `start-relay`, you can only specify free DM-workers or DM-workers that have been bound to the upstream data source.
+In the command `start-relay`, you can only specify free DM-workers or DM-workers that have been bound to the upstream data source in the parameter.
 
 ```
 {
