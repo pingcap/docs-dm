@@ -81,6 +81,7 @@
 + [术语表](glossary.md)
 + 版本发布历史
   + v2.0
+    - [2.0.2](releases/2.0.2.md)
     - [2.0.1](releases/2.0.1.md)
     - [2.0 GA](releases/2.0.0-ga.md)
     - [2.0.0-rc.2](releases/2.0.0-rc.2.md)
