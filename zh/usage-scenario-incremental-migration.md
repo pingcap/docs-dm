@@ -47,7 +47,9 @@ CREATE TABLE `messages` (
 INSERT INTO messages VALUES (1, 'msg1'), (2, 'msg2'), (3, 'msg3');
 ```
 
-## 迁移操作
+## 增量数据迁移操作
+
+本节按顺序给出迁移操作步骤，指导如何使用 DM 将上游数据库的 `log` 库从某个时间点起的数据变动同步到 TiDB 集群。
 
 ### 确定增量同步起始位置
 
