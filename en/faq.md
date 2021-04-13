@@ -254,7 +254,7 @@ This is a known bug of TiUP, which is fixed in TiUP v1.3.2. The following are tw
 This is a known bug in DM, which is fixed in DM v2.0.2. The bug is triggered when the following two conditions are fully met at the same time:
 
 1. Parameters `enable-relay` and `enable-gtid` are set to `true` in the source configuration file.
-2. The upstream database is a **MySQL secondary database** and if you execute the command `show binlog events in '<newest-binlog>' limit 2` to query the `previous_gtids` of the database, the result is inconsecutive, such as the following example:
+2. The upstream database is a **MySQL secondary database**. If you execute the command `show binlog events in '<newest-binlog>' limit 2` to query the `previous_gtids` of the database, the result is inconsecutive, such as the following example:
 
 ```
 mysql> show binlog events in 'mysql-bin.000005' limit 2;
