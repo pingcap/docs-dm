@@ -205,17 +205,17 @@ You can check the DM-worker log file and search for a line containing `change co
 
 In DM v2.0.1 and lower versions, if DM restarts before the full import completes, the bindings between upstream data sources and DM-worker nodes might change. For example, it is possible that the intermediate data of the dump unit is on DM-worker node A but the load unit is run by DM-worker node B, thus causing the operation to fail.
 
-Following are two solutions to this issue:
+The following are two solutions to this issue:
 
-- If the data volume is small (less than 1 TB) or the task merges sharded tables, you need to take these steps:
+- If the data volume is small (less than 1 TB) or the task merges sharded tables, take these steps:
 
     1. Clean up the imported data in the downstream database.
     2. Remove all files in the directory of exported data.
     3. Delete the task using dmctl and run the command `start-task --remove-meta` to create a new task.
 
-    After the new task starts, it is recommended to ensure that there is no redundant DM worker node and avoid restarting or upgrading the DM cluster during this time.
+    After the new task starts, it is recommended to ensure that there is no redundant DM worker node and avoid restarting or upgrading the DM cluster during the full import.
 
-- If the data volume is large (more than 1 TB), you need to take these steps:
+- If the data volume is large (more than 1 TB), take these steps:
 
     1. Clean up the imported data in the downstream database.
     2. Deploy TiDB-Lightning to the DM worker nodes that process the data.
@@ -235,14 +235,14 @@ You can avoid this issue in advance by configuring in the following ways:
 1. Increase the value of `expire_logs_days` in the upstream MySQL database to avoid wrongly purging needed binlog files before the full migration task completes. If the data volume is large, it is recommended to use dumpling and TiDB-Lightning at the same time to speed up the task.
 2. Enable the relay log feature for this task so that DM can read data from relay logs even though the binlog position is purged.
 
-## Why does the Grafana dashboard of a DM cluster displays `failed to fetch dashboard` if the cluster is deployed through TiUP v1.3.0 or v1.3.1?
+## Why does the Grafana dashboard of a DM cluster display `failed to fetch dashboard` if the cluster is deployed using TiUP v1.3.0 or v1.3.1?
 
-This is a known bug of TiUP, which is fixed in TiUP v1.3.2. Following are two solutions to this issue:
+This is a known bug of TiUP, which is fixed in TiUP v1.3.2. The following are two solutions to this issue:
 
-- Method one:
-    1. Upgrade TiUP to a higher version using the command `tiup update --self && tiup update dm`.
+- Solution one:
+    1. Upgrade TiUP to a later version using the command `tiup update --self && tiup update dm`.
     2. Scale in and then scale out Grafana nodes in the cluster to restart the Grafana service.
-- Method two:
+- Solution two:
     1. Back up the `deploy/grafana-$port/bin/public` folder.
     2. Download the [TiUP DM offline package](https://download.pingcap.org/tidb-dm-v2.0.1-linux-amd64.tar.gz) and unpack it.
     3. Unpack the `grafana-v4.0.3-**.tar.gz` in the offline package.
@@ -330,9 +330,9 @@ query-status test
 }
 ```
 
-In the above example, the `syncerBinlogGtid` of data source `mysql1` is inconsecutive. You can handle the data loss according to either of the following solutions:
+In the example, the `syncerBinlogGtid` of the data source `mysql1` is inconsecutive. In this case, you can do one of the following to handle the data loss:
 
-- If upstream binlogs from current time to the position recorded in the metadata of the full export task have not been purged, you can take the these steps:
+- If upstream binlogs from the current time to the position recorded in the metadata of the full export task have not been purged, you can take these steps:
     1. Pause the current task and delete all data sources with inconsecutive GTIDs.
     2. Set `enable-relay` to `false` in all source configuration files.
     3. For data sources with inconsecutive GTIDs (such as `mysql1` in the above example), change the task to an incremental task and configure related `mysql-instances.meta` with metadata information of each full export task, including the `binlog-name`, `binlog-pos`, and `binlog-gtid` information.
@@ -345,7 +345,7 @@ In the above example, the `syncerBinlogGtid` of data source `mysql1` is inconsec
     4. Set `syncers.safe-mode` to `true` in the `task.yaml`.
     5. After the incremental task replicates all missing data to the downstream, restart the task and set `safe-mode` to `false`.
     6. Restart the data source and set either `enable-relay` or `enable-gtid` to `false` in the source configuration file.
-- If none of the above conditions are met or if the data volume of the task is small, you can take these steps:
+- If none of the above conditions is met or if the data volume of the task is small, you can take these steps:
     1. Clean up imported data in the downstream database.
     2. Restart the data source and set either `enable-relay` or `enable-gtid` to `false` in the source configuration file.
     3. Create a new task and run the command `start-task task.yaml --remove-meta` to migrate data from the beginning again.
