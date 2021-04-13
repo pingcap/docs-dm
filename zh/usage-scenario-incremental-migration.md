@@ -154,11 +154,11 @@ CREATE TABLE `messages` (
 1. 创建任务配置文件 `task.yaml`，配置增量同步模式，以及每个上游的同步起点。示例如下：
 
    {{< copyable "yaml" >}}
- 
+
    ```yaml
    name: test             # 任务名称，需要全局唯一
    task-mode: incremental # 任务模式，可设为 "full"、"incremental"、"all"
-    
+
    mysql-instances:
      - source-id: "mysql-01" # 上游实例 ID
        meta:                 # `task-mode` 为 `incremental` 且下游数据库的 `checkpoint` 不存在时 binlog 迁移开始的位置; 如果 `checkpoint` 存在，则以 `checkpoint` 为准
@@ -174,7 +174,7 @@ CREATE TABLE `messages` (
    block-allow-list:   # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
      bw-rule-1:        # 黑白名单配置项 ID
        do-dbs: ["log"] # 迁移哪些库
-   
+
    mysql-instances:
      - source-id: "mysql-01"          # 上游实例或者复制组 ID
        block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
@@ -213,13 +213,13 @@ CREATE TABLE `messages` (
    ```yaml
    name: test             # 任务名称，需要全局唯一
    task-mode: incremental # 任务模式，可设为 "full"、"incremental"、"all"
-   
+
    target-database:       # 下游数据库实例配置
      host: "127.0.0.1"
      port: 4000
      user: "root"
      password: ""         # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
-   
+
    ## ******** 功能配置集 **********
    block-allow-list:   # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
      bw-rule-1:        # 黑白名单配置项 ID
@@ -227,7 +227,7 @@ CREATE TABLE `messages` (
    syncers:            # sync 处理单元的运行配置参数
      global:           # 配置名称
        safe-mode: true # 设置为 true，则将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。在启动或恢复增量复制任务的前 5 分钟内 TiDB DM 会自动启动 safe mode
-   
+
    # ----------- 实例配置 -----------
    mysql-instances:
      - source-id: "mysql-01"         # 上游实例或者复制组 ID
@@ -341,8 +341,6 @@ MySQL [log]> SELECT * FROM messages;
 ```
 
 查询下游数据库，可以发现 `(3, 'msg3')` 之后的数据已同步成功：
-
-{{< copyable "" >}}
 
 ```sql
 MySQL [log]> SELECT * FROM messages;
