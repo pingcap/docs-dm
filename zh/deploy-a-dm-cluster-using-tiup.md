@@ -201,3 +201,9 @@ tiup dm display dm-test
 ```
 
 在输出结果中，如果 Status 状态信息为 `Up`，说明集群状态正常。
+
+## 第 8 步：获取集群控制工具 dmctl
+
+dmctl 是用来控制集群运行命令的工具，推荐[通过 TiUP 获取该工具](maintain-dm-using-tiup.md#集群控制工具-dmctl)。
+
+dmctl 支持命令模式与交互模式，具体请见[使用 dmctl 运维集群](dmctl-introduction.md#使用-dmctl-运维集群)。
