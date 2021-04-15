@@ -346,7 +346,7 @@ In the example, the `syncerBinlogGtid` of the data source `mysql1` is inconsecut
     4. Set `syncers.safe-mode` to `true` in the `task.yaml` and restart the task.
     5. After the incremental task replicates all missing data to the downstream, stop the task and change `safe-mode` to `false` in the `task.yaml`.
     6. Restart the task again.
-    6. Restart the data source and set either `enable-relay` or `enable-gtid` to `false` in the source configuration file.
+    7. Restart the data source and set either `enable-relay` or `enable-gtid` to `false` in the source configuration file.
 - If none of the above conditions is met or if the data volume of the task is small, you can take these steps:
     1. Clean up imported data in the downstream database.
     2. Restart the data source and set either `enable-relay` or `enable-gtid` to `false` in the source configuration file.
