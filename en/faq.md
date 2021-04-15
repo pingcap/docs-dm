@@ -333,17 +333,19 @@ query-status test
 In the example, the `syncerBinlogGtid` of the data source `mysql1` is inconsecutive. In this case, you can do one of the following to handle the data loss:
 
 - If upstream binlogs from the current time to the position recorded in the metadata of the full export task have not been purged, you can take these steps:
-    1. Pause the current task and delete all data sources with inconsecutive GTIDs.
+    1. Stop the current task and delete all data sources with inconsecutive GTIDs.
     2. Set `enable-relay` to `false` in all source configuration files.
     3. For data sources with inconsecutive GTIDs (such as `mysql1` in the above example), change the task to an incremental task and configure related `mysql-instances.meta` with metadata information of each full export task, including the `binlog-name`, `binlog-pos`, and `binlog-gtid` information.
-    4. Set `syncers.safe-mode` to `true` in `task.yaml` of the incremental task.
-    5. After the incremental task replicates all missing data to the downstream, restart the task and set `safe-mode` to `false`.
+    4. Set `syncers.safe-mode` to `true` in `task.yaml` of the incremental task and restart the task.
+    5. After the incremental task replicates all missing data to the downstream, stop the task and change `safe-mode` to `false` in the `task.yaml`.
+    6. Restart the task again.
 - If upstream binlogs have been purged but local relay logs remain, you can take these steps:
-    1. Pause the current task.
+    1. Stop the current task.
     2. For data sources with inconsecutive GTIDs (such as `mysql1` in the above example), change the task to an incremental task and configure related `mysql-instances.meta` with metadata information of each full export task, including the `binlog-name`, `binlog-pos`, and `binlog-gtid` information.
     3. In the `task.yaml` of the incremental task, change the previous value of `binlog-gtid` to the previous value of `previous_gtids`. For the above example, change `1-y` to `6-y`.
-    4. Set `syncers.safe-mode` to `true` in the `task.yaml`.
-    5. After the incremental task replicates all missing data to the downstream, restart the task and set `safe-mode` to `false`.
+    4. Set `syncers.safe-mode` to `true` in the `task.yaml` and restart the task.
+    5. After the incremental task replicates all missing data to the downstream, stop the task and change `safe-mode` to `false` in the `task.yaml`.
+    6. Restart the task again.
     6. Restart the data source and set either `enable-relay` or `enable-gtid` to `false` in the source configuration file.
 - If none of the above conditions is met or if the data volume of the task is small, you can take these steps:
     1. Clean up imported data in the downstream database.
