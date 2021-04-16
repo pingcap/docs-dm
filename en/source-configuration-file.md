@@ -48,6 +48,10 @@ from:
 #   action: Ignore
 ```
 
+> **Note:**
+>
+> In DM v2.0.1, DO NOT set `enable-gtid` and `enable-relay` to `true` at the same time. Otherwise, it may cause loss of incremental data.
+
 ## Configuration parameters
 
 This section describes each configuration parameter in the configuration file.
