@@ -239,7 +239,6 @@ mydumpers:
   global:
     threads: 4
     chunk-filesize: 64
-    skip-tz-utc: true
 
 loaders:
   global:
