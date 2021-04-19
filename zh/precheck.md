@@ -23,7 +23,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/precheck/']
 
     > **注意：**
     >
-    > 支持从 MySQL v8.0 迁移数据为 DM v2.0 的实验特性。
+    > 支持从 MySQL v8.0 迁移数据是 DM v2.0 的实验特性。
 
 + 数据库配置
 
