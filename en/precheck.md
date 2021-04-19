@@ -18,7 +18,7 @@ Upstream and downstream database users must have the corresponding read and writ
 
 + Database version
 
-    - 5.5 < MySQL version
+    - MySQL version > 5.5
     - MariaDB version >= 10.1.2
 
     > **Note:**

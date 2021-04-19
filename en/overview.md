@@ -98,7 +98,7 @@ Before using the DM tool, note the following restrictions:
 
 + Database version
 
-    - 5.5 < MySQL version
+    - MySQL version > 5.5
     - MariaDB version >= 10.1.2
 
     > **Note:**
