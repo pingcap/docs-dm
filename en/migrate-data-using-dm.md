@@ -39,6 +39,8 @@ After the DM cluster is deployed using TiUP, the configuration information is li
     | Upstream MySQL-2 | 172.16.10.82 | 3306 | root | VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU= |
     | Downstream TiDB | 172.16.10.83 | 4000 | root | |
 
+The list of privileges needed on the MySQL host can be found in the [precheck](precheck.md) documentation.
+
 ## Step 3: Create data source
 
 1. Write MySQL-1 related information to `conf/source1.yaml`:
