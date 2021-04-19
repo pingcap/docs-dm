@@ -108,7 +108,7 @@ block-allow-list:                     # 如果 DM 版本 <= v2.0.0-beta.2 则使
 # dump 处理单元全局配置，各实例通过配置项名引用。
 mydumpers:
   global:
-    extra-args: "-B test_db -T test_table"  # dump 处理单元的其他参数，从 DM 1.0.2 版本开始，DM 会自动生成 table-list 配置，在其之前的版本仍然需要人工配置。
+    extra-args: ""
 ```
 
 ## 第 5 步：启动任务
