@@ -353,3 +353,13 @@ In the example, the `syncerBinlogGtid` of the data source `mysql1` is inconsecut
     3. Create a new task and run the command `start-task task.yaml --remove-meta` to migrate data from the beginning again.
 
 For data sources that can be replicated normally (such as `mysql2` in the above example) in the first and second solutions above, configure related `mysql-instances.meta` with `syncerBinlog` and `syncerBinlogGtid` information from `subTaskStatus.sync` when setting the incremental task.
+
+## In DM v2.0, how to handle the error "heartbeat config is different from previous used: serverID not equal" when switching the connection between DM-workers and MySQL instances in virtual IP environment with the `heartbeat` feature enabled?
+
+The `heartbeat` feature is disabled by default in DM v2.0. If you enable the feature in the task configuration file, it interferes with the high availability feature. To solve this issue, you can disable the `heartbeat` feature by setting `enable-heartbeat` to `false` in the task configuration file and reload the task configuration file. DM will forcibly disable the `heartbeat` feature in subsequent releases.
+
+## Why does a DM-master fail to join the cluster after it restarts and DM report the error "fail to start embed etcd, RawCause: member xxx has already been bootstrapped"?
+
+When a DM-master starts, DM records the etcd information in the current directory. If the directory changes after the DM-master restarts, DM can not get access to the etcd information and thus the restart fails.
+
+To solve this issue, you are recommended to maintain DM clusters using TiUP. In the case that you need to deploy using binary files, you need to configure `data-dir` with absolute paths in the configuration file of the DM-master, or pay attention to the current directory where you run the command.
