@@ -68,6 +68,8 @@ According to the intended cluster topology, you need to manually create and edit
 
 You need to create a YAML configuration file (named `topology.yaml` for example) according to the [configuration file template](https://github.com/pingcap/tiup/blob/master/embed/templates/examples/dm/topology.example.yaml). For other scenarios, edit the configuration accordingly.
 
+> You can use `tiup dm template > topology.yaml` command to generate template quickly
+
 The configuration of deploying three DM-masters, three DM-workers, and one monitoring component instance is as follows:
 
 ```yaml
