@@ -5,7 +5,7 @@ summary: 学习如何使用 TiUP DM 组件来离线部署 TiDB Data Migration �
 
 # 使用 TiUP 离线镜像部署 DM 集群（实验特性）
 
-> **注意：**
+> **警告：**
 >
 > 本文描述特性仍为实验特性，不建议在生产环境下使用 TiUP 离线镜像部署 DM 集群。
 

@@ -18,12 +18,12 @@ Upstream and downstream database users must have the corresponding read and writ
 
 + Database version
 
-    - 5.5 < MySQL version
+    - MySQL version > 5.5
     - MariaDB version >= 10.1.2
 
-    > **Note:**
+    > **Warning:**
     >
-    > Support for MySQL 8.0 is an experimental feature of TiDB Data Migration v2.0.
+    > Support for MySQL 8.0 is an experimental feature of TiDB Data Migration v2.0. It is **NOT** recommended that you use it in a production environment.
 
 + Database configuration
 
