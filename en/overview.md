@@ -108,9 +108,9 @@ Before using the DM tool, note the following restrictions:
     > - MySQL version > 5.7.1
     > - MariaDB version >= 10.1.3
 
-    > **Note:**
+    > **Warning:**
     >
-    > Support for MySQL 8.0 is an experimental feature of TiDB Data Migration v2.0.
+    > Support for MySQL 8.0 is an experimental feature of TiDB Data Migration v2.0. It is **NOT** recommended that you use it in a production environment.
 
     Data Migration [prechecks the corresponding privileges and configuration automatically](precheck.md) while starting the data migration task using dmctl.
 
