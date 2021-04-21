@@ -41,12 +41,20 @@ DM 支持对源数据的分库分表进行合并迁移，但有一些使用限�
 
 + 数据库版本
 
-    - 5.5 < MySQL 版本 < 8.0
+    - MySQL 版本 > 5.5
     - MariaDB 版本 >= 10.1.2
 
     > **注意：**
     >
+<<<<<<< HEAD
     > 如果上游 MySQL/MariaDB server 间构成主从复制结构，则需要 5.7.1 < MySQL 版本 < 8.0 或者 MariaDB 版本 >= 10.1.3。
+=======
+    > 如果上游 MySQL/MariaDB servers 间构成主从复制结构，则需要 MySQL 版本高于 5.7.1 或者 MariaDB 版本等于或高于 10.1.3。
+
+    > **警告：**
+    >
+    > 支持从 MySQL v8.0 迁移数据是 DM v2.0 的实验特性，不建议在生产环境下使用。
+>>>>>>> 928e5af... zh: update precheck info about MySQL 8.0 support (#641)
 
 + DDL 语法兼容性
 

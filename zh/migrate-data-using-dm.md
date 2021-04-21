@@ -36,6 +36,8 @@ aliases: ['/zh/tidb-data-migration/v2.0/replicate-data-using-dm']
     | 上游 MySQL-2 | 172.16.10.82 | 3306 | root | VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU= |
     | 下游 TiDB | 172.16.10.83 | 4000 | root | |
 
+上游 MySQL 数据库实例用户所需权限参见[上游 MySQL 实例配置前置检查](precheck.md)介绍。
+
 ## 第 3 步：创建数据源
 
 1. 将 MySQL-1 的相关信息写入到 `conf/source1.yaml` 中：
