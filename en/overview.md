@@ -105,7 +105,7 @@ Before using the DM tool, note the following restrictions:
     >
     > If there is a primary-secondary migration structure between the upstream MySQL/MariaDB servers, then choose the following version.
     >
-    > - 5.7.1 < MySQL version
+    > - MySQL version > 5.7.1
     > - MariaDB version >= 10.1.3
 
     > **Note:**
