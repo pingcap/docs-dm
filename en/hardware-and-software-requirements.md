@@ -45,5 +45,5 @@ DM can be deployed and run on a 64-bit generic hardware server platform (Intel x
 
 > **Note:**
 >
-> - In the production environment, it is not recommended to deploy and run DM-master and DM-worker on the same server, because when DM-worker writes to the disk, it may interferes with the use of disks by the DM-master high availability component.
-> - If you encounter performance issues, you are recommended to modify the task configuration file according to [Optimize Configuration of DM](tune-configuration.md). If the performance is not effectively optimized by tuning configuration files, you can try to upgrade the configuration of your server.
+> - In the production environment, it is not recommended to deploy and run DM-master and DM-worker on the same server, because when DM-worker writes to a disk, it may interfere with the use of disks by the DM-master high availability component.
+> - If a performance issue occurs, you are recommended to modify the task configuration file according to [Optimize Configuration of DM](tune-configuration.md). If the performance is not effectively optimized by tuning the configuration file, you can try to upgrade the configuration of your server.
