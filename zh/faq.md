@@ -99,7 +99,7 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
     - 需要更新的 checkpoint 表为 `{dm_meta}` 库中的 `{task-name}_syncer_checkpoint`。
 
     - 需要更新的 checkpoint 行为 `id={source-id}` 且 `is_global=1`。
-    
+
     - 需要更新的 checkpoint 列为 `binlog_name` 与 `binlog_pos`。
 
 3. 在迁移任务配置中为 `syncers` 部分设置 `safe-mode: true` 以保证可重入执行。
@@ -303,21 +303,23 @@ query-status test
 - 如果全量导出任务 metadata 中的 position 到当前时间的上游数据库的 binlog 仍未被清理：
     1. 停止当前任务并删除所有 GTID 不连续的 source
     2. 设置所有 source 的 `enable-relay` 为 `false`
-    3. 针对 GTID 不连续的 source（上例 mysql1），重启任务并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出任务 metadata 的 binlog name，position 和 gtid 信息
-    4. 配置 `task.yaml` 中的 `syncers.safe-mode` 为 `true`
-    5. 待增量同步追上后，重启任务并设置 `safe-mode` 为 `false`
+    3. 针对 GTID 不连续的 source（上例 mysql1），在对应的任务配置文件 `task.yaml` 中，把 `task-mode` 修改为 `incremental` 并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出任务 metadata 的 binlog name，position 和 gtid 信息
+    4. 配置 `task.yaml` 中的 `syncers.safe-mode` 为 `true` 并重启任务
+    5. 待增量同步追上后，停止任务并在任务配置文件中设置 `safe-mode` 为 `false`
+    6. 再次重启任务
 - 如果上游数据库 binlog 已被清理但是本地 relay log 仍未被清理：
     1. 停止当前任务
-    2. 针对 GTID 不连续的 source（上例 mysql1），重启任务并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出任务 metadata 的 binlog name，position 和 gtid 信息
+    2. 针对 GTID 不连续的 source（上例 mysql1），在对应的任务配置文件 `task.yaml` 中，把 `task-mode` 修改为 `incremental` 并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出任务 metadata 的 binlog name，position 和 gtid 信息
     3. 修改其中的 GTID 信息的 `1-y` 为 `previous_gtids` 的前段值，例如，上述例子需要改为 `6-y`
-    4. 配置 `task.yaml` 中的 `syncers.safe-mode` 为 `true`
-    5. 待增量同步追上后，重启任务并设置 `safe-mode` 为 `false`
-    6. 重启 source 并关闭 gtid 或 relay
+    4. 配置 `task.yaml` 中的 `syncers.safe-mode` 为 `true` 并重启任务
+    5. 待增量同步追上后，停止任务并在任务配置文件中设置 `safe-mode` 为 `false`
+    6. 再次重启任务
+    7. 重启 source 并关闭 gtid 或 relay
 - 如果上述条件均不满足或任务同步数据量较小：
     1. 清空下游数据库中数据
     2. 重启 source 并关闭 gtid 或 relay
     3. 重建任务并通过 `start-task task.yaml --remove-meta` 重新同步
-    
+
 上述处理方案中，针对正常同步的 source（如上例 mysql2），重设增量任务时起始点需设置 `mysql-instances.meta` 为 `subTaskStatus.sync` 的 `syncerBinlog` 与 `syncerBinlogGtid`。
 
 ## 在 DM 2.0 中开启 heartbeat，虚拟 IP 环境下切换 DM-worker 与 MySQL 实例的连接，遇到 "heartbeat config is different from previous used: serverID not equal" 错误
