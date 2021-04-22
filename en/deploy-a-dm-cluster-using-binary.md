@@ -134,6 +134,10 @@ The following is the configuration file of DM-master. It is recommended that you
       ./bin/dm-master -config conf/dm-master1.toml
       ```
 
+      > **Note:**
+      >
+      > The console does not output logs after this command is executed. If you want to view the runtime log, you can execute `tail -f dm-master.log`.
+
 3. For DM-master2 and DM-master3, change `name` in the configuration file to `master2` and `master3` respectively, and change `peer-urls` to `192.168.0.5:8291` and `192.168.0.6:8291` respectively. Then repeat Step 2.
 
 ### Deploy DM-worker
