@@ -131,7 +131,7 @@ initial-cluster = "master1=http://192.168.0.4:8291,master2=http://192.168.0.5:82
 
 > **注意：**
 >
-> 执行该命令后控制台不会输出日志，可以通过 `tail -f dm-master.log` 查看运行日志
+> 执行该命令后控制台不会输出日志，可以通过 `tail -f dm-master.log` 查看运行日志。
 
 ```bash
 ./bin/dm-master -config conf/dm-master1.toml
