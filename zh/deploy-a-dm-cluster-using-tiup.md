@@ -67,6 +67,8 @@ summary: 学习如何使用 TiUP DM 组件来部署 TiDB Data Migration 工具�
 
 请根据[配置文件模板](https://github.com/pingcap/tiup/blob/master/embed/templates/examples/dm/topology.example.yaml)，新建一个配置文件 `topology.yaml`。如果有其他组合场景的需求，请根据多个模板自行调整。
 
+可以使用 `tiup dm template > topology.yaml` 命令快速生成配置文件模板。
+
 部署 3 个 DM-master、3 个 DM-worker 与 1 个监控组件的配置如下：
 
 ```yaml

@@ -266,3 +266,31 @@ block-allow-list:
 ```
 
 这样就成功创建了一个将 MySQL-3306 数据迁移到 TiDB 的任务。
+
+### 查看迁移任务状态
+
+在创建迁移任务之后，可以用 `dmtcl query-status` 来查看任务的状态。
+
+{{< copyable "shell-regular" >}}
+
+```bash
+./bin/dmctl -master-addr 127.0.0.1:8261 query-status
+```
+
+结果如下：
+
+```bash
+{
+    "result": true,
+    "msg": "",
+    "tasks": [
+        {
+            "taskName": "testdm",
+            "taskStatus": "Running",
+            "sources": [
+                "mysql-replica-01"
+            ]
+        }
+    ]
+}
+```
