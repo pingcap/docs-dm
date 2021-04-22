@@ -269,7 +269,7 @@ block-allow-list:
 
 ### 查看迁移任务状态
 
-在创建迁移任务之后，可以用 `dmtcl query-status` 来查看任务的状态
+在创建迁移任务之后，可以用 `dmtcl query-status` 来查看任务的状态。
 
 {{< copyable "shell-regular" >}}
 
