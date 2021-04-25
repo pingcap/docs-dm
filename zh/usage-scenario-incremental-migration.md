@@ -4,7 +4,7 @@ title: Data Migration 增量数据迁移场景
 
 # Data Migration 增量数据迁移场景
 
-本文介绍如何使用 DM 将源数据库从指定位置开始的 Binlog 同步到下游 TiDB。本文以一个上游 MySQL 实例进行迁移为例。
+本文介绍如何使用 DM 将源数据库从指定位置开始的 Binlog 同步到下游 TiDB。本文以迁移一个上游 MySQL 实例为例。
 
 ## 上游实例
 
