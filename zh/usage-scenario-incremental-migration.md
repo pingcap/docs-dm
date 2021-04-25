@@ -87,7 +87,7 @@ CREATE TABLE `messages` (
 
 ### 启动 DM 集群
 
-可以参照 [快速上手](quick-start-with-dm.md#使用-binary-包部署-dm) 使用 binary 包启动 DM 集群快速验证，或者参照[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)进行部署。
+可以参照[快速上手文档](quick-start-with-dm.md#使用-binary-包部署-dm)使用 binary 包启动 DM 集群快速验证，或者参照[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)进行集群部署和启动。
 
 ### 创建上游数据源
 
