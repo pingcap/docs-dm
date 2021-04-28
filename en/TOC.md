@@ -35,7 +35,7 @@
   + Cluster Upgrade
     - [Manually Upgrade from v1.0.x to v2.0.x](manually-upgrade-dm-1.0-to-2.0.md)
     - [Upgrade Between v1.0.x](upgrade-dm-1.0.md)
-  + [Manage Data Source Configurations](manage-source.md)
+  + [Manage Data Source](manage-source.md)
   + Manage a Data Migration Task
     - [Task Configuration Guide](task-configuration-guide.md)
     - [Precheck a Task](precheck.md)
