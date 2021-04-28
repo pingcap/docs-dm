@@ -1,11 +1,11 @@
 ---
-title: Manage Upstream MySQL Instances
+title: Manage Data Source Configurations
 summary: Learn how to manage upstream MySQL instances in TiDB Data Migration.
 ---
 
-# Manage Upstream MySQL Instances
+# Manage Data Source Configurations
 
-This document introduces how to manage upstream MySQL instances, including encrypting the MySQL password, managing data source configurations, and changing the bindings between upstream MySQL instances and DM-workers using [dmctl](dmctl-introduction.md).
+This document introduces how to manage data source configurations, including encrypting the MySQL password, operating the data source, and changing the bindings between upstream MySQL instances and DM-workers using [dmctl](dmctl-introduction.md).
 
 ## Encrypt the database password
 
@@ -69,7 +69,7 @@ For the configuration of `source.yaml`, refer to [Upstream Database Configuratio
 
 + `--print-sample-config`: Prints the sample configuration file. This parameter ignores other parameters.
 
-### Returned results
+### Returned results example
 
 {{< copyable "" >}}
 
@@ -92,7 +92,7 @@ operate-source create ./source.yaml
 }
 ```
 
-## Check effective data source configuration in DM-master
+### Check data source configurations
 
 > **Note:**
 >
@@ -108,13 +108,20 @@ get-config source mysql-replica-01
 
 ```
 {
-    "result": true,
+  "result": true,
     "msg": "",
-    "cfg": "enable-gtid: false\nauto-fix-gtid: false\nrelay-dir: \"\"\nmeta-dir: \"\"\nflavor: mysql\ncharset: \"\"\nenable-relay: false\nrelay-binlog-name: \"\"\nrelay-binlog-gtid: \"\"\nsource-id: mysql-replica-01\nfrom:\n  host: 172.16.4.222\n  port: 3306\n  user: dm_user\n  password: '******'\n  max-allowed-packet: null\n  session: {}\n  security: null\npurge:\n  interval: 3600\n  expires: 0\n  remain-space: 15\nchecker:\n  check-enable: true\n  backoff-rollback: 5m0s\n  backoff-max: 5m0s\n  check-interval: 5s\n  backoff-min: 1s\n  backoff-jitter: true\n  backoff-factor: 2\nserver-id: 429595182\ntracer: {}\n"
+    "cfg": "enable-gtid: false
+      flavor: mysql
+      source-id: mysql-replica-01
+      from:
+        host: 127.0.0.1
+        port: 8407
+        user: root
+        password: '******'
 }
 ```
 
-If you don't know the `source-id`, you can run `dmctl --master-addr <master-addr> operate-source show` to list all data sources.
+If you don't know the `source-id`, you can run `dmctl --master-addr <master-addr> operate-source show` to list all data sources first.
 
 {{< copyable "" >}}
 
