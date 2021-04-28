@@ -34,11 +34,9 @@ The [schema and table routing](key-features.md#table-routing) feature means that
 
 DM supports merging and migrating the original sharded instances and tables from the source databases into TiDB, but with some restrictions. For details, see [Sharding DDL usage Restrictions in the pessimistic mode](feature-shard-merge-pessimistic.md#restrictions) and [Sharding DDL usage Restrictions in the optimistic mode](feature-shard-merge-optimistic.md#restrictions).
 
-### 对第三方 Online Schema Change 工具变更过程的同步优化
-
 ### Optimization for third-party online-schema-change tools in the migration process
 
-In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM provides supports for these tools to avoid migrating unnecessary intermediate data. For details, see [Online DDL Tools](key-features.md#online-ddl-tool)
+In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM provides supports for these tools to avoid migrating unnecessary intermediate data. For details, see [Online DDL Tools](key-features.md#online-ddl-tools)
 
 ## Usage restrictions
 
