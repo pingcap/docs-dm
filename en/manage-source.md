@@ -45,16 +45,6 @@ Global Flags:
   -s, --source strings   MySQL Source ID
 ```
 
-### Usage example
-
-{{< copyable "" >}}
-
-```bash
-operate-source create ./source.yaml
-```
-
-For the configuration of `source.yaml`, refer to [Upstream Database Configuration File Introduction](source-configuration-file.md).
-
 ### Flags description
 
 + `create`: Creates one or more upstream database source(s). When creating multiple data sources fails, DM rolls back to the state where the command was not executed.
@@ -69,13 +59,21 @@ For the configuration of `source.yaml`, refer to [Upstream Database Configuratio
 
 + `--print-sample-config`: Prints the sample configuration file. This parameter ignores other parameters.
 
-### Returned results example
+### Usage example
+
+Use the following `operate-source` command to create a source configuration file:
 
 {{< copyable "" >}}
 
 ```bash
 operate-source create ./source.yaml
 ```
+
+For the configuration of `source.yaml`, refer to [Upstream Database Configuration File Introduction](source-configuration-file.md).
+
+The following is an example of the returned result:
+
+{{< copyable "" >}}
 
 ```
 {
