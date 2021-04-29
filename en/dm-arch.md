@@ -14,7 +14,7 @@ DM consists of three components: DM-master, DM-worker, and dmctl.
 
 ### DM-master
 
-DM-master manages and schedules the operation of data migration tasks.
+DM-master manages and schedules the operations of data migration tasks.
 
 - Storing the topology information of the DM cluster
 - Monitoring the running state of DM-worker processes
@@ -35,11 +35,11 @@ For more details of DM-worker, see [DM-worker Introduction](dm-worker-intro.md).
 
 ### dmctl
 
-dmctl is the command line tool used to control the DM cluster.
+dmctl is a command line tool used to control the DM cluster.
 
-- Creating/Updating/Dropping data migration tasks
+- Creating, updating, or dropping data migration tasks
 - Checking the state of data migration tasks
-- Handling the errors during data migration tasks
+- Handling errors of data migration tasks
 - Verifying the configuration correctness of data migration tasks
 
 ## Architecture features

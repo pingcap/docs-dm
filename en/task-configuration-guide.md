@@ -58,13 +58,13 @@ target-database:       # Configuration of target TiDB database.
 >
 > If you do not need to filter specific tables or you only need to migrate specific tables, skip this configuration.
 
-To configure the block allow list of data source tables for the data migration task, see the following two steps:
+To configure the block and allow list of data source tables for the data migration task, perform the following steps:
 
-1. Configure a global filter rule set of the block allow list in the task configuration file.
+1. Configure a global filter rule set of the block and allow list in the task configuration file.
 
     ```yaml
     block-allow-list:
-      bw-rule-1:                           # The name of the block allow list rule.
+      bw-rule-1:                           # The name of the block and allow list rule.
         do-dbs: ["test.*", "user"]         # The allow list of upstream schemas to be migrated. Wildcard characters (*?) are supported. You only need to configure either `do-dbs` or `ignore-dbs`. If both fields are configured, only `do-dbs` takes effect.
         # ignore-dbs: ["mysql", "account"] # The block list of upstream schemas to be migrated. Wildcard characters (*?) are supported.
         do-tables:                         # The allow list of upstream tables to be migrated. You only need to configure either `do-tables` or `ignore-tables`. If both fields are configured, only `do-tables` takes effect.
@@ -85,9 +85,9 @@ To configure the block allow list of data source tables for the data migration t
     ```yaml
     mysql-instances:
         - source-id: "mysql-replica-01"  # Migrate data from the data source whose `source-id` is `mysql-replica-01`.
-          block-allow-list:  "bw-rule-1" # The name of the block allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
+          block-allow-list:  "bw-rule-1" # The name of the block and allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
         - source-id: "mysql-replica-02"  # Migrate data from the data source whose `source-id` is `mysql-replica-02`.
-          block-allow-list:  "bw-rule-2" # The name of the block allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
+          block-allow-list:  "bw-rule-2" # The name of the block and allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
     ```
 
 ## Configure binlog events to be migrated
@@ -96,7 +96,7 @@ To configure the block allow list of data source tables for the data migration t
 >
 > If you do not need to filter specific binlog events of certain schemas or tables, skip this configuration.
 
-To configure the filters of binlog events for the data migration task, see the following two steps:
+To configure the filters of binlog events for the data migration task, perform the following steps:
 
 1. Configure a global binlog event filter rule set in the task configuration file.
 
@@ -115,15 +115,15 @@ To configure the filters of binlog events for the data migration task, see the f
 
     For detailed configuration rules, see [Binlog event filter](key-features.md#binlog-event-filter).
 
-2. Reference the binlog event filtering rules in the data source configuration to filter out specified binlog events of specified tables or schemas in the data source.
+2. Reference the binlog event filtering rules in the data source configuration to filter specified binlog events of specified tables or schemas in the data source.
 
     ```yaml
     mysql-instances:
         - source-id: "mysql-replica-01"    # Migrate data from the data source whose `source-id` is `mysql-replica-01`.
-          block-allow-list:  "bw-rule-1"   # The name of the block allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
+          block-allow-list:  "bw-rule-1"   # The name of the block and allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
           filter-rules: ["filter-rule-1"]  # The name of the rule that filters specific binlog events of the data source. You can configure multiple rules here.
         - source-id: "mysql-replica-02"    # Migrate data from the data source whose `source-id` is `mysql-replica-01`.
-          block-allow-list:  "bw-rule-2"   # The name of the block allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
+          block-allow-list:  "bw-rule-2"   # The name of the block and allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
           filter-rules: ["filter-rule-2"]  # The name of the rule that filters specific binlog events of the data source. You can configure multiple rules here.
     ```
 
@@ -135,7 +135,7 @@ To configure the filters of binlog events for the data migration task, see the f
 >
 > - If it is a shard merge task, you **must** set mapping rules in the task configuration file.
 
-To configure the routing mapping rules for migrating data source tables to specified downstream TiDB tables, see the following two steps:
+To configure the routing mapping rules for migrating data source tables to specified downstream TiDB tables, perform the following steps:
 
 1. Configure a global routing mapping rule set in the task configuration file.
 
@@ -158,11 +158,11 @@ To configure the routing mapping rules for migrating data source tables to speci
     ```yaml
     mysql-instances:
         - source-id: "mysql-replica-01"                     # Migrate data from the data source whose `source-id` is `mysql-replica-01`.
-          block-allow-list:  "bw-rule-1"                    # The name of the block allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
-          filter-rules: ["filter-rule-1"]                   # The name of the rule that filters out specific binlog events of the data source. You can configure multiple rules here.
+          block-allow-list:  "bw-rule-1"                    # The name of the block and allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
+          filter-rules: ["filter-rule-1"]                   # The name of the rule that filters specific binlog events of the data source. You can configure multiple rules here.
           route-rules: ["route-rule-1", "route-rule-2"]     # The name of the routing mapping rule. You can configure multiple rules here.
         - source-id: "mysql-replica-02"                     # Migrate data from the data source whose `source-id` is `mysql-replica-02`.
-          block-allow-list:  "bw-rule-2"                    # The name of the block allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
+          block-allow-list:  "bw-rule-2"                    # The name of the block and allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
           filter-rules: ["filter-rule-2"]                   # The name of the rule that filters specific binlog events of the data source. You can configure multiple rules here.
     ```
 
@@ -170,9 +170,9 @@ To configure the routing mapping rules for migrating data source tables to speci
 
 > **Note:**
 >
-> If you need to migrate sharding DDL statements in a shard merge scenario, you **must** explicitly configure the `shard-mode` field. Otherwise, **DO NOT** configure `shard-mode` at all.
+> - If you need to migrate sharding DDL statements in a shard merge scenario, you **must** explicitly configure the `shard-mode` field. Otherwise, **DO NOT** configure `shard-mode` at all.
 >
-> Migrating sharding DDL statements is likely to cause many issues. Make sure you understand the principles and restriction of DM migrating DDL statements before using this feature, and you **must** use this feature with caution.
+> - Migrating sharding DDL statements is likely to cause many issues. Make sure you understand the principles and restrictions of DM migrating DDL statements before using this feature, and you **must** use this feature with caution.
 
 The following example shows how to configure the task as a shard merge task:
 
@@ -181,7 +181,7 @@ The following example shows how to configure the task as a shard merge task:
 
 ## ********* Basic information *********
 name: test                      # The name of the task. Should be globally unique.
-shard-mode: "pessimistic"       # This needs to be configured if it is a shard merge task. The "pessimistic" mode is used by default. After understanding the principles and restrictions of the "optimistic" mode, you can set to the "optimistic" mode.
+shard-mode: "pessimistic"       # The shard-mode must be configured for a shard merge task. By default, use the "pessimistic" mode. After getting a deep understanding of the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
 ```
 
 ## Other configurations
@@ -193,18 +193,18 @@ The following is an overall task configuration example of this document. The com
 
 ## ********* Basic configuration *********
 name: test                      # The name of the task. Should be globally unique.
-shard-mode: "pessimistic"       # This needs to be configured if it is a shard merge task. The "pessimistic" mode is used by default. After understanding the principles and restrictions of the "optimistic" mode, you can set to the "optimistic" mode.
-task-mode: all                  # The task mode. Can be set to `full`(only migrates full data)/`incremental`(replicates binlog synchronously)/`all` (replicates both full and incremental binlog).
+shard-mode: "pessimistic"       # The shard-mode must be configured for a shard merge task. By default, use the "pessimistic" mode. After getting a deep understanding of the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
+task-mode: all                  # The task mode. Can be set to `full`(only migrates full data)/`incremental`(replicates binlog synchronously)/`all` (replicates both full and incremental binlogs).
 
 ## ******** Data source configuration **********
 mysql-instances:
   - source-id: "mysql-replica-01"                   # Migrate data from the data source whose `source-id` is `mysql-replica-01`.
-    block-allow-list:  "bw-rule-1"                  # The name of the block allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
-    filter-rules: ["filter-rule-1"]                 # The name of the rule that filters out specific binlog events of the data source. You can configure multiple rules here.
+    block-allow-list:  "bw-rule-1"                  # The name of the block and allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
+    filter-rules: ["filter-rule-1"]                 # The name of the rule that filters specific binlog events of the data source. You can configure multiple rules here.
     route-rules: ["route-rule-1", "route-rule-2"]   # The name of the routing mapping rule. You can configure multiple rules here.
   - source-id: "mysql-replica-02"                   # Migrate data from the data source whose `source-id` is `mysql-replica-02`.
-    block-allow-list:  "bw-rule-2"                  # The name of the block allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
-    filter-rules: ["filter-rule-2"]                 # The name of the rule that filters out specific binlog events of the data source. You can configure multiple rules here.
+    block-allow-list:  "bw-rule-2"                  # The name of the block and allow list rule. If the DM version is earlier than v2.0.0-beta.2, use `black-white-list` instead.
+    filter-rules: ["filter-rule-2"]                 # The name of the rule that filters specific binlog events of the data source. You can configure multiple rules here.
     route-rules: ["route-rule-2"]                   # The name of the routing mapping rule. You can configure multiple rules here.
 
 ## ******** Downstream TiDB instance configuration **********
@@ -215,9 +215,9 @@ target-database:       # Configuration of the downstream database instance.
   password: ""         # If the password is not null, it is recommended to use a password encrypted with dmctl.
 
 ## ******** Feature configuration set **********
-# The filter rule set of tables to be migrated in the upstream database instance. You can set multiple rules at the same time.
+# The filter rule set of tables to be migrated from the upstream database instance. You can set multiple rules at the same time.
 block-allow-list:                      # Use black-white-list if the DM version is earlier than v2.0.0-beta.2.
-  bw-rule-1:                           # The name of the block allow list rule.
+  bw-rule-1:                           # The name of the block and allow list rule.
     do-dbs: ["test.*", "user"]         # The allow list of upstream schemas to be migrated. Wildcard characters (*?) are supported. You only need to configure either `do-dbs` or `ignore-dbs`. If both fields are configured, only `do-dbs` takes effect.
     # ignore-dbs: ["mysql", "account"] # The block list of upstream schemas to be migrated. Wildcard characters (*?) are supported.
     do-tables:                         # The allow list of upstream tables to be migrated. You only need to configure either `do-tables` or `ignore-tables`. If both fields are configured, only `do-tables` takes effect.

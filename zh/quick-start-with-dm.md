@@ -214,7 +214,7 @@ from:
 
 ### 创建数据迁移任务
 
-在导入[准备数据](#准备数据)后，遵循以下两步把 MySQL 的 `testdm`.`t1` 和 `testdm`.`t2` 两张表迁移到 TiDB。
+在导入[准备数据](#准备数据)后，进行以下操作将 MySQL 的 `testdm`.`t1` 和 `testdm`.`t2` 两张表迁移到 TiDB。
 
 1. 创建任务的配置文件 `testdm-task.yaml`：
 

@@ -27,7 +27,7 @@ The following is the task configuration file template which allows you to perfor
 # ----------- Global setting -----------
 ## ********* Basic configuration *********
 name: test                      # The name of the task. Should be globally unique.
-task-mode: all                  # The task mode. Can be set to `full`(only migrates full data)/`incremental`(replicates binlog synchronously)/`all` (replicates both full and incremental binlog).
+task-mode: all                  # The task mode. Can be set to `full`(only migrates full data)/`incremental`(replicates binlog synchronously)/`all` (replicates both full and incremental binlogs).
 shard-mode: "pessimistic"       # This needs to be configured if it is a shard merge task. The "pessimistic" mode is used by default. After understanding the principles and restrictions of the "optimistic" mode, you can set to the "optimistic" mode.
 meta-schema: "dm_meta"          # The downstream database that stores the `meta` information.
 timezone: "Asia/Shanghai"       # The timezone.
@@ -77,7 +77,7 @@ filters:
     events: ["all dml"]
     action: Do
 
-# The filter rule set of tables to be migrated in the upstream database instance. You can set multiple rules at the same time.
+# The filter rule set of tables to be migrated from the upstream database instance. You can set multiple rules at the same time.
 block-allow-list:                    # Use black-white-list if the DM version is earlier than v2.0.0-beta.2.
   bw-rule-1:                         # The name of the block allow list rule.
     do-dbs: ["~^test.*", "user"]     # The allow list of upstream schemas needs to be migrated.

@@ -6,7 +6,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 
 # TiDB Data Migration Documentation
 
-[TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data migration task management platform that supports data migration from databases that are compatible with the MySQL protocol into TiDB, such as MySQL, MariaDB, and Aurora MySQL. It can help to reduce the operations cost of data migration.
+[TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data migration task management platform, which supports data migration from MySQL-compatible databases (such as MySQL, MariaDB, and Aurora MySQL) into TiDB. It can help to reduce the operation cost of data migration.
 
 The latest stable version of DM is v2.0.
 

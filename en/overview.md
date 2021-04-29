@@ -8,11 +8,11 @@ aliases: ['/docs/tidb-data-migration/dev/overview/']
 
 # Data Migration Overview
 
-[TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data migration task management platform that supports the full data migration and the incremental data replication from MySQL-compatible databases (such as MySQL, MariaDB, and Aurora MySQL) into TiDB. It can help to reduce the operations cost of data migration and simplify the troubleshooting process.
+[TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data migration task management platform, which supports the full data migration and the incremental data replication from MySQL-compatible databases (such as MySQL, MariaDB, and Aurora MySQL) into TiDB. It can help to reduce the operation cost of data migration and simplify the troubleshooting process.
 
 ## Basic features
 
-This section describes the basic data migration features provided by the Data Migration tool.
+This section describes the basic data migration features provided by DM.
 
 ![DM Core Features](/media/dm-core-features.png)
 
@@ -32,11 +32,11 @@ The [schema and table routing](key-features.md#table-routing) feature means that
 
 ### Shard merge and migration
 
-DM supports merging and migrating the original sharded instances and tables from the source databases into TiDB, but with some restrictions. For details, see [Sharding DDL usage Restrictions in the pessimistic mode](feature-shard-merge-pessimistic.md#restrictions) and [Sharding DDL usage Restrictions in the optimistic mode](feature-shard-merge-optimistic.md#restrictions).
+DM supports merging and migrating the original sharded instances and tables from the source databases into TiDB, but with some restrictions. For details, see [Sharding DDL usage restrictions in the pessimistic mode](feature-shard-merge-pessimistic.md#restrictions) and [Sharding DDL usage restrictions in the optimistic mode](feature-shard-merge-optimistic.md#restrictions).
 
 ### Optimization for third-party online-schema-change tools in the migration process
 
-In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM provides supports for these tools to avoid migrating unnecessary intermediate data. For details, see [Online DDL Tools](key-features.md#online-ddl-tools)
+In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM provides support for these tools to avoid migrating unnecessary intermediate data. For details, see [Online DDL Tools](key-features.md#online-ddl-tools)
 
 ## Usage restrictions
 
@@ -68,7 +68,7 @@ Before using the DM tool, note the following restrictions:
 
     - If conflict exists between sharded tables, solve the conflict by referring to [handling conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key). Otherwise, data migration is not supported. Conflicting data can cover each other and cause data loss.
 
-    - For other sharding DDL migration restrictions, see [Sharding DDL usage Restrictions in the pessimistic mode](feature-shard-merge-pessimistic.md#restrictions) and [Sharding DDL usage Restrictions in the optimistic mode](feature-shard-merge-optimistic.md#restrictions).
+    - For other sharding DDL migration restrictions, see [Sharding DDL usage restrictions in the pessimistic mode](feature-shard-merge-pessimistic.md#restrictions) and [Sharding DDL usage restrictions in the optimistic mode](feature-shard-merge-optimistic.md#restrictions).
 
 + Consistent connection switch of MySQL instances
 

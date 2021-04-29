@@ -10,7 +10,7 @@ This document describes how to migrate data from MySQL to TiDB using [TiDB Data 
 
 ## Sample scenario
 
-Suppose you deploy DM-master and DM-worker instances locally, and migrates data from an upstream MySQL instance to a downstream TiDB instance.
+Suppose you deploy DM-master and DM-worker instances locally, and migrate data from an upstream MySQL instance to a downstream TiDB instance.
 
 The detailed information of each instance is as follows:
 
@@ -214,9 +214,9 @@ Now you successfully add the data source `MySQL-3306` to the DM cluster.
 
 ### Create a data migration task
 
-After inserting the [sample data](#prepare-sample-data) into `MySQL-3306`, take the following two steps to migrate the table `testdm`.`t1` and `testdm`.`t2` to the downstream TiDB instance:
+After inserting the [sample data](#prepare-sample-data) into `MySQL-3306`, take the following steps to migrate the tables `testdm`.`t1` and `testdm`.`t2` to the downstream TiDB instance:
 
-1. Write the following configurations to `testdm-task.yaml` to create a task configuration file:
+1. Create a task configuration file `testdm-task.yaml`, and add the following configurations to the file.
 
     {{< copyable "" >}}
 
@@ -262,9 +262,9 @@ After inserting the [sample data](#prepare-sample-data) into `MySQL-3306`, take 
     }
     ```
 
-Now you successfully create a data migration task that migrates date from `MySQL-3306` to the downstream TiDB instance.
+Now you successfully create a data migration task that migrates data from `MySQL-3306` to the downstream TiDB instance.
 
-### Check data migration task status
+### Check status of the data migration task 
 
 After the data migration task is created, you can use `dmtcl query-status` to check the status of the task. See the following example:
 
