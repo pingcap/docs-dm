@@ -27,7 +27,7 @@ from:
   port: 3306
   user: "root"
   password: "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # 推荐使用 dmctl 对上游数据库的用户密码加密之后的密码
-  security:                       # 上游数据库 TLS 相关配置。所有节点
+  security:                       # 上游数据库 TLS 相关配置
     ssl-ca: "/path/to/ca.pem"
     ssl-cert: "/path/to/cert.pem"
     ssl-key: "/path/to/key.pem"
