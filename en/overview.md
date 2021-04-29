@@ -18,7 +18,7 @@ This section describes the basic data migration features provided by DM.
 
 ### Block and allow lists migration at the schema and table levels
 
-The [block and allow lists filtering rule](key-features.md#block-and-allow-table-lists) is similar to the `replication-rules-db`/`replication-rules-table` feature of MySQL, which can be used to filter or only replicate all operations of some databases or some tables.
+The [block and allow lists filtering rule](key-features.md#block-and-allow-table-lists) is similar to the `replication-rules-db`/`replication-rules-table` feature of MySQL, which can be used to filter or replicate all operations of some databases only or some tables only.
 
 ### Binlog event filtering
 

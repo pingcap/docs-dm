@@ -98,7 +98,7 @@ To configure the block and allow list of data source tables for the data migrati
 
 To configure the filters of binlog events for the data migration task, perform the following steps:
 
-1. Configure a global binlog event filter rule set in the task configuration file.
+1. Configure a global filter rule set of binlog events in the task configuration file.
 
     ```yaml
     filters:                                        # The filter rule set of data source binlog events. You can set multiple rules at the same time.
