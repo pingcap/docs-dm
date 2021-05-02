@@ -72,7 +72,7 @@ mysql-instances:
 
 > **注意：**
 >
-> DM 2.0 使用 dumpling 工具执行全量备份。全量备份过程中会使用 [`FLUSH TABLES WITH READ LOCK`](https://dev.mysql.com/doc/refman/8.0/en/flush.html#flush-tables-with-read-lock) 短暂地中断备份库的 DML 和 DDL 操作，保证并发备份连接的全局一致性和记录增量复制所需的起始 pos 信息。所有的并发备份连接启动事务后释放该锁。
+> DM 2.0 使用 dumpling 工具执行全量备份。全量备份过程中会使用 [`FLUSH TABLES WITH READ LOCK`](https://dev.mysql.com/doc/refman/8.0/en/flush.html#flush-tables-with-read-lock) 短暂地中断备份库的 DML 和 DDL 操作，从而保证并发备份连接的一致性并记录 binlog 位置用于增量复制。所有的并发备份连接启动事务后释放该锁。
 > 
 > 推荐在业务低峰或者 MySQL 备库上进行全量备份。
 
