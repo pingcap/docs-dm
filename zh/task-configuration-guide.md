@@ -53,7 +53,7 @@ target-database:       # 目标 TiDB 配置
 
 ## 配置需要迁移的表
 
-如果不需要过滤特定表，或者只迁移特定表，可以跳过该项配置。
+如果不需要过滤或迁移特定表，可以跳过该项配置。
 
 配置从数据源迁移表的黑白名单，则需要添加两个定义，详细配置规则参考 [Block & Allow Lists](key-features.md#block--allow-table-lists)：
 
