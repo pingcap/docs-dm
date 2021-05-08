@@ -160,20 +160,20 @@ target-database:
 
 mysql-instances:
   - source-id: "mysql-replica-01"
-    block-allow-list:  "instance"   # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:  "instance"   # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
     mydumper-thread: 4
     loader-thread: 16
     syncer-thread: 16
 
   - source-id: "mysql-replica-02"
-    block-allow-list:  "instance"  # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:  "instance"  # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
     mydumper-thread: 4
     loader-thread: 16
     syncer-thread: 16
 
-block-allow-list:                  # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+block-allow-list:                  # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
   instance:
     do-dbs: ["~^sharding[\\d]+"]
     do-tables:

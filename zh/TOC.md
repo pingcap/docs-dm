@@ -19,7 +19,12 @@
     - [迁移使用 GH-ost/PT-osc 的源数据库](feature-online-ddl-scheme.md)
   + [DM 架构](dm-arch.md)
   + [性能数据](benchmark-v2.0-ga.md)
-- [快速上手](quick-start-with-dm.md)
++ 快速上手
+  - [快速上手](quick-start-with-dm.md)
+  - [数据迁移任务配置向导](task-configuration-guide.md)
+  - [分库汇总迁移配置示例](usage-scenario-simple-migration.md)
+  - [增量数据实时同步配置示例](usage-scenario-incremental-migration.md)
+  - [分库分表合并迁移配置示例](usage-scenario-shard-merge.md)
 + 部署使用
   - [软硬件要求](hardware-and-software-requirements.md)
   + 部署 DM 集群
@@ -50,8 +55,6 @@
   - [处理告警](handle-alerts.md)
   - [日常巡检](daily-check.md)
 + 使用场景
-  - [简单数据迁移场景](usage-scenario-simple-migration.md)
-  - [分库分表合并场景](usage-scenario-shard-merge.md)
   - [从 Aurora 迁移数据到 TiDB](migrate-from-mysql-aurora.md)
   - [TiDB 表结构存在更多列的迁移场景](usage-scenario-downstream-more-columns.md)
   - [变更同步的 MySQL 实例](usage-scenario-master-slave-switch.md)
