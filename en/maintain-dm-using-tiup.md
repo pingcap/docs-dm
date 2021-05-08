@@ -6,7 +6,9 @@ aliases: ['/docs/tidb-data-migration/dev/cluster-operations/','/tidb-data-migrat
 
 # Maintain a DM Cluster Using TiUP
 
-This document introduces how to maintain a DM cluster using the TiUP DM component. For the complete steps of DM deployment, refer to [Deploy a DM Cluster Using TiUP](deploy-a-dm-cluster-using-tiup.md).
+This document introduces how to maintain a DM cluster using the TiUP DM component.
+
+If you have not deployed a DM cluster yet, you can refer to [Deploy a DM Cluster Using TiUP](deploy-a-dm-cluster-using-tiup.md) for instructions.
 
 > **Note:**
 >

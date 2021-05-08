@@ -1,10 +1,10 @@
 ---
-title: DM Online DDL Scheme
+title: Migrate from Databases that Use GH-ost/PT-osc
 summary: This document introduces the online-ddl-scheme feature of DM.
 aliases: ['/docs/tidb-data-migration/dev/online-ddl-scheme/','/tidb-data-migration/dev/online-ddl-scheme/']
 ---
 
-# DM Online DDL Scheme
+# Migrate from Databases that Use GH-ost/PT-osc
 
 This document introduces the `online-ddl-scheme` feature of DM.
 
@@ -120,9 +120,9 @@ The SQL statements mostly used by gh-ost and the corresponding operation of DM a
         rename test.test4 to test._test4_del;
         rename test._test4_gho to test.test4;
         ```
-    
+
     * DM does not execute `rename to _test4_del`. When executing `rename ghost_table to origin table`, DM takes the following steps:
-    
+
         - Read the DDL recorded in memory in Step 3
         - Replace `ghost_table` and `ghost_schema` with `origin_table` and its corresponding schema
         - Execute the DDL that has been replaced
@@ -157,7 +157,7 @@ The SQL statements mostly used by pt-osc and the corresponding operation of DM a
 
     ```sql
     CREATE TABLE `test`.`_test4_new` ( id int(11) NOT NULL AUTO_INCREMENT,
-    date date DEFAULT NULL, account_id bigint(20) DEFAULT NULL, conversion_price decimal(20,3) DEFAULT NULL,  ocpc_matched_conversions bigint(20) DEFAULT NULL, ad_cost decimal(20,3) DEFAULT NULL,cl2 varchar(20) COLLATE utf8mb4_bin NOT NULL,cl1 varchar(20) COLLATE utf8mb4_bin NOT NULL,PRIMARY KEY (id) ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ;   
+    date date DEFAULT NULL, account_id bigint(20) DEFAULT NULL, conversion_price decimal(20,3) DEFAULT NULL,  ocpc_matched_conversions bigint(20) DEFAULT NULL, ad_cost decimal(20,3) DEFAULT NULL,cl2 varchar(20) COLLATE utf8mb4_bin NOT NULL,cl1 varchar(20) COLLATE utf8mb4_bin NOT NULL,PRIMARY KEY (id) ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ;
     ```
 
     DM does not create the `_test4_new` table. DM deletes the `dm_meta.{task_name}\_onlineddl` record in the downstream according to `ghost_schema`, `ghost_table`, and the `server_id` of `dm_worker`, and clears the related information in memory.
@@ -170,7 +170,7 @@ The SQL statements mostly used by pt-osc and the corresponding operation of DM a
 
     ```sql
     ALTER TABLE `test`.`_test4_new` add column c3 int;
-    ``` 
+    ```
 
     DM does not perform the DDL operation of `_test4_new`. Instead, it records this DDL in `dm_meta.{task_name}\_onlineddl` and memory.
 
@@ -207,10 +207,10 @@ The SQL statements mostly used by pt-osc and the corresponding operation of DM a
     * DM splits the above `rename` operation into two SQL statements:
 
         ```sql
-         rename test.test4 to test._test4_old; 
+         rename test.test4 to test._test4_old;
          rename test._test4_new to test.test4;
          ```
-    
+
     * DM does not execute `rename to _test4_old`. When executing `rename ghost_table to origin table`, DM takes the following steps:
 
         - Read the DDL recorded in memory in Step 2

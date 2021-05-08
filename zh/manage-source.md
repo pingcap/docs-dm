@@ -46,16 +46,6 @@ Global Flags:
   -s, --source strings   MySQL Source ID
 ```
 
-### 命令用法示例
-
-{{< copyable "" >}}
-
-```bash
-operate-source create ./source.yaml
-```
-
-其中 `source.toml` 的配置参考[上游数据库配置文件介绍](source-configuration-file.md)。
-
 ### 参数解释
 
 + `create`：创建一个或多个上游的数据库源。创建多个数据源失败时，会尝试回滚到执行命令之前的状态
@@ -72,13 +62,21 @@ operate-source create ./source.yaml
 
 + `--print-sample-config`：打印示例配置文件。该参数会忽视其余参数
 
-### 创建数据源配置示例
+### 命令用法示例
+
+使用 `operate-source` 命令创建数据源配置：
 
 {{< copyable "" >}}
 
 ```bash
 operate-source create ./source.yaml
 ```
+
+其中 `source.yaml` 的配置参考[上游数据库配置文件介绍](source-configuration-file.md)。
+
+结果如下：
+
+{{< copyable "" >}}
 
 ```
 {
