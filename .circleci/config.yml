@@ -7,14 +7,24 @@ jobs:
     working_directory: ~/pingcap/docs-dm
     steps:
       - checkout
+
       - run:
           name: "Install markdownlint"
           command: |
             sudo npm install -g markdownlint-cli@0.17.0
+
       - run:
           name: "Lint"
           command: |
             markdownlint .
+
+      - run:
+          name: "Vale linter"
+          command: |
+            git remote add upstream https://github.com/pingcap/docs-dm.git
+            git fetch upstream
+            curl -sfL https://install.goreleaser.com/github.com/ValeLint/vale.sh | sh -s v2.5.1
+            vale $(git diff-tree --name-only --no-commit-id -r upstream/master...HEAD -- 'en/' '.md' ':(exclude).github/*')
 
   build:
     docker:
