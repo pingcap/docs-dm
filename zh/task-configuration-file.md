@@ -69,6 +69,12 @@ mysql-instances:
     - `incremental`：只通过 binlog 把上游数据库的增量修改复制到下游数据库, 可以设置实例配置的 `meta` 配置项来指定增量复制开始的位置。
     - `all`：`full` + `incremental`。先全量备份上游数据库，将数据全量导入到下游数据库，然后从全量数据备份时导出的位置信息 (binlog position) 开始通过 binlog 增量复制数据到下游数据库。
 
+> **注意：**
+>
+> DM 2.0 使用 dumpling 工具执行全量备份。全量备份过程中会使用 [`FLUSH TABLES WITH READ LOCK`](https://dev.mysql.com/doc/refman/8.0/en/flush.html#flush-tables-with-read-lock) 短暂地中断备份库的 DML 和 DDL 操作，从而保证并发备份连接的一致性并记录 binlog 位置用于增量复制。所有的并发备份连接启动事务后释放该锁。
+> 
+> 推荐在业务低峰或者 MySQL 备库上进行全量备份。
+
 ### 功能配置集
 
 对于一般的业务场景，只需要配置黑白名单过滤规则集，配置说明参见以上示例配置文件中 `block-allow-list` 的注释以及 [Block & Allow Lists](key-features.md#block--allow-table-lists)
