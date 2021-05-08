@@ -26,10 +26,10 @@ Enter the interactive mode to interact with DM-master:
 
 ```
 Welcome to dmctl
-Release Version: v2.0.0
-Git Commit Hash: e6ca256257fbe6e744892841537a16eb84469116
+Release Version: v2.0.3
+Git Commit Hash: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 Git Branch: release-2.0
-UTC Build Time: 2020-10-30 07:43:00
+UTC Build Time: yyyy-mm-dd hh:mm:ss
 Go Version: go version go1.13 linux/amd64
 
 » help
@@ -85,7 +85,7 @@ The command mode differs from the interactive mode in that you need to append th
 
 ```
 Available Commands:
-  check-task            check-task <config-file>
+  check-task            check-task <config-file> [--error count] [--warn count]
   get-config            get-config <task | master | worker | source> <name> [--file filename]
   handle-error          handle-error <task-name | task-file> [-s source ...] [-b binlog-pos] <skip/replace/revert> [replace-sql1;replace-sql2;]
   list-member           list-member [--leader] [--master] [--worker] [--name master-name/worker-name ...]
