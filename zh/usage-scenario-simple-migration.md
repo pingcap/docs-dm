@@ -1,11 +1,6 @@
 ---
-<<<<<<< HEAD
-title: Data Migration 简单使用场景
-aliases: ['/zh/tidb-data-migration/v2.0/usage-scenario-simple-replication']
-=======
 title: Data Migration 分库汇总迁移
-aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/','/zh/tidb-data-migration/dev/usage-scenario-simple-replication']
->>>>>>> 0a3add5... zh: add an example for incremental sync (#575)
+aliases: ['/zh/tidb-data-migration/v2.0/usage-scenario-simple-replication']
 ---
 
 # Data Migration 分库汇总迁移
