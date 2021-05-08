@@ -118,7 +118,7 @@ routes:
 {{< copyable "" >}}
 
 ```yaml
-block-allow-list:             # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
+block-allow-list:             # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list。
   rule-1:
     do-dbs: ["test*"]         # 非 ~ 字符开头，表示规则是通配符；v1.0.5 及后续版本支持通配符规则。
 ​    do-tables:
@@ -214,7 +214,7 @@ block-allow-list:             # 如果 DM 版本 <= v2.0.0-beta.2 则使用 blac
 {{< copyable "" >}}
 
 ```yaml
-block-allow-list:  # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
+block-allow-list:  # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list。
   bw-rule:
     do-dbs: ["forum_backup_2018", "forum"]
     ignore-dbs: ["~^forum_backup_"]

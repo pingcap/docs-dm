@@ -70,12 +70,12 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
   mysql-instances:
     -
       source-id: "source-1"
-      block-allow-list:  "instance"  # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+      block-allow-list:  "instance"  # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
       mydumper-config-name: "global"
       loader-thread: 16
 
   # 配置 sysbench 生成数据所在的库的名称
-  block-allow-list:                  # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+  block-allow-list:                  # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     instance:
       do-dbs: ["dm_benchmark"]
 
@@ -129,11 +129,11 @@ sysbench --test=oltp_insert --tables=4 --mysql-host=172.16.4.40 --mysql-port=330
   mysql-instances:
     -
       source-id: "source-1"
-      block-allow-list:  "instance"   # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+      block-allow-list:  "instance"   # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
       syncer-config-name: "global"
 
   # 配置 sysbench 生成数据所在的库的名称
-  block-allow-list:                   # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+  block-allow-list:                   # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     instance:
       do-dbs: ["dm_benchmark"]
 

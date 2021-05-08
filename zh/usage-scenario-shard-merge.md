@@ -126,7 +126,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
     {{< copyable "" >}}
 
     ```yaml
-    block-allow-list:    # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:    # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
       log-bak-ignored:
         ignore-tables:
         - db-name: "user"
@@ -164,7 +164,7 @@ mysql-instances:
     source-id: "instance-1"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"     # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:  "log-bak-ignored"     # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -173,7 +173,7 @@ mysql-instances:
     source-id: "instance-2"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"    # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:  "log-bak-ignored"    # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -181,7 +181,7 @@ mysql-instances:
     source-id: "instance-3"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"    # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:  "log-bak-ignored"    # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -216,7 +216,7 @@ filters:
     events: ["drop database"]
     action: Ignore
 
-block-allow-list:      # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+block-allow-list:      # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
   log-bak-ignored:
     ignore-tables:
     - db-name: "user"
