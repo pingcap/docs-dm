@@ -16,16 +16,12 @@ This document gives an overview of configuration files of DM (Data Migration).
 
 ## DM migration task configuration
 
-### DM task configuration file
-
-`task.yaml` is the configuration file for the data migration task. For more details, refer to [Task Configuration File](task-configuration-file.md).
-
 ### Data migration task creation
 
 You can take the following steps to create a data migration task:
 
 1. [Load the data source configuration into the DM cluster using dmctl](manage-source.md#operate-data-source).
-2. Refer to the description in the [Task Configuration File](task-configuration-file.md) and create the configuration file `your_task.yaml`.
+2. Refer to the description in the [Task Configuration Guide](task-configuration-guide.md) and create the configuration file `your_task.yaml`.
 3. [Create the data migration task using dmctl](create-task.md).
 
 ### Important concepts

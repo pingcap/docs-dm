@@ -1,14 +1,16 @@
 ---
-title: Introduction to dmctl
-summary: Learn how to manage the data replication task using dmctl.
+title: Maintain DM Clusters Using dmctl
+summary: Learn how to maintain a DM cluster using dmctl.
 aliases: ['/docs/tidb-data-migration/dev/manage-replication-tasks/','/tidb-data-migration/dev/manage-replication-tasks/']
 ---
 
-# Introduction to dmctl
+# Maintain DM Clusters Using dmctl
 
-dmctl is a command line tool used to manage the data migration task. For DM clusters deployed using TiUP, you can directly use [`tiup dmctl`](maintain-dm-using-tiup.md#dmctl).
+> **Note:**
+>
+> For DM clusters deployed using TiUP, you are recommended to directly use [`tiup dmctl`](maintain-dm-using-tiup.md#dmctl) to maintain the clusters.
 
-The dmctl component supports the interactive mode and the command mode.
+dmctl is a command line tool used to maintain DM clusters. It supports both the interactive mode and the command mode.
 
 ## Interactive mode
 

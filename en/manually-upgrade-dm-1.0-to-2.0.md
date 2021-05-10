@@ -98,7 +98,7 @@ from:
 
 ### Data migration task configuration file
 
-For [data migration task configuration file](task-configuration-file.md), v2.0.x is basically compatible with v1.0.x. You can directly copy the configuration of v1.0.x.
+For [data migration task configuration guide](task-configuration-guide.md), v2.0.x is basically compatible with v1.0.x. You can directly copy the configuration of v1.0.x.
 
 ## Step 2: Deploy the v2.0.x cluster
 

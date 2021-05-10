@@ -10,9 +10,7 @@ This guide shows how to migrate data using the Data Migration (DM) tool.
 
 ## Step 1: Deploy the DM cluster
 
-It is recommended to deploy the DM cluster using TiUP. For detailed deployment, see [Deploy Data Migration Using TiUP](deploy-a-dm-cluster-using-tiup.md).
-
-You can also deploy the DM cluster using binary for trial or test. For detailed deployment, see [Deploy Data Migration Cluster Using DM Binary](deploy-a-dm-cluster-using-binary.md).
+It is recommended to [deploy the DM cluster using TiUP](deploy-a-dm-cluster-using-tiup.md). You can also [deploy the DM cluster using binary](deploy-a-dm-cluster-using-binary.md) for trial or test.
 
 > **Note:**
 >
