@@ -16,7 +16,7 @@
       - [Overview](feature-shard-merge.md)
       - [Pessimistic Mode](feature-shard-merge-pessimistic.md)
       - [Optimistic Mode](feature-shard-merge-optimistic.md)
-      - [Migrate from GH-ost/PT-osc Databases](feature-online-ddl-scheme.md)
+      - [Migrate from MySQL Databases that Use GH-ost/PT-osc](feature-online-ddl-scheme.md)
   + [DM Architecture](dm-arch.md)
   + [Benchmarks](benchmark-v2.0-ga.md)
 + [Quick Start](quick-start-with-dm.md)
@@ -46,7 +46,7 @@
     - [Stop a Task](stop-task.md)
     - [Handle Failed DDL Statements](handle-failed-ddl-statements.md)
   - [Manually Handle Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
-  - [Manage Table Schemas of Tables to be Migrated](manage-schema.md)
+  - [Manage Schemas of Tables to be Migrated](manage-schema.md)
   - [Handle Alerts](handle-alerts.md)
   - [Daily Check](daily-check.md)
 + Usage Scenarios
