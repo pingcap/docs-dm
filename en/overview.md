@@ -8,15 +8,7 @@ aliases: ['/docs/dev/syncer-overview/','/docs/dev/reference/tools/syncer/','/tid
 
 # Data Migration Overview
 
-<<<<<<< HEAD
-> **Note:**
->
-> TiDB Data Migration completely replaces the [Syncer](https://docs.pingcap.com/tidb/v4.0/syncer-overview) tool (no longer maintained since TiDB v4.0).
-
-[TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data migration task management platform that supports the full data migration and the incremental data replication from MySQL/MariaDB into TiDB. It can help to reduce the operations cost and simplify the troubleshooting process.
-=======
 [TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data migration task management platform, which supports the full data migration and the incremental data replication from MySQL-compatible databases (such as MySQL, MariaDB, and Aurora MySQL) into TiDB. It can help to reduce the operation cost of data migration and simplify the troubleshooting process.
->>>>>>> fb16eff... *: adjust dm docs structure and refine some expressions (#653)
 
 ## Basic features
 
