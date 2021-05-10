@@ -53,7 +53,7 @@ target-database:       # 目标 TiDB 配置
 
 ## 配置需要迁移的表
 
-如果不需要过滤特定表，或者只迁移特定表，可以跳过该项配置。
+如果不需要过滤或迁移特定表，可以跳过该项配置。
 
 配置从数据源迁移表的黑白名单，则需要添加两个定义，详细配置规则参考 [Block & Allow Lists](key-features.md#block--allow-table-lists)：
 
@@ -61,7 +61,7 @@ target-database:       # 目标 TiDB 配置
 
     ```yaml
     block-allow-list:
-      bw-rule-1:                           # 规则名称，dbs 和 tables
+      bw-rule-1:                           # 规则名称
         do-dbs: ["test.*", "user"]         # 迁移哪些库，支持通配符 "*" 和 "?"，do-dbs 和 ignore-dbs 只需要配置一个，如果两者同时配置只有 do-dbs 会生效
         # ignore-dbs: ["mysql", "account"] # 忽略哪些库，支持通配符 "*" 和 "?"
         do-tables:                         # 迁移哪些表，do-tables 和 ignore-tables 只需要配置一个，如果两者同时配置只有 do-tables 会生效
@@ -75,7 +75,7 @@ target-database:       # 目标 TiDB 配置
           tbl-name: "log"
     ```
 
-2. 在数据源配置中引用黑白名规则，过滤该数据源需要迁移的表
+2. 在数据源配置中引用黑白名单规则，过滤该数据源需要迁移的表
 
     ```yaml
     mysql-instances:
@@ -97,7 +97,7 @@ target-database:       # 目标 TiDB 配置
     filters:                                        # 定义过滤数据源特定操作的规则，可以定义多个规则
       filter-rule-1:                                # 规则名称
         schema-pattern: "test_*"                    # 匹配数据源的库名，支持通配符 "*" 和 "?"
-        table-pattern: "t_*"                        # 匹配数据源的表明，支持通配符 "*" 和 "?"
+        table-pattern: "t_*"                        # 匹配数据源的表名，支持通配符 "*" 和 "?"
         events: ["truncate table", "drop table"]    # 匹配上 schema-pattern 和 table-pattern 的库或者表的操作类型
         action: Ignore                              # 迁移（Do）还是忽略(Ignore)
       filter-rule-2:
@@ -130,7 +130,7 @@ target-database:       # 目标 TiDB 配置
     routes:                           # 定义数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则
       route-rule-1:                   # 规则名称
         schema-pattern: "test_*"      # 匹配数据源的库名，支持通配符 "*" 和 "?"
-        table-pattern: "t_*"          # 匹配数据源的表明，支持通配符 "*" 和 "?"
+        table-pattern: "t_*"          # 匹配数据源的表名，支持通配符 "*" 和 "?"
         target-schema: "test"         # 目标 TiDB 库名
         target-table: "t"             # 目标 TiDB 表名
       route-rule-2:
@@ -138,7 +138,7 @@ target-database:       # 目标 TiDB 配置
         target-schema: "test"
     ```
 
-2. 在数据源配置中引用黑白名规则，过滤该数据源需要迁移的表
+2. 在数据源配置中引用路由规则，过滤该数据源需要迁移的表
 
     ```yaml
     mysql-instances:
@@ -213,7 +213,7 @@ block-allow-list:                      # 定义数据源迁移表的过滤规则
 filters:                                        # 定义过滤数据源特定操作的规则，可以定义多个规则
   filter-rule-1:                                # 规则名称
     schema-pattern: "test_*"                    # 匹配数据源的库名，支持通配符 "*" 和 "?"
-    table-pattern: "t_*"                        # 匹配数据源的表明，支持通配符 "*" 和 "?"
+    table-pattern: "t_*"                        # 匹配数据源的表名，支持通配符 "*" 和 "?"
     events: ["truncate table", "drop table"]    # 匹配上 schema-pattern 和 table-pattern 的库或者表的操作类型
     action: Ignore                              # 迁移（Do）还是忽略(Ignore)
   filter-rule-2:
@@ -224,7 +224,7 @@ filters:                                        # 定义过滤数据源特定操
 routes:                           # 定义数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则
   route-rule-1:                   # 规则名称
     schema-pattern: "test_*"      # 匹配数据源的库名，支持通配符 "*" 和 "?"
-    table-pattern: "t_*"          # 匹配数据源的表明，支持通配符 "*" 和 "?"
+    table-pattern: "t_*"          # 匹配数据源的表名，支持通配符 "*" 和 "?"
     target-schema: "test"         # 目标 TiDB 库名
     target-table: "t"             # 目标 TiDB 表名
   route-rule-2:

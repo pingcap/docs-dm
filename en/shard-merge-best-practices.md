@@ -28,7 +28,7 @@ Instead, you can:
 
 ## Handle conflicts of auto-increment primary key
 
-DM offers the [column mapping](key-features.md#column-mapping) feature to handle conflicts that might occur in merging the `bigint` type of auto-increment primary key. However, it is **strongly discouraged** to choose this approach. If it is acceptable in the production environment, the following two alternatives are recommended.
+This section introduces two recommended solutions to handle conflicts of auto-increment primary key.
 
 ### Remove the `PRIMARY KEY` attribute from the column
 
@@ -63,8 +63,8 @@ Then you can perform the following steps to fix the `ERROR 1062 (23000): Duplica
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1
     ```
 
-2. Add the following configuration in `task.yaml` to skip the check of auto-increment primary key conflict: 
-  
+2. Add the following configuration in `task.yaml` to skip the check of auto-increment primary key conflict:
+
     ```yaml
     ignore-checking-items: ["auto_increment_ID"]
     ```
