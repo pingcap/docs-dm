@@ -230,7 +230,7 @@ After inserting the [sample data](#prepare-sample-data) into `MySQL-3306`, take 
     user: "root"
     password: "" # If the password is not null, it is recommended to use password encrypted with dmctl.
     mysql-instances:
-    - source-id: "mysql-replica-01"
+      - source-id: "mysql-replica-01"
         block-allow-list:  "ba-rule1"
     block-allow-list:
     ba-rule1:
