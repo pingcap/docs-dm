@@ -135,7 +135,7 @@ Assume that the schemas migrated to the downstream are as follows:
 
 ## Migration task configuration
 
-The complete migration task configuration is shown below. For more details, see [configuration explanations](task-configuration-file.md).
+The complete migration task configuration is shown below. For more details, see [data migration task configuration guide](task-configuration-guide.md).
 
 ```yaml
 name: "one-tidb-secondary"
