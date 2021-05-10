@@ -232,7 +232,7 @@ from:
     password: "" # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
 
     mysql-instances:
-    - source-id: "mysql-replica-01"
+      - source-id: "mysql-replica-01"
         block-allow-list:  "ba-rule1"
 
     block-allow-list:

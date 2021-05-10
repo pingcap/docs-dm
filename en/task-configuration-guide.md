@@ -56,7 +56,7 @@ target-database:       # Configuration of target TiDB database.
 
 > **Note:**
 >
-> If you do not need to filter specific tables or you only need to migrate specific tables, skip this configuration.
+> If you do not need to filter specific tables or migrate specific tables, skip this configuration.
 
 To configure the block and allow list of data source tables for the data migration task, perform the following steps:
 

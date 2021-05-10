@@ -70,6 +70,6 @@ Before using the DM tool, note the following restrictions:
 
     - For other sharding DDL migration restrictions, see [Sharding DDL usage restrictions in the pessimistic mode](feature-shard-merge-pessimistic.md#restrictions) and [Sharding DDL usage restrictions in the optimistic mode](feature-shard-merge-optimistic.md#restrictions).
 
-+ Consistent connection switch of MySQL instances
++ Switch of MySQL instances
 
     When DM-worker connects the upstream MySQL instance via a virtual IP (VIP), if you switch the VIP connection to another MySQL instance, DM might connect to the new and old MySQL instances at the same time in different connections. In this situation, the binlog migrated to DM is not consistent with other upstream status that DM receives, causing unpredictable anomalies and even data damage. To make necessary changes to DM manually, see [Switch DM-worker connection via virtual IP](usage-scenario-master-slave-switch.md#switch-dm-worker-connection-via-virtual-ip).

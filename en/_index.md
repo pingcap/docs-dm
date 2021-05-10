@@ -25,7 +25,7 @@ Currently, DM does not have a graphical interface and provides limited support f
 <ColumnTitle>About TiDB Data Migration</ColumnTitle>
 
 - [What is DM?](overview.md)
-- [DM Architecture](overview.md)
+- [DM Architecture](dm-arch.md)
 - [Performance](benchmark-v2.0-ga.md)
 
 </NavColumn>

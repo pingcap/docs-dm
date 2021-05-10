@@ -138,7 +138,7 @@ target-database:       # 目标 TiDB 配置
         target-schema: "test"
     ```
 
-2. 在数据源配置中引用黑白名单规则，过滤该数据源需要迁移的表
+2. 在数据源配置中引用路由规则，过滤该数据源需要迁移的表
 
     ```yaml
     mysql-instances:
