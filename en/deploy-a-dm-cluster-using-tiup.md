@@ -201,6 +201,6 @@ If the `Status` is `Up` in the output, the cluster status is normal.
 
 ## Step 8: Get the cluster controller - dmctl
 
-dmctl is a command line tool used to control DM clusters. You are recommended to [use dmctl via TiUP](maintain-dm-using-tiup.md#dmctl).
+dmctl is a command-line tool used to control DM clusters. You are recommended to [use dmctl via TiUP](maintain-dm-using-tiup.md#dmctl).
 
 dmctl supports both the command mode and the interactive mode. For details, see [Maintain DM Clusters Using dmctl](dmctl-introduction.md#maintain-dm- clusters-using-dmctl).
