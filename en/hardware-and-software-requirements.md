@@ -5,9 +5,7 @@ summary: Learn the software and hardware requirements for DM cluster.
 
 # Software and Hardware Requirements
 
-TiDB Data Migration (DM) supports the Linux operating system, and can be well deployed and run on the Intel architecture server and mainstream virtualization environment.
-
-## Linux OS version requirements
+TiDB Data Migration (DM) supports mainstream Linux operating systems. See the following table for specific version requirements:
 
 | Linux OS Platform       | Version         |
 | :----------------------- | :----------:   |
@@ -16,9 +14,7 @@ TiDB Data Migration (DM) supports the Linux operating system, and can be well de
 | Oracle Enterprise Linux  | 7.3 or later   |
 | Ubuntu LTS               | 16.04 or later |
 
-> **Note:**
->
-> The Linux OS platforms above can run in physical servers as well as mainstream virtualization environments like VMware, KVM, and XEN.
+DM can be deployed and run on Intel architecture servers and mainstream virtualization environments.
 
 ## Recommended server requirements
 
@@ -48,5 +44,5 @@ DM can be deployed and run on a 64-bit generic hardware server platform (Intel x
 
 > **Note:**
 >
-> - In the production environment, DM-master and DM-worker can be deployed and run on the same server.
-> - It is recommended to use server configurations higher than those mentioned in the table above in production environments.
+> - In the production environment, it is not recommended to deploy and run DM-master and DM-worker on the same server, because when DM-worker writes data to disks, it might interfere with the use of disks by DM-master's high availability component.
+> - If a performance issue occurs, you are recommended to modify the task configuration file according to the [Optimize Configuration of DM](tune-configuration.md) document. If the performance is not effectively optimized by tuning the configuration file, you can try to upgrade the hardware of your server.
