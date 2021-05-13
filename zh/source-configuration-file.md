@@ -26,7 +26,7 @@ from:
   port: 3306
   user: "root"
   password: "ZqMLjZ2j5khNelDEfDoUhkD5aV5fIJOe0fiog9w=" # 推荐使用 dmctl 对上游数据库的用户密码加密之后的密码
-  security:                       # 上游数据库 TLS 相关配置                             
+  security:                       # 上游数据库 TLS 相关配置
     ssl-ca: "/path/to/ca.pem"
     ssl-cert: "/path/to/cert.pem"
     ssl-key: "/path/to/key.pem"
@@ -66,7 +66,7 @@ from:
 | `port` | 上游数据库的端口。|
 | `user` | 上游数据库使用的用户名。|
 | `password` | 上游数据库的用户密码。注意：推荐使用 dmctl 加密后的密码。|
-| `security` | 上游数据库 TLS 相关配置。|
+| `security` | 上游数据库 TLS 相关配置。配置的证书文件路径需能被所有节点访问。若配置为本地路径，则集群所有节点需要将证书文件拷贝一份放在各节点机器相同的路径位置上。|
 
 ### relay log 清理策略配置（purge 配置项）
 
