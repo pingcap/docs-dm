@@ -33,6 +33,7 @@
   + 部署 DM 集群
     - [使用 DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
+    - [使用 Kubernetes (实验特性)](https://docs.pingcap.com/zh/tidb-in-kubernetes/dev/deploy-tidb-dm)
   + [使用 DM 迁移数据](migrate-data-using-dm.md)
 + 配置
   - [概述](config-overview.md)

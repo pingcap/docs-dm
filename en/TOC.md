@@ -33,6 +33,7 @@
   + Deploy a DM Cluster
     - [Use DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
+    - [Use Kubernetes (Experimental)](https://docs.pingcap.com/tidb-in-kubernetes/dev/deploy-tidb-dm)
   + [Migrate Data Using DM](migrate-data-using-dm.md)
 + Configure
   - [Overview](config-overview.md)
