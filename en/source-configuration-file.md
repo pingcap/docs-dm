@@ -69,7 +69,7 @@ This section describes each configuration parameter in the configuration file.
 | `port` | Specifies the port of the upstream database. |
 | `user` | Specifies the username of the upstream database. |
 | `password` | Specifies the user password of the upstream database. It is recommended to use the password encrypted with dmctl. |
-| `security` | Specifies the TLS config of the upstream database. |
+| `security` | Specifies the TLS config of the upstream database. The configuration file path of the certificates need to be accessed by all nodes. If the file path is local, then all the nodes in the cluster need to copy the certificates in the same path of each host.|
 
 ### Relay log cleanup strategy configuration (`purge`)
 
