@@ -33,6 +33,7 @@
   + Deploy a DM Cluster
     - [Use DM-Ansible](deploy-a-dm-cluster-using-ansible.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
+<<<<<<< HEAD
   + [Migrate Data Using DM](migrate-data-using-dm.md)
 + Configure
   - [Overview](config-overview.md)
@@ -55,6 +56,30 @@
 + [DM Portal](dm-portal.md)
 + Alert
   - [Alert Rules](alert-rules.md)
+=======
+    - [Use Kubernetes (Experimental)](https://docs.pingcap.com/tidb-in-kubernetes/dev/deploy-tidb-dm)
+  - [Migrate Data Using DM](migrate-data-using-dm.md)
+  - [Test DM Performance](performance-test.md)
++ Maintain
+ + Tools
+    - [Maintain DM Clusters Using TiUP (Recommended)](maintain-dm-using-tiup.md)
+    - [Maintain DM Clusters Using dmctl](dmctl-introduction.md)
+  + Cluster Upgrade
+    - [Manually Upgrade from v1.0.x to v2.0.x](manually-upgrade-dm-1.0-to-2.0.md)
+    - [Upgrade Between v1.0.x](upgrade-dm-1.0.md)
+  + [Manage Data Source](manage-source.md)
+  + Manage a Data Migration Task
+    - [Task Configuration Guide](task-configuration-guide.md)
+    - [Precheck a Task](precheck.md)
+    - [Create a Task](create-task.md)
+    - [Query Status](query-status.md)
+    - [Pause a Task](pause-task.md)
+    - [Resume a Task](resume-task.md)
+    - [Stop a Task](stop-task.md)
+    - [Handle Failed DDL Statements](handle-failed-ddl-statements.md)
+  - [Manually Handle Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
+  - [Manage Schemas of Tables to be Migrated](manage-schema.md)
+>>>>>>> 6f9a6ca (*: add link: deploy dm in k8s (#668))
   - [Handle Alerts](handle-alerts.md)
 + Troubleshoot
   - [Handle Errors](error-handling.md)
