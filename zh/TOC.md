@@ -31,6 +31,7 @@
     - [使用 TiUP（推荐）](deploy-a-dm-cluster-using-tiup.md)
     - [使用 TiUP 离线镜像](deploy-a-dm-cluster-using-tiup-offline.md)
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
+    - [使用 kubernetes (实验性)](https://docs.pingcap.com/zh/tidb-in-kubernetes/dev/deploy-tidb-dm)
   + [使用 DM 迁移数据](migrate-data-using-dm.md)
   + [测试 DM 性能](performance-test.md)
 + 运维操作
