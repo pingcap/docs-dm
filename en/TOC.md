@@ -26,6 +26,7 @@
     - [Use TiUP (Recommended)](deploy-a-dm-cluster-using-tiup.md)
     - [Use TiUP Offline](deploy-a-dm-cluster-using-tiup-offline.md)
     - [Use Binary](deploy-a-dm-cluster-using-binary.md)
+    - [Use kubernetes (experimental)](https://docs.pingcap.com/tidb-in-kubernetes/dev/deploy-tidb-dm)
   - [Migrate Data Using DM](migrate-data-using-dm.md)
   - [Test DM Performance](performance-test.md)
 + Maintain
