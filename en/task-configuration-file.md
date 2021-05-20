@@ -76,7 +76,7 @@ Refer to the comments in the [template](#task-configuration-file-template-basic)
 
 > **Note:**
 >
-> DM 2.0 uses dumpling to execute full backups. During the process, [`FLUSH TABLES WITH READ LOCK`](https://dev.mysql.com/doc/refman/8.0/en/flush.html#flush-tables-with-read-lock) is used to temporarily interrupt the DML and DDL operations of the replica database, to ensure the consistency of the backup connections, and to record the binlog position information for incremental replications. The lock is released after all backup connections start transactions.
+> In v2.0, DM uses dumpling to execute full backups. During the full backup process, [`FLUSH TABLES WITH READ LOCK`](https://dev.mysql.com/doc/refman/8.0/en/flush.html#flush-tables-with-read-lock) is used to temporarily interrupt the DML and DDL operations of the replica database, to ensure the consistency of the backup connections, and to record the binlog position (POS) information for incremental replications. The lock is released after all backup connections start transactions.
 > 
 > It is recommended to perform full backups during off-peak hours or on the MySQL replica database.
 
