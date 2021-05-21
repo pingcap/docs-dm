@@ -72,6 +72,12 @@ Refer to the comments in the [template](#task-configuration-file-template-basic)
     - `incremental`: Only replicates the incremental data of the upstream database to the downstream database using the binlog. You can set the `meta` configuration item of the instance configuration to specify the starting position of incremental replication.
     - `all`: `full` + `incremental`. Makes a full backup of the upstream database, imports the full data to the downstream database, and then uses the binlog to make an incremental replication to the downstream database starting from the exported position during the full backup process (binlog position).
 
+> **Note:**
+>
+> In v2.0, DM uses dumpling to execute full backups. During the full backup process, [`FLUSH TABLES WITH READ LOCK`](https://dev.mysql.com/doc/refman/8.0/en/flush.html#flush-tables-with-read-lock) is used to temporarily interrupt the DML and DDL operations of the replica database, to ensure the consistency of the backup connections, and to record the binlog position (POS) information for incremental replications. The lock is released after all backup connections start transactions.
+> 
+> It is recommended to perform full backups during off-peak hours or on the MySQL replica database.
+
 ### Feature configuration set
 
 For basic applications, you only need to modify the block and allow lists filtering rule. Refer to the comments about `block-allow-list` in the [template](#task-configuration-file-template-basic) or [Block & allow table lists](key-features.md#block-and-allow-table-lists) to see more details.
