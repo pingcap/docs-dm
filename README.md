@@ -14,7 +14,7 @@ You can use Google Translate to view the documentation in different languages. F
 - `ko`: [documentation in Korean](https://translate.google.com/translate?hl=en&sl=en&tl=ko&u=https%3A%2F%2Fgithub.com%2Fpingcap%2Fdocs-dm%2Fblob%2Frelease-1.0%2Fen%2FTOC.md)
 - `id`: [documentation in Indonesian](https://translate.google.com/translate?hl=en&sl=en&tl=id&u=https%3A%2F%2Fgithub.com%2Fpingcap%2Fdocs-dm%2Fblob%2Frelease-1.0%2Fen%2FTOC.md)
 
-## Contributor over time
+## Contributors over time
 
 [![Contributors over time](https://contributor-graph-api.apiseven.com/contributors-svg?chart=contributorOverTime&repo=pingcap/docs-dm)](https://www.apiseven.com/en/contributor-graph?chart=contributorOverTime&repo=pingcap/docs-dm)
 
