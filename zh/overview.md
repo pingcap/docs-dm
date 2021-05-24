@@ -5,7 +5,18 @@ aliases: ['/docs-cn/tidb-data-migration/dev/overview/','/docs-cn/tools/dm/overvi
 
 # Data Migration 简介
 
-[TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据迁移任务管理工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的数据迁移。DM 工具旨在降低数据迁移的运维成本。
+[TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据迁移任务管理工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的数据迁移。DM 工具旨在降低数据迁移的运维成本。 当你使用 DM 进行数据迁移的时候，需要执行下面的操作
+
+- 部署 DM 集群
+- 创建上游数据源（source）对象，保存数据源访问信息
+- 创建（多个）数据迁移任务从数据源迁移数据到 TiDB
+
+数据迁移任务包含全量数据迁移、增量数据迁移两个阶段：
+
+- 全量数据迁移：从数据源迁移对应表的表结构到 TiDB，然后读取存量数据写入到 TiDB 集群；
+- 增量数据迁移：全量数据迁移完成后，从数据源读取对应的表变更然后写入到 TiDB 集群。
+
+下面介绍 DM 所具备的功能。
 
 ## 基本功能
 
@@ -23,7 +34,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/overview/','/docs-cn/tools/dm/overvi
 
 ### Table routing
 
-[Table Routing](key-features.md#table-routing) 是将源数据库的表迁移到下游指定表的路由功能，比如将源数据表 `test`.`sbtest1` 的数据同步到 TiDB 的表 `test`.`sbtest2`。它也是分库分表合并迁移所需的一个核心功能。
+[Table Routing](key-features.md#table-routing) 是将源数据库的表迁移到下游指定表的路由功能，比如将源数据表 `test`.`sbtest1` 的表结构和数据迁移到 TiDB 的表 `test`.`sbtest2`。它也是分库分表合并迁移所需的一个核心功能。
 
 ## 高级功能
 
@@ -58,11 +69,11 @@ DM 支持对源数据的分库分表进行合并迁移，但有一些使用限�
 
     - DM 遇到不兼容的 DDL 语句时会报错。要解决此报错，需要使用 dmctl 手动处理，要么跳过该 DDL 语句，要么用指定的 DDL 语句来替换它。详见[如何处理不兼容的 DDL 语句](faq.md#如何处理不兼容的-ddl-语句)。
 
-+ 分库分表
++ 分库分表数据冲突合并
 
     - 如果业务分库分表之间存在数据冲突，可以参考[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)来解决；否则不推荐使用 DM 进行迁移，如果进行迁移则有冲突的数据会相互覆盖造成数据丢失。
     - 分库分表 DDL 同步限制，参见[悲观模式下分库分表合并迁移使用限制](feature-shard-merge-pessimistic.md#使用限制)以及[乐观模式下分库分表合并迁移使用限制](feature-shard-merge-optimistic.md#使用限制)。
 
-+ 同步的 MySQL 实例变更
++ 同步的 MySQL 实例
 
     - 当 DM-worker 通过虚拟 IP（VIP）连接到 MySQL 且要切换 VIP 指向的 MySQL 实例时，DM 内部不同的 connection 可能会同时连接到切换前后不同的 MySQL 实例，造成 DM 拉取的 binlog 与从上游获取到的其他状态不一致，从而导致难以预期的异常行为甚至数据损坏。如需切换 VIP 指向的 MySQL 实例，请参考[虚拟 IP 环境下的上游主从切换](usage-scenario-master-slave-switch.md#虚拟-ip-环境下切换-dm-worker-与-mysql-实例的连接)对 DM 手动执行变更。
