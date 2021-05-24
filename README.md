@@ -16,7 +16,7 @@ You can use Google Translate to view the documentation in different languages. F
 
 ## Contributor over time
 
-[![Contributor over time](https://contributor-graph-api.apiseven.com/contributors-svg?chart=contributorOverTime&repo=pingcap/docs-dm)](https://www.apiseven.com/en/contributor-graph?chart=contributorOverTime&repo=pingcap/docs-dm)
+[![Contributors over time](https://contributor-graph-api.apiseven.com/contributors-svg?chart=contributorOverTime&repo=pingcap/docs-dm)](https://www.apiseven.com/en/contributor-graph?chart=contributorOverTime&repo=pingcap/docs-dm)
 
 ## Documentation versions
 
