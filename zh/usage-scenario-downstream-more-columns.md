@@ -3,40 +3,67 @@ title: 下游表结构存在更多列的迁移场景
 summary: 了解如何在下游表结构比上游存在更多列的情况下，使用 DM 对表进行迁移。
 ---
 
-# 下游表结构存在更多列的迁移场景
+# 下游 TiDB 表结构有更多列的迁移场景
 
-本文介绍如何在下游表结构比上游存在更多列的情况下，使用 DM 对表进行迁移。
+## 数据源表
+
+假设上游实例为：
+
+| Schema | Tables |
+|:------|:------|
+| user  | information, log |
+| store | store_bj, store_tj |
+| log   | messages |
+
+## 迁移要求
+
+在 TiDB 定制创建表 `log.message`， 其表结构包含数据源对应表 `log.message` 的所有列，且比数据源的表结构有更多的列。在此需求下，将数据源表 `log.message` 迁移到 TiDB 集群的表 `log.message`。
 
 > **注意：**
 >
-> - 下游相比于上游多的列必须指定默认值或允许为 `NULL`。
-> - 对于已经通过 DM 在正常迁移的表，可直接在下游添加指定了默认值或允许为 `NULL` 的列而不会影响数据迁移。
-> - 若下游相比于上游多出的列存在默认值或允许为 `NULL`，则对于全量导出与导入无需特殊配置与处理。
+> - 下游 TiDB 相比于数据源多出来的列必须指定默认值或允许为 `NULL`。
+> - 对 DM 已经正在正常迁移的表，可直接接在 TiDB 新增指定了默认值或允许为 `NULL` 的列而不会影响 DM 正常的数据迁移。
 
-## 下游已有表存在更多列的数据迁移
+## 数据迁移操作
 
-假如在进行数据迁移前，上游表结构为：
+下面介绍了操作步骤
 
-```sql
-CREATE TABLE `t1` (
-  `c1` int(11) NOT NULL,
-  `c2` int(11) DEFAULT NULL,
-  PRIMARY KEY (`c1`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
-```
+### 在下游 TiDB 手动创建表结构
 
-下游表结构为：
+假如在进行开始进行数据迁移时刻，上游表结构为：
 
 ```sql
-CREATE TABLE `t1` (
-  `c1` int(11) NOT NULL,
-  `c2` int(11) DEFAULT NULL,
-  `c3` varchar(256) DEFAULT 'default_c3',
-  PRIMARY KEY (`c1`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
 ```
 
-当使用 DM 迁移增量数据时，如果下游表结构中存在比上游表结构更多的列，则通过 `query-status` 可看到类似如下的错误：
+手动在下游 TiDB 创建表结构，比数据源多出 `annotation` 列：
+
+```sql
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `annotation` varchar(255) DEFAULT NULL,
+  ``
+  PRIMARY KEY (`id`)
+)
+```
+
+### 创建数据迁移
+
+数据迁移任务配置参考其他场景的任务配置
+- [多数据源汇总迁移到 TiDB](usage-scenario-simple-migration.md)
+- [分表合并迁移到 TiDB](usage-scenario-shard-merge.md)
+- [只迁移数据源增量数据到 TiDB](usage-scenario-incremental-migration.md)
+
+如果数据迁移包含全量数据迁移，可以正常的进行数据同步，无需其他处理；但是如果只迁移数据源增量数据到 TiDB，那么还需手动在 DM 设置用于解析 MySQL Binlog 的表结构，具体的操作可以参考下面的问题处理步骤。
+
+#### （只迁移）数据源增量数据到 TiDB 问题处理
+
+该场景与【只迁移数据源增量数据到 TiDB】数据迁移不同在于：运行对应的数据迁移任务后，通过 `query-status` 可看到类似如下数据迁移错误：
 
 ```
 "errors": [
@@ -45,25 +72,25 @@ CREATE TABLE `t1` (
         "ErrClass": "sync-unit",
         "ErrScope": "internal",
         "ErrLevel": "high",
-        "Message": "startLocation: [position: (mysql-bin.000001, 17491), gtid-set: ], endLocation: [position: (mysql-bin.000001, 17535), gtid-set: ]: gen insert sqls failed, schema: db_single, table: t1: Column count doesn't match value count: 3 (columns) vs 2 (values)",
+        "Message": "startLocation: [position: (mysql-bin.000001, 2022), gtid-set:09bec856-ba95-11ea-850a-58f2b4af5188:1-9 ], endLocation: [position: (mysql-bin.000001, 2022), gtid-set: 09bec856-ba95-11ea-850a-58f2b4af5188:1-9]: gen insert sqls failed, schema: log, table: messages: Column count doesn't match value count: 3 (columns) vs 2 (values)",
         "RawCause": "",
         "Workaround": ""
     }
 ]
 ```
 
-DM 在遇到 binlog event 里的 DML 需要迁移时，如果 DM 内部没有维护对应于该表的表结构，则会尝试使用下游当前的表结构来解析 binlog event 并生成相应的 DML 语句。如果 binlog event 里数据的列数与下游表结构的列数不一致时，则会产生上述错误。
+原因是 DM 迁移 binlog event 时，如果 DM 内部没有维护对应于该表的表结构，则会尝试使用下游当前的表结构来解析 binlog event 并生成相应的 DML 语句。如果 binlog event 里数据的列数与下游表结构的列数不一致时，则会产生上述错误。
 
-此时，我们可以使用 [`operate-schema`](manage-schema.md) 命令来为该表指定与 binlog event 匹配的表结构，具体操作为：
+此时，我们可以使用 [`operate-schema`](manage-schema.md) 命令来为该表指定与 binlog event 匹配的表结构。如果你在进行分表合并的数据迁移，那么需要为每个分表按照如下步骤在 DM  设置用于解析 MySQL Binlog 的表结构。具体操作为：
 
-1. 准备与 binlog event 里数据对应的 `CREATE TABLE` 表结构语句并保存到文件，如将以下表结构保存到 `db_single.t1-schema.sql` 中。
+1. 为数据源中需要迁移的表 `log.messages` 指定表结构，表结构需要对应 DM 将要开始同步的 binlog event 的数据。 将对应的 `CREATE TABLE` 表结构语句并保存到文件，如将以下表结构保存到 `log.message.sql` 中。
 
     ```sql
-    CREATE TABLE `t1` (
-      `c1` int(11) NOT NULL,
-      `c2` int(11) DEFAULT NULL,
-      PRIMARY KEY (`c1`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+    CREATE TABLE `messages` (
+      `id` int(11) NOT NULL,
+      `message` varchar(255) DEFAULT NULL,
+      PRIMARY KEY (`id`)
+    )
     ```
 
 2. 使用 [`operate-schema`](manage-schema.md) 命令设置表结构（此时 task 应该由于上述错误而处于 `Paused` 状态）。
@@ -71,7 +98,7 @@ DM 在遇到 binlog event 里的 DML 需要迁移时，如果 DM 内部没有维
     {{< copyable "" >}}
     
     ```bash
-    operate-schema set -s mysql-replica-01 task_single -d db_single -t t1 db_single.t1-schema.sql
+    tiup dmctl operate-schema set -s mysql-01 task-test -d log -t message log.message.sql --master-addr <master-addr>
     ```    
 
 3. 使用 [`resume-task`](resume-task.md) 命令恢复处于 `Paused` 状态的任务。
