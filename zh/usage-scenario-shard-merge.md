@@ -59,17 +59,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
 ## 迁移方案
 
-- 要满足迁移需求 #1 和 #2，配置 [Table routing 规则](key-features.md#table-routing) 如下：
-
-    {{< copyable "" >}}
-
-    ```yaml
-    routes:
-      ...
-      user-route-rule:
-        schema-pattern: "user"
-        target-schema: "user"
-    ```
+- 要满足迁移需求 #1 和 #2，不需要特别的配置；
 
 - 要满足迁移需求 #3，配置 [table routing 规则](key-features.md#table-routing) 如下：
 
@@ -95,7 +85,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
     ```yaml
     filters:
       ...
-      user-filter-rule:
+      user-filter-rule:        # 过滤掉删除 user 库的操作，以及 user 库下面任何表的任何删除操作
         schema-pattern: "user"
         events: ["truncate table", "drop table", "delete", "drop database"]
         action: Ignore
@@ -112,12 +102,12 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
     ```yaml
     filters:
       ...
-      sale-filter-rule:
+      sale-filter-rule:     # 过滤掉 store_* 库下面任何表的任何删除操作
         schema-pattern: "store_*"
         table-pattern: "sale_*"
         events: ["truncate table", "drop table", "delete"]
         action: Ignore
-      store-filter-rule:
+      store-filter-rule:   # 过滤掉删除 store_* 库的操作
         schema-pattern: "store_*"
         events: ["drop database"]
         action: Ignore
@@ -128,20 +118,14 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
     {{< copyable "" >}}
 
     ```yaml
-    block-allow-list:    # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:    # 通过黑白名单过滤掉 user.log_bak 表
       log-bak-ignored:
         ignore-tables:
         - db-name: "user"
           tbl-name: "log_bak"
     ```
 
-- 要满足迁移需求 #8，首先参考[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)来解决冲突，保证在迁移到下游时不会因为分表中有相同的主键值而使迁移出现异常，然后需要配置 `ignore-checking-items` 来跳过自增主键冲突的检查：
-
-    {{< copyable "" >}}
-
-    ```yaml
-    ignore-checking-items: ["auto_increment_ID"]
-    ```
+- 要满足迁移需求 #8，首先参考[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)来解决冲突，保证在迁移到下游时不会因为分表中有相同的主键值而使迁移出现异常。
 
 ## 迁移任务配置
 
@@ -151,7 +135,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
 ```yaml
 name: "shard_merge"
-task-mode: all
+task-mode: all                                   # 进行全量数据迁移 + 增量数据迁移
 meta-schema: "dm_meta"
 ignore-checking-items: ["auto_increment_ID"]
 
@@ -163,30 +147,21 @@ target-database:
 
 mysql-instances:
   -
-    source-id: "instance-1"
-    route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
-    filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"     # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
-    mydumper-config-name: "global"
-    loader-config-name: "global"
-    syncer-config-name: "global"
-
+    source-id: "instance-1"        # 数据源对象 ID，可以从数据源配置中获取
+    route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"] # 应用于该数据源的 table route 规则
+    filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"] # 应用于该数据源的 binlog event filter 规则
+    block-allow-list:  "log-bak-ignored" # 应用于该数据源的 Block & Allow Lists 规则
   -
     source-id: "instance-2"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"    # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
-    mydumper-config-name: "global"
-    loader-config-name: "global"
-    syncer-config-name: "global"
+    block-allow-list:  "log-bak-ignored"
+
   -
     source-id: "instance-3"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"    # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
-    mydumper-config-name: "global"
-    loader-config-name: "global"
-    syncer-config-name: "global"
+    block-allow-list:  "log-bak-ignored"
 
 # 所有实例共享的其他通用配置
 
@@ -218,25 +193,9 @@ filters:
     events: ["drop database"]
     action: Ignore
 
-block-allow-list:      # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+block-allow-list:
   log-bak-ignored:
     ignore-tables:
     - db-name: "user"
       tbl-name: "log_bak"
-
-mydumpers:
-  global:
-    threads: 4
-    chunk-filesize: 64
-
-loaders:
-  global:
-    pool-size: 16
-    dir: "./dumped_data"
-
-syncers:
-  global:
-    worker-count: 16
-    batch: 100
-    max-retry: 100
 ```
