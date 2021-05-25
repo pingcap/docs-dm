@@ -8,7 +8,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/manage-source/']
 
 本文介绍了如何使用 [dmctl](dmctl-introduction.md) 组件来管理数据源配置，包括如何加密数据库密码，数据源操作，查看数据源配置，改变数据源与 DM-worker 的绑定关系。
 
-## 加密数据库密码
+## 使用密文密码
 
 在 DM 相关配置文件中，推荐使用经 dmctl 加密后的密码。对于同一个原始密码，每次加密后密码不同。
 
@@ -22,7 +22,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/manage-source/']
 MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
 ```
 
-## 数据源操作
+## 管理数据源
 
 `operate-source` 命令向 DM 集群加载、列出、移除数据源。
 
@@ -62,14 +62,14 @@ Global Flags:
 
 + `--print-sample-config`：打印示例配置文件。该参数会忽视其余参数
 
-### 命令用法示例
+### 创建数据源
 
 使用 `operate-source` 命令创建数据源配置：
 
 {{< copyable "" >}}
 
 ```bash
-operate-source create ./source.yaml
+dmctl operate-source create ./source.yaml
 ```
 
 其中 `source.yaml` 的配置参考[上游数据库配置文件介绍](source-configuration-file.md)。
