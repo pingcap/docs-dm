@@ -15,7 +15,7 @@ You can start from any one of the following items to help improve [TiDB Data Mig
 
 ## Before you contribute
 
-Before you contribute, please take a quick look at some general information about TiDB documentation maintenance. This can help you to become a contributor soon.
+Before you contribute, please take a quick look at some general information about TiDB Data Migration documentation maintenance. This can help you to become a contributor soon.
 
 ### Get familiar with style
 
