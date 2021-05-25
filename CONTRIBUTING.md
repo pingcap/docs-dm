@@ -41,8 +41,8 @@ Currently, we maintain three versions of TiDB Data Migration documentation, each
 
 - If your changes apply to only one docs version, just submit a PR to the corresponding version branch.
 
-- If your changes apply to multiple docs versions, you don't have to submit a PR to each branch. Instead, after you submit your PR, trigger the ti-chi-bot to submit a PR to other version branches by adding one or several of the following labels as needed. Once the current PR is merged, sre-bot will start to work.
-    - `needs-cherry-pick-master` label: sre-bot will submit a PR to the `master` branch.
+- If your changes apply to multiple docs versions, you don't have to submit a PR to each branch. Instead, after you submit your PR, trigger the ti-chi-bot to submit a PR to other version branches by adding one or several of the following labels as needed. Once the current PR is merged, ti-chi-bot will start to work.
+    - `needs-cherry-pick-master` label: ti-chi-bot will submit a PR to the `master` branch.
     - `needs-cherry-pick-release-2.0` label: ti-chi-bot will submit a PR to the `release-2.0` branch.
     - `needs-cherry-pick-release-1.0` label: ti-chi-bot will submit a PR to the `release-1.0` branch.
 
