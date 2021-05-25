@@ -33,7 +33,7 @@ Currently, we maintain three versions of TiDB Data Migration documentation, each
 
 | Branch name | Version description |
 | :--- | :-- |
-| `master` | the latest development version, including v3.0 changes for now |
+| `master` | the latest development version |
 | `release-2.0` | the latest 2.0 stable version |
 | `release-1.0` | the latest 1.0 stable version |
 
