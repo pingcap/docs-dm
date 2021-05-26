@@ -139,6 +139,8 @@ Relay log 迁移的起始位置由如下规则决定：
 
 在 v2.0.2 之前的版本（不含 v2.0.2），DM-worker 在绑定上游数据源时，会检查上游数据源配置中的 `enable-relay` 项。如果 `enable-relay` 为 `true`，则为该数据源启用 relay log 功能。
 
+具体配置方式参见[上游数据源配置文件介绍](source-configuration-file.md)
+
 </div>
 </SimpleTab>
 
