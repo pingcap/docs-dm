@@ -74,6 +74,11 @@ This section describes each configuration parameter in the configuration file.
 | `password` | Specifies the user password of the upstream database. It is recommended to use the password encrypted with dmctl. |
 | `security` | Specifies the TLS config of the upstream database. The configured file paths of the certificates must be accessible to all nodes. If the configured file paths are local paths, then all the nodes in the cluster need to store a copy of the certificates in the same path of each host.|
 
+
+### Relay Log
+
+For description of relay log, see [Relay Log](relay-log.md).
+
 ### Relay log cleanup strategy configuration (`purge`)
 
 Generally, there is no need to manually configure these parameters unless there is a large amount of relay logs and disk capacity is insufficient.
