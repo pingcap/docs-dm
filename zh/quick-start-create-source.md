@@ -20,7 +20,7 @@ title: 创建数据源对象
     {{< copyable "shell-regular" >}}
 
     ```bash
-    ./dmctl -encrypt 'abc!@#123'
+    tiup dmctl -encrypt 'abc!@#123'
    ```
 
    ```
@@ -38,8 +38,8 @@ title: 创建数据源对象
     host: "127.0.0.1"
     port: 3306
     user: "root"
-    password: "MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=" # 推荐使用 dmctl 对上游数据库的用户密码加密之后的密码
-    security:                                        # 上游数据库 TLS 相关配置。如果没有需要则可以删除
+    password: "MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=" # 推荐使用 dmctl 对上游数据源的用户密码加密之后的密码
+    security:                                        # 上游数据源 TLS 相关配置。如果没有需要则可以删除
       ssl-ca: "/path/to/ca.pem"
       ssl-cert: "/path/to/cert.pem"
       ssl-key: "/path/to/key.pem"
@@ -52,7 +52,7 @@ title: 创建数据源对象
 {{< copyable "" >}}
 
 ```bash
-tiup dmctl operate-source create ./source-mysql-01.yaml --master-addr <master-addr>
+tiup dmctl --master-addr <master-addr> operate-source create ./source-mysql-01.yaml
 ```
 
 数据源配置文件的其他配置参考数据源配置文件介绍参考[数据源配置文件介绍](source-configuration-file.md)。
@@ -85,7 +85,7 @@ tiup dmctl operate-source create ./source-mysql-01.yaml --master-addr <master-ad
 {{< copyable "" >}}
 
 ```bash
-tiup dmctl get-config source mysql-replica-01 --master-addr <master-addr>
+tiup dmctl --master-addr <master-addr> get-config source mysql-replica-01
 ```
 
 ```
@@ -108,7 +108,7 @@ tiup dmctl get-config source mysql-replica-01 --master-addr <master-addr>
 {{< copyable "" >}}
 
 ```bash
-tiup dmctl operate-source show --master-addr <master-addr>
+tiup dmctl --master-addr <master-addr> operate-source show
 ```
 
 ```
