@@ -5,11 +5,11 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
 
 # Data Migration 多数据源汇总迁移到 TiDB
 
-本文介绍了 DM 工具的一个简单使用场景：将三个上游 MySQL 实例的数据迁移到一个下游 TiDB 集群中。
+本文介绍了 DM 工具的一个简单使用场景：将三个数据源 MySQL 实例的数据迁移到一个下游 TiDB 集群中。
 
-## 上游实例
+## 数据源实例
 
-假设上游结构为：
+假设数据源结构为：
 
 - 实例 1
 
@@ -47,7 +47,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
 
     4. 任何情况下都不删除 `user.log` 表的任何数据。
 
-2. 将上游 `store` 库迁移到下游 `store` 库中，且迁移过程中不合并表。
+2. 将数据源 `store` 库迁移到下游 `store` 库中，且迁移过程中不合并表。
 
     1. 实例 2 和实例 3 中都存在 `store_sz` 表，且这两个 `store_sz` 表分别被迁移到下游的 `store_suzhou` 表和 `store_shenzhen` 表中。
 
