@@ -19,7 +19,7 @@ source-id: "mysql-replica-01"
 enable-gtid: false
 
 # Whether to enable relay log.
-enable-relay: false       # Since DM v2.0.2, this configuration item is deprecated. Please use `start-relay` command to enable relay.
+enable-relay: false       # Since DM v2.0.2, this configuration item is deprecated. To enable the relay log feature, use the `start-relay` command instead.
 relay-binlog-name: ""     # The file name from which DM-worker starts to pull the binlog.
 relay-binlog-gtid: ""     # The GTID from which DM-worker starts to pull the binlog.
 relay-dir: "./relay_log"  # The directory used to store relay log.
