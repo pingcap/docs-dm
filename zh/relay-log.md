@@ -97,6 +97,7 @@ Relay log 迁移的起始位置由如下规则决定：
 <div label="v2.0.2 及之后的版本">
 
 > **注意：**
+> 
 > 自 v2.0.2 起，上游数据源配置中的 `enable-relay` 项已经失效。在[加载数据源配置](manage-source.md#数据源操作)时，如果发现配置中的 `enable-relay` 项为 `true`，DM 会给出如下信息提示：
 > 
 > ```
