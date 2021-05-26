@@ -75,6 +75,11 @@ This section describes each configuration parameter in the configuration file.
 | `password` | Specifies the user password of the upstream database. It is recommended to use the password encrypted with dmctl. |
 | `security` | Specifies the TLS config of the upstream database. |
 
+
+### Relay Log
+
+For description of relay log, see [Relay Log](relay-log.md).
+
 ### Relay log cleanup strategy configuration (`purge`)
 
 Generally, there is no need to manually configure these parameters unless there is a large amount of relay logs and disk capacity is insufficient.
