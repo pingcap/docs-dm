@@ -28,6 +28,6 @@ title: 创建数据迁移任务
 
 如果你使用其他工具进行了全量数据迁移，例如使用 TiDB Lightning 迁移了全量数据，然后只使用 DM 进行增量数据迁移，那么该场景的数据迁移任务配置可以参考 [只迁移数据源增量数据到 TiDB](usage-scenario-incremental-migration.md)。
 
-## 只迁移数据源增量数据到 TiDB, 且TiDB 目标表比数据源表多列
+## TiDB 目标表比数据源表多列
 
 如果你需要在 TiDB 中定制创建表结构，TiDB 的表结构包含数据源对应表的所有列，且比数据源的表结构有更多的列，那么该场景的数据迁移任务配置需要参考 [TiDB 表结构存在更多列场景的数据迁移](usage-scenario-downstream-more-columns.md)。
