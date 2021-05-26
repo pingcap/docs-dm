@@ -30,7 +30,7 @@ title: Data Migration 增量数据迁移场景
 
 你可以通过下面的方法获得对应数据源开启迁移的 binlog 位置点：
 
-- 使用 dumplings/mydumper 进行全量数据导出，然后使用其他工具，如 lightning，进行全量数据导入，则可以通过导出数据的 [metadata 文件](https://docs.pingcap.com/zh/tidb/stable/dumpling-overview#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F)获取同步位置；
+- 使用 Dumplings/Mydumper 进行全量数据导出，然后使用其他工具，如 TiDB Lightning，进行全量数据导入，则可以通过导出数据的 [metadata 文件](https://docs.pingcap.com/zh/tidb/stable/dumpling-overview#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F)获取同步位置；
   ```file
   Started dump at: 2020-11-10 10:40:19
   SHOW MASTER STATUS:
@@ -76,7 +76,7 @@ CREATE TABLE `messages` (
 
    ```yaml
    name: task-test             # 任务名称，需要全局唯一
-   task-mode: incremental # 任务模式，设为 "incremental" 只进行增量数据迁移
+   task-mode: incremental # 任务模式，设为 "incremental" 即只进行增量数据迁移
 
    ## 配置下游 TiDB 数据库实例访问信息
    target-database:       # 下游数据库实例配置
