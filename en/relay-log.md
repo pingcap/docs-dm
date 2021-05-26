@@ -103,7 +103,7 @@ In DM v2.0.2 and later versions, you can use the command `start-relay` to start 
 » start-relay -s mysql-replica-01 worker1 worker2
 ```
 
-In the command `start-relay`, you can only specify free DM-workers or DM-workers that have been bound to the upstream data source in the parameter.
+In the command `start-relay`, you can configure one or more DM-workers to migrate relay logs for the specified data source, but the DM-workers specified in the parameter must be free or have been bound to the upstream data source.
 
 ```
 {
