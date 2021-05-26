@@ -87,11 +87,12 @@ The starting position of the relay log migration is determined by the following 
 <SimpleTab>
 <div label="v2.0.2 and later versions">
 
-In DM v2.0.2 and later versions, the `start-relay` command is used to configure one or more DM-workers to migrate relay logs for the specified data source. The configuration item `enable-relay` in the source configuration file is no longer valid. If DM finds that `enable-relay` is set to `true` when [loading the data source configuration](manage-source.md#operate-data-source), it outputs the following message to guide you to use the `start-relay` command:
-
-```
-Please use `start-relay` to specify which workers should pull relay log of relay-enabled sources.
-```
+> **Note:**
+> Since DM v2.0.2, the configuration item `enable-relay` in the source configuration file is no longer valid. If DM finds that `enable-relay` is set to `true` when [loading the data source configuration](manage-source.md#operate-data-source), it outputs the following message:
+> 
+> ```
+> Please use `start-relay` to specify which workers should pull relay log of relay-enabled sources.
+> ```
 
 In DM v2.0.2 and later versions, you can use the command `start-relay` to start pulling relay logs and use `stop-relay` to stop the process. See the following examples:
 
