@@ -1,13 +1,15 @@
 ---
 title: 创建数据源对象
+summary: 了解如何为 DM 创建数据源对象。
 ---
 
 > **注意：**
 >
-> 在创建数据源对象之前你需要先完成：
-> 1. [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)
+> 在创建数据源对象之前，你需要先[使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。
 
 # 创建数据源对象
+
+本文档介绍如何为 TiDB Data Migration (DM) 的数据迁移任务创建数据源。
 
 数据源对象包含了访问数据源的信息。在创建数据迁移任务之前，需要先创建任务的数据源对象。数据迁移任务需要引用对应的数据源对象来获取访问配置信息。详细的数据源管理命令请参考[管理上游数据源](manage-source.md)。
 
@@ -15,17 +17,17 @@ title: 创建数据源对象
 
 1. （可选）加密数据源密码
 
-    在 DM 的配置文件中，推荐使用经 dmctl 加密后的密文密码。按照下面的示例可以获得数据源的密文密码，将用于 step 1.2 的数据源配置。
+    在 DM 的配置文件中，推荐使用经 dmctl 加密后的密文密码。按照下面的示例可以获得数据源的密文密码，将用于第一步和第二步的数据源配置。
 
     {{< copyable "shell-regular" >}}
 
     ```bash
     tiup dmctl -encrypt 'abc!@#123'
-   ```
+    ```
 
-   ```
-   MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
-   ```
+    ```
+    MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
+    ```
 
 2. 编写数据源配置文件
 
@@ -49,15 +51,15 @@ title: 创建数据源对象
 
 使用如下命令创建数据源对象：
 
-{{< copyable "" >}}
+{{< copyable "shell-regular" >}}
 
 ```bash
 tiup dmctl --master-addr <master-addr> operate-source create ./source-mysql-01.yaml
 ```
 
-数据源配置文件的其他配置参考数据源配置文件介绍参考[数据源配置文件介绍](source-configuration-file.md)。
+数据源配置文件的其他配置参考[数据源配置文件介绍](source-configuration-file.md)。
 
-结果如下：
+命令返回结果如下：
 
 {{< copyable "" >}}
 
@@ -78,11 +80,11 @@ tiup dmctl --master-addr <master-addr> operate-source create ./source-mysql-01.y
 
 ## 第三步：查询创建的数据源对象
 
-创建数据源对象后，可以使用下面的命令查看创建的数据源对象。
+创建数据源对象后，可以使用如下命令查看创建的数据源对象：
 
 如果知道 source-id，可以通过 `dmctl get-config source <source-id>` 命令直接查看数据源配置。
 
-{{< copyable "" >}}
+{{< copyable "shell-regular" >}}
 
 ```bash
 tiup dmctl --master-addr <master-addr> get-config source mysql-replica-01
