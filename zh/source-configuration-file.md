@@ -70,11 +70,6 @@ from:
 | `password` | 上游数据库的用户密码。注意：推荐使用 dmctl 加密后的密码。|
 | `security` | 上游数据库 TLS 相关配置。配置的证书文件路径需能被所有节点访问。若配置为本地路径，则集群所有节点需要将证书文件拷贝一份放在各节点机器相同的路径位置上。|
 
-### Relay Log
-
-关于 relay log 的介绍，请参阅[Relay Log](relay-log.md)。
-
-
 ### relay log 清理策略配置（purge 配置项）
 
 一般情况下不需要手动配置，如果 relay log 数据量较大，磁盘空间不足，则可以通过设置该配置项来避免 relay log 写满磁盘。
