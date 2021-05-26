@@ -16,7 +16,7 @@ title: 创建数据迁移任务
 - 如果你需要了解如何一步一步配置数据迁移任务，请参考 [数据迁移任务配置向导](task-configuration-guide.md)
 
 ## 多数据源汇总迁移到 TiDB
-如果你需要将多个数据源的数据汇总迁移到 TiDB，此外还需要为多个数据源中冲突的表名进行重命名和屏蔽掉某些表的某些 DDL/DML 操作，那么你可以参考 [多数据源汇总迁移到 TiDB](usage-scenario-simple-migration.md)。
+如果你需要将多个数据源的数据汇总迁移到 TiDB，此外如果你需要为了防止多个数据源中相同表名在迁移过程中出现冲突而要进行表重命名，或者屏蔽掉某些表的某些 DDL/DML 操作，那么你可以参考 [多数据源汇总迁移到 TiDB](usage-scenario-simple-migration.md)。
 
 ## 分库分表合并迁移到 TiDB
 如果你需要将使用分表方案的业务合并迁移到 TiDB，那么你可以参考 [分表合并迁移到 TiDB](usage-scenario-shard-merge.md)。
