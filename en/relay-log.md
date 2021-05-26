@@ -89,6 +89,7 @@ The starting position of the relay log migration is determined by the following 
 <div label="v2.0.2 and later versions">
 
 > **Note:**
+> 
 > Since DM v2.0.2, the configuration item `enable-relay` in the source configuration file is no longer valid. If DM finds that `enable-relay` is set to `true` when [loading the data source configuration](manage-source.md#operate-data-source), it outputs the following message:
 > 
 > ```
