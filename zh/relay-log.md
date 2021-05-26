@@ -97,11 +97,12 @@ Relay log 迁移的起始位置由如下规则决定：
 <SimpleTab>
 <div label="v2.0.2 及之后的版本">
 
-在 v2.0.2 及之后的版本，`start-relay` 命令用于配置一个或多个 DM-worker 为指定数据源迁移 relay log。上游数据源配置中的 `enable-relay` 项已经失效。在[加载数据源配置](manage-source.md#数据源操作)时，如果发现配置中的 `enable-relay` 项为 `true`，会给出如下信息提示使用 `start-relay` 命令。
-
-```
-Please use `start-relay` to specify which workers should pull relay log of relay-enabled sources.
-```
+> **注意：**
+> 自 v2.0.2 起，上游数据源配置中的 `enable-relay` 项已经失效。在[加载数据源配置](manage-source.md#数据源操作)时，如果发现配置中的 `enable-relay` 项为 `true`，DM 会给出如下信息提示：
+> 
+> ```
+> Please use `start-relay` to specify which workers should pull relay log of relay-enabled sources.
+> ```
 
 在 v2.0.2 及之后的版本中，`start-relay` 与 `stop-relay` 命令可以分别启动及停止 relay log 的拉取。`start-relay` 命令只能指定空闲或者已绑定了该上游数据源的 DM-worker 拉取 relay log。
 
