@@ -15,35 +15,35 @@ title: 创建数据源对象
 
 1. （可选）加密数据源密码
 
-在 DM 的配置文件中，推荐使用经 dmctl 加密后的密文密码。按照下面的示例可以获得数据源的密文密码，将用于 step 1.2 的数据源配置。
+    在 DM 的配置文件中，推荐使用经 dmctl 加密后的密文密码。按照下面的示例可以获得数据源的密文密码，将用于 step 1.2 的数据源配置。
 
-{{< copyable "shell-regular" >}}
+    {{< copyable "shell-regular" >}}
 
-  ```bash
-  ./dmctl -encrypt 'abc!@#123'
-  ```
+    ```bash
+    ./dmctl -encrypt 'abc!@#123'
+   ```
 
-  ```
-  MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
-  ```
+   ```
+   MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=
+   ```
 
 2. 编写数据源配置文件
 
-每个数据源需要一个单独的配置文件来创建数据源对象。按照下面示例创建 ID 为 "mysql-01" 的数据源对象，创建数据源配置文件 `./source-mysql-01.yaml`：
+    每个数据源需要一个单独的配置文件来创建数据源对象。按照下面示例创建 ID 为 "mysql-01" 的数据源对象，创建数据源配置文件 `./source-mysql-01.yaml`：
 
-```yaml
-source-id: "mysql-01"    # 数据源对象 ID，在数据迁移任务配置和 dmctl 命令行中引用该 source-id 可以关联到对应的数据源对象
+    ```yaml
+    source-id: "mysql-01"    # 数据源对象 ID，在数据迁移任务配置和 dmctl 命令行中引用该 source-id 可以关联到对应的数据源对象
 
-from:
-  host: "127.0.0.1"
-  port: 3306
-  user: "root"
-  password: "MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=" # 推荐使用 dmctl 对上游数据库的用户密码加密之后的密码
-  security:                                        # 上游数据库 TLS 相关配置。如果没有需要则可以删除
-    ssl-ca: "/path/to/ca.pem"
-    ssl-cert: "/path/to/cert.pem"
-    ssl-key: "/path/to/key.pem"
-```
+    from:
+    host: "127.0.0.1"
+    port: 3306
+    user: "root"
+    password: "MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=" # 推荐使用 dmctl 对上游数据库的用户密码加密之后的密码
+    security:                                        # 上游数据库 TLS 相关配置。如果没有需要则可以删除
+      ssl-ca: "/path/to/ca.pem"
+      ssl-cert: "/path/to/cert.pem"
+      ssl-key: "/path/to/key.pem"
+    ```
 
 ## 第二步：创建数据源对象
 
