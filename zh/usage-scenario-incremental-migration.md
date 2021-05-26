@@ -4,11 +4,11 @@ title: Data Migration 增量数据迁移场景
 
 # Data Migration 增量数据迁移场景
 
-本文介绍如何使用 DM 将源数据库从指定位置开始的 Binlog 同步到下游 TiDB。本文以迁移一个上游 MySQL 实例为例。
+本文介绍如何使用 DM 将源数据库从指定位置开始的 Binlog 同步到下游 TiDB。本文以迁移一个数据源 MySQL 实例为例。
 
 ## 数据源表
 
-假设上游实例为：
+假设数据源实例为：
 
 | Schema | Tables |
 |:------|:------|
@@ -26,7 +26,7 @@ title: Data Migration 增量数据迁移场景
 
 ### 确定增量同步起始位置
 
-首先需要确定开始迁移的上游 binlog 位置。如果你确定 binlog 的同步位置，那么可以跳过这一步。
+首先需要确定开始迁移的数据源 binlog 位置。如果你确定 binlog 的同步位置，那么可以跳过这一步。
 
 你可以通过下面的方法获得对应数据源开启迁移的 binlog 位置点：
 
@@ -70,7 +70,7 @@ CREATE TABLE `messages` (
 
 ### 创建同步任务
 
-1. 创建任务配置文件 `task.yaml`，配置增量同步模式，以及每个上游的同步起点。完整的任务配置文件示例如下：
+1. 创建任务配置文件 `task.yaml`，配置增量同步模式，以及每个数据源的同步起点。完整的任务配置文件示例如下：
 
    {{< copyable "yaml" >}}
 
@@ -86,7 +86,7 @@ CREATE TABLE `messages` (
      password: ""         # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
 
    ##  使用黑白名单配置需要同步的表
-   block-allow-list:   # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+   block-allow-list:   # 数据源数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
      bw-rule-1:        # 黑白名单配置项 ID
        do-dbs: ["log"] # 迁移哪些库
 
@@ -94,7 +94,7 @@ CREATE TABLE `messages` (
    ##  该场景多见于，全量数据迁移的数据不属于的同一个数据源的一致性快照。
    syncers:            # sync 处理单元的运行配置参数
      global:           # 配置名称
-       safe-mode: true # 设置为 true，则将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。在启动或恢复增量复制任务的前 5 分钟内 TiDB DM 会自动启动 safe mode
+       safe-mode: true # 设置为 true，则将来自数据源的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。在启动或恢复增量复制任务的前 5 分钟内 TiDB DM 会自动启动 safe mode
 
    # 配置数据源
    mysql-instances:
@@ -112,7 +112,7 @@ CREATE TABLE `messages` (
    {{< copyable "shell-regular" >}}
 
    ```bash
-   bin/dmctl start-task task.yaml --master-addr <master-addr>
+   tiup dmctl --master-addr <master-addr> start-task task.yaml
    ```
 
    ```
@@ -135,7 +135,7 @@ CREATE TABLE `messages` (
    {{< copyable "shell-regular" >}}
 
    ```bash
-   bin/dmctl --master-addr=127.0.0.1:8261 query-status test
+   tiup dmctl --master-addr <master-addr> query-status test
    ```
 
    ```
@@ -183,7 +183,7 @@ CREATE TABLE `messages` (
 
 ## 测试同步任务
 
-在上游数据库插入新增数据：
+在数据源数据库插入新增数据：
 
 {{< copyable "sql" >}}
 
@@ -193,7 +193,7 @@ Query OK, 2 rows affected (0.010 sec)
 Records: 2  Duplicates: 0  Warnings: 0
 ```
 
-此时上游数据为：
+此时数据源数据为：
 
 ```sql
 MySQL [log]> SELECT * FROM messages;
