@@ -17,7 +17,7 @@ source-id: "mysql-replica-01"
 # 是否开启 GTID
 enable-gtid: false
 
-# 是否开启 relay log
+# 是否开启 relay log，在 v2.0.2 之后的版本，该参数失效，使用 start-relay 开启 relay log
 enable-relay: false
 relay-binlog-name: '' # 拉取上游 binlog 的起始文件名
 relay-binlog-gtid: '' # 拉取上游 binlog 的起始 GTID
@@ -60,7 +60,7 @@ from:
 | :------------ | :--------------------------------------- |
 | `source-id` | 标识一个 MySQL 实例。|
 | `enable-gtid` | 是否使用 GTID 方式从上游拉取 binlog，默认值为 false。一般情况下不需要手动配置，如果上游数据库启用了 GTID 支持，且需要做主从切换，则将该配置项设置为 true。 |
-| `enable-relay` | 是否开启 relay log，默认值为 false。 |
+| `enable-relay` | 是否开启 relay log，默认值为 false。在 v2.0.2 之后的版本，该参数失效，使用 start-relay 开启 relay log。 |
 | `relay-binlog-name` | 拉取上游 binlog 的起始文件名，例如 "mysql-bin.000002"，该配置在 `enable-gtid` 为 false 的情况下生效。如果不配置该项，DM-worker 将从最新时间点的 binlog 文件开始拉取 binlog，一般情况下不需要手动配置。 |
 | `relay-binlog-gtid` | 拉取上游 binlog 的起始 GTID，例如 "e9a1fc22-ec08-11e9-b2ac-0242ac110003:1-7849"，该配置在 `enable-gtid` 为 true 的情况下生效。如果不配置该项，DM-worker 将从最新时间点的 binlog GTID 开始拉取 binlog，一般情况下不需要手动配置。 |
 | `host` | 上游数据库的 host。|
