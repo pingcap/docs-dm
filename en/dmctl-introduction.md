@@ -76,6 +76,8 @@ The command mode differs from the interactive mode in that you need to append th
 >
 > + A dmctl command must be followed by only one task operation.
 > + The task operation can be placed only at the end of the dmctl command.
+> + Starting from v2.0.4, the `-master-addr` parameter supports reading from environment variables (DM_MASTER_ADDR).
+
 
 {{< copyable "shell-regular" >}}
 

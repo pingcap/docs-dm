@@ -76,6 +76,7 @@ Use "dmctl [command] --help" for more information about a command.
 >
 > + 一条 dmctl 命令只能跟一个任务操作
 > + 任务操作只能放在 dmctl 命令的最后
+> + 从 v2.0.4 版本开始, `-master-addr`参数支持从环境变量(DM_MASTER_ADDR)里读取
 
 {{< copyable "shell-regular" >}}
 
