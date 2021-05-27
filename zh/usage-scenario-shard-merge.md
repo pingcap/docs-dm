@@ -178,6 +178,7 @@ mysql-instances:
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
+
   -
     source-id: "instance-3"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
