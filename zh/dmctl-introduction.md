@@ -76,7 +76,7 @@ Use "dmctl [command] --help" for more information about a command.
 >
 > + 一条 dmctl 命令只能跟一个任务操作
 > + 任务操作只能放在 dmctl 命令的最后
-> + 从 v2.0.4 版本开始, `-master-addr`参数支持从环境变量(DM_MASTER_ADDR)里读取
+> + 从 v2.0.4 版本开始，支持从环境变量(DM_MASTER_ADDR)里读取 `-master-addr` 参数
 
 {{< copyable "shell-regular" >}}
 
@@ -84,6 +84,9 @@ Use "dmctl [command] --help" for more information about a command.
 ./dmctl -master-addr 172.16.30.14:8261 start-task task.yaml
 ./dmctl -master-addr 172.16.30.14:8261 stop-task task
 ./dmctl -master-addr 172.16.30.14:8261 query-status
+
+export DM_MASTER_ADD="172.16.30.14:8261"
+./dmctl query-status
 ```
 
 ```
