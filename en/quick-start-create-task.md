@@ -164,18 +164,18 @@ Now, suppose that you need to migrate these sharded tables to the `db_target.t_t
       password: "" # It is recommended to use password encrypted with dmctl if the password is not empty.
 
     mysql-instances:
-    - source-id: "mysql-replica-01"
-      block-allow-list:  "instance"  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
-      route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
-      mydumper-thread: 4
-      loader-thread: 16
-      syncer-thread: 16
-    - source-id: "mysql-replica-02"
-      block-allow-list:  "instance"  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
-      route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
-      mydumper-thread: 4
-      loader-thread: 16
-      syncer-thread: 16
+      - source-id: "mysql-replica-01"
+        block-allow-list:  "instance"  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
+        route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
+        mydumper-thread: 4
+        loader-thread: 16
+        syncer-thread: 16
+      - source-id: "mysql-replica-02"
+        block-allow-list:  "instance"  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
+        route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
+        mydumper-thread: 4
+        loader-thread: 16
+        syncer-thread: 16
     block-allow-list:  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
     instance:
       do-dbs: ["~^sharding[\\d]+"]
