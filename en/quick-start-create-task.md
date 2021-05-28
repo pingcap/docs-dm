@@ -176,20 +176,20 @@ Now, suppose that you need to migrate these sharded tables to the `db_target.t_t
         loader-thread: 16
         syncer-thread: 16
     block-allow-list:  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
-    instance:
-      do-dbs: ["~^sharding[\\d]+"]
-      do-tables:
-      -  db-name: "~^sharding[\\d]+"
-      tbl-name: "~^t[\\d]+"
+      instance:
+        do-dbs: ["~^sharding[\\d]+"]
+        do-tables:
+        -  db-name: "~^sharding[\\d]+"
+        tbl-name: "~^t[\\d]+"
     routes:
-    sharding-route-rules-table:
-      schema-pattern: sharding*
-      table-pattern: t*
-      target-schema: db_target
-      target-table: t_target
-    sharding-route-rules-schema:
-      schema-pattern: sharding*
-      target-schema: db_target
+      sharding-route-rules-table:
+        schema-pattern: sharding*
+        table-pattern: t*
+        target-schema: db_target
+        target-table: t_target
+      sharding-route-rules-schema:
+        schema-pattern: sharding*
+        target-schema: db_target
     ```
 
 2. To create a task using dmctl, write the above configurations to the `conf/task.yaml` file:
