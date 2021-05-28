@@ -117,7 +117,7 @@ mysql-instances:
       binlog-gtid: "03fc0263-28c7-11e7-a653-6c0b84d59f30:1-7041423,05474d3c-28c7-11e7-8352-203db246dd3d:1-170"  # 对于 source 中指定了 `enable-gtid: true` 的增量任务，需要指定该值
 
     route-rules: ["route-rule-1", "route-rule-2"]  # 该上游数据库实例匹配的表到下游数据库的 table routing 规则名称
-    filter-rules: ["filter-rule-1"]                # 该上游数据库实例匹配的表的 binlog event filter 规则名称
+    filter-rules: ["filter-rule-1", "filter-rule-2"]                # 该上游数据库实例匹配的表的 binlog event filter 规则名称
     block-allow-list:  "bw-rule-1"                 # 该上游数据库实例匹配的表的 block-allow-list 过滤规则名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
 
     mydumper-config-name: "global"          # mydumpers 配置的名称
