@@ -179,8 +179,8 @@ Now, suppose that you need to migrate these sharded tables to the `db_target.t_t
       instance:
         do-dbs: ["~^sharding[\\d]+"]
         do-tables:
-        -  db-name: "~^sharding[\\d]+"
-        tbl-name: "~^t[\\d]+"
+        - db-name: "~^sharding[\\d]+"
+          tbl-name: "~^t[\\d]+"
     routes:
       sharding-route-rules-table:
         schema-pattern: sharding*
