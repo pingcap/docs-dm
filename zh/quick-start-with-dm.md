@@ -8,7 +8,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/quick-start-with-dm/','/docs-cn/tidb
 
 本文介绍如何快速体验使用数据迁移工具 [TiDB Data Migration](https://github.com/pingcap/dm) (DM) 从 MySQL 迁移数据到 TiDB。
 
-在生产环境部署 DM 请参考如下文档
+如需在生产环境中部署 DM，请参考以下文档：
 
 1. [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)
 2. [创建数据源对象](quick-start-create-source.md)

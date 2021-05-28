@@ -1,13 +1,15 @@
 ---
-title: 下游表结构存在更多列的迁移场景
+title: 下游 TiDB 表结构存在更多列的迁移场景
 summary: 了解如何在下游表结构比数据源存在更多列的情况下，使用 DM 对表进行迁移。
 ---
 
 # 下游 TiDB 表结构有更多列的迁移场景
 
+本文介绍如何在下游 TiDB 表结构比上游存在更多列的情况下，使用 DM 对表进行迁移。
+
 ## 数据源表
 
-假设数据源实例为：
+本文档示例所用的数据源实例如下所示：
 
 | Schema | Tables |
 |:------|:------|
@@ -17,18 +19,18 @@ summary: 了解如何在下游表结构比数据源存在更多列的情况下�
 
 ## 迁移要求
 
-在 TiDB 中定制创建表 `log.messages`， 其表结构包含数据源对应表 `log.messages` 的所有列，且比数据源的表结构有更多的列。在此需求下，将数据源表 `log.messages` 迁移到 TiDB 集群的表 `log.messages`。
+在 TiDB 中定制创建表 `log.messages`，其表结构包含数据源中 `log.messages` 表的所有列，且比数据源的表结构有更多的列。在此需求下，将数据源表 `log.messages` 迁移到 TiDB 集群的表 `log.messages`。
 
 > **注意：**
 >
-> - 下游 TiDB 相比于数据源多出来的列必须指定默认值或允许为 `NULL`。
-> - 对 DM 已经正在正常迁移的表，可直接接在 TiDB 新增指定了默认值或允许为 `NULL` 的列而不会影响 DM 正常的数据迁移。
+> - 下游 TiDB 相比于数据源多出的列必须指定默认值或允许为 `NULL`。
+> - 对于已经通过 DM 在正常迁移的表，可直接在下游 TiDB 中新增指定了默认值或允许为 `NULL` 的列而不会影响 DM 正常的数据迁移。
 
 ## 数据迁移操作
 
-下面介绍了操作步骤
+下面介绍满足以上迁移要求的具体操作步骤。
 
-### 在下游 TiDB 手动创建表结构
+### 在下游 TiDB 中手动创建表结构
 
 假设在开始进行数据迁移时，数据源表结构为：
 
@@ -40,7 +42,7 @@ CREATE TABLE `messages` (
 )
 ```
 
-手动在下游 TiDB 创建表结构，比数据源多出 `annotation` 列：
+手动在下游 TiDB 中创建表结构，比数据源多出 `annotation` 列：
 
 ```sql
 CREATE TABLE `messages` (
@@ -52,16 +54,17 @@ CREATE TABLE `messages` (
 )
 ```
 
-### 创建数据迁移
+### 创建数据迁移任务
 
-数据迁移任务配置参考其他场景的任务配置
+要创建数据迁移任务，首先需要进行数据迁移的任务配置，可参考以下场景的任务配置：
+
 - [多数据源汇总迁移到 TiDB](usage-scenario-simple-migration.md)
 - [分表合并迁移到 TiDB](usage-scenario-shard-merge.md)
 - [只迁移数据源增量数据到 TiDB](usage-scenario-incremental-migration.md)
 
-如果数据迁移包含全量数据迁移，可以正常的进行数据同步，无需其他处理；但是如果只迁移数据源增量数据到 TiDB，那么还需手动在 DM 设置用于解析 MySQL Binlog 的表结构，具体的操作可以参考下面的问题处理步骤。
+如果该迁移任务为全量数据迁移，可以正常地进行数据同步，无需其他处理；但是如果只迁移数据源的增量数据到 TiDB，那么还需手动在 DM 中设置用于解析 MySQL binlog 的表结构，具体的操作可以参考下面“只迁移数据源增量数据到 TiDB 的问题处理”一节。
 
-#### （只迁移）数据源增量数据到 TiDB 问题处理
+#### 只迁移数据源增量数据到 TiDB 的问题处理
 
 该场景与【只迁移数据源增量数据到 TiDB】数据迁移不同在于：运行对应的数据迁移任务后，通过 `query-status` 可看到类似如下数据迁移错误：
 
@@ -79,11 +82,11 @@ CREATE TABLE `messages` (
 ]
 ```
 
-原因是 DM 迁移 binlog event 时，如果 DM 内部没有维护对应于该表的表结构，则会尝试使用下游当前的表结构来解析 binlog event 并生成相应的 DML 语句。如果 binlog event 里数据的列数与下游表结构的列数不一致时，则会产生上述错误。
+出现以上错误的原因是 DM 迁移 binlog event 时，如果 DM 内部没有维护对应于该表的表结构，则会尝试使用下游当前的表结构来解析 binlog event 并生成相应的 DML 语句。如果 binlog event 里数据的列数与下游表结构的列数不一致时，则会产生上述错误。
 
-此时，我们可以使用 [`operate-schema`](manage-schema.md) 命令来为该表指定与 binlog event 匹配的表结构。如果你在进行分表合并的数据迁移，那么需要为每个分表按照如下步骤在 DM 设置用于解析 MySQL Binlog 的表结构。具体操作为：
+此时，我们可以使用 [`operate-schema`](manage-schema.md) 命令来为该表指定与 binlog event 匹配的表结构。如果你在进行分表合并的数据迁移，那么需要为每个分表按照如下步骤在 DM 中设置用于解析 MySQL binlog 的表结构。具体操作为：
 
-1. 为数据源中需要迁移的表 `log.messages` 指定表结构，表结构需要对应 DM 将要开始同步的 binlog event 的数据。将对应的 `CREATE TABLE` 表结构语句并保存到文件，如将以下表结构保存到 `log.messages.sql` 中。
+1. 为数据源中需要迁移的表 `log.messages` 指定表结构，表结构需要对应 DM 将要开始同步的 binlog event 的数据。将对应的 `CREATE TABLE` 表结构语句并保存到文件，例如将以下表结构保存到 `log.messages.sql` 中。
 
     ```sql
     CREATE TABLE `messages` (

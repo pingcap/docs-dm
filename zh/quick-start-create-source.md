@@ -82,54 +82,54 @@ tiup dmctl --master-addr <master-addr> operate-source create ./source-mysql-01.y
 
 创建数据源对象后，可以使用如下命令查看创建的数据源对象：
 
-如果知道 source-id，可以通过 `dmctl get-config source <source-id>` 命令直接查看数据源配置。
+- 如果知道数据源的 `source-id`，可以通过 `dmctl get-config source <source-id>` 命令直接查看数据源配置：
 
-{{< copyable "shell-regular" >}}
+    {{< copyable "shell-regular" >}}
 
-```bash
-tiup dmctl --master-addr <master-addr> get-config source mysql-replica-01
-```
+    ```bash
+    tiup dmctl --master-addr <master-addr> get-config source mysql-replica-01
+    ```
+    
+    ```
+    {
+      "result": true,
+      "msg": "",
+      "cfg": "enable-gtid: false
+        flavor: mysql
+        source-id: mysql-replica-01
+        from:
+          host: 127.0.0.1
+          port: 3306
+          user: root
+          password: '******'
+    }
+    ```
 
-```
-{
-  "result": true,
-  "msg": "",
-  "cfg": "enable-gtid: false
-    flavor: mysql
-    source-id: mysql-replica-01
-    from:
-      host: 127.0.0.1
-      port: 3306
-      user: root
-      password: '******'
-}
-```
+- 如果不知道数据源的 `source-id`，可以先通过 `dmctl operate-source show` 命令查看源数据库列表，从中可以找到对应的数据源对象。
 
-如果不知道 source-id，可以先通过 `dmctl operate-source show` 查看源数据库列表。
+    {{< copyable "shell-regular" >}}
 
-{{< copyable "" >}}
+    ```bash
+    tiup dmctl --master-addr <master-addr> operate-source show
+    ```
 
-```bash
-tiup dmctl --master-addr <master-addr> operate-source show
-```
-
-```
-{
-    "result": true,
-    "msg": "",
-    "sources": [
-        {
-            "result": true,
-            "msg": "source is added but there is no free worker to bound",
-            "source": "mysql-replica-02",
-            "worker": ""
-        },
-        {
-            "result": true,
-            "msg": "",
-            "source": "mysql-replica-01",
-            "worker": "dm-worker-1"
-        }
-    ]
-}
-```
+    ```
+    {
+        "result": true,
+        "msg": "",
+        "sources": [
+            {
+                "result": true,
+                "msg": "source is added but there is no free worker to bound",
+                "source": "mysql-replica-02",
+                "worker": ""
+            },
+            {
+                "result": true,
+                "msg": "",
+                "source": "mysql-replica-01",
+                "worker": "dm-worker-1"
+            }
+        ]
+    }
+    ```
