@@ -87,7 +87,7 @@ tiup dmctl --master-addr <master-addr> operate-source create ./source-mysql-01.y
     {{< copyable "shell-regular" >}}
 
     ```bash
-    tiup dmctl --master-addr <master-addr> get-config source mysql-replica-01
+    tiup dmctl --master-addr <master-addr> get-config source mysql-01
     ```
     
     ```
@@ -96,7 +96,7 @@ tiup dmctl --master-addr <master-addr> operate-source create ./source-mysql-01.y
       "msg": "",
       "cfg": "enable-gtid: false
         flavor: mysql
-        source-id: mysql-replica-01
+        source-id: mysql-01
         from:
           host: 127.0.0.1
           port: 3306
@@ -121,13 +121,13 @@ tiup dmctl --master-addr <master-addr> operate-source create ./source-mysql-01.y
             {
                 "result": true,
                 "msg": "source is added but there is no free worker to bound",
-                "source": "mysql-replica-02",
+                "source": "mysql-02",
                 "worker": ""
             },
             {
                 "result": true,
                 "msg": "",
-                "source": "mysql-replica-01",
+                "source": "mysql-01",
                 "worker": "dm-worker-1"
             }
         ]
