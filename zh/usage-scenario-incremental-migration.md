@@ -31,7 +31,7 @@ title: Data Migration 增量数据迁移场景
 你可以通过下面的方法获得对应数据源开启迁移的 binlog 位置点：
 
 - 使用 Dumplings/Mydumper 进行全量数据导出，然后使用其他工具，如 TiDB Lightning，进行全量数据导入，则可以通过导出数据的 [metadata 文件](https://docs.pingcap.com/zh/tidb/stable/dumpling-overview#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F)获取同步位置；
-- 
+
   ```file
   Started dump at: 2020-11-10 10:40:19
   SHOW MASTER STATUS:
@@ -43,7 +43,7 @@ title: Data Migration 增量数据迁移场景
   
 - 使用 `SHOW BINLOG EVENTS` 语句，或者使用 `mysqlbinlog` 工具查看 binlog，选择合适的位置。
 - 如果从当前时间点开始同步 binlog，则可以使用 `SHOW MASTER STATUS` 命令查看当前位置：
-- 
+
   ```sql
   MySQL [log]> SHOW MASTER STATUS;
   +------------------+----------+--------------+------------------+------------------------------------------+
@@ -109,7 +109,7 @@ CREATE TABLE `messages` (
          binlog-gtid: "09bec856-ba95-11ea-850a-58f2b4af5188:1-9"
    ```
 
-5. 使用 `start-task` 命令创建同步任务：
+2. 使用 `start-task` 命令创建同步任务：
 
    {{< copyable "shell-regular" >}}
 
@@ -132,7 +132,7 @@ CREATE TABLE `messages` (
    }
    ```
 
-6. 使用 `query-status` 查看同步任务，确认无报错信息：
+3. 使用 `query-status` 查看同步任务，确认无报错信息：
 
    {{< copyable "shell-regular" >}}
 
