@@ -16,8 +16,8 @@ summary: 了解在不同业务需求场景下如何配置数据迁移任务。
 
 除了业务需求场景导向的创建数据迁移任务教程之外：
 
-- 如果需要查看完整的数据迁移任务配置示例，请参考 [DM 任务完整配置文件介绍](task-configuration-file-full.md)
-- 如果需要了解数据迁移任务的具体配置步骤，请参考 [数据迁移任务配置向导](task-configuration-guide.md)
+- 完整的数据迁移任务配置示例，请参考 [DM 任务完整配置文件介绍](task-configuration-file-full.md)
+- 数据迁移任务的配置向导，请参考 [数据迁移任务配置向导](task-configuration-guide.md)
 
 ## 多数据源汇总迁移到 TiDB
 
