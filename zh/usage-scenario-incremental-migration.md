@@ -31,6 +31,7 @@ title: Data Migration 增量数据迁移场景
 你可以通过下面的方法获得对应数据源开启迁移的 binlog 位置点：
 
 - 使用 Dumplings/Mydumper 进行全量数据导出，然后使用其他工具，如 TiDB Lightning，进行全量数据导入，则可以通过导出数据的 [metadata 文件](https://docs.pingcap.com/zh/tidb/stable/dumpling-overview#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F)获取同步位置；
+- 
   ```file
   Started dump at: 2020-11-10 10:40:19
   SHOW MASTER STATUS:
@@ -39,8 +40,10 @@ title: Data Migration 增量数据迁移场景
         GTID: 09bec856-ba95-11ea-850a-58f2b4af5188:1-9 
   Finished dump at: 2020-11-10 10:40:20
   ```
+  
 - 使用 `SHOW BINLOG EVENTS` 语句，或者使用 `mysqlbinlog` 工具查看 binlog，选择合适的位置。
 - 如果从当前时间点开始同步 binlog，则可以使用 `SHOW MASTER STATUS` 命令查看当前位置：
+- 
   ```sql
   MySQL [log]> SHOW MASTER STATUS;
   +------------------+----------+--------------+------------------+------------------------------------------+
@@ -52,7 +55,6 @@ title: Data Migration 增量数据迁移场景
   ```
 
 本例将从 `binlog position=(mysql-bin.000001, 2022), gtid=09bec856-ba95-11ea-850a-58f2b4af5188:1-9` 这个位置开始同步。
-
 
 ### 手动在下游创建表
 
@@ -101,7 +103,7 @@ CREATE TABLE `messages` (
      - source-id: "mysql-01"         # 数据源对象 ID，可以从数据源配置中获取
        block-allow-list: "bw-rule-1" # 引入上面黑白名单配置
        syncer-config-name: "global"  # 引用上面的 syncers 增量数据配置
-       meta:                         # `task-mode` 为 `incremental` 且下游数据库的 `checkpoint` 不存在时 binlog 迁移开始的位置; 如果 `checkpoint` 存在，则以 `checkpoint` 为 准
+       meta:                         # `task-mode` 为 `incremental` 且下游数据库的 `checkpoint` 不存在时 binlog 迁移开始的位置; 如果 `checkpoint` 存在，以 `checkpoint` 为准
          binlog-name: "mysql-bin.000001"
          binlog-pos: 2022
          binlog-gtid: "09bec856-ba95-11ea-850a-58f2b4af5188:1-9"
