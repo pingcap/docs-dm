@@ -30,7 +30,7 @@
   - [Migrate Data Using DM](migrate-data-using-dm.md)
   - [Test DM Performance](performance-test.md)
 + Maintain
- + Tools
+  + Tools
     - [Maintain DM Clusters Using TiUP (Recommended)](maintain-dm-using-tiup.md)
     - [Maintain DM Clusters Using dmctl](dmctl-introduction.md)
   + Cluster Upgrade

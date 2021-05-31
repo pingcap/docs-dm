@@ -158,37 +158,37 @@ Now, suppose that you need to migrate these sharded tables to the `db_target.t_t
     task-mode: all
     shard-mode: "pessimistic"
     target-database:
-    host: "127.0.0.1"
-    port: 4000
-    user: "root"
-    password: "" # It is recommended to use password encrypted with dmctl if the password is not empty.
+      host: "127.0.0.1"
+      port: 4000
+      user: "root"
+      password: "" # It is recommended to use password encrypted with dmctl if the password is not empty.
 
     mysql-instances:
-    - source-id: "mysql-replica-01"
+      - source-id: "mysql-replica-01"
         block-allow-list:  "instance"  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
         route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
         mydumper-thread: 4
         loader-thread: 16
         syncer-thread: 16
-    - source-id: "mysql-replica-02"
+      - source-id: "mysql-replica-02"
         block-allow-list:  "instance"  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
         route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
         mydumper-thread: 4
         loader-thread: 16
         syncer-thread: 16
     block-allow-list:  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
-    instance:
+      instance:
         do-dbs: ["~^sharding[\\d]+"]
         do-tables:
-        -  db-name: "~^sharding[\\d]+"
-        tbl-name: "~^t[\\d]+"
+        - db-name: "~^sharding[\\d]+"
+          tbl-name: "~^t[\\d]+"
     routes:
-    sharding-route-rules-table:
+      sharding-route-rules-table:
         schema-pattern: sharding*
         table-pattern: t*
         target-schema: db_target
         target-table: t_target
-    sharding-route-rules-schema:
+      sharding-route-rules-schema:
         schema-pattern: sharding*
         target-schema: db_target
     ```
