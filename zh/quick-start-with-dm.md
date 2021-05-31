@@ -12,7 +12,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/quick-start-with-dm/','/docs-cn/tidb
 
 1. [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)
 2. [创建数据源对象](quick-start-create-source.md)
-3. [创建数据迁移任务](quick-start-create-migration-task.md)
+3. [创建数据迁移任务](quick-create-migration-task.md)
 
 ## 使用样例
 
