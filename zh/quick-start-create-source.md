@@ -35,16 +35,16 @@ summary: 了解如何为 DM 创建数据源对象。
 
     ```yaml
     source-id: "mysql-01"    # 数据源对象 ID，在数据迁移任务配置和 dmctl 命令行中引用该 source-id 可以关联到对应的数据源对象
-
+    
     from:
-    host: "127.0.0.1"
-    port: 3306
-    user: "root"
-    password: "MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=" # 推荐使用 dmctl 对上游数据源的用户密码加密之后的密码
-    security:                                        # 上游数据源 TLS 相关配置。如果没有需要则可以删除
-      ssl-ca: "/path/to/ca.pem"
-      ssl-cert: "/path/to/cert.pem"
-      ssl-key: "/path/to/key.pem"
+      host: "127.0.0.1"
+      port: 3306
+      user: "root"
+      password: "MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=" # 推荐使用 dmctl 对上游数据源的用户密码加密之后的密码
+      security:                                        # 上游数据源 TLS 相关配置。如果没有需要则可以删除
+        ssl-ca: "/path/to/ca.pem"
+        ssl-cert: "/path/to/cert.pem"
+        ssl-key: "/path/to/key.pem"
     ```
 
 ## 第二步：创建数据源对象
