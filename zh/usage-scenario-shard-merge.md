@@ -34,7 +34,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 1. `user`.`information` 需要合并到下游 TiDB 中的 `user`.`information` 表。
 2. 实例中的 `store_{01|02}`.`sale_{01|02}` 表合并至下游 TiDB 中的 `store`.`sale` 表。
 3. 使用通配符 `user`.`log_*` 过滤掉两个实例的 `user`.`log_bak` 表。
-4. 过滤掉三个实例中 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作。
+4. 过滤掉三个实例中 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作，并过滤该库的 `drop database` 操作。
 
 预期迁移后下游库结构如下：
 
@@ -60,7 +60,7 @@ CREATE TABLE `information` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
 ```
 
-而 `uid` 可以保证全局满足唯一索引，因此可以[去掉自增主键的主键属性](shard-merge-best-practices.md#去掉自增主键的主键属性)。
+其中主键或唯一索引涉及 `id`、`uid` 两列。`id` 列具有自增属性，多个分表范围重复会引发数据冲突。 `uid` 可以保证全局满足唯一索引，因此可以按照文档[去掉自增主键的主键属性](shard-merge-best-practices.md#去掉自增主键的主键属性)进行绕过。
 
 `store_{01|02}`.`sale_{01|02}` 的表结构为
 
@@ -154,6 +154,10 @@ CREATE TABLE `sale_01` (
         table-pattern: "sale_*"
         events: ["truncate table", "drop table", "delete"]
         action: Ignore
+      store-filter-rule:
+        schema-pattern: "store_*"
+        events: ["drop database"]
+        action: Ignore
     ```
 
 ## 迁移任务配置
@@ -178,7 +182,7 @@ mysql-instances:
   -
     source-id: "instance-1"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
-    filter-rules: ["user-filter-rule", "sale-filter-rule"]
+    filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
     block-allow-list:  "log-bak-ignored"
     mydumper-config-name: "global"
     loader-config-name: "global"
@@ -187,7 +191,7 @@ mysql-instances:
   -
     source-id: "instance-2"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
-    filter-rules: ["user-filter-rule", "sale-filter-rule"]
+    filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
     block-allow-list:  "log-bak-ignored"
     mydumper-config-name: "global"
     loader-config-name: "global"
