@@ -61,7 +61,7 @@ CREATE TABLE `messages` (
 - [分表合并迁移到 TiDB](usage-scenario-shard-merge.md)
 - [只迁移数据源增量数据到 TiDB](usage-scenario-incremental-migration.md)
 
-如果该迁移任务为全量数据迁移，可以正常地进行数据同步，无需其他处理；但是如果只迁移数据源的增量数据到 TiDB，那么还需手动在 DM 中设置用于解析 MySQL binlog 的表结构，具体的操作可以参考下面“只迁移数据源增量数据到 TiDB 的问题处理”一节。
+如果该迁移任务只包含全量数据迁移，可以正常地进行数据同步，无需其他处理；但是如果包含增量数据复制阶段，那么还需手动在 DM 中设置用于解析 MySQL binlog 的表结构，具体的操作可以参考下面“只迁移数据源增量数据到 TiDB 的问题处理”一节。
 
 #### 只迁移数据源增量数据到 TiDB 时问题处理
 
