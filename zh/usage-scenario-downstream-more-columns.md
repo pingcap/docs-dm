@@ -49,7 +49,6 @@ CREATE TABLE `messages` (
   `id` int(11) NOT NULL,
   `message` varchar(255) DEFAULT NULL,
   `annotation` varchar(255) DEFAULT NULL,
-  ``
   PRIMARY KEY (`id`)
 )
 ```
