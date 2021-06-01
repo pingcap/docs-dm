@@ -30,7 +30,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/shard-merge-best-practices/']
 
 - 分片键：通常来讲，相同的分片键始终会划分到同一张分表之中，因此分片键不会产生数据冲突。
 - 自增主键：每个分表的自增主键会单独计数，因此会出现范围重叠的情况，这需要参照下一节[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)来解决。
-- 其他主键或唯一索引：需要根据业务逻辑判断。如果出现数据冲突，也可参照下一节[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)来解决。
+- 其他主键或唯一索引：需要根据业务逻辑判断。如果出现数据冲突，也可参照下一节[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)预先在下游创建表结构。
 
 ## 自增主键冲突处理
 
