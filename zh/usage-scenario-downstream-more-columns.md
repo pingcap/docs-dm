@@ -55,17 +55,118 @@ CREATE TABLE `messages` (
 
 ### 创建数据迁移任务
 
-要创建数据迁移任务，首先需要进行数据迁移的任务配置，可参考以下场景的任务配置：
+1. 创建任务配置文件 `task.yaml`，配置增量同步模式，以及每个数据源的同步起点。完整的任务配置文件示例如下：
 
-- [多数据源汇总迁移到 TiDB](usage-scenario-simple-migration.md#迁移任务配置)
-- [分表合并迁移到 TiDB](usage-scenario-shard-merge.md#迁移任务配置)
-- [只迁移数据源增量数据到 TiDB](usage-scenario-incremental-migration.md#迁移任务配置)
+   {{< copyable "yaml" >}}
 
-如果该迁移任务只包含全量数据迁移，可以正常地进行数据同步，无需其他处理；但是如果包含增量数据复制阶段，那么还需手动在 DM 中设置用于解析 MySQL binlog 的表结构，具体的操作可以参考下面“只迁移数据源增量数据到 TiDB 的问题处理”一节。
+   ```yaml
+   name: task-test   # 任务名称，需要全局唯一
+   task-mode: all    # 进行全量数据迁移 + 增量数据迁移
 
-#### 只迁移数据源增量数据到 TiDB 时问题处理
+   ## 配置下游 TiDB 数据库实例访问信息
+   target-database:       # 下游数据库实例配置
+     host: "127.0.0.1"
+     port: 4000
+     user: "root"
+     password: ""         # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
 
-如果只迁移数据源增量数据到 TiDB，且下游 TiDB 比数据源多列，那么在你运行对应的数据迁移任务后，通过 `query-status` 可看到类似如下数据迁移错误：
+   ##  使用黑白名单配置需要同步的表
+   block-allow-list:   # 数据源数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+     bw-rule-1:        # 黑白名单配置项 ID
+       do-dbs: ["log"] # 迁移哪些库
+
+   ## 配置数据源
+   mysql-instances:
+     - source-id: "mysql-01"         # 数据源对象 ID，可以从数据源配置中获取
+       block-allow-list: "bw-rule-1" # 引入上面黑白名单配置
+       syncer-config-name: "global"  # 引用上面的 syncers 增量数据配置
+       meta:                         # `task-mode` 为 `incremental` 且下游数据库的 `checkpoint` 不存在时 binlog 迁移开始的位置; 如果 `checkpoint` 存在，以 `checkpoint` 为准
+         binlog-name: "mysql-bin.000001"
+         binlog-pos: 2022
+         binlog-gtid: "09bec856-ba95-11ea-850a-58f2b4af5188:1-9"
+   ```
+
+2. 使用 `start-task` 命令创建同步任务：
+
+   {{< copyable "shell-regular" >}}
+
+   ```bash
+   tiup dmctl --master-addr <master-addr> start-task task.yaml
+   ```
+
+   ```
+   {
+       "result": true,
+       "msg": "",
+       "sources": [
+           {
+               "result": true,
+               "msg": "",
+               "source": "mysql-01",
+               "worker": "127.0.0.1:8262"
+           }
+       ]
+   }
+   ```
+
+3. 使用 `query-status` 查看同步任务，确认无报错信息：
+
+   {{< copyable "shell-regular" >}}
+
+   ```bash
+   tiup dmctl --master-addr <master-addr> query-status test
+   ```
+
+   ```
+   {
+       "result": true,
+       "msg": "",
+       "sources": [
+           {
+               "result": true,
+               "msg": "",
+               "sourceStatus": {
+                   "source": "mysql-01",
+                   "worker": "127.0.0.1:8262",
+                   "result": null,
+                   "relayStatus": null
+               },
+               "subTaskStatus": [
+                   {
+                       "name": "task-test",
+                       "stage": "Running",
+                       "unit": "Sync",
+                       "result": null,
+                       "unresolvedDDLLockID": "",
+                       "sync": {
+                           "totalEvents": "0",
+                           "totalTps": "0",
+                           "recentTps": "0",
+                           "masterBinlog": "(mysql-bin.000001, 2022)",
+                           "masterBinlogGtid": "09bec856-ba95-11ea-850a-58f2b4af5188:1-9",
+                           "syncerBinlog": "(mysql-bin.000001, 2022)",
+                           "syncerBinlogGtid": "",
+                           "blockingDDLs": [
+                           ],
+                           "unresolvedGroups": [
+                           ],
+                           "synced": true,
+                           "binlogType": "remote"
+                       }
+                   }
+               ]
+           }
+       ]
+   }
+   ```
+
+## 只迁移数据源增量数据到 TiDB ，并且下游 TiDB 表结构有更多列的场景问题处理
+
+如果该迁移任务包含全量数据迁移，迁移任务会正常的运行；但是如果你使用其他方式进行了全量迁移，只是用 dm 进行增量数据复制，那么还需手动在 DM 中设置用于解析 MySQL binlog 的表结构，具体的操作可以参考下文。
+
+创建数据迁移任务，可参考以下场景指导 [只迁移数据源增量数据到 TiDB](usage-scenario-incremental-migration.md)
+
+创建任务后，通过 `query-status` 可看到类似如下数据迁移错误：
 
 ```
 "errors": [
