@@ -5,18 +5,18 @@ aliases: ['/docs-cn/tidb-data-migration/dev/overview/','/docs-cn/tools/dm/overvi
 
 # Data Migration 简介
 
-[TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据迁移任务管理工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的数据迁移。DM 工具旨在降低数据迁移的运维成本。 当你使用 DM 进行数据迁移的时候，需要执行下面的操作
+[TiDB Data Migration](https://github.com/pingcap/dm) (DM) 是一体化的数据迁移任务管理工具，支持从与 MySQL 协议兼容的数据库（MySQL、MariaDB、Aurora MySQL）到 TiDB 的数据迁移。DM 工具旨在降低数据迁移的运维成本。使用 DM 进行数据迁移的时候，需要执行以下操作：
 
 - 部署 DM 集群
 - 创建上游数据源（source）对象，保存数据源访问信息
 - 创建（多个）数据迁移任务从数据源迁移数据到 TiDB
 
-数据迁移任务包含全量数据迁移、增量数据迁移两个阶段：
+数据迁移任务包含全量数据迁移、增量数据复制两个阶段：
 
 - 全量数据迁移：从数据源迁移对应表的表结构到 TiDB，然后读取存量数据写入到 TiDB 集群；
-- 增量数据迁移：全量数据迁移完成后，从数据源读取对应的表变更然后写入到 TiDB 集群。
+- 增量数据复制：全量数据迁移完成后，从数据源读取对应的表变更然后写入到 TiDB 集群。
 
-下面介绍 DM 所具备的功能。
+下文介绍 DM 所具备的功能。
 
 ## 基本功能
 
