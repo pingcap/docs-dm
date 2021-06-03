@@ -162,9 +162,9 @@ CREATE TABLE `messages` (
 
 ## 只迁移数据源增量数据到 TiDB ，并且下游 TiDB 表结构有更多列的场景问题处理
 
-如果该迁移任务包含全量数据迁移，迁移任务会正常的运行；但是如果你使用其他方式进行了全量迁移，只是用 dm 进行增量数据复制，那么还需手动在 DM 中设置用于解析 MySQL binlog 的表结构，具体的操作可以参考下文。
+如果该迁移任务包含全量数据迁移，迁移任务可以正常运行；但是如果你使用其他方式进行了全量迁移，只是用 DM 进行增量数据复制，可以参考[只迁移数据源增量数据到 TiDB](usage-scenario-incremental-migration.md#)创建数据迁移任务，同时还需手动在 DM 中设置用于解析 MySQL binlog 的表结构。
 
-创建数据迁移任务，可参考以下场景指导 [只迁移数据源增量数据到 TiDB](usage-scenario-incremental-migration.md)。创建任务后，通过 `query-status` 可看到类似如下数据迁移错误：
+否则，创建任务后，运行 `query-status` 会返回类似如下数据迁移错误：
 
 ```
 "errors": [
