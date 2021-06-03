@@ -68,7 +68,7 @@ Your Pull Requests can only be merged after you sign the [Contributor License Ag
 ### Step 2: Clone the forked repository to local storage
 
 ```
-cd $working_dir # Comes to the directory that you want put the fork in, for example, "cd ~/Documents/GitHub"
+cd $working_dir # Comes to the directory that you want to put the fork in, for example, "cd ~/Documents/GitHub"
 git clone git@github.com:$user/docs-dm.git # Replace "$user" with your GitHub ID
 
 cd $working_dir/docs-dm
