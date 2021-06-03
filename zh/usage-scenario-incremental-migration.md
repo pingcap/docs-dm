@@ -30,7 +30,7 @@ title: Data Migration 增量数据迁移场景
 
 你可以通过下面的方法获得对应数据源开启迁移的 binlog 位置点：
 
-- 使用 Dumplings/Mydumper 进行全量数据导出，然后使用其他工具，如 TiDB Lightning，进行全量数据导入，则可以通过导出数据的 [metadata 文件](https://docs.pingcap.com/zh/tidb/stable/dumpling-overview#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F)获取同步位置；
+- 使用 Dumpling/Mydumper 进行全量数据导出，然后使用其他工具，如 TiDB Lightning，进行全量数据导入，则可以通过导出数据的 [metadata 文件](https://docs.pingcap.com/zh/tidb/stable/dumpling-overview#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F)获取同步位置；
 
   ```file
   Started dump at: 2020-11-10 10:40:19
@@ -92,13 +92,13 @@ CREATE TABLE `messages` (
      bw-rule-1:        # 黑白名单配置项 ID
        do-dbs: ["log"] # 迁移哪些库
 
-   ## 【可选配置】如果增量数据迁移需要重复迁移已经在全量数据迁移中完成迁移的数据，则需要开启 safe mode 避免增量数据迁移报错。
-   ##  该场景多见于，全量数据迁移的数据不属于的同一个数据源的一致性快照, 随后从一个早于全量迁移数据之前的位置开始同步增量数据。
+   ## 【可选配置】如果增量数据迁移需要重复迁移已经在全量数据迁移中完成迁移的数据，则需要开启 safe mode 避免增量数据迁移报错
+   ##  该场景多见于，全量迁移的数据不属于数据源的一个一致性快照，随后从一个早于全量迁移数据之前的位置开始同步增量数据
    syncers:            # sync 处理单元的运行配置参数
      global:           # 配置名称
        safe-mode: true # 设置为 true，则将来自数据源的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。在启动或恢复增量复制任务的前 5 分钟内 TiDB DM 会自动启动 safe mode
 
-   # 配置数据源
+   ## 配置数据源
    mysql-instances:
      - source-id: "mysql-01"         # 数据源对象 ID，可以从数据源配置中获取
        block-allow-list: "bw-rule-1" # 引入上面黑白名单配置

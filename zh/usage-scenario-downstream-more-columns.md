@@ -57,15 +57,15 @@ CREATE TABLE `messages` (
 
 要创建数据迁移任务，首先需要进行数据迁移的任务配置，可参考以下场景的任务配置：
 
-- [多数据源汇总迁移到 TiDB](usage-scenario-simple-migration.md)
-- [分表合并迁移到 TiDB](usage-scenario-shard-merge.md)
-- [只迁移数据源增量数据到 TiDB](usage-scenario-incremental-migration.md)
+- [多数据源汇总迁移到 TiDB](usage-scenario-simple-migration.md#迁移任务配置)
+- [分表合并迁移到 TiDB](usage-scenario-shard-merge.md#迁移任务配置)
+- [只迁移数据源增量数据到 TiDB](usage-scenario-incremental-migration.md#迁移任务配置)
 
 如果该迁移任务只包含全量数据迁移，可以正常地进行数据同步，无需其他处理；但是如果包含增量数据复制阶段，那么还需手动在 DM 中设置用于解析 MySQL binlog 的表结构，具体的操作可以参考下面“只迁移数据源增量数据到 TiDB 的问题处理”一节。
 
 #### 只迁移数据源增量数据到 TiDB 时问题处理
 
-如果只迁移数据源增量数据到 TiDB，下游 TiDB 比数据源多列，那么在你运行对应的数据迁移任务后，通过 `query-status` 可看到类似如下数据迁移错误：
+如果只迁移数据源增量数据到 TiDB，且下游 TiDB 比数据源多列，那么在你运行对应的数据迁移任务后，通过 `query-status` 可看到类似如下数据迁移错误：
 
 ```
 "errors": [
