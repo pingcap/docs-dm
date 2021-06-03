@@ -50,7 +50,7 @@ DM 支持对源数据的分库分表进行合并迁移，但有一些使用限�
 
 在使用 DM 工具之前，需了解以下限制：
 
-+ 数据库版本
++ 数据库版本要求
 
     - MySQL 版本 > 5.5
     - MariaDB 版本 >= 10.1.2
@@ -63,7 +63,7 @@ DM 支持对源数据的分库分表进行合并迁移，但有一些使用限�
     >
     > 支持从 MySQL v8.0 迁移数据是 DM v2.0 的实验特性，不建议在生产环境下使用。
 
-+ DDL 语法兼容性
++ DDL 语法兼容性要求
 
     - 目前，TiDB 部分兼容 MySQL 支持的 DDL 语句。因为 DM 使用 TiDB parser 来解析处理 DDL 语句，所以目前仅支持 TiDB parser 支持的 DDL 语法。详见 [TiDB DDL 语法支持](https://pingcap.com/docs-cn/dev/reference/mysql-compatibility/#ddl)。
 
@@ -74,6 +74,6 @@ DM 支持对源数据的分库分表进行合并迁移，但有一些使用限�
     - 如果业务分库分表之间存在数据冲突，可以参考[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)来解决；否则不推荐使用 DM 进行迁移，如果进行迁移则有冲突的数据会相互覆盖造成数据丢失。
     - 分库分表 DDL 同步限制，参见[悲观模式下分库分表合并迁移使用限制](feature-shard-merge-pessimistic.md#使用限制)以及[乐观模式下分库分表合并迁移使用限制](feature-shard-merge-optimistic.md#使用限制)。
 
-+ 同步的 MySQL 实例
++ 同步的 MySQL 实例切换
 
     - 当 DM-worker 通过虚拟 IP（VIP）连接到 MySQL 且要切换 VIP 指向的 MySQL 实例时，DM 内部不同的 connection 可能会同时连接到切换前后不同的 MySQL 实例，造成 DM 拉取的 binlog 与从上游获取到的其他状态不一致，从而导致难以预期的异常行为甚至数据损坏。如需切换 VIP 指向的 MySQL 实例，请参考[虚拟 IP 环境下的上游主从切换](usage-scenario-master-slave-switch.md#虚拟-ip-环境下切换-dm-worker-与-mysql-实例的连接)对 DM 手动执行变更。
