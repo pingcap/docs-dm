@@ -1,5 +1,5 @@
 ---
-title: TiDB Data Migration 快速上手指南
+title: TiDB Data Migration 快速上手试用
 summary: 了解如何快速上手部署试用 TiDB Data Migration 工具。
 aliases: ['/docs-cn/stable/how-to/get-started/data-migration/']
 ---
@@ -7,6 +7,12 @@ aliases: ['/docs-cn/stable/how-to/get-started/data-migration/']
 # TiDB Data Migration 快速上手指南
 
 本文介绍如何快速体验使用数据迁移工具 [TiDB Data Migration](https://github.com/pingcap/dm) (DM) 从 MySQL 迁移数据到 TiDB。
+
+如需在生产环境中部署 DM，请参考以下文档：
+
+1. [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)
+2. [创建数据源对象](quick-start-create-source.md)
+3. [创建数据迁移任务](quick-create-migration-task.md)
 
 ## 使用样例
 
