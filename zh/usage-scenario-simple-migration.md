@@ -1,11 +1,6 @@
 ---
-<<<<<<< HEAD
-title: Data Migration 分库汇总迁移
-aliases: ['/zh/tidb-data-migration/v2.0/usage-scenario-simple-replication']
-=======
 title: Data Migration 多数据源汇总迁移到 TiDB
 aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/','/zh/tidb-data-migration/dev/usage-scenario-simple-replication']
->>>>>>> ab54029 (Update quick start (#687))
 ---
 
 # Data Migration 多数据源汇总迁移到 TiDB
