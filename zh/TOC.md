@@ -20,11 +20,14 @@
   + [DM 架构](dm-arch.md)
   + [性能数据](benchmark-v2.0-ga.md)
 + 快速上手
-  - [快速上手](quick-start-with-dm.md)
-  - [数据迁移任务配置向导](task-configuration-guide.md)
-  - [分库汇总迁移配置示例](usage-scenario-simple-migration.md)
-  - [增量数据实时同步配置示例](usage-scenario-incremental-migration.md)
-  - [分库分表合并迁移配置示例](usage-scenario-shard-merge.md)
+  - [快速上手试用](quick-start-with-dm.md)
+  - [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)
+  - [创建数据源对象](quick-start-create-source.md)
+  + [创建数据迁移任务](quick-create-migration-task.md)
+     - [多数据源汇总迁移到 TiDB](usage-scenario-simple-migration.md)
+     - [分表合并迁移到 TiDB](usage-scenario-shard-merge.md)
+     - [只迁移数据源增量数据到 TiDB](usage-scenario-incremental-migration.md)
+     - [TiDB 表结构存在更多列场景的数据迁移](usage-scenario-downstream-more-columns.md)
 + 部署使用
   - [软硬件要求](hardware-and-software-requirements.md)
   + 部署 DM 集群
