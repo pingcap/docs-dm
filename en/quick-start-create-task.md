@@ -99,7 +99,7 @@ For safety reasons, it is recommended to configure and use encrypted passwords. 
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl --encrypt "123456"
+./bin/dmctl encrypt "123456"
 ```
 
 ```
@@ -197,7 +197,7 @@ Now, suppose that you need to migrate these sharded tables to the `db_target.t_t
     {{< copyable "shell-regular" >}}
 
     ```bash
-    ./bin/dmctl -master-addr 127.0.0.1:8261 start-task conf/task.yaml
+    ./bin/dmctl --master-addr 127.0.0.1:8261 start-task conf/task.yaml
     ```
 
     ```
