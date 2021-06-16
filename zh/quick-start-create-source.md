@@ -22,7 +22,7 @@ summary: 了解如何为 DM 创建数据源对象。
     {{< copyable "shell-regular" >}}
 
     ```bash
-    tiup dmctl -encrypt 'abc!@#123'
+    tiup dmctl encrypt 'abc!@#123'
     ```
 
     ```

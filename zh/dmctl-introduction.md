@@ -23,7 +23,7 @@ dmctl 是用来运维 DM 集群的命令行工具，支持交互模式和命令�
 {{< copyable "shell-regular" >}}
 
 ```bash
-./dmctl -master-addr 172.16.30.14:8261
+./dmctl --master-addr 172.16.30.14:8261
 ```
 
 ```
@@ -75,14 +75,13 @@ Use "dmctl [command] --help" for more information about a command.
 > **注意：**
 >
 > + 一条 dmctl 命令只能跟一个任务操作
-> + 任务操作只能放在 dmctl 命令的最后
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-./dmctl -master-addr 172.16.30.14:8261 start-task task.yaml
-./dmctl -master-addr 172.16.30.14:8261 stop-task task
-./dmctl -master-addr 172.16.30.14:8261 query-status
+./dmctl --master-addr 172.16.30.14:8261 start-task task.yaml
+./dmctl --master-addr 172.16.30.14:8261 stop-task task
+./dmctl --master-addr 172.16.30.14:8261 query-status
 ```
 
 ```

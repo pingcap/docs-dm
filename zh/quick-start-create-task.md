@@ -95,7 +95,7 @@ mv tidb-latest-linux-amd64/bin/tidb-server ./
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl --encrypt "123456"
+./bin/dmctl encrypt "123456"
 ```
 
 ```
@@ -198,7 +198,7 @@ routes:
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl -master-addr 127.0.0.1:8261 start-task conf/task.yaml
+./bin/dmctl --master-addr 127.0.0.1:8261 start-task conf/task.yaml
 ```
 
 结果如下：
