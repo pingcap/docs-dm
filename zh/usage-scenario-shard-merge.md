@@ -7,11 +7,11 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
 本文介绍如何在分库分表合并场景中使用 Data Migration (DM)。
 
-下面介绍了一个简单的场景，两个上游 MySQL 实例的分库和分表数据需要迁移至下游 TiDB 集群。更多详情请参阅 [分表合并数据迁移最佳实践](shard-merge-best-practices.md)。
+下面介绍了一个简单的场景，两个数据源 MySQL 实例的分库和分表数据需要迁移至下游 TiDB 集群。更多详情请参阅 [分表合并数据迁移最佳实践](shard-merge-best-practices.md)。
 
-## 上游实例
+## 数据源实例
 
-假设上游库结构如下：
+假设数据源结构如下：
 
 - 实例 1
 
@@ -149,12 +149,12 @@ CREATE TABLE `sale_01` (
     ```yaml
     filters:
       ...
-      sale-filter-rule:
+      sale-filter-rule:     # 过滤掉 store_* 库下面任何表的任何删除操作
         schema-pattern: "store_*"
         table-pattern: "sale_*"
         events: ["truncate table", "drop table", "delete"]
         action: Ignore
-      store-filter-rule:
+      store-filter-rule:   # 过滤掉删除 store_* 库的操作
         schema-pattern: "store_*"
         events: ["drop database"]
         action: Ignore
@@ -168,7 +168,7 @@ CREATE TABLE `sale_01` (
 
 ```yaml
 name: "shard_merge"
-task-mode: all
+task-mode: all                                   # 进行全量数据迁移 + 增量数据迁移
 meta-schema: "dm_meta"
 ignore-checking-items: ["auto_increment_ID"]
 
@@ -180,22 +180,15 @@ target-database:
 
 mysql-instances:
   -
-    source-id: "instance-1"
-    route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
-    filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"
-    mydumper-config-name: "global"
-    loader-config-name: "global"
-    syncer-config-name: "global"
-
+    source-id: "instance-1"        # 数据源对象 ID，可以从数据源配置中获取
+    route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"] # 应用于该数据源的 table route 规则
+    filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"] # 应用于该数据源的 binlog event filter 规则
+    block-allow-list:  "log-bak-ignored" # 应用于该数据源的 Block & Allow Lists 规则
   -
     source-id: "instance-2"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
     block-allow-list:  "log-bak-ignored"
-    mydumper-config-name: "global"
-    loader-config-name: "global"
-    syncer-config-name: "global"
 
 # 所有实例共享的其他通用配置
 
@@ -228,20 +221,4 @@ block-allow-list:
     ignore-tables:
     - db-name: "user"
       tbl-name: "log_bak"
-
-mydumpers:
-  global:
-    threads: 4
-    chunk-filesize: 64
-
-loaders:
-  global:
-    pool-size: 16
-    dir: "./dumped_data"
-
-syncers:
-  global:
-    worker-count: 16
-    batch: 100
-    max-retry: 100
 ```
