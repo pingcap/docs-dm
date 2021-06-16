@@ -251,7 +251,7 @@ from:
     {{< copyable "shell-regular" >}}
 
     ```bash
-    ./bin/dmctl -master-addr 127.0.0.1:8261 start-task testdm-task.yaml
+    ./bin/dmctl --master-addr 127.0.0.1:8261 start-task testdm-task.yaml
     ```
 
     结果如下：
@@ -280,7 +280,7 @@ from:
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl -master-addr 127.0.0.1:8261 query-status
+./bin/dmctl --master-addr 127.0.0.1:8261 query-status
 ```
 
 结果如下：
