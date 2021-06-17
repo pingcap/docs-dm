@@ -54,7 +54,7 @@ summary: 了解如何为 DM 的连接开启加密传输。
         {{< copyable "shell-regular" >}}
 
         ```bash
-        ./dmctl -master-addr=127.0.0.1:8261 --ssl-ca /path/to/ca.pem --ssl-cert /path/to/client-cert.pem --ssl-key /path/to/client-key.pem
+        ./dmctl --master-addr=127.0.0.1:8261 --ssl-ca /path/to/ca.pem --ssl-cert /path/to/client-cert.pem --ssl-key /path/to/client-key.pem
         ```
 
 ### 认证组件调用者身份

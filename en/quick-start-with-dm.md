@@ -241,7 +241,7 @@ After inserting the [sample data](#prepare-sample-data) into `MySQL-3306`, take 
     {{< copyable "shell-regular" >}}
 
     ```bash
-    ./bin/dmctl -master-addr 127.0.0.1:8261 start-task testdm-task.yaml
+    ./bin/dmctl --master-addr 127.0.0.1:8261 start-task testdm-task.yaml
     ```
 
     The following is an example of the returned results:
@@ -270,7 +270,7 @@ After the data migration task is created, you can use `dmtcl query-status` to ch
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl -master-addr 127.0.0.1:8261 query-status
+./bin/dmctl --master-addr 127.0.0.1:8261 query-status
 ```
 
 The following is an example of the returned results:
