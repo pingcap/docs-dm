@@ -110,7 +110,7 @@ syncers:
     worker-count: 16                 # The number of threads that replicate binlog events concurrently in the sync processing unit. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
     batch: 100                       # The number of SQL statements in a transaction batch that the sync processing unit replicates to the downstream database (100 by default).
     enable-ansi-quotes: true         # Enable this argument if `sql-mode: "ANSI_QUOTES"` is set in the `session`
-    safe-mode: false                 # If set to true, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. This ensures that DML statements can be imported repeatedly during data migration when there is any primary key or unique index in the table schema. TiDB DM automatically enables safe mode within the first 1 minutes(5 minutes eariler than or equal to v2.0.3) after starting or resuming migration tasks.
+    safe-mode: false                 # If set to true, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. This ensures that DML statements can be imported repeatedly during data migration when there is any primary key or unique index in the table schema. TiDB DM automatically enables safe mode within the first minute (in v2.0.3 and earlier versions, it is 5 minutes) after starting or resuming migration tasks.
 
 # ----------- Instance configuration -----------
 mysql-instances:
