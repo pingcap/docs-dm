@@ -23,7 +23,7 @@ Enter the interactive mode to interact with DM-master:
 {{< copyable "shell-regular" >}}
 
 ```bash
-./dmctl -master-addr 172.16.30.14:8261
+./dmctl --master-addr 172.16.30.14:8261
 ```
 
 ```
@@ -75,18 +75,14 @@ The command mode differs from the interactive mode in that you need to append th
 > **Note:**
 >
 > + A dmctl command must be followed by only one task operation.
-> + The task operation can be placed only at the end of the dmctl command.
 > + Starting from v2.0.4, the `-master-addr` parameter supports reading from environment variables (DM_MASTER_ADDR).
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-./dmctl -master-addr 172.16.30.14:8261 start-task task.yaml
-./dmctl -master-addr 172.16.30.14:8261 stop-task task
-./dmctl -master-addr 172.16.30.14:8261 query-status
-
-export DM_MASTER_ADD="172.16.30.14:8261"
-./dmctl query-status
+./dmctl --master-addr 172.16.30.14:8261 start-task task.yaml
+./dmctl --master-addr 172.16.30.14:8261 stop-task task
+./dmctl --master-addr 172.16.30.14:8261 query-status
 ```
 
 ```

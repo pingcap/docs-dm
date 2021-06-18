@@ -54,7 +54,7 @@ This section introduces how to enable encrypted data transmission between DM-mas
         {{< copyable "shell-regular" >}}
 
         ```bash
-        ./dmctl -master-addr=127.0.0.1:8261 --ssl-ca /path/to/ca.pem --ssl-cert /path/to/client-cert.pem --ssl-key /path/to/client-key.pem
+        ./dmctl --master-addr=127.0.0.1:8261 --ssl-ca /path/to/ca.pem --ssl-cert /path/to/client-cert.pem --ssl-key /path/to/client-key.pem
         ```
 
 ### Verify component caller's identity
