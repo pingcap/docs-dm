@@ -83,6 +83,9 @@ Use "dmctl [command] --help" for more information about a command.
 ./dmctl --master-addr 172.16.30.14:8261 start-task task.yaml
 ./dmctl --master-addr 172.16.30.14:8261 stop-task task
 ./dmctl --master-addr 172.16.30.14:8261 query-status
+
+export DM_MASTER_ADD="172.16.30.14:8261"
+./dmctl query-status
 ```
 
 ```
