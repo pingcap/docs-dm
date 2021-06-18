@@ -196,7 +196,7 @@ In DM v2.0, `handle-error` replaces `sql-skip`. You can use `handle-error` inste
 
 ## Why do `REPLACE` statements keep appearing in the downstream when DM is replicating?
 
-You need to check whether the [safe mode](glossary.md#safe-mode) is automatically enabled for the task. If the task is automatically resumed after an error, or if there is high availability scheduling, then the safe mode is enabled because it is within 5 minutes after the task is started or resumed.
+You need to check whether the [safe mode](glossary.md#safe-mode) is automatically enabled for the task. If the task is automatically resumed after an error, or if there is high availability scheduling, then the safe mode is enabled because it is within 1 minutes after the task is started or resumed.
 
 You can check the DM-worker log file and search for a line containing `change count`. If the `new count` in the line is not zero, the safe mode is enabled. To find out why it is enabled, check when it happens and if any errors are reported before.
 
