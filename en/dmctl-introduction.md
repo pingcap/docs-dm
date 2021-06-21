@@ -75,7 +75,7 @@ The command mode differs from the interactive mode in that you need to append th
 > **Note:**
 >
 > + A dmctl command must be followed by only one task operation.
-> + Starting from v2.0.4, the `-master-addr` parameter supports reading from environment variables (DM_MASTER_ADDR).
+> + Starting from v2.0.4, DM supports reading the `-master-addr` parameter from the environment variable `DM_MASTER_ADDR`.
 
 {{< copyable "shell-regular" >}}
 
