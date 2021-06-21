@@ -96,6 +96,7 @@
     - [2.0.0-rc.2](releases/2.0.0-rc.2.md)
     - [2.0.0-rc](releases/2.0.0-rc.md)
   + v1.0
+    - [1.0.7](releases/1.0.7.md)
     - [1.0.6](releases/1.0.6.md)
     - [1.0.5](releases/1.0.5.md)
     - [1.0.4](releases/1.0.4.md)
