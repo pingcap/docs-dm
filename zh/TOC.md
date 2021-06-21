@@ -63,6 +63,7 @@
 - [DM FAQ](faq.md)
 + 版本发布历史
   + v1.0
+    - [1.0.7](releases/1.0.7.md)
     - [1.0.6](releases/1.0.6.md)
     - [1.0.5](releases/1.0.5.md)
     - [1.0.4](releases/1.0.4.md)
