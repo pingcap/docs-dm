@@ -53,7 +53,7 @@ In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM prov
 
 Before using the DM tool, note the following restrictions:
 
-+ Database version requirements:
++ Database version requirements
 
     - MySQL version > 5.5
     - MariaDB version >= 10.1.2
