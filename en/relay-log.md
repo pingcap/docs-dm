@@ -8,14 +8,6 @@ aliases: ['/docs/tidb-data-migration/dev/relay-log/']
 
 The Data Migration (DM) relay log consists of several sets of numbered files containing events that describe database changes, and an index file that contains the names of all used relay log files.
 
-In DM versions earlier than v2.0.2 (not including v2.0.2), DM checks the configuration item `enable-relay` in the source configuration file when binding a DM-worker to an upstream data source. If `enable-relay` is set to `true`, DM enables the relay log feature for the data source.
-
-In DM v2.0.2 and later versions, the `start-relay` command is used to configure one or more DM-workers to migrate relay logs for the specified data source. The configuration item `enable-relay` in the source configuration file is no longer valid. If DM finds that `enable-relay` is set to `true` when [loading the data source configuration](manage-source.md#operate-data-source), it outputs the following message to guide you to use the `start-relay` command:
-
-```
-Please use `start-relay` to specify which workers should pull relay log of relay-enabled sources.
-```
-
 After DM-worker is started, it automatically migrates the upstream binlog to the local configuration directory (the default migration directory is `<deploy_dir>/relay_log` if DM is deployed using TiUP). When DM-worker is running, it migrates the upstream binlog to the local file in real time. The sync processing unit of DM-worker, reads the binlog events of the local relay log in real time, transforms these events to SQL statements, and then migrates these statements to the downstream database.
 
 This document introduces the directory structure and initial migration rules DM relay logs, and how to pause, resume, and purge relay logs.
@@ -93,6 +85,17 @@ The starting position of the relay log migration is determined by the following 
 
 ## Start and stop the relay log feature
 
+<SimpleTab>
+<div label="v2.0.2 and later versions">
+
+> **Note:**
+> 
+> Since DM v2.0.2, the configuration item `enable-relay` in the source configuration file is no longer valid. If DM finds that `enable-relay` is set to `true` when [loading the data source configuration](manage-source.md#operate-data-source), it outputs the following message:
+> 
+> ```
+> Please use `start-relay` to specify which workers should pull relay log of relay-enabled sources.
+> ```
+
 In DM v2.0.2 and later versions, you can use the command `start-relay` to start pulling relay logs and use `stop-relay` to stop the process. See the following examples:
 
 {{< copyable "" >}}
@@ -101,7 +104,7 @@ In DM v2.0.2 and later versions, you can use the command `start-relay` to start 
 » start-relay -s mysql-replica-01 worker1 worker2
 ```
 
-In the command `start-relay`, you can only specify free DM-workers or DM-workers that have been bound to the upstream data source in the parameter.
+In the command `start-relay`, you can configure one or more DM-workers to migrate relay logs for the specified data source, but the DM-workers specified in the parameter must be free or have been bound to the upstream data source.
 
 ```
 {
@@ -122,6 +125,17 @@ In the command `start-relay`, you can only specify free DM-workers or DM-workers
     "msg": ""
 }
 ```
+
+</div>
+
+<div label="earlier than v2.0.2">
+
+In DM versions earlier than v2.0.2 (not including v2.0.2), DM checks the configuration item `enable-relay` in the source configuration file when binding a DM-worker to an upstream data source. If `enable-relay` is set to `true`, DM enables the relay log feature for the data source.
+
+See [Upstream Database Configuration File](source-configuration-file.md) for how to set the configuration item `enable-relay`.
+
+</div>
+</SimpleTab>
 
 ## Query relay logs
 

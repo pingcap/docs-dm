@@ -110,12 +110,12 @@ target-database:       # 目标 TiDB 配置
 
     ```yaml
     mysql-instances:
-        - source-id: "mysql-replica-01"    # 从 source-id = mysql-replica-01 的数据源迁移数据
-          block-allow-list:  "bw-rule-1"   # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
-          filter-rules: ["filter-rule-1"]  # 过滤数据源特定操作的规则，可以配置多个过滤规则
-        - source-id: "mysql-replica-02"    # 从 source-id = mysql-replica-02 的数据源迁移数据
-          block-allow-list:  "bw-rule-2"   # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
-          filter-rules: ["filter-rule-2"]  # 过滤数据源特定操作的规则，可以配置多个过滤规则
+      - source-id: "mysql-replica-01"    # 从 source-id = mysql-replica-01 的数据源迁移数据
+        block-allow-list:  "bw-rule-1"   # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+        filter-rules: ["filter-rule-1"]  # 过滤数据源特定操作的规则，可以配置多个过滤规则
+      - source-id: "mysql-replica-02"    # 从 source-id = mysql-replica-02 的数据源迁移数据
+        block-allow-list:  "bw-rule-2"   # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+        filter-rules: ["filter-rule-2"]  # 过滤数据源特定操作的规则，可以配置多个过滤规则
     ```
 
 ## 配置需要数据源表到目标 TiDB 表的映射
@@ -142,13 +142,13 @@ target-database:       # 目标 TiDB 配置
 
     ```yaml
     mysql-instances:
-        - source-id: "mysql-replica-01"                     # 从 source-id = mysql-replica-01 的数据源迁移数据
-          block-allow-list:  "bw-rule-1"                    # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
-          filter-rules: ["filter-rule-1"]                   # 过滤数据源特定操作的规则，可以配置多个过滤规则
-          route-rules: ["route-rule-1", "route-rule-2"]     # 数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则
-        - source-id: "mysql-replica-02"                     # 从 source-id = mysql-replica-02 的数据源迁移数据
-          block-allow-list:  "bw-rule-2"                    # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
-          filter-rules: ["filter-rule-2"]                   # 过滤数据源特定操作的规则，可以配置多个过滤规则
+      - source-id: "mysql-replica-01"                     # 从 source-id = mysql-replica-01 的数据源迁移数据
+        block-allow-list:  "bw-rule-1"                    # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+        filter-rules: ["filter-rule-1"]                   # 过滤数据源特定操作的规则，可以配置多个过滤规则
+        route-rules: ["route-rule-1", "route-rule-2"]     # 数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则
+      - source-id: "mysql-replica-02"                     # 从 source-id = mysql-replica-02 的数据源迁移数据
+        block-allow-list:  "bw-rule-2"                    # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+        filter-rules: ["filter-rule-2"]                   # 过滤数据源特定操作的规则，可以配置多个过滤规则
     ```
 
 ## 配置是否进行分库分表合并
