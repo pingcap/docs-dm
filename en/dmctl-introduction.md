@@ -83,7 +83,7 @@ The command mode differs from the interactive mode in that you need to append th
 ./dmctl --master-addr 172.16.30.14:8261 stop-task task
 ./dmctl --master-addr 172.16.30.14:8261 query-status
 
-export DM_MASTER_ADD="172.16.30.14:8261"
+export DM_MASTER_ADDR="172.16.30.14:8261"
 ./dmctl query-status
 ```
 
