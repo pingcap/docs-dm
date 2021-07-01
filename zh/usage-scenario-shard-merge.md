@@ -78,7 +78,7 @@ CREATE TABLE `sale_01` (
 
 ## 迁移方案
 
-- 要满足迁移需求 #1，配置 [Table routing 规则](key-features.md#table-routing) 如下：
+- 要满足迁移需求 #1，配置 [table routing 规则](key-features.md#table-routing)如下：
 
     {{< copyable "" >}}
 
