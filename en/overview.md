@@ -8,7 +8,18 @@ aliases: ['/docs/dev/syncer-overview/','/docs/dev/reference/tools/syncer/','/tid
 
 # Data Migration Overview
 
-[TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data migration task management platform, which supports the full data migration and the incremental data replication from MySQL-compatible databases (such as MySQL, MariaDB, and Aurora MySQL) into TiDB. It can help to reduce the operation cost of data migration and simplify the troubleshooting process.
+[TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data migration task management platform, which supports the full data migration and the incremental data replication from MySQL-compatible databases (such as MySQL, MariaDB, and Aurora MySQL) into TiDB. It can help to reduce the operation cost of data migration and simplify the troubleshooting process. When using DM for data migration, you need to perform the following operations:
+
+- Deploy a DM Cluster
+- Create upstream data source and save data source access information
+- Create data migration tasks to migrate data from data sources to TiDB
+
+The data migration task includes two stages: full data migration and incremental data replication:
+
+- Full data migration: Migrate the table structure of the corresponding table from the data source to TiDB, and then read the data stored in the data source and write it to the TiDB cluster.
+- Incremental data replication: After the full data migration is completed, the corresponding table changes from the data source are read and then written to the TiDB cluster.
+
+The following describes the features of DM.
 
 ## Basic features
 
@@ -26,7 +37,7 @@ The [binlog event filtering](key-features.md#binlog-event-filter) feature means 
 
 ### Schema and table routing
 
-The [schema and table routing](key-features.md#table-routing) feature means that DM can migrate a certain table of the source database to the specified table in the downstream. For example, you can migrate the data from the table `test`.`sbtest1` in the source database to the table `test`.`sbtest2` in TiDB. This is also a core feature for merging and migrating sharded databases and tables.
+The [schema and table routing](key-features.md#table-routing) feature means that DM can migrate a certain table of the source database to the specified table in the downstream. For example, you can migrate the table structure and data from the table `test`.`sbtest1` in the source database to the table `test`.`sbtest2` in TiDB. This is also a core feature for merging and migrating sharded databases and tables.
 
 ## Advanced features
 
@@ -42,7 +53,7 @@ In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM prov
 
 Before using the DM tool, note the following restrictions:
 
-+ Database version
++ Database version requirements
 
     - MySQL version > 5.5
     - MariaDB version >= 10.1.2
@@ -64,12 +75,12 @@ Before using the DM tool, note the following restrictions:
 
     - DM reports an error when it encounters an incompatible DDL statement. To solve this error, you need to manually handle it using dmctl, either skipping this DDL statement or replacing it with a specified DDL statement(s). For details, see [Skip or replace abnormal SQL statements](faq.md#how-to-handle-incompatible-ddl-statements).
 
-+ Sharding
++ Sharding merge with conflicts
 
     - If conflict exists between sharded tables, solve the conflict by referring to [handling conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key). Otherwise, data migration is not supported. Conflicting data can cover each other and cause data loss.
 
     - For other sharding DDL migration restrictions, see [Sharding DDL usage restrictions in the pessimistic mode](feature-shard-merge-pessimistic.md#restrictions) and [Sharding DDL usage restrictions in the optimistic mode](feature-shard-merge-optimistic.md#restrictions).
 
-+ Switch of MySQL instances
++ Switch of MySQL instances for data sources
 
     When DM-worker connects the upstream MySQL instance via a virtual IP (VIP), if you switch the VIP connection to another MySQL instance, DM might connect to the new and old MySQL instances at the same time in different connections. In this situation, the binlog migrated to DM is not consistent with other upstream status that DM receives, causing unpredictable anomalies and even data damage. To make necessary changes to DM manually, see [Switch DM-worker connection via virtual IP](usage-scenario-master-slave-switch.md#switch-dm-worker-connection-via-virtual-ip).
