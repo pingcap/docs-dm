@@ -12,11 +12,11 @@ aliases: ['/docs/tidb-data-migration/dev/overview/']
 
 - Deploy a DM Cluster
 - Create upstream data source and save data source access information
-- Create (multiple) data migration tasks to migrate data from data sources to TiDB
+- Create data migration tasks to migrate data from data sources to TiDB
 
 The data migration task includes two stages: full data migration and incremental data replication:
 
-- Full data migration: migrate the table structure of the corresponding table from the data source to TiDB, and then read the the data stored in data source and write it to the TiDB cluster;
+- Full data migration: Migrate the table structure of the corresponding table from the data source to TiDB, and then read the data stored in the data source and write it to the TiDB cluster.
 - Incremental data replication: After the full data migration is completed, the corresponding table changes from the data source are read and then written to the TiDB cluster.
 
 The following describes the features of DM.
@@ -37,7 +37,7 @@ The [binlog event filtering](key-features.md#binlog-event-filter) feature means 
 
 ### Schema and table routing
 
-The [schema and table routing](key-features.md#table-routing) feature means that DM can migrate a certain table of the source database to the specified table in the downstream. For example, you can migrate the data and table structure from the table `test`.`sbtest1` in the source database to the table `test`.`sbtest2` in TiDB. This is also a core feature for merging and migrating sharded databases and tables.
+The [schema and table routing](key-features.md#table-routing) feature means that DM can migrate a certain table of the source database to the specified table in the downstream. For example, you can migrate the table structure and data from the table `test`.`sbtest1` in the source database to the table `test`.`sbtest2` in TiDB. This is also a core feature for merging and migrating sharded databases and tables.
 
 ## Advanced features
 
@@ -75,7 +75,7 @@ Before using the DM tool, note the following restrictions:
 
     - DM reports an error when it encounters an incompatible DDL statement. To solve this error, you need to manually handle it using dmctl, either skipping this DDL statement or replacing it with a specified DDL statement(s). For details, see [Skip or replace abnormal SQL statements](faq.md#how-to-handle-incompatible-ddl-statements).
 
-+ Sharding and conflict merging
++ Sharding merge with conflicts
 
     - If conflict exists between sharded tables, solve the conflict by referring to [handling conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key). Otherwise, data migration is not supported. Conflicting data can cover each other and cause data loss.
 
