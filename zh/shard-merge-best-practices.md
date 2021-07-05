@@ -115,7 +115,7 @@ CREATE TABLE `tbl_multi_pk` (
 
 3. 通过 `query-status` 验证数据迁移任务是否正常，在下游数据库中验证合表中是否已经存在了来自上游的数据。
 
-## 上游 RDS 对分库分表进行了封装
+## 上游 RDS 封装分库分表的处理
 
 上游数据源为 RDS 且使用了其分库分表功能的情况下，MySQL binlog 中的表名在 SQL client 连接时可能并不可见。例如在 UCloud 分布式数据库 [UDDB](https://www.ucloud.cn/site/product/uddb.html)中，其 binlog 表名可能会多出 `_0001` 的后缀。这需要根据 binlog 中的表名规律，而不是 SQL client 所见的表名，来配置 [table routing 规则](key-features.md#table-routing)。
 
