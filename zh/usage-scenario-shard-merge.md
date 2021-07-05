@@ -60,7 +60,7 @@ CREATE TABLE `information` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
 ```
 
-其中 `id` 列为主键，`uid` 列为唯一索引。`id` 列具有自增属性，多个分表范围重复会引发数据冲突。 `uid` 可以保证全局满足唯一索引，因此可以按照参考[去掉自增主键的主键属性](shard-merge-best-practices.md#去掉自增主键的主键属性)中介绍的操作绕过 `uid` 列。
+其中 `id` 列为主键，`uid` 列为唯一索引。`id` 列具有自增属性，多个分表范围重复会引发数据冲突。 `uid` 可以保证全局满足唯一索引，因此可以按照参考[去掉自增主键的主键属性](shard-merge-best-practices.md#去掉自增主键的主键属性)中介绍的操作绕过 `id` 列。
 
 `store_{01|02}`.`sale_{01|02}` 的表结构为
 
@@ -214,6 +214,10 @@ filters:
     schema-pattern: "store_*"
     table-pattern: "sale_*"
     events: ["truncate table", "drop table", "delete"]
+    action: Ignore
+  store-filter-rule:
+    schema-pattern: "store_*"
+    events: ["drop database"]
     action: Ignore
 
 block-allow-list:
