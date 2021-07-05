@@ -45,7 +45,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
 ## 分表数据冲突检查
 
-迁移需求 #1 和 #2 涉及合库合表，来自多张分表的数据可能引发主键或唯一索引的数据冲突。这需要我们检查这几组分表数据的业务特点，详情请见[跨分表数据在主键或唯一索引的冲突](shard-merge-best-practices.md#跨分表数据在主键或唯一索引的冲突)。在本示例中：
+迁移需求 #1 和 #2 涉及合库合表，来自多张分表的数据可能引发主键或唯一索引的数据冲突。这需要我们检查这几组分表数据的业务特点，详情请见[跨分表数据在主键或唯一索引冲突处理](shard-merge-best-practices.md#跨分表数据在主键或唯一索引冲突处理)。在本示例中：
 
 `user`.`information` 表结构为
 
