@@ -7,7 +7,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
 本文介绍如何在分库分表合并场景中使用 Data Migration (DM)。
 
-下面介绍了一个简单的场景，两个数据源 MySQL 实例的分库和分表数据需要迁移至下游 TiDB 集群。更多详情请参阅 [分表合并数据迁移最佳实践](shard-merge-best-practices.md)。
+下面介绍了一个简单的场景，两个数据源 MySQL 实例的分库和分表数据需要迁移至下游 TiDB 集群。更多详情请参阅[分表合并数据迁移最佳实践](shard-merge-best-practices.md)。
 
 ## 数据源实例
 
@@ -33,8 +33,8 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
 1. `user`.`information` 需要合并到下游 TiDB 中的 `user`.`information` 表。
 2. 实例中的 `store_{01|02}`.`sale_{01|02}` 表合并至下游 TiDB 中的 `store`.`sale` 表。
-3. 使用通配符 `user`.`log_*` 过滤掉两个实例的 `user`.`log_bak` 表。
-4. 过滤掉三个实例中 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作，并过滤该库的 `drop database` 操作。
+3. 同步 `user`，`store_{01|02}` 库，但不同步两个实例的 `user`.`log_bak` 表。
+4. 过滤掉两个实例中 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作，并过滤该库的 `drop database` 操作。
 
 预期迁移后下游库结构如下：
 
@@ -78,19 +78,7 @@ CREATE TABLE `sale_01` (
 
 ## 迁移方案
 
-- 要满足迁移需求 #1，配置 [table routing 规则](key-features.md#table-routing)如下：
-
-    {{< copyable "" >}}
-
-    ```yaml
-    routes:
-      ...
-      user-route-rule:
-        schema-pattern: "user"
-        target-schema: "user"
-    ```
-    
-    同时按照[去掉自增主键的主键属性](shard-merge-best-practices.md#去掉自增主键的主键属性)的要求，在下游手动建表。
+- 要满足迁移需求 #1，无需配置 [table routing 规则](key-features.md#table-routing)。按照[去掉自增主键的主键属性](shard-merge-best-practices.md#去掉自增主键的主键属性)的要求，在下游手动建表。
     
     {{< copyable "sql" >}}
 
@@ -137,6 +125,7 @@ CREATE TABLE `sale_01` (
     ```yaml
     block-allow-list:
       log-bak-ignored:
+        do-dbs: ["user", "store_*"]
         ignore-tables:
         - db-name: "user"
           tbl-name: "log_bak"
@@ -181,21 +170,18 @@ target-database:
 mysql-instances:
   -
     source-id: "instance-1"        # 数据源对象 ID，可以从数据源配置中获取
-    route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"] # 应用于该数据源的 table route 规则
-    filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"] # 应用于该数据源的 binlog event filter 规则
+    route-rules: ["store-route-rule", "sale-route-rule"] # 应用于该数据源的 table route 规则
+    filter-rules: ["store-filter-rule", "sale-filter-rule"] # 应用于该数据源的 binlog event filter 规则
     block-allow-list:  "log-bak-ignored" # 应用于该数据源的 Block & Allow Lists 规则
   -
     source-id: "instance-2"
-    route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
-    filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
+    route-rules: ["store-route-rule", "sale-route-rule"]
+    filter-rules: ["store-filter-rule", "sale-filter-rule"]
     block-allow-list:  "log-bak-ignored"
 
 # 所有实例共享的其他通用配置
 
 routes:
-  user-route-rule:
-    schema-pattern: "user"
-    target-schema: "user"
   store-route-rule:
     schema-pattern: "store_*"
     target-schema: "store"
@@ -206,10 +192,6 @@ routes:
     target-table:  "sale"
 
 filters:
-  user-filter-rule:
-    schema-pattern: "user"
-    events: ["truncate table", "drop table", "delete", "drop database"]
-    action: Ignore
   sale-filter-rule:
     schema-pattern: "store_*"
     table-pattern: "sale_*"
@@ -222,6 +204,7 @@ filters:
 
 block-allow-list:
   log-bak-ignored:
+    do-dbs: ["user", "store_*"]
     ignore-tables:
     - db-name: "user"
       tbl-name: "log_bak"
