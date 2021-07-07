@@ -116,7 +116,7 @@ log-level = "info"
 log-file = "dm-master.log"
 
 # DM-master 监听地址
-master-addr = ":8261"
+master-addr = "192.168.0.4:8261"
 
 # DM-master 节点的对等 URL
 peer-urls = "192.168.0.4:8291"
