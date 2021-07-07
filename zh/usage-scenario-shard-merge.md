@@ -7,7 +7,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
 本文介绍如何在分库分表合并场景中使用 Data Migration (DM)。
 
-下面介绍了一个简单的场景，三个数据源 MySQL 实例的分库和分表数据需要迁移至下游 TiDB 集群。更多详情请参阅 [分表合并数据迁移最佳实践](shard-merge-best-practices.md)。
+下面介绍了一个简单的场景，两个数据源 MySQL 实例的分库和分表数据需要迁移至下游 TiDB 集群。更多详情请参阅[分表合并数据迁移最佳实践](shard-merge-best-practices.md)。
 
 ## 数据源实例
 
@@ -17,7 +17,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
     | Schema | Tables |
     |:------|:------|
-    | user  | information, log_north, log_bak |
+    | user  | information, log_bak |
     | store_01 | sale_01, sale_02 |
     | store_02 | sale_01, sale_02 |
 
@@ -25,43 +25,83 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
     | Schema | Tables |
     |:------|:------|
-    | user  | information, log_east, log_bak |
-    | store_01 | sale_01, sale_02 |
-    | store_02 | sale_01, sale_02 |
-
-- 实例 3
-
-    | Schema | Tables |
-    |:------|:------|
-    | user  | information, log_south, log_bak |
+    | user  | information, log_bak |
     | store_01 | sale_01, sale_02 |
     | store_02 | sale_01, sale_02 |
 
 ## 迁移需求
 
-1. 同名表合并场景，比如将三个实例中的 `user`.`information` 表合并至下游 TiDB 中的 `user`.`information` 表。
-2. 不同名表合并场景，比如将三个实例中的 `user`.`log_{north|south|east}` 表合并至下游 TiDB 中的 `user`.`log_{north|south|east}` 表。
-3. 分片表合并场景，比如将三个实例中的 `store_{01|02}`.`sale_{01|02}` 表合并至下游 TiDB 中的 `store`.`sale` 表。
-4. 过滤删除操作场景，比如过滤掉三个实例中 `user`.`log_{north|south|east}` 表的所有删除操作。
-5. 过滤删除操作场景，比如过滤掉三个实例中 `user`.`information` 表的所有删除操作。
-6. 过滤删除操作场景，比如过滤掉三个实例中 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作。
-7. 使用通配符过滤特定表的场景，比如使用通配符 `user`.`log_*` 过滤掉三个实例的 `user`.`log_bak` 表。
-8. 主键冲突处理场景，假设 `store_{01|02}`.`sale_{01|02}` 表带有 bigint 型的自增主键，将其合并至 TiDB 时会引发冲突，可以使用相应的方案来避免冲突。
+1. `user`.`information` 需要合并到下游 TiDB 中的 `user`.`information` 表。
+2. 实例中的 `store_{01|02}`.`sale_{01|02}` 表合并至下游 TiDB 中的 `store`.`sale` 表。
+3. 同步 `user`，`store_{01|02}` 库，但不同步两个实例的 `user`.`log_bak` 表。
+4. 过滤掉两个实例中 `store_{01|02}`.`sale_{01|02}` 表的所有删除操作，并过滤该库的 `drop database` 操作。
 
-## 下游实例
-
-假设迁移后下游库结构如下：
+预期迁移后下游库结构如下：
 
 | Schema | Tables |
 |:------|:------|
-| user | information, log_north, log_east, log_south|
+| user | information |
 | store | sale |
+
+## 分表数据冲突检查
+
+迁移需求 #1 和 #2 涉及合库合表，来自多张分表的数据可能引发主键或唯一索引的数据冲突。这需要我们检查这几组分表数据的业务特点，详情请见[跨分表数据在主键或唯一索引冲突处理](shard-merge-best-practices.md#跨分表数据在主键或唯一索引冲突处理)。在本示例中：
+
+`user`.`information` 表结构为
+
+```sql
+CREATE TABLE `information` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `uid` bigint(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `data` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uid` (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+```
+
+其中 `id` 列为主键，`uid` 列为唯一索引。`id` 列具有自增属性，多个分表范围重复会引发数据冲突。 `uid` 可以保证全局满足唯一索引，因此可以按照参考[去掉自增主键的主键属性](shard-merge-best-practices.md#去掉自增主键的主键属性)中介绍的操作绕过 `id` 列。
+
+`store_{01|02}`.`sale_{01|02}` 的表结构为
+
+```sql
+CREATE TABLE `sale_01` (
+  `sid` bigint(20) NOT NULL,
+  `pid` bigint(20) NOT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`sid`),
+  KEY `pid` (`pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+```
+
+其中 `sid` 是分片键，可以保证同一个 `sid` 只会划分到一个分表中，因此不会引发数据冲突，无需进行额外操作。
 
 ## 迁移方案
 
-- 要满足迁移需求 #1 和 #2，不需要特别的配置；
+- 要满足迁移需求 #1，无需配置 [table routing 规则](key-features.md#table-routing)。按照[去掉自增主键的主键属性](shard-merge-best-practices.md#去掉自增主键的主键属性)的要求，在下游手动建表。
+    
+    {{< copyable "sql" >}}
 
-- 要满足迁移需求 #3，配置 [table routing 规则](key-features.md#table-routing) 如下：
+    ```sql
+    CREATE TABLE `information` (
+      `id` bigint(20) NOT NULL AUTO_INCREMENT,
+      `uid` bigint(20) DEFAULT NULL,
+      `name` varchar(255) DEFAULT NULL,
+      `data` varchar(255) DEFAULT NULL,
+      INDEX (`id`),
+      UNIQUE KEY `uid` (`uid`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+    ```
+    
+    并在配置文件中跳过前置检查
+    
+    {{< copyable "" >}}
+
+    ```yaml
+    ignore-checking-items: ["auto_increment_ID"]
+    ```
+
+- 要满足迁移需求 #2，配置 [table routing 规则](key-features.md#table-routing)如下：
 
     {{< copyable "" >}}
 
@@ -78,24 +118,20 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
         target-table:  "sale"
     ```
 
-- 要满足迁移需求 #4 和 #5，配置 [Binlog event filter 规则](key-features.md#binlog-event-filter) 如下：
+- 要满足迁移需求 #3，配置 [Block & Allow Lists](key-features.md#block--allow-table-lists) 如下：
 
     {{< copyable "" >}}
 
     ```yaml
-    filters:
-      ...
-      user-filter-rule:        # 过滤掉删除 user 库的操作，以及 user 库下面任何表的任何删除操作
-        schema-pattern: "user"
-        events: ["truncate table", "drop table", "delete", "drop database"]
-        action: Ignore
+    block-allow-list:
+      log-bak-ignored:
+        do-dbs: ["user", "store_*"]
+        ignore-tables:
+        - db-name: "user"
+          tbl-name: "log_bak"
     ```
 
-    > **注意：**
-    >
-    > 迁移需求 #4、#5 的操作意味着过滤掉所有对 `user` 库的删除操作，所以此处配置了库级别的过滤规则，`user` 库以后参与复制的表的所有删除操作也都会被过滤。
-
-- 要满足迁移需求 #6，配置 [Binlog event filter 规则](key-features.md#binlog-event-filter) 如下：
+- 要满足迁移需求 #4，配置 [Binlog event filter 规则](key-features.md#binlog-event-filter)如下：
 
     {{< copyable "" >}}
 
@@ -113,23 +149,9 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
         action: Ignore
     ```
 
-- 要满足迁移需求 #7，配置 [Block & Allow Lists](key-features.md#block--allow-table-lists) 如下：
-
-    {{< copyable "" >}}
-
-    ```yaml
-    block-allow-list:    # 通过黑白名单过滤掉 user.log_bak 表
-      log-bak-ignored:
-        ignore-tables:
-        - db-name: "user"
-          tbl-name: "log_bak"
-    ```
-
-- 要满足迁移需求 #8，首先参考[自增主键冲突处理](shard-merge-best-practices.md#自增主键冲突处理)来解决冲突，保证在迁移到下游时不会因为分表中有相同的主键值而使迁移出现异常。
-
 ## 迁移任务配置
 
-迁移任务的完整配置如下，更多详情请参阅 [数据迁移任务配置向导](task-configuration-guide.md)。
+迁移任务的完整配置如下，更多详情请参阅[数据迁移任务配置向导](task-configuration-guide.md)。
 
 {{< copyable "" >}}
 
@@ -148,27 +170,18 @@ target-database:
 mysql-instances:
   -
     source-id: "instance-1"        # 数据源对象 ID，可以从数据源配置中获取
-    route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"] # 应用于该数据源的 table route 规则
-    filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"] # 应用于该数据源的 binlog event filter 规则
+    route-rules: ["store-route-rule", "sale-route-rule"] # 应用于该数据源的 table route 规则
+    filter-rules: ["store-filter-rule", "sale-filter-rule"] # 应用于该数据源的 binlog event filter 规则
     block-allow-list:  "log-bak-ignored" # 应用于该数据源的 Block & Allow Lists 规则
   -
     source-id: "instance-2"
-    route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
-    filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"
-
-  -
-    source-id: "instance-3"
-    route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
-    filter-rules: ["user-filter-rule", "store-filter-rule", "sale-filter-rule"]
+    route-rules: ["store-route-rule", "sale-route-rule"]
+    filter-rules: ["store-filter-rule", "sale-filter-rule"]
     block-allow-list:  "log-bak-ignored"
 
 # 所有实例共享的其他通用配置
 
 routes:
-  user-route-rule:
-    schema-pattern: "user"
-    target-schema: "user"
   store-route-rule:
     schema-pattern: "store_*"
     target-schema: "store"
@@ -179,10 +192,6 @@ routes:
     target-table:  "sale"
 
 filters:
-  user-filter-rule:
-    schema-pattern: "user"
-    events: ["truncate table", "drop table", "delete", "drop database"]
-    action: Ignore
   sale-filter-rule:
     schema-pattern: "store_*"
     table-pattern: "sale_*"
@@ -195,6 +204,7 @@ filters:
 
 block-allow-list:
   log-bak-ignored:
+    do-dbs: ["user", "store_*"]
     ignore-tables:
     - db-name: "user"
       tbl-name: "log_bak"
