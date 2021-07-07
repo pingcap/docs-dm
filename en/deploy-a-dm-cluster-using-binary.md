@@ -117,7 +117,7 @@ The following is the configuration file of DM-master. It is recommended that you
       log-file = "dm-master.log"
 
       # The listening address of DM-master.
-      master-addr = ":8261"
+      master-addr = "192.168.0.4:8261"
 
       # The peer URLs of DM-master.
       peer-urls = "192.168.0.4:8291"
