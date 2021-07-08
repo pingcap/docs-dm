@@ -334,9 +334,9 @@ DM-master 会在启动时将 etcd 信息记录在当前目录。如果重启后�
 
 ## 使用 dmctl 执行命令时无法连接 DM-master
 
-在执行 `dmctl` 相关命令，发现连接 `dm-master` 失败（即使指定了 `--master-addr`），报错内容可能是“RawCause: context deadline exceeded, Workaround: please check your network connection.”。但是，检查网络却发现没有问题（比如，telnet x.x.x.x xx 正常）  
+在使用 dmctl 执行相关命令时，发现连接 DM-master 失败（即使已在命令中指定 `--master-addr` 的参数值），报错内容类似 `RawCause: context deadline exceeded, Workaround: please check your network connection.`，但使用 `telnet <master-addr>` 之类的命令检查网络却没有发现异常。  
 
-这种情况可以检查下环境变量 `https_proxy` (注意，这里是 **https** )。如果配置了该环境变量， `dmctl` 会自动去连接 `https_proxy` ，而 `https_proxy` 主机没有相应的 `proxy` 转发服务，导致连接失败。  
+这种情况可以检查下环境变量 `https_proxy`（注意，这里是 **https** ）。如果配置了该环境变量，dmctl 会自动去连接 `https_proxy`  指定的主机及端口，而如果该主机没有相应的 `proxy` 转发服务，则会导致连接失败。  
 
 解决方案：确认 `https_proxy` 是否必须要配置，如果不是必须的，取消该设置即可。如果环境必须，那么在原命令前加环境变量设置 `https_proxy="" ./dmctl --master-addr "x.x.x.x:8261" ` 即可。
 
