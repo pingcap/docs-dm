@@ -74,6 +74,12 @@ filters:                                        # 上游数据库实例匹配的
     events: ["all dml"]
     action: Do
 
+expression-filter:
+  even_c:                            # 过滤 `expr_filter`.`tbl` 的 c 为偶数的插入
+    schema: "expr_filter"
+    table: "tbl"
+    insert-value-expr: "c % 2 = 0"
+
 block-allow-list:                    # 定义数据源迁移表的过滤规则，可以定义多个规则。如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
   bw-rule-1:                         # 规则名称
     do-dbs: ["~^test.*", "user"]     # 迁移哪些库
@@ -119,6 +125,7 @@ mysql-instances:
     route-rules: ["route-rule-1", "route-rule-2"]  # 该上游数据库实例匹配的表到下游数据库的 table routing 规则名称
     filter-rules: ["filter-rule-1", "filter-rule-2"]                # 该上游数据库实例匹配的表的 binlog event filter 规则名称
     block-allow-list:  "bw-rule-1"                 # 该上游数据库实例匹配的表的 block-allow-list 过滤规则名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+    expression-filters: ["even_c"]
 
     mydumper-config-name: "global"          # mydumpers 配置的名称
     loader-config-name: "global"            # loaders 配置的名称
