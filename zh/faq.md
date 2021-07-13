@@ -174,3 +174,162 @@ if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to
 请检查是否符合 [safe mode 触发条件](glossary.md#safe-mode)。如果任务发生错误并自动恢复，会满足“启动或恢复任务的前 5 分钟“这一条件，因此启用 safe mode。
 
 可以检查 DM-worker 日志，在其中搜索包含 `change count` 的行，该行的 `new count` 非零时会启用 safe mode。检查 safe mode 启用时间以及启用前是否有报错，以定位启用原因。
+<<<<<<< HEAD
+=======
+
+## 使用 DM v2.0 同步数据时重启 DM 进程，出现全量数据导入失败错误
+
+在 DM v2.0.1 及更早版本中，如果全量导入操作未完成时发生重启，重启后的上游数据源与 DM worker 的绑定关系可能会发生变化。例如，可能出现 dump 单元的中间数据在 DM worker A 机器上，但却由 DM worker B 进行 load 单元的情况，进而导致操作失败。
+
+该情况有两种解决方案：
+
+- 如果数据量较小（TB 级以下）或任务有合库合表：清空下游数据库的已导入数据，同时清空导出数据目录，使用 dmctl 删除并 `start-task --remove-meta` 重建任务。后续尽量保证全量导出导入阶段 DM 没有冗余 worker 以及避免在该时段内重启或升级 DM 集群。
+- 如果数据量较大（数 TB 或更多）：清空下游数据库的已导入数据，将 lightning 部署到数据所在的 DM worker 节点，使用 [lightning local backend 模式](https://docs.pingcap.com/zh/tidb/dev/deploy-tidb-lightning) 导入 DM dump 单元导出的数据。全量导入完成后，修改任务的 `task-mode` 为 `incremental`，修改 `mysql-instance.meta.pos` 为 dump 单元导出数据 `metadata` 中记录的位置，启动一个增量任务。
+
+## 使用 DM 同步数据时重启 DM 进程，增量任务出现 `ERROR 1236 (HY000): The slave is connecting using CHANGE MASTER TO MASTER_AUTO_POSITION = 1, but the master has purged binary logs containing GTIDs that the slave requires.` 错误
+
+该错误表明全量迁移期间，dump 单元记录 metadata 中的 binlog 位置已经被上游清理。
+
+解决方案：出现该问题时只能清空下游数据库已同步数据，并在停止任务后加上 `--remove-meta` 参数重建任务。
+
+如要提前避免该问题，需要进行以下配置：
+
+1. 在 DM 全量迁移未完成时调大上游 MySQL 的 `expire_logs_days` 变量，保证全量进行结束时 metadata 中的 binlog 位置到当前时间的 binlog 都还没有被清理掉。如果数据量较大，应该使用 dumpling + lightning 的方式加快全量迁移速度。
+2. DM 任务开启 relay log 选项，保证 binlog 被清理后 DM 仍有 relay log 可读取。
+
+## 使用 TiUP v1.3.0, v1.3.1 部署 DM 集群，DM 集群的 grafana 监控报错显示 `failed to fetch dashboard`
+
+该问题为 TiUP 已知 bug，在 TiUP v1.3.2 中已进行修复。可采取以下任一方法解决：
+
+- 方法一：使用 `tiup update --self && tiup update dm` 升级 TiUP 到更新版本，随后先缩容再扩容集群中的 grafana 节点，重建 grafana 服务。
+- 方法二：
+    1. 备份 `deploy/grafana-$port/bin/public` 文件夹。
+    2. 下载 [TiUP DM 离线镜像包](https://download.pingcap.org/tidb-dm-v2.0.1-linux-amd64.tar.gz)，并进行解压，将其中的 grafana-v4.0.3-**.tar.gz 文件解压后，用解压出的 public/ 文件夹替换前面所描述的文件夹，运行 `tiup dm restart $cluster_name -R grafana` 重启 grafana 服务监控。
+
+## 在 DM v2.0 中，同时开启 relay 与 gtid 同步 MySQL 时，运行 `query-status` 发现 syncer checkpoint 中 GTID 不连续
+
+该问题为 DM 已知 bug，在完全满足以下两个条件时将会触发，DM 将在 v2.0.2 修复该问题：
+
+1. DM 配置的 source 同时设置了 `enable-relay` 与 `enable-gtid` 为 `true`
+2. DM 同步上游为 **MySQL 从库**，并且该从库通过 `show binlog events in '<newest-binlog>' limit 2` 查询出的 `previous_gtids` 区间不连续，例如：
+
+```
+mysql> show binlog events in 'mysql-bin.000005' limit 2;
++------------------+------+----------------+-----------+-------------+--------------------------------------------------------------------+
+| Log_name         | Pos  | Event_type     | Server_id | End_log_pos | Info                                                               |
++------------------+------+----------------+-----------+-------------+--------------------------------------------------------------------+
+| mysql-bin.000005 |    4 | Format_desc    |    123452 |         123 | Server ver: 5.7.32-35-log, Binlog ver: 4                           |
+| mysql-bin.000005 |  123 | Previous_gtids |    123452 |         194 | d3618e68-6052-11eb-a68b-0242ac110002:6-7                           |
++------------------+------+----------------+-----------+-------------+--------------------------------------------------------------------+
+```
+
+使用 dmctl 的 `query-status <task>` 指令查询任务信息，如果已经出现 `subTaskStatus.sync.syncerBinlogGtid` 不连续但 `subTaskStatus.sync.masterBinlogGtid` 连续的情况，例如下述例子：
+
+```
+query-status test
+{
+    ...
+    "sources": [
+        {
+            ...
+            "sourceStatus": {
+                "source": "mysql1",
+                ...
+                "relayStatus": {
+                    "masterBinlog": "(mysql-bin.000006, 744)",
+                    "masterBinlogGtid": "f8004e25-6067-11eb-9fa3-0242ac110003:1-50",
+                    ...
+                }
+            },
+            "subTaskStatus": [
+                {
+                    ...
+                    "sync": {
+                        ...
+                        "masterBinlog": "(mysql-bin.000006, 744)",
+                        "masterBinlogGtid": "f8004e25-6067-11eb-9fa3-0242ac110003:1-50",
+                        "syncerBinlog": "(mysql-bin|000001.000006, 738)",
+                        "syncerBinlogGtid": "f8004e25-6067-11eb-9fa3-0242ac110003:1-20:40-49",
+                        ...
+                        "synced": false,
+                        "binlogType": "local"
+                    }
+                }
+            ]
+        },
+        {
+            ...
+            "sourceStatus": {
+                "source": "mysql2",
+                ...
+                "relayStatus": {
+                    "masterBinlog": "(mysql-bin.000007, 1979)",
+                    "masterBinlogGtid": "ddb8974e-6064-11eb-8357-0242ac110002:1-25",
+                    ...
+                }
+            },
+            "subTaskStatus": [
+                {
+                    ...
+                    "sync": {
+                        "masterBinlog": "(mysql-bin.000007, 1979)",
+                        "masterBinlogGtid": "ddb8974e-6064-11eb-8357-0242ac110002:1-25",
+                        "syncerBinlog": "(mysql-bin|000001.000008, 1979)",
+                        "syncerBinlogGtid": "ddb8974e-6064-11eb-8357-0242ac110002:1-25",
+                        ...
+                        "synced": true,
+                        "binlogType": "local"
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
+
+其中 mysql1 的 `syncerBinlogGtid` 不连续，已有数据丢失需要按下述方案之一处理：
+
+- 如果全量导出任务 metadata 中的 position 到当前时间的上游数据库的 binlog 仍未被清理：
+    1. 停止当前任务并删除所有 GTID 不连续的 source
+    2. 设置所有 source 的 `enable-relay` 为 `false`
+    3. 针对 GTID 不连续的 source（上例 mysql1），在对应的任务配置文件 `task.yaml` 中，把 `task-mode` 修改为 `incremental` 并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出任务 metadata 的 binlog name，position 和 gtid 信息
+    4. 配置 `task.yaml` 中的 `syncers.safe-mode` 为 `true` 并重启任务
+    5. 待增量同步追上后，停止任务并在任务配置文件中设置 `safe-mode` 为 `false`
+    6. 再次重启任务
+- 如果上游数据库 binlog 已被清理但是本地 relay log 仍未被清理：
+    1. 停止当前任务
+    2. 针对 GTID 不连续的 source（上例 mysql1），在对应的任务配置文件 `task.yaml` 中，把 `task-mode` 修改为 `incremental` 并配置增量任务起始点 `mysql-instances.meta` 为各个全量导出任务 metadata 的 binlog name，position 和 gtid 信息
+    3. 修改其中的 GTID 信息的 `1-y` 为 `previous_gtids` 的前段值，例如，上述例子需要改为 `6-y`
+    4. 配置 `task.yaml` 中的 `syncers.safe-mode` 为 `true` 并重启任务
+    5. 待增量同步追上后，停止任务并在任务配置文件中设置 `safe-mode` 为 `false`
+    6. 再次重启任务
+    7. 重启 source 并关闭 gtid 或 relay
+- 如果上述条件均不满足或任务同步数据量较小：
+    1. 清空下游数据库中数据
+    2. 重启 source 并关闭 gtid 或 relay
+    3. 重建任务并通过 `start-task task.yaml --remove-meta` 重新同步
+
+上述处理方案中，针对正常同步的 source（如上例 mysql2），重设增量任务时起始点需设置 `mysql-instances.meta` 为 `subTaskStatus.sync` 的 `syncerBinlog` 与 `syncerBinlogGtid`。
+
+## 在 DM 2.0 中开启 heartbeat，虚拟 IP 环境下切换 DM-worker 与 MySQL 实例的连接，遇到 "heartbeat config is different from previous used: serverID not equal" 错误
+
+`heartbeat` 功能在 DM v2.0 已经默认关闭，如果用户在同步任务配置文件中开启会干扰高可用特性，在配置文件中关闭该项（通过设置 `enable-heartbeat: false`，然后更新任务配置）即可解决。DM 将会在后续版本强制关闭该功能。
+
+## DM-master 在重启后无法加入集群，报错信息为 "fail to start embed etcd, RawCause: member xxx has already been bootstrapped"
+
+DM-master 会在启动时将 etcd 信息记录在当前目录。如果重启后当前目录发生变化，会导致 DM 缺失 etcd 信息，从而启动失败。
+
+推荐使用 TiUP 运维 DM 避免这一问题。在需要使用二进制部署的场合，需要在 DM-master 配置文件中使用绝对路径配置 data-dir 项，或者注意运行命令的当前目录。
+
+## 使用 dmctl 执行命令时无法连接 DM-master
+
+在使用 dmctl 执行相关命令时，发现连接 DM-master 失败（即使已在命令中指定 `--master-addr` 的参数值），报错内容类似 `RawCause: context deadline exceeded, Workaround: please check your network connection.`，但使用 `telnet <master-addr>` 之类的命令检查网络却没有发现异常。  
+
+这种情况可以检查下环境变量 `https_proxy`（注意，这里是 **https** ）。如果配置了该环境变量，dmctl 会自动去连接 `https_proxy`  指定的主机及端口，而如果该主机没有相应的 `proxy` 转发服务，则会导致连接失败。  
+
+解决方案：确认 `https_proxy` 是否必须要配置，如果不是必须的，取消该设置即可。如果环境必须，那么在原命令前加环境变量设置 `https_proxy="" ./dmctl --master-addr "x.x.x.x:8261"` 即可。
+
+> **注意：**   
+> 
+> 关于 `proxy` 的环境变量有 `http_proxy`，`https_proxy`，`no_proxy` 等。如果依据上述解决方案处理后仍无法连接，可以考虑检查 `http_proxy` 和 `no_proxy` 的参数配置是否有影响。 
+>>>>>>> b2122f3 (add proxy question (#723))
