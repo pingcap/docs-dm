@@ -51,7 +51,7 @@ expression-filter:
 > **注意：**
 >
 > update-old-value-expr 可以与 update-new-value-expr 同时配置。
-> - 当二者同时配置时，会将更新旧值满足 update-old-value-expr **且** 更新新值满足 update-new-value-expr 的行变动过滤掉。
+> - 当二者同时配置时，会将更新旧值满足 update-old-value-expr **且**更新新值满足 update-new-value-expr 的行变动过滤掉。
 > - 当只配置一者时，配置的这条表达式会决定是否过滤**整个行变更**，即对旧值的删除和新值的插入会作为一个整体被过滤掉。
 
 SQL 表达式可以涉及一列、多列、使用 TiDB 支持的 SQL 函数。例如 `c % 2 = 0`，`a*a + b*b = c*c`、`ts > NOW()`
