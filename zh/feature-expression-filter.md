@@ -39,20 +39,42 @@ expression-filter:
 
 对于 `expr_filter` 库下的 `tbl` 表，当插入偶数的 `c` (`c % 2 = 0`) 时，不将这条插入同步到下游。
 
+该示例的同步效果是：
+
+上游
+
+```sql
+INSERT INTO tbl(id, c) VALUES (1, 1), (2, 2), (3, 3), (4, 4);
+```
+
+下游
+
+```sql
+MySQL [test]> select * from tbl;
++------+------+
+| id   | c    |
++------+------+
+|    1 |    1 |
+|    3 |    3 |
++------+------+
+2 rows in set (0.001 sec)
+```
+
 ## 配置规则
 
 - schema: 要匹配的上游数据库库名，不支持通配符匹配或正则匹配
 - table: 要匹配的上游表名，不支持通配符匹配或正则匹配
-- insert-value-expr: 可以配置一个表达式，对 INSERT 类型的 binlog event (WRITE_ROWS_EVENT) 带有的值生效。不能与 update-old-value-expr、update-new-value-expr、delete-value-expr 出现在一个配置项中。
-- update-old-value-expr: 可以配置一个表达式，对 UPDATE 类型的 binlog event (UPDATE_ROWS_EVENT) 更新对应的旧值生效。不能与 insert-value-expr、delete-value-expr 出现在一个配置项中。
-- update-new-value-expr: 可以配置一个表达式，对 UPDATE 类型的 binlog event (UPDATE_ROWS_EVENT) 更新对应的新值生效。不能与 insert-value-expr、delete-value-expr 出现在一个配置项中。
-- delete-value-expr: 可以配置一个表达式，对 DELETE 类型的 binlog event (DELETE_ROWS_EVENT) 带有的值生效。不能与 insert-value-expr、update-old-value-expr、update-new-value-expr 出现在一个配置项中。
+- insert-value-expr: 可以配置一个表达式，对 INSERT 类型的 binlog event (WRITE_ROWS_EVENT) 带有的值生效。不能与 update-old-value-expr、update-new-value-expr、delete-value-expr 出现在一个配置项中
+- update-old-value-expr: 可以配置一个表达式，对 UPDATE 类型的 binlog event (UPDATE_ROWS_EVENT) 更新对应的旧值生效。不能与 insert-value-expr、delete-value-expr 出现在一个配置项中
+- update-new-value-expr: 可以配置一个表达式，对 UPDATE 类型的 binlog event (UPDATE_ROWS_EVENT) 更新对应的新值生效。不能与 insert-value-expr、delete-value-expr 出现在一个配置项中
+- delete-value-expr: 可以配置一个表达式，对 DELETE 类型的 binlog event (DELETE_ROWS_EVENT) 带有的值生效。不能与 insert-value-expr、update-old-value-expr、update-new-value-expr 出现在一个配置项中
 
 > **注意：**
 >
 > update-old-value-expr 可以与 update-new-value-expr 同时配置。
-> - 当二者同时配置时，会将更新旧值满足 update-old-value-expr **且**更新新值满足 update-new-value-expr 的行变动过滤掉。
-> - 当只配置一者时，配置的这条表达式会决定是否过滤**整个行变更**，即对旧值的删除和新值的插入会作为一个整体被过滤掉。
+
+> - 当二者同时配置时，会将更新旧值满足 update-old-value-expr **且**更新新值满足 update-new-value-expr 的行变动过滤掉
+> - 当只配置一者时，配置的这条表达式会决定是否过滤**整个行变更**，即对旧值的删除和新值的插入会作为一个整体被过滤掉
 
 SQL 表达式可以涉及一列、多列、使用 TiDB 支持的 SQL 函数。例如 `c % 2 = 0`，`a*a + b*b = c*c`、`ts > NOW()`
 
