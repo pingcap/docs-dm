@@ -341,6 +341,6 @@ DM-master 会在启动时将 etcd 信息记录在当前目录。如果重启后�
 
 解决方案：确认 `https_proxy` 是否必须要配置，如果不是必须的，取消该设置即可。如果环境必须，那么在原命令前加环境变量设置 `https_proxy="" ./dmctl --master-addr "x.x.x.x:8261"` 即可。
 
-> **补充说明：**   
+> **注意：**   
 > 
-> 关于 `proxy` 的环境变量有 `http_proxy`, `https_proxy`, `no_proxy` 等。如果这里连接有问题，可以考虑查看这个几个参数设置是否有问题。  
+> 关于 `proxy` 的环境变量有 `http_proxy`，`https_proxy`，`no_proxy` 等。如果依据上述解决方案处理后仍无法连接，可以考虑检查 `http_proxy` 和 `no_proxy` 的参数配置是否有影响。 
