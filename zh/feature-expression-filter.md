@@ -35,7 +35,7 @@ expression-filter:
     insert-value-expr: "c % 2 = 0"
 ```
 
-上面的配置中配置了 `even_c` 规则，并让 source ID 为 `mysql-replica-01` 的上游引用了改规则。`even_c` 规则的含义是：
+上面的配置中配置了 `even_c` 规则，并让 source ID 为 `mysql-replica-01` 的上游引用了该规则。`even_c` 规则的含义是：
 
 对于 `expr_filter` 库下的 `tbl` 表，当插入偶数的 `c` (`c % 2 = 0`) 时，不将这条插入同步到下游。
 
@@ -45,7 +45,7 @@ expression-filter:
 - table: 要匹配的上游表名，不支持通配符匹配或正则匹配
 - insert-value-expr: 可以配置一个表达式，对 INSERT 类型的 binlog event (WRITE_ROWS_EVENT) 带有的值生效。不能与 update-old-value-expr、update-new-value-expr、delete-value-expr 出现在一个配置项中。
 - update-old-value-expr: 可以配置一个表达式，对 UPDATE 类型的 binlog event (UPDATE_ROWS_EVENT) 更新对应的旧值生效。不能与 insert-value-expr、delete-value-expr 出现在一个配置项中。
-- update-new-value-expr: 可以配置一个表达式，对 UPDATE 类型的 binlog event (UPDATE_ROWS_EVENT) 更新对应的旧值生效。不能与 insert-value-expr、delete-value-expr 出现在一个配置项中。
+- update-new-value-expr: 可以配置一个表达式，对 UPDATE 类型的 binlog event (UPDATE_ROWS_EVENT) 更新对应的新值生效。不能与 insert-value-expr、delete-value-expr 出现在一个配置项中。
 - delete-value-expr: 可以配置一个表达式，对 DELETE 类型的 binlog event (DELETE_ROWS_EVENT) 带有的值生效。不能与 insert-value-expr、update-old-value-expr、update-new-value-expr 出现在一个配置项中。
 
 > **注意：**
