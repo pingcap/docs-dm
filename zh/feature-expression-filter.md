@@ -10,6 +10,10 @@ title: 使用 SQL 表达式过滤某些行变更
 
 为了解决上面的问题，DM 在 v2.0.5 版本可以使用 SQL 表达式过滤某些行变更。DM 所要求的 ROW 模式的 binlog 会在 binlog event 中带有所有列的值。基于这些值，用户可以配置 SQL 表达式，如果该表达式对于某条行变更的计算结果是 `TRUE`，DM 就不会向下游同步该条行变更。
 
+> **注意：**
+>
+> 该功能只会在增量复制阶段生效，并不会在全量迁移阶段生效。
+
 ## 配置示例
 
 表达式过滤在 task 配置文件里面与 [Binlog Event Filter](key-features.md#binlog-event-filter) 类似，详见下面配置样例。完整的配置及意义，可以参考 [DM 完整配置文件示例](task-configuration-file-full.md#完整配置文件示例)：
@@ -72,7 +76,7 @@ MySQL [test]> select * from tbl;
 > **注意：**
 >
 > update-old-value-expr 可以与 update-new-value-expr 同时配置。
-
+>
 > - 当二者同时配置时，会将更新旧值满足 update-old-value-expr **且**更新新值满足 update-new-value-expr 的行变动过滤掉
 > - 当只配置一者时，配置的这条表达式会决定是否过滤**整个行变更**，即对旧值的删除和新值的插入会作为一个整体被过滤掉
 
