@@ -8,7 +8,7 @@ title: 使用 SQL 表达式过滤某些行变更
 
 在进行数据同步的过程中，DM 提供了 [Binlog Event Filter](key-features.md#binlog-event-filter)可以过滤某些类型的 binlog event，例如不向下游同步 DELETE 以达到归档、审计等目的。但是 Binlog Event Filter 无法以更细粒度判断某一行的 DELETE 是否要被过滤。
 
-为了解决上面的问题，DM 在 v2.0.5 版本可以使用 SQL 表达式过滤某些行变更。DM 所要求的 ROW 模式的 binlog 会在 binlog event 中带有所有列的值。基于这些值，用户可以配置 SQL 表达式，如果该表达式对于某条行变更的计算结果是 `TRUE`，DM 就不会向下游同步该条行变更。
+为了解决上面的问题，DM 可以使用 SQL 表达式过滤某些行变更。DM 所要求的 ROW 模式的 binlog 会在 binlog event 中带有所有列的值。基于这些值，用户可以配置 SQL 表达式，如果该表达式对于某条行变更的计算结果是 `TRUE`，DM 就不会向下游同步该条行变更。
 
 > **注意：**
 >
