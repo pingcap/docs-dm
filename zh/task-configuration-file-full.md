@@ -74,10 +74,11 @@ filters:                                        # 上游数据库实例匹配的
     events: ["all dml"]
     action: Do
 
-expression-filter:
-  even_c:                            # 过滤 `expr_filter`.`tbl` 的 c 为偶数的插入
-    schema: "expr_filter"
-    table: "tbl"
+expression-filter:                   # 定义数据源迁移行变更的过滤规则，可以定义多个规则
+  # 过滤 `expr_filter`.`tbl` 的 c 为偶数的插入
+  even_c:                            # 规则名称
+    schema: "expr_filter"            # 要匹配的上游数据库库名，不支持通配符匹配或正则匹配
+    table: "tbl"                     # 要匹配的上游表名，不支持通配符匹配或正则匹配
     insert-value-expr: "c % 2 = 0"
 
 block-allow-list:                    # 定义数据源迁移表的过滤规则，可以定义多个规则。如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
@@ -122,10 +123,10 @@ mysql-instances:
       binlog-pos: 4
       binlog-gtid: "03fc0263-28c7-11e7-a653-6c0b84d59f30:1-7041423,05474d3c-28c7-11e7-8352-203db246dd3d:1-170"  # 对于 source 中指定了 `enable-gtid: true` 的增量任务，需要指定该值
 
-    route-rules: ["route-rule-1", "route-rule-2"]  # 该上游数据库实例匹配的表到下游数据库的 table routing 规则名称
-    filter-rules: ["filter-rule-1", "filter-rule-2"]                # 该上游数据库实例匹配的表的 binlog event filter 规则名称
-    block-allow-list:  "bw-rule-1"                 # 该上游数据库实例匹配的表的 block-allow-list 过滤规则名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
-    expression-filters: ["even_c"]
+    route-rules: ["route-rule-1", "route-rule-2"]    # 该上游数据库实例匹配的表到下游数据库的 table routing 规则名称
+    filter-rules: ["filter-rule-1", "filter-rule-2"] # 该上游数据库实例匹配的表的 binlog event filter 规则名称
+    block-allow-list:  "bw-rule-1"                   # 该上游数据库实例匹配的表的 block-allow-list 过滤规则名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+    expression-filters: ["even_c"]                   # 使用名为 even_c 的表达式过滤规则
 
     mydumper-config-name: "global"          # mydumpers 配置的名称
     loader-config-name: "global"            # loaders 配置的名称
