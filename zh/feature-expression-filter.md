@@ -43,7 +43,7 @@ expression-filter:
 
 对于 `expr_filter` 库下的 `tbl` 表，当插入的 `c` 的值为偶数 (`c % 2 = 0`) 时，不将这条插入语句迁移到下游。
 
-该示例的同步效果是：
+下面展示该规则的使用效果。
 
 在上游数据源增量插入以下数据：
 
@@ -68,10 +68,10 @@ MySQL [test]> select * from tbl;
 
 - `schema`：要匹配的上游数据库库名，不支持通配符匹配或正则匹配。
 - `table`: 要匹配的上游表名，不支持通配符匹配或正则匹配
-- `insert-value-expr`: 配置一个表达式，对 INSERT 类型的 binlog event (WRITE_ROWS_EVENT) 带有的值生效。不能与 `update-old-value-expr`、`update-new-value-expr`、`delete-value-expr` 出现在一个配置项中
-- `update-old-value-expr`: 配置一个表达式，对 UPDATE 类型的 binlog event (UPDATE_ROWS_EVENT) 更新对应的旧值生效。不能与 `insert-value-expr`、`delete-value-expr` 出现在一个配置项中
-- `update-new-value-expr`: 配置一个表达式，对 UPDATE 类型的 binlog event (UPDATE_ROWS_EVENT) 更新对应的新值生效。不能与 `insert-value-expr`、`delete-value-expr` 出现在一个配置项中
-- `delete-value-expr`: 配置一个表达式，对 DELETE 类型的 binlog event (DELETE_ROWS_EVENT) 带有的值生效。不能与 `insert-value-expr`、`update-old-value-expr`、`update-new-value-expr` 出现在一个配置项中
+- `insert-value-expr`：配置一个表达式，对 INSERT 类型的 binlog event (WRITE_ROWS_EVENT) 带有的值生效。不能与 `update-old-value-expr`、`update-new-value-expr`、`delete-value-expr` 出现在一个配置项中。
+- `update-old-value-expr`：配置一个表达式，对 UPDATE 类型的 binlog event (UPDATE_ROWS_EVENT) 更新对应的旧值生效。不能与 `insert-value-expr`、`delete-value-expr` 出现在一个配置项中。
+- `update-new-value-expr`：配置一个表达式，对 UPDATE 类型的 binlog event (UPDATE_ROWS_EVENT) 更新对应的新值生效。不能与 `insert-value-expr`、`delete-value-expr` 出现在一个配置项中。
+- `delete-value-expr`：配置一个表达式，对 DELETE 类型的 binlog event (DELETE_ROWS_EVENT) 带有的值生效。不能与 `insert-value-expr`、`update-old-value-expr`、`update-new-value-expr` 出现在一个配置项中。
 
 > **注意：**
 >
