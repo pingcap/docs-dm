@@ -136,7 +136,7 @@ This document introduces how to deal with the alert information in DM.
 
 ## Alert rules related to Dump/Load
 
-### `DM_dump_process_exists_with_error`
+### `DM_dump_process_exits_with_error`
 
 - Description:
 
@@ -146,7 +146,7 @@ This document introduces how to deal with the alert information in DM.
 
     Refer to [Troubleshoot DM](error-handling.md#troubleshooting).
 
-### `DM_load_process_exists_with_error`
+### `DM_load_process_exits_with_error`
 
 - Description:
 
@@ -158,7 +158,7 @@ This document introduces how to deal with the alert information in DM.
 
 ## Alert rules related to binlog replication
 
-### `DM_sync_process_exists_with_error`
+### `DM_sync_process_exits_with_error`
 
 - Description:
 

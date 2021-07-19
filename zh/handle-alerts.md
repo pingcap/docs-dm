@@ -64,17 +64,17 @@ aliases: ['/docs-cn/tidb-data-migration/dev/handle-alerts/']
 
 ## Dump/Load 告警
 
-### `DM_dump_process_exists_with_error`
+### `DM_dump_process_exits_with_error`
 
 当 Dump 处理单元遇到错误时，会转为 `Paused` 状态并立即触发该告警，此时需要参考 [DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
 
-### `DM_load_process_exists_with_error`
+### `DM_load_process_exits_with_error`
 
 当 Load 处理单元遇到错误时，会转为 `Paused` 状态并立即触发该告警，此时需要参考 [DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
 
 ## Binlog replication 告警
 
-### `DM_sync_process_exists_with_error`
+### `DM_sync_process_exits_with_error`
 
 当 Binlog replication 处理单元遇到错误时，会转为 `Paused` 状态并立即触发该告警，此时需要参考 [DM 故障诊断](error-handling.md#dm-故障诊断)进行处理。
 
