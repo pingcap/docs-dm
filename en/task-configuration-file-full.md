@@ -32,7 +32,8 @@ shard-mode: "pessimistic"       # This needs to be configured if it is a shard m
 meta-schema: "dm_meta"          # The downstream database that stores the `meta` information.
 timezone: "Asia/Shanghai"       # The timezone.
 case-sensitive: false           # Determines whether the schema/table is case-sensitive.
-online-ddl-scheme: "gh-ost"     # Only "gh-ost" and "pt" are currently supported.
+online-ddl: true                # Only "gh-ost" and "pt" are currently supported.
+online-ddl-scheme: "gh-ost"     # Online-ddl-scheme will be deprecated in the future, it is recommended to use online-ddl.
 ignore-checking-items: []       # No element, which means not to disable any checking items. Available items are `all`/`dump_privilege`/`replication_privilege`/`version`/`binlog_enable`/`binlog_format`/`binlog_row_image`/`table_schema`/`schema_of_shard_tables`/`auto_increment_ID`.
 clean-dump-file: true           # Whether to clean up the files generated during data dump. Note that these include `metadata` files.
 

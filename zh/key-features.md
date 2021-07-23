@@ -391,14 +391,20 @@ filters:
 
 在 MySQL 生态中，gh-ost 与 pt-osc 等工具较广泛地被使用，DM 对其提供了特殊的支持以避免对不必要的中间数据进行迁移。
 
-有关 DM 对 online DDL 工具支持的原理、处理流程等，可参考 [online-ddl-scheme](feature-online-ddl-scheme.md)。
+有关 DM 对 online DDL 工具支持的原理、处理流程等，可参考 [online-ddl](feature-online-ddl.md)。
 
 ### 使用限制
 
 - DM 仅针对 gh-ost 与 pt-osc 做了特殊支持。
-- 在开启 `online-ddl-scheme` 时，增量复制对应的 checkpoint 应不处于 online DDL 执行过程中。如上游某次 online DDL 操作开始于 binlog `position-A`、结束于 `position-B`，则增量复制的起始点应早于 `position-A` 或晚于 `position-B`，否则可能出现迁移出错，具体可参考 [FAQ](faq.md#设置了-online-ddl-scheme-gh-ost-gh-ost-表相关的-ddl-报错该如何处理)。
+- 在开启 `online-ddl/online-ddl-scheme` 时，增量复制对应的 checkpoint 应不处于 online DDL 执行过程中。如上游某次 online DDL 操作开始于 binlog `position-A`、结束于 `position-B`，则增量复制的起始点应早于 `position-A` 或晚于 `position-B`，否则可能出现迁移出错，具体可参考 [FAQ](faq.md#设置了-online-ddl-scheme-gh-ost-gh-ost-表相关的-ddl-报错该如何处理)。
 
 ### 参数配置
+
+如上游 MySQL/MariaDB （同时）使用 gh-ost 或 pt-osc 工具，则在 task 的配置文件中设置：
+
+```
+online-ddl: true
+```
 
 如上游 MySQL/MariaDB 使用的是 gh-ost 工具，则在 task 的配置文件中设置：
 
@@ -411,6 +417,10 @@ online-ddl-scheme: "gh-ost"
 ```
 online-ddl-scheme: "pt"
 ```
+
+> **建议：**
+>
+> 建议使用 `online-ddl` 代替 `online-ddl-scheme`。
 
 ## 分库分表合并
 
