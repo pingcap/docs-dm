@@ -406,7 +406,7 @@ filters:
 online-ddl: true
 ```
 
-如果使用 `online-ddl-scheme` 设置，则在 task 的配置文件中设置
+如果使用 `online-ddl-scheme` 设置，则在 task 的配置文件中设置：
 
 ```yml
 online-ddl: false
