@@ -402,25 +402,31 @@ filters:
 
 如上游 MySQL/MariaDB （同时）使用 gh-ost 或 pt-osc 工具，则在 task 的配置文件中设置：
 
-```
+```yml
 online-ddl: true
 ```
 
-如上游 MySQL/MariaDB 使用的是 gh-ost 工具，则在 task 的配置文件中设置：
+如果使用 `online-ddl-scheme` 设置，则在 task 的配置文件中设置
 
-```
-online-ddl-scheme: "gh-ost"
+```yml
+online-ddl: false
+online-ddl-scheme: "gh-ost"    # 只支持 gh-ost
 ```
 
-如上游 MySQL/MariaDB 使用的是 pt-osc 工具，则在 task 的配置文件中设置：
+或者
 
-```
-online-ddl-scheme: "pt"
+```yml
+online-ddl: false
+online-ddl-scheme: "pt"        # 只支持 pt
 ```
 
 > **建议：**
 >
 > 建议使用 `online-ddl` 代替 `online-ddl-scheme`。
+
+> **注意：**
+>
+> 设置 `online-ddl: true` 会覆盖掉 `online-ddl-scheme`。
 
 ## 分库分表合并
 

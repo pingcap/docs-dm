@@ -382,20 +382,22 @@ In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM prov
 
 - If the upstream MySQL/MariaDB (at the same time) uses the gh-ost or pt-osc tool, set `online-ddl` to `true` in the task configuration file:
 
-```
+```yml
 online-ddl: true
 ```
 
-- If the upstream MySQL/MariaDB uses gh-ost, set `online-ddl-scheme` to `"gh-ost"` in the task configuration file:
+- If you use the `online-ddl-scheme`, set it in the task configuration file
 
-```
-online-ddl-scheme: "gh-ost"
+```yml
+online-ddl: false
+online-ddl-scheme: "gh-ost"    # Only support gh-ost
 ```
 
-- If the upstream MySQL/MariaDB uses pt-osc, set `online-ddl-scheme` to `"pt"` in the task configuration file:
+- Or
 
-```
-online-ddl-scheme: "pt"
+```yml
+online-ddl: false
+online-ddl-scheme: "pt"        # Only support pt
 ```
 
 For more information about online DDL tools, refer to [Online DDL](feature-online-ddl.md).
@@ -403,6 +405,10 @@ For more information about online DDL tools, refer to [Online DDL](feature-onlin
 > **Tip:**
 >
 > It is recommended to use `online-ddl` instead of `online-ddl-scheme`.
+
+> **Note:**
+> 
+> Setting `online-ddl: true` will override `online-ddl-scheme`.
 
 ## Shard merge
 
