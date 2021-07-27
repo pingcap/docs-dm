@@ -380,21 +380,41 @@ In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM prov
 
 ### Parameter configuration
 
+<SimpleTab>
+<div label="v2.0.5 and later">
+ 
+In v2.0.5 and later versions, please use the `online-ddl` configuration item in the `task` configuration file.
+
 - If the upstream MySQL/MariaDB (at the same time) uses the gh-ost or pt-osc tool, set `online-ddl` to `true` in the task configuration file:
 
 ```yml
 online-ddl: true
 ```
 
-For more information about online DDL tools, refer to [Online DDL](feature-online-ddl.md).
-
-> **Tip:**
->
-> `online-ddl-scheme` is deprecated, it is recommended to use `online-ddl` instead of `online-ddl-scheme`.
-
 > **Note:**
-> 
-> Setting `online-ddl: true` will override `online-ddl-scheme`.
+>
+> Since v2.0.5, `online-ddl-scheme` has been deprecated, please use `online-ddl` instead of `online-ddl-scheme`. For example, setting `online-ddl: true` will overwrite `online-ddl-scheme`, and setting `online-ddl-scheme: "pt"` or `online-ddl-scheme: "gh-ost"` will also be converted to `online-ddl: true`.
+
+</div>
+
+<div label="earlier than v2.0.5">
+
+Before v2.0.5 (not including v2.0.5), please use the `online-ddl-scheme` configuration item in the `task` configuration file.
+
+- If the upstream MySQL/MariaDB uses the gh-ost tool, set it in the task configuration file:
+
+```yml
+online-ddl-scheme: "gh-ost"
+```
+
+- If the upstream MySQL/MariaDB uses the pt tool, set it in the task configuration file:
+
+```yml
+online-ddl-scheme: "pt"
+```
+
+</div>
+</SimpleTab>
 
 ## Shard merge
 
