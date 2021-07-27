@@ -33,7 +33,7 @@ meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
 timezone: "Asia/Shanghai"       # 时区
 case-sensitive: false           # schema/table 是否大小写敏感
 online-ddl: true                # 目前支持 "gh-ost" 、"pt" 的自动处理
-online-ddl-scheme: "gh-ost"     # `online-ddl-scheme` 在未来将会被弃用，建议使用 `online-ddl`
+online-ddl-scheme: "gh-ost"     # `online-ddl-scheme` 在未来将会被弃用，建议使用 `online-ddl` 代替 `online-ddl-scheme`
 ignore-checking-items: []       # 不关闭任何检查项。可选的检查项有 "all"、"dump_privilege"、"replication_privilege"、"version"、"binlog_enable"、"binlog_format"、"binlog_row_image"、"table_schema"、"schema_of_shard_tables"、"auto_increment_ID"
 clean-dump-file: true           # 是否清理 dump 阶段产生的文件，包括 metadata 文件、建库建表 SQL 文件以及数据导入 SQL 文件
 
