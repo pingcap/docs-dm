@@ -422,7 +422,7 @@ online-ddl-scheme: "pt"        # 只支持 pt
 
 > **建议：**
 >
-> 建议使用 `online-ddl` 代替 `online-ddl-scheme`。
+> `online-ddl-scheme` 在未来将会被弃用，建议使用 `online-ddl` 代替 `online-ddl-scheme`。
 
 > **注意：**
 >
