@@ -406,23 +406,9 @@ filters:
 online-ddl: true
 ```
 
-如果使用 `online-ddl-scheme` 设置，则在 task 的配置文件中设置：
-
-```yml
-online-ddl: false
-online-ddl-scheme: "gh-ost"    # 只支持 gh-ost
-```
-
-或者
-
-```yml
-online-ddl: false
-online-ddl-scheme: "pt"        # 只支持 pt
-```
-
 > **建议：**
 >
-> `online-ddl-scheme` 在未来将会被弃用，建议使用 `online-ddl` 代替 `online-ddl-scheme`。
+> `online-ddl-scheme` 已被弃用，建议使用 `online-ddl` 代替 `online-ddl-scheme`。
 
 > **注意：**
 >
