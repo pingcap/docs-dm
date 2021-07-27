@@ -102,7 +102,7 @@ DM periodically checks the current task status and error message, to determine i
 | :------------ | :--------------------------------------- |
 | `check-enable` | Whether enables this feature. |
 | `backoff-rollback` | If the current checking interval of backoff strategy is larger than this value and the task status is normal, DM will try to decrease the interval. |
-| `backoff-rollback` | The maximum value of checking interval of backoff strategy, must be larger than 1 second. |
+| `backoff-max` | The maximum value of checking interval of backoff strategy, must be larger than 1 second. |
 
 ### Binlog event filter
 
