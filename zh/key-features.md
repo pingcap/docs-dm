@@ -400,19 +400,41 @@ filters:
 
 ### 参数配置
 
+<SimpleTab>
+<div label="v2.0.5 及之后的版本">
+ 
+在 v2.0.5 及之后的版本，请在 `task` 配置文件中使用 `online-ddl` 配置项。
+
 如上游 MySQL/MariaDB （同时）使用 gh-ost 或 pt-osc 工具，则在 task 的配置文件中设置：
+
+> **注意：**
+>
+> 自 v2.0.5 起，`online-ddl-scheme` 已被弃用，请使用 `online-ddl` 代替 `online-ddl-scheme`。如设置 `online-ddl: true` 会覆盖掉 `online-ddl-scheme`。如设置 `online-ddl-scheme: "pt"` 或 `online-ddl-scheme: "gh-ost"` 会被转换为 `online-ddl: true`。
 
 ```yml
 online-ddl: true
 ```
 
-> **建议：**
->
-> `online-ddl-scheme` 已被弃用，建议使用 `online-ddl` 代替 `online-ddl-scheme`。
+</div>
 
-> **注意：**
->
-> 设置 `online-ddl: true` 会覆盖掉 `online-ddl-scheme`。
+<div label="v2.0.5 之前的版本">
+
+在 v2.0.5 之前的版本（不含 v2.0.5），请在 `task` 配置文件中使用 `online-ddl-scheme` 配置项。
+
+如上游 MySQL/MariaDB 使用的是 gh-ost 工具，则在 task 的配置文件中设置：
+
+```yml
+online-ddl-scheme: "gh-ost"
+```
+
+如上游 MySQL/MariaDB 使用的是 pt-osc 工具，则在 task 的配置文件中设置：
+
+```yml
+online-ddl-scheme: "pt"
+```
+
+</div>
+</SimpleTab>
 
 ## 分库分表合并
 
