@@ -404,7 +404,7 @@ For more information about online DDL tools, refer to [Online DDL](feature-onlin
 
 > **Tip:**
 >
-> It is recommended to use `online-ddl` instead of `online-ddl-scheme`.
+> Because `online-ddl-scheme` will be deprecated in the future, it is recommended to use `online-ddl` instead of `online-ddl-scheme`.
 
 > **Note:**
 > 
