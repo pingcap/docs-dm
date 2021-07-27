@@ -53,6 +53,7 @@
     - [暂停任务](pause-task.md)
     - [恢复任务](resume-task.md)
     - [停止任务](stop-task.md)
+    - [导出和导入集群的数据源和任务配置](export-import-config.md)
     - [处理出错的 DDL 语句](handle-failed-ddl-statements.md)
   - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
   - [管理迁移表的表结构](manage-schema.md)
