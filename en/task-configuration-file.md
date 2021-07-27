@@ -28,7 +28,6 @@ The following is a task configuration file template which allows you to perform 
 
 name: test                      # The name of the task. Should be globally unique.
 task-mode: all                  # The task mode. Can be set to `full`/`incremental`/`all`.
-is-sharding: false              # Whether it is a shard merge task.
 
 target-database:                # Configuration of the downstream database instance.
   host: "127.0.0.1"

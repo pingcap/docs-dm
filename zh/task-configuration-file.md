@@ -23,7 +23,6 @@ title: DM 任务配置文件介绍
 ## ********* 基本信息配置 *********
 name: test             # 任务名称，需要全局唯一
 task-mode: all         # 任务模式，可设为 "full"、"incremental"、"all"
-is-sharding: false     # 是否是合库合表任务
 
 target-database:       # 下游数据库实例配置
   host: "127.0.0.1"
