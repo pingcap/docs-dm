@@ -386,7 +386,7 @@ In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM prov
 online-ddl: true
 ```
 
-- If you use the `online-ddl-scheme`, set it in the task configuration file:
+- If you use the `online-ddl-scheme`, set it as follows in the task configuration file:
 
 ```yml
 online-ddl: false
