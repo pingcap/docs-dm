@@ -181,9 +181,12 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
 
 > **注意：**
 >
-> 从 v2.0.5 版本开始，dmctl 支持[导出和导入集群的数据源和任务配置](export-import-config.md)
+> 从 v2.0.5 版本开始，dmctl 支持[导出和导入集群的数据源和任务配置](export-import-config.md)。
+>
 > 升级前，可使用 `config export` 命令导出集群的配置文件，升级后如需降级回退到旧版本，可重建旧集群后，使用 `config import` 导入之前的配置。
+>
 > 对于 v2.0.5 之前版本的集群，可使用 v2.0.5 及之后版本的 dmctl 导出和导入集群配置。
+>
 > 对于 v2.0.2 之后的版本，导入集群配置时暂不支持自动恢复 relay worker 相关配置，可手动执行 `start-relay` 命令[开启 relay log](relay-log.md#启动停止-relay-log)。
 
 滚动升级过程中尽量保证对前端业务透明、无感知，其中对不同节点有不同的操作。
