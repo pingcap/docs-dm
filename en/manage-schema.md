@@ -85,6 +85,7 @@ Global Flags:
 * `--flush`:
     - Optional.
     - Writes the schema to the checkpoint so that DM can load it after restarting the task.
+    - The default value is `true`.
 * `--sync`:
     - Optional. Only used when an error occurs in the optimistic sharding DDL mode.
     - Updates the optimistic sharding metadata with this schema.
