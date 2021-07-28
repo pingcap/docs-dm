@@ -38,6 +38,11 @@ from:
 #   expires: 0
 #   remain-space: 15
 
+# checker:
+#   check-enable: true
+#   backoff-rollback: 5m0s
+#   backoff-max: 5m0s       # backoff 的最大值，不能小于 1s
+
 # 从 DM v2.0.2 开始，Binlog event filter 也可以在上游数据库配置文件中进行配置
 # case-sensitive: false
 # filters:
@@ -85,11 +90,21 @@ from:
 >
 > 仅在 `interval` 不为 0 且 `expires` 和 `remain-space` 两个配置项中至少有一个不为 0 的情况下 DM 的自动清理策略才会生效。
 
+### 任务状态检查配置（checker 配置项）
+
+DM 会定期检查当前任务状态以及错误信息，判断恢复任务能否消除错误，并自动尝试恢复任务进行重试。DM 会使用指数回退策略调整检查间隔。这些行为可以通过如下配置进行调整：
+
+| 配置项        | 说明                                    |
+| :------------ | :--------------------------------------- |
+| `check-enable` | 启用自动重试功能。 |
+| `backoff-rollback` | 如果指数回退策略的间隔大于该值，且任务处于正常状态，尝试减小间隔。 |
+| `backoff-max` | 指数回退策略的间隔的最大值，该值必须大于 1 秒。 |
+
 ### Binlog event filter
 
 从 DM v2.0.2 开始，Binlog event filter 也可以在上游数据库配置文件中进行配置。
 
 | 配置项        | 说明                                    |
 | :------------ | :--------------------------------------- |
-| `case-sensitive` | Binlog event filter 标识符是否大小写敏感。默认值：false 。|
+| `case-sensitive` | Binlog event filter 标识符是否大小写敏感。默认值：false。|
 | `filters` | 配置 Binlog event filter，含义见 [Binlog event filter 参数解释](key-features.md#参数解释-2)。 |

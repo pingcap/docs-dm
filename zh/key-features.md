@@ -121,14 +121,14 @@ routes:
 block-allow-list:             # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list。
   rule-1:
     do-dbs: ["test*"]         # 非 ~ 字符开头，表示规则是通配符；v1.0.5 及后续版本支持通配符规则。
-​    do-tables:
+    do-tables:
     - db-name: "test[123]"    # 匹配 test1、test2、test3。
       tbl-name: "t[1-5]"      # 匹配 t1、t2、t3、t4、t5。
     - db-name: "test"
       tbl-name: "t"
   rule-2:
     do-dbs: ["~^test.*"]      # 以 ~ 字符开头，表示规则是正则表达式。
-​    ignore-dbs: ["mysql"]
+    ignore-dbs: ["mysql"]
     do-tables:
     - db-name: "~^test.*"
       tbl-name: "~^t.*"
@@ -143,8 +143,8 @@ block-allow-list:             # 如果 DM 版本早于 v2.0.0-beta.2 则使用 b
 
 - `do-dbs`：要迁移的库的白名单，类似于 MySQL 中的 [`replicate-do-db`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-replica.html#option_mysqld_replicate-do-db)。
 - `ignore-dbs`：要迁移的库的黑名单，类似于 MySQL 中的 [`replicate-ignore-db`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-replica.html#option_mysqld_replicate-ignore-db)。
-- `do-tables`：要迁移的表的白名单，类似于 MySQL 中的 [`replicate-do-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-replica.html#option_mysqld_replicate-do-table)。
-- `ignore-tables`：要迁移的表的黑名单，类似于 MySQL 中的 [`replicate-ignore-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-replica.html#option_mysqld_replicate-ignore-table)。
+- `do-tables`：要迁移的表的白名单，类似于 MySQL 中的 [`replicate-do-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-replica.html#option_mysqld_replicate-do-table)。必须同时指定 `db-name` 与 `tbl-name`。
+- `ignore-tables`：要迁移的表的黑名单，类似于 MySQL 中的 [`replicate-ignore-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-replica.html#option_mysqld_replicate-ignore-table)。必须同时指定 `db-name` 与 `tbl-name`。
 
 以上参数值以 `~` 开头时均支持使用[正则表达式](https://golang.org/pkg/regexp/syntax/#hdr-syntax)来匹配库名、表名。
 
