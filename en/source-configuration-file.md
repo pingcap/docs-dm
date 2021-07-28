@@ -43,7 +43,7 @@ from:
 # checker:
 #   check-enable: true
 #   backoff-rollback: 5m0s
-#   backoff-max: 5m0s       # The max value of backoff, should be larger than 1s
+#   backoff-max: 5m0s       # The maximum value of backoff, should be larger than 1s
 
 # Configure binlog event filters. New in DM v2.0.2
 # case-sensitive: false
@@ -96,11 +96,11 @@ Generally, there is no need to manually configure these parameters unless there 
 
 ### Task status checker configuration (`checker`)
 
-DM periodically checks the current task status and error message, to determine if resuming the task will eliminate the error, and automatically retries to resume the task if needed. DM adjusts the checking interval using an exponential backoff strategy. These behaviors can be adjusted by the following configuration.
+DM periodically checks the current task status and error message to determine if resuming the task will eliminate the error. If needed, DM automatically retries to resume the task. DM adjusts the checking interval using the exponential backoff strategy. Its behaviors can be adjusted by the following configuration.
 
 | Parameter        | Description                                    |
 | :------------ | :--------------------------------------- |
-| `check-enable` | Whether enables this feature. |
+| `check-enable` | Whether to enable this feature. |
 | `backoff-rollback` | If the current checking interval of backoff strategy is larger than this value and the task status is normal, DM will try to decrease the interval. |
 | `backoff-max` | The maximum value of checking interval of backoff strategy, must be larger than 1 second. |
 
