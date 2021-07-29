@@ -399,7 +399,7 @@ online-ddl: true
 
 <div label="earlier than v2.0.5">
 
-Before v2.0.5 (not including v2.0.5), please use the `online-ddl-scheme` configuration item in the `task` configuration file.
+Before v2.0.5 (not including v2.0.5), you need to use the `online-ddl-scheme` configuration item in the `task` configuration file.
 
 - If the upstream MySQL/MariaDB uses the gh-ost tool, set it in the task configuration file:
 
