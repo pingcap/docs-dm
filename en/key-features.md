@@ -383,7 +383,7 @@ In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM prov
 <SimpleTab>
 <div label="v2.0.5 and later">
  
-In v2.0.5 and later versions, please use the `online-ddl` configuration item in the `task` configuration file.
+In v2.0.5 and later versions, you need to use the `online-ddl` configuration item in the `task` configuration file.
 
 - If the upstream MySQL/MariaDB (at the same time) uses the gh-ost or pt-osc tool, set `online-ddl` to `true` in the task configuration file:
 
