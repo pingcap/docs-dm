@@ -393,7 +393,7 @@ online-ddl: true
 
 > **Note:**
 >
-> Since v2.0.5, `online-ddl-scheme` has been deprecated, please use `online-ddl` instead of `online-ddl-scheme`. For example, setting `online-ddl: true` will overwrite `online-ddl-scheme`, and setting `online-ddl-scheme: "pt"` or `online-ddl-scheme: "gh-ost"` will also be converted to `online-ddl: true`.
+> Since v2.0.5, `online-ddl-scheme` has been deprecated, so you need to use `online-ddl` instead of `online-ddl-scheme`. That means that setting `online-ddl: true` overwrites `online-ddl-scheme`, and setting `online-ddl-scheme: "pt"` or `online-ddl-scheme: "gh-ost"` is converted to `online-ddl: true`.
 
 </div>
 
