@@ -1,6 +1,6 @@
 ---
 title: Export and Import Data Sources and Task Configuration of Clusters
-summary: Learn about the configuration of exporting and importing data sources and task configuration of clusters when you use DM.
+summary: Learn how to export and import data sources and task configuration of clusters when you use DM.
 ---
 
 # Export and Import Data Sources and Task Configuration of Clusters
