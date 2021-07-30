@@ -376,23 +376,45 @@ In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM prov
 ### Restrictions
 
 - DM only supports gh-ost and pt-osc.
-- When `online-ddl-scheme` is enabled, the checkpoint corresponding to incremental replication should not be in the process of online DDL execution. For example, if an upstream online DDL operation starts at `position-A` and ends at `position-B` of the binlog, the starting point of incremental replication should be earlier than `position-A` or later than `position-B`; otherwise, an error occurs. For details, refer to [FAQ](faq.md#how-to-handle-the-error-returned-by-the-ddl-operation-related-to-the-gh-ost-table-after-online-ddl-scheme-gh-ost-is-set).
+- When `online-ddl` is enabled, the checkpoint corresponding to incremental replication should not be in the process of online DDL execution. For example, if an upstream online DDL operation starts at `position-A` and ends at `position-B` of the binlog, the starting point of incremental replication should be earlier than `position-A` or later than `position-B`; otherwise, an error occurs. For details, refer to [FAQ](faq.md#how-to-handle-the-error-returned-by-the-ddl-operation-related-to-the-gh-ost-table-after-online-ddl-scheme-gh-ost-is-set).
 
 ### Parameter configuration
 
-- If the upstream MySQL/MariaDB uses gh-ost, set `online-ddl-scheme` to `"gh-ost"` in the task configuration file:
+<SimpleTab>
+<div label="v2.0.5 and later">
+ 
+In v2.0.5 and later versions, you need to use the `online-ddl` configuration item in the `task` configuration file.
 
+- If the upstream MySQL/MariaDB (at the same time) uses the gh-ost or pt-osc tool, set `online-ddl` to `true` in the task configuration file:
+
+```yml
+online-ddl: true
 ```
+
+> **Note:**
+>
+> Since v2.0.5, `online-ddl-scheme` has been deprecated, so you need to use `online-ddl` instead of `online-ddl-scheme`. That means that setting `online-ddl: true` overwrites `online-ddl-scheme`, and setting `online-ddl-scheme: "pt"` or `online-ddl-scheme: "gh-ost"` is converted to `online-ddl: true`.
+
+</div>
+
+<div label="earlier than v2.0.5">
+
+Before v2.0.5 (not including v2.0.5), you need to use the `online-ddl-scheme` configuration item in the `task` configuration file.
+
+- If the upstream MySQL/MariaDB uses the gh-ost tool, set it in the task configuration file:
+
+```yml
 online-ddl-scheme: "gh-ost"
 ```
 
-- If the upstream MySQL/MariaDB uses pt-osc, set `online-ddl-scheme` to `"pt"` in the task configuration file:
+- If the upstream MySQL/MariaDB uses the pt tool, set it in the task configuration file:
 
-```
+```yml
 online-ddl-scheme: "pt"
 ```
 
-For more information about online DDL tools, refer to [Online DDL Scheme](feature-online-ddl-scheme.md).
+</div>
+</SimpleTab>
 
 ## Shard merge
 

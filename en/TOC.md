@@ -16,7 +16,7 @@
       - [Overview](feature-shard-merge.md)
       - [Pessimistic Mode](feature-shard-merge-pessimistic.md)
       - [Optimistic Mode](feature-shard-merge-optimistic.md)
-      - [Migrate from MySQL Databases that Use GH-ost/PT-osc](feature-online-ddl-scheme.md)
+      - [Migrate from MySQL Databases that Use GH-ost/PT-osc](feature-online-ddl.md)
   + [DM Architecture](dm-arch.md)
   + [Benchmarks](benchmark-v2.0-ga.md)
 + [Quick Start](quick-start-with-dm.md)
