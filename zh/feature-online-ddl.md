@@ -1,9 +1,6 @@
 ---
 title: 迁移使用 GH-ost/PT-osc 的源数据库
-<<<<<<< HEAD:zh/feature-online-ddl-scheme.md
-=======
 aliases: ['/docs-cn/tidb-data-migration/dev/feature-online-ddl-scheme/','/zh/tidb-data-migration/stable/feature-online-ddl-scheme']
->>>>>>> 84cb536 (zh, en: update online ddl doc (#734)):zh/feature-online-ddl.md
 ---
 
 # 迁移使用 GH-ost/PT-osc 的源数据库
