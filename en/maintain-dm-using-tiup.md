@@ -180,7 +180,7 @@ For example, to scale out a DM-worker node in the `prod-cluster` cluster, take t
 >
 > Since v2.0.5, dmctl support [Export and Import Data Sources and Task Configuration of Clusters](export-import-config.md)。
 >
-> Before upgrading, you can use `config export` to export the configuration files of clusters. After upgrading, if you need to downgrade to an earlier version, you can first rebuild the earlier cluster and then use `config import` to import the previous configuration files.
+> Before upgrading, you can use `config export` to export the configuration files of clusters. After upgrading, if you need to downgrade to an earlier version, you can first redeploy the earlier cluster and then use `config import` to import the previous configuration files.
 >
 > For clusters earlier than v2.0.5, you can use dmctl v2.0.5 or later to export and import the data source and task configuration files.
 >

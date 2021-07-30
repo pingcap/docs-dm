@@ -5,7 +5,7 @@ summary: Learn about the configuration of exporting and importing data sources a
 
 # Export and Import Data Sources and Task Configuration of Clusters
 
-`config` command is used to export and import data sourcse and task configuration of clusters.
+`config` command is used to export and import data sources and task configuration of clusters.
 
 > **Note:**
 >
