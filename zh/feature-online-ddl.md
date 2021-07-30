@@ -1,5 +1,9 @@
 ---
 title: 迁移使用 GH-ost/PT-osc 的源数据库
+<<<<<<< HEAD:zh/feature-online-ddl-scheme.md
+=======
+aliases: ['/docs-cn/tidb-data-migration/dev/feature-online-ddl-scheme/','/zh/tidb-data-migration/stable/feature-online-ddl-scheme']
+>>>>>>> 84cb536 (zh, en: update online ddl doc (#734)):zh/feature-online-ddl.md
 ---
 
 # 迁移使用 GH-ost/PT-osc 的源数据库
@@ -12,13 +16,13 @@ DDL 是数据库应用中必然会使用的一类 SQL。MySQL 虽然在 5.6 的�
 
 TiDB 根据 Google F1 的在线异步 schema 变更算法实现，在 DDL 过程中并不会阻塞读写。因此，在 online-schema-change 过程中，gh-ost 和 pt-osc 所产生的大量中间表数据以及 binlog event，在 MySQL 与 TiDB 的数据迁移过程中并不需要。
 
-DM 是 MySQL 到 TiDB 的数据迁移工具，online-ddl-scheme 功能就是对上述两个 online-schema-change 的工具进行特殊的处理，以便更快完成所需的 DDL 迁移。
+DM 是 MySQL 到 TiDB 的数据迁移工具，online-ddl 功能就是对上述两个 online-schema-change 的工具进行特殊的处理，以便更快完成所需的 DDL 迁移。
 
-如果想从源码方面了解 DM online-ddl-scheme，可以参考 [DM 源码阅读系列文章（八）Online Schema Change 迁移支持](https://pingcap.com/blog-cn/dm-source-code-reading-8/#dm-源码阅读系列文章八online-schema-change-迁移支持)
+如果想从源码方面了解 DM online-ddl，可以参考 [DM 源码阅读系列文章（八）Online Schema Change 迁移支持](https://pingcap.com/blog-cn/dm-source-code-reading-8/#dm-源码阅读系列文章八online-schema-change-迁移支持)
 
 ## 配置
 
-online-ddl-scheme 在 task 配置文件里面与 name 同级，例子详见下面配置 Example。完整的配置及意义，可以参考 [DM 完整配置文件示例](task-configuration-file-full.md#完整配置文件示例)：
+online-ddl 在 task 配置文件里面与 name 同级，例子详见下面配置 Example。完整的配置及意义，可以参考 [DM 完整配置文件示例](task-configuration-file-full.md#完整配置文件示例)：
 
 ```yml
 # ----------- 全局配置 -----------
@@ -27,7 +31,8 @@ name: test                      # 任务名称，需要全局唯一
 task-mode: all                  # 任务模式，可设为 "full"、"incremental"、"all"
 shard-mode: "pessimistic"       # 如果为分库分表合并任务则需要配置该项。默认使用悲观协调模式 "pessimistic"，在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
-online-ddl-scheme: "gh-ost"     # 目前仅支持 gh-ost 、pt
+online-ddl: true                # 目前支持 gh-ost 、pt 的自动处理
+online-ddl-scheme: "gh-ost"     # `online-ddl-scheme` 在未来将被弃用，建议使用 `online-ddl`
 
 target-database:                # 下游数据库实例配置
   host: "192.168.0.1"
