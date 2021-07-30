@@ -5,7 +5,7 @@ summary: Learn how to export and import data sources and task configuration of c
 
 # Export and Import Data Sources and Task Configuration of Clusters
 
-`config` command is used to export and import data sourcse and task configuration of clusters.
+`config` command is used to export and import data sources and task configuration of clusters.
 
 > **Note:**
 >
