@@ -41,6 +41,7 @@ Usage:
 
 Available Commands:
   check-task      Checks the configuration file of the task.
+  config          Commands to import/export config.
   get-config      Gets the configuration.
   handle-error    `skip`/`replace`/`revert` the current error event or a specific binlog position (binlog-pos) event.
   help            Gets help about any command.
@@ -90,6 +91,7 @@ export DM_MASTER_ADDR="172.16.30.14:8261"
 ```
 Available Commands:
   check-task            check-task <config-file> [--error count] [--warn count]
+  config                commands to import/export config
   get-config            get-config <task | master | worker | source> <name> [--file filename]
   handle-error          handle-error <task-name | task-file> [-s source ...] [-b binlog-pos] <skip/replace/revert> [replace-sql1;replace-sql2;]
   list-member           list-member [--leader] [--master] [--worker] [--name master-name/worker-name ...]
