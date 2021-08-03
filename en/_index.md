@@ -33,8 +33,10 @@ Currently, DM does not have a graphical interface and provides limited support f
 <NavColumn>
 <ColumnTitle>Quick Start</ColumnTitle>
 
-- [Migrate from MySQL](quick-start-with-dm.md)
-- [Data Migration Task Configuration Guide](task-configuration-guide.md)
+- [Quick Start](quick-start-with-dm.md)
+- [Deploy a DM cluster Using TiUP](deploy-a-dm-cluster-using-tiup.md)
+- [Create a Data Source](quick-start-create-source.md)
+- [Create a Data Migration Task](quick-create-migration-task.md)
 
 </NavColumn>
 
@@ -65,8 +67,6 @@ Currently, DM does not have a graphical interface and provides limited support f
 <NavColumn>
 <ColumnTitle>Usage Scenarios</ColumnTitle>
 
-- [Data Migration Simple Usage Scenario](usage-scenario-simple-migration.md)
-- [Shard Merge Scenario](usage-scenario-shard-merge.md)
 - [Migrate from Aurora](migrate-from-mysql-aurora.md)
 - [Switch the MySQL instance to Be Migrated](usage-scenario-master-slave-switch.md)
 

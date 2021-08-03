@@ -1,5 +1,5 @@
 ---
-title: Quick Start Guide for TiDB Data Migration
+title: TiDB Data Migration Quick Start
 summary: Learn how to quickly deploy a DM cluster using binary packages.
 aliases: ['/docs/tidb-data-migration/dev/get-started/','/tidb-data-migration/dev/get-started']
 ---
@@ -7,6 +7,12 @@ aliases: ['/docs/tidb-data-migration/dev/get-started/','/tidb-data-migration/dev
 # Quick Start Guide for TiDB Data Migration
 
 This document describes how to migrate data from MySQL to TiDB using [TiDB Data Migration](https://github.com/pingcap/dm) (DM).
+
+If you need to deploy DM in the production environment, refer to the following documents:
+
+1. [Deploy a DM cluster Using TiUP](deploy-a-dm-cluster-using-tiup.md)
+2. [Create a Data Source](quick-start-create-source.md)
+3. [Create a Data Migration Task](quick-create-migration-task.md)
 
 ## Sample scenario
 

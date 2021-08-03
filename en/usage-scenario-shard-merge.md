@@ -8,57 +8,76 @@ aliases: ['/docs/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
 This document shows how to use Data Migration (DM) in the shard merge scenario.
 
-The example used in this document is a simple scenario where the sharded schemas and sharded tables of three upstream MySQL instances need to be migrated to a downstream TiDB cluster.
+The example used in this document is a simple scenario where the sharded schemas and sharded tables of two data source MySQL instances need to be migrated to a downstream TiDB cluster.
 
 For other scenarios, you can refer to [Best Practices of Data Migration in the Shard Merge Scenario](shard-merge-best-practices.md).
 
-## Upstream instances
+## Data source instances
 
-Assume that the upstream schemas are as follows:
+Assume that the data source structure are as follows:
 
 - Instance 1
 
-    | Schema | Tables|
+    | Schema | Tables |
     |:------|:------|
-    | user  | information, log_north, log_bak |
+    | user  | information, log_bak |
     | store_01 | sale_01, sale_02 |
     | store_02 | sale_01, sale_02 |
 
 - Instance 2
 
-    | Schema | Tables|
+    | Schema | Tables |
     |:------|:------|
-    | user  | information, log_east, log_bak |
-    | store_01 | sale_01, sale_02 |
-    | store_02 | sale_01, sale_02 |
-
-- Instance 3
-
-    | Schema | Tables|
-    |:------|:------|
-    | user  | information, log_south, log_bak |
+    | user  | information, log_bak |
     | store_01 | sale_01, sale_02 |
     | store_02 | sale_01, sale_02 |
 
 ## Migration requirements
 
-1. Merge tables with the same name. For example, merge the `user`.`information` tables of three upstream instances to the downstream `user`.`information` table in TiDB.
-2. Merge tables with different names. For example, merge the `user`.`log_{north|south|east}` tables of three upstream instances to the downstream `user`.`log_{north|south|east}` table in TiDB.
-3. Merge sharded tables. For example, merge the `store_{01|02}`.`sale_{01|02}` tables of three upstream instances to the downstream `store`.`sale` table in TiDB.
-4. Filter delete operations. For example, filter out all the delete operations in the `user`.`log_{north|south|east}` table of three upstream instances.
-5. Filter delete operations. For example, filter out all the delete operations in the `user`.`information` table of three upstream instances.
-6. Filter delete operations. For example, filter out all the delete operations in the `store_{01|02}`.`sale_{01|02}` table of three upstream instances.
-7. Use wildcards to filter specific tables. For example, filter out the `user`.`log_bak` tables of three upstream instances using wildcard `user`.`log_*`.
-8. Troubleshoot primary key conflicts. Because the `store_{01|02}`.`sale_{01|02}` tables have auto-increment primary keys of the `bigint` type, the conflict occurs when these tables are merged into TiDB. The following text will show you solutions to resolve and avoid the conflict.
-
-## Downstream instances
+1. Merge the `user`.`information` tables to the downstream `user`.`information` table in TiDB.
+2. Merge the `store_{01|02}`.`sale_{01|02}` tables in the above instances to the downstream `store`.`sale` table in TiDB.
+3. Replicate `user` and `store_{01|02}` schemas but do not replicate the `user`.`log_bak` tables in the above instances.
+4. Filter out all the delete operations in the `store_{01|02}`.`sale_{01|02}` table of the above instances and filter out the `drop database` operation in the shema.
 
 Assume that the downstream schema after migration is as follows:
 
 | Schema | Tables |
 |:------|:------|
-| user | information, log_north, log_east, log_south|
+| user | information |
 | store | sale |
+
+## 分表数据冲突检查
+
+迁移需求 #1 和 #2 涉及合库合表，来自多张分表的数据可能引发主键或唯一索引的数据冲突。这需要我们检查这几组分表数据的业务特点，详情请见[跨分表数据在主键或唯一索引冲突处理](shard-merge-best-practices.md#跨分表数据在主键或唯一索引冲突处理)。在本示例中：
+
+`user`.`information` 表结构为
+
+```sql
+CREATE TABLE `information` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `uid` bigint(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `data` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uid` (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+```
+
+其中 `id` 列为主键，`uid` 列为唯一索引。`id` 列具有自增属性，多个分表范围重复会引发数据冲突。 `uid` 可以保证全局满足唯一索引，因此可以按照参考[去掉自增主键的主键属性](shard-merge-best-practices.md#去掉自增主键的主键属性)中介绍的操作绕过 `id` 列。
+
+`store_{01|02}`.`sale_{01|02}` 的表结构为
+
+```sql
+CREATE TABLE `sale_01` (
+  `sid` bigint(20) NOT NULL,
+  `pid` bigint(20) NOT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`sid`),
+  KEY `pid` (`pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+```
+
+其中 `sid` 是分片键，可以保证同一个 `sid` 只会划分到一个分表中，因此不会引发数据冲突，无需进行额外操作。
 
 ## Migration solution
 
@@ -157,7 +176,7 @@ mysql-instances:
     source-id: "instance-1"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule" , "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version is earlier than v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -165,7 +184,7 @@ mysql-instances:
     source-id: "instance-2"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule" , "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version is earlier than v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -173,7 +192,7 @@ mysql-instances:
     source-id: "instance-3"
     route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
     filter-rules: ["user-filter-rule", "store-filter-rule" , "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version is earlier than v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -208,7 +227,7 @@ filters:
     events: ["drop database"]
     action: Ignore
 
-block-allow-list:  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:  # Use black-white-list if the DM's version is earlier than v2.0.0-beta.2.
   log-bak-ignored:
     ignore-tales:
     - db-name: "user"
