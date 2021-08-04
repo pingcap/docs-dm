@@ -27,6 +27,14 @@ Instead, you can:
 - Follow the corresponding manual solution to handle the scenario if the failure of automatically releasing the sharding DDL lock is one of the [listed abnormal scenarios](manually-handling-sharding-ddl-locks.md#supported-scenarios).
 - Redo the entire data migration task if it is an unsupported scenario: First, empty the data in the downstream database and the `dm_meta` information associated with the migration task; then, re-execute the full and incremental data replication.
 
+## Handle conflicts between primary keys or unique indexes across multiple sharded tables
+
+Data from multiple sharded tables might cause conflicts between the primary keys or the unique keys. You need to check each primary key or unique index in these sharded tables. Here, three situations are listed to help you solve the conflicts.
+
+- Sharded key: Usually, the same sharded key only exists in one sharded table, which means no data conflict is caused.
+- Auto-increment primary key：The auto-increment primary key of each sharded tables counts separately,......In this condition, you need to refer to the next section 每个分表的自增主键会单独计数，因此会出现范围重叠的情况[Handle conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key) to solve it.
+- Other primary keys or unique indexes: you need to analyze based on the logic of the tables. If data conflicts occur, you can also refer to the next section [Handle conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key) to solve it.
+
 ## Handle conflicts of auto-increment primary key
 
 This section introduces two recommended solutions to handle conflicts of auto-increment primary key.

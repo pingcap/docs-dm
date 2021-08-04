@@ -46,11 +46,11 @@ Assume that the downstream schema after migration is as follows:
 | user | information |
 | store | sale |
 
-## 分表数据冲突检查
+## Conflict check across sharded tables
 
-迁移需求 #1 和 #2 涉及合库合表，来自多张分表的数据可能引发主键或唯一索引的数据冲突。这需要我们检查这几组分表数据的业务特点，详情请见[跨分表数据在主键或唯一索引冲突处理](shard-merge-best-practices.md#跨分表数据在主键或唯一索引冲突处理)。在本示例中：
+Because migration requirements #1 and #2 involve the DM Shard Merge feature, data from multiple tables might cause conflicts between the primary keys or the unique keys (in each sharded table, the primary keys or the unique keys are different from those of other tables). You need to check these sharded tables. For details, refer to [Handle conflicts between primary keys or unique indexes across multiple sharded tables](shard-merge-best-practices.md#handle-conflicts-between-primary-keys-or-unique-indexes-across-multiple-sharded-tables). In this example:
 
-`user`.`information` 表结构为
+The table structure of `user`.`information` is
 
 ```sql
 CREATE TABLE `information` (
@@ -63,9 +63,9 @@ CREATE TABLE `information` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
 ```
 
-其中 `id` 列为主键，`uid` 列为唯一索引。`id` 列具有自增属性，多个分表范围重复会引发数据冲突。 `uid` 可以保证全局满足唯一索引，因此可以按照参考[去掉自增主键的主键属性](shard-merge-best-practices.md#去掉自增主键的主键属性)中介绍的操作绕过 `id` 列。
+In the above structure, column `id` is the primary key and column `uid` is the unique index. Column `id` has auto-increment attribute and repeated 。。。。。列具有自增属性，多个分表范围重复会引发数据冲突。 Column `uid` can ensure only a unique index exists globally. So, you can aviod column `id` by following the steps in the section [Remove the `PRIMARY KEY` attribute from the column](shard-merge-best-practices.md#remove-the-primary-key-attribute-from-the-column).
 
-`store_{01|02}`.`sale_{01|02}` 的表结构为
+The table structure of `store_{01|02}`.`sale_{01|02}` is
 
 ```sql
 CREATE TABLE `sale_01` (
@@ -77,21 +77,36 @@ CREATE TABLE `sale_01` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
 ```
 
-其中 `sid` 是分片键，可以保证同一个 `sid` 只会划分到一个分表中，因此不会引发数据冲突，无需进行额外操作。
+In the above structure, `sid` is the sharded key, which can ensure that the same `sid` only exists in one sharded table. So no data conflict is caused and you do not need to perform extra operations.
 
 ## Migration solution
 
-- To satisfy the migration Requirements #1 and #2, configure the [table routing rule](key-features.md#table-routing) as follows:
+- To satisfy migration requirements #1, you do not need to configure the [table routing rule](key-features.md#table-routing). You need to manually create a table based on the requirements in the section [Remove the `PRIMARY KEY` attribute from the column](shard-merge-best-practices.md#remove-the-primary-key-attribute-from-the-column):
+
+    {{< copyable "sql" >}}
+
+    ```sql
+    CREATE TABLE `information` (
+      `id` bigint(20) NOT NULL AUTO_INCREMENT,
+      `uid` bigint(20) DEFAULT NULL,
+      `name` varchar(255) DEFAULT NULL,
+      `data` varchar(255) DEFAULT NULL,
+      INDEX (`id`),
+      UNIQUE KEY `uid` (`uid`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+    ```
+    
+    And skip precheck in the configuration file:
+    
+    {{< copyable "" >}}
 
     ```yaml
-    routes:
-      ...
-      user-route-rule:
-        schema-pattern: "user"
-        target-schema: "user"
+    ignore-checking-items: ["auto_increment_ID"]
     ```
 
-- To satisfy the migration Requirement #3, configure the [table routing rule](key-features.md#table-routing) as follows:
+- To satisfy the migration Requirement #2, configure the [table routing rule](key-features.md#table-routing) as follows:
+
+    {{< copyable "" >}}
 
     ```yaml
     routes:
@@ -106,62 +121,46 @@ CREATE TABLE `sale_01` (
         target-table:  "sale"
     ```
 
-- To satisfy the migration Requirements #4 and #5, configure the [binlog event filtering rule](key-features.md#binlog-event-filter) as follows:
-
-    ```yaml
-    filters:
-      ...
-      user-filter-rule:
-        schema-pattern: "user"
-        events: ["truncate table", "drop table", "delete", "drop database"]
-        action: Ignore
-    ```
-
-    > **Note:**
-    >
-    > The migration Requirements #4 and #5 indicate that all the deletion operations in the `user` schema are filtered out, so a schema level filtering rule is configured here. And the deletion operations of tables in the `user` schema participating in the future migration will also be filtered out.
-
-- To satisfy the migration Requirement #6, configure the [binlog event filter rule](key-features.md#binlog-event-filter) as follows:
-
-    ```yaml
-    filters:
-      ...
-      sale-filter-rule:
-        schema-pattern: "store_*"
-        table-pattern: "sale_*"
-        events: ["truncate table", "drop table", "delete"]
-        action: Ignore
-      store-filter-rule:
-        schema-pattern: "store_*"
-        events: ["drop database"]
-        action: Ignore
-    ```
-
-- To satisfy the migration Requirement #7, configure the [block and allow table lists](key-features.md#block-and-allow-table-lists) as follows:
-
-    ```yaml
-    block-allow-list:
-      log-bak-ignored:
-        ignore-tales:
-        - db-name: "user"
-          tbl-name: "log_bak"
-    ```
-
-- To satisfy the migration Requirement #8, first refer to [handling conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key) to solve conflicts. This guarantees that data is successfully migrated to the downstream when the primary key value of one sharded table is duplicate with that of another sharded table. Then, configure `ignore-checking-items` to skip checking the conflict of auto-increment primary key:
+- To satisfy the migration requirements #3, configure the [Block and allow table lists](key-features.md#block-and-allow-table-lists) as follows:
 
     {{< copyable "" >}}
 
     ```yaml
-    ignore-checking-items: ["auto_increment_ID"]
+    block-allow-list:
+      log-bak-ignored:
+        do-dbs: ["user", "store_*"]
+        ignore-tables:
+        - db-name: "user"
+          tbl-name: "log_bak"
+    ```
+
+- To satisfy the migration requirement #4, configure the [binlog event filter rule](key-features.md#binlog-event-filter) as follows:
+
+    {{< copyable "" >}}
+
+    ```yaml
+    filters:
+      ...
+      sale-filter-rule:     # filter out all deletion operations of all tables under store_* schema
+        schema-pattern: "store_*"
+        table-pattern: "sale_*"
+        events: ["truncate table", "drop table", "delete"]
+        action: Ignore
+      store-filter-rule:   # filter out the deletion operation of store_* schema
+        schema-pattern: "store_*"
+        events: ["drop database"]
+        action: Ignore
     ```
 
 ## Migration task configuration
 
 The complete configuration of the migration task is shown as below. For more details, see [Data Migration Task Configuration File](task-configuration-file.md).
 
+{{< copyable "" >}}
+
 ```yaml
 name: "shard_merge"
-task-mode: all
+task-mode: all                      # full data migration + incremental data migration
 meta-schema: "dm_meta"
 ignore-checking-items: ["auto_increment_ID"]
 
@@ -173,36 +172,19 @@ target-database:
 
 mysql-instances:
   -
-    source-id: "instance-1"
-    route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
-    filter-rules: ["user-filter-rule", "store-filter-rule" , "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version is earlier than v2.0.0-beta.2.
-    mydumper-config-name: "global"
-    loader-config-name: "global"
-    syncer-config-name: "global"
+    source-id: "instance-1"  # the ID of the data source and can be obtained from the data source configuration
+    route-rules: ["store-route-rule", "sale-route-rule"] # applies to the table route rules of this data source
+    filter-rules: ["store-filter-rule" , "sale-filter-rule"] # applies to the binlog event filter rules of this data source
+    block-allow-list:  "log-bak-ignored"  # applies to the block and allow lists of this data source
   -
     source-id: "instance-2"
-    route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
-    filter-rules: ["user-filter-rule", "store-filter-rule" , "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version is earlier than v2.0.0-beta.2.
-    mydumper-config-name: "global"
-    loader-config-name: "global"
-    syncer-config-name: "global"
-  -
-    source-id: "instance-3"
-    route-rules: ["user-route-rule", "store-route-rule", "sale-route-rule"]
-    filter-rules: ["user-filter-rule", "store-filter-rule" , "sale-filter-rule"]
-    block-allow-list:  "log-bak-ignored"  # Use black-white-list if the DM's version is earlier than v2.0.0-beta.2.
-    mydumper-config-name: "global"
-    loader-config-name: "global"
-    syncer-config-name: "global"
+    route-rules: ["store-route-rule", "sale-route-rule"]
+    filter-rules: ["store-filter-rule", "sale-filter-rule"]
+    block-allow-list:  "log-bak-ignored"
 
-# Other common configs shared by all instances.
+# Other common configs shared by all instances
 
 routes:
-  user-route-rule:
-    schema-pattern: "user"
-    target-schema: "user"
   store-route-rule:
     schema-pattern: "store_*"
     target-schema: "store"
@@ -213,10 +195,6 @@ routes:
     target-table:  "sale"
 
 filters:
-  user-filter-rule:
-    schema-pattern: "user"
-    events: ["truncate table", "drop table", "delete", "drop database"]
-    action: Ignore
   sale-filter-rule:
     schema-pattern: "store_*"
     table-pattern: "sale_*"
@@ -227,25 +205,10 @@ filters:
     events: ["drop database"]
     action: Ignore
 
-block-allow-list:  # Use black-white-list if the DM's version is earlier than v2.0.0-beta.2.
+block-allow-list:
   log-bak-ignored:
-    ignore-tales:
+    do-dbs: ["user", "store_*"]
+    ignore-tables:
     - db-name: "user"
       tbl-name: "log_bak"
-
-mydumpers:
-  global:
-    threads: 4
-    chunk-filesize: 64
-
-loaders:
-  global:
-    pool-size: 16
-    dir: "./dumped_data"
-
-syncers:
-  global:
-    worker-count: 16
-    batch: 100
-    max-retry: 100
 ```
