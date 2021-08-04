@@ -8,7 +8,7 @@ aliases: ['/docs/tidb-data-migration/dev/usage-scenario-shard-merge/']
 
 This document shows how to use Data Migration (DM) in the shard merge scenario.
 
-The example used in this document is a simple scenario where the sharded schemas and sharded tables of two data source MySQL instances need to be migrated to a downstream TiDB cluster.
+The example used in this document is a simple scenario where sharded schemas and sharded tables of two data source MySQL instances need to be migrated to a downstream TiDB cluster.
 
 For other scenarios, you can refer to [Best Practices of Data Migration in the Shard Merge Scenario](shard-merge-best-practices.md).
 
