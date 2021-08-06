@@ -34,22 +34,22 @@ A data source contains the data source access information. Before creating a dat
     For each data source, you need to create an independent configuration file to create it. You can follow the example below to create a data source whose ID is "mysql-01". First create the configuration file `./source-mysql-01.yaml`：
 
     ```yaml
-    source-id: "mysql-01"    # The ID of the data source, you can 数据源对象 ID，在数据迁移任务配置和 dmctl 命令行中引用该 source-id 可以关联到对应的数据源对象
+    source-id: "mysql-01"    # The ID of the data source, you can quote this source-id in the task configuration and dmctl command to associate the corresponding data source.
     
     from:
       host: "127.0.0.1"
       port: 3306
       user: "root"
-      password: "MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=" # 推荐使用 dmctl 对上游数据源的用户密码加密之后的密码
-      security:                                        # 上游数据源 TLS 相关配置。如果没有需要则可以删除
+      password: "MKxn0Qo3m3XOyjCnhEMtsUCm83EhGQDZ/T4=" # The user password of the upstream data source. It is recommended to use the password encrypted with dmctl.
+      security:                                        # The TLS configuration of the upstream data source. If not necessary, it can be deleted.
         ssl-ca: "/path/to/ca.pem"
         ssl-cert: "/path/to/cert.pem"
         ssl-key: "/path/to/key.pem"
     ```
 
-## 第二步：创建数据源对象
+## Step 2: Create a data source
 
-使用如下命令创建数据源对象：
+You can use the following command to create a data source:
 
 {{< copyable "shell-regular" >}}
 
@@ -57,9 +57,9 @@ A data source contains the data source access information. Before creating a dat
 tiup dmctl --master-addr <master-addr> operate-source create ./source-mysql-01.yaml
 ```
 
-数据源配置文件的其他配置参考[数据源配置文件介绍](source-configuration-file.md)。
+For other configuration parameters, refer to [Upstream Database Configuration File](source-configuration-file.md).
 
-命令返回结果如下：
+The returned results are as follows:
 
 {{< copyable "" >}}
 
@@ -78,11 +78,11 @@ tiup dmctl --master-addr <master-addr> operate-source create ./source-mysql-01.y
 }
 ```
 
-## 第三步：查询创建的数据源对象
+## Step 3: Query the data source you created
 
-创建数据源对象后，可以使用如下命令查看创建的数据源对象：
+After creating a data source, you can use the following command to query the data source:
 
-- 如果知道数据源的 `source-id`，可以通过 `dmctl get-config source <source-id>` 命令直接查看数据源配置：
+- If you konw the `source-id` of the data source, you can use `dmctl get-config source <source-id>` command to directly check the configuration of the data source:
 
     {{< copyable "shell-regular" >}}
 
@@ -105,7 +105,7 @@ tiup dmctl --master-addr <master-addr> operate-source create ./source-mysql-01.y
     }
     ```
 
-- 如果不知道数据源的 `source-id`，可以先通过 `dmctl operate-source show` 命令查看源数据库列表，从中可以找到对应的数据源对象。
+- If you do not know the `source-id`, you can first use the `dmctl operate-source show` command to check the original database, from which you can find the corresponding data source.
 
     {{< copyable "shell-regular" >}}
 
