@@ -1,9 +1,9 @@
 ---
-title: Migration When the Downstream Table Has More Columns
+title: Migration when the Downstream Table Has More Columns
 summary: Learn how to use DM to migrate tables when the downstream table schema has more columns.
 ---
 
-# Migration When the Downstream Table Has More Columns
+# Migration when the Downstream Table Has More Columns
 
 This document describes how to migrate tables using DM when the downstream table schema has more columns than the upstream table schema.
 
