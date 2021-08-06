@@ -33,4 +33,4 @@ If you have already migrated full data migration using other tools like TiDB Lig
 
 ## Migration when the Downstream Table Has More Columns
 
-If you need to customize your table structure and TiDB table structure contains and has more columns than the data source table, refer to [Migration when the Downstream Table Has More Columns](usage-scenario-downstream-more-columns.md).
+If you need to customize your table schema and TiDB table schema has more columns than the data source table, refer to [Migration when the Downstream Table Has More Columns](usage-scenario-downstream-more-columns.md).

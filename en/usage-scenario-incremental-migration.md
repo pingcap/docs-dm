@@ -58,7 +58,7 @@ This example starts synchronizing data changes from `binlog position=(mysql-bin.
 
 ### Create tables manually downstream
 
-Because the table SQL statements are created before sync starting point, this incremental synchronization task does not automatically create tables downstream. So you need to manually create a table structure at the corresponding starting point in the downstream TiDB. The detailed steps are as follows:
+Because the table SQL statements are created before sync starting point, this incremental synchronization task does not automatically create tables downstream. So you need to manually create a table schema at the corresponding starting point in the downstream TiDB. The detailed steps are as follows:
 
 {{< copyable "sql" >}}
 

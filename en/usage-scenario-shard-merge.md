@@ -50,7 +50,7 @@ Assume that the downstream schema after migration is as follows:
 
 Because migration requirements #1 and #2 involve the DM Shard Merge feature, data from multiple tables might cause conflicts between the primary keys or the unique keys (in each sharded table, the primary keys or the unique keys are different from those of other tables). You need to check these sharded tables. For details, refer to [Handle conflicts between primary keys or unique indexes across multiple sharded tables](shard-merge-best-practices.md#handle-conflicts-between-primary-keys-or-unique-indexes-across-multiple-sharded-tables). In this example:
 
-The table structure of `user`.`information` is
+The table schema of `user`.`information` is
 
 ```sql
 CREATE TABLE `information` (
@@ -65,7 +65,7 @@ CREATE TABLE `information` (
 
 In the above structure, column `id` is the primary key and column `uid` is the unique index. Column `id` has auto-increment attribute and repeated 。。。。。列具有自增属性，多个分表范围重复会引发数据冲突。 Column `uid` can ensure only a unique index exists globally. So, you can aviod column `id` by following the steps in the section [Remove the `PRIMARY KEY` attribute from the column](shard-merge-best-practices.md#remove-the-primary-key-attribute-from-the-column).
 
-The table structure of `store_{01|02}`.`sale_{01|02}` is
+The table schema of `store_{01|02}`.`sale_{01|02}` is
 
 ```sql
 CREATE TABLE `sale_01` (
