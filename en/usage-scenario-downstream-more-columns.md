@@ -181,9 +181,9 @@ Otherwise, after creating the task, the following data migration errors occur wh
 
 The reason for the above errors is that when DM migrates the binlog event, if DM has not maintained internally the table schema corresponding to that table, DM tries to use the current table schema in the downstream to parse the binlog event and generate the corresponding DML statement. If the number of columns in the binlog event is inconsistent with the number of columns in the downstream table schema, the above error might occur.
 
-In such cases, you can run the [`operate-schema`](manage-schema.md) command to specify for the table a table schema that matches the binlog event. If you are migrating sharded tables, you need to configure the table schema in DM for parsing MySQL binlog for each sharded tables according to the following steps. The steps are as follows:
+In such cases, you can run the [`operate-schema`](manage-schema.md) command to specify for the table a table schema that matches the binlog event. If you are migrating sharded tables, you need to configure the table schema in DM for parsing MySQL binlog for each sharded tables according to the following steps:
 
-1. Specify the table schema for the table `log.messages` to be migrated in the data source. The table schema needs to correspond to the data of the binlog event to be synchronized by DM. Then save the `CREATE TABLE` table schema statement in a file. For example, save the following table schema in the `log.messages.sql` file:
+1. Specify the table schema for the table `log.messages` to be migrated in the data source. The table schema needs to correspond to the data of the binlog event to be replicated by DM. Then save the `CREATE TABLE` table schema statement in a file. For example, save the following table schema in the `log.messages.sql` file:
 
     ```sql
     CREATE TABLE `messages` (

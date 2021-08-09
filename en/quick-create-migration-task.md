@@ -14,7 +14,7 @@ summary: Learn how to configure a data migration task in different scenarios.
 
 This document introduces how to configure a data migration task in different scenarios. You can choose suitable documents to create your data migration task according to the specific scenario.
 
-In addition to documents based on different scenarios, you can also refer to the following documents:
+In addition to scenario-based documents, you can also refer to the following ones:
 
 - For a complete example of data migration task configuration, refer to [DM Advanced Task Configuration File](task-configuration-file-full.md).
 - For a data migration task configuration guide, refer to [Data Migration Task Configuration Guide](task-configuration-guide.md).

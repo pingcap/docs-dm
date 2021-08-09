@@ -11,7 +11,7 @@ summary: Learn how to create a data source for Data Migration (DM).
 
 The document describes how to create a data source for the data migration task of TiDB Data Migration (DM).
 
-A data source contains the data source access information. Before creating a data migration task, you need to create the data source of a task. That is because a data migration task requires quoting its corresponding data source to obtain the configuration information of access. For specific data source management commands, refer to [Manage Data Source Configurations](manage-source.md).
+A data source contains the data source access information. Before creating a data migration task, you need to create the data source of a task. That is because a data migration task requires referring its corresponding data source to obtain the configuration information of access. For specific data source management commands, refer to [Manage Data Source Configurations](manage-source.md).
 
 ## Step 1: Configure the data source
 
@@ -31,10 +31,10 @@ A data source contains the data source access information. Before creating a dat
 
 2. Write the configuration file of the data source
 
-    For each data source, you need to create an independent configuration file to create it. You can follow the example below to create a data source whose ID is "mysql-01". First create the configuration file `./source-mysql-01.yaml`：
+    For each data source, you need an independent configuration file to create it. You can follow the example below to create a data source whose ID is "mysql-01". First create the configuration file `./source-mysql-01.yaml`：
 
     ```yaml
-    source-id: "mysql-01"    # The ID of the data source, you can quote this source-id in the task configuration and dmctl command to associate the corresponding data source.
+    source-id: "mysql-01"    # The ID of the data source, you can refer this source-id in the task configuration and dmctl command to associate the corresponding data source.
     
     from:
       host: "127.0.0.1"

@@ -4,7 +4,7 @@ title: Incremental Data Migration Scenario
 
 # Incremental Data Migration Scenario
 
-This document describes how to use Data Migration (DM) to synchronize the Binlog at a specified position in the source database to the downstream TiDB. The scenario is based on an example of migrating a data source MySQL instance to TiDB.
+This document describes how to use Data Migration (DM) to replicate the Binlog from a specified position in the source database to the downstream TiDB. The scenario is based on an example of migrating a data source MySQL instance to TiDB.
 
 ## Data source table
 
@@ -18,7 +18,7 @@ Assume the data source instance is:
 
 ## Migration requirements
 
-Only synchronize the data change at a specified position in the source database `log` to the TiDB cluster.
+Only replicate the data change from a specified position in the source database `log` to the TiDB cluster.
 
 ## Incremental data migration operations
 
@@ -26,7 +26,7 @@ This section provides you data migration steps, which helps you use DM to synchr
 
 ### Determines the start position of incremental sync
 
-First you need to determine the sync position of the binlog where you start to migrate data. If you have determined the position of binlog, skip this step.
+First you need to determine the position of the binlog where you start to migrate data. If you have determined the position of binlog, skip this step.
 
 By following the steps below, you can obtain the position of binlog where you start migrating data in the source data:
 
@@ -58,7 +58,7 @@ This example starts synchronizing data changes from `binlog position=(mysql-bin.
 
 ### Create tables manually downstream
 
-Because the table SQL statements are created before sync starting point, this incremental synchronization task does not automatically create tables downstream. So you need to manually create a table schema at the corresponding starting point in the downstream TiDB. The detailed steps are as follows:
+Because the table SQL statements are created before replication starting point, this incremental synchronization task does not automatically create tables downstream. So you need to manually create a table schema at the corresponding starting point in the downstream TiDB. The detailed steps are as follows:
 
 {{< copyable "sql" >}}
 
@@ -70,9 +70,9 @@ CREATE TABLE `messages` (
 )
 ```
 
-### Create sync task
+### Create replication task
 
-1. Create task configuration `task.yaml` to configure incremental sync mode and sync starting point for each data source. The complete task configuration example is as follows:
+1. Create task configuration `task.yaml` to configure incremental replication mode and replication starting point for each data source. The complete task configuration example is as follows:
 
    {{< copyable "yaml" >}}
 
