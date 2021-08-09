@@ -24,7 +24,7 @@ Only replicate the data change from a specified position in the source database 
 
 This section provides you data migration steps, which helps you use DM to replicate data changes from the `log` database to the TiDB cluster.
 
-### Determines the start position of incremental sync
+### Determines the start position of incremental replication
 
 First you need to determine the replication position of the binlog where you start to migrate data. If you have determined the position of binlog, skip this step.
 
@@ -42,7 +42,7 @@ By following the steps below, you can obtain the position of binlog where you st
   ```
 
 - Use `SHOW BINLOG EVENTS`, or use `mysqlbinlog` tool to check binlog and select an appropriate position.
-- If you want to start synchronizing binlog at the current time, use `SHOW MASTER STATUS` to check the current position:
+- If you want to start replicating binlog at the current time, use `SHOW MASTER STATUS` to check the current position:
 
   ```sql
   MySQL [log]> SHOW MASTER STATUS;
@@ -54,11 +54,11 @@ By following the steps below, you can obtain the position of binlog where you st
   1 row in set (0.000 sec)
   ```
 
-This example starts synchronizing data changes from `binlog position=(mysql-bin.000001, 2022), gtid=09bec856-ba95-11ea-850a-58f2b4af5188:1-9`.
+This example starts replicating data changes from `binlog position=(mysql-bin.000001, 2022), gtid=09bec856-ba95-11ea-850a-58f2b4af5188:1-9`.
 
 ### Create tables manually downstream
 
-Because the table SQL statements are created before replication starting point, this incremental synchronization task does not automatically create tables downstream. So you need to manually create a table schema at the corresponding starting point in the downstream TiDB. The detailed steps are as follows:
+Because the table SQL statements are created before replication starting point, this incremental replication task does not automatically create tables downstream. So you need to manually create a table schema at the corresponding starting point in the downstream TiDB. The detailed steps are as follows:
 
 {{< copyable "sql" >}}
 

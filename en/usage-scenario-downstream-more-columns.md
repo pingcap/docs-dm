@@ -28,7 +28,7 @@ Customize a table `log.messages` in TiDB, whose table shema has all the columns 
 
 ## Only migrate incremental data to TiDB and the downstream TiDB table has more columns
 
-If your migration task contains full data migration, the task can operate normally. If you have already used other tools to do full data migration and this migration task only uses DM to replicate incremental data, refer to [Migrate Incremental Data to TiDB](usage-scenario-incremental-migration.md#create-sync-task) to create a data migration task. At the same time, you need to manually configure the table schema in DM for MySQL binlog parsing.
+If your migration task contains full data migration, the task can operate normally. If you have already used other tools to do full data migration and this migration task only uses DM to replicate incremental data, refer to [Migrate Incremental Data to TiDB](usage-scenario-incremental-migration.md#create-replication-task) to create a data migration task. At the same time, you need to manually configure the table schema in DM for MySQL binlog parsing.
 
 Otherwise, after creating the task, the following data migration errors occur when you run `query-status` command:
 
