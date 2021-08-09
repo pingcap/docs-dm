@@ -22,15 +22,15 @@ Only replicate the data change from a specified position in the source database 
 
 ## Incremental data migration operations
 
-This section provides you data migration steps, which helps you use DM to synchronize data changes from the `log` database to the TiDB cluster.
+This section provides you data migration steps, which helps you use DM to replicate data changes from the `log` database to the TiDB cluster.
 
 ### Determines the start position of incremental sync
 
-First you need to determine the position of the binlog where you start to migrate data. If you have determined the position of binlog, skip this step.
+First you need to determine the replication position of the binlog where you start to migrate data. If you have determined the position of binlog, skip this step.
 
 By following the steps below, you can obtain the position of binlog where you start migrating data in the source data:
 
-- Use Dumpling/Mydumper for full data exports. Then use other tools, such as TiDB Lightning, for full data imports. By exporting the [metadata files](https://docs.pingcap.com/zh/tidb/stable/dumpling-overview#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F), you can get the the sync position.
+- Use Dumpling/Mydumper for full data exports. Then use other tools, such as TiDB Lightning, for full data imports. After that, you can  you can obtain the replication position by exporting the [metadata files](https://docs.pingcap.com/zh/tidb/stable/dumpling-overview#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F).
 
   ```file
   Started dump at: 2020-11-10 10:40:19
@@ -109,7 +109,7 @@ CREATE TABLE `messages` (
          binlog-gtid: "09bec856-ba95-11ea-850a-58f2b4af5188:1-9"
    ```
 
-2. Create sync task using `start-task` command:
+2. Create replication task using `start-task` command:
 
    {{< copyable "shell-regular" >}}
 
@@ -132,7 +132,7 @@ CREATE TABLE `messages` (
    }
    ```
 
-3. Check sync task using `query-status` command to ensure that no error message exists:
+3. Check replication task using `query-status` command to ensure that no error message exists:
 
    {{< copyable "shell-regular" >}}
 
@@ -183,7 +183,7 @@ CREATE TABLE `messages` (
    }
    ```
 
-## Test sync tasks
+## Test replication tasks
 
 Insert new data in source database:
 
@@ -211,7 +211,7 @@ MySQL [log]> SELECT * FROM messages;
 5 rows in set (0.001 sec)
 ```
 
-If you query data in the downstream, you can find that the data after `(3, 'msg3')` is synchronized successfully:
+If you query data in the downstream, you can find that the data after `(3, 'msg3')` is replicated successfully:
 
 ```sql
 MySQL [log]> SELECT * FROM messages;
