@@ -21,7 +21,7 @@ In addition to documents based on different scenarios, you can also refer to the
 
 ## Migrate Data from Multiple Data Sources to TiDB
 
-If you need to migrate data from multiple data sources to TiDB, or to avoid some DDL/DML operations of some tables, refer to 如果你需要将多个数据源的数据汇总迁移到 TiDB，此外还需要进行表重命名以防止多个数据源中相同表名在迁移过程中出现冲突，[Migrate Data from Multiple Data Sources to TiDB](usage-scenario-simple-migration.md).
+If you need to migrate data from multiple data sources to TiDB, and to rename tables to avoid migration conflicts when tables with the same name exist in different data source, refer to [Migrate Data from Multiple Data Sources to TiDB](usage-scenario-simple-migration.md).
 
 ## Migrate Sharded Schemas and Sharded Tables to TiDB
 

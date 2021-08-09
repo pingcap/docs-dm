@@ -37,7 +37,7 @@ Assume that the data source structure are as follows:
 1. Merge the `user`.`information` tables to the downstream `user`.`information` table in TiDB.
 2. Merge the `store_{01|02}`.`sale_{01|02}` tables in the above instances to the downstream `store`.`sale` table in TiDB.
 3. Replicate `user` and `store_{01|02}` schemas but do not replicate the `user`.`log_bak` tables in the above instances.
-4. Filter out all the delete operations in the `store_{01|02}`.`sale_{01|02}` table of the above instances and filter out the `drop database` operation in the shema.
+4. Filter out all the delete operations in the `store_{01|02}`.`sale_{01|02}` table of the above instances and filter out the `drop database` operation in shemas.
 
 Assume that the downstream schema after migration is as follows:
 
@@ -63,7 +63,7 @@ CREATE TABLE `information` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
 ```
 
-In the above structure, column `id` is the primary key and column `uid` is the unique index. Column `id` has auto-increment attribute and repeated 。。。。。列具有自增属性，多个分表范围重复会引发数据冲突。 Column `uid` can ensure only a unique index exists globally. So, you can aviod column `id` by following the steps in the section [Remove the `PRIMARY KEY` attribute from the column](shard-merge-best-practices.md#remove-the-primary-key-attribute-from-the-column).
+In the above structure, column `id` is the primary key and column `uid` is the unique index. Column `id` has auto-increment attribute and if the ranges of tables overlap, data conflicts might occur. Column `uid` can ensure only a unique index exists globally. So, you can aviod column `id` by following the steps in the section [Remove the `PRIMARY KEY` attribute from the column](shard-merge-best-practices.md#remove-the-primary-key-attribute-from-the-column).
 
 The table schema of `store_{01|02}`.`sale_{01|02}` is
 
