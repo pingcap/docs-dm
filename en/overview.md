@@ -49,6 +49,10 @@ DM supports merging and migrating the original sharded instances and tables from
 
 In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM provides support for these tools to avoid migrating unnecessary intermediate data. For details, see [Online DDL Tools](key-features.md#online-ddl-tools)
 
+### Filter certain row changes using SQL expressions
+
+In the phase of incremental replication, DM supports the configuration of SQL expressions to filter out certain row changes, which makes you more specifically control the data to be replicated. For more detailed information, refer to [Filter Certain Row Changes Using SQL Expressions](feature-expression-filter.md).
+
 ## Usage restrictions
 
 Before using the DM tool, note the following restrictions:
