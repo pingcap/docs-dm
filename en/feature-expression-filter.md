@@ -84,7 +84,7 @@ SQL expressions can involve one or more columns. You can also use the SQL functi
 
 The timezone of TIMESTAMP is UTC by default. You can use `c_timestamp = '2021-01-01 12:34:56.5678+08:00'` to show the specified timezone.
 
-You can define multiple filter rules under the configuration item `expression-filter`. By refering the rules you need in the configuration item of `expression-filters` in the upstream data source, the rules can take effect. When multiple rules take effect, matching **any** of the rules cause a row change to be filtered.
+You can define multiple filter rules under the configuration item `expression-filter`. By refering the rules you need in the configuration item of `expression-filters` in the upstream data source, the rules can take effect. When multiple rules take effect, matching **any** of the rules causes a row change to be filtered.
 
 > **Note:**
 >
