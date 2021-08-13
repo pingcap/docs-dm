@@ -39,7 +39,7 @@ expression-filter:
     insert-value-expr: "c % 2 = 0"
 ```
 
-The above example configures `even_c` rule, and allows the data source whose ID is `mysql-replica-01` to refer this rule.The meaning of `even_c` is:
+The above example configures `even_c` rule, and allows the data source whose ID is `mysql-replica-01` to refer this rule. The meaning of `even_c` is:
 
 For the `tbl` table in the `expr_filter` shema, when the value of the inserted `c` is even (`c % 2 = 0`), the inserted statement will not be migrated downstream.
 
@@ -69,7 +69,7 @@ MySQL [test]> select * from tbl;
 - `schema`: The name of upstream database to be matched. Wildcard match or regular match is not supported.
 - `table`: The name of upstream table to be matched. Wildcard match or regular match is not supported.
 - `insert-value-expr`: To configure an expression which takes effect on the value of binlog event (WRITE_ROWS_EVENT) of INSERT type. It cannot appear in a same configuration item with `update-old-value-expr`, `update-new-value-expr`, and `delete-value-expr`.
-- `update-old-value-expr`：To configure an expression which takes effect on the old value of binlog event (UPDATE_ROWS_EVENT)  of UPDATE type. It cannot appear in a same configuration item with `insert-value-expr` and `delete-value-expr`.
+- `update-old-value-expr`：To configure an expression which takes effect on the old value of binlog event (UPDATE_ROWS_EVENT) of UPDATE type. It cannot appear in a same configuration item with `insert-value-expr` and `delete-value-expr`.
 - `update-new-value-expr`: To configure an expression which takes effect on the new value of binlog event (UPDATE_ROWS_EVENT) of UPDATE type. It cannot appear in a same configuration item with `insert-value-expr` and `delete-value-expr`.
 - `delete-value-expr`：To configure an expression which takes effect on the value of binlog event (DELETE_ROWS_EVENT) of DELETE type. It cannot appear in a same configuration item with`insert-value-expr`, `update-old-value-expr`, and `update-new-value-expr`.
 
