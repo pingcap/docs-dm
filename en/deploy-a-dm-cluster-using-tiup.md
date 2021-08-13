@@ -66,7 +66,7 @@ Log in to the control machine using a regular user account (take the `tidb` user
 
 According to the intended cluster topology, you need to manually create and edit the cluster initialization configuration file.
 
-You need to create a YAML configuration file (named `topology.yaml` for example) according to the [configuration file template](https://github.com/pingcap/tiup/blob/master/embed/templates/examples/dm/topology.example.yaml). For other scenarios, edit the configuration accordingly.
+You need to create a YAML configuration file (named `topology.yaml` for example) according to the [configuration file template](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml). For other scenarios, edit the configuration accordingly.
 
 You can use the command `tiup dm template > topology.yaml` to generate a configuration file template quickly.
 
@@ -111,7 +111,7 @@ alertmanager_servers:
 >
 > - For parameters that should be effective on a specific node, configure these parameters in `config` of this node.
 >
-> - Use `.` to indicate the subcategory of the configuration, such as `log.slow-threshold`. For more formats, see [TiUP configuration template](https://github.com/pingcap/tiup/blob/master/embed/templates/examples/dm/topology.example.yaml).
+> - Use `.` to indicate the subcategory of the configuration, such as `log.slow-threshold`. For more formats, see [TiUP configuration template](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml).
 >
 > - For more parameter description, see [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml) and [worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml).
 >
