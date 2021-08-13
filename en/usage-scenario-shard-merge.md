@@ -48,7 +48,7 @@ Assume that the downstream schema after migration is as follows:
 
 ## Conflict check across sharded tables
 
-Because migration requirements #1 and #2 involve the DM Shard Merge feature, data from multiple tables might cause conflicts between the primary keys or the unique keys (in each sharded table, the primary keys or the unique keys are different from those of other tables). You need to check these sharded tables. For details, refer to [Handle conflicts between primary keys or unique indexes across multiple sharded tables](shard-merge-best-practices.md#handle-conflicts-between-primary-keys-or-unique-indexes-across-multiple-sharded-tables). In this example:
+Because migration requirements #1 and #2 involve the DM Shard Merge feature, data from multiple tables might cause conflicts between the primary keys or the unique keys (in each sharded table, the primary keys or the unique keys may be not different from those of other tables). You need to check these sharded tables. For details, refer to [Handle conflicts between primary keys or unique indexes across multiple sharded tables](shard-merge-best-practices.md#handle-conflicts-between-primary-keys-or-unique-indexes-across-multiple-sharded-tables). In this example:
 
 The table schema of `user`.`information` is
 
@@ -63,7 +63,7 @@ CREATE TABLE `information` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
 ```
 
-In the above structure, column `id` is the primary key and column `uid` is the unique index. Column `id` has auto-increment attribute and if the ranges of tables overlap, data conflicts might occur. Column `uid` can ensure only a unique index exists globally. So, you can aviod column `id` by following the steps in the section [Remove the `PRIMARY KEY` attribute from the column](shard-merge-best-practices.md#remove-the-primary-key-attribute-from-the-column).
+In the above structure, column `id` is the primary key and column `uid` is the unique index. Column `id` has auto-increment attribute and if the ranges of tables overlap, data conflicts might occur. Column `uid` can ensure only a unique index exists globally. So, you can avoid column `id` by following the steps in the section [Remove the `PRIMARY KEY` attribute from the column](shard-merge-best-practices.md#remove-the-primary-key-attribute-from-the-column).
 
 The table schema of `store_{01|02}`.`sale_{01|02}` is
 
@@ -77,7 +77,7 @@ CREATE TABLE `sale_01` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
 ```
 
-In the above structure, `sid` is the sharded key, which can ensure that the same `sid` only exists in one sharded table. So no data conflict is caused and you do not need to perform extra operations.
+In the above structure, `sid` is the shard key, which can ensure that the same `sid` only exists in one sharded table. So no data conflict is caused and you do not need to perform extra operations.
 
 ## Migration solution
 
@@ -104,7 +104,7 @@ In the above structure, `sid` is the sharded key, which can ensure that the same
     ignore-checking-items: ["auto_increment_ID"]
     ```
 
-- To satisfy the migration Requirement #2, configure the [table routing rule](key-features.md#table-routing) as follows:
+- To satisfy the migration requirement #2, configure the [table routing rule](key-features.md#table-routing) as follows:
 
     {{< copyable "" >}}
 
