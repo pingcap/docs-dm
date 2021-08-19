@@ -70,6 +70,7 @@ overview 下包含运行当前选定 task 的所有 DM-worker/master instance/so
 | data file count | load unit 导入的全量数据中数据文件（内含 `INSERT INTO` 语句）的数量总和| N/A | N/A |
 | transaction execution latency | load unit 在执行事务的时延，单位：秒 | N/A | N/A |
 | statement execution latency | load unit 执行语句的耗时，单位：秒 | N/A | N/A |
+| remaining time | load unit 完成同步的剩余时间，单位：秒 | N/A | N/A |
 
 ### Binlog replication
 
@@ -78,7 +79,7 @@ overview 下包含运行当前选定 task 的所有 DM-worker/master instance/so
 | metric 名称 | 说明  | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
 | remaining time to sync | 预计 Syncer 还需要多少分钟可以和 master 完全同步，单位：分钟 | N/A | N/A |
-| replicate lag | master 到 Syncer 的 binlog 复制延迟时间，单位：秒 | N/A | N/A |
+| replicate lag | master 到 Syncer 的 binlog 复制延迟时间，单位：秒 由于是 prometheus 内置的直方图类型，数据不一定准确 | N/A | N/A |
 | process exist with error | binlog replication unit 在 DM-worker 内部遇到错误并且退出了 | 立即告警 | critical |
 | binlog file gap between master and syncer | 与上游 master 相比落后的 binlog file 个数 | 落后 binlog file 个数超过 1 个（不含 1 个）且持续 10 分钟时 | critical |
 | binlog file gap between relay and syncer | 与 relay 相比落后的 binlog file 个数 | 落后 binlog file 个数超过 1 个（不含 1 个）且持续 10 分钟时 | critical |
@@ -98,6 +99,11 @@ overview 下包含运行当前选定 task 的所有 DM-worker/master instance/so
 | skipped event duration | binlog replication unit 跳过 binlog event 的耗时，单位：秒 | N/A | N/A |
 | unsynced tables | 当前子任务内还未收到 shard DDL 的分表数量 | N/A | N/A |
 | shard lock resolving | 当前子任务是否正在等待 shard DDL 迁移，大于 0 表示正在等待迁移 | N/A | N/A |
+| ideal qps | 理想情况下可以达到的最高QPS | N/A | N/A |
+| binlog event row | 一个 binlog 事件中的行数 | N/A | N/A |
+| finished transaction total | 执行完毕的事务数量 | N/A | N/A |
+| replication transaction batch | 执行到下游的事务里中 sql 行数 | N/A | N/A |
+| flush checkpoints time interval | 检查点刷新时间间隔，单位：秒  | N/A | N/A |
 
 ### Relay log
 
