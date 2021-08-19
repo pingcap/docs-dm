@@ -10,7 +10,7 @@ summary: 了解在不同业务需求场景下如何配置数据迁移任务。
 > 在创建数据迁移任务之前，需要先完成以下操作：
 >
 > 1. [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)。
-> 2. [创建数据源对象](quick-start-create-source.md)。
+> 2. [创建数据源](quick-start-create-source.md)。
 
 本文介绍多个业务需求场景下如何配置数据迁移任务。你可以根据具体的场景介绍，选择参考适合的教程来创建对应的数据迁移任务。
 

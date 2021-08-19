@@ -168,7 +168,7 @@ target-database:
 
 mysql-instances:
   -
-    source-id: "instance-1"        # 数据源对象 ID，可以从数据源配置中获取
+    source-id: "instance-1"        # 数据源 ID，可以从数据源配置中获取
     route-rules: ["store-route-rule", "sale-route-rule"] # 应用于该数据源的 table route 规则
     filter-rules: ["store-filter-rule", "sale-filter-rule"] # 应用于该数据源的 binlog event filter 规则
     block-allow-list:  "log-bak-ignored" # 应用于该数据源的 Block & Allow Lists 规则
