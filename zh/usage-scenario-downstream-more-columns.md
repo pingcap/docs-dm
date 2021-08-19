@@ -77,7 +77,7 @@ CREATE TABLE `messages` (
 
    ## 配置数据源
    mysql-instances:
-     - source-id: "mysql-01"         # 数据源对象 ID，可以从数据源配置中获取
+     - source-id: "mysql-01"         # 数据源 ID，可以从数据源配置中获取
        block-allow-list: "bw-rule-1" # 引入上面黑白名单配置
        syncer-config-name: "global"  # 引用上面的 syncers 增量数据配置
        meta:                         # `task-mode` 为 `incremental` 且下游数据库的 `checkpoint` 不存在时 binlog 迁移开始的位置; 如果 `checkpoint` 存在，以 `checkpoint` 为准

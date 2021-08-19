@@ -32,7 +32,7 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 
 - [快速上手试用](quick-start-with-dm.md)
 - [使用 TiUP 部署集群](deploy-a-dm-cluster-using-tiup.md)
-- [创建数据源对象](quick-start-create-source.md)
+- [创建数据源](quick-start-create-source.md)
 - [创建数据迁移任务](quick-create-migration-task.md)
 
 </NavColumn>
