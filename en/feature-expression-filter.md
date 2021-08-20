@@ -8,7 +8,7 @@ title: Filter Certain Row Changes Using SQL Expressions
 
 In the process of data migration, DM provides the [Binlog Event Filter](key-features.md#binlog-event-filter) feature to filter certain types of binlog events. For example, `DELETE` event might be filtered when data is migrated to the downstream for archiving or auditing, etc. However, Binlog Event Filter feature cannot judge more specifically whether the `DELETE` event of a certain row should be filtered.
 
-To solve the above issue, DM supports filtering certain row changes using SQL expressions. The binlog of ROW mode required by DM have the values of all columns in binlog event. You can configure SQL expressions according to these values. If the SQL expressions evaluate a row change as  `TRUE`, DM will not migrate the row change downstream.
+To solve the above issue, DM supports filtering certain row changes using SQL expressions. The binlog of ROW mode required by DM have the values of all columns in binlog event. You can configure SQL expressions according to these values. If the SQL expressions evaluate a row change as `TRUE`, DM will not migrate the row change downstream.
 
 > **Note:**
 >
