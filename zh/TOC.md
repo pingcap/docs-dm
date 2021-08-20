@@ -23,7 +23,7 @@
 + 快速上手
   - [快速上手试用](quick-start-with-dm.md)
   - [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)
-  - [创建数据源对象](quick-start-create-source.md)
+  - [创建数据源](quick-start-create-source.md)
   + [创建数据迁移任务](quick-create-migration-task.md)
      - [多数据源汇总迁移到 TiDB](usage-scenario-simple-migration.md)
      - [分表合并迁移到 TiDB](usage-scenario-shard-merge.md)
