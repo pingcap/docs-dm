@@ -16,7 +16,7 @@ To solve the above issue, DM supports filtering certain row changes using SQL ex
 
 ## Configuration example
 
-Like [Binlog Event Filter](key-features.md#binlog-event-filter), you also need to configure the expression-filter feature in the configuration file of data migration task, as shown below. For complete configuration and its meaning, refer to [DM Advanced Task Configuration File](task-configuration-file-full.md#task-configuration-file-template-(advanced))：
+Like [Binlog Event Filter](key-features.md#binlog-event-filter), you also need to configure the expression-filter feature in the configuration file of data migration task, as shown below. For complete configuration and its meaning, refer to [DM Advanced Task Configuration File](task-configuration-file-full.md#task-configuration-file-template-advanced)：
 
 ```yml
 name: test
