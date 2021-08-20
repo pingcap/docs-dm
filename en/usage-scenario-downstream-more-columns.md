@@ -1,11 +1,11 @@
 ---
-title: Migration when the Downstream TiDB Table Has More Columns
-summary: Learn how to use Data Migration (DM) to migrate tables when the downstream table schema has more columns.
+title: Migration when There Are More Columns in the Downstream TiDB Table
+summary: Learn how to use Data Migration (DM) to migrate tables when there are more columns in the downstream table schema.
 ---
 
-# Migration when the Downstream TiDB Table Has More Columns
+# Migration when There Are More Columns in the Downstream TiDB Table
 
-This document describes how to migrate tables using DM when the downstream TiDB table schema has more columns than the upstream table schema.
+This document describes how to migrate tables using DM when there are more columns in the downstream TiDB table schema than the upstream table schema.
 
 ## The table shcema of the data source
 
@@ -19,7 +19,7 @@ This document uses the follwing data source example:
 
 ## Migration requirements
 
-Customize a table `log.messages` in TiDB, whose table shema has all the columns in the `log.messages` table of data source, and has more columns than the data source table schema. Under this condition, migrate the table `log.messages` of data source to the table `log.messages` of TiDB cluster.
+Create a customized table `log.messages` in TiDB. Its schema contains not only all the columns in the `log.messages` table of the data source, but also additional columns. In this case, migrate the table `log.messages` of the data source to the table `log.messages` of the TiDB cluster.
 
 > **Note:**
 >

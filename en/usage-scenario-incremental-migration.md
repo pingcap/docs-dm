@@ -30,7 +30,7 @@ First you need to determine the replication position of the binlog where you sta
 
 By following the steps below, you can obtain the position of binlog where you start migrating data in the source data:
 
-- Use Dumpling/Mydumper for full data exports. Then use other tools, such as TiDB Lightning, for full data imports. After that, you can obtain the replication position by inspecting the [metadata files](https://docs.pingcap.com/zh/tidb/stable/dumpling-overview#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F).
+- Use Dumpling/Mydumper for full data export. Then use other tools, such as TiDB Lightning, for full data import. After that, you can obtain the replication position by inspecting the [metadata files](https://docs.pingcap.com/zh/tidb/stable/dumpling-overview#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F).
 
   ```file
   Started dump at: 2020-11-10 10:40:19
@@ -88,7 +88,7 @@ CREATE TABLE `messages` (
      password: "" # If password is not empty, it is recommended to use dmctl encrypted password.
 
    ## Use block-allow-list to configure tables that require sync:
-   block-allow-list: # The filter rule set of the matched table of the data source database instance. Use black-white-list if the DM's version is earlier than v2.0.0-beta.2.
+   block-allow-list: # The filter rule set of the matched table of the data source database instance. Use black-white-list if the DM version is earlier than v2.0.0-beta.2.
      bw-rule-1: # The name of the block and allow list rule.
        do-dbs: ["log"]# The databases to be migrated.
 

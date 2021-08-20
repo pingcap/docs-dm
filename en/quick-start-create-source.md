@@ -31,7 +31,7 @@ A data source contains the data source access information. Before creating a dat
 
 2. Write the configuration file of the data source
 
-    For each data source, you need an independent configuration file to create it. You can follow the example below to create a data source whose ID is "mysql-01". First create the configuration file `./source-mysql-01.yaml`：
+    For each data source, you need an individual configuration file to create it. You can follow the example below to create a data source whose ID is "mysql-01". First create the configuration file `./source-mysql-01.yaml`：
 
     ```yaml
     source-id: "mysql-01"    # The ID of the data source, you can refer this source-id in the task configuration and dmctl command to associate the corresponding data source.
@@ -105,7 +105,7 @@ After creating a data source, you can use the following command to query the dat
     }
     ```
 
-- If you do not know the `source-id`, you can first use the `dmctl operate-source show` command to check the original database, from which you can find the corresponding data source.
+- If you do not know the `source-id`, you can first use the `dmctl operate-source show` command to check the source database list, from which you can find the corresponding data source.
 
     {{< copyable "shell-regular" >}}
 

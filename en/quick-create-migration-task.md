@@ -21,7 +21,7 @@ In addition to scenario-based documents, you can also refer to the following one
 
 ## Migrate Data from Multiple Data Sources to TiDB
 
-If you need to migrate data from multiple data sources to TiDB, and to rename tables to avoid migration conflicts when tables with the same name exist in different data source, refer to [Migrate Data from Multiple Data Sources to TiDB](usage-scenario-simple-migration.md).
+If you need to migrate data from multiple data sources to TiDB, and to rename tables to avoid migration conflicts caused by duplicate table names in different data sources, or to disable some DDL/DML operations in some tables, refer to [Migrate Data from Multiple Data Sources to TiDB](usage-scenario-simple-migration.md).
 
 ## Migrate Sharded Schemas and Sharded Tables to TiDB
 
@@ -29,8 +29,8 @@ If you need to migrate sharded schemas and sharded tables to TiDB, refer to [Dat
 
 ## Migrate Incremental Data to TiDB
 
-If you have already migrated full data migration using other tools like TiDB Lightning and you need to migrate incremental data, refer to [Migrate Incremental Data to TiDB](usage-scenario-incremental-migration.md).
+If you have already migrated full data using other tools like TiDB Lightning and you need to migrate incremental data, refer to [Migrate Incremental Data to TiDB](usage-scenario-incremental-migration.md).
 
 ## Migration when the Downstream Table Has More Columns
 
-If you need to customize your table schema and TiDB table schema has more columns than the data source table, refer to [Migration when the Downstream Table Has More Columns](usage-scenario-downstream-more-columns.md).
+If you need to customize your table schema in TiDB to include not only all the columns from the source but also additional columns, refer to [Migration when the Downstream Table Has More Columns](usage-scenario-downstream-more-columns.md).

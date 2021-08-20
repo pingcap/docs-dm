@@ -68,7 +68,7 @@ Currently, DM does not have a graphical interface and provides limited support f
 <ColumnTitle>Usage Scenarios</ColumnTitle>
 
 - [Migrate from Aurora](migrate-from-mysql-aurora.md)
-- [Switch the MySQL instance to Be Migrated](usage-scenario-master-slave-switch.md)
+- [Switch the MySQL Instance to Be Migrated](usage-scenario-master-slave-switch.md)
 
 </NavColumn>
 

@@ -27,7 +27,7 @@
      - [Migrate Data from Multiple Data Sources to TiDB](usage-scenario-simple-migration.md)
      - [Migrate Sharded Schemas and Tables to TiDB](usage-scenario-shard-merge.md)
      - [Migrate Incremental Data to TiDB](usage-scenario-incremental-migration.md)
-     - [Migrate when TiDB Tables Have More Columns](usage-scenario-downstream-more-columns.md)
+     - [Migrate Tables when There Are More Columns](usage-scenario-downstream-more-columns.md)
 + Deploy
   + [Software and Hardware Requirements](hardware-and-software-requirements.md)
   + Deploy a DM Cluster
@@ -62,7 +62,7 @@
 + Usage Scenarios
   - [Migrate from Aurora to TiDB](migrate-from-mysql-aurora.md)
   - [Migrate when TiDB Tables Have More Columns](usage-scenario-downstream-more-columns.md)
-  - [Switch the MySQL instance to Be Migrated](usage-scenario-master-slave-switch.md)
+  - [Switch the MySQL Instance to Be Migrated](usage-scenario-master-slave-switch.md)
 + Troubleshoot
   - [Handle Errors](error-handling.md)
   - [Handle Performance Issues](handle-performance-issues.md)
