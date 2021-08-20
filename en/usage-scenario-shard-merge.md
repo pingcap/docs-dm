@@ -14,7 +14,7 @@ For other scenarios, you can refer to [Best Practices of Data Migration in the S
 
 ## Data source instances
 
-Assume that the data source structure are as follows:
+Assume that the data source structures are as follows:
 
 - Instance 1
 
@@ -39,7 +39,7 @@ Assume that the data source structure are as follows:
 3. Replicate `user` and `store_{01|02}` schemas but do not replicate the `user`.`log_bak` tables in the above instances.
 4. Filter out all the delete operations in the `store_{01|02}`.`sale_{01|02}` table of the above instances and filter out the `drop database` operation in shemas.
 
-Assume that the downstream schema after migration is as follows:
+The expected downstream schema after migration is as follows:
 
 | Schema | Tables |
 |:------|:------|
@@ -154,7 +154,7 @@ In the above structure, `sid` is the shard key, which can ensure that the same `
 
 ## Migration task configuration
 
-The complete configuration of the migration task is shown as below. For more details, see [Data Migration Task Configuration File](task-configuration-file.md).
+The complete configuration of the migration task is shown as follows. For more details, see [Data Migration Task Configuration File](task-configuration-file.md).
 
 {{< copyable "" >}}
 
