@@ -41,7 +41,7 @@ By following the steps below, you can obtain the position of binlog where you st
   Finished dump at: 2020-11-10 10:40:20
   ```
 
-- Use `SHOW BINLOG EVENTS`, or use `mysqlbinlog` tool to check binlog and select an appropriate position.
+- Use `SHOW BINLOG EVENTS`, or use the `mysqlbinlog` tool to check binlog and select an appropriate position.
 - If you want to start replicating binlog at the current time, use `SHOW MASTER STATUS` to check the current position:
 
   ```sql
@@ -70,7 +70,7 @@ CREATE TABLE `messages` (
 )
 ```
 
-### Create replication task
+### Create a replication task
 
 1. Create task configuration `task.yaml` to configure incremental replication mode and replication starting point for each data source. The complete task configuration example is as follows:
 
@@ -96,7 +96,7 @@ CREATE TABLE `messages` (
    ## This scenario usually happens when the full migrated data is not a consistent snapshot of the data source. You need to start migrate incremental data at a position before the full data migration starting point.
    syncers: # The configuration parameters of sync unit.
      global: # The name of the configuration.
-       safe-mode: true # If you set `safe-mode` to `true`, `INSERT`` from data sources is rewritten to `REPLACE` and `UPDATE` is rewritten to `DELETE` and `REPLACE`. This is to ensure that when primary keys or the unique keys exist in table structure, you can re-import DML when migrating data. TiDB DM automatically enables the safe mode within 1 minutes immediately after the incremental replication task is started or resumed.
+       safe-mode: true # If you set `safe-mode` to `true`, `INSERT`` from data sources is rewritten to `REPLACE` and `UPDATE` is rewritten to `DELETE` and `REPLACE`. This is to ensure that when primary keys or the unique keys exist in table structure, you can re-import DML when migrating data. TiDB DM automatically enables the safe mode within 1 minute immediately after the incremental replication task is started or resumed.
 
    ## Configure the data source
    mysql-instances:
@@ -109,7 +109,7 @@ CREATE TABLE `messages` (
          binlog-gtid: "09bec856-ba95-11ea-850a-58f2b4af5188:1-9"
    ```
 
-2. Create replication task using `start-task` command:
+2. Create a replication task using `start-task` command:
 
    {{< copyable "shell-regular" >}}
 
@@ -132,7 +132,7 @@ CREATE TABLE `messages` (
    }
    ```
 
-3. Check replication task using `query-status` command to ensure that no error message exists:
+3. Check the replication task using `query-status` command to ensure that no error message occurs:
 
    {{< copyable "shell-regular" >}}
 
@@ -185,7 +185,7 @@ CREATE TABLE `messages` (
 
 ## Test replication tasks
 
-Insert new data in source database:
+Insert new data in the source database:
 
 {{< copyable "sql" >}}
 
