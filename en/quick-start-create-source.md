@@ -11,7 +11,7 @@ summary: Learn how to create a data source for Data Migration (DM).
 
 The document describes how to create a data source for the data migration task of TiDB Data Migration (DM).
 
-A data source contains the data source access information. Before creating a data migration task, you need to create the data source of a task. That is because a data migration task requires referring its corresponding data source to obtain the configuration information of access. For specific data source management commands, refer to [Manage Data Source Configurations](manage-source.md).
+A data source contains the information for accessing the upstream migration task. Because a data migration task requires referring its corresponding data source to obtain the configuration information of access, you need to create the data source of a task Before creating a data migration task. For specific data source management commands, refer to [Manage Data Source Configurations](manage-source.md).
 
 ## Step 1: Configure the data source
 
