@@ -81,7 +81,7 @@ In the above structure, `sid` is the shard key, which can ensure that the same `
 
 ## Migration solution
 
-- To satisfy migration requirements #1, you do not need to configure the [table routing rule](key-features.md#table-routing). You need to manually create a table based on the requirements in the section [Remove the `PRIMARY KEY` attribute from the column](shard-merge-best-practices.md#remove-the-primary-key-attribute-from-the-column):
+- To satisfy the migration requirements #1, you do not need to configure the [table routing rule](key-features.md#table-routing). You need to manually create a table based on the requirements in the section [Remove the `PRIMARY KEY` attribute from the column](shard-merge-best-practices.md#remove-the-primary-key-attribute-from-the-column):
 
     {{< copyable "sql" >}}
 

@@ -88,12 +88,12 @@ CREATE TABLE `messages` (
      password: "" # If password is not empty, it is recommended to use dmctl encrypted password.
 
    ## Use block-allow-list to configure tables that require sync:
-   block-allow-list: # The filter rule set of the matched table of the data source database instance. Use black-white-list if the DM version is earlier than v2.0.0-beta.2.
+   block-allow-list: # The filter rule set of the matched table of the data source database instance. Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
      bw-rule-1: # The name of the block and allow list rule.
        do-dbs: ["log"]# The databases to be migrated.
 
    ## (Optional) If incremental data migration requires remigrating data that has already been migrated during full data migration process, you need to enable safe mode to avoid incremental migration errors.
-   ## This scenario usually happens when the full migrated data is not a consistent snapshot of the data source. You need to start migrate incremental data at a position before the full data migration starting point.
+   ## This scenario usually happens when the full migrated data is not a consistent snapshot of the data source. You need to start migrating incremental data at a position before the full data migration starting point.
    syncers: # The configuration parameters of sync unit.
      global: # The name of the configuration.
        safe-mode: true # If you set `safe-mode` to `true`, `INSERT`` from data sources is rewritten to `REPLACE` and `UPDATE` is rewritten to `DELETE` and `REPLACE`. This is to ensure that when primary keys or the unique keys exist in table structure, you can re-import DML when migrating data. TiDB DM automatically enables the safe mode within 1 minute immediately after the incremental replication task is started or resumed.
@@ -103,7 +103,7 @@ CREATE TABLE `messages` (
      - source-id: "mysql-01" # The ID of data source. You can obtain it from the configuration of the data source.
        block-allow-list: "bw-rule-1" # To import the block-allow-list configuration above.
        syncer-config-name: "global" # To import the incremental data migration configuration of syncers.
-       meta: # If `task-mode` is `incremental` and the `checkpoint` in downstream database does not exist, `meta` is the starting point of binlog; If `checkpoint` exists, base it on `checkpoint`.
+       meta: # If `task-mode` is `incremental` and the `checkpoint` in the downstream database does not exist, `meta` is the starting point of binlog; If `checkpoint` exists, base it on `checkpoint`.
          binlog-name: "mysql-bin. 00001"
          binlog-pos: 2022
          binlog-gtid: "09bec856-ba95-11ea-850a-58f2b4af5188:1-9"
@@ -132,7 +132,7 @@ CREATE TABLE `messages` (
    }
    ```
 
-3. Check the replication task using `query-status` command to ensure that no error message occurs:
+3. Check the replication task using the `query-status` command to ensure that no error message occurs:
 
    {{< copyable "shell-regular" >}}
 
