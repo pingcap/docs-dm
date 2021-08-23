@@ -10,9 +10,9 @@ aliases: ['/docs-cn/stable/how-to/get-started/data-migration/']
 
 如需在生产环境中部署 DM，请参考以下文档：
 
-1. [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)
-2. [创建数据源](quick-start-create-source.md)
-3. [创建数据迁移任务](quick-create-migration-task.md)
+- [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)
+- [创建数据源](quick-start-create-source.md)
+- [创建数据迁移任务](quick-create-migration-task.md)
 
 ## 使用样例
 

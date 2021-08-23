@@ -19,7 +19,15 @@
       - [Migrate from MySQL Databases that Use GH-ost/PT-osc](feature-online-ddl.md)
   + [DM Architecture](dm-arch.md)
   + [Benchmarks](benchmark-v2.0-ga.md)
-+ [Quick Start](quick-start-with-dm.md)
++ Quick Start
+  - [Quick Start](quick-start-with-dm.md)
+  - [Deploy a DM cluster Using TiUP](deploy-a-dm-cluster-using-tiup.md)
+  - [Create a Data Source](quick-start-create-source.md)
+  + [Create a Data Migration Task](quick-create-migration-task.md)
+     - [Migrate Data from Multiple Data Sources to TiDB](usage-scenario-simple-migration.md)
+     - [Migrate Sharded Schemas and Tables to TiDB](usage-scenario-shard-merge.md)
+     - [Migrate Incremental Data to TiDB](usage-scenario-incremental-migration.md)
+     - [Migrate Tables when There Are More Columns](usage-scenario-downstream-more-columns.md)
 + Deploy
   + [Software and Hardware Requirements](hardware-and-software-requirements.md)
   + Deploy a DM Cluster
@@ -52,11 +60,9 @@
   - [Handle Alerts](handle-alerts.md)
   - [Daily Check](daily-check.md)
 + Usage Scenarios
-  - [Simple Data Migration Scenario](usage-scenario-simple-migration.md)
-  - [Shard Merge Scenario](usage-scenario-shard-merge.md)
   - [Migrate from Aurora to TiDB](migrate-from-mysql-aurora.md)
-  - [Migrate When TiDB Tables Have More Columns](usage-scenario-downstream-more-columns.md)
-  - [Switch the MySQL instance to Be Migrated](usage-scenario-master-slave-switch.md)
+  - [Migrate when TiDB Tables Have More Columns](usage-scenario-downstream-more-columns.md)
+  - [Switch the MySQL Instance to Be Migrated](usage-scenario-master-slave-switch.md)
 + Troubleshoot
   - [Handle Errors](error-handling.md)
   - [Handle Performance Issues](handle-performance-issues.md)
