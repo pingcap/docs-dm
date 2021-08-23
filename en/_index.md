@@ -66,11 +66,6 @@ Currently, DM does not have a graphical interface and provides limited support f
 <NavColumn>
 <ColumnTitle>Usage Scenarios</ColumnTitle>
 
-<<<<<<< HEAD
-- [Simple Usage Scenario](usage-scenario-simple-migration.md)
-- [Shard Merge Scenario](usage-scenario-shard-merge.md)
-=======
->>>>>>> 09920f49 (update toc.md, shard-merge.md, add incremental data migration document (#748))
 - [Migrate from Aurora](migrate-from-mysql-aurora.md)
 - [Switch the MySQL Instance to Be Migrated](usage-scenario-master-slave-switch.md)
 
