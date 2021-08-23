@@ -94,18 +94,18 @@ mysql-instances:
   # The configuration item name of the block and allow lists of the name of the
   # database/table to be migrated, used to quote the global block and allow
   # lists configuration that is set in the global block-allow-list below.
-  block-allow-list: "global"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+  block-allow-list: "global"  # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
   # The configuration item name of the dump processing unit, used to quote the global configuration of the dump unit.
   mydumper-config-name: "global"
 
 -
   source-id: "mysql-replica-02"
-  block-allow-list: "global"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+  block-allow-list: "global"  # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
   mydumper-config-name: "global"
 
 # The global configuration of block and allow lists. Each instance can quote it by the
 # configuration item name.
-block-allow-list:                     # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:                     # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
   global:
     do-tables:                        # The allow list of upstream tables to be migrated.
     - db-name: "test_db"              # The database name of the table to be migrated.
