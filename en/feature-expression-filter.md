@@ -68,10 +68,10 @@ MySQL [test]> select * from tbl;
 
 - `schema`: The name of the upstream database to be matched. Wildcard match or regular match is not supported.
 - `table`: The name of the upstream table to be matched. Wildcard match or regular match is not supported.
-- `insert-value-expr`: To configure an expression which takes effect on the value of binlog event (WRITE_ROWS_EVENT) of INSERT type. It cannot appear in a same configuration item with `update-old-value-expr`, `update-new-value-expr`, and `delete-value-expr`.
-- `update-old-value-expr`：To configure an expression which takes effect on the old value of binlog event (UPDATE_ROWS_EVENT) of UPDATE type. It cannot appear in a same configuration item with `insert-value-expr` and `delete-value-expr`.
-- `update-new-value-expr`: To configure an expression which takes effect on the new value of binlog event (UPDATE_ROWS_EVENT) of UPDATE type. It cannot appear in a same configuration item with `insert-value-expr` and `delete-value-expr`.
-- `delete-value-expr`：To configure an expression which takes effect on the value of binlog event (DELETE_ROWS_EVENT) of DELETE type. It cannot appear in a same configuration item with`insert-value-expr`, `update-old-value-expr`, and `update-new-value-expr`.
+- `insert-value-expr`: Specifies an expression which takes effect on the value of binlog event (WRITE_ROWS_EVENT) of INSERT type. Do not use it with `update-old-value-expr`, `update-new-value-expr`, or `delete-value-expr` in the same configuration item.
+- `update-old-value-expr`：Specifies an expression which takes effect on the old value of binlog event (UPDATE_ROWS_EVENT) of UPDATE type. Do not use it with `insert-value-expr` or `delete-value-expr` in the same configuration item.
+- `update-new-value-expr`: Specifies an expression which takes effect on the new value of binlog event (UPDATE_ROWS_EVENT) of UPDATE type. Do not use it with `insert-value-expr` or `delete-value-expr` in the same configuration item.
+- `delete-value-expr`：Specifies an expression which takes effect on the value of binlog event (DELETE_ROWS_EVENT) of DELETE type. Do not use it with`insert-value-expr`, `update-old-value-expr`, or `update-new-value-expr` in the same configuration item.
 
 > **Note:**
 >
