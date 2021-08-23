@@ -1,16 +1,22 @@
 ---
+<<<<<<< HEAD
 title: Data Migration Simple Usage Scenario
 summary: Learn how to use Data Migration to migrate data in a simple scenario.
 aliases: ['/tidb-data-migration/v2.0/usage-scenario-simple-replication']
+=======
+title: Migrate Data from Multiple Data Sources to TiDB
+summary: Learn how to use Data Migration to migrate data from multiple data sources to TiDB.
+aliases: ['/docs/tidb-data-migration/dev/usage-scenario-simple-replication/','/tidb-data-migration/dev/usage-scenario-simple-replication']
+>>>>>>> 09920f49 (update toc.md, shard-merge.md, add incremental data migration document (#748))
 ---
 
-# Data Migration Simple Usage Scenario
+# Using Migrate Data from Multiple Data Sources to TiDB
 
-This document shows how to use Data Migration (DM) in a simple data migration scenario where the data of three upstream MySQL instances needs to be migrated to a downstream TiDB cluster (no sharding data).
+This document shows how to use Data Migration (DM) in a simple data migration scenario where the data of three data source MySQL instances needs to be migrated to a downstream TiDB cluster (no sharding data).
 
-## Upstream instances
+## Data source instances
 
-Assume that the upstream schemas are as follows:
+Assume that the data sources are as follows:
 
 - Instance 1
 
@@ -128,7 +134,7 @@ Assume that the schemas migrated to the downstream are as follows:
 - To satisfy the migration Requirement #3, configure the [block and allow lists](key-features.md#block-and-allow-table-lists) as follows:
 
     ```yaml
-    block-allow-list:  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
       log-ignored:
         ignore-dbs: ["log"]
     ```
@@ -153,7 +159,7 @@ mysql-instances:
     source-id: "instance-1"
     route-rules: ["instance-1-user-rule"]
     filter-rules: ["log-filter-rule", "user-filter-rule", "store-filter-rule"]
-    block-allow-list:  "log-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "log-ignored"  # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -161,7 +167,7 @@ mysql-instances:
     source-id: "instance-2"
     route-rules: ["instance-2-user-rule", instance-2-store-rule]
     filter-rules: ["log-filter-rule", "user-filter-rule", "store-filter-rule"]
-    block-allow-list:  "log-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "log-ignored"  # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -169,7 +175,7 @@ mysql-instances:
     source-id: "instance-3"
     route-rules: ["instance-3-user-rule", instance-3-store-rule]
     filter-rules: ["log-filter-rule", "user-filter-rule", "store-filter-rule"]
-    block-allow-list:  "log-ignored"  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "log-ignored"  # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
     mydumper-config-name: "global"
     loader-config-name: "global"
     syncer-config-name: "global"
@@ -212,7 +218,7 @@ filters:
     events: ["drop database", "truncate table", "drop table", "delete"]
     action: Ignore
 
-block-allow-list:  # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:  # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
   log-ignored:
     ignore-dbs: ["log"]
 
