@@ -84,6 +84,7 @@
 + [Glossary](glossary.md)
 + Release Notes
   + v2.0
+    - [2.0.6](releases/2.0.6.md)
     - [2.0.5](releases/2.0.5.md)
     - [2.0.4](releases/2.0.4.md)
     - [2.0.3](releases/2.0.3.md)
