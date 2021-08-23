@@ -1,13 +1,7 @@
 ---
-<<<<<<< HEAD
-title: Data Migration Simple Usage Scenario
-summary: Learn how to use Data Migration to migrate data in a simple scenario.
-aliases: ['/tidb-data-migration/v2.0/usage-scenario-simple-replication']
-=======
 title: Migrate Data from Multiple Data Sources to TiDB
 summary: Learn how to use Data Migration to migrate data from multiple data sources to TiDB.
 aliases: ['/docs/tidb-data-migration/dev/usage-scenario-simple-replication/','/tidb-data-migration/dev/usage-scenario-simple-replication']
->>>>>>> 09920f49 (update toc.md, shard-merge.md, add incremental data migration document (#748))
 ---
 
 # Using Migrate Data from Multiple Data Sources to TiDB
