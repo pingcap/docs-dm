@@ -36,7 +36,7 @@ target-database:                # Configuration of the downstream database insta
 
 ## ******** Feature configuration set **********
 # The filter rule set of the block allow list of the matched table of the upstream database instance.
-block-allow-list:        # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:        # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
   bw-rule-1:             # The name of the block and allow lists filtering rule of the table matching the upstream database instance.
     do-dbs: ["all_mode"] # Allow list of upstream tables needs to be migrated.
 # ----------- Instance configuration -----------
@@ -49,7 +49,7 @@ mysql-instances:
     syncer-thread: 16              # The number of threads that the sync processing unit uses for replicating incremental data. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
 
   - source-id: "mysql-replica-02"
-    block-allow-list:  "bw-rule-1" # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "bw-rule-1" # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
     mydumper-thread: 4
     loader-thread: 16
     syncer-thread: 16
