@@ -51,7 +51,7 @@ In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM prov
 
 ### Filter certain row changes using SQL expressions
 
-In the phase of incremental replication, DM supports the configuration of SQL expressions to filter out certain row changes, which makes you more specifically control the data to be replicated. For more detailed information, refer to [Filter Certain Row Changes Using SQL Expressions](feature-expression-filter.md).
+In the phase of incremental replication, DM supports the configuration of SQL expressions to filter out certain row changes, which lets you replicate the data with a greater granularity. For more information, refer to [Filter Certain Row Changes Using SQL Expressions](feature-expression-filter.md).
 
 ## Usage restrictions
 

@@ -6,7 +6,7 @@ title: Filter Certain Row Changes Using SQL Expressions
 
 ## Overview
 
-In the process of data migration, DM provides the [Binlog Event Filter](key-features.md#binlog-event-filter) feature to filter certain types of binlog events. For example, `DELETE` event might be filtered when data is migrated to the downstream for archiving or auditing, etc. However, Binlog Event Filter feature cannot judge more specifically whether the `DELETE` event of a certain row should be filtered.
+In the process of data migration, DM provides the [Binlog Event Filter](key-features.md#binlog-event-filter) feature to filter certain types of binlog events. For example, for archiving or auditing purposes, `DELETE` event might be filtered when data is migrated to the downstream. However, Binlog Event Filter cannot judge with a greater granularity whether the `DELETE` event of a certain row should be filtered.
 
 To solve the above issue, DM supports filtering certain row changes using SQL expressions. The binlog of ROW mode required by DM have the values of all columns in binlog event. You can configure SQL expressions according to these values. If the SQL expressions evaluate a row change as `TRUE`, DM will not migrate the row change downstream.
 
@@ -16,7 +16,7 @@ To solve the above issue, DM supports filtering certain row changes using SQL ex
 
 ## Configuration example
 
-Like [Binlog Event Filter](key-features.md#binlog-event-filter), you also need to configure the expression-filter feature in the configuration file of data migration task, as shown below. For complete configuration and its meaning, refer to [DM Advanced Task Configuration File](task-configuration-file-full.md#task-configuration-file-template-advanced)：
+Similar to [Binlog Event Filter](key-features.md#binlog-event-filter), you also need to configure the expression-filter feature in the configuration file of the data migration task, as shown below. For complete configuration and its descriptions, refer to [DM Advanced Task Configuration File](task-configuration-file-full.md#task-configuration-file-template-advanced)：
 
 ```yml
 name: test
@@ -66,8 +66,8 @@ MySQL [test]> select * from tbl;
 
 ## Configuration parameters and rule descriptions
 
-- `schema`: The name of upstream database to be matched. Wildcard match or regular match is not supported.
-- `table`: The name of upstream table to be matched. Wildcard match or regular match is not supported.
+- `schema`: The name of the upstream database to be matched. Wildcard match or regular match is not supported.
+- `table`: The name of the upstream table to be matched. Wildcard match or regular match is not supported.
 - `insert-value-expr`: To configure an expression which takes effect on the value of binlog event (WRITE_ROWS_EVENT) of INSERT type. It cannot appear in a same configuration item with `update-old-value-expr`, `update-new-value-expr`, and `delete-value-expr`.
 - `update-old-value-expr`：To configure an expression which takes effect on the old value of binlog event (UPDATE_ROWS_EVENT) of UPDATE type. It cannot appear in a same configuration item with `insert-value-expr` and `delete-value-expr`.
 - `update-new-value-expr`: To configure an expression which takes effect on the new value of binlog event (UPDATE_ROWS_EVENT) of UPDATE type. It cannot appear in a same configuration item with `insert-value-expr` and `delete-value-expr`.
@@ -82,10 +82,10 @@ MySQL [test]> select * from tbl;
 
 SQL expressions can involve one or more columns. You can also use the SQL functions TiDB supports, such as `c % 2 = 0`, `a*a + b*b = c*c`, and `ts > NOW()`.
 
-The timezone of TIMESTAMP is UTC by default. You can use `c_timestamp = '2021-01-01 12:34:56.5678+08:00'` to show the specified timezone.
+The timezone of TIMESTAMP is UTC by default. You can use `c_timestamp = '2021-01-01 12:34:56.5678+08:00'` to specify the timezone explicitly.
 
 You can define multiple filter rules under the configuration item `expression-filter`. By refering the rules you need in the configuration item of `expression-filters` in the upstream data source, the rules can take effect. When multiple rules take effect, matching **any** of the rules causes a row change to be filtered.
 
 > **Note:**
 >
-> Setting too many expression filters for a table increases the computing overhead of DM， which might slow down data migration.
+> Setting too many expression filters for a table increases the computing overhead of DM， which might impede data migration.
