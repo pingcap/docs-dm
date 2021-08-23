@@ -92,11 +92,11 @@ CREATE TABLE `messages` (
      bw-rule-1: # The name of the block and allow list rule.
        do-dbs: ["log"]# The databases to be migrated.
 
-   ## (Optional) If incremental data migration requires remigrating data that has already been migrated during full data migration process, you need to enable safe mode to avoid incremental migration errors.
+   ## (Optional) If incremental data migration needs to remigrate the data that has already been migrated during full data migration process, you need to enable safe mode to avoid incremental migration errors.
    ## This scenario usually happens when the full migrated data is not a consistent snapshot of the data source. You need to start migrating incremental data at a position before the full data migration starting point.
    syncers: # The configuration parameters of sync unit.
      global: # The name of the configuration.
-       safe-mode: true # If you set `safe-mode` to `true`, `INSERT`` from data sources is rewritten to `REPLACE` and `UPDATE` is rewritten to `DELETE` and `REPLACE`. This is to ensure that when primary keys or the unique keys exist in table structure, you can re-import DML when migrating data. TiDB DM automatically enables the safe mode within 1 minute immediately after the incremental replication task is started or resumed.
+       safe-mode: true # If you set `safe-mode` to `true`, `INSERT`` from data sources is rewritten to `REPLACE` and `UPDATE` is rewritten to `DELETE` and `REPLACE`. This is to ensure that when primary keys or unique keys exist in table structure, you can re-import DML when migrating data. TiDB DM automatically enables the safe mode within 1 minute immediately after the incremental replication task is started or resumed.
 
    ## Configure the data source
    mysql-instances:
@@ -109,7 +109,7 @@ CREATE TABLE `messages` (
          binlog-gtid: "09bec856-ba95-11ea-850a-58f2b4af5188:1-9"
    ```
 
-2. Create a replication task using `start-task` command:
+2. Create a replication task using the `start-task` command:
 
    {{< copyable "shell-regular" >}}
 

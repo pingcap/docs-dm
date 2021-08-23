@@ -29,7 +29,7 @@ Instead, you can:
 
 ## Handle conflicts between primary keys or unique indexes across multiple sharded tables
 
-Data from multiple sharded tables might cause conflicts between the primary keys or the unique index. You need to check each primary key or unique index based on the sharding logic of these sharded tables. The following are three cases related to primary keys or unique indexes:
+Data from multiple sharded tables might cause conflicts between the primary keys or unique indexes. You need to check each primary key or unique index based on the sharding logic of these sharded tables. The following are three cases related to primary keys or unique indexes:
 
 - Shard key: Usually, the same shard key only exists in one sharded table, which means no data conflict is caused on shard key.
 - Auto-increment primary key：The auto-increment primary key of each sharded tables counts separately, so their range might overlap. In this case, you need to refer to the next section [Handle conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key) to solve it.

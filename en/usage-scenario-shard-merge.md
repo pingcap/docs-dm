@@ -172,10 +172,10 @@ target-database:
 
 mysql-instances:
   -
-    source-id: "instance-1"  # the ID of the data source and can be obtained from the data source configuration
-    route-rules: ["store-route-rule", "sale-route-rule"] # applies to the table route rules of this data source
-    filter-rules: ["store-filter-rule" , "sale-filter-rule"] # applies to the binlog event filter rules of this data source
-    block-allow-list:  "log-bak-ignored"  # applies to the block and allow lists of this data source
+    source-id: "instance-1"  # The ID of the data source and can be obtained from the data source configuration
+    route-rules: ["store-route-rule", "sale-route-rule"] # Applies to the table route rules of this data source
+    filter-rules: ["store-filter-rule" , "sale-filter-rule"] # Applies to the binlog event filter rules of this data source
+    block-allow-list:  "log-bak-ignored"  # Applies to the block and allow lists of this data source
   -
     source-id: "instance-2"
     route-rules: ["store-route-rule", "sale-route-rule"]
