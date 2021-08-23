@@ -77,6 +77,13 @@ filters:
     events: ["all dml"]
     action: Do
 
+expression-filter:                   # Defines the filter rules for row changes when migrating data. Supports defining multiple rules.
+  # Filter the value of inserted `c` in `expr_filter`.`tbl` when it is even.
+  even_c:                            # The name of the filter rule.
+    schema: "expr_filter"            # The name of upstream database to be matched. Wildcard match or regular match is not supported.
+    table: "tbl"                     # The name of upstream table to be matched. Wildcard match or regular match is not supported.
+    insert-value-expr: "c % 2 = 0"
+
 # The filter rule set of tables to be migrated from the upstream database instance. You can set multiple rules at the same time.
 block-allow-list:                    # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
   bw-rule-1:                         # The name of the block allow list rule.
@@ -126,7 +133,7 @@ mysql-instances:
     route-rules: ["route-rule-1", "route-rule-2"]   # The name of the mapping rule between the table matching the upstream database instance and the downstream database.
     filter-rules: ["filter-rule-1", "filter-rule-2"]                 # The name of the binlog event filtering rule of the table matching the upstream database instance.
     block-allow-list:  "bw-rule-1"                  # The name of the block and allow lists filtering rule of the table matching the upstream database instance. Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
-
+    expression-filters: ["even_c"]                  # Use expression filter rule named even_c.
     mydumper-config-name: "global"                  # The name of the mydumpers configuration.
     loader-config-name: "global"                    # The name of the loaders configuration.
     syncer-config-name: "global"                    # The name of the syncers configuration.
