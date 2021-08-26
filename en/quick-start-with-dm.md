@@ -195,7 +195,7 @@ To load the data source configuration file of MySQL to the DM cluster using dmct
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create mysql-source-conf.yaml
+./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create conf/source1.yaml
 ```
 
 The following is an example of the returned results:
