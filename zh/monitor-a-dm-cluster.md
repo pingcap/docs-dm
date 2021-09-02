@@ -100,7 +100,7 @@ overview 下包含运行当前选定 task 的所有 DM-worker/master instance/so
 | skipped event duration | binlog replication unit 跳过 binlog event 的耗时，单位：秒 | N/A | N/A |
 | unsynced tables | 当前子任务内还未收到 shard DDL 的分表数量 | N/A | N/A |
 | shard lock resolving | 当前子任务是否正在等待 shard DDL 迁移，大于 0 表示正在等待迁移 | N/A | N/A |
-| ideal qps | 理想情况下可以达到的最高QPS | N/A | N/A |
+| ideal qps | 在 DM 运行耗时为 0 时可以达到的最高 QPS | N/A | N/A |
 | binlog event row | 一个 binlog 事件中的行数 | N/A | N/A |
 | finished transaction total | 执行完毕的事务数量 | N/A | N/A |
 | replication transaction batch | 执行到下游的事务里中 sql 行数 | N/A | N/A |
