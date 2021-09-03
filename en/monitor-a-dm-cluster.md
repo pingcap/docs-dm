@@ -80,7 +80,7 @@ The following metrics show only when `task-mode` is in the `incremental` or `all
 |:----|:------------|:----|:----|
 | remaining time to sync | The predicted remaining time it takes `syncer` to be completely migrated with the master (in minutes) | N/A | N/A |
 | replicate lag gauge | The latency time it takes to replicate the binlog from master to `syncer` (in seconds) | N/A | N/A |
-| replicate lag histogram | The histogram of replicating the binlog from master to `syncer` (in seconds). Note that due to different statistical mechanisms, errors exist in the data | N/A | N/A |
+| replicate lag histogram | The histogram of replicating the binlog from master to `syncer` (in seconds). Note that due to different statistical mechanisms, the data might be inaccurate | N/A | N/A |
 | process exist with error | The binlog replication unit encounters an error within the DM-worker and exits | Immediate alerts | critical |
 | binlog file gap between master and syncer | The number of binlog files by which the `syncer` processing unit is behind the master | An alert occurs when the number of binlog files by which the `syncer` processing unit is behind the master exceeds one (>1) and the condition lasts over 10 minutes | critical |
 | binlog file gap between relay and syncer | The number of binlog files by which `syncer` is behind `relay` | An alert occurs when the number of binlog files by which the `syncer` processing unit is behind the `relay` processing unit exceeds one (>1) and the condition lasts over 10 minutes | critical |
