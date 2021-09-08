@@ -101,7 +101,7 @@ unlock-ddl-lock [--owner] [--force-remove] <lock-ID>
 #### Example of results
 
 ```bash
-» unlock-ddl-lock test-`shard_db`.`shard_table`
+» unlock-ddl-lock test-\`shard_db\`.\`shard_table\`
 {
     "result": true,                                        # The result of the unlocking operation.
     "msg": "",                                             # The additional message for the failure to unlock the lock.
@@ -197,7 +197,7 @@ The operation processes of MySQL and DM are as follows:
         {{< copyable "shell-regular" >}}
 
         ```bash
-        unlock-ddl-lock test-`shard_db`.`shard_table`
+        unlock-ddl-lock test-\`shard_db\`.\`shard_table\`
         ```
 
         ```
@@ -308,7 +308,7 @@ The operation processes are:
     - During the unlocking process, the owner tries to execute the DDL operation to the downstream again (the original owner before restarting has executed the DDL operation to the downstream once). Make sure that the DDL operation can be executed multiple times.
 
         ```bash
-        unlock-ddl-lock test-`shard_db`.`shard_table`
+        unlock-ddl-lock test-\`shard_db\`.\`shard_table\`
         {
             "result": true,
             "msg": "",
