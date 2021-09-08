@@ -104,7 +104,7 @@ unlock-ddl-lock [--owner] [--force-remove] <lock-ID>
 {{< copyable "shell-regular" >}}
 
 ```bash
-unlock-ddl-lock test-`shard_db`.`shard_table`
+unlock-ddl-lock test-\`shard_db\`.\`shard_table\`
 ```
 
 ```
@@ -217,7 +217,7 @@ MySQL 及 DM 操作与处理流程如下：
         {{< copyable "shell-regular" >}}
 
         ```bash
-        unlock-ddl-lock test-`shard_db`.`shard_table`
+        unlock-ddl-lock test-\`shard_db\`.\`shard_table\`
         ```
 
         ```
@@ -343,7 +343,7 @@ MySQL 及 DM 操作与处理流程如下：
         {{< copyable "shell-regular" >}}
 
         ```bash
-        unlock-ddl-lock test-`shard_db`.`shard_table`
+        unlock-ddl-lock test-\`shard_db\`.\`shard_table\`
         ```
 
         ```
