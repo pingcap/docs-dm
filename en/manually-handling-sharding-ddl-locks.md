@@ -11,6 +11,7 @@ DM uses the sharding DDL lock to ensure operations are performed in the correct 
 > **Note:**
 >
 > - This document only applies to the processing of sharding DDL lock in pessimistic coordination mode. 
+> - The command usage in this document is in the interactive mode. The interactive mode does not support Bash features. For example, you need to directly pass string flags instead of passing them in quotes.
 > - Do not use `unlock-ddl-lock` or `break-ddl-lock` unless you are totally aware of the possible impacts brought by the command and you can accept them.
 > - Before manually handling the abnormal DDL locks, make sure that you have already read the DM [shard merge principles](feature-shard-merge-pessimistic.md#principles).
 
@@ -101,7 +102,7 @@ unlock-ddl-lock [--owner] [--force-remove] <lock-ID>
 #### Example of results
 
 ```bash
-» unlock-ddl-lock test-\`shard_db\`.\`shard_table\`
+» unlock-ddl-lock test-`shard_db`.`shard_table`
 {
     "result": true,                                        # The result of the unlocking operation.
     "msg": "",                                             # The additional message for the failure to unlock the lock.
@@ -197,7 +198,7 @@ The operation processes of MySQL and DM are as follows:
         {{< copyable "shell-regular" >}}
 
         ```bash
-        unlock-ddl-lock test-\`shard_db\`.\`shard_table\`
+        unlock-ddl-lock test-`shard_db`.`shard_table`
         ```
 
         ```
@@ -308,7 +309,7 @@ The operation processes are:
     - During the unlocking process, the owner tries to execute the DDL operation to the downstream again (the original owner before restarting has executed the DDL operation to the downstream once). Make sure that the DDL operation can be executed multiple times.
 
         ```bash
-        unlock-ddl-lock test-\`shard_db\`.\`shard_table\`
+        unlock-ddl-lock test-`shard_db`.`shard_table`
         {
             "result": true,
             "msg": "",
