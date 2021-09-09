@@ -9,6 +9,7 @@ DM (Data Migration) 使用 sharding DDL lock 来确保分库分表的 DDL 操作
 > **注意：**
 > 
 > - 本文档只适用于悲观协调模式下 sharding DDL lock 的处理。
+> - 本文档的命令示例在交互模式中进行，交互模式下不具有 bash 的特性，比如不需要通过引号传递字符串参数而应当直接传递。
 > - 不要轻易使用 `unlock-ddl-lock` 命令，除非完全明确当前场景下使用这些命令可能会造成的影响，并能接受这些影响。
 > - 在手动处理异常的 DDL lock 前，请确保已经了解 DM 的[分库分表合并迁移原理](feature-shard-merge-pessimistic.md#实现原理)。
 
@@ -104,7 +105,7 @@ unlock-ddl-lock [--owner] [--force-remove] <lock-ID>
 {{< copyable "shell-regular" >}}
 
 ```bash
-unlock-ddl-lock test-\`shard_db\`.\`shard_table\`
+unlock-ddl-lock test-`shard_db`.`shard_table`
 ```
 
 ```
@@ -217,7 +218,7 @@ MySQL 及 DM 操作与处理流程如下：
         {{< copyable "shell-regular" >}}
 
         ```bash
-        unlock-ddl-lock test-\`shard_db\`.\`shard_table\`
+        unlock-ddl-lock test-`shard_db`.`shard_table`
         ```
 
         ```
@@ -343,7 +344,7 @@ MySQL 及 DM 操作与处理流程如下：
         {{< copyable "shell-regular" >}}
 
         ```bash
-        unlock-ddl-lock test-\`shard_db\`.\`shard_table\`
+        unlock-ddl-lock test-`shard_db`.`shard_table`
         ```
 
         ```
