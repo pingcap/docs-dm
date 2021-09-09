@@ -78,9 +78,9 @@ overview 下包含运行当前选定 task 的所有 DM-worker/master instance/so
 
 | metric 名称 | 说明  | 告警说明 | 告警级别 |
 |:----|:------------|:----|:----|
-| remaining time to sync | 预计下游 Syncer 还需要多少分钟可以和上游 master 完全同步，单位：分钟 | N/A | N/A |
-| replicate lag gauge | 上游 master 到下游 Syncer 的 binlog 复制延迟时间，单位：秒 | N/A | N/A |
-| replicate lag histogram | 上游 master 到下游 Syncer 的 binlog 复制延迟分布，单位：秒。注意由于统计机制不同，数据会有误差 | N/A | N/A |
+| remaining time to sync | 预计 Syncer 还需要多少分钟可以和上游 master 完全同步，单位：分钟 | N/A | N/A |
+| replicate lag gauge | 上游 master 到下游的 binlog 复制延迟时间，单位：秒 | N/A | N/A |
+| replicate lag histogram | 上游 master 到下游的 binlog 复制延迟分布，单位：秒。注意由于统计机制不同，数据会有误差 | N/A | N/A |
 | process exist with error | binlog replication unit 在 DM-worker 内部遇到错误并且退出了 | 立即告警 | critical |
 | binlog file gap between master and syncer | 与上游 master 相比落后的 binlog file 个数 | 落后 binlog file 个数超过 1 个（不含 1 个）且持续 10 分钟时 | critical |
 | binlog file gap between relay and syncer | 与 relay 相比落后的 binlog file 个数 | 落后 binlog file 个数超过 1 个（不含 1 个）且持续 10 分钟时 | critical |
