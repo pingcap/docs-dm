@@ -78,7 +78,7 @@ The following metrics show only when `task-mode` is in the `incremental` or `all
 
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
-| remaining time to sync | The predicted remaining time it takes for the downstream `syncer` to be completely migrated with the upstream master (in minutes) | N/A | N/A |
+| remaining time to sync | The predicted remaining time it takes for `syncer` to be completely migrated with the upstream master (in minutes) | N/A | N/A |
 | replicate lag gauge | The latency time it takes to replicate the binlog from upstream to downstream (in seconds) | N/A | N/A |
 | replicate lag histogram | The histogram of replicating the binlog from upstream to downstream (in seconds). Note that due to different statistical mechanisms, the data might be inaccurate | N/A | N/A |
 | process exist with error | The binlog replication unit encounters an error within the DM-worker and exits | Immediate alerts | critical |
