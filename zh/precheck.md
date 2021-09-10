@@ -18,8 +18,12 @@ aliases: ['/docs-cn/tidb-data-migration/dev/precheck/']
 
 + 数据库版本
 
-    - 5.5 < MySQL 版本 < 8.0
+    - MySQL 版本 > 5.5
     - MariaDB 版本 >= 10.1.2
+
+    > **警告：**
+    >
+    > 支持从 MySQL v8.0 迁移数据是 DM v2.0 的实验特性，不建议在生产环境下使用。
 
 + 数据库配置
 

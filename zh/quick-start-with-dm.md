@@ -1,5 +1,5 @@
 ---
-title: TiDB Data Migration 快速上手指南
+title: TiDB Data Migration 快速上手试用
 summary: 了解如何快速上手部署试用 TiDB Data Migration 工具。
 aliases: ['/docs-cn/tidb-data-migration/dev/quick-start-with-dm/','/docs-cn/tidb-data-migration/dev/get-started/']
 ---
@@ -7,6 +7,12 @@ aliases: ['/docs-cn/tidb-data-migration/dev/quick-start-with-dm/','/docs-cn/tidb
 # TiDB Data Migration 快速上手指南
 
 本文介绍如何快速体验使用数据迁移工具 [TiDB Data Migration](https://github.com/pingcap/dm) (DM) 从 MySQL 迁移数据到 TiDB。
+
+如需在生产环境中部署 DM，请参考以下文档：
+
+- [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)
+- [创建数据源](quick-start-create-source.md)
+- [创建数据迁移任务](quick-create-migration-task.md)
 
 ## 使用样例
 
@@ -126,7 +132,7 @@ bin/dmctl --master-addr=127.0.0.1:8261 list-member
 
 ### 准备数据
 
-使用 DM 之前，先准备好数据，向 mysql-3306 写入示例数据。
+使用 DM 之前，先准备好数据，向 MySQL-3306 写入示例数据。
 
 {{< copyable "sql" >}}
 
@@ -136,8 +142,8 @@ create database `testdm`;
 use `testdm`;
 create table t1 (id bigint, uid int, name varchar(80), info varchar(100), primary key (`id`), unique key(`uid`)) DEFAULT CHARSET=utf8mb4;
 create table t2 (id bigint, uid int, name varchar(80), info varchar(100), primary key (`id`), unique key(`uid`)) DEFAULT CHARSET=utf8mb4;
-insert into t1 (id, uid, name) values (1, 10001, 'Gabriel García Márquez'), (2 ,10002, 'Cien años de soledad');
-insert into t2 (id, uid, name) values (3,20001, 'José Arcadio Buendía'), (4,20002, 'Úrsula Iguarán'), (5,20003, 'José Arcadio');
+insert into t1 (id, uid, name) values (1, 10001, 'Gabriel García Márquez'), (2, 10002, 'Cien años de soledad');
+insert into t2 (id, uid, name) values (3, 20001, 'José Arcadio Buendía'), (4, 20002, 'Úrsula Iguarán'), (5, 20003, 'José Arcadio');
 ```
 
 ### 加载数据源 MySQL 配置
@@ -214,38 +220,67 @@ from:
 
 ### 创建数据迁移任务
 
-在导入[准备数据](#准备数据)后，迁移 MySQL 的 `testdm`.`t1` 和  `testdm`.`t2` 两张表到 TiDB。
+在导入[准备数据](#准备数据)后，进行以下操作将 MySQL 的 `testdm`.`t1` 和 `testdm`.`t2` 两张表迁移到 TiDB。
 
-创建任务的配置文件 `testdm-task.yaml`：
+1. 创建任务的配置文件 `testdm-task.yaml`：
 
-{{< copyable "" >}}
+    {{< copyable "" >}}
 
-```yaml
----
-name: testdm
-task-mode: all
+    ```yaml
+    ---
+    name: testdm
+    task-mode: all
 
-target-database:
-  host: "127.0.0.1"
-  port: 4000
-  user: "root"
-  password: "" # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
+    target-database:
+      host: "127.0.0.1"
+      port: 4000
+      user: "root"
+      password: "" # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
 
-mysql-instances:
-  - source-id: "mysql-replica-01"
-    block-allow-list:  "ba-rule1"
+    mysql-instances:
+      - source-id: "mysql-replica-01"
+        block-allow-list:  "ba-rule1"
 
-block-allow-list:
-  ba-rule1:
-    do-dbs: ["testdm"]
-```
+    block-allow-list:
+      ba-rule1:
+        do-dbs: ["testdm"]
+    ```
 
-使用 dmctl 创建任务：
+2. 使用 dmctl 创建任务：
+
+    {{< copyable "shell-regular" >}}
+
+    ```bash
+    ./bin/dmctl --master-addr 127.0.0.1:8261 start-task testdm-task.yaml
+    ```
+
+    结果如下：
+
+    ```bash
+    {
+        "result": true,
+        "msg": "",
+        "sources": [
+            {
+                "result": true,
+                "msg": "",
+                "source": "mysql-replica-01",
+                "worker": "worker1"
+            }
+        ]
+    }
+    ```
+
+这样就成功创建了一个将 MySQL-3306 数据迁移到 TiDB 的任务。
+
+### 查看迁移任务状态
+
+在创建迁移任务之后，可以用 `dmtcl query-status` 来查看任务的状态。
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl -master-addr 127.0.0.1:8261 start-task testdm-task.yaml
+./bin/dmctl --master-addr 127.0.0.1:8261 query-status
 ```
 
 结果如下：
@@ -254,15 +289,14 @@ block-allow-list:
 {
     "result": true,
     "msg": "",
-    "sources": [
+    "tasks": [
         {
-            "result": true,
-            "msg": "",
-            "source": "mysql-replica-01",
-            "worker": "worker1"
+            "taskName": "testdm",
+            "taskStatus": "Running",
+            "sources": [
+                "mysql-replica-01"
+            ]
         }
     ]
 }
 ```
-
-这样就成功创建了一个将 MySQL-3306 数据迁移到 TiDB 的任务。

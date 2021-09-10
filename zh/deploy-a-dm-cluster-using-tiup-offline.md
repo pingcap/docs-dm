@@ -5,7 +5,7 @@ summary: 学习如何使用 TiUP DM 组件来离线部署 TiDB Data Migration �
 
 # 使用 TiUP 离线镜像部署 DM 集群（实验特性）
 
-> **注意：**
+> **警告：**
 >
 > 本文描述特性仍为实验特性，不建议在生产环境下使用 TiUP 离线镜像部署 DM 集群。
 
@@ -46,11 +46,11 @@ summary: 学习如何使用 TiUP DM 组件来离线部署 TiDB Data Migration �
         {{< copyable "shell-regular" >}}
 
         ```bash
-        export version=v2.0.0  # 可修改成实际需要的版本
+        export version=v2.0.3  # 可修改成实际需要的版本
         tiup mirror clone tidb-dm-${version}-linux-amd64 --os=linux --arch=amd64 \
             --dm-master=${version} --dm-worker=${version} --dmctl=${version} \
             --alertmanager=v0.17.0 --grafana=v4.0.3 --prometheus=v4.0.3 \
-            --tiup=$(tiup --version|grep 'tiup'|awk -F ' ' '{print $1}') --dm=$(tiup --version|grep 'tiup'|awk -F ' ' '{print $1}')
+            --tiup=v$(tiup --version|grep 'tiup'|awk -F ' ' '{print $1}') --dm=v$(tiup --version|grep 'tiup'|awk -F ' ' '{print $1}')
         ```
 
         该命令会在当前目录下创建一个名叫 `tidb-dm-${version}-linux-amd64` 的目录，里面包含 TiUP 管理的组件包。
@@ -72,7 +72,7 @@ summary: 学习如何使用 TiUP DM 组件来离线部署 TiDB Data Migration �
 {{< copyable "shell-regular" >}}
 
 ```bash
-export version=v2.0.0 # 可修改成实际需要的版本
+export version=v2.0.3 # 可修改成实际需要的版本
 tar xzvf tidb-dm-${version}-linux-amd64.tar.gz
 sh tidb-dm-${version}-linux-amd64/local_install.sh
 source /home/tidb/.bash_profile
@@ -86,7 +86,7 @@ source /home/tidb/.bash_profile
 
 请根据不同的集群拓扑，编辑 TiUP 所需的集群初始化配置文件。
 
-请根据[配置文件模板](https://github.com/pingcap/tiup/blob/master/embed/templates/examples/dm/topology.example.yaml)，新建一个配置文件 `topology.yaml`。如果有其他组合场景的需求，请根据多个模板自行调整。
+请根据[配置文件模板](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml)，新建一个配置文件 `topology.yaml`。如果有其他组合场景的需求，请根据多个模板自行调整。
 
 部署 3 个 DM-master、3 个 DM-worker 与 1 个监控组件的配置如下：
 
@@ -129,7 +129,7 @@ alertmanager_servers:
 >
 > - 对于需要某个节点生效的参数，请在具体节点的 `config` 中配置。
 >
-> - 配置的层次结构使用 `.` 表示。如：`log.slow-threshold`。更多格式说明，请参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/embed/templates/examples/dm/topology.example.yaml)。
+> - 配置的层次结构使用 `.` 表示。如：`log.slow-threshold`。更多格式说明，请参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml)。
 >
 > - 更多参数说明，请参考 [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml)、[worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml)。
 >
@@ -185,7 +185,7 @@ TiUP 支持管理多个 DM 集群，该命令会输出当前通过 TiUP DM 管�
 ```log
 Name  User  Version  Path                                  PrivateKey
 ----  ----  -------  ----                                  ----------
-dm-test  tidb  v2.0.0  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/storage/dm/clusters/dm-test/ssh/id_rsa
+dm-test  tidb  v2.0.3  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/storage/dm/clusters/dm-test/ssh/id_rsa
 ```
 
 ## 第 6 步：检查部署的 DM 集群情况

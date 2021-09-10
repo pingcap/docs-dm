@@ -98,7 +98,7 @@ from:
 
 ### Data migration task configuration file
 
-For [data migration task configuration file](task-configuration-file.md), v2.0.x is basically compatible with v1.0.x. You can directly copy the configuration of v1.0.x.
+For [data migration task configuration guide](task-configuration-guide.md), v2.0.x is basically compatible with v1.0.x. You can directly copy the configuration of v1.0.x.
 
 ## Step 2: Deploy the v2.0.x cluster
 
@@ -116,7 +116,7 @@ If the original v1.0.x cluster is deployed by binary, you can stop the DM-worker
 
 ## Step 4: Upgrade data migration task
 
-1. Use the [`operate-source`](manage-source.md#load-the-data-source-configurations) command to load the upstream database source configuration from [step 1](#step-1-prepare-v20x-configuration-file) into the v2.0.x cluster.
+1. Use the [`operate-source`](manage-source.md#operate-data-source) command to load the upstream database source configuration from [step 1](#step-1-prepare-v20x-configuration-file) into the v2.0.x cluster.
 
 2. In the downstream TiDB cluster, obtain the corresponding global checkpoint information from the incremental checkpoint table of the v1.0.x data migration task.
 

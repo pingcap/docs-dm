@@ -10,7 +10,7 @@ title: DM 数据迁移任务配置向导
 
 配置需要迁移的数据源之前，首先应该确认已经在 DM 创建相应数据源：
 
-- 查看数据源可以参考 [查看数据源配置](manage-source.md#查看数据源配置示例)
+- 查看数据源可以参考 [查看数据源配置](manage-source.md#查看数据源配置)
 - 创建数据源可以参考 [在 DM 创建数据源](migrate-data-using-dm.md#第-3-步创建数据源)
 - 数据源配置可以参考 [数据源配置文件介绍](source-configuration-file.md)
 
@@ -53,7 +53,7 @@ target-database:       # 目标 TiDB 配置
 
 ## 配置需要迁移的表
 
-如果不需要过滤特定表，或者只迁移特定表，可以跳过该项配置。
+如果不需要过滤或迁移特定表，可以跳过该项配置。
 
 配置从数据源迁移表的黑白名单，则需要添加两个定义，详细配置规则参考 [Block & Allow Lists](key-features.md#block--allow-table-lists)：
 
@@ -61,7 +61,7 @@ target-database:       # 目标 TiDB 配置
 
     ```yaml
     block-allow-list:
-      bw-rule-1:                           # 规则名称，dbs 和 tables
+      bw-rule-1:                           # 规则名称
         do-dbs: ["test.*", "user"]         # 迁移哪些库，支持通配符 "*" 和 "?"，do-dbs 和 ignore-dbs 只需要配置一个，如果两者同时配置只有 do-dbs 会生效
         # ignore-dbs: ["mysql", "account"] # 忽略哪些库，支持通配符 "*" 和 "?"
         do-tables:                         # 迁移哪些表，do-tables 和 ignore-tables 只需要配置一个，如果两者同时配置只有 do-tables 会生效
@@ -75,14 +75,14 @@ target-database:       # 目标 TiDB 配置
           tbl-name: "log"
     ```
 
-2. 在数据源配置中引用黑白名规则，过滤该数据源需要迁移的表
+2. 在数据源配置中引用黑白名单规则，过滤该数据源需要迁移的表
 
     ```yaml
     mysql-instances:
         - source-id: "mysql-replica-01"  # 从 source-id = mysql-replica-01 的数据源迁移数据
-          block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+          block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
         - source-id: "mysql-replica-02"  # 从 source-id = mysql-replica-02 的数据源迁移数据
-          block-allow-list:  "bw-rule-2" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+          block-allow-list:  "bw-rule-2" # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     ```
 
 ## 配置需要过滤的操作
@@ -97,7 +97,7 @@ target-database:       # 目标 TiDB 配置
     filters:                                        # 定义过滤数据源特定操作的规则，可以定义多个规则
       filter-rule-1:                                # 规则名称
         schema-pattern: "test_*"                    # 匹配数据源的库名，支持通配符 "*" 和 "?"
-        table-pattern: "t_*"                        # 匹配数据源的表明，支持通配符 "*" 和 "?"
+        table-pattern: "t_*"                        # 匹配数据源的表名，支持通配符 "*" 和 "?"
         events: ["truncate table", "drop table"]    # 匹配上 schema-pattern 和 table-pattern 的库或者表的操作类型
         action: Ignore                              # 迁移（Do）还是忽略(Ignore)
       filter-rule-2:
@@ -110,12 +110,12 @@ target-database:       # 目标 TiDB 配置
 
     ```yaml
     mysql-instances:
-        - source-id: "mysql-replica-01"    # 从 source-id = mysql-replica-01 的数据源迁移数据
-          block-allow-list:  "bw-rule-1"   # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-          filter-rules: ["filter-rule-1"]  # 过滤数据源特定操作的规则，可以配置多个过滤规则
-        - source-id: "mysql-replica-02"    # 从 source-id = mysql-replica-02 的数据源迁移数据
-          block-allow-list:  "bw-rule-2"   # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-          filter-rules: ["filter-rule-2"]  # 过滤数据源特定操作的规则，可以配置多个过滤规则
+      - source-id: "mysql-replica-01"    # 从 source-id = mysql-replica-01 的数据源迁移数据
+        block-allow-list:  "bw-rule-1"   # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+        filter-rules: ["filter-rule-1"]  # 过滤数据源特定操作的规则，可以配置多个过滤规则
+      - source-id: "mysql-replica-02"    # 从 source-id = mysql-replica-02 的数据源迁移数据
+        block-allow-list:  "bw-rule-2"   # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+        filter-rules: ["filter-rule-2"]  # 过滤数据源特定操作的规则，可以配置多个过滤规则
     ```
 
 ## 配置需要数据源表到目标 TiDB 表的映射
@@ -130,7 +130,7 @@ target-database:       # 目标 TiDB 配置
     routes:                           # 定义数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则
       route-rule-1:                   # 规则名称
         schema-pattern: "test_*"      # 匹配数据源的库名，支持通配符 "*" 和 "?"
-        table-pattern: "t_*"          # 匹配数据源的表明，支持通配符 "*" 和 "?"
+        table-pattern: "t_*"          # 匹配数据源的表名，支持通配符 "*" 和 "?"
         target-schema: "test"         # 目标 TiDB 库名
         target-table: "t"             # 目标 TiDB 表名
       route-rule-2:
@@ -138,17 +138,17 @@ target-database:       # 目标 TiDB 配置
         target-schema: "test"
     ```
 
-2. 在数据源配置中引用黑白名规则，过滤该数据源需要迁移的表
+2. 在数据源配置中引用路由规则，过滤该数据源需要迁移的表
 
     ```yaml
     mysql-instances:
-        - source-id: "mysql-replica-01"                     # 从 source-id = mysql-replica-01 的数据源迁移数据
-          block-allow-list:  "bw-rule-1"                    # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-          filter-rules: ["filter-rule-1"]                   # 过滤数据源特定操作的规则，可以配置多个过滤规则
-          route-rules: ["route-rule-1", "route-rule-2"]     # 数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则
-        - source-id: "mysql-replica-02"                     # 从 source-id = mysql-replica-02 的数据源迁移数据
-          block-allow-list:  "bw-rule-2"                    # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-          filter-rules: ["filter-rule-2"]                   # 过滤数据源特定操作的规则，可以配置多个过滤规则
+      - source-id: "mysql-replica-01"                     # 从 source-id = mysql-replica-01 的数据源迁移数据
+        block-allow-list:  "bw-rule-1"                    # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+        filter-rules: ["filter-rule-1"]                   # 过滤数据源特定操作的规则，可以配置多个过滤规则
+        route-rules: ["route-rule-1", "route-rule-2"]     # 数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则
+      - source-id: "mysql-replica-02"                     # 从 source-id = mysql-replica-02 的数据源迁移数据
+        block-allow-list:  "bw-rule-2"                    # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+        filter-rules: ["filter-rule-2"]                   # 过滤数据源特定操作的规则，可以配置多个过滤规则
     ```
 
 ## 配置是否进行分库分表合并
@@ -180,11 +180,11 @@ task-mode: all                  # 任务模式，可设为 "full" - "只进行�
 ## ******** 数据源配置 **********
 mysql-instances:
   - source-id: "mysql-replica-01"                   # 从 source-id = mysql-replica-01 的数据源迁移数据
-    block-allow-list:  "bw-rule-1"                  # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:  "bw-rule-1"                  # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     filter-rules: ["filter-rule-1"]                 # 过滤数据源特定操作的规则，可以配置多个过滤规则
     route-rules: ["route-rule-1", "route-rule-2"]   # 数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则
   - source-id: "mysql-replica-02"                   # 从 source-id = mysql-replica-02 的数据源迁移数据
-    block-allow-list:  "bw-rule-2"                  # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:  "bw-rule-2"                  # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     filter-rules: ["filter-rule-2"]                 # 过滤数据源特定操作的规则，可以配置多个过滤规则
     route-rules: ["route-rule-2"]                   # 数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则
 
@@ -196,7 +196,7 @@ target-database:       # 目标 TiDB 配置
   password: ""         # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
 
 ## ******** 功能配置 **********
-block-allow-list:                      # 定义数据源迁移表的过滤规则，可以定义多个规则。如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+block-allow-list:                      # 定义数据源迁移表的过滤规则，可以定义多个规则。如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
   bw-rule-1:                           # 规则名称
     do-dbs: ["test.*", "user"]         # 迁移哪些库，支持通配符 "*" 和 "?"，do-dbs 和 ignore-dbs 只需要配置一个，如果两者同时配置只有 do-dbs 会生效
     # ignore-dbs: ["mysql", "account"] # 忽略哪些库，支持通配符 "*" 和 "?"
@@ -213,7 +213,7 @@ block-allow-list:                      # 定义数据源迁移表的过滤规则
 filters:                                        # 定义过滤数据源特定操作的规则，可以定义多个规则
   filter-rule-1:                                # 规则名称
     schema-pattern: "test_*"                    # 匹配数据源的库名，支持通配符 "*" 和 "?"
-    table-pattern: "t_*"                        # 匹配数据源的表明，支持通配符 "*" 和 "?"
+    table-pattern: "t_*"                        # 匹配数据源的表名，支持通配符 "*" 和 "?"
     events: ["truncate table", "drop table"]    # 匹配上 schema-pattern 和 table-pattern 的库或者表的操作类型
     action: Ignore                              # 迁移（Do）还是忽略(Ignore)
   filter-rule-2:
@@ -224,7 +224,7 @@ filters:                                        # 定义过滤数据源特定操
 routes:                           # 定义数据源表迁移到目标 TiDB 表的路由规则，可以定义多个规则
   route-rule-1:                   # 规则名称
     schema-pattern: "test_*"      # 匹配数据源的库名，支持通配符 "*" 和 "?"
-    table-pattern: "t_*"          # 匹配数据源的表明，支持通配符 "*" 和 "?"
+    table-pattern: "t_*"          # 匹配数据源的表名，支持通配符 "*" 和 "?"
     target-schema: "test"         # 目标 TiDB 库名
     target-table: "t"             # 目标 TiDB 表名
   route-rule-2:

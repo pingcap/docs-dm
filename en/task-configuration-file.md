@@ -36,7 +36,7 @@ target-database:                # Configuration of the downstream database insta
 
 ## ******** Feature configuration set **********
 # The filter rule set of the block allow list of the matched table of the upstream database instance.
-block-allow-list:        # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+block-allow-list:        # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
   bw-rule-1:             # The name of the block and allow lists filtering rule of the table matching the upstream database instance.
     do-dbs: ["all_mode"] # Allow list of upstream tables needs to be migrated.
 # ----------- Instance configuration -----------
@@ -49,7 +49,7 @@ mysql-instances:
     syncer-thread: 16              # The number of threads that the sync processing unit uses for replicating incremental data. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
 
   - source-id: "mysql-replica-02"
-    block-allow-list:  "bw-rule-1" # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+    block-allow-list:  "bw-rule-1" # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
     mydumper-thread: 4
     loader-thread: 16
     syncer-thread: 16
@@ -71,6 +71,12 @@ Refer to the comments in the [template](#task-configuration-file-template-basic)
     - `full` only makes a full backup of the upstream database and then imports the full data to the downstream database.
     - `incremental`: Only replicates the incremental data of the upstream database to the downstream database using the binlog. You can set the `meta` configuration item of the instance configuration to specify the starting position of incremental replication.
     - `all`: `full` + `incremental`. Makes a full backup of the upstream database, imports the full data to the downstream database, and then uses the binlog to make an incremental replication to the downstream database starting from the exported position during the full backup process (binlog position).
+
+> **Note:**
+>
+> In v2.0, DM uses dumpling to execute full backups. During the full backup process, [`FLUSH TABLES WITH READ LOCK`](https://dev.mysql.com/doc/refman/8.0/en/flush.html#flush-tables-with-read-lock) is used to temporarily interrupt the DML and DDL operations of the replica database, to ensure the consistency of the backup connections, and to record the binlog position (POS) information for incremental replications. The lock is released after all backup connections start transactions.
+> 
+> It is recommended to perform full backups during off-peak hours or on the MySQL replica database.
 
 ### Feature configuration set
 

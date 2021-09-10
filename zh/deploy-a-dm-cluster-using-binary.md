@@ -41,6 +41,8 @@ aliases: ['/docs-cn/tidb-data-migration/dev/deploy-a-dm-cluster-using-binary/']
 
 > **注意：**
 >
+> - 在单机部署多个 DM-master 或 DM-worker 时，需要确保每个实例的端口以及运行命令的当前目录各不相同。
+>
 > - 如果不需要确保 DM 集群高可用，则可只部署 1 个 DM-master 节点，且部署的 DM-worker 节点数量不少于上游待迁移的 MySQL/MariaDB 实例数。
 >
 > - 如果需要确保 DM 集群高可用，则推荐部署 3 个 DM-master 节点，且部署的 DM-worker 节点数量大于上游待迁移的 MySQL/MariaDB 实例数（如 DM-worker 节点数量比上游实例数多 2 个）。
@@ -114,7 +116,7 @@ log-level = "info"
 log-file = "dm-master.log"
 
 # DM-master 监听地址
-master-addr = ":8261"
+master-addr = "192.168.0.4:8261"
 
 # DM-master 节点的对等 URL
 peer-urls = "192.168.0.4:8291"
@@ -126,6 +128,10 @@ initial-cluster = "master1=http://192.168.0.4:8291,master2=http://192.168.0.5:82
 在终端中使用下面的命令运行 DM-master：
 
 {{< copyable "shell-regular" >}}
+
+> **注意：**
+>
+> 执行该命令后控制台不会输出日志，可以通过 `tail -f dm-master.log` 查看运行日志。
 
 ```bash
 ./bin/dm-master -config conf/dm-master1.toml

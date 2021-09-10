@@ -66,7 +66,9 @@ Log in to the control machine using a regular user account (take the `tidb` user
 
 According to the intended cluster topology, you need to manually create and edit the cluster initialization configuration file.
 
-You need to create a YAML configuration file (named `topology.yaml` for example) according to the [configuration file template](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml). For other scenarios, edit the configuration accordingly.
+You need to create a YAML configuration file (named `topology.yaml` for example) according to the [configuration file template](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml). For other scenarios, edit the configuration accordingly.
+
+You can use the command `tiup dm template > topology.yaml` to generate a configuration file template quickly.
 
 The configuration of deploying three DM-masters, three DM-workers, and one monitoring component instance is as follows:
 
@@ -109,7 +111,7 @@ alertmanager_servers:
 >
 > - For parameters that should be effective on a specific node, configure these parameters in `config` of this node.
 >
-> - Use `.` to indicate the subcategory of the configuration, such as `log.slow-threshold`. For more formats, see [TiUP configuration template](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml).
+> - Use `.` to indicate the subcategory of the configuration, such as `log.slow-threshold`. For more formats, see [TiUP configuration template](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml).
 >
 > - For more parameter description, see [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml) and [worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml).
 >
@@ -160,7 +162,7 @@ TiUP supports managing multiple DM clusters. The command above outputs informati
 ```log
 Name  User  Version  Path                                  PrivateKey
 ----  ----  -------  ----                                  ----------
-dm-test  tidb  v2.0.0  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/storage/dm/clusters/dm-test/ssh/id_rsa
+dm-test  tidb  v2.0.3  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/storage/dm/clusters/dm-test/ssh/id_rsa
 ```
 
 ## Step 5: Check the status of the deployed DM cluster
@@ -196,3 +198,9 @@ tiup dm display dm-test
 ```
 
 If the `Status` is `Up` in the output, the cluster status is normal.
+
+## Step 8: Get the cluster controller - dmctl
+
+dmctl is a command-line tool used to control DM clusters. You are recommended to [use dmctl via TiUP](maintain-dm-using-tiup.md#dmctl).
+
+dmctl supports both the command mode and the interactive mode. For details, see [Maintain DM Clusters Using dmctl](dmctl-introduction.md#maintain-dm- clusters-using-dmctl).

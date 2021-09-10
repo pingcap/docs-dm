@@ -69,9 +69,9 @@ docker run --rm --name mysql-3307 -p 3307:3307 -e MYSQL_ALLOW_EMPTY_PASSWORD=tru
 {{< copyable "shell-regular" >}}
 
 ```bash
-wget https://download.pingcap.org/tidb-v4.0.0-linux-amd64.tar.gz
-tar -xzvf tidb-v4.0.0-rc.2-linux-amd64.tar.gz
-mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
+wget https://download.pingcap.org/tidb-latest-linux-amd64.tar.gz
+tar -xzvf tidb-latest-linux-amd64.tar.gz
+mv tidb-latest-linux-amd64/bin/tidb-server ./
 ./tidb-server -P 4000 --store mocktikv --log-file "./tidb.log" &
 ```
 
@@ -95,7 +95,7 @@ mv tidb-v4.0.0-rc.2-linux-amd64/bin/tidb-server ./
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl --encrypt "123456"
+./bin/dmctl encrypt "123456"
 ```
 
 ```
@@ -161,20 +161,20 @@ target-database:
 
 mysql-instances:
   - source-id: "mysql-replica-01"
-    block-allow-list:  "instance"   # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:  "instance"   # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
     mydumper-thread: 4
     loader-thread: 16
     syncer-thread: 16
 
   - source-id: "mysql-replica-02"
-    block-allow-list:  "instance"  # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:  "instance"  # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     route-rules: ["sharding-route-rules-table", "sharding-route-rules-schema"]
     mydumper-thread: 4
     loader-thread: 16
     syncer-thread: 16
 
-block-allow-list:                  # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+block-allow-list:                  # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
   instance:
     do-dbs: ["~^sharding[\\d]+"]
     do-tables:
@@ -198,7 +198,7 @@ routes:
 {{< copyable "shell-regular" >}}
 
 ```bash
-./bin/dmctl -master-addr 127.0.0.1:8261 start-task conf/task.yaml
+./bin/dmctl --master-addr 127.0.0.1:8261 start-task conf/task.yaml
 ```
 
 结果如下：

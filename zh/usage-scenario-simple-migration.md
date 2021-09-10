@@ -1,15 +1,15 @@
 ---
-title: Data Migration 简单使用场景
+title: Data Migration 多数据源汇总迁移到 TiDB
 aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/','/zh/tidb-data-migration/dev/usage-scenario-simple-replication']
 ---
 
-# Data Migration 简单使用场景
+# Data Migration 多数据源汇总迁移到 TiDB
 
-本文介绍了 DM 工具的一个简单使用场景（非分库分表合并场景）：将三个上游 MySQL 实例的数据迁移到一个下游 TiDB 集群中。
+本文介绍了 DM 工具的一个简单使用场景：将三个数据源 MySQL 实例的数据迁移到一个下游 TiDB 集群中。
 
-## 上游实例
+## 数据源实例
 
-假设上游结构为：
+假设数据源结构为：
 
 - 实例 1
 
@@ -45,9 +45,9 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
 
     3. 将实例 3 中的 `user` 库迁移到下游 TiDB 的 `user_south` 库中。
 
-    4. 任何情况下都不删除 `log` 表的任何数据。
+    4. 任何情况下都不删除 `user.log` 表的任何数据。
 
-2. 将上游 `store` 库迁移到下游 `store` 库中，且迁移过程中不合并表。
+2. 将数据源 `store` 库迁移到下游 `store` 库中，且迁移过程中不合并表。
 
     1. 实例 2 和实例 3 中都存在 `store_sz` 表，且这两个 `store_sz` 表分别被迁移到下游的 `store_suzhou` 表和 `store_shenzhen` 表中。
 
@@ -112,12 +112,12 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
     ```yaml
     filters:
       ...
-      log-filter-rule:
+      log-filter-rule:                 # 过滤掉 user.log 表的任何删除操作
         schema-pattern: "user"
         table-pattern: "log"
         events: ["truncate table", "drop table", "delete"]
         action: Ignore
-      user-filter-rule:
+      user-filter-rule:                # 过滤掉删除 user 库操作
         schema-pattern: "user"
         events: ["drop database"]
         action: Ignore
@@ -130,7 +130,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
     ```yaml
     filters:
       ...
-      store-filter-rule:
+      store-filter-rule:            # 过滤掉删除 store 库，以及 store 库下面任何表的所有删除操作
         schema-pattern: "store"
         events: ["drop database", "truncate table", "drop table", "delete"]
         action: Ignore
@@ -145,7 +145,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
     {{< copyable "" >}}
 
     ```yaml
-    block-allow-list:   # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:   # 通过黑白名单，过滤掉 log 库的所有操作
       log-ignored:
         ignore-dbs: ["log"]
     ```
@@ -158,7 +158,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
 
 ```yaml
 name: "one-tidb-slave"
-task-mode: all
+task-mode: all                           # 进行全量数据迁移 + 增量数据迁移
 meta-schema: "dm_meta"
 
 target-database:
@@ -169,29 +169,20 @@ target-database:
 
 mysql-instances:
   -
-    source-id: "instance-1"
-    route-rules: ["instance-1-user-rule"]
-    filter-rules: ["log-filter-rule", "user-filter-rule" , "store-filter-rule"]
-    block-allow-list:  "log-ignored"    # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-    mydumper-config-name: "global"
-    loader-config-name: "global"
-    syncer-config-name: "global"
+    source-id: "instance-1"    # 数据源 ID，可以从数据源配置中获取
+    route-rules: ["instance-1-user-rule"]  # 应用于该数据源的 table route 规则
+    filter-rules: ["log-filter-rule", "user-filter-rule" , "store-filter-rule"]  # 应用于该数据源的 binlog event filter 规则
+    block-allow-list:  "log-ignored"  # 应用于该数据源的 Block & Allow Lists 规则
   -
     source-id: "instance-2"
     route-rules: ["instance-2-user-rule", instance-2-store-rule]
     filter-rules: ["log-filter-rule", "user-filter-rule" , "store-filter-rule"]
-    block-allow-list:  "log-ignored"    # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-    mydumper-config-name: "global"
-    loader-config-name: "global"
-    syncer-config-name: "global"
+    block-allow-list:  "log-ignored"
   -
     source-id: "instance-3"
     route-rules: ["instance-3-user-rule", instance-3-store-rule]
     filter-rules: ["log-filter-rule", "user-filter-rule" , "store-filter-rule"]
-    block-allow-list:  "log-ignored"    # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-    mydumper-config-name: "global"
-    loader-config-name: "global"
-    syncer-config-name: "global"
+    block-allow-list:  "log-ignored"
 
 # 所有实例的共有配置
 
@@ -230,25 +221,4 @@ filters:
     schema-pattern: "store"
     events: ["drop database", "truncate table", "drop table", "delete"]
     action: Ignore
-
-block-allow-list:   # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
-  log-ignored:
-    ignore-dbs: ["log"]
-
-mydumpers:
-  global:
-    threads: 4
-    chunk-filesize: 64
-    skip-tz-utc: true
-
-loaders:
-  global:
-    pool-size: 16
-    dir: "./dumped_data"
-
-syncers:
-  global:
-    worker-count: 16
-    batch: 100
-    max-retry: 100
 ```

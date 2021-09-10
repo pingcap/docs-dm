@@ -38,7 +38,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/scenarios/']
 
 ## online DDL 场景
 
-在 MySQL 生态中，经常会使用 pt-osc 或 gh-ost 等工具执行 online DDL 操作，DM 对此类场景提供了特殊的支持，通过配置 `online-ddl-scheme` 参数即可开启。具体可参考 [DM online-ddl-scheme](feature-online-ddl-scheme.md)。
+在 MySQL 生态中，经常会使用 pt-osc 或 gh-ost 等工具执行 online DDL 操作，DM 对此类场景提供了特殊的支持，通过配置 `online-ddl` 参数即可开启。具体可参考 [DM online-ddl](feature-online-ddl.md)。
 
 ## 变更 DM 连接的上游 MySQL 实例
 

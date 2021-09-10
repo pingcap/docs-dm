@@ -78,7 +78,7 @@ tiup dm list
 ```
 Name  User  Version  Path                                  PrivateKey
 ----  ----  -------  ----                                  ----------
-prod-cluster  tidb  v2.0.0  /root/.tiup/storage/dm/clusters/test  /root/.tiup/storage/dm/clusters/test/ssh/id_rsa
+prod-cluster  tidb  v2.0.3  /root/.tiup/storage/dm/clusters/test  /root/.tiup/storage/dm/clusters/test/ssh/id_rsa
 ```
 
 ## 启动集群
@@ -103,7 +103,7 @@ tiup dm display prod-cluster
 
 ```
 dm Cluster: prod-cluster
-dm Version: v2.0.0
+dm Version: v2.0.3
 ID                 Role          Host          Ports      OS/Arch       Status     Data Dir                           Deploy Dir
 --                 ----          ----          -----      -------       ------     --------                           ----------
 172.19.0.101:9093  alertmanager  172.19.0.101  9093/9094  linux/x86_64  Up         /home/tidb/data/alertmanager-9093  /home/tidb/deploy/alertmanager-9093
@@ -157,7 +157,7 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
     >
     > 需要新建一个拓扑文件，文件中只写入扩容节点的描述信息，不要包含已存在的节点。
     >
-    > 其他更多配置项（如：部署目录等）请参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/embed/templates/examples/dm/topology.example.yaml)。
+    > 其他更多配置项（如：部署目录等）请参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml)。
 
     ```yaml
     ---
@@ -178,6 +178,16 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
     执行完成之后可以通过 `tiup dm display prod-cluster` 命令检查扩容后的集群状态。
 
 ## 滚动升级
+
+> **注意：**
+>
+> 从 v2.0.5 版本开始，dmctl 支持[导出和导入集群的数据源和任务配置](export-import-config.md)。
+>
+> 升级前，可使用 `config export` 命令导出集群的配置文件，升级后如需降级回退到旧版本，可重建旧集群后，使用 `config import` 导入之前的配置。
+>
+> 对于 v2.0.5 之前版本的集群，可使用 v2.0.5 及之后版本的 dmctl 导出和导入集群配置。
+>
+> 对于 v2.0.2 之后的版本，导入集群配置时暂不支持自动恢复 relay worker 相关配置，可手动执行 `start-relay` 命令[开启 relay log](relay-log.md#启动停止-relay-log)。
 
 滚动升级过程中尽量保证对前端业务透明、无感知，其中对不同节点有不同的操作。
 
@@ -277,14 +287,14 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dm import --dir=/path/to/dm-ansible --cluster-version v2.0.0
+tiup dm import --dir=/path/to/dm-ansible --cluster-version v2.0.3
 ```
 
 可以通过执行 `tiup list dm-master` 来查看 TiUP 支持的最新集群版本。
 
 `import` 命令的工作流程如下：
 
-- 根据 DM-Ansible 部署的集群生成一个拓扑文件 [topology.yml](https://github.com/pingcap/tiup/blob/master/embed/templates/examples/dm/topology.example.yaml) 用于 TiUP 部署。
+- 根据 DM-Ansible 部署的集群生成一个拓扑文件 [topology.yml](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml) 用于 TiUP 部署。
 - 确认该生成的部署拓扑文件无误后，使用该文件部署 2.0 以上版本的集群。
 
 部署成功后可以使用 `tiup dm start` 命令启动集群后进入 DM 内核升级流程。
@@ -314,7 +324,7 @@ ID      Time                  Command
 --      ----                  -------
 4D5kQY  2020-08-13T05:38:19Z  tiup dm display test
 4D5kNv  2020-08-13T05:36:13Z  tiup dm list
-4D5kNr  2020-08-13T05:36:10Z  tiup dm deploy -p prod-cluster v2.0.0 ./examples/dm/minimal.yaml
+4D5kNr  2020-08-13T05:36:10Z  tiup dm deploy -p prod-cluster v2.0.3 ./examples/dm/minimal.yaml
 ```
 
 第一列为 audit-id，如果想看某个命令的执行日志，则传入这个 audit-id：
@@ -362,7 +372,7 @@ tiup dmctl [args]
 指定 dmctl 版本：
 
 ```
-tiup dmctl:v2.0.0 [args]
+tiup dmctl:v2.0.3 [args]
 ```
 
 例如，以前添加 source 命令为 `dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml`，集成到 TiUP 中的命令为：

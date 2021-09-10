@@ -23,15 +23,15 @@ dmctl 是用来运维 DM 集群的命令行工具，支持交互模式和命令�
 {{< copyable "shell-regular" >}}
 
 ```bash
-./dmctl -master-addr 172.16.30.14:8261
+./dmctl --master-addr 172.16.30.14:8261
 ```
 
 ```
 Welcome to dmctl
-Release Version: v2.0.1
-Git Commit Hash: 2bb9aa33a8962d62a1b0280341b7b1b6beda7eda
-Git Branch: heads/refs/tags/v2.0.1
-UTC Build Time: 2020-12-25 04:26:33
+Release Version: v2.0.3
+Git Commit Hash: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Git Branch: release-2.0
+UTC Build Time: yyyy-mm-dd hh:mm:ss
 Go Version: go version go1.13 linux/amd64
 
 » help
@@ -42,6 +42,7 @@ Usage:
 
 Available Commands:
   check-task      Checks the configuration file of the task.
+  config          Commands to import/export config.
   get-config      Gets the configuration.
   handle-error    `skip`/`replace`/`revert` the current error event or a specific binlog position (binlog-pos) event.
   help            Help about any command
@@ -75,19 +76,23 @@ Use "dmctl [command] --help" for more information about a command.
 > **注意：**
 >
 > + 一条 dmctl 命令只能跟一个任务操作
-> + 任务操作只能放在 dmctl 命令的最后
+> + 从 v2.0.4 版本开始，支持从环境变量 (DM_MASTER_ADDR) 里读取 `-master-addr` 参数
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-./dmctl -master-addr 172.16.30.14:8261 start-task task.yaml
-./dmctl -master-addr 172.16.30.14:8261 stop-task task
-./dmctl -master-addr 172.16.30.14:8261 query-status
+./dmctl --master-addr 172.16.30.14:8261 start-task task.yaml
+./dmctl --master-addr 172.16.30.14:8261 stop-task task
+./dmctl --master-addr 172.16.30.14:8261 query-status
+
+export DM_MASTER_ADDR="172.16.30.14:8261"
+./dmctl query-status
 ```
 
 ```
 Available Commands:
-  check-task            check-task <config-file>
+  check-task            check-task <config-file> [--error count] [--warn count]
+  config                commands to import/export config
   get-config            get-config <task | master | worker | source> <name> [--file filename]
   handle-error          handle-error <task-name | task-file> [-s source ...] [-b binlog-pos] <skip/replace/revert> [replace-sql1;replace-sql2;]
   list-member           list-member [--leader] [--master] [--worker] [--name master-name/worker-name ...]

@@ -46,11 +46,11 @@ This document describes how to deploy a DM cluster offline using TiUP.
         {{< copyable "shell-regular" >}}
 
         ```bash
-        export version=v2.0.0  # You can modify it to the needed version.
+        export version=v2.0.3  # You can modify it to the needed version.
         tiup mirror clone tidb-dm-${version}-linux-amd64 --os=linux --arch=amd64 \
             --dm-master=${version} --dm-worker=${version} --dmctl=${version} \
             --alertmanager=v0.17.0 --grafana=v4.0.3 --prometheus=v4.0.3 \
-            --tiup=$(tiup --version|grep 'tiup'|awk -F ' ' '{print $1}') --dm=$(tiup --version|grep 'tiup'|awk -F ' ' '{print $1}')
+            --tiup=v$(tiup --version|grep 'tiup'|awk -F ' ' '{print $1}') --dm=v$(tiup --version|grep 'tiup'|awk -F ' ' '{print $1}')
         ```
 
         The command above creates a directory named `tidb-dm-${version}-linux-amd64` in the current directory, which contains the component package managed by TiUP.
@@ -72,7 +72,7 @@ After sending the package to the control machine of the target cluster, install 
 {{< copyable "shell-regular" >}}
 
 ```bash
-export version=v2.0.0 # You can modify it to the needed version.
+export version=v2.0.3 # You can modify it to the needed version.
 tar xzvf tidb-dm-${version}-linux-amd64.tar.gz
 sh tidb-dm-${version}-linux-amd64/local_install.sh
 source /home/tidb/.bash_profile
@@ -84,9 +84,9 @@ To switch the mirror to another directory, manually execute the `tiup mirror set
 
 ## Step 3: Edit the initialization configuration file
 
-You need to edit the cluster initialization configuration file according to different cluster topologies. 
+You need to edit the cluster initialization configuration file according to different cluster topologies.
 
-For the full configuration template, refer to the [TiUP configuration parameter template](https://github.com/pingcap/tiup/blob/master/examples/topology.example.yaml). Create a configuration file `topology.yaml`. In other combined scenarios, edit the configuration file as needed according to the templates.
+For the full configuration template, refer to the [TiUP configuration parameter template](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml). Create a configuration file `topology.yaml`. In other combined scenarios, edit the configuration file as needed according to the templates.
 
 The configuration of deploying three DM-masters, three DM-workers, and one monitoring component instance is as follows:
 
@@ -129,7 +129,7 @@ alertmanager_servers:
 >
 > - For parameters that should be effective on a specific node, configure these parameters in `config` of this node.
 >
-> - Use `.` to indicate the subcategory of the configuration, such as `log.slow-threshold`. For more formats, see [TiUP configuration template](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml).
+> - Use `.` to indicate the subcategory of the configuration, such as `log.slow-threshold`. For more formats, see [TiUP configuration template](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml).
 >
 > - For more parameter description, see [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml) and [worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml).
 >
@@ -180,7 +180,7 @@ TiUP supports managing multiple DM clusters. The command above outputs informati
 ```log
 Name  User  Version  Path                                  PrivateKey
 ----  ----  -------  ----                                  ----------
-dm-test  tidb  v2.0.0  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/storage/dm/clusters/dm-test/ssh/id_rsa
+dm-test  tidb  v2.0.3  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/storage/dm/clusters/dm-test/ssh/id_rsa
 ```
 
 ## Step 6: Check the status of the deployed DM cluster

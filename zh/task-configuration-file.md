@@ -32,20 +32,20 @@ target-database:       # 下游数据库实例配置
   password: ""         # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
 
 ## ******** 功能配置集 **********
-block-allow-list:        # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+block-allow-list:        # 上游数据库实例匹配的表的 block-allow-list 过滤规则集，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
   bw-rule-1:             # 黑白名单配置的名称
     do-dbs: ["all_mode"] # 迁移哪些库
 
 # ----------- 实例配置 -----------
 mysql-instances:
   - source-id: "mysql-replica-01"  # 上游实例或者复制组 ID，参考 `dm-master.toml` 的 `source-id` 配置
-    block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     mydumper-thread: 4             # dump 处理单元用于导出数据的线程数量
     loader-thread: 16              # load 处理单元用于导入数据的线程数量，当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
     syncer-thread: 16              # sync 处理单元用于复制增量数据的线程数量，当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
 
   - source-id: "mysql-replica-02" # 上游实例或者复制组 ID，参考 `dm-master.toml` 的 `source-id` 配置
-    block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    block-allow-list:  "bw-rule-1" # 黑白名单配置名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
     mydumper-thread: 4             # dump 处理单元用于导出数据的线程数量
     loader-thread: 16              # load 处理单元用于导入数据的线程数量，当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
     syncer-thread: 16              # sync 处理单元用于复制增量数据的线程数量，当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
@@ -69,6 +69,12 @@ mysql-instances:
     - `full`：只全量备份上游数据库，然后将数据全量导入到下游数据库。
     - `incremental`：只通过 binlog 把上游数据库的增量修改复制到下游数据库, 可以设置实例配置的 `meta` 配置项来指定增量复制开始的位置。
     - `all`：`full` + `incremental`。先全量备份上游数据库，将数据全量导入到下游数据库，然后从全量数据备份时导出的位置信息 (binlog position) 开始通过 binlog 增量复制数据到下游数据库。
+
+> **注意：**
+>
+> DM 2.0 使用 dumpling 工具执行全量备份。全量备份过程中会使用 [`FLUSH TABLES WITH READ LOCK`](https://dev.mysql.com/doc/refman/8.0/en/flush.html#flush-tables-with-read-lock) 短暂地中断备份库的 DML 和 DDL 操作，从而保证并发备份连接的一致性并记录 binlog 位置用于增量复制。所有的并发备份连接启动事务后释放该锁。
+> 
+> 推荐在业务低峰或者 MySQL 备库上进行全量备份。
 
 ### 功能配置集
 

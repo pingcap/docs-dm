@@ -1,14 +1,16 @@
 ---
-title: Introduction to dmctl
-summary: Learn how to manage the data replication task using dmctl.
+title: Maintain DM Clusters Using dmctl
+summary: Learn how to maintain a DM cluster using dmctl.
 aliases: ['/docs/tidb-data-migration/dev/manage-replication-tasks/','/tidb-data-migration/dev/manage-replication-tasks/']
 ---
 
-# Introduction to dmctl
+# Maintain DM Clusters Using dmctl
 
-dmctl is a command line tool used to manage the data migration task. For DM clusters deployed using TiUP, you can directly use [`tiup dmctl`](maintain-dm-using-tiup.md#dmctl).
+> **Note:**
+>
+> For DM clusters deployed using TiUP, you are recommended to directly use [`tiup dmctl`](maintain-dm-using-tiup.md#dmctl) to maintain the clusters.
 
-The dmctl component supports the interactive mode and the command mode.
+dmctl is a command line tool used to maintain DM clusters. It supports both the interactive mode and the command mode.
 
 ## Interactive mode
 
@@ -21,15 +23,15 @@ Enter the interactive mode to interact with DM-master:
 {{< copyable "shell-regular" >}}
 
 ```bash
-./dmctl -master-addr 172.16.30.14:8261
+./dmctl --master-addr 172.16.30.14:8261
 ```
 
 ```
 Welcome to dmctl
-Release Version: v2.0.0
-Git Commit Hash: e6ca256257fbe6e744892841537a16eb84469116
+Release Version: v2.0.3
+Git Commit Hash: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 Git Branch: release-2.0
-UTC Build Time: 2020-10-30 07:43:00
+UTC Build Time: yyyy-mm-dd hh:mm:ss
 Go Version: go version go1.13 linux/amd64
 
 » help
@@ -40,6 +42,7 @@ Usage:
 
 Available Commands:
   check-task      Checks the configuration file of the task.
+  config          Commands to import/export config.
   get-config      Gets the configuration.
   handle-error    `skip`/`replace`/`revert` the current error event or a specific binlog position (binlog-pos) event.
   help            Gets help about any command.
@@ -73,19 +76,23 @@ The command mode differs from the interactive mode in that you need to append th
 > **Note:**
 >
 > + A dmctl command must be followed by only one task operation.
-> + The task operation can be placed only at the end of the dmctl command.
+> + Starting from v2.0.4, DM supports reading the `-master-addr` parameter from the environment variable `DM_MASTER_ADDR`.
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-./dmctl -master-addr 172.16.30.14:8261 start-task task.yaml
-./dmctl -master-addr 172.16.30.14:8261 stop-task task
-./dmctl -master-addr 172.16.30.14:8261 query-status
+./dmctl --master-addr 172.16.30.14:8261 start-task task.yaml
+./dmctl --master-addr 172.16.30.14:8261 stop-task task
+./dmctl --master-addr 172.16.30.14:8261 query-status
+
+export DM_MASTER_ADDR="172.16.30.14:8261"
+./dmctl query-status
 ```
 
 ```
 Available Commands:
-  check-task            check-task <config-file>
+  check-task            check-task <config-file> [--error count] [--warn count]
+  config                commands to import/export config
   get-config            get-config <task | master | worker | source> <name> [--file filename]
   handle-error          handle-error <task-name | task-file> [-s source ...] [-b binlog-pos] <skip/replace/revert> [replace-sql1;replace-sql2;]
   list-member           list-member [--leader] [--master] [--worker] [--name master-name/worker-name ...]

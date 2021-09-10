@@ -111,14 +111,14 @@ block-allow-list:             # This configuration applies to DM versions higher
   rule-1:
     do-dbs: ["test*"]         # Starting with characters other than "~" indicates that it is a wildcard;
                               # v1.0.5 or later versions support the regular expression rules.
-​    do-tables:
+    do-tables:
     - db-name: "test[123]"    # Matches test1, test2, and test3.
       tbl-name: "t[1-5]"      # Matches t1, t2, t3, t4, and t5.
     - db-name: "test"
       tbl-name: "t"
   rule-2:
     do-dbs: ["~^test.*"]      # Starting with "~" indicates that it is a regular expression.
-​    ignore-dbs: ["mysql"]
+    ignore-dbs: ["mysql"]
     do-tables:
     - db-name: "~^test.*"
       tbl-name: "~^t.*"
@@ -133,8 +133,8 @@ block-allow-list:             # This configuration applies to DM versions higher
 
 - `do-dbs`: allow lists of the schemas to be migrated, similar to [`replicate-do-db`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-replica.html#option_mysqld_replicate-do-db) in MySQL
 - `ignore-dbs`: block lists of the schemas to be migrated, similar to [`replicate-ignore-db`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-replica.html#option_mysqld_replicate-ignore-db) in MySQL
-- `do-tables`: allow lists of the tables to be migrated, similar to [`replicate-do-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-replica.html#option_mysqld_replicate-do-table) in MySQL
-- `ignore-tables`: block lists of the tables to be migrated, similar to [`replicate-ignore-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-replica.html#option_mysqld_replicate-ignore-table) in MySQL
+- `do-tables`: allow lists of the tables to be migrated, similar to [`replicate-do-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-replica.html#option_mysqld_replicate-do-table) in MySQL. Both `db-name` and `tbl-name` must be specified
+- `ignore-tables`: block lists of the tables to be migrated, similar to [`replicate-ignore-table`](https://dev.mysql.com/doc/refman/5.7/en/replication-options-replica.html#option_mysqld_replicate-ignore-table) in MySQL. Both `db-name` and `tbl-name` must be specified
 
 If a value of the above parameters starts with the `~` character, the subsequent characters of this value are treated as a [regular expression](https://golang.org/pkg/regexp/syntax/#hdr-syntax). You can use this parameter to match schema or table names.
 
@@ -235,7 +235,8 @@ Binlog event filter is a more fine-grained filtering rule than the block and all
 
 > **Note:**
 >
-> If the same table matches multiple rules, these rules are applied in order and the block list has priority over the allow list. This means if both the `Ignore` and `Do` rules are applied to a single table, the `Ignore` rule takes effect.
+> - If the same table matches multiple rules, these rules are applied in order and the block list has priority over the allow list. This means if both the `Ignore` and `Do` rules are applied to a table, the `Ignore` rule takes effect.
+> - Starting from DM v2.0.2, you can configure binlog event filters in the source configuration file. For details, see [Upstream Database Configuration File](source-configuration-file.md).
 
 ### Parameter configuration
 
@@ -368,123 +369,6 @@ filters:
     action: Ignore
 ```
 
-## Column mapping
-
-> **Note:**
->
-> The column mapping is not recommended as the primary solution due to its usage restrictions. The preferable solution is [handling conflicts of auto-increment primary key](shard-merge-best-practices.md#handle-conflicts-of-auto-increment-primary-key).
-
-The column mapping feature supports modifying the value of table columns. You can execute different modification operations on the specified column according to different expressions. Currently, only the built-in expressions provided by DM are supported.
-
-> **Note:**
->
-> - It does not support modifying the column type and the table schema.
-> - It does not support configuring multiple different column mapping rules for the same table.
-
-### Parameter configuration
-
-```yaml
-column-mappings:
-  rule-1:
-​    schema-pattern: "test_*"
-​    table-pattern: "t_*"
-​    expression: "partition id"
-​    source-column: "id"
-​    target-column: "id"
-​    arguments: ["1", "test", "t", "_"]
-  rule-2:
-​    schema-pattern: "test_*"
-​    table-pattern: "t_*"
-​    expression: "partition id"
-​    source-column: "id"
-​    target-column: "id"
-​    arguments: ["2", "test", "t", "_"]
-```
-
-### Parameter explanation
-
-- [`schema-pattern`/`table-pattern`](table-selector.md): to execute column value modifying operations on the upstream MySQL or MariaDB instance tables that match the `schema-pattern`/`table-pattern` filtering rule.
-- `source-column`, `target-column`: to modify the value of the `source-column` column according to specified `expression` and assign the new value to `target-column`.
-- `expression`: the expression used to modify data. Currently, only the `partition id` built-in expression is supported.
-
-#### The `partition id` expression
-
-`partition id` is used to resolve the conflicts of auto-increment primary keys of sharded tables.
-
-**`partition id` restrictions**
-
-Note the following restrictions:
-
-- The `partition id` expression only supports the bigint type of auto-increment primary key.
-- If the `schema prefix` is not empty, the schema name format must be `schema prefix` or `schema prefix + separator + number (the schema ID)`. For example, it supports `s` and `s_1`, but does not support `s_a`.
-- If the `table prefix` is not empty, the table name format must be `table prefix` or `table prefix + separator + number (the table ID)`.
-- If the schema/table name does not contain the `… + separator + number` part, the corresponding ID is considered as 0.
-- Restrictions on sharding size:
-    - It supports 16 MySQL or MariaDB instances at most (Requirement: 0 <= instance ID <= 15).
-    - Each instance supports 128 schemas at most (Requirement: 0 <= schema ID <= 127).
-    - Each schema of each instance supports 256 tables at most (Requirement: 0 <= table ID <= 255).
-    - The range of the mapped column should meet the requirement: 0 <= ID <= 17592186044415.
-    - The `{instance ID, schema ID, table ID}` group must be unique.
-- Currently, the `partition id` expression is a customized feature. If you want to modify this feature, contact the corresponding developers.
-
-**`partition id` arguments configuration**
-
-Configure the following three or four arguments in order:
-
-- `instance_id`: the ID of the upstream sharded MySQL or MariaDB instance (0 <= instance ID <= 15)
-- `schema prefix`: used to parse the schema name and get the `schema ID`
-- `table prefix`: used to parse the table name and get the `table ID`
-- The separator: used to separate between the prefix and the IDs, and can be omitted to use an empty string as a separator
-
-Any of `instance_id`, `schema prefix` and `table prefix` can be set to an empty string (`""`) to indicate that the corresponding parts are not encoded into the partition ID.
-
-**`partition id` expression rules**
-
-`partition id` fills the beginning bit of the auto-increment primary key ID with the argument number, and computes an int64 (MySQL bigint) type of value. The specific rules are as follows:
-
-| instance_id | schema prefix | table prefix | Encoding |
-|:------------|:--------------|:-------------|---------:|
-| ☑ defined   | ☑ defined     | ☑ defined    | [`S`: 1 bit] [`I`: 4 bits] [`D`: 7 bits] [`T`: 8 bits] [`P`: 44 bits] |
-| ☐ empty     | ☑ defined     | ☑ defined    | [`S`: 1 bit] [`D`: 7 bits] [`T`: 8 bits] [`P`: 48 bits] |
-| ☑ defined   | ☐ empty       | ☑ defined    | [`S`: 1 bit] [`I`: 4 bits] [`T`: 8 bits] [`P`: 51 bits] |
-| ☑ defined   | ☑ defined     | ☐ empty      | [`S`: 1 bit] [`I`: 4 bits] [`D`: 7 bits] [`P`: 52 bits] |
-| ☐ empty     | ☐ empty       | ☑ defined    | [`S`: 1 bit] [`T`: 8 bits] [`P`: 55 bits] |
-| ☐ empty     | ☑ defined     | ☐ empty      | [`S`: 1 bit] [`D`: 7 bits] [`P`: 56 bits] |
-| ☑ defined   | ☐ empty       | ☐ empty      | [`S`: 1 bit] [`I`: 4 bits] [`P`: 59 bits] |
-
-- `S`: the sign bit, reserved
-- `I`: the instance ID, 4 bits by default if set
-- `D`: the schema ID, 7 bits by default if set
-- `T`: the table ID, 8 bits by default if set
-- `P`: the auto-increment primary key ID, occupying the rest of bits (≥44 bits)
-
-### Usage example
-
-Assuming in the sharding scenario where all tables have the auto-increment primary key, you want to migrate two upstream MySQL instances `test_{1,2,3...}`.`t_{1,2,3...}` to the downstream TiDB instances `test`.`t`.
-
-Configure the following two rules:
-
-```yaml
-column-mappings:
-  rule-1:
-​    schema-pattern: "test_*"
-​    table-pattern: "t_*"
-​    expression: "partition id"
-​    source-column: "id"
-​    target-column: "id"
-​    arguments: ["1", "test", "t", "_"]
-  rule-2:
-​    schema-pattern: "test_*"
-​    table-pattern: "t_*"
-​    expression: "partition id"
-​    source-column: "id"
-​    target-column: "id"
-​    arguments: ["2", "test", "t", "_"]
-```
-
-- The column ID of the MySQL instance 1 table `test_1`.`t_1` is converted from `1` to `1 << (64-1-4) | 1 << (64-1-4 -7) | 1 << 44 | 1 = 580981944116838401`.
-- The row ID of the MySQL instance 2 table `test_1`.`t_2` is converted from `2` to `2 << (64-1-4) | 1 << (64-1-4 -7) | 2 << 44 | 2 = 1157460288606306306`.
-
 ## Online DDL tools
 
 In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM provides supports for these tools to avoid migrating unnecessary intermediate data.
@@ -492,23 +376,45 @@ In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM prov
 ### Restrictions
 
 - DM only supports gh-ost and pt-osc.
-- When `online-ddl-scheme` is enabled, the checkpoint corresponding to incremental replication should not be in the process of online DDL execution. For example, if an upstream online DDL operation starts at `position-A` and ends at `position-B` of the binlog, the starting point of incremental replication should be earlier than `position-A` or later than `position-B`; otherwise, an error occurs. For details, refer to [FAQ](faq.md#how-to-handle-the-error-returned-by-the-ddl-operation-related-to-the-gh-ost-table-after-online-ddl-scheme-gh-ost-is-set).
+- When `online-ddl` is enabled, the checkpoint corresponding to incremental replication should not be in the process of online DDL execution. For example, if an upstream online DDL operation starts at `position-A` and ends at `position-B` of the binlog, the starting point of incremental replication should be earlier than `position-A` or later than `position-B`; otherwise, an error occurs. For details, refer to [FAQ](faq.md#how-to-handle-the-error-returned-by-the-ddl-operation-related-to-the-gh-ost-table-after-online-ddl-scheme-gh-ost-is-set).
 
 ### Parameter configuration
 
-- If the upstream MySQL/MariaDB uses gh-ost, set `online-ddl-scheme` to `"gh-ost"` in the task configuration file:
+<SimpleTab>
+<div label="v2.0.5 and later">
+ 
+In v2.0.5 and later versions, you need to use the `online-ddl` configuration item in the `task` configuration file.
 
+- If the upstream MySQL/MariaDB (at the same time) uses the gh-ost or pt-osc tool, set `online-ddl` to `true` in the task configuration file:
+
+```yml
+online-ddl: true
 ```
+
+> **Note:**
+>
+> Since v2.0.5, `online-ddl-scheme` has been deprecated, so you need to use `online-ddl` instead of `online-ddl-scheme`. That means that setting `online-ddl: true` overwrites `online-ddl-scheme`, and setting `online-ddl-scheme: "pt"` or `online-ddl-scheme: "gh-ost"` is converted to `online-ddl: true`.
+
+</div>
+
+<div label="earlier than v2.0.5">
+
+Before v2.0.5 (not including v2.0.5), you need to use the `online-ddl-scheme` configuration item in the `task` configuration file.
+
+- If the upstream MySQL/MariaDB uses the gh-ost tool, set it in the task configuration file:
+
+```yml
 online-ddl-scheme: "gh-ost"
 ```
 
-- If the upstream MySQL/MariaDB uses pt-osc, set `online-ddl-scheme` to `"pt"` in the task configuration file:
+- If the upstream MySQL/MariaDB uses the pt tool, set it in the task configuration file:
 
-```
+```yml
 online-ddl-scheme: "pt"
 ```
 
-For more information about online DDL tools, refer to [Online DDL Scheme](feature-online-ddl-scheme.md).
+</div>
+</SimpleTab>
 
 ## Shard merge
 

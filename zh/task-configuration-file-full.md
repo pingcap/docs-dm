@@ -28,11 +28,12 @@ DM 会根据任务类型进行相应检查。可以参考[关闭检查项](prech
 ## ********* 基本信息配置 *********
 name: test                      # 任务名称，需要全局唯一
 task-mode: all                  # 任务模式，可设为 "full" - "只进行全量数据迁移"、"incremental" - "Binlog 实时同步"、"all" - "全量 + Binlog 迁移"
-shard-mode: "pessimistic"       # 如果为分库分表合并任务则需要配置该项。默认使用悲观协调模式 "pessimistic"，在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
+shard-mode: "pessimistic"       # 任务协调模式，可选的模式有 ""、"pessimistic、"optimistic"。默认使用 ""。如果是分库分表合并任务，请设置为悲观协调模式 "pessimistic"。在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
 timezone: "Asia/Shanghai"       # 时区
 case-sensitive: false           # schema/table 是否大小写敏感
-online-ddl-scheme: "gh-ost"     # 目前仅支持 "gh-ost" 、"pt"
+online-ddl: true                # 目前支持 "gh-ost" 、"pt" 的自动处理
+online-ddl-scheme: "gh-ost"     # `online-ddl-scheme` 在未来将会被弃用，建议使用 `online-ddl` 代替 `online-ddl-scheme`
 ignore-checking-items: []       # 不关闭任何检查项。可选的检查项有 "all"、"dump_privilege"、"replication_privilege"、"version"、"binlog_enable"、"binlog_format"、"binlog_row_image"、"table_schema"、"schema_of_shard_tables"、"auto_increment_ID"
 clean-dump-file: true           # 是否清理 dump 阶段产生的文件，包括 metadata 文件、建库建表 SQL 文件以及数据导入 SQL 文件
 
@@ -75,7 +76,14 @@ filters:                                        # 上游数据库实例匹配的
     events: ["all dml"]
     action: Do
 
-block-allow-list:                    # 定义数据源迁移表的过滤规则，可以定义多个规则。如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+expression-filter:                   # 定义数据源迁移行变更的过滤规则，可以定义多个规则
+  # 过滤 `expr_filter`.`tbl` 的 c 为偶数的插入
+  even_c:                            # 规则名称
+    schema: "expr_filter"            # 要匹配的上游数据库库名，不支持通配符匹配或正则匹配
+    table: "tbl"                     # 要匹配的上游表名，不支持通配符匹配或正则匹配
+    insert-value-expr: "c % 2 = 0"
+
+block-allow-list:                    # 定义数据源迁移表的过滤规则，可以定义多个规则。如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
   bw-rule-1:                         # 规则名称
     do-dbs: ["~^test.*", "user"]     # 迁移哪些库
     ignore-dbs: ["mysql", "account"] # 忽略哪些库
@@ -93,7 +101,6 @@ mydumpers:                           # dump 处理单元的运行配置参数
   global:                            # 配置名称
     threads: 4                       # dump 处理单元从上游数据库实例导出数据的线程数量，默认值为 4
     chunk-filesize: 64               # dump 处理单元生成的数据文件大小，默认值为 64，单位为 MB
-    skip-tz-utc: true                # 忽略对时间类型数据进行时区转化，默认值为 true
     extra-args: "--consistency none" # dump 处理单元的其他参数，不需要在 extra-args 中配置 table-list，DM 会自动生成
 
 loaders:                             # load 处理单元的运行配置参数
@@ -107,7 +114,7 @@ syncers:                             # sync 处理单元的运行配置参数
     worker-count: 16                 # sync 并发迁移 binlog event 的线程数量，默认值为 16，当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
     batch: 100                       # sync 迁移到下游数据库的一个事务批次 SQL 语句数，默认值为 100
     enable-ansi-quotes: true         # 若 `session` 中设置 `sql-mode: "ANSI_QUOTES"`，则需开启此项
-    safe-mode: false                 # 设置为 true，则将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。在启动或恢复增量复制任务的前 5 分钟内 TiDB DM 会自动启动 safe mode
+    safe-mode: false                 # 设置为 true，则将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。在启动或恢复增量复制任务的前 1 分钟（在 v2.0.3 及之前的版本中为 5 分钟）内 TiDB DM 会自动启动 safe mode
 
 # ----------- 实例配置 -----------
 mysql-instances:
@@ -118,9 +125,10 @@ mysql-instances:
       binlog-pos: 4
       binlog-gtid: "03fc0263-28c7-11e7-a653-6c0b84d59f30:1-7041423,05474d3c-28c7-11e7-8352-203db246dd3d:1-170"  # 对于 source 中指定了 `enable-gtid: true` 的增量任务，需要指定该值
 
-    route-rules: ["route-rule-1", "route-rule-2"]  # 该上游数据库实例匹配的表到下游数据库的 table routing 规则名称
-    filter-rules: ["filter-rule-1"]                # 该上游数据库实例匹配的表的 binlog event filter 规则名称
-    block-allow-list:  "bw-rule-1"                 # 该上游数据库实例匹配的表的 block-allow-list 过滤规则名称，如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list
+    route-rules: ["route-rule-1", "route-rule-2"]    # 该上游数据库实例匹配的表到下游数据库的 table routing 规则名称
+    filter-rules: ["filter-rule-1", "filter-rule-2"] # 该上游数据库实例匹配的表的 binlog event filter 规则名称
+    block-allow-list:  "bw-rule-1"                   # 该上游数据库实例匹配的表的 block-allow-list 过滤规则名称，如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list
+    expression-filters: ["even_c"]                   # 使用名为 even_c 的表达式过滤规则
 
     mydumper-config-name: "global"          # mydumpers 配置的名称
     loader-config-name: "global"            # loaders 配置的名称

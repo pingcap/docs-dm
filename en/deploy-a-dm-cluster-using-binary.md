@@ -46,6 +46,8 @@ Based on this scenario, the following sections describe how to deploy the DM clu
 
 > **Note:**
 >
+> - If you deploy multiple DM-master or DM-worker instances in a single server, the port and working directory of each instance must be unique.
+>
 > - If you do not need to ensure high availability of the DM cluster, deploy only one DM-master node, and the number of deployed DM-worker nodes must be no less than the number of upstream MySQL/MariaDB instances to be migrated.
 >
 > - To ensure high availability of the DM cluster, it is recommended to deploy three DM-master nodes, and the number of deployed DM-worker nodes must be greater than the number of upstream MySQL/MariaDB instances to be migrated (for example, the number of DM-worker nodes is two more than the number of upstream instances).
@@ -115,7 +117,7 @@ The following is the configuration file of DM-master. It is recommended that you
       log-file = "dm-master.log"
 
       # The listening address of DM-master.
-      master-addr = ":8261"
+      master-addr = "192.168.0.4:8261"
 
       # The peer URLs of DM-master.
       peer-urls = "192.168.0.4:8291"
@@ -131,6 +133,10 @@ The following is the configuration file of DM-master. It is recommended that you
       ```bash
       ./bin/dm-master -config conf/dm-master1.toml
       ```
+
+      > **Note:**
+      >
+      > The console does not output logs after this command is executed. If you want to view the runtime log, you can execute `tail -f dm-master.log`.
 
 3. For DM-master2 and DM-master3, change `name` in the configuration file to `master2` and `master3` respectively, and change `peer-urls` to `192.168.0.5:8291` and `192.168.0.6:8291` respectively. Then repeat Step 2.
 

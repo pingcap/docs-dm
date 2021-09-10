@@ -7,11 +7,9 @@ summary: Understand the main usage scenarios of TiDB Data Migration.
 
 This document introduces the main usage scenarios of TiDB Data Migration (DM) and the usage suggestions.
 
-## Non-shard-merge scenario
+## Use TiDB as MySQL/MariaDB's secondary database
 
-### Use TiDB as MySQL/MariaDB's secondary database
-
-If you want to use TiDB as the upstream MySQL/MariaDB's secondary database, that is, import the full data of the upstream instance to TiDB, and replicate the incremental data to TiDB in real-time once data changes are made, you can configure the data migration task according to the following rules:
+If you want to use TiDB as a secondary database of the upstream MySQL, Amazon Aurora, or MariaDB database (that is, import the full data of the upstream instance to TiDB, and replicate the incremental data to TiDB in real-time once data changes are made), you can configure the data migration task according to the following rules:
 
 - Specify `task-mode` as `all`.
 - Configure `target-database` based on the connection information of the downstream TiDB.
@@ -39,7 +37,7 @@ If you only need to migrate some application data or filter out some operations,
 
 ## Online DDL scenario
 
-In MySQL ecosystem, tools such as pt-osc or gh-ost are often used to perform online DDL operations. DM also supports such scenarios. You can enable support for pt-osc or gh-ost by configuring the `online-ddl-scheme` parameter. For details, refer to [DM Online DDL Scheme](feature-online-ddl-scheme.md).
+In MySQL ecosystem, tools such as pt-osc or gh-ost are often used to perform online DDL operations. DM also supports such scenarios. You can enable support for pt-osc or gh-ost by configuring the `online-ddl` parameter. For details, refer to [DM Online DDL Scheme](feature-online-ddl.md).
 
 ## Switch the DM-worker connection to another instance
 

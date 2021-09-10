@@ -36,6 +36,8 @@ aliases: ['/docs-cn/tidb-data-migration/dev/replicate-data-using-dm/','/zh/tidb-
     | 上游 MySQL-2 | 172.16.10.82 | 3306 | root | VjX8cEeTX+qcvZ3bPaO4h0C80pe/1aU= |
     | 下游 TiDB | 172.16.10.83 | 4000 | root | |
 
+上游 MySQL 数据库实例用户所需权限参见[上游 MySQL 实例配置前置检查](precheck.md)介绍。
+
 ## 第 3 步：创建数据源
 
 1. 将 MySQL-1 的相关信息写入到 `conf/source1.yaml` 中：
@@ -89,17 +91,17 @@ mysql-instances:
   # 上游实例或者复制组 ID，参考 `inventory.ini` 的 `source_id` 或者 `dm-master.toml` 的 `source-id 配置`。
   source-id: "mysql-replica-01"
   # 需要迁移的库名或表名的黑白名单的配置项名称，用于引用全局的黑白名单配置，全局配置见下面的 `block-allow-list` 的配置。
-  block-allow-list: "global"          # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
+  block-allow-list: "global"          # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list。
   # dump 处理单元的配置项名称，用于引用全局的 dump 处理单元配置。
   mydumper-config-name: "global"
 
 -
   source-id: "mysql-replica-02"
-  block-allow-list: "global"          # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
+  block-allow-list: "global"          # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list。
   mydumper-config-name: "global"
 
 # 黑白名单全局配置，各实例通过配置项名引用。
-block-allow-list:                     # 如果 DM 版本 <= v2.0.0-beta.2 则使用 black-white-list。
+block-allow-list:                     # 如果 DM 版本早于 v2.0.0-beta.2 则使用 black-white-list。
   global:
     do-tables:                        # 需要迁移的上游表的白名单。
     - db-name: "test_db"              # 需要迁移的表的库名。
@@ -108,7 +110,7 @@ block-allow-list:                     # 如果 DM 版本 <= v2.0.0-beta.2 则使
 # dump 处理单元全局配置，各实例通过配置项名引用。
 mydumpers:
   global:
-    extra-args: "-B test_db -T test_table"  # dump 处理单元的其他参数，从 DM 1.0.2 版本开始，DM 会自动生成 table-list 配置，在其之前的版本仍然需要人工配置。
+    extra-args: ""
 ```
 
 ## 第 5 步：启动任务

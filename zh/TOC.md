@@ -16,16 +16,26 @@
       - [概述](feature-shard-merge.md)
       - [悲观模式](feature-shard-merge-pessimistic.md)
       - [乐观模式](feature-shard-merge-optimistic.md)
-    - [迁移使用 GH-ost/PT-osc 的源数据库](feature-online-ddl-scheme.md)
+    - [迁移使用 GH-ost/PT-osc 的源数据库](feature-online-ddl.md)
+    - [使用 SQL 表达式过滤某些行变更](feature-expression-filter.md)
   + [DM 架构](dm-arch.md)
   + [性能数据](benchmark-v2.0-ga.md)
-- [快速上手](quick-start-with-dm.md)
++ 快速上手
+  - [快速上手试用](quick-start-with-dm.md)
+  - [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)
+  - [创建数据源](quick-start-create-source.md)
+  + [创建数据迁移任务](quick-create-migration-task.md)
+     - [多数据源汇总迁移到 TiDB](usage-scenario-simple-migration.md)
+     - [分表合并迁移到 TiDB](usage-scenario-shard-merge.md)
+     - [只迁移数据源增量数据到 TiDB](usage-scenario-incremental-migration.md)
+     - [TiDB 表结构存在更多列场景的数据迁移](usage-scenario-downstream-more-columns.md)
 + 部署使用
   - [软硬件要求](hardware-and-software-requirements.md)
   + 部署 DM 集群
     - [使用 TiUP（推荐）](deploy-a-dm-cluster-using-tiup.md)
     - [使用 TiUP 离线镜像](deploy-a-dm-cluster-using-tiup-offline.md)
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
+    - [使用 Kubernetes (实验特性)](https://docs.pingcap.com/zh/tidb-in-kubernetes/dev/deploy-tidb-dm)
   + [使用 DM 迁移数据](migrate-data-using-dm.md)
   + [测试 DM 性能](performance-test.md)
 + 运维操作
@@ -35,7 +45,7 @@
   + 升级版本
     - [1.0.x 到 2.0.x 手动升级](manually-upgrade-dm-1.0-to-2.0.md)
     - [1.0.x 版本间升级](upgrade-dm-1.0.md)
-  - [管理数据源配置](manage-source.md)
+  - [管理数据源](manage-source.md)
   + 管理迁移任务
     - [任务配置向导](task-configuration-guide.md)
     - [任务前置检查](precheck.md)
@@ -44,14 +54,13 @@
     - [暂停任务](pause-task.md)
     - [恢复任务](resume-task.md)
     - [停止任务](stop-task.md)
+    - [导出和导入集群的数据源和任务配置](export-import-config.md)
     - [处理出错的 DDL 语句](handle-failed-ddl-statements.md)
   - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
   - [管理迁移表的表结构](manage-schema.md)
   - [处理告警](handle-alerts.md)
   - [日常巡检](daily-check.md)
 + 使用场景
-  - [简单数据迁移场景](usage-scenario-simple-migration.md)
-  - [分库分表合并场景](usage-scenario-shard-merge.md)
   - [从 Aurora 迁移数据到 TiDB](migrate-from-mysql-aurora.md)
   - [TiDB 表结构存在更多列的迁移场景](usage-scenario-downstream-more-columns.md)
   - [变更同步的 MySQL 实例](usage-scenario-master-slave-switch.md)
@@ -81,11 +90,17 @@
 + [术语表](glossary.md)
 + 版本发布历史
   + v2.0
+    - [2.0.6](releases/2.0.6.md)
+    - [2.0.5](releases/2.0.5.md)
+    - [2.0.4](releases/2.0.4.md)
+    - [2.0.3](releases/2.0.3.md)
+    - [2.0.2](releases/2.0.2.md)
     - [2.0.1](releases/2.0.1.md)
     - [2.0 GA](releases/2.0.0-ga.md)
     - [2.0.0-rc.2](releases/2.0.0-rc.2.md)
     - [2.0.0-rc](releases/2.0.0-rc.md)
   + v1.0
+    - [1.0.7](releases/1.0.7.md)
     - [1.0.6](releases/1.0.6.md)
     - [1.0.5](releases/1.0.5.md)
     - [1.0.4](releases/1.0.4.md)

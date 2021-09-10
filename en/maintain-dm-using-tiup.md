@@ -6,7 +6,9 @@ aliases: ['/docs/tidb-data-migration/dev/cluster-operations/','/tidb-data-migrat
 
 # Maintain a DM Cluster Using TiUP
 
-This document introduces how to maintain a DM cluster using the TiUP DM component. For the complete steps of DM deployment, refer to [Deploy a DM Cluster Using TiUP](deploy-a-dm-cluster-using-tiup.md).
+This document introduces how to maintain a DM cluster using the TiUP DM component.
+
+If you have not deployed a DM cluster yet, you can refer to [Deploy a DM Cluster Using TiUP](deploy-a-dm-cluster-using-tiup.md) for instructions.
 
 > **Note:**
 >
@@ -71,7 +73,7 @@ tiup dm list
 ```
 Name  User  Version  Path                                  PrivateKey
 ----  ----  -------  ----                                  ----------
-prod-cluster  tidb  v2.0.0  /root/.tiup/storage/dm/clusters/test  /root/.tiup/storage/dm/clusters/test/ssh/id_rsa
+prod-cluster  tidb  v2.0.3  /root/.tiup/storage/dm/clusters/test  /root/.tiup/storage/dm/clusters/test/ssh/id_rsa
 ```
 
 ## Start the cluster
@@ -98,7 +100,7 @@ tiup dm display prod-cluster
 
 ```
 dm Cluster: prod-cluster
-dm Version: v2.0.0
+dm Version: v2.0.3
 ID                 Role          Host          Ports      OS/Arch       Status     Data Dir                           Deploy Dir
 --                 ----          ----          -----      -------       ------     --------                           ----------
 172.19.0.101:9093  alertmanager  172.19.0.101  9093/9094  linux/x86_64  Up         /home/tidb/data/alertmanager-9093  /home/tidb/deploy/alertmanager-9093
@@ -153,7 +155,7 @@ For example, to scale out a DM-worker node in the `prod-cluster` cluster, take t
     > **Note:**
     >
     > You need to create a topology file, which includes only the description of the new nodes, not the existing nodes.
-    > For more configuration items (such as the deployment directory), refer to this [TiUP configuration parameter example](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml).
+    > For more configuration items (such as the deployment directory), refer to this [TiUP configuration parameter example](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml).
 
     ```yaml
     ---
@@ -174,6 +176,16 @@ For example, to scale out a DM-worker node in the `prod-cluster` cluster, take t
     After the command is executed, you can check the status of the scaled-out cluster by running `tiup dm display prod-cluster`.
 
 ## Rolling upgrade
+
+> **Note:**
+>
+> Since v2.0.5, dmctl support [Export and Import Data Sources and Task Configuration of Clusters](export-import-config.md)。
+>
+> Before upgrading, you can use `config export` to export the configuration files of clusters. After upgrading, if you need to downgrade to an earlier version, you can first redeploy the earlier cluster and then use `config import` to import the previous configuration files.
+>
+> For clusters earlier than v2.0.5, you can use dmctl v2.0.5 or later to export and import the data source and task configuration files.
+>
+> For clusters later than v2.0.2, currently, it is not supported to automatically import the configuration related to relay worker. You can use `start-relay` command to manually [start relay log](relay-log.md#start-and-stop-the-relay-log-feature).
 
 The rolling upgrade process is made as transparent as possible to the application, and does not affect the business. The operations vary with different nodes.
 
@@ -258,7 +270,7 @@ tiup dm patch prod-cluster /tmp/dm--hotfix.tar.gz -N 172.16.4.5:8261
 > **Note:**
 >
 > - TiUP does not support importing the DM Portal component in a DM 1.0 cluster.
-> - You need to stop the original cluster before importing. 
+> - You need to stop the original cluster before importing.
 > - Don't run `stop-task` for tasks that need to be upgraded to 2.0.
 > - TiUP only supports importing to a DM cluster of v2.0.0-rc.2 or a later version.
 > - The `import` command is used to import data from a DM 1.0 cluster to a new DM 2.0 cluster. If you need to import DM migration tasks to an existing DM 2.0 cluster, refer to [Manually Upgrade TiDB Data Migration from v1.0.x to v2.0.x](manually-upgrade-dm-1.0-to-2.0.md).
@@ -273,14 +285,14 @@ For example, to import a cluster deployed using DM Ansible:
 {{< copyable "shell-regular" >}}
 
 ```bash
-tiup dm import --dir=/path/to/dm-ansible --cluster-version v2.0.0
+tiup dm import --dir=/path/to/dm-ansible --cluster-version v2.0.3
 ```
 
 Execute `tiup list dm-master` to view the latest cluster version supported by TiUP.
 
 The process of using the `import` command is as follows:
 
-1. TiUP generates a topology file [`topology.yml`](https://github.com/pingcap/tiup/blob/master/examples/dm/topology.example.yaml) based on the DM cluster previously deployed using DM-Ansible.
+1. TiUP generates a topology file [`topology.yml`](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml) based on the DM cluster previously deployed using DM-Ansible.
 2. After confirming that the topology file has been generated, you can use it to deploy the DM cluster of v2.0 or later versions.
 
 After the deployment is completed, you can execute the `tiup dm start` command to start the cluster and begin the process of upgrading the DM kernel.
@@ -310,7 +322,7 @@ ID      Time                  Command
 --      ----                  -------
 4D5kQY  2020-08-13T05:38:19Z  tiup dm display test
 4D5kNv  2020-08-13T05:36:13Z  tiup dm list
-4D5kNr  2020-08-13T05:36:10Z  tiup dm deploy -p prod-cluster v2.0.0 ./examples/dm/minimal.yaml
+4D5kNr  2020-08-13T05:36:10Z  tiup dm deploy -p prod-cluster v2.0.3 ./examples/dm/minimal.yaml
 ```
 
 The first column is `audit-id`. To view the execution log of a certain command, pass the `audit-id` argument as follows:
@@ -358,7 +370,7 @@ tiup dmctl [args]
 Specify the version of dmctl:
 
 ```
-tiup dmctl:v2.0.0 [args]
+tiup dmctl:v2.0.3 [args]
 ```
 
 The previous dmctl command to add a source is `dmctl --master-addr master1:8261 operate-source create /tmp/source1.yml`. After dmctl is integrated into TiUP, the command is:

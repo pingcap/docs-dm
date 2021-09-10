@@ -1,29 +1,33 @@
 ---
-title: Quick Start Guide for TiDB Data Migration
+title: TiDB Data Migration Quick Start
 summary: Learn how to quickly deploy a DM cluster using binary packages.
 aliases: ['/docs/tidb-data-migration/dev/get-started/','/tidb-data-migration/dev/get-started']
 ---
 
 # Quick Start Guide for TiDB Data Migration
 
-This document describes how to quickly deploy a [TiDB Data Migration](https://github.com/pingcap/dm) (DM) cluster using binary packages.
+This document describes how to migrate data from MySQL to TiDB using [TiDB Data Migration](https://github.com/pingcap/dm) (DM).
 
-## Deploy instances locally
+If you need to deploy DM in the production environment, refer to the following documents:
 
-Deploy DM-master, and DM-worker instances locally. The detailed information of each instance is as follows:
+- [Deploy a DM cluster Using TiUP](deploy-a-dm-cluster-using-tiup.md)
+- [Create a Data Source](quick-start-create-source.md)
+- [Create a Data Migration Task](quick-create-migration-task.md)
+
+## Sample scenario
+
+Suppose you deploy DM-master and DM-worker instances in an on-premise environment, and migrate data from an upstream MySQL instance to a downstream TiDB instance.
+
+The detailed information of each instance is as follows:
 
 | Instance        | Server Address   | Port |
 | :---------- | :----------- | :----------- |
-| DM-master1 | 127.0.0.1 | 8261, 8291 |
-| DM-master2 | 127.0.0.1 | 8361, 8292 |
-| DM-master3 | 127.0.0.1 | 8461, 8293 |
-| DM-worker1 | 127.0.0.1 | 8262 |
-| DM-worker2 | 127.0.0.1 | 8263 |
-| DM-worker3 | 127.0.0.1 | 8264 |
+| DM-master  | 127.0.0.1 | 8261, 8291 (Internal port) |
+| DM-worker  | 127.0.0.1 | 8262 |
+| MySQL-3306 | 127.0.0.1 | 3306 |
+| TiDB       | 127.0.0.1 | 4000 |
 
-## Download binary
-
-Before deploying DM, you need to download the binary package, run the upstream and downstream databases, and prepare the data.
+## Deploy DM using the binary package
 
 ### Download DM binary package
 
@@ -49,121 +53,35 @@ cd dm
 make
 ```
 
-**Optional**: Add the downloaded/compiled binary to the environment variable `PATH` for easier deployment.
+### Deploy DM-master
+
+Execute the following command to start the DM-master:
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-DM_PATH=`pwd` && export PATH=$PATH:$DM_PATH/bin
+nohup bin/dm-master --master-addr='127.0.0.1:8261' --log-file=/tmp/dm-master.log --name="master1" >> /tmp/dm-master.log 2>&1 &
 ```
 
-## Deploy DM-master
+### Deploy DM-worker
 
-1. Create three directories: master1, master2, and master3.
-2. Create a DM-master configuration file in each directory. The configuration files are as follows:
+Execute the following command to start the DM-worker:
 
-    `master1/dm-master1.toml`:
+{{< copyable "shell-regular" >}}
 
-    ```toml
-    # DM-master1 Configuration.
-    name = "master1"
-    master-addr = ":8261"
-    advertise-addr = "127.0.0.1:8261"
-    peer-urls = "127.0.0.1:8291"
-    initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,master3=http://127.0.0.1:8293"
-    ```
+```bash
+nohup bin/dm-worker --worker-addr='127.0.0.1:8262' --log-file=/tmp/dm-worker.log --join='127.0.0.1:8261' --name="worker1" >> /tmp/dm-worker.log 2>&1 &
+```
 
-    `master2/dm-master2.toml`:
-
-    ```toml
-    # DM-master2 Configuration.
-    name = "master2"
-    master-addr = ":8361"
-    advertise-addr = "127.0.0.1:8361"
-    peer-urls = "127.0.0.1:8292"
-    initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,master3=http://127.0.0.1:8293"
-    ```
-
-    `master3/dm-master3.toml`:
-
-    ```toml
-    # DM-master3 Configuration.
-    name = "master3"
-    master-addr = ":8461"
-    advertise-addr = "127.0.0.1:8461"
-    peer-urls = "127.0.0.1:8293"
-    initial-cluster = "master1=http://127.0.0.1:8291,master2=http://127.0.0.1:8292,master3=http://127.0.0.1:8293"
-    ```
-
-3. Enter the directories of master1, master2, and master3 respectively, and execute the following commands to start each DM-master:
-
-    {{< copyable "shell-regular" >}}
-
-    ```bash
-    nohup dm-master --config=dm-master1.toml --log-file=dm-master1.log >> dm-master1.log 2>&1 &
-    nohup dm-master --config=dm-master2.toml --log-file=dm-master2.log >> dm-master2.log 2>&1 &
-    nohup dm-master --config=dm-master3.toml --log-file=dm-master3.log >> dm-master3.log 2>&1 &
-    ```
-
-## Deploy DM-worker
-
-1. Create three directories: worker1, worker2, and worker3.
-2. Create a DM-worker configuration file in each directory. The configuration files are as follows:
-
-    `worker1/dm-worker1.toml`:
-
-    ```toml
-    # DM-worker1 Configuration
-    name = "worker1"
-    worker-addr="0.0.0.0:8262"
-    advertise-addr="127.0.0.1:8262"
-    join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
-    ```
-
-    `worker2/dm-worker2.toml`:
-
-    ```toml
-    # DM-worker2 Configuration
-    name = "worker2"
-    worker-addr="0.0.0.0:8263"
-    advertise-addr="127.0.0.1:8263"
-    join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
-    ```
-
-    `worker3/dm-worker3.toml`:
-
-    ```toml
-    # DM-worker3 Configuration
-    name = "worke3"
-    worker-addr="0.0.0.0:8264"
-    advertise-addr="127.0.0.1:8264"
-    join = "127.0.0.1:8261,127.0.0.1:8361,127.0.0.1:8461"
-    ```
-
-3. Enter the directories of worker1, worker2, and worker3 respectively, and execute the following commands to start each DM-worker:
-
-    {{< copyable "shell-regular" >}}
-
-    ```bash
-    nohup dm-worker --config=dm-worker1.toml --log-file=dm-worker1.log >> dm-worker1.log 2>&1 &
-    nohup dm-worker --config=dm-worker2.toml --log-file=dm-worker2.log >> dm-worker2.log 2>&1 &
-    nohup dm-worker --config=dm-worker3.toml --log-file=dm-worker3.log >> dm-worker3.log 2>&1 &
-    ```
-
-## Check deployment status
+### Check deployment status
 
 To check whether the DM cluster has been deployed successfully, execute the following command:
 
 {{< copyable "shell-regular" >}}
 
 ```bash
-dmctl --master-addr=127.0.0.1:8261 list-member
+bin/dmctl --master-addr=127.0.0.1:8261 list-member
 ```
-
-You need to check the following information in the returned result:
-
-- Whether there is a `leader` item;
-- Whether the `master` and the `worker` items include all topology information of DM-master and DM-worker.
 
 A normal DM cluster returns the following information:
 
@@ -193,29 +111,7 @@ A normal DM cluster returns the following information:
                         "clientURLs": [
                             "http://127.0.0.1:8261"
                         ]
-                    },
-                    {
-                        "name": "master2",
-                        "memberID": "12007177379717800042",
-                        "alive": true,
-                        "peerURLs": [
-                            "http://127.0.0.1:8292"
-                        ],
-                        "clientURLs": [
-                            "http://127.0.0.1:8361"
-                        ]
-                    },
-                    {
-                        "name": "master3",
-                        "memberID": "13007157379717700087",
-                        "alive": true,
-                        "peerURLs": [
-                            "http://127.0.0.1:8293"
-                        ],
-                        "clientURLs": [
-                            "http://127.0.0.1:8461"
-                        ]
-                    },
+                    }
                 ]
             }
         },
@@ -228,21 +124,175 @@ A normal DM cluster returns the following information:
                         "addr": "127.0.0.1:8262",
                         "stage": "free",
                         "source": ""
-                    },
-                    {
-                        "name": "worker2",
-                        "addr": "127.0.0.1:8263",
-                        "stage": "free",
-                        "source": ""
-                    },
-                    {
-                        "name": "worker3",
-                        "addr": "127.0.0.1:8264",
-                        "stage": "free",
-                        "source": ""
                     }
                 ]
             }
+        }
+    ]
+}
+```
+
+## Migrate data from MySQL to TiDB
+
+### Prepare sample data
+
+Before using DM, insert the following sample data to `MySQL-3306`:
+
+{{< copyable "sql" >}}
+
+```sql
+drop database if exists `testdm`;
+create database `testdm`;
+use `testdm`;
+create table t1 (id bigint, uid int, name varchar(80), info varchar(100), primary key (`id`), unique key(`uid`)) DEFAULT CHARSET=utf8mb4;
+create table t2 (id bigint, uid int, name varchar(80), info varchar(100), primary key (`id`), unique key(`uid`)) DEFAULT CHARSET=utf8mb4;
+insert into t1 (id, uid, name) values (1, 10001, 'Gabriel García Márquez'), (2, 10002, 'Cien años de soledad');
+insert into t2 (id, uid, name) values (3, 20001, 'José Arcadio Buendía'), (4, 20002, 'Úrsula Iguarán'), (5, 20003, 'José Arcadio');
+```
+
+### Load data source configurations
+
+Before running a data migration task, you need to first load the configuration file of the corresponding data source (that is, `MySQL-3306` in the example) to DM.
+
+#### Encrypt the data source password
+
+> **Note:**
+>
+> + You can skip this step if the data source does not have a password.
+> + You can use the plaintext password to configure the data source information in DM v2.0 and later versions.
+
+For safety reasons, it is recommended to configure and use encrypted passwords for data sources. Suppose the password is "123456":
+
+{{< copyable "shell-regular" >}}
+
+```bash
+./bin/dmctl --encrypt "123456"
+```
+
+```
+fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg=
+```
+
+Save this encrypted value, and use it for creating a MySQL data source in the following steps.
+
+#### Edit the source configuration file of the MySQL instance
+
+Write the following configurations to `conf/source1.yaml`.
+
+```yaml
+# MySQL1 Configuration.
+source-id: "mysql-replica-01"
+from:
+  host: "127.0.0.1"
+  user: "root"
+  password: "fCxfQ9XKCezSzuCD0Wf5dUD+LsKegSg="
+  port: 3306
+```
+
+#### Load data source configuration file
+
+To load the data source configuration file of MySQL to the DM cluster using dmctl, run the following command in the terminal:
+
+{{< copyable "shell-regular" >}}
+
+```bash
+./bin/dmctl --master-addr=127.0.0.1:8261 operate-source create conf/source1.yaml
+```
+
+The following is an example of the returned results:
+
+```bash
+{
+    "result": true,
+    "msg": "",
+    "sources": [
+        {
+            "result": true,
+            "msg": "",
+            "source": "mysql-replica-01",
+            "worker": "worker1"
+        }
+    ]
+}
+```
+
+Now you successfully add the data source `MySQL-3306` to the DM cluster.
+
+### Create a data migration task
+
+After inserting the [sample data](#prepare-sample-data) into `MySQL-3306`, take the following steps to migrate the tables `testdm`.`t1` and `testdm`.`t2` to the downstream TiDB instance:
+
+1. Create a task configuration file `testdm-task.yaml`, and add the following configurations to the file.
+
+    {{< copyable "" >}}
+
+    ```yaml
+    ---
+    name: testdm
+    task-mode: all
+    target-database:
+      host: "127.0.0.1"
+      port: 4000
+      user: "root"
+      password: "" # If the password is not null, it is recommended to use password encrypted with dmctl.
+    mysql-instances:
+      - source-id: "mysql-replica-01"
+        block-allow-list:  "ba-rule1"
+    block-allow-list:
+      ba-rule1:
+        do-dbs: ["testdm"]
+    ```
+
+2. Load the task configuration file using dmctl:
+
+    {{< copyable "shell-regular" >}}
+
+    ```bash
+    ./bin/dmctl --master-addr 127.0.0.1:8261 start-task testdm-task.yaml
+    ```
+
+    The following is an example of the returned results:
+
+    ```bash
+    {
+        "result": true,
+        "msg": "",
+        "sources": [
+            {
+                "result": true,
+                "msg": "",
+                "source": "mysql-replica-01",
+                "worker": "worker1"
+            }
+        ]
+    }
+    ```
+
+Now you successfully create a data migration task that migrates data from `MySQL-3306` to the downstream TiDB instance.
+
+### Check status of the data migration task 
+
+After the data migration task is created, you can use `dmtcl query-status` to check the status of the task. See the following example:
+
+{{< copyable "shell-regular" >}}
+
+```bash
+./bin/dmctl --master-addr 127.0.0.1:8261 query-status
+```
+
+The following is an example of the returned results:
+
+```bash
+{
+    "result": true,
+    "msg": "",
+    "tasks": [
+        {
+            "taskName": "testdm",
+            "taskStatus": "Running",
+            "sources": [
+                "mysql-replica-01"
+            ]
         }
     ]
 }

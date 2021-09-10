@@ -31,8 +31,10 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 <NavColumn>
 <ColumnTitle>快速上手</ColumnTitle>
 
-- [快速上手](quick-start-with-dm.md)
-- [数据迁移任务配置向导](task-configuration-guide.md)
+- [快速上手试用](quick-start-with-dm.md)
+- [使用 TiUP 部署集群](deploy-a-dm-cluster-using-tiup.md)
+- [创建数据源](quick-start-create-source.md)
+- [创建数据迁移任务](quick-create-migration-task.md)
 
 </NavColumn>
 
@@ -63,8 +65,6 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 <NavColumn>
 <ColumnTitle>使用场景</ColumnTitle>
 
-- [简单数据迁移场景](usage-scenario-simple-migration.md)
-- [分库分表合并场景](usage-scenario-shard-merge.md)
 - [从 Aurora 迁移数据到 TiDB](migrate-from-mysql-aurora.md)
 - [变更同步的 MySQL 实例](usage-scenario-master-slave-switch.md)
 

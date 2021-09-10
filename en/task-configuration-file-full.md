@@ -7,7 +7,7 @@ aliases: ['/docs/tidb-data-migration/dev/task-configuration-file-full/','/docs/t
 
 This document introduces the advanced task configuration file of Data Migration (DM), including [global configuration](#global-configuration) and [instance configuration](#instance-configuration).
 
-For the feature and configuration of each configuration item, see [Data migration features](key-features.md).
+For the feature and configuration of each configuration item, see [Data migration features](overview.md#basic-features).
 
 ## Important concepts
 
@@ -27,12 +27,13 @@ The following is the task configuration file template which allows you to perfor
 # ----------- Global setting -----------
 ## ********* Basic configuration *********
 name: test                      # The name of the task. Should be globally unique.
-task-mode: all                  # The task mode. Can be set to `full`/`incremental`/`all`.
-shard-mode: "pessimistic"       # This needs to be configured if it is a shard merge task. The "pessimistic" mode is used by default. After understanding the principles and restrictions of the "optimistic" mode, you can set to the "optimistic" mode.
+task-mode: all                  # The task mode. Can be set to `full`(only migrates full data)/`incremental`(replicates binlog synchronously)/`all` (replicates both full and incremental binlogs).
+shard-mode: "pessimistic"       # The shard merge mode. Optional modes are ""/"pessimistic"/"optimistic". The "" mode is used by default. If the task is a shard merge task, set it to the "pessimistic" mode. After understanding the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
 meta-schema: "dm_meta"          # The downstream database that stores the `meta` information.
 timezone: "Asia/Shanghai"       # The timezone.
 case-sensitive: false           # Determines whether the schema/table is case-sensitive.
-online-ddl-scheme: "gh-ost"     # Only "gh-ost" and "pt" are currently supported.
+online-ddl: true                # Currently supports automatic processing of "gh-ost" and "pt".
+online-ddl-scheme: "gh-ost"     # `online-ddl-scheme` will be deprecated in the future, so it is recommended to use `online-ddl`.
 ignore-checking-items: []       # No element, which means not to disable any checking items. Available items are `all`/`dump_privilege`/`replication_privilege`/`version`/`binlog_enable`/`binlog_format`/`binlog_row_image`/`table_schema`/`schema_of_shard_tables`/`auto_increment_ID`.
 clean-dump-file: true           # Whether to clean up the files generated during data dump. Note that these include `metadata` files.
 
@@ -43,7 +44,7 @@ target-database:                # Configuration of the downstream database insta
   password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # It is recommended to use a password encrypted with dmctl.
   max-allowed-packet: 67108864                  # Sets the "max_allowed_packet" limit of the TiDB client (that is, the limit of the maximum accepted packet) when DM internally connects to the TiDB server. The unit is bytes. (67108864 by default)
                                                 # Since DM v2.0.0, this configuration item is deprecated, and DM automatically obtains the "max_allowed_packet" value from TiDB.
- session:                                       # The session variables of TiDB, supported since v1.0.6. For details, go to `https://pingcap.com/docs/stable/system-variables`.
+  session:                                       # The session variables of TiDB, supported since v1.0.6. For details, go to `https://pingcap.com/docs/stable/system-variables`.
     sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE" # Since DM v2.0.0, if this item does not appear in the configuration file, DM automatically fetches a proper value for "sql_mode" from the downstream TiDB. Manual configuration of this item has a higher priority.
     tidb_skip_utf8_check: 1                     # Since DM v2.0.0, if this item does not appear in the configuration file, DM automatically fetches a proper value for "tidb_skip_utf8_check" from the downstream TiDB. Manual configuration of this item has a higher priority.
     tidb_constraint_check_in_place: 0
@@ -77,8 +78,15 @@ filters:
     events: ["all dml"]
     action: Do
 
-# The filter rule set of the block allow list of the matched table of the upstream database instance.
-block-allow-list:                    # Use black-white-list if the DM's version <= v2.0.0-beta.2.
+expression-filter:                   # Defines the filter rules for row changes when migrating data. Supports defining multiple rules.
+  # Filter the value of inserted `c` in `expr_filter`.`tbl` when it is even.
+  even_c:                            # The name of the filter rule.
+    schema: "expr_filter"            # The name of upstream database to be matched. Wildcard match or regular match is not supported.
+    table: "tbl"                     # The name of upstream table to be matched. Wildcard match or regular match is not supported.
+    insert-value-expr: "c % 2 = 0"
+
+# The filter rule set of tables to be migrated from the upstream database instance. You can set multiple rules at the same time.
+block-allow-list:                    # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
   bw-rule-1:                         # The name of the block allow list rule.
     do-dbs: ["~^test.*", "user"]     # The allow list of upstream schemas needs to be migrated.
     ignore-dbs: ["mysql", "account"] # The block list of upstream schemas needs to be migrated.
@@ -87,6 +95,7 @@ block-allow-list:                    # Use black-white-list if the DM's version 
       tbl-name: "~^t.*"
     - db-name: "user"
       tbl-name: "information"
+  bw-rule-2:                         # The name of the block allow list rule.
     ignore-tables:                   # The block list of upstream tables needs to be migrated.
     - db-name: "user"
       tbl-name: "log"
@@ -96,7 +105,6 @@ mydumpers:
   global:                            # The configuration name of the processing unit.
     threads: 4                       # The number of the threads that the dump processing unit dumps from the upstream database (4 by default).
     chunk-filesize: 64               # The size of the file generated by the dump processing unit (64 in MB by default).
-    skip-tz-utc: true                # Ignore timezone conversion for time type data (true by default).
     extra-args: "--consistency none" # Other arguments of the dump processing unit. You do not need to manually configure table-list in `extra-args`, because table-list is automatically generated by DM.
 
 # Configuration arguments of the load processing unit.
@@ -111,7 +119,7 @@ syncers:
     worker-count: 16                 # The number of threads that replicate binlog events concurrently in the sync processing unit. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
     batch: 100                       # The number of SQL statements in a transaction batch that the sync processing unit replicates to the downstream database (100 by default).
     enable-ansi-quotes: true         # Enable this argument if `sql-mode: "ANSI_QUOTES"` is set in the `session`
-    safe-mode: false                 # If set to true, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. This ensures that DML statements can be imported repeatedly during data migration when there is any primary key or unique index in the table schema. TiDB DM automatically enables safe mode within the first 5 minutes after starting or resuming migration tasks.
+    safe-mode: false                 # If set to true, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. This ensures that DML statements can be imported repeatedly during data migration when there is any primary key or unique index in the table schema. TiDB DM automatically enables safe mode within the first minute (in v2.0.3 and earlier versions, it is 5 minutes) after starting or resuming migration tasks.
 
 # ----------- Instance configuration -----------
 mysql-instances:
@@ -124,9 +132,9 @@ mysql-instances:
       binlog-gtid: "03fc0263-28c7-11e7-a653-6c0b84d59f30:1-7041423,05474d3c-28c7-11e7-8352-203db246dd3d:1-170"  # You need to set this argument if you specify `enable-gtid: true` for the source of the incremental task.
 
     route-rules: ["route-rule-1", "route-rule-2"]   # The name of the mapping rule between the table matching the upstream database instance and the downstream database.
-    filter-rules: ["filter-rule-1"]                 # The name of the binlog event filtering rule of the table matching the upstream database instance.
-    block-allow-list:  "bw-rule-1"                  # The name of the block and allow lists filtering rule of the table matching the upstream database instance. Use black-white-list if the DM's version <= v2.0.0-beta.2.
-
+    filter-rules: ["filter-rule-1", "filter-rule-2"]                 # The name of the binlog event filtering rule of the table matching the upstream database instance.
+    block-allow-list:  "bw-rule-1"                  # The name of the block and allow lists filtering rule of the table matching the upstream database instance. Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
+    expression-filters: ["even_c"]                  # Use expression filter rule named even_c.
     mydumper-config-name: "global"                  # The name of the mydumpers configuration.
     loader-config-name: "global"                    # The name of the loaders configuration.
     syncer-config-name: "global"                    # The name of the syncers configuration.

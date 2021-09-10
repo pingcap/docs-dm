@@ -66,7 +66,9 @@ aliases: ['/docs-cn/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible/',
 
 请根据不同的集群拓扑，编辑 TiUP 所需的集群初始化配置文件。
 
-请根据[配置文件模板](https://github.com/pingcap/tiup/blob/master/embed/templates/examples/dm/topology.example.yaml)，新建一个配置文件 `topology.yaml`。如果有其他组合场景的需求，请根据多个模板自行调整。
+请根据[配置文件模板](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml)，新建一个配置文件 `topology.yaml`。如果有其他组合场景的需求，请根据多个模板自行调整。
+
+可以使用 `tiup dm template > topology.yaml` 命令快速生成配置文件模板。
 
 部署 3 个 DM-master、3 个 DM-worker 与 1 个监控组件的配置如下：
 
@@ -109,7 +111,7 @@ alertmanager_servers:
 >
 > - 对于需要某个节点生效的参数，请在具体节点的 `config` 中配置。
 >
-> - 配置的层次结构使用 `.` 表示。如：`log.slow-threshold`。更多格式参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/embed/templates/examples/dm/topology.example.yaml)。
+> - 配置的层次结构使用 `.` 表示。如：`log.slow-threshold`。更多格式参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml)。
 >
 > - 更多参数说明，请参考 [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml)、[worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml)
 >
@@ -165,7 +167,7 @@ TiUP 支持管理多个 DM 集群，该命令会输出当前通过 TiUP DM 管�
 ```log
 Name  User  Version  Path                                  PrivateKey
 ----  ----  -------  ----                                  ----------
-dm-test  tidb  v2.0.0  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/storage/dm/clusters/dm-test/ssh/id_rsa
+dm-test  tidb  v2.0.3  /root/.tiup/storage/dm/clusters/dm-test  /root/.tiup/storage/dm/clusters/dm-test/ssh/id_rsa
 ```
 
 ## 第 5 步：检查部署的 DM 集群情况
@@ -201,3 +203,9 @@ tiup dm display dm-test
 ```
 
 在输出结果中，如果 Status 状态信息为 `Up`，说明集群状态正常。
+
+## 第 8 步：获取集群控制工具 dmctl
+
+dmctl 是用来控制集群运行命令的工具，推荐[通过 TiUP 获取该工具](maintain-dm-using-tiup.md#集群控制工具-dmctl)。
+
+dmctl 支持命令模式与交互模式，具体请见[使用 dmctl 运维集群](dmctl-introduction.md#使用-dmctl-运维集群)。
