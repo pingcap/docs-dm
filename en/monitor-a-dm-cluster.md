@@ -70,6 +70,7 @@ The following metrics show only when `task-mode` is in the `full` or `all` mode.
 | data file count | The total number of data files (includes the `INSERT INTO` statement) in the full data imported by the load unit | N/A | N/A |
 | transaction execution latency | The latency of executing a transaction by the load unit (in seconds) | N/A | N/A |
 | statement execution latency | The duration of executing a statement by the load unit (in seconds) | N/A | N/A |
+| remaining time | The remaining time of replicating data by the load unit (in seconds) | N/A | N/A |
 
 ### Binlog replication
 
@@ -77,10 +78,11 @@ The following metrics show only when `task-mode` is in the `incremental` or `all
 
 | Metric name | Description | Alert | Severity level |
 |:----|:------------|:----|:----|
-| remaining time to sync | The predicted remaining time it takes `syncer` to be completely migrated with the master (in minutes) | N/A | N/A |
-| replicate lag | The latency time it takes to replicate the binlog from master to `syncer` (in seconds) | N/A | N/A |
+| remaining time to sync | The predicted remaining time it takes for `syncer` to be completely migrated with the upstream master (in minutes) | N/A | N/A |
+| replicate lag gauge | The latency time it takes to replicate the binlog from upstream to downstream (in seconds) | N/A | N/A |
+| replicate lag histogram | The histogram of replicating the binlog from upstream to downstream (in seconds). Note that due to different statistical mechanisms, the data might be inaccurate | N/A | N/A |
 | process exist with error | The binlog replication unit encounters an error within the DM-worker and exits | Immediate alerts | critical |
-| binlog file gap between master and syncer | The number of binlog files by which the `syncer` processing unit is behind the master | An alert occurs when the number of binlog files by which the `syncer` processing unit is behind the master exceeds one (>1) and the condition lasts over 10 minutes | critical |
+| binlog file gap between master and syncer | The number of binlog files by which the `syncer` processing unit is behind the upstream master | An alert occurs when the number of binlog files by which the `syncer` processing unit is behind the upstream master exceeds one (>1) and the condition lasts over 10 minutes | critical |
 | binlog file gap between relay and syncer | The number of binlog files by which `syncer` is behind `relay` | An alert occurs when the number of binlog files by which the `syncer` processing unit is behind the `relay` processing unit exceeds one (>1) and the condition lasts over 10 minutes | critical |
 | binlog event QPS | The number of binlog events received per unit of time (this number does not include the events that need to be skipped) | N/A | N/A |
 | skipped binlog event QPS | The number of binlog events received per unit of time that need to be skipped | N/A | N/A |
@@ -98,6 +100,11 @@ The following metrics show only when `task-mode` is in the `incremental` or `all
 | skipped event duration | The duration that the binlog replication unit skips a binlog event (in seconds) | N/A | N/A |
 | unsynced tables | The number of tables that have not received the shard DDL statement in the current subtask | N/A | N/A |
 | shard lock resolving | Whether the current subtask is waiting for the shard DDL lock to be resolved. A value greater than 0 indicates that it is waiting for the shard DDL lock to be resolved | N/A | N/A |
+| ideal QPS | The highest QPS that can be achieved when the running time of DM is 0 | N/A | N/A |
+| binlog event row | The number of rows in a binlog event | N/A | N/A |
+| finished transaction total | The number of finished transactions in total | N/A | N/A |
+| replication transaction batch | The number of sql rows in the transaction executed to the downstream | N/A | N/A |
+| flush checkpoints time interval | The time interval for flushing the checkpoints (in seconds) | N/A | N/A |
 
 ### Relay log
 
