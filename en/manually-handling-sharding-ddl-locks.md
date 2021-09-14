@@ -11,7 +11,7 @@ DM uses the sharding DDL lock to ensure operations are performed in the correct 
 > **Note:**
 >
 > - This document only applies to the processing of sharding DDL lock in pessimistic coordination mode. 
-> - The commands in the Command usage section in this document are in interactive mode. In command-line mode, you need to add the escape characters to avoid an error report.
+> - The commands in the Command usage sections in this document are in interactive mode. In command-line mode, you need to add the escape characters to avoid an error report.
 > - Do not use `unlock-ddl-lock` or `break-ddl-lock` unless you are totally aware of the possible impacts brought by the command and you can accept them.
 > - Before manually handling the abnormal DDL locks, make sure that you have already read the DM [shard merge principles](feature-shard-merge-pessimistic.md#principles).
 
