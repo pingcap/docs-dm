@@ -12,10 +12,6 @@ title: DM 任务完整配置文件介绍
 
 关于包括 `source-id` 和 DM-worker ID 在内的关键概念的介绍，请参阅[关键概念](config-overview.md#关键概念)。
 
-## 关闭检查项
-
-DM 会根据任务类型进行相应检查。可以参考[关闭检查项](precheck.md#关闭检查项)，在任务配置文件中使用 `ignore-checking-items` 配置关闭相应检查。
-
 ## 完整配置文件示例
 
 下面是一个完整的配置文件示例，通过该示例可以完成复杂的数据迁移功能。
@@ -26,21 +22,21 @@ DM 会根据任务类型进行相应检查。可以参考[关闭检查项](prech
 # ----------- 全局配置 -----------
 ## ********* 基本信息配置 *********
 name: test                      # 任务名称，需要全局唯一
-task-mode: all                  # 任务模式，可设为 "full" - "只进行全量数据迁移"、"incremental" - "Binlog 实时同步"、"all" - "全量 + Binlog 迁移"
-shard-mode: "pessimistic"       # 任务协调模式，可选的模式有 ""、"pessimistic、"optimistic"。默认使用 ""。如果是分库分表合并任务，请设置为悲观协调模式 "pessimistic"。在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
+task-mode: all                  # 任务模式，可设为 "full" - "只进行全量数据迁移"、"incremental" - "Binlog 实时同步"、"all" - "全量 + Binlog 实时同步"
+shard-mode: "pessimistic"       # 任务协调模式，可选的模式有 ""、"pessimistic、"optimistic"。默认使用 "" 即无需协调。如果是分库分表合并任务，请设置为悲观协调模式 "pessimistic"。
+                                # 在 v2.0.6 版本后乐观模式逐渐成熟，深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
 timezone: "Asia/Shanghai"       # 时区
 case-sensitive: false           # schema/table 是否大小写敏感
-online-ddl: true                # 目前支持 "gh-ost" 、"pt" 的自动处理
+online-ddl: true                # 支持上游 "gh-ost" 、"pt" 的自动处理
 online-ddl-scheme: "gh-ost"     # `online-ddl-scheme` 在未来将会被弃用，建议使用 `online-ddl` 代替 `online-ddl-scheme`
-ignore-checking-items: []       # 不关闭任何检查项。可选的检查项有 "all"、"dump_privilege"、"replication_privilege"、"version"、"binlog_enable"、"binlog_format"、"binlog_row_image"、"table_schema"、"schema_of_shard_tables"、"auto_increment_ID"
 clean-dump-file: true           # 是否清理 dump 阶段产生的文件，包括 metadata 文件、建库建表 SQL 文件以及数据导入 SQL 文件
 
 target-database:                # 下游数据库实例配置
   host: "192.168.0.1"
   port: 4000
   user: "root"
-  password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # 推荐使用经 dmctl 加密后的密码
+  password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # 推荐使用经 `dmctl encrypt` 加密后的密码
   max-allowed-packet: 67108864                  # 设置 DM 内部连接 TiDB 服务器时，TiDB 客户端的 "max_allowed_packet" 限制（即接受的最大数据包限制），单位为字节，默认 67108864 (64 MB)
                                                 # 该配置项从 DM v2.0.0 版本起弃用，DM 会自动获取连接 TiDB 的 "max_allowed_packet"
   session:                                      # 设置 TiDB 的 session 变量，在 v1.0.6 版本引入。更多变量及解释参见 `https://docs.pingcap.com/zh/tidb/stable/system-variables`
@@ -110,8 +106,8 @@ loaders:                             # load 处理单元的运行配置参数
 
 syncers:                             # sync 处理单元的运行配置参数
   global:                            # 配置名称
-    worker-count: 16                 # sync 并发迁移 binlog event 的线程数量，默认值为 16，当有多个实例同时向 TiDB 迁移数据时可根据负载情况适当调小该值
-    batch: 100                       # sync 迁移到下游数据库的一个事务批次 SQL 语句数，默认值为 100
+    worker-count: 16                 # sync 读取和应用已传输 binlog event 的并发线程数量，默认值为 16。调整此参数对上游压力无影响，对下游压力则影响显著。
+    batch: 100                       # sync 迁移到下游数据库的一个事务批次 SQL 语句数，默认值为 100，建议一般不超过 500。
     enable-ansi-quotes: true         # 若 `session` 中设置 `sql-mode: "ANSI_QUOTES"`，则需开启此项
     safe-mode: false                 # 设置为 true，则将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。在启动或恢复增量复制任务的前 1 分钟（在 v2.0.3 及之前的版本中为 5 分钟）内 TiDB DM 会自动启动 safe mode
 
