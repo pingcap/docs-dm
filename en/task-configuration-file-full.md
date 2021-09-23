@@ -12,10 +12,6 @@ For the feature and configuration of each configuration item, see [Data migratio
 
 For description of important concepts including `source-id` and the DM-worker ID, see [Important concepts](config-overview.md#important-concepts).
 
-## Disable checking items
-
-DM checks items according to the task type, see [Disable checking items](precheck.md#disable-checking-items). You can use `ignore-checking-items` in the task configuration file to disable checking items.
-
 ## Task configuration file template (advanced)
 
 The following is the task configuration file template which allows you to perform **advanced** data migration tasks.
@@ -26,21 +22,21 @@ The following is the task configuration file template which allows you to perfor
 # ----------- Global setting -----------
 ## ********* Basic configuration *********
 name: test                      # The name of the task. Should be globally unique.
-task-mode: all                  # The task mode. Can be set to `full`(only migrates full data)/`incremental`(replicates binlog synchronously)/`all` (replicates both full and incremental binlogs).
-shard-mode: "pessimistic"       # The shard merge mode. Optional modes are ""/"pessimistic"/"optimistic". The "" mode is used by default. If the task is a shard merge task, set it to the "pessimistic" mode. After understanding the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
+task-mode: all                  # The task mode. Can be set to `full`(only migrates full data)/`incremental`(replicates binlogs synchronously)/`all` (replicates both full data and incremental binlogs).
+shard-mode: "pessimistic"       # The shard merge mode. Optional modes are ""/"pessimistic"/"optimistic". The "" mode is used by default which means no specific mode is required. If the task is a shard merge task, set it to the "pessimistic" mode. 
+                                # After understanding the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
 meta-schema: "dm_meta"          # The downstream database that stores the `meta` information.
 timezone: "Asia/Shanghai"       # The timezone.
 case-sensitive: false           # Determines whether the schema/table is case-sensitive.
-online-ddl: true                # Currently supports automatic processing of "gh-ost" and "pt".
+online-ddl: true                # Supports automatic processing of upstream "gh-ost" and "pt".
 online-ddl-scheme: "gh-ost"     # `online-ddl-scheme` will be deprecated in the future, so it is recommended to use `online-ddl`.
-ignore-checking-items: []       # No element, which means not to disable any checking items. Available items are `all`/`dump_privilege`/`replication_privilege`/`version`/`binlog_enable`/`binlog_format`/`binlog_row_image`/`table_schema`/`schema_of_shard_tables`/`auto_increment_ID`.
 clean-dump-file: true           # Whether to clean up the files generated during data dump. Note that these include `metadata` files.
 
 target-database:                # Configuration of the downstream database instance.
   host: "192.168.0.1"
   port: 4000
   user: "root"
-  password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # It is recommended to use a password encrypted with dmctl.
+  password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # It is recommended to use a password encrypted with `dmctl encrypt`.
   max-allowed-packet: 67108864                  # Sets the "max_allowed_packet" limit of the TiDB client (that is, the limit of the maximum accepted packet) when DM internally connects to the TiDB server. The unit is bytes. (67108864 by default)
                                                 # Since DM v2.0.0, this configuration item is deprecated, and DM automatically obtains the "max_allowed_packet" value from TiDB.
   session:                                       # The session variables of TiDB, supported since v1.0.6. For details, go to `https://pingcap.com/docs/stable/system-variables`.
@@ -115,8 +111,8 @@ loaders:
 # Configuration arguments of the sync processing unit.
 syncers:
   global:                            # The configuration name of the processing unit.
-    worker-count: 16                 # The number of threads that replicate binlog events concurrently in the sync processing unit. When multiple instances are migrating data to TiDB at the same time, reduce the value according to the load.
-    batch: 100                       # The number of SQL statements in a transaction batch that the sync processing unit replicates to the downstream database (100 by default).
+    worker-count: 16                 # The number of concurrent threads that read, parse, and apply binlog events in the sync processing unit (16 by default). Adjusting this value has no effect on the upstream, but has a significant effect on the downstream database.
+    batch: 100                       # The number of SQL statements in a transaction batch that the sync processing unit replicates to the downstream database (100 by default). Generally, it is recommended to set the value less than 500.
     enable-ansi-quotes: true         # Enable this argument if `sql-mode: "ANSI_QUOTES"` is set in the `session`
     safe-mode: false                 # If set to true, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. This ensures that DML statements can be imported repeatedly during data migration when there is any primary key or unique index in the table schema. TiDB DM automatically enables safe mode within the first minute (in v2.0.3 and earlier versions, it is 5 minutes) after starting or resuming migration tasks.
 
