@@ -29,7 +29,7 @@ meta-schema: "dm_meta"          # The downstream database that stores the `meta`
 timezone: "Asia/Shanghai"       # The timezone.
 case-sensitive: false           # Determines whether the schema/table is case-sensitive.
 online-ddl: true                # Supports automatic processing of upstream "gh-ost" and "pt".
-online-ddl-scheme: "gh-ost"     # `online-ddl-scheme` will be deprecated in the future, so it is recommended to use `online-ddl`.
+online-ddl-scheme: "gh-ost"     # `online-ddl-scheme` has been deprecated in v2.0.6, so it is recommended to use `online-ddl`.
 clean-dump-file: true           # Whether to clean up the files generated during data dump. Note that these include `metadata` files.
 
 target-database:                # Configuration of the downstream database instance.
@@ -111,7 +111,7 @@ loaders:
 # Configuration arguments of the sync processing unit.
 syncers:
   global:                            # The configuration name of the processing unit.
-    worker-count: 16                 # The number of concurrent threads that read, parse, and apply binlog events in the sync processing unit (16 by default). Adjusting this value has no effect on the upstream, but has a significant effect on the downstream database.
+    worker-count: 16                 # The number of concurrent threads that apply binlogs which has been transferred to the local (16 by default). Adjusting this parameter has no effect on the concurrency of upstream pull logs, but has a significant effect on the downstream database.
     batch: 100                       # The number of SQL statements in a transaction batch that the sync processing unit replicates to the downstream database (100 by default). Generally, it is recommended to set the value less than 500.
     enable-ansi-quotes: true         # Enable this argument if `sql-mode: "ANSI_QUOTES"` is set in the `session`
     safe-mode: false                 # If set to true, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. This ensures that DML statements can be imported repeatedly during data migration when there is any primary key or unique index in the table schema. TiDB DM automatically enables safe mode within the first minute (in v2.0.3 and earlier versions, it is 5 minutes) after starting or resuming migration tasks.
