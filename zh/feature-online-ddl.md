@@ -18,13 +18,23 @@ DDL 是数据库应用中必然会使用的一类 SQL。MySQL 虽然在 5.6 的�
 3. 将 DDL 目标表的数据同步到镜像表
 4. 在目标表与镜像表数据追平后，使用 RENAME 使镜像表替换掉 DDL 目标表
 
-在使用 DM 完成 MySQL 到 TiDB 的数据迁移时，online-ddl 功能可以将上面的 online DDL 操作还原为普通的 DDL，以便更快完成所需的 DDL 迁移。
+在使用 DM 完成 MySQL 到 TiDB 的数据迁移时，online-ddl 功能可以识别上述 2. 步骤产生的 DDL，并在 4. 步骤时向下游应用 DDL，从而避免镜像表的同步开销。
 
 如果想从源码方面了解 DM online-ddl，可以参考 [DM 源码阅读系列文章（八）Online Schema Change 迁移支持](https://pingcap.com/blog-cn/dm-source-code-reading-8/#dm-源码阅读系列文章八online-schema-change-迁移支持)
 
 ## 特点
 
-TiDB 根据 Google F1 的在线异步 schema 变更算法实现，在 DDL 过程中并不会阻塞读写。因此，在 online-schema-change 过程中，gh-ost 和 pt-osc 所产生的大量中间表数据以及 binlog event，在 MySQL 与 TiDB 的数据迁移过程中并不需要。
+使用 online-ddl 功能具有如下特点
+
+- 可以避免在下游创建镜像表，节约相应开销
+- 在分库分表合并场景下，避免处理各分表镜像表的 RENAME 操作，保证同步正确性
+- 受目前 DM 实现限制，在向下游应用 DDL 时，该同步任务的其他 DML 会被阻塞直到 DDL 完成。我们会在后续优化该限制
+
+不使用 online-ddl 有如下特点
+
+- 能保持 online DDL 的特点，利用更快速的镜像表 RENAME 操作完成 DDL。在 DM 的目前实现中可以减少同步任务阻塞时间
+- 需要将 online-ddl 工具产生的各种临时表添加到任务配置白名单中
+- 与分库分表合并场景不兼容
 
 ## 配置
 
