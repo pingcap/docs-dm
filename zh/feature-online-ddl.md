@@ -9,32 +9,39 @@ aliases: ['/docs-cn/tidb-data-migration/dev/feature-online-ddl-scheme/','/zh/tid
 
 DDL 是数据库应用中必然会使用的一类 SQL。MySQL 虽然在 5.6 的版本以后支持了 online-ddl，但是也有或多或少的限制。比如 MDL 锁的获取，某些 DDL 还是需要以 Copy 的方式来进行，在生产业务使用中，DDL 执行过程中的锁表会一定程度上阻塞数据库的读取或者写入。
 
-因此，用户往往会选择 online DDL 工具执行 DDL，把对读写的影响降到最低。常见的 online DDL 工具有 [gh-ost](https://github.com/github/gh-ost)、[pt-osc](https://www.percona.com/doc/percona-toolkit/3.0/pt-online-schema-change.html)。
+因此，用户往往会选择 Online DDL 工具执行 DDL，把对读写的影响降到最低。常见的 Online DDL 工具有 [gh-ost](https://github.com/github/gh-ost)、[pt-osc](https://www.percona.com/doc/percona-toolkit/3.0/pt-online-schema-change.html)。
 
 这些工具的工作原理可以大概概括为
 
-1. 以 DDL 目标表的表结构新建一张镜像表（ghost table）
+1. 以 DDL 目标表(real table)的表结构新建一张镜像表（ghost table）
 2. 在镜像表上应用 DDL
 3. 将 DDL 目标表的数据同步到镜像表
-4. 在目标表与镜像表数据追平后，使用 RENAME 使镜像表替换掉 DDL 目标表
+4. 在目标表与镜像表数据一致后，通过 `RENAME` 语句使镜像表替换掉目标表
+
+![DM online-ddl](/media/dm-online-ddl-2.png)
 
 在使用 DM 完成 MySQL 到 TiDB 的数据迁移时，online-ddl 功能可以识别上述 2. 步骤产生的 DDL，并在 4. 步骤时向下游应用 DDL，从而避免镜像表的同步开销。
 
-如果想从源码方面了解 DM online-ddl，可以参考 [DM 源码阅读系列文章（八）Online Schema Change 迁移支持](https://pingcap.com/blog-cn/dm-source-code-reading-8/#dm-源码阅读系列文章八online-schema-change-迁移支持)
+> **Note:**
+> 
+> 如果希望从源码方面了解 DM online-ddl，可以参考 [DM 源码阅读系列文章（八）Online Schema Change 迁移支持](https://pingcap.com/blog-cn/dm-source-code-reading-8/#dm-源码阅读系列文章八online-schema-change-迁移支持)，以及 [TiDB Online Schema Change 原理](https://pingcap.com/zh/blog/tidb-source-code-reading-17)
 
-## 特点
+## `online-ddl` 配置
 
-使用 online-ddl 功能具有如下特点
+一般情况下建议开启 DM 的 `online-ddl` 配置，将产生以下效果：
 
-- 可以避免在下游创建镜像表，节约相应开销
-- 在分库分表合并场景下，避免处理各分表镜像表的 RENAME 操作，保证同步正确性
+![DM online-ddl](/media/dm-online-ddl.png)
+
+- 下游 TiDB 无需创建和同步镜像表，节约相应空间和网络等开销
+- 在分库分表合并场景下，忽略各分表镜像表的 RENAME 操作，保证同步正确性
 - 受目前 DM 实现限制，在向下游应用 DDL 时，该同步任务的其他 DML 会被阻塞直到 DDL 完成。我们会在后续优化该限制
 
-不使用 online-ddl 有如下特点
-
-- 能保持 online DDL 的特点，利用更快速的镜像表 RENAME 操作完成 DDL。在 DM 的目前实现中可以减少同步任务阻塞时间
-- 需要将 online-ddl 工具产生的各种临时表添加到任务配置白名单中
-- 与分库分表合并场景不兼容
+> **Note:**
+> 如果因为一些原因需要关闭 `online-ddl` 配置，需注意以下影响
+> 
+> - 将原样同步 gh-ost/pt-osc 等 Online DDL 工具的行为
+> - 需要手动将 Online DDL 工具产生的各种临时表、镜像表等添加到任务配置白名单中
+> - 与分库分表合并场景不兼容
 
 ## 配置
 
@@ -47,7 +54,7 @@ name: test                      # 任务名称，需要全局唯一
 task-mode: all                  # 任务模式，可设为 "full"、"incremental"、"all"
 shard-mode: "pessimistic"       # 如果为分库分表合并任务则需要配置该项。默认使用悲观协调模式 "pessimistic"，在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
-online-ddl: true                # 目前支持 gh-ost 、pt 的自动处理
+online-ddl: true                # 支持上游使用 gh-ost 、pt 两种工具的自动处理
 online-ddl-scheme: "gh-ost"     # `online-ddl-scheme` 在未来将被弃用，建议使用 `online-ddl`
 
 target-database:                # 下游数据库实例配置
@@ -57,7 +64,11 @@ target-database:                # 下游数据库实例配置
   password: ""                  # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
 ```
 
-## online-schema-change: gh-ost
+在分库分表合并场景，迁移过程中需要协调各个分表的 DDL，以及该 DDL 前后的 DML。DM 支持悲观协调模式（pessimistic）和乐观协调模式（optimistic），关于二者的区别和适用场景可参考[分库分表合并迁移](https://docs.pingcap.com/zh/tidb-data-migration/stable/feature-shard-merge)
+
+## DM 与 Online DDL 工具协作细节
+
+### online-schema-change: gh-ost
 
 gh-ost 在实现 online-schema-change 的过程会产生 3 种 table：
 
@@ -152,7 +163,7 @@ DM 在迁移过程中会把上述 table 分成 3 类：
 >
 > 具体 gh-ost 的 SQL 会根据工具执行时所带的参数而变化。本文只列出主要的 SQL，具体可以参考 [gh-ost 官方文档](https://github.com/github/gh-ost#gh-ost)。
 
-## online-schema-change: pt
+### online-schema-change: pt
 
 pt-osc 在实现 online-schema-change 的过程会产生 2 种 table：
 
