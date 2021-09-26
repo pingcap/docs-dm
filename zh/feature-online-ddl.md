@@ -9,13 +9,22 @@ aliases: ['/docs-cn/tidb-data-migration/dev/feature-online-ddl-scheme/','/zh/tid
 
 DDL 是数据库应用中必然会使用的一类 SQL。MySQL 虽然在 5.6 的版本以后支持了 online-ddl，但是也有或多或少的限制。比如 MDL 锁的获取，某些 DDL 还是需要以 Copy 的方式来进行，在生产业务使用中，DDL 执行过程中的锁表会一定程度上阻塞数据库的读取或者写入。
 
-因此，gh-ost 以及 pt-osc 可以更优雅地在 MySQL 上面执行 DDL，把对读写的影响降到最低。
+因此，用户往往会选择 online DDL 工具执行 DDL，把对读写的影响降到最低。常见的 online DDL 工具有 gh-ost、pt-osc。
 
-TiDB 根据 Google F1 的在线异步 schema 变更算法实现，在 DDL 过程中并不会阻塞读写。因此，在 online-schema-change 过程中，gh-ost 和 pt-osc 所产生的大量中间表数据以及 binlog event，在 MySQL 与 TiDB 的数据迁移过程中并不需要。
+这些工具的工作原理可以大概概括为
 
-DM 是 MySQL 到 TiDB 的数据迁移工具，online-ddl 功能就是对上述两个 online-schema-change 的工具进行特殊的处理，以便更快完成所需的 DDL 迁移。
+1. 以 DDL 目标表的表结构新建一张镜像表（ghost table）
+2. 在镜像表上应用 DDL
+3. 将 DDL 目标表的数据同步到镜像表
+4. 在目标表与镜像表数据追平后，使用 RENAME 使镜像表替换掉 DDL 目标表
+
+在使用 DM 完成 MySQL 到 TiDB 的数据迁移时，online-ddl 功能可以将上面的 online DDL 操作还原为普通的 DDL，以便更快完成所需的 DDL 迁移。
 
 如果想从源码方面了解 DM online-ddl，可以参考 [DM 源码阅读系列文章（八）Online Schema Change 迁移支持](https://pingcap.com/blog-cn/dm-source-code-reading-8/#dm-源码阅读系列文章八online-schema-change-迁移支持)
+
+## 特点
+
+TiDB 根据 Google F1 的在线异步 schema 变更算法实现，在 DDL 过程中并不会阻塞读写。因此，在 online-schema-change 过程中，gh-ost 和 pt-osc 所产生的大量中间表数据以及 binlog event，在 MySQL 与 TiDB 的数据迁移过程中并不需要。
 
 ## 配置
 
