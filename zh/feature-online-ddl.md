@@ -9,7 +9,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/feature-online-ddl-scheme/','/zh/tid
 
 DDL 是数据库应用中必然会使用的一类 SQL。MySQL 虽然在 5.6 的版本以后支持了 online-ddl，但是也有或多或少的限制。比如 MDL 锁的获取，某些 DDL 还是需要以 Copy 的方式来进行，在生产业务使用中，DDL 执行过程中的锁表会一定程度上阻塞数据库的读取或者写入。
 
-因此，用户往往会选择 online DDL 工具执行 DDL，把对读写的影响降到最低。常见的 online DDL 工具有 gh-ost、pt-osc。
+因此，用户往往会选择 online DDL 工具执行 DDL，把对读写的影响降到最低。常见的 online DDL 工具有 [gh-ost](https://github.com/github/gh-ost)、[pt-osc](https://www.percona.com/doc/percona-toolkit/3.0/pt-online-schema-change.html)。
 
 这些工具的工作原理可以大概概括为
 
