@@ -361,9 +361,9 @@ flush local meta, Rawcause: open relay-dir/xxx.000001/relay.metayyyy: no such fi
 
 1. 重启 relay log
 
-```
-» stop-relay -s sourceID workerName
-» start-relay -s sourceID workerName
-```
+    ```
+    » stop-relay -s sourceID workerName
+    » start-relay -s sourceID workerName
+    ```
 
 2. 升级 DM 至 v2.0.7 及之后版本

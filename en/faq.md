@@ -392,9 +392,9 @@ You can avoid this error by the following steps:
 
 1. restart relay log
 
-```
-» stop-relay -s sourceID workerName
-» start-relay -s sourceID workerName
-```
+    ```
+    » stop-relay -s sourceID workerName
+    » start-relay -s sourceID workerName
+    ```
 
-2. Upgrade DM to v2.0.7 and later
+2. upgrade DM to v2.0.7 and later
