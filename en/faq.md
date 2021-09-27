@@ -374,3 +374,27 @@ To solve this issue, check whether `https_proxy` is mandatory. If not, cancel th
 > **Note:**
 > 
 > The environment variables related to `proxy` include `http_proxy`, `https_proxy`, and `no_proxy`. If the connection error persists after you perform the above steps, check whether the configuration parameters of `http_proxy` and `no_proxy` are correct.
+
+## How to deal with the error of executing start-relay command from v2.0.2 to v2.0.6?
+
+```
+flush local meta, Rawcause: open relay-dir/xxx.000001/relay.metayyyy: no such file or directory
+```
+
+The above error can be caused by the following reason:
+
+- DM has been upgraded from v2.0.1 and earlier to v2.0.2 - v2.0.6, and relay log was started before the upgrade and restarted again after the upgrade
+- Use the stop-relay command to pause the relay log and then restart it
+
+The above conditions have a certain probability of triggering the error.
+
+You can avoid this error by the following steps:
+
+1. restart relay log
+
+```
+» stop-relay -s sourceID workerName
+» start-relay -s sourceID workerName
+```
+
+2. Upgrade DM to v2.0.7 and later

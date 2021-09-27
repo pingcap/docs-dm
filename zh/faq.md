@@ -343,3 +343,27 @@ DM-master 会在启动时将 etcd 信息记录在当前目录。如果重启后�
 > **注意：**   
 > 
 > 关于 `proxy` 的环境变量有 `http_proxy`，`https_proxy`，`no_proxy` 等。如果依据上述解决方案处理后仍无法连接，可以考虑检查 `http_proxy` 和 `no_proxy` 的参数配置是否有影响。 
+
+## v2.0.2 - v2.0.6 版本执行 start-relay 命令报错该如何处理
+
+```
+flush local meta, Rawcause: open relay-dir/xxx.000001/relay.metayyyy: no such file or directory
+```
+
+出现上述错误可能有以下原因：
+
+- DM 从 v2.0.1 及之前的版本升级到 v2.0.2 - v2.0.6 版本，且升级之前曾开启过 relay log，升级完后重新开启。
+- 使用 stop-relay 命令暂停 relay log 后重新开启
+
+上述条件下，有一定概率触发此错误。
+
+可以通过以下方式绕过这个问题：
+
+1. 重启 relay log
+
+```
+» stop-relay -s sourceID workerName
+» start-relay -s sourceID workerName
+```
+
+2. 升级 DM 至 v2.0.7 及之后版本
