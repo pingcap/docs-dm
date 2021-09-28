@@ -106,7 +106,7 @@ loaders:                             # load 处理单元的运行配置参数
 
 syncers:                             # sync 处理单元的运行配置参数
   global:                            # 配置名称
-    worker-count: 16                 # 应用已传输到本地的 binlog 的并发线程数量，默认值为 16。调整此参数对上游拉取日志的并发无影响，对下游则造成显著压力变化。
+    worker-count: 16                 # 应用已传输到本地的 binlog 的并发线程数量，默认值为 16。调整此参数不会影响上游拉取日志的并发，但会对下游产生显著压力。
     batch: 100                       # sync 迁移到下游数据库的一个事务批次 SQL 语句数，默认值为 100，建议一般不超过 500。
     enable-ansi-quotes: true         # 若 `session` 中设置 `sql-mode: "ANSI_QUOTES"`，则需开启此项
     safe-mode: false                 # 设置为 true，则将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。在启动或恢复增量复制任务的前 1 分钟（在 v2.0.3 及之前的版本中为 5 分钟）内 TiDB DM 会自动启动 safe mode
