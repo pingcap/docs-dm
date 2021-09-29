@@ -154,12 +154,6 @@ alertmanager_servers:
     # data_dir: "/tidb-data/alertmanager-9093"
     # log_dir: "/tidb-deploy/alertmanager-9093/log"
 
-# if monitored is set, node_exporter and blackbox_exporter will be
-# deployed with the port specified, otherwise they are not deployed
-# on the server to avoid conflict with tidb clusters
-#monitored:
-#  node_exporter_port: 9100
-#  blackbox_exporter_port: 9115
 ```
 
 > **Note:**
