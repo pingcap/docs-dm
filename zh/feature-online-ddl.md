@@ -65,7 +65,7 @@ target-database:                # 下游数据库实例配置
   password: ""                  # 如果密码不为空，则推荐使用经过 dmctl 加密的密文
 ```
 
-在分库分表合并场景，迁移过程中需要协调各个分表的 DDL 语句，以及该 DDL 语句前后的 DML 语句。DM 支持悲观协调模式（pessimistic）和乐观协调模式（optimistic），关于二者的区别和适用场景可参考[分库分表合并迁移]。(https://docs.pingcap.com/zh/tidb-data-migration/stable/feature-shard-merge)
+在分库分表合并场景，迁移过程中需要协调各个分表的 DDL 语句，以及该 DDL 语句前后的 DML 语句。DM 支持悲观协调模式（pessimistic）和乐观协调模式（optimistic），关于二者的区别和适用场景可参考[分库分表合并迁移](https://docs.pingcap.com/zh/tidb-data-migration/stable/feature-shard-merge)。
 
 ## DM 与 Online DDL 工具协作细节
 
