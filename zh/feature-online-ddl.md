@@ -5,6 +5,8 @@ aliases: ['/docs-cn/tidb-data-migration/dev/feature-online-ddl-scheme/','/zh/tid
 
 # 迁移使用 GH-ost/PT-osc 的源数据库
 
+本文档介绍在使用 DM 进行从 MySQL 到 TiDB 的数据迁移时，如何配置 `online-ddl`，以及 DM 与 Online DDL 工具的协作细节。
+
 ## 概述
 
 DDL 是数据库应用中必然会使用的一类 SQL。MySQL 虽然在 5.6 的版本以后支持了 online-ddl 功能，但是也有或多或少的限制。比如 MDL 锁的获取，某些 DDL 还是需要以 Copy 的方式来进行，在生产业务使用中，DDL 执行过程中的锁表会一定程度上阻塞数据库的读取或者写入。
@@ -68,6 +70,8 @@ target-database:                # 下游数据库实例配置
 在分库分表合并场景，迁移过程中需要协调各个分表的 DDL 语句，以及该 DDL 语句前后的 DML 语句。DM 支持悲观协调模式（pessimistic）和乐观协调模式（optimistic），关于二者的区别和适用场景可参考[分库分表合并迁移](https://docs.pingcap.com/zh/tidb-data-migration/stable/feature-shard-merge)。
 
 ## DM 与 Online DDL 工具协作细节
+
+本小节介绍 DM 与 Online DDL工具 [gh-ost](https://github.com/github/gh-ost) 和 [pt-osc](https://www.percona.com/doc/percona-toolkit/3.0/pt-online-schema-change.html) 在实现 online-schema-change 过程中的协作细节。
 
 ### online-schema-change: gh-ost
 
