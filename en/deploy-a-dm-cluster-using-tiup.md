@@ -77,8 +77,7 @@ You can use the command `tiup dm template > topology.yaml` to generate a configu
 The configuration of deploying three DM-masters, three DM-workers, and one monitoring component instance is as follows:
 
 ```yaml
-# Global variables are applied to all deployments and as the default value of
-# them if the specific deployment value missing.
+# Global variables apply to all ways of deployment. If one specific value is missing, the corresponding global variable serves as the default value.
 global:
   user: "tidb"
   ssh_port: 22
@@ -167,7 +166,7 @@ alertmanager_servers:
 >
 > - If you do not need to ensure high availability of the DM cluster, deploy only one DM-master node, and the number of deployed DM-worker nodes must be no less than the number of upstream MySQL/MariaDB instances to be migrated. To ensure high availability of the DM cluster, it is recommended to deploy three DM-master nodes, and the number of deployed DM-worker nodes must be greater than the number of upstream MySQL/MariaDB instances to be migrated (for example, the number of DM-worker nodes is two more than the number of upstream instances).
 > 
-> - It is not recommend running too many workers on one host, each worker is recommended to be allocated at least 2 core cpu and 4 GiB memory.
+> - It is not recommended to run too many DM-workers on one host. Each DM-worker should be allocated at least 2 core CPU and 4 GiB memory.
 >
 > - The worker will be bound with an upstream database, when DM performs a full replication task, the worker exporting the full amount of data locally first, and then importing it into the downstream database. Therefore, the worker's host needs sufficient storage space (The storage path will be specified later when creating the task)
 > 
@@ -204,7 +203,7 @@ The parameters used in this step is as follows.
 
 |Parameter|Description|
 |-|-|
-|`${name}` | The name of dm cluster,eg: dm-test|
+|`${name}` | The name of dm cluster, eg: dm-test|
 |`${version}` | The version of the DM cluster. You can see other supported versions by running `tiup list dm-master`.
 |`./topology.yaml`| Path of topology config file.|
 |`-u` or `--user`|Log in to the target machine through the root key to complete the cluster deployment, or you can use other users with ssh and sudo privileges to complete the deployment.|
