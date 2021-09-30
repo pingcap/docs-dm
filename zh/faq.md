@@ -350,12 +350,11 @@ DM-master 会在启动时将 etcd 信息记录在当前目录。如果重启后�
 flush local meta, Rawcause: open relay-dir/xxx.000001/relay.metayyyy: no such file or directory
 ```
 
-出现上述错误可能有以下原因：
+上述报错在以下情况下有可能会被触发：
 
 - DM 从 v2.0.1 及之前的版本升级到 v2.0.2 - v2.0.6 版本，且升级之前曾开启过 relay log，升级完后重新开启。
-- 使用 stop-relay 命令暂停 relay log 后重新开启
+- 使用 stop-relay 命令暂停 relay log 后重新开启 relay log。
 
-上述条件下，有一定概率触发此错误。
 
 可以通过以下方式绕过这个问题：
 
