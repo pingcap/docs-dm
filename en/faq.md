@@ -386,7 +386,7 @@ The above error might be made in the following cases:
 - DM has been upgraded from v2.0.1 and earlier to v2.0.2 - v2.0.6, and relay log is started before the upgrade and restarted after the upgrade.
 - Execute the stop-relay command to pause the relay log and then restart it.
 
-You can avoid this error by the following steps:
+You can avoid this error by the following options:
 
 - Restart relay log:
 
