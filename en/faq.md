@@ -388,11 +388,11 @@ The above error might be made in the following cases:
 
 You can avoid this error by the following steps:
 
-1. restart relay log
+- Restart relay log:
 
     ```
     » stop-relay -s sourceID workerName
     » start-relay -s sourceID workerName
     ```
 
-2. upgrade DM to v2.0.7 and later
+- Upgrade DM to v2.0.7 or later versions.
