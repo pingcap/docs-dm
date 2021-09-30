@@ -345,7 +345,7 @@ DM-master 会在启动时将 etcd 信息记录在当前目录。如果重启后�
 > 
 > 关于 `proxy` 的环境变量有 `http_proxy`，`https_proxy`，`no_proxy` 等。如果依据上述解决方案处理后仍无法连接，可以考虑检查 `http_proxy` 和 `no_proxy` 的参数配置是否有影响。 
 
-## v2.0.2 - v2.0.6 版本执行 start-relay 命令报错该如何处理
+## v2.0.2 - v2.0.6 版本执行 start-relay 命令报错该如何处理？
 
 ```
 flush local meta, Rawcause: open relay-dir/xxx.000001/relay.metayyyy: no such file or directory
