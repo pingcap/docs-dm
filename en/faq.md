@@ -383,7 +383,7 @@ flush local meta, Rawcause: open relay-dir/xxx.000001/relay.metayyyy: no such fi
 
 The above error might be made in the following cases:
 
-- DM has been upgraded from v2.0.1 and earlier to v2.0.2 - v2.0.6, and relay log was started before the upgrade and restarted again after the upgrade
+- DM has been upgraded from v2.0.1 and earlier to v2.0.2 - v2.0.6, and relay log is started before the upgrade and restarted after the upgrade.
 - Execute the stop-relay command to pause the relay log and then restart it.
 
 
