@@ -375,7 +375,7 @@ To solve this issue, check whether `https_proxy` is mandatory. If not, cancel th
 > 
 > The environment variables related to `proxy` include `http_proxy`, `https_proxy`, and `no_proxy`. If the connection error persists after you perform the above steps, check whether the configuration parameters of `http_proxy` and `no_proxy` are correct.
 
-## How to deal with the error of executing start-relay command from v2.0.2 to v2.0.6?
+## How to handle the returned error when executing start-relay command for DM versions from 2.0.2 to 2.0.6?
 
 ```
 flush local meta, Rawcause: open relay-dir/xxx.000001/relay.metayyyy: no such file or directory
