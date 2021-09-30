@@ -382,7 +382,7 @@ To solve this issue, check whether `https_proxy` is mandatory. If not, cancel th
 flush local meta, Rawcause: open relay-dir/xxx.000001/relay.metayyyy: no such file or directory
 ```
 
-The above error can be caused by the following reason:
+The above error might be made in the following cases:
 
 - DM has been upgraded from v2.0.1 and earlier to v2.0.2 - v2.0.6, and relay log was started before the upgrade and restarted again after the upgrade
 - Use the stop-relay command to pause the relay log and then restart it
