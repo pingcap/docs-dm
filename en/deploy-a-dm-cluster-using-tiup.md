@@ -77,7 +77,7 @@ You can use the command `tiup dm template > topology.yaml` to generate a configu
 The configuration of deploying three DM-masters, three DM-workers, and one monitoring component instance is as follows:
 
 ```yaml
-# Global variables apply to all ways of deployment. If one specific value is missing, the corresponding global variable serves as the default value.
+# The global variables apply to all other components in the configuration. If one specific value is missing in the component instance, the corresponding global variable serves as the default value.
 global:
   user: "tidb"
   ssh_port: 22
