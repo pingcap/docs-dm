@@ -103,7 +103,7 @@ master_servers:
     # data_dir: "/dm-data/dm-master-8261"
     # log_dir: "/dm-deploy/dm-master-8261/log"
     # numa_node: "0,1"
-    # # The following configs are used to overwrite the `server_configs.master` values.
+    # The following configs are used to overwrite the `server_configs.master` values.
     config:
       log-level: info
       # rpc-timeout: "30s"
@@ -125,7 +125,7 @@ worker_servers:
     # deploy_dir: "/dm-deploy/dm-worker-8262"
     # log_dir: "/dm-deploy/dm-worker-8262/log"
     # numa_node: "0,1"
-    # # Config is used to overwrite the `server_configs.dm-worker` values
+    # The following configs are used to overwrite the `server_configs.dm-worker` values.
     config:
       log-level: info
   - host: 10.0.1.19
@@ -158,11 +158,11 @@ alertmanager_servers:
 
 > **Note:**
 >
-> - If you do not need to ensure high availability of the DM cluster, deploy only one DM-master node, and the number of deployed DM-worker nodes must be no less than the number of upstream MySQL/MariaDB instances to be migrated. To ensure high availability of the DM cluster, it is recommended to deploy three DM-master nodes, and the number of deployed DM-worker nodes must be greater than the number of upstream MySQL/MariaDB instances to be migrated (for example, the number of DM-worker nodes is two more than the number of upstream instances).
+> - If you do not need to ensure high availability of the DM cluster, deploy only one DM-master node, and the number of deployed DM-worker nodes must be no less than the number of upstream MySQL/MariaDB instances to be migrated. To ensure high availability of the DM cluster, it is recommended to deploy three DM-master nodes, and the number of deployed DM-worker nodes must exceed the number of upstream MySQL/MariaDB instances to be migrated (for example, the number of DM-worker nodes is two more than the number of upstream instances).
 > 
 > - It is not recommended to run too many DM-workers on one host. Each DM-worker should be allocated at least 2 core CPU and 4 GiB memory.
 >
-> - The worker will be bound with an upstream database, when DM performs a full replication task, the worker exporting the full amount of data locally first, and then importing it into the downstream database. Therefore, the worker's host needs sufficient storage space (The storage path will be specified later when creating the task)
+> - When DM performs a full data replication task, the DM-worker is bound with an upstream database. The DM-worker first exports the full amount of data locally, and then imports the data into the downstream database. Therefore, the worker's host needs sufficient storage space (The storage path will be specified later when creating the task).
 > 
 > - For parameters that should be globally effective, configure these parameters of corresponding components in the `server_configs` section of the configuration file. For parameters that should be effective on a specific node, configure these parameters in `config` of this node.
 >
@@ -193,16 +193,16 @@ alertmanager_servers:
 tiup dm deploy ${name} ${version} ./topology.yaml -u ${ssh_user} [-p] [-i /home/root/.ssh/gcp_rsa]
 ```
 
-The parameters used in this step is as follows.
+The parameters used in this step are as follows.
 
 |Parameter|Description|
 |-|-|
-|`${name}` | The name of dm cluster, eg: dm-test|
+|`${name}` | The name of the DM cluster, eg: dm-test|
 |`${version}` | The version of the DM cluster. You can see other supported versions by running `tiup list dm-master`.
-|`./topology.yaml`| Path of topology config file.|
-|`-u` or `--user`|Log in to the target machine through the root key to complete the cluster deployment, or you can use other users with ssh and sudo privileges to complete the deployment.|
-|`-p` or `--password`|Password of target hosts. If specified, password authentication will be used|
-|`-i` or `--identity_file`|The path of the SSH identity file. If specified, public key authentication will be used. (default "/root/.ssh/id_rsa")|
+|`./topology.yaml`| The path of the topology configuration file.|
+|`-u` or `--user`| Log in to the target machine as the root user or other user account with ssh and sudo privileges to complete the cluster deployment.|
+|`-p` or `--password`| The password of target hosts. If specified, password authentication is used.|
+|`-i` or `--identity_file`| The path of the SSH identity file. If specified, public key authentication is used (default "/root/.ssh/id_rsa").|
 
 At the end of the output log, you will see ```Deployed cluster `dm-test` successfully```. This indicates that the deployment is successful.
 
