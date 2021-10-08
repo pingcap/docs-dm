@@ -14,6 +14,10 @@ TiUP supports deploying DM v2.0 or later DM versions. This document introduces h
 >
 > If your target machine's operating system supports SELinux, make sure that SELinux is **disabled**.
 
+## Prerequisites
+
+- [Hardware and software requirements](https://docs.pingcap.com/tidb-data-migration/stable/hardware-and-software-requirements)
+
 ## Step 1: Install TiUP on the control machine
 
 Log in to the control machine using a regular user account (take the `tidb` user as an example). All the following TiUP installation and cluster management operations can be performed by the `tidb` user.
@@ -73,43 +77,94 @@ You can use the command `tiup dm template > topology.yaml` to generate a configu
 The configuration of deploying three DM-masters, three DM-workers, and one monitoring component instance is as follows:
 
 ```yaml
----
+# The global variables apply to all other components in the configuration. If one specific value is missing in the component instance, the corresponding global variable serves as the default value.
 global:
   user: "tidb"
   ssh_port: 22
-  deploy_dir: "/home/tidb/dm/deploy"
-  data_dir: "/home/tidb/dm/data"
-  # arch: "amd64"
+  deploy_dir: "/dm-deploy"
+  data_dir: "/dm-data"
+
+server_configs:
+  master:
+    log-level: info
+    # rpc-timeout: "30s"
+    # rpc-rate-limit: 10.0
+    # rpc-rate-burst: 40
+  worker:
+    log-level: info
 
 master_servers:
-  - host: 172.19.0.101
-  - host: 172.19.0.102
-  - host: 172.19.0.103
+  - host: 10.0.1.11
+    name: master1
+    ssh_port: 22
+    port: 8261
+    # peer_port: 8291
+    # deploy_dir: "/dm-deploy/dm-master-8261"
+    # data_dir: "/dm-data/dm-master-8261"
+    # log_dir: "/dm-deploy/dm-master-8261/log"
+    # numa_node: "0,1"
+    # The following configs are used to overwrite the `server_configs.master` values.
+    config:
+      log-level: info
+      # rpc-timeout: "30s"
+      # rpc-rate-limit: 10.0
+      # rpc-rate-burst: 40
+  - host: 10.0.1.18
+    name: master2
+    ssh_port: 22
+    port: 8261
+  - host: 10.0.1.19
+    name: master3
+    ssh_port: 22
+    port: 8261
 
 worker_servers:
-  - host: 172.19.0.101
-  - host: 172.19.0.102
-  - host: 172.19.0.103
+  - host: 10.0.1.12
+    ssh_port: 22
+    port: 8262
+    # deploy_dir: "/dm-deploy/dm-worker-8262"
+    # log_dir: "/dm-deploy/dm-worker-8262/log"
+    # numa_node: "0,1"
+    # The following configs are used to overwrite the `server_configs.dm-worker` values.
+    config:
+      log-level: info
+  - host: 10.0.1.19
+    ssh_port: 22
+    port: 8262
 
 monitoring_servers:
-  - host: 172.19.0.101
+  - host: 10.0.1.13
+    ssh_port: 22
+    port: 9090
+    # deploy_dir: "/tidb-deploy/prometheus-8249"
+    # data_dir: "/tidb-data/prometheus-8249"
+    # log_dir: "/tidb-deploy/prometheus-8249/log"
 
 grafana_servers:
-  - host: 172.19.0.101
+  - host: 10.0.1.14
+    port: 3000
+    # deploy_dir: /tidb-deploy/grafana-3000
 
 alertmanager_servers:
-  - host: 172.19.0.101
+  - host: 10.0.1.15
+    ssh_port: 22
+    web_port: 9093
+    # cluster_port: 9094
+    # deploy_dir: "/tidb-deploy/alertmanager-9093"
+    # data_dir: "/tidb-data/alertmanager-9093"
+    # log_dir: "/tidb-deploy/alertmanager-9093/log"
+
 ```
 
 > **Note:**
 >
-> - If you do not need to ensure high availability of the DM cluster, deploy only one DM-master node, and the number of deployed DM-worker nodes must be no less than the number of upstream MySQL/MariaDB instances to be migrated.
+> - If you do not need to ensure high availability of the DM cluster, deploy only one DM-master node, and the number of deployed DM-worker nodes must be no less than the number of upstream MySQL/MariaDB instances to be migrated. To ensure high availability of the DM cluster, it is recommended to deploy three DM-master nodes, and the number of deployed DM-worker nodes must exceed the number of upstream MySQL/MariaDB instances to be migrated (for example, the number of DM-worker nodes is two more than the number of upstream instances).
+> 
+> - It is not recommended to run too many DM-workers on one host. Each DM-worker should be allocated at least 2 core CPU and 4 GiB memory.
 >
-> - To ensure high availability of the DM cluster, it is recommended to deploy three DM-master nodes, and the number of deployed DM-worker nodes must be greater than the number of upstream MySQL/MariaDB instances to be migrated (for example, the number of DM-worker nodes is two more than the number of upstream instances).
->
-> - For parameters that should be globally effective, configure these parameters of corresponding components in the `server_configs` section of the configuration file.
->
-> - For parameters that should be effective on a specific node, configure these parameters in `config` of this node.
+> - When DM performs a full data replication task, the DM-worker is bound with an upstream database. The DM-worker first exports the full amount of data locally, and then imports the data into the downstream database. Therefore, the worker's host needs sufficient storage space (The storage path will be specified later when creating the task).
+> 
+> - For parameters that should be globally effective, configure these parameters of corresponding components in the `server_configs` section of the configuration file. For parameters that should be effective on a specific node, configure these parameters in `config` of this node.
 >
 > - Use `.` to indicate the subcategory of the configuration, such as `log.slow-threshold`. For more formats, see [TiUP configuration template](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml).
 >
@@ -135,17 +190,19 @@ alertmanager_servers:
 {{< copyable "shell-regular" >}}
 
 ```shell
-tiup dm deploy dm-test ${version} ./topology.yaml --user root [-p] [-i /home/root/.ssh/gcp_rsa]
+tiup dm deploy ${name} ${version} ./topology.yaml -u ${ssh_user} [-p] [-i /home/root/.ssh/gcp_rsa]
 ```
 
-In the above command:
+The parameters used in this step are as follows.
 
-- The name of the deployed DM cluster is `dm-test`.
-- The version of the DM cluster is `${version}`. You can see other supported versions by running `tiup list dm-master`.
-- The initialization configuration file is `topology.yaml`.
-- `--user root`: Log in to the target machine through the `root` key to complete the cluster deployment, or you can use other users with `ssh` and `sudo` privileges to complete the deployment.
-- `[-i]` and `[-p]`: optional. If you have configured login to the target machine without password, these parameters are not required. If not, choose one of the two parameters. `[-i]` is the private key of the `root` user (or other users specified by `--user`) that has access to the target machine. `[-p]` is used to input the user password interactively.
-- TiUP DM uses the embedded SSH client. If you want to use the SSH client native to the control machine system, edit the configuration according to [using the system's native SSH client to connect to the cluster](maintain-dm-using-tiup.md#use-the-systems-native-ssh-client-to-connect-to-cluster).
+|Parameter|Description|
+|-|-|
+|`${name}` | The name of the DM cluster, eg: dm-test|
+|`${version}` | The version of the DM cluster. You can see other supported versions by running `tiup list dm-master`. |
+|`./topology.yaml`| The path of the topology configuration file.|
+|`-u` or `--user`| Log in to the target machine as the root user or other user account with ssh and sudo privileges to complete the cluster deployment.|
+|`-p` or `--password`| The password of target hosts. If specified, password authentication is used.|
+|`-i` or `--identity_file`| The path of the SSH identity file. If specified, public key authentication is used (default "/root/.ssh/id_rsa").|
 
 At the end of the output log, you will see ```Deployed cluster `dm-test` successfully```. This indicates that the deployment is successful.
 
