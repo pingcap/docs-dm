@@ -198,7 +198,7 @@ The parameters used in this step are as follows.
 |Parameter|Description|
 |-|-|
 |`${name}` | The name of the DM cluster, eg: dm-test|
-|`${version}` | The version of the DM cluster. You can see other supported versions by running `tiup list dm-master`.
+|`${version}` | The version of the DM cluster. You can see other supported versions by running `tiup list dm-master`. |
 |`./topology.yaml`| The path of the topology configuration file.|
 |`-u` or `--user`| Log in to the target machine as the root user or other user account with ssh and sudo privileges to complete the cluster deployment.|
 |`-p` or `--password`| The password of target hosts. If specified, password authentication is used.|
