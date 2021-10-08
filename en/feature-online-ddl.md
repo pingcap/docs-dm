@@ -54,7 +54,7 @@ name: test                      # The name of the task. Should be globally uniqu
 task-mode: all                  # The task mode. Can be set to `full`/`incremental`/`all`.
 shard-mode: "pessimistic"       # You need to configure this if it is a shard merge task. The "pessimistic" mode is used by default. After understanding the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
 meta-schema: "dm_meta"          # The downstream database that stores the `meta` information.
-online-ddl: true                # Currently supports automatic processing of "gh-ost" and "pt".
+online-ddl: true                # Supports automatic processing of "gh-ost" and "pt" for the upstream database.
 online-ddl-scheme: "gh-ost"     # `online-ddl-scheme` will be deprecated in the future, so it is recommended to use `online-ddl`.
 target-database:                # Configuration of the downstream database instance.
   host: "192.168.0.1"
