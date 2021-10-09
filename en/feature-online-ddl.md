@@ -14,16 +14,16 @@ DDL statements are always used in the database applications. MySQL 5.6 and later
 
 Therefore, online DDL tools are often used to execute DDLs to reduce the impact on reads and writes. Common DDL tools are [gh-ost](https://github.com/github/gh-ost) and [pt-osc](https://www.percona.com/doc/percona-toolkit/3.0/pt-online-schema-change.html).
 
-These tools work by the following steps:
+Generally, these tools work by the following steps:
 
 1. Create a new ghost table according to the table schema of the DDL real table;
 2. Apply DDLs on the ghost table;
 3. Replicate the data of the DDL real table to the ghost table;
-4. Use the `rename` statement to replace the real table with the ghost table.
+4. After the data are consistent between the two tables, use the `rename` statement to replace the real table with the ghost table.
 
 ![DM online-ddl](/media/dm-online-ddl-2.png)
 
-When you migrate data from MySQL to TiDB using DM, online DDL tools can identify the DDLs in the above step 2 and apply the DDLs downstream in step 4, which can reduce the replication workload for the ghost table.
+When you migrate data from MySQL to TiDB using DM, online DDL tools can identify the DDLs in the above step 2 and apply them downstream in step 4, which can reduce the replication workload for the ghost table.
 
 ## `online-ddl` Configuration
 
@@ -31,9 +31,9 @@ Generally, it is recommended to enbale the `online-ddl` configuration and you ca
 
 ![DM online-ddl](/media/dm-online-ddl.png)
 
-- The downstream TiDB does not need to create and replicate the ghost table, saving the storage space and internet transmission overhead;
-- When you merge and migrate data from sharded tables, the RENAME operation is ignored for each sharded ghost tables to ensure the accuracy of the replication;
-- Currently, one limitation for DM is that when you apply DDL operation to the downstream TiDB, other DMLs in this task are blocked until DDL operation is finished. This limitation will be removed later.
+- The downstream TiDB does not need to create and replicate the ghost table, saving the storage space and network transmission overhead;
+- When you merge and migrate data from sharded tables, the RENAME operation is ignored for each sharded ghost tables to ensure the correctness of the replication;
+- Currently, one limitation for DM is that DMLs in this task are blocked until DDL operation is finished when you apply DDL operation to the downstream TiDB. This limitation will be removed later.
 
 > **Note:**
 >
