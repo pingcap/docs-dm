@@ -80,7 +80,7 @@ master_servers:
     # log_dir: "/dm-deploy/dm-master-8261/log"
     # numa_node: "0,1"
     # 
-    # The following configs are used to overwrite the `server_configs.master` values. For more parameter description, see https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml
+    # The following configs are used to overwrite the `server_configs.master` values. For more parameter description, see [master config](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml)
     config:
       log-level: info
       # rpc-timeout: "30s"
@@ -103,7 +103,7 @@ worker_servers:
     # deploy_dir: "/dm-deploy/dm-worker-8262"
     # log_dir: "/dm-deploy/dm-worker-8262/log"
     # numa_node: "0,1"
-    # The following configs are used to overwrite the `server_configs.dm-worker` values.  For more parameter description, see https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml
+    # The following configs are used to overwrite the `server_configs.dm-worker` values.  For more parameter description, see [worker config](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml)
     config:
       log-level: info
   - host: 10.0.1.19
