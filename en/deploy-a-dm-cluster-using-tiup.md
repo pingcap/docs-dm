@@ -16,6 +16,8 @@ TiUP supports deploying DM v2.0 or later DM versions. This document introduces h
 
 ## Prerequisites
 
+When DM performs a full data replication task, the DM-worker is bound with only one upstream database. The DM-worker first exports the full amount of data locally, and then imports the data into the downstream database. Therefore, the worker's host needs sufficient storage space (The storage path will be specified later when creating the task).
+
 - [Hardware and software requirements](https://docs.pingcap.com/tidb-data-migration/stable/hardware-and-software-requirements)
 
 ## Step 1: Install TiUP on the control machine
@@ -30,41 +32,15 @@ Log in to the control machine using a regular user account (take the `tidb` user
     curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
     ```
 
-2. Set the TiUP environment variables:
+    `~/.bashrc` has been modified to add tiup to PATH, open a new terminal or source ~/.bashrc to use
 
-    Redeclare the global environment variables:
-
-    {{< copyable "shell-regular" >}}
-
-    ```shell
-    source .bash_profile
-    ```
-
-    Confirm whether TiUP is installed:
+2. Install the TiUP DM component:
 
     {{< copyable "shell-regular" >}}
 
     ```shell
-    which tiup
+    tiup install dm dmctl
     ```
-
-3. Install the TiUP DM component:
-
-    {{< copyable "shell-regular" >}}
-
-    ```shell
-    tiup install dm
-    ```
-
-4. If TiUP is already installed, update the TiUP DM component to the latest version:
-
-    {{< copyable "shell-regular" >}}
-
-    ```shell
-    tiup update --self && tiup update dm
-    ```
-
-    Expected output includes `Update successfully!`.
 
 ## Step 2: Edit the initialization configuration file
 
@@ -103,7 +79,7 @@ master_servers:
     # data_dir: "/dm-data/dm-master-8261"
     # log_dir: "/dm-deploy/dm-master-8261/log"
     # numa_node: "0,1"
-    # The following configs are used to overwrite the `server_configs.master` values.
+    # The following configs are used to overwrite the `server_configs.master` values. For more parameter description, see https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml
     config:
       log-level: info
       # rpc-timeout: "30s"
@@ -118,6 +94,9 @@ master_servers:
     ssh_port: 22
     port: 8261
 
+# If you do not need to ensure high availability of the DM cluster, deploy only one DM-master node, and the number of deployed DM-worker nodes must be no less than the number of upstream MySQL/MariaDB instances to be migrated.
+# To ensure high availability of the DM cluster, it is recommended to deploy three DM-master nodes, and the number of deployed DM-worker nodes must exceed the number of upstream MySQL/MariaDB instances to be migrated (for example, the number of DM-worker nodes is two more than the number of upstream instances).
+
 worker_servers:
   - host: 10.0.1.12
     ssh_port: 22
@@ -125,7 +104,7 @@ worker_servers:
     # deploy_dir: "/dm-deploy/dm-worker-8262"
     # log_dir: "/dm-deploy/dm-worker-8262/log"
     # numa_node: "0,1"
-    # The following configs are used to overwrite the `server_configs.dm-worker` values.
+    # The following configs are used to overwrite the `server_configs.dm-worker` values.  For more parameter description, see https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml
     config:
       log-level: info
   - host: 10.0.1.19
@@ -157,18 +136,8 @@ alertmanager_servers:
 ```
 
 > **Note:**
->
-> - If you do not need to ensure high availability of the DM cluster, deploy only one DM-master node, and the number of deployed DM-worker nodes must be no less than the number of upstream MySQL/MariaDB instances to be migrated. To ensure high availability of the DM cluster, it is recommended to deploy three DM-master nodes, and the number of deployed DM-worker nodes must exceed the number of upstream MySQL/MariaDB instances to be migrated (for example, the number of DM-worker nodes is two more than the number of upstream instances).
 > 
 > - It is not recommended to run too many DM-workers on one host. Each DM-worker should be allocated at least 2 core CPU and 4 GiB memory.
->
-> - When DM performs a full data replication task, the DM-worker is bound with an upstream database. The DM-worker first exports the full amount of data locally, and then imports the data into the downstream database. Therefore, the worker's host needs sufficient storage space (The storage path will be specified later when creating the task).
-> 
-> - For parameters that should be globally effective, configure these parameters of corresponding components in the `server_configs` section of the configuration file. For parameters that should be effective on a specific node, configure these parameters in `config` of this node.
->
-> - Use `.` to indicate the subcategory of the configuration, such as `log.slow-threshold`. For more formats, see [TiUP configuration template](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml).
->
-> - For more parameter description, see [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml) and [worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml).
 >
 > - Make sure that the ports among the following components are interconnected:
 >     - The `peer_port` (`8291` by default) among the DM-master nodes are interconnected.
@@ -256,7 +225,7 @@ tiup dm display dm-test
 
 If the `Status` is `Up` in the output, the cluster status is normal.
 
-## Step 8: Get the cluster controller - dmctl
+## Step 8: Managing dm tasks with dmctl
 
 dmctl is a command-line tool used to control DM clusters. You are recommended to [use dmctl via TiUP](maintain-dm-using-tiup.md#dmctl).
 
