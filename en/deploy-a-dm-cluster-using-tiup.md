@@ -79,6 +79,7 @@ master_servers:
     # data_dir: "/dm-data/dm-master-8261"
     # log_dir: "/dm-deploy/dm-master-8261/log"
     # numa_node: "0,1"
+    # 
     # The following configs are used to overwrite the `server_configs.master` values. For more parameter description, see https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml
     config:
       log-level: info
@@ -93,10 +94,8 @@ master_servers:
     name: master3
     ssh_port: 22
     port: 8261
-
 # If you do not need to ensure high availability of the DM cluster, deploy only one DM-master node, and the number of deployed DM-worker nodes must be no less than the number of upstream MySQL/MariaDB instances to be migrated.
 # To ensure high availability of the DM cluster, it is recommended to deploy three DM-master nodes, and the number of deployed DM-worker nodes must exceed the number of upstream MySQL/MariaDB instances to be migrated (for example, the number of DM-worker nodes is two more than the number of upstream instances).
-
 worker_servers:
   - host: 10.0.1.12
     ssh_port: 22
