@@ -32,7 +32,7 @@ Log in to the control machine using a regular user account (take the `tidb` user
     curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
     ```
 
-    `~/.bashrc` has been modified to add tiup to PATH, you can open a new terminal or `source ~/.bashrc` to use
+    `~/.bashrc` has been modified to add tiup to PATH, you can open a new terminal or `source ~/.bashrc` to use it
 
 2. Install the TiUP DM component:
 
