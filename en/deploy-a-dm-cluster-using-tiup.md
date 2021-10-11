@@ -16,7 +16,7 @@ TiUP supports deploying DM v2.0 or later DM versions. This document introduces h
 
 ## Prerequisites
 
-When DM performs a full data replication task, the DM-worker is bound with only one upstream database. The DM-worker first exports the full amount of data locally, and then imports the data into the downstream database. Therefore, the worker's host needs sufficient storage space (The storage path will be specified later when creating the task).
+When DM performs a full data replication task, the DM-worker is bound with only one upstream database. The DM-worker first exports the full amount of data locally, and then imports the data into the downstream database. Therefore, the worker's host needs sufficient storage space (The storage path is specified later when you create the task).
 
 - [Hardware and software requirements](https://docs.pingcap.com/tidb-data-migration/stable/hardware-and-software-requirements)
 
@@ -32,7 +32,7 @@ Log in to the control machine using a regular user account (take the `tidb` user
     curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
     ```
 
-    `~/.bashrc` has been modified to add tiup to PATH, open a new terminal or source ~/.bashrc to use
+    `~/.bashrc` has been modified to add tiup to PATH, you can open a new terminal or `source ~/.bashrc` to use
 
 2. Install the TiUP DM component:
 
@@ -79,8 +79,7 @@ master_servers:
     # data_dir: "/dm-data/dm-master-8261"
     # log_dir: "/dm-deploy/dm-master-8261/log"
     # numa_node: "0,1"
-    # 
-    # The following configs are used to overwrite the `server_configs.master` values. For more parameter description, see https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml
+    # The following configs are used to overwrite the `server_configs.master` values. For more parameter description, refer to `https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml`.
     config:
       log-level: info
       # rpc-timeout: "30s"
@@ -103,7 +102,7 @@ worker_servers:
     # deploy_dir: "/dm-deploy/dm-worker-8262"
     # log_dir: "/dm-deploy/dm-worker-8262/log"
     # numa_node: "0,1"
-    # The following configs are used to overwrite the `server_configs.dm-worker` values.  For more parameter description, see https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml
+    # The following configs are used to overwrite the `server_configs.dm-worker` values.  For more parameter description, refer to `https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml`.
     config:
       log-level: info
   - host: 10.0.1.19
