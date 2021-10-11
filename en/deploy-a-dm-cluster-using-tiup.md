@@ -32,7 +32,7 @@ Log in to the control machine using a regular user account (take the `tidb` user
     curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
     ```
 
-    `~/.bashrc` has been modified to add tiup to PATH, you can open a new terminal or `source ~/.bashrc` to use it
+    `~/.bashrc` has been modified to add tiup to PATH, and you can open a new terminal or `source ~/.bashrc` to use it.
 
 2. Install the TiUP DM component:
 
@@ -102,7 +102,7 @@ worker_servers:
     # deploy_dir: "/dm-deploy/dm-worker-8262"
     # log_dir: "/dm-deploy/dm-worker-8262/log"
     # numa_node: "0,1"
-    # The following configs are used to overwrite the `server_configs.dm-worker` values.  For more parameter description, refer to `https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml`.
+    # The following configs are used to overwrite the `server_configs.dm-worker` values. For more parameter description, refer to `https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml`.
     config:
       log-level: info
   - host: 10.0.1.19
