@@ -38,8 +38,8 @@ aliases: ['/docs-cn/tidb-data-migration/dev/deploy-a-dm-cluster-using-ansible/',
 
     {{< copyable "shell-regular" >}}
 
-   ```shell
-   tiup install dm dmctl
+    ```shell
+    tiup install dm dmctl
     ```
 
 ## 第 2 步：编辑初始化配置文件
