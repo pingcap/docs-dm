@@ -20,7 +20,7 @@ DM has the following sharding DDL usage restrictions in the pessimistic mode:
     - The sync unit in DM-worker automatically ignores the `DROP DATABASE`/`DROP TABLE` statement of upstream sharded tables.
 - The sharding group migration task does not support `TRUNCATE TABLE`.
     - The sync unit in DM-worker automatically ignores the `TRUNCATE TABLE` statement of upstream sharded tables.
-- The sharding group migration task supports `RENAME TABLE`, but with the following limitations (Online DDL is supported in another solution):
+- The sharding group migration task supports `RENAME TABLE`, but with the following limitations (online DDL is supported in another solution):
     - A table can only be renamed to a new name that is not used by any other table.
     - A single `RENAME TABLE` statement can only involve a single `RENAME` operation.
 - The sharding group migration task requires each DDL statement to involve operations on only one table.
