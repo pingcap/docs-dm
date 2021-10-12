@@ -144,7 +144,7 @@ alertmanager_servers:
 >     - The TiUP nodes can connect to the `port` of all DM-master nodes (`8261` by default).
 >     - The TiUP nodes can connect to the `port` of all DM-worker nodes (`8262` by default).
 >
-> - More `master_servers.host.config` parameters can be found: [worker parameter](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml).
+> - More `master_servers.host.config` parameters can be found: [master parameter](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml).
 >
 > - More `worker_servers.host.config` parameters can be found: [worker parameter](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml).
 
