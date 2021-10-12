@@ -37,8 +37,8 @@ summary: 学习如何使用 TiUP DM 组件来部署 TiDB Data Migration 工具�
 
     {{< copyable "shell-regular" >}}
 
-   ```shell
-   tiup install dm dmctl
+    ```shell
+    tiup install dm dmctl
     ```
 
 ## 第 2 步：编辑初始化配置文件
