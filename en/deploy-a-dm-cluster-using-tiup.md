@@ -225,7 +225,7 @@ tiup dm display dm-test
 
 If the `Status` is `Up` in the output, the cluster status is normal.
 
-## Step 8: Managing migration tasks with dmctl
+## Step 8: Managing migration tasks using dmctl
 
 dmctl is a command-line tool used to control DM clusters. You are recommended to [use dmctl via TiUP](maintain-dm-using-tiup.md#dmctl).
 
