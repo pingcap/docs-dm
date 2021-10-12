@@ -32,7 +32,7 @@ Log in to the control machine using a regular user account (take the `tidb` user
     curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
     ```
 
-    `~/.bashrc` has been modified to add tiup to PATH, and you can open a new terminal or `source ~/.bashrc` to use it.
+    After the installing, `~/.bashrc` has been modified to add TiUP to PATH, so you need to open a new terminal or redeclare the global environment variables `source ~/.bashrc` to use it.
 
 2. Install the TiUP DM component:
 
@@ -79,7 +79,7 @@ master_servers:
     # data_dir: "/dm-data/dm-master-8261"
     # log_dir: "/dm-deploy/dm-master-8261/log"
     # numa_node: "0,1"
-    # The following configs are used to overwrite the `server_configs.master` values. 
+    # The following configs are used to overwrite the `server_configs.master` values.
     config:
       log-level: info
       # rpc-timeout: "30s"
@@ -143,10 +143,8 @@ alertmanager_servers:
 >     - Each DM-worker node can connect to the `port` of all DM-master nodes (`8261` by default).
 >     - The TiUP nodes can connect to the `port` of all DM-master nodes (`8261` by default).
 >     - The TiUP nodes can connect to the `port` of all DM-worker nodes (`8262` by default).
->
-> - More `master_servers.host.config` parameters can be found: [master parameter](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml).
->
-> - More `worker_servers.host.config` parameters can be found: [worker parameter](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml).
+
+For more `master_servers.host.config` parameter description, refer to [master parameter](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml). For more `worker_servers.host.config` parameter description, refer to [worker parameter](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml).
 
 ## Step 3: Execute the deployment command
 
@@ -227,8 +225,8 @@ tiup dm display dm-test
 
 If the `Status` is `Up` in the output, the cluster status is normal.
 
-## Step 8: Managing dm tasks with dmctl
+## Step 8: Managing migration tasks with dmctl
 
-`dmctl` is a command-line tool used to control DM clusters. You are recommended to [use dmctl via TiUP](maintain-dm-using-tiup.md#dmctl).
+dmctl is a command-line tool used to control DM clusters. You are recommended to [use dmctl via TiUP](maintain-dm-using-tiup.md#dmctl).
 
-`dmctl` supports both the command mode and the interactive mode. For details, see [Maintain DM Clusters Using dmctl](dmctl-introduction.md#maintain-dm-clusters-using-dmctl).
+dmctl supports both the command mode and the interactive mode. For details, see [Maintain DM Clusters Using dmctl](dmctl-introduction.md#maintain-dm-clusters-using-dmctl).
