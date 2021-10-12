@@ -79,7 +79,7 @@ master_servers:
     # data_dir: "/dm-data/dm-master-8261"
     # log_dir: "/dm-deploy/dm-master-8261/log"
     # numa_node: "0,1"
-    # The following configs are used to overwrite the `server_configs.master` values. For more parameter description, refer to `https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml`.
+    # The following configs are used to overwrite the `server_configs.master` values. 
     config:
       log-level: info
       # rpc-timeout: "30s"
@@ -102,7 +102,7 @@ worker_servers:
     # deploy_dir: "/dm-deploy/dm-worker-8262"
     # log_dir: "/dm-deploy/dm-worker-8262/log"
     # numa_node: "0,1"
-    # The following configs are used to overwrite the `server_configs.dm-worker` values. For more parameter description, refer to `https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml`.
+    # The following configs are used to overwrite the `server_configs.worker` values.
     config:
       log-level: info
   - host: 10.0.1.19
@@ -143,6 +143,10 @@ alertmanager_servers:
 >     - Each DM-worker node can connect to the `port` of all DM-master nodes (`8261` by default).
 >     - The TiUP nodes can connect to the `port` of all DM-master nodes (`8261` by default).
 >     - The TiUP nodes can connect to the `port` of all DM-worker nodes (`8262` by default).
+>
+> - More `master_servers.host.config` parameters can be found: [worker parameter](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml).
+>
+> - More `worker_servers.host.config` parameters can be found: [worker parameter](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml).
 
 ## Step 3: Execute the deployment command
 
