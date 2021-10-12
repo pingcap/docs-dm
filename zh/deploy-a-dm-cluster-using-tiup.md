@@ -13,6 +13,12 @@ summary: 学习如何使用 TiUP DM 组件来部署 TiDB Data Migration 工具�
 >
 > 如果部署机器的操作系统支持 SELinux，请确保 SELinux 处于关闭状态。
 
+## 前提条件
+
+当 DM 执行全量数据复制任务时，每个 DM-worker 只绑定一个上游数据库。DM-worker 首先在上游导出全部数据，然后将数据导入下游数据库。因此，DM-worker 的主机需要有足够的存储空间（稍后创建任务时，会指定存储路径）。
+
+- [DM 集群软硬件环境需求](https://docs.pingcap.com/zh/tidb-data-migration/stable/hardware-and-software-requirements)
+
 ## 第 1 步：在中控机上安装 TiUP 组件
 
 使用普通用户登录中控机，以 `tidb` 用户为例，后续安装 TiUP 及集群管理操作均通过该用户完成：
@@ -25,41 +31,15 @@ summary: 学习如何使用 TiUP DM 组件来部署 TiDB Data Migration 工具�
     curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
     ```
 
-2. 按如下步骤设置 TiUP 环境变量：
+  安装完成后，`~/.bashrc` 已将 TiUP 加入到路径中，你需要新开一个终端或重新声明全局变量 `source ~/.bashrc` 来使用 TiUP。
 
-    重新声明全局环境变量：
-
-    {{< copyable "shell-regular" >}}
-
-    ```shell
-    source .bash_profile
-    ```
-
-    确认 TiUP 工具是否安装：
+2. 安装 TiUP DM 组件：
 
     {{< copyable "shell-regular" >}}
 
-    ```shell
-    which tiup
+   ```shell
+   tiup install dm dmctl
     ```
-
-3. 安装 TiUP DM 组件
-
-    {{< copyable "shell-regular" >}}
-
-    ```shell
-    tiup install dm
-    ```
-
-4. 如果已经安装，则更新 TiUP DM 组件至最新版本：
-
-    {{< copyable "shell-regular" >}}
-
-    ```shell
-    tiup update --self && tiup update dm
-    ```
-
-    预期输出 `Update successfully!` 字样。
 
 ## 第 2 步：编辑初始化配置文件
 
@@ -72,47 +52,90 @@ summary: 学习如何使用 TiUP DM 组件来部署 TiDB Data Migration 工具�
 部署 3 个 DM-master、3 个 DM-worker 与 1 个监控组件的配置如下：
 
 ```yaml
----
+#全局变量适用于配置中的其他组件。如果组件实例中缺少一个特定值，则相应的全局变量将用作默认值。
 global:
   user: "tidb"
   ssh_port: 22
-  deploy_dir: "/home/tidb/dm/deploy"
-  data_dir: "/home/tidb/dm/data"
-  # arch: "amd64"
+  deploy_dir: "/dm-deploy"
+  data_dir: "/dm-data"
+
+server_configs:
+  master:
+    log-level: info
+    # rpc-timeout: "30s"
+    # rpc-rate-limit: 10.0
+    # rpc-rate-burst: 40
+  worker:
+    log-level: info
 
 master_servers:
-  - host: 172.19.0.101
-  - host: 172.19.0.102
-  - host: 172.19.0.103
-
+  - host: 10.0.1.11
+    name: master1
+    ssh_port: 22
+    port: 8261
+    # peer_port: 8291
+    # deploy_dir: "/dm-deploy/dm-master-8261"
+    # data_dir: "/dm-data/dm-master-8261"
+    # log_dir: "/dm-deploy/dm-master-8261/log"
+    # numa_node: "0,1"
+    # 下列配置项用于覆盖 `server_configs.master` 的值。
+    config:
+      log-level: info
+      # rpc-timeout: "30s"
+      # rpc-rate-limit: 10.0
+      # rpc-rate-burst: 40
+  - host: 10.0.1.18
+    name: master2
+    ssh_port: 22
+    port: 8261
+  - host: 10.0.1.19
+    name: master3
+    ssh_port: 22
+    port: 8261
+# 如果不需要确保 DM 集群高可用，则可只部署 1 个 DM-master 节点，且部署的 DM-worker 节点数量不少于上游待迁移的 MySQL/MariaDB 实例数。
+# 如果需要确保 DM 集群高可用，则推荐部署 3 个 DM-master 节点，且部署的 DM-worker 节点数量大于上游待迁移的 MySQL/MariaDB 实例数（如 DM-worker 节点数量比上游实例数多 2 个）。
 worker_servers:
-  - host: 172.19.0.101
-  - host: 172.19.0.102
-  - host: 172.19.0.103
+  - host: 10.0.1.12
+    ssh_port: 22
+    port: 8262
+    # deploy_dir: "/dm-deploy/dm-worker-8262"
+    # log_dir: "/dm-deploy/dm-worker-8262/log"
+    # numa_node: "0,1"
+    # 下列配置项用于覆盖 `server_configs.worker` 的值。
+    config:
+      log-level: info
+  - host: 10.0.1.19
+    ssh_port: 22
+    port: 8262
 
 monitoring_servers:
-  - host: 172.19.0.101
+  - host: 10.0.1.13
+    ssh_port: 22
+    port: 9090
+    # deploy_dir: "/tidb-deploy/prometheus-8249"
+    # data_dir: "/tidb-data/prometheus-8249"
+    # log_dir: "/tidb-deploy/prometheus-8249/log"
 
 grafana_servers:
-  - host: 172.19.0.101
+  - host: 10.0.1.14
+    port: 3000
+    # deploy_dir: /tidb-deploy/grafana-3000
 
 alertmanager_servers:
-  - host: 172.19.0.101
+  - host: 10.0.1.15
+    ssh_port: 22
+    web_port: 9093
+    # cluster_port: 9094
+    # deploy_dir: "/tidb-deploy/alertmanager-9093"
+    # data_dir: "/tidb-data/alertmanager-9093"
+    # log_dir: "/tidb-deploy/alertmanager-9093/log"
+
 ```
 
 > **注意：**
 >
-> - 如果不需要确保 DM 集群高可用，则可只部署 1 个 DM-master 节点，且部署的 DM-worker 节点数量不少于上游待迁移的 MySQL/MariaDB 实例数。
 >
-> - 如果需要确保 DM 集群高可用，则推荐部署 3 个 DM-master 节点，且部署的 DM-worker 节点数量大于上游待迁移的 MySQL/MariaDB 实例数（如 DM-worker 节点数量比上游实例数多 2 个）。
->
-> - 对于需要全局生效的参数，请在配置文件中 `server_configs` 的对应组件下配置。
->
-> - 对于需要某个节点生效的参数，请在具体节点的 `config` 中配置。
->
-> - 配置的层次结构使用 `.` 表示。如：`log.slow-threshold`。更多格式参考 [TiUP 配置参数模版](https://github.com/pingcap/tiup/blob/master/embed/examples/dm/topology.example.yaml)。
->
-> - 更多参数说明，请参考 [master `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml)、[worker `config.toml.example`](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml)
+> - 不建议在一台主机上运行太多 DM-worker。每个 DM-worker 至少应有 2 核 CPU 和 4 GiB 内存。
 >
 > - 需要确保以下组件间端口可正常连通：
 >
@@ -125,6 +148,8 @@ alertmanager_servers:
 >     - TiUP 节点可连通所有 DM-master 节点的 `port`（默认为 `8261`）。
 >
 >     - TiUP 节点可连通所有 DM-worker 节点的 `port`（默认为 `8262`）。
+
+更多 `master_servers.host.config` 参数说明，请参考 [master parameter](https://github.com/pingcap/dm/blob/master/dm/master/dm-master.toml)；更多 `worker_servers.host.config` 参数说明，请参考 [worker parameter](https://github.com/pingcap/dm/blob/master/dm/worker/dm-worker.toml)。
 
 ## 第 3 步：执行部署命令
 
@@ -203,7 +228,7 @@ tiup dm display dm-test
 
 在输出结果中，如果 Status 状态信息为 `Up`，说明集群状态正常。
 
-## 第 8 步：获取集群控制工具 dmctl
+## 第 8 步：用 dmctl 管理迁移任务
 
 dmctl 是用来控制集群运行命令的工具，推荐[通过 TiUP 获取该工具](maintain-dm-using-tiup.md#集群控制工具-dmctl)。
 
