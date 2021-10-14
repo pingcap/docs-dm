@@ -161,7 +161,7 @@ This is a known issue in DM 2.0.0 version and will be fixed in DM 2.0.1 version.
 
 You need to first check and confirm the following things:
 
-- `disable-detect` is not configured in the replication task. (v2.0.7 or lower)
+- `disable-detect` is not configured in the replication task ( in v2.0.7 and earlier versions).
 - The data is not inserted manually or by other replication programs.
 - No DML filter associated with this table is configured.
 
