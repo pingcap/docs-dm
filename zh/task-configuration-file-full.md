@@ -1,6 +1,6 @@
 ---
 title: DM 任务完整配置文件介绍
-aliases: ['/zh/tidb-data-migration/stable/task-configuration-file-full','/docs-cn/tidb-data-migration/stable/task-configuration-file-full/','/docs-cn/tidb-data-migration/v1.0/task-configuration-file-full/','/docs-cn/dev/reference/tools/data-migration/configure/task-configuration-file-full/','/docs-cn/v3.1/reference/tools/data-migration/configure/task-configuration-file-full/','/docs-cn/v3.0/reference/tools/data-migration/configure/task-configuration-file-full/','/docs-cn/v2.1/reference/tools/data-migration/configure/task-configuration-file-full/','/docs-cn/stable/reference/tools/data-migration/configure/task-configuration-file-full/']
+aliases: ['/docs-cn/tidb-data-migration/stable/task-configuration-file-full/','/docs-cn/tidb-data-migration/v1.0/task-configuration-file-full/','/docs-cn/dev/reference/tools/data-migration/configure/task-configuration-file-full/','/docs-cn/v3.1/reference/tools/data-migration/configure/task-configuration-file-full/','/docs-cn/v3.0/reference/tools/data-migration/configure/task-configuration-file-full/','/docs-cn/v2.1/reference/tools/data-migration/configure/task-configuration-file-full/','/docs-cn/stable/reference/tools/data-migration/configure/task-configuration-file-full/']
 ---
 
 # DM 任务完整配置文件介绍
