@@ -153,7 +153,7 @@ In the above structure, `sid` is the shard key, which can ensure that the same `
 
 ## Migration task configuration
 
-The complete configuration of the migration task is shown as follows. For more details, see [Data Migration Task Configuration File](task-configuration-file.md).
+The complete configuration of the migration task is shown as follows. For more details, see [Data Migration Task Configuration Guide](task-configuration-guide.md).
 
 {{< copyable "" >}}
 
