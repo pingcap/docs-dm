@@ -1,7 +1,11 @@
 ---
 title: Handle Errors
 summary: Learn about the error system and how to handle common errors when you use DM.
+<<<<<<< HEAD
 aliases: ['/docs/stable/reference/tools/data-migration/troubleshoot/error-system/']
+=======
+aliases: ['/docs/tidb-data-migration/dev/error-handling/','/docs/tidb-data-migration/dev/troubleshoot-dm/','/docs/tidb-data-migration/dev/error-system/','/tidb-data-migration/dev/error-system/']
+>>>>>>> e993d242 (delete an extra alias (#808))
 ---
 
 # Handle Errors
