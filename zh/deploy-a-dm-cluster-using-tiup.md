@@ -15,7 +15,7 @@ summary: 学习如何使用 TiUP DM 组件来部署 TiDB Data Migration 工具�
 
 ## 前提条件
 
-当 DM 执行全量数据复制任务时，每个 DM-worker 只绑定一个上游数据库。DM-worker 首先在上游导出全部数据，然后将数据导入下游数据库。因此，DM-worker 的主机需要有足够的存储空间（稍后创建任务时，会指定存储路径）。
+当 DM 执行全量数据复制任务时，每个 DM-worker 只绑定一个上游数据库。DM-worker 首先在上游导出全部数据，然后将数据导入下游数据库。因此，DM-worker 的主机需要有足够的存储空间，具体存储路径在后续创建迁移任务时指定。
 
 - [DM 集群软硬件环境需求](https://docs.pingcap.com/zh/tidb-data-migration/stable/hardware-and-software-requirements)
 
@@ -228,7 +228,7 @@ tiup dm display dm-test
 
 在输出结果中，如果 Status 状态信息为 `Up`，说明集群状态正常。
 
-## 第 8 步：用 dmctl 管理迁移任务
+## 第 8 步：使用 dmctl 管理迁移任务
 
 dmctl 是用来控制集群运行命令的工具，推荐[通过 TiUP 获取该工具](maintain-dm-using-tiup.md#集群控制工具-dmctl)。
 
