@@ -51,6 +51,7 @@ The upstream database (MySQL/MariaDB) user must have the following privileges:
 | `RELOAD` | Global |
 | `REPLICATION SLAVE` | Global |
 | `REPLICATION CLIENT` | Global |
+| `information_schema` | Global |
 
 If you need to migrate the data from `db1` to TiDB, execute the following `GRANT` statement:
 

@@ -43,6 +43,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/precheck/']
     - REPLICATION CLIENT
     - RELOAD
     - SELECT
+    - `information_schema`
 
 + 上游 MySQL 表结构的兼容性
 

@@ -50,6 +50,7 @@ Binlog replication/sync 处理单元读取上游 MySQL/MariaDB 的 binlog event 
 | `RELOAD` | Global |
 | `REPLICATION SLAVE` | Global |
 | `REPLICATION CLIENT` | Global |
+| `information_schema` | Global |
 
 如果要迁移 `db1` 的数据到 TiDB，可执行如下的 `GRANT` 语句：
 

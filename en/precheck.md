@@ -43,6 +43,7 @@ Upstream and downstream database users must have the corresponding read and writ
     - REPLICATION CLIENT
     - RELOAD
     - SELECT
+    - `information_schema`
 
 + The compatibility of the upstream MySQL table schema
 
