@@ -10,9 +10,9 @@ DM 提供 OpenAPI 功能，用户可通过 OpenAPI 对 DM 集群进行查询和�
 
 > **注意：**
 >
-> DM 提供符合 OpenAPI 3.0.0 标准的 Spec [文档](https://github.com/pingcap/dm/blob/master/openapi/spec/dm.yaml)，其中包含了所有 API 的请求参数和返回体，可自行复制到如 [Swagger Editor](https://editor.swagger.io/) 等工具中进行在线预览。
+> DM 提供符合 OpenAPI 3.0.0 标准的 [Spec 文档](https://github.com/pingcap/dm/blob/master/openapi/spec/dm.yaml)，其中包含了所有 API 的请求参数和返回体，你可自行复制到如 [Swagger Editor](https://editor.swagger.io/) 等工具中在线预览文档。
 >
-> OpenAPI Server 运行在 dm-master 监听的端口（默认是 8216）部署 dm-maser 后可访问 `http://{host}:{port}/api/v1/docs` 获取文档的在线预览。
+> OpenAPI Server 运行在 dm-master 监听的端口默认是 8216，部署 dm-master 后，你可访问 `http://{host}:{port}/api/v1/docs` 在线预览文档。
 
 你可以通过 OpenAPI 完成 DM 集群的如下运维操作：
 
