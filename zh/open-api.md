@@ -16,12 +16,12 @@ DM 提供 OpenAPI 功能，用户可通过 OpenAPI 对 DM 集群进行查询和�
 
 你可以通过 OpenAPI 完成 DM 集群的如下运维操作：
 
-## 集群相关API
+## 集群相关 API
 
-* [获取dm-master节点信息](#获取dm-master节点信息)
-* [下线dm-master节点](#下线dm-master节点)
-* [获取dm-worker节点信息](#获取dm-worker节点信息)
-* [下线dm-worker节点](#下线dm-worker节点)
+* [获取 dm-master 节点信息](#获取-dm-master-节点信息)
+* [下线 dm-master 节点](#下线-dm-master-节点)
+* [获取-dm-worker-节点信息](#获取-dm-worker-节点信息)
+* [下线-dm-worker-节点](#下线-dm-worker-节点)
 
 ## 数据源相关 API
 
@@ -29,10 +29,10 @@ DM 提供 OpenAPI 功能，用户可通过 OpenAPI 对 DM 集群进行查询和�
 * [获取数据源列表](#获取数据源列表)
 * [删除数据源](#删除数据源)
 * [获取数据源状态](#获取数据源状态)
-* [对数据源开启relay-log功能](#对数据源开启relay-log功能)
-* [对数据源停止relay-log功能](#对数据源停止relay-log功能)
-* [对数据源暂停relay-log功能](#对数据源暂停relay-log功能)
-* [对数据源恢复relay-log功能](#对数据源恢复relay-log功能)
+* [对数据源开启 relay-log 功能](#对数据源开启-relay-log-功能)
+* [对数据源停止 relay-log 功能](#对数据源停止-relay-log-功能)
+* [对数据源暂停 relay-log 功能](#对数据源暂停-relay-log-功能)
+* [对数据源恢复 relay-log 功能](#对数据源恢复-relay-log-功能)
 * [更改数据源和dm-worker的绑定关系](#更改数据源和dm-worker的绑定关系)
 * [获取数据源的数据库名列表](#获取数据源的数据库名列表)
 * [获取数据源的指定数据库的表名列表](#获取数据源的指定数据库的表名列表)
@@ -64,7 +64,7 @@ DM 提供 OpenAPI 功能，用户可通过 OpenAPI 对 DM 集群进行查询和�
 
 如上所示， `error_msg` 描述错误信息， `error_code` 则是对应的错误码。
 
-## 获取dm-master节点信息
+## 获取 dm-master 节点信息
 
 该接口是一个同步接口，请求成功会返回对应节点的状态信息。
 
@@ -96,7 +96,7 @@ curl -X 'GET' \
 }
 ```
 
-## 下线dm-master节点
+## 下线 dm-master 节点
 
 该接口是一个同步接口，请求成功后返回体的 Status Code 是 204。
 
@@ -114,7 +114,7 @@ curl -X 'DELETE' \
   -H 'accept: */*'
 ```
 
-## 获取dm-worker节点信息
+## 获取 dm-worker 节点信息
 
 该接口是一个同步接口，请求成功会返回对应节点的状态信息。
 
@@ -146,7 +146,7 @@ curl -X 'GET' \
 }
 ```
 
-## 下线dm-worker节点
+## 下线 dm-worker 节点
 
 该接口是一个同步接口，请求成功后返回体的 Status Code 是 204。
 
@@ -354,7 +354,7 @@ curl -X 'GET' \
 }
 ```
 
-## 对数据源开启relay-log功能
+## 对数据源开启 relay-log 功能
 
 这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态) 接口获取最新的状态。
 
@@ -381,7 +381,7 @@ curl -X 'PATCH' \
 }'
 ```
 
-## 对数据源停止relay-log功能
+## 对数据源停止 relay-log 功能
 
 这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态) 接口获取最新的状态。
 
@@ -405,7 +405,7 @@ curl -X 'PATCH' \
 }'
 ```
 
-## 对数据源暂停relay-log功能
+## 对数据源暂停 relay-log 功能
 
 这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态) 接口获取最新的状态。
 
@@ -423,7 +423,7 @@ curl -X 'PATCH' \
   -H 'accept: */*'
 ```
 
-## 对数据源恢复relay-log功能
+## 对数据源恢复 relay-log 功能
 
 这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态) 接口获取最新的状态。
 
@@ -441,9 +441,9 @@ curl -X 'PATCH' \
   -H 'accept: */*'
 ```
 
-## 更改数据源和dm-worker的绑定关系
+## 更改数据源和 dm-worker 的绑定关系
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取dm-worker节点信息](#获取dm-worker节点信息) 接口获取最新的状态。
+这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取 dm-worker 节点信息](#获取-dm-worker-节点信息) 接口获取最新的状态。
 
 ### 请求 URI
 
