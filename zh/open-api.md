@@ -6,6 +6,10 @@ aliases: ['/docs-cn/tidb-data-migration/dev/open-api/']
 
 # DM OpenAPI
 
+> **注意：**
+>
+> 本文描述特性仍为实验特性，不建议在生产环境下使用 。
+
 DM 提供 OpenAPI 功能，用户可通过 OpenAPI 对 DM 集群进行查询和运维操作。OpenAPI 的总体功能和 [dmctl工具](./dmctl-introduction.md)类似。
 
 > **注意：**
