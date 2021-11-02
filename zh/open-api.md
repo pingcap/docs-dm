@@ -1,7 +1,6 @@
 ---
 title: DM OpenAPI
 summary: 了解如何使用 OpenAPI 接口来管理集群状态和数据同步。
-aliases: ['/docs-cn/tidb-data-migration/dev/open-api/']
 ---
 
 # DM OpenAPI
