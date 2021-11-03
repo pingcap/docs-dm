@@ -29,7 +29,7 @@
      - [多数据源合并迁移到 TiDB](usage-scenario-simple-migration.md)
      - [分表合并迁移到 TiDB](usage-scenario-shard-merge.md)
      - [增量迁移数据到 TiDB](usage-scenario-incremental-migration.md)
-     - [下游 TiDB 表结构存在更多列场景的数据迁移](usage-scenario-downstream-more-columns.md)
+     - [下游 TiDB 表结构存在更多列的数据迁移](usage-scenario-downstream-more-columns.md)
 + 部署使用
   - [软硬件要求](hardware-and-software-requirements.md)
   + 部署 DM 集群
