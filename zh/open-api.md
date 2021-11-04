@@ -9,11 +9,11 @@ summary: 了解如何使用 OpenAPI 接口来管理集群状态和数据同步�
 >
 > 当前该功能为实验特性，不建议在生产环境中使用。
 
-DM 提供 OpenAPI 功能，用户可通过 OpenAPI 对 DM 集群进行查询和运维操作。OpenAPI 的总体功能和 [dmctl工具](./dmctl-introduction.md)类似。
+DM 提供 OpenAPI 功能，用户可通过 OpenAPI 对 DM 集群进行查询和运维操作。OpenAPI 的总体功能和 [dmctl 工具](./dmctl-introduction.md)类似。
 
 > **注意：**
 >
-> DM 提供符合 OpenAPI 3.0.0 标准的 [Spec 文档](https://github.com/pingcap/dm/blob/master/openapi/spec/dm.yaml)，其中包含了所有 API 的请求参数和返回体，你可自行复制到如 [Swagger Editor](https://editor.swagger.io/) 等工具中在线预览文档。
+> DM 提供符合 OpenAPI 3.0.0 标准的 [Spec 文档](https://github.com/pingcap/ticdc/blob/master/dm/openapi/spec/dm.yaml)，其中包含了所有 API 的请求参数和返回体，你可自行复制到如 [Swagger Editor](https://editor.swagger.io/) 等工具中在线预览文档。
 >
 > OpenAPI Server 运行在 dm-master 监听的端口默认是 8216，部署 dm-master 后，你可访问 `http://{host}:{port}/api/v1/docs` 在线预览文档。
 
