@@ -24,11 +24,12 @@
   - [快速上手试用](quick-start-with-dm.md)
   - [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)
   - [创建数据源](quick-start-create-source.md)
-  + [创建数据迁移任务](quick-create-migration-task.md)
-     - [多数据源汇总迁移到 TiDB](usage-scenario-simple-migration.md)
+  + 数据迁移场景
+     - [数据迁移场景概述](quick-create-migration-task.md)
+     - [多数据源合并迁移到 TiDB](usage-scenario-simple-migration.md)
      - [分表合并迁移到 TiDB](usage-scenario-shard-merge.md)
-     - [只迁移数据源增量数据到 TiDB](usage-scenario-incremental-migration.md)
-     - [TiDB 表结构存在更多列场景的数据迁移](usage-scenario-downstream-more-columns.md)
+     - [增量迁移数据到 TiDB](usage-scenario-incremental-migration.md)
+     - [下游 TiDB 表结构存在更多列的数据迁移](usage-scenario-downstream-more-columns.md)
 + 部署使用
   - [软硬件要求](hardware-and-software-requirements.md)
   + 部署 DM 集群
