@@ -1,10 +1,5 @@
 ---
-<<<<<<< HEAD
-title: DM 分库分表合并场景
-=======
 title: 分表合并迁移到 TiDB
-aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
->>>>>>> 46ac7dfb (adjust TOC to fix a docs website build error (#820))
 ---
 
 # 分表合并迁移到 TiDB
