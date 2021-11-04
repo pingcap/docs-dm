@@ -1,9 +1,9 @@
 ---
-title: Data Migration 多数据源汇总迁移到 TiDB
+title: 多数据源合并迁移到 TiDB
 aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/','/zh/tidb-data-migration/dev/usage-scenario-simple-replication']
 ---
 
-# Data Migration 多数据源汇总迁移到 TiDB
+# 多数据源合并迁移到 TiDB
 
 本文介绍了 DM 工具的一个简单使用场景：将三个数据源 MySQL 实例的数据迁移到一个下游 TiDB 集群中。
 

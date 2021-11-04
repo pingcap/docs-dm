@@ -24,11 +24,12 @@
   - [Quick Start](quick-start-with-dm.md)
   - [Deploy a DM cluster Using TiUP](deploy-a-dm-cluster-using-tiup.md)
   - [Create a Data Source](quick-start-create-source.md)
-  + [Create a Data Migration Task](quick-create-migration-task.md)
+  - [Data Migration Scenarios]
+     - [Data Migration Scenario Overview](quick-create-migration-task.md)
      - [Migrate Data from Multiple Data Sources to TiDB](usage-scenario-simple-migration.md)
      - [Migrate Sharded Schemas and Tables to TiDB](usage-scenario-shard-merge.md)
      - [Migrate Incremental Data to TiDB](usage-scenario-incremental-migration.md)
-     - [Migrate Tables when There Are More Columns](usage-scenario-downstream-more-columns.md)
+     - [Migrate Tables when There Are More Columns Downstream](usage-scenario-downstream-more-columns.md)
 + Deploy
   + [Software and Hardware Requirements](hardware-and-software-requirements.md)
   + Deploy a DM Cluster
