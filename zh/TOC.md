@@ -42,6 +42,7 @@
   + 集群运维工具
     - [使用 TiUP 运维集群（推荐）](maintain-dm-using-tiup.md)
     - [使用 dmctl 运维集群](dmctl-introduction.md)
+    - [使用 OpenAPI 运维集群](open-api.md)
   + 升级版本
     - [1.0.x 到 2.0.x 手动升级](manually-upgrade-dm-1.0-to-2.0.md)
     - [1.0.x 版本间升级](upgrade-dm-1.0.md)

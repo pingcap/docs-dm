@@ -59,7 +59,6 @@ DM 最新稳定版本是 2.0，相比 1.0 版本支持了以下特性：
 - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
 - [处理告警](handle-alerts.md)
 - [日常巡检](daily-check.md)
-- [OpenAPI](open-api.md)
 
 </NavColumn>
 

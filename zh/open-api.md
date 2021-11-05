@@ -1,27 +1,26 @@
 ---
-title: DM OpenAPI
+title: 使用 OpenAPI 运维集群
 summary: 了解如何使用 OpenAPI 接口来管理集群状态和数据同步。
 ---
 
-# DM OpenAPI
+# 使用 OpenAPI 运维集群
 
 > **警告：**
 >
 > 当前该功能为实验特性，默认关闭，不建议在生产环境中使用。
-> 如果需要开启改功能, 请在 dm-master 的配置文件中增加如下配置项
+
+DM 提供 OpenAPI 功能，用户可通过 OpenAPI 对 DM 集群进行查询和运维操作。OpenAPI 的总体功能和 [dmctl 工具](./dmctl-introduction.md)类似。如需开启该功能，请在 dm-master 的配置文件中增加如下配置项：
 
 ```toml
 [experimental-features]
 openapi = true
 ```
 
-DM 提供 OpenAPI 功能，用户可通过 OpenAPI 对 DM 集群进行查询和运维操作。OpenAPI 的总体功能和 [dmctl 工具](./dmctl-introduction.md)类似。
-
 > **注意：**
 >
-> DM 提供符合 OpenAPI 3.0.0 标准的 [Spec 文档](https://github.com/pingcap/ticdc/blob/master/dm/openapi/spec/dm.yaml)，其中包含了所有 API 的请求参数和返回体，你可自行复制到如 [Swagger Editor](https://editor.swagger.io/) 等工具中在线预览文档。
+> - DM 提供符合 OpenAPI 3.0.0 标准的 [Spec 文档](https://github.com/pingcap/ticdc/blob/master/dm/openapi/spec/dm.yaml)，其中包含了所有 API 的请求参数和返回体，你可自行复制到如 [Swagger Editor](https://editor.swagger.io/) 等工具中在线预览文档。
 >
-> OpenAPI Server 运行在 dm-master 监听的端口默认是 8216，部署 dm-master 后，你可访问 `http://{host}:{port}/api/v1/docs` 在线预览文档。
+> - OpenAPI Server 运行在 dm-master 监听的端口默认是 8216，部署 dm-master 后，你可访问 `http://{host}:{port}/api/v1/docs` 在线预览文档。
 
 你可以通过 OpenAPI 完成 DM 集群的如下运维操作：
 
@@ -42,7 +41,7 @@ DM 提供 OpenAPI 功能，用户可通过 OpenAPI 对 DM 集群进行查询和�
 * [对数据源停止 relay-log 功能](#对数据源停止-relay-log-功能)
 * [对数据源暂停 relay-log 功能](#对数据源暂停-relay-log-功能)
 * [对数据源恢复 relay-log 功能](#对数据源恢复-relay-log-功能)
-* [更改数据源和dm-worker的绑定关系](#更改数据源和-dm-worker-的绑定关系)
+* [更改数据源和 dm-worker 的绑定关系](#更改数据源和-dm-worker-的绑定关系)
 * [获取数据源的数据库名列表](#获取数据源的数据库名列表)
 * [获取数据源的指定数据库的表名列表](#获取数据源的指定数据库的表名列表)
 
@@ -59,6 +58,8 @@ DM 提供 OpenAPI 功能，用户可通过 OpenAPI 对 DM 集群进行查询和�
 * [获取同步任务关联数据源的数据表的创建语句](#获取同步任务关联数据源的数据表的创建语句)
 * [更新同步任务关联数据源的数据表的创建语句](#更新同步任务关联数据源的数据表的创建语句)
 * [删除同步任务关联数据源的数据表](#删除同步任务关联数据源的数据表)
+
+本文档以下部分描述当前提供的 API 的具体使用方法。
 
 ## API 统一错误格式
 
@@ -365,7 +366,7 @@ curl -X 'GET' \
 
 ## 对数据源开启 relay-log 功能
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态) 接口获取最新的状态。
+这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态)接口获取最新的状态。
 
 ### 请求 URI
 
@@ -392,7 +393,7 @@ curl -X 'PATCH' \
 
 ## 对数据源停止 relay-log 功能
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态) 接口获取最新的状态。
+这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态)接口获取最新的状态。
 
 ### 请求 URI
 
@@ -416,7 +417,7 @@ curl -X 'PATCH' \
 
 ## 对数据源暂停 relay-log 功能
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态) 接口获取最新的状态。
+这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态)接口获取最新的状态。
 
 ### 请求 URI
 
@@ -434,7 +435,7 @@ curl -X 'PATCH' \
 
 ## 对数据源恢复 relay-log 功能
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态) 接口获取最新的状态。
+这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态)接口获取最新的状态。
 
 ### 请求 URI
 
@@ -452,7 +453,7 @@ curl -X 'PATCH' \
 
 ## 更改数据源和 dm-worker 的绑定关系
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取 dm-worker 节点信息](#获取-dm-worker-节点信息) 接口获取最新的状态。
+这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取 dm-worker 节点信息](#获取-dm-worker-节点信息)接口获取最新的状态。
 
 ### 请求 URI
 
@@ -522,7 +523,7 @@ curl -X 'GET' \
 
 ## 创建同步任务
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取同步任务状态](#获取同步任务状态) 接口获取最新的状态。
+这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取同步任务状态](#获取同步任务状态)接口获取最新的状态。
 
 ### 请求 URI
 
@@ -828,7 +829,7 @@ curl -X 'GET' \
 
 ## 停止同步任务
 
-这是一个异步接口，请求成功的 Status Code 是 204，可通过[获取同步任务状态](#获取同步任务状态) 接口获取最新的状态。
+这是一个异步接口，请求成功的 Status Code 是 204，可通过[获取同步任务状态](#获取同步任务状态)接口获取最新的状态。
 
 ### 请求 URI
 
@@ -917,7 +918,7 @@ curl -X 'GET' \
 
 ## 暂停同步任务
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取同步任务状态](#获取同步任务状态) 接口获取最新的状态。
+这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取同步任务状态](#获取同步任务状态)接口获取最新的状态。
 
 ### 请求 URI
 
@@ -939,7 +940,7 @@ curl -X 'PATCH' \
 
 ## 恢复同步任务
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取同步任务状态](#获取同步任务状态) 接口获取最新的状态。
+这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取同步任务状态](#获取同步任务状态)接口获取最新的状态。
 
 ### 请求 URI
 
