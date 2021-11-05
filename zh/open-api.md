@@ -72,7 +72,7 @@ openapi = true
 }
 ```
 
-如上所示， `error_msg` 描述错误信息， `error_code` 则是对应的错误码。
+如上所示，`error_msg` 描述错误信息， `error_code` 则是对应的错误码。
 
 ## 获取 dm-master 节点信息
 
