@@ -1,69 +1,69 @@
 ---
-title: 使用 OpenAPI 运维集群
-summary: 了解如何使用 OpenAPI 接口来管理集群状态和数据同步。
+title: Operate the DM Cluster Using OpenAPI
+summary: Learn about how to use OpenAPI interface to manage the cluster status and data replication.
 ---
 
-# 使用 OpenAPI 运维集群
+# Operate the DM Cluster Using OpenAPI
 
-> **警告：**
+> **Warning:**
 >
-> 当前该功能为实验特性，默认关闭，不建议在生产环境中使用。
+> DM OpenAPI is still an experimental feature and disabled by default. It is not recommended to use it in a production environment.
 
-DM 提供 OpenAPI 功能，用户可通过 OpenAPI 对 DM 集群进行查询和运维操作。OpenAPI 的总体功能和 [dmctl 工具](./dmctl-introduction.md)类似。如需开启该功能，请在 dm-master 的配置文件中增加如下配置项：
+DM provides the OpenAPI feature for querying and operating the DM cluster, which is similar to the feature of [dmctl tools](./dmctl-introduction.md). If you need to enable this feature, add the following configuration in the DM-master configuration file:
 
 ```toml
 [experimental-features]
 openapi = true
 ```
 
-> **注意：**
+> **Note:**
 >
-> - DM 提供符合 OpenAPI 3.0.0 标准的 [Spec 文档](https://github.com/pingcap/ticdc/blob/master/dm/openapi/spec/dm.yaml)，其中包含了所有 API 的请求参数和返回体，你可自行复制到如 [Swagger Editor](https://editor.swagger.io/) 等工具中在线预览文档。
+> - DM provides the [specification document](https://github.com/pingcap/ticdc/blob/master/dm/openapi/spec/dm.yaml) that meets OpenAPI 3.0.0 standard. This document contains all the request parameters and returned values and you can copy the document and preview it in [Swagger Editor](https://editor.swagger.io/).
 >
-> - OpenAPI Server 运行在 dm-master 监听的端口默认是 8216，部署 dm-master 后，你可访问 `http://{host}:{port}/api/v1/docs` 在线预览文档。
+> - The listening port of the DM-master node is 8216 by default. After you deploy the DM-master nodes, you can access `http://{host}:{port}/api/v1/docs` to preview the documentation online.
 
-你可以通过 OpenAPI 完成 DM 集群的如下运维操作：
+You can use the APIs to perform the following maintenance operations on the DM cluster:
 
-## 集群相关 API
+## APIs for managing clusters
 
-* [获取 dm-master 节点信息](#获取-dm-master-节点信息)
-* [下线 dm-master 节点](#下线-dm-master-节点)
-* [获取 dm-worker 节点信息](#获取-dm-worker-节点信息)
-* [下线 dm-worker 节点](#下线-dm-worker-节点)
+* [Get the status information of a DM-master node](#get-the-status-information-of-a-dm-master-node)
+* [Stop a DM-master node](#stop-a-dm-master-node)
+* [Get the status information of a DM-worker node](#get-the-status-information-of-a-dm-worker-node)
+* [Stop a DM-worker node](#stop-a-dm-worker-node)
 
-## 数据源相关 API
+## APIs for managing data sources
 
-* [创建数据源](#创建数据源)
-* [获取数据源列表](#获取数据源列表)
-* [删除数据源](#删除数据源)
-* [获取数据源状态](#获取数据源状态)
-* [对数据源开启 relay-log 功能](#对数据源开启-relay-log-功能)
-* [对数据源停止 relay-log 功能](#对数据源停止-relay-log-功能)
-* [对数据源暂停 relay-log 功能](#对数据源暂停-relay-log-功能)
-* [对数据源恢复 relay-log 功能](#对数据源恢复-relay-log-功能)
-* [更改数据源和 dm-worker 的绑定关系](#更改数据源和-dm-worker-的绑定关系)
-* [获取数据源的数据库名列表](#获取数据源的数据库名列表)
-* [获取数据源的指定数据库的表名列表](#获取数据源的指定数据库的表名列表)
+* [Create a data source](#create-a-data-source)
+* [Get the data source list](#get-the-data-source-list)
+* [Delete the data source](#delete-the-data-source)
+* [Get the status information of a data source](#get-the-status-information-of-a-data-source)
+* [Start the relay-log feature for a data source](#start-the-relay-log-feature-for-a-data-source)
+* [Stop the relay-log feature for a data source](#stop-the-relay-log-feature-for-a-data-source)
+* [Pause the relay-log feature for a data source](#pause-the-relay-log-feature-for-a-data-source)
+* [Resume the relay-log feature for a data source](#resume-the-relay-log-feature-for-a-data-source)
+* [Change the bindings between the data source and DM-workers](#change-the-bindings-between-the-data-source-and-dm-workers)
+* [Get the list of schema names of a data source](#get-the-list-of-schema-names-of-a-data-source)
+* [Get the list of table names of a specified schema in a data source](#get-the-list-of-table-names-of-a-specified-shema-in-a-data-source)
 
-## 同步任务相关 API
+## APIs for managing replication tasks
 
-* [创建同步任务](#创建同步任务)
-* [获取同步任务列表](#获取同步任务列表)
-* [停止同步任务](#停止同步任务)
-* [获取同步任务状态](#获取同步任务状态)
-* [暂停同步任务](#暂停同步任务)
-* [恢复同步任务](#恢复同步任务)
-* [获取同步任务关联数据源的数据库名列表](#获取同步任务关联数据源的数据库名列表)
-* [获取同步任务关联数据源的数据表名列表](#获取同步任务关联数据源的数据表名列表)
-* [获取同步任务关联数据源的数据表的创建语句](#获取同步任务关联数据源的数据表的创建语句)
-* [更新同步任务关联数据源的数据表的创建语句](#更新同步任务关联数据源的数据表的创建语句)
-* [删除同步任务关联数据源的数据表](#删除同步任务关联数据源的数据表)
+* [Create a replication task](#create-a-replication-task)
+* [Get the replication task list](#get-the-replication-task-list)
+* [Stop a replication task](#stop-a-replication-task)
+* [Get the status information of a replication task](#get-the-status-information-of-a-replication-task)
+* [Pause a replication task](#pause-a-replication-task)
+* [Resume a replication task](#resume-a-replication-task)
+* [Get the list of schema names of the data source that is associated with a replication task](#get-the-list-of-schema-names-of-the-data-source-that-is-associated-with-a-replication-task)
+* [Get the list of table names of a specified shema in the data source that is associated with a replication task](#get-the-list-of-table-names-of-a-specified-shema-in-the-data-source-that-is-associated-with-a-replication-task)
+* [Get the CREATE statement for shemas of the data source that is associated with a replication task](#get-the-create-statement-for-shemas-of-a-data-source-that-is-associated-with-a-replication-task)
+* [Update the CREATE statement for shemas of the data source that is associated with a replication task](#update-the-create-statement-for-shemas-of-the-data-source-that-is-associated-with-a-replication-task)
+* [Delete a shema of the data source that is associated with a replication task](#delete-a-shema-of-the-data-source-that-is-associated-with-a-replication-task)
 
-本文档以下部分描述当前提供的 API 的具体使用方法。
+The following sections describe the specific usage of the APIs.
 
-## API 统一错误格式
+## API error message template
 
-对 API 发起的请求后，如发生错误，返回错误信息的格式如下所示：
+After sending an API request, if an error occurs, the returned error message is in the following format:
 
 ```json
 {
@@ -72,17 +72,17 @@ openapi = true
 }
 ```
 
-如上所示，`error_msg` 描述错误信息，`error_code` 则是对应的错误码。
+From the above JSON output, `error_msg` describes the error message and `error_code` is the corresponding error code.
 
-## 获取 dm-master 节点信息
+## Get the status information of a DM-master node
 
-该接口是一个同步接口，请求成功会返回对应节点的状态信息。
+This API is a synchronous interface. If the request is successful, the status information of the corresponding node is returned.
 
-### 请求 URI
+### Request URI
 
  `GET /api/v1/cluster/masters`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -106,15 +106,15 @@ curl -X 'GET' \
 }
 ```
 
-## 下线 dm-master 节点
+## Stop a DM-master node
 
-该接口是一个同步接口，请求成功后返回体的 Status Code 是 204。
+This API is a synchronous interface. If the request is successful, the status code of the returned body is 204.
 
-### 请求 URI
+### Request URI
 
  `DELETE /api/v1/cluster/masters/{master-name}`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -124,15 +124,15 @@ curl -X 'DELETE' \
   -H 'accept: */*'
 ```
 
-## 获取 dm-worker 节点信息
+## Get the status information of a DM-worker node
 
-该接口是一个同步接口，请求成功会返回对应节点的状态信息。
+This API is a synchronous interface. If the request is successful, the status information of the corresponding node is returned.
 
-### 请求 URI
+### Request URI
 
  `GET /api/v1/cluster/workers`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -156,15 +156,15 @@ curl -X 'GET' \
 }
 ```
 
-## 下线 dm-worker 节点
+## Stop a DM-worker node
 
-该接口是一个同步接口，请求成功后返回体的 Status Code 是 204。
+This API is a synchronous interface. If the request is successful, the status code of the returned body is 204.
 
-### 请求 URI
+### Request URI
 
  `DELETE /api/v1/cluster/workers/{worker-name}`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -174,15 +174,15 @@ curl -X 'DELETE' \
   -H 'accept: */*'
 ```
 
-## 创建数据源
+## Create a data source
 
-该接口是一个同步接口，请求成功会返回对应数据源信息。
+This API is a synchronous interface. If the request is successful, the information of the corresponding data source is returned.
 
-### 请求 URI
+### Request URI
 
  `POST /api/v1/sources`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -253,15 +253,15 @@ curl -X 'POST' \
 }
 ```
 
-## 获取数据源列表
+## Get the data source list
 
-该接口是一个同步接口，请求成功会返回数据源列表信息。
+This API is a synchronous interface. If the request is successful, the data source list is returned.
 
-### 请求 URI
+### Request URI
 
  `GET /api/v1/sources`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -307,15 +307,15 @@ curl -X 'GET' \
 }
 ```
 
-## 删除数据源
+## Delete the data source
 
-该接口是一个同步接口，请求成功后返回体的 Status Code 是 204。
+This API is a synchronous interface. If the request is successful, the status code of the returned body is 204.
 
-### 请求 URI
+### Request URI
 
  `DELETE /api/v1/sources/{source-name}`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -325,15 +325,15 @@ curl -X 'DELETE' \
   -H 'accept: application/json'
 ```
 
-## 获取数据源状态
+## Get the status information of a data source
 
-该接口是一个同步接口，请求成功会返回对应节点的状态信息。
+This API is a synchronous interface. If the request is successful, the status information of the corresponding node is returned.
 
-### 请求 URI
+### Request URI
 
  `GET /api/v1/sources/{source-name}/status`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -364,15 +364,15 @@ curl -X 'GET' \
 }
 ```
 
-## 对数据源开启 relay-log 功能
+## Start the relay-log feature for a data source
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态)接口获取最新的状态。
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a data source](##get-the-status-information-of-a-data-source).
 
-### 请求 URI
+### Request URI
 
  `PATCH /api/v1/sources/{source-name}/start-relay`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -391,15 +391,15 @@ curl -X 'PATCH' \
 }'
 ```
 
-## 对数据源停止 relay-log 功能
+## Stop the relay-log feature for a data source
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态)接口获取最新的状态。
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a data source](##get-the-status-information-of-a-data-source).
 
-### 请求 URI
+### Request URI
 
  `PATCH /api/v1/sources/{source-name}/stop-relay`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -415,15 +415,15 @@ curl -X 'PATCH' \
 }'
 ```
 
-## 对数据源暂停 relay-log 功能
+## Pause the relay-log feature for a data source
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态)接口获取最新的状态。
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a data source](##get-the-status-information-of-a-data-source).
 
-### 请求 URI
+### Request URI
 
  `PATCH /api/v1/sources/{source-name}/pause-relay`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -433,15 +433,15 @@ curl -X 'PATCH' \
   -H 'accept: */*'
 ```
 
-## 对数据源恢复 relay-log 功能
+## Resume the relay-log feature for a data source
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取数据源状态](#获取数据源状态)接口获取最新的状态。
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a data source](##get-the-status-information-of-a-data-source).
 
-### 请求 URI
+### Request URI
 
  `PATCH /api/v1/sources/{source-name}/resume-relay`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -451,15 +451,15 @@ curl -X 'PATCH' \
   -H 'accept: */*'
 ```
 
-## 更改数据源和 dm-worker 的绑定关系
+## Change the bindings between the data source and DM-workers
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取 dm-worker 节点信息](#获取-dm-worker-节点信息)接口获取最新的状态。
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a DM-worker node](#get-the-status-information-of-a-dm-worker-node).
 
-### 请求 URI
+### Request URI
 
  `PATCH /api/v1/sources/{source-name}/transfer`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -473,15 +473,15 @@ curl -X 'PATCH' \
 }'
 ```
 
-## 获取数据源的数据库名列表
+## Get the list of schema names of a data source
 
-该接口是一个同步接口，请求成功会返回对应的列表。
+This API is a synchronous interface. If the request is successful, the corresponding list is returned.
 
-### 请求 URI
+### Request URI
 
  `GET /api/v1/sources/{source-name}/schemas`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -497,15 +497,15 @@ curl -X 'GET' \
 ]
 ```
 
-## 获取数据源的指定数据库的表名列表
+## Get the list of table names of a specified schema in a data source
 
-该接口是一个同步接口，请求成功会返回对应的列表。
+This API is a synchronous interface. If the request is successful, the corresponding list is returned.
 
-### 请求 URI
+### Request URI
 
  `GET /api/v1/sources/{source-name}/schemas/{schema-name}`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -521,15 +521,15 @@ curl -X 'GET' \
 ]
 ```
 
-## 创建同步任务
+## Create a replication task
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取同步任务状态](#获取同步任务状态)接口获取最新的状态。
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a replication task](#get-the-status-information-of-a-replication-task).
 
-### 请求 URI
+### Request URI
 
  `POST /api/v1/tasks`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -717,15 +717,15 @@ curl -X 'POST' \
 }
 ```
 
-## 获取同步任务列表
+## Get the replication task list
 
-该接口是一个同步接口，请求成功会返回对应的同步任务信息。
+This API is a synchronous interface. If the request is successful, the information of the corresponding replication task is returned.
 
-### 请求 URI
+### Request URI
 
  `GET /api/v1/tasks`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -827,15 +827,15 @@ curl -X 'GET' \
 }
 ```
 
-## 停止同步任务
+## Stop a replication task
 
-这是一个异步接口，请求成功的 Status Code 是 204，可通过[获取同步任务状态](#获取同步任务状态)接口获取最新的状态。
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 204. To learn about its latest status, You can [get the status information of a replication task](#get-the-status-information-of-a-replication-task).
 
-### 请求 URI
+### Request URI
 
  `DELETE /api/v1/tasks/{task-name}`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -845,15 +845,15 @@ curl -X 'DELETE' \
   -H 'accept: */*'
 ```
 
-## 获取同步任务状态
+## Get the status information of a replication task
 
-该接口是一个同步接口，请求成功会返回对应节点的状态信息。
+This API is a synchronous interface. If the request is successful, the status information of the corresponding node is returned.
 
-### 请求 URI
+### Request URI
 
  `GET /api/v1/tasks/task-1/status`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -916,15 +916,15 @@ curl -X 'GET' \
 }
 ```
 
-## 暂停同步任务
+## Pause a replication task
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取同步任务状态](#获取同步任务状态)接口获取最新的状态。
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a replication task](#get-the-status-information-of-a-replication-task).
 
-### 请求 URI
+### Request URI
 
  `PATCH /api/v1/tasks/task-1/pause`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -938,15 +938,15 @@ curl -X 'PATCH' \
 ]'
 ```
 
-## 恢复同步任务
+## Resume a replication task
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取同步任务状态](#获取同步任务状态)接口获取最新的状态。
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a replication task](#get-the-status-information-of-a-replication-task).
 
-### 请求 URI
+### Request URI
 
  `PATCH /api/v1/tasks/task-1/resume`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -960,15 +960,15 @@ curl -X 'PATCH' \
 ]'
 ```
 
-## 获取同步任务关联数据源的数据库名列表
+## Get the list of schema names of the data source that is associated with a replication task
 
-该接口是一个同步接口，请求成功会返回对应的列表。
+This API is a synchronous interface. If the request is successful, the corresponding list is returned.
 
-### 请求 URI
+### Request URI
 
  `GET /api/v1/tasks/{task-name}/sources/{source-name}/schemas`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -984,15 +984,15 @@ curl -X 'GET' \
 ]
 ```
 
-## 获取同步任务关联数据源的数据表名列表
+## Get the list of table names of a specified shema in the data source that is associated with a replication task
 
-该接口是一个同步接口，请求成功会返回对应的列表。
+This API is a synchronous interface. If the request is successful, the corresponding list is returned.
 
-### 请求 URI
+### Request URI
 
  `GET /api/v1/tasks/{task-name}/sources/{source-name}/schemas/{schema-name}`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -1008,15 +1008,15 @@ curl -X 'GET' \
 ]
 ```
 
-## 获取同步任务关联数据源的数据表的创建语句
+## Get the CREATE statement for shemas of the data source that is associated with a replication task
 
-该接口是一个同步接口，请求成功会返回对应的创建语句。
+This API is a synchronous interface. If the request is successful, the corresponding CREATE statement is returned.
 
-### 请求 URI
+### Request URI
 
  `GET /api/v1/tasks/{task-name}/sources/{source-name}/schemas/{schema-name}/{table-name}`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -1034,15 +1034,15 @@ curl -X 'GET' \
 }
 ```
 
-## 更新同步任务关联数据源的数据表的创建语句
+## Update the CREATE statement for shemas of the data source that is associated with a replication task
 
-该接口是一个同步接口，返回体的 Status Code 是 200。
+This API is a synchronous interface. If the request is successful, the status code of the returned body is 200.
 
-### 请求 URI
+### Request URI
 
  `PATCH /api/v1/tasks/{task-name}/sources/{source-name}/schemas/{schema-name}/{table-name}`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
@@ -1058,15 +1058,15 @@ curl -X 'PUT' \
 }'
 ```
 
-## 删除同步任务关联数据源的数据表
+## Delete a shema of the data source that is associated with a replication task
 
-该接口是一个同步接口，返回体的 Status Code 是 200。
+This API is a synchronous interface. If the request is successful, the status code of the returned body is 200.
 
-### 请求 URI
+### Request URI
 
  `DELETE /api/v1/tasks/{task-name}/sources/{source-name}/schemas/{schema-name}/{table-name}`
 
-### 使用样例
+### Example
 
 {{< copyable "shell-regular" >}}
 
