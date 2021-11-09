@@ -12,7 +12,7 @@ summary: Learn about how to use OpenAPI interface to manage the cluster status a
 DM provides the OpenAPI feature for querying and operating the DM cluster, which is similar to the feature of [dmctl tools](./dmctl-introduction.md). If you need to enable this feature, add the following configuration in the DM-master configuration file:
 
 ```toml
-[experimental-features]
+[experimental]
 openapi = true
 ```
 
@@ -37,10 +37,10 @@ You can use the APIs to perform the following maintenance operations on the DM c
 * [Get the data source list](#get-the-data-source-list)
 * [Delete the data source](#delete-the-data-source)
 * [Get the status information of a data source](#get-the-status-information-of-a-data-source)
-* [Start the relay-log feature for a data source](#start-the-relay-log-feature-for-a-data-source)
-* [Stop the relay-log feature for a data source](#stop-the-relay-log-feature-for-a-data-source)
-* [Pause the relay-log feature for a data source](#pause-the-relay-log-feature-for-a-data-source)
-* [Resume the relay-log feature for a data source](#resume-the-relay-log-feature-for-a-data-source)
+* [Start the relay-log feature for data sources](#start-the-relay-log-feature-for-a-data-source)
+* [Stop the relay-log feature for data sources](#stop-the-relay-log-feature-for-a-data-source)
+* [Pause the relay-log feature for data sources](#pause-the-relay-log-feature-for-a-data-source)
+* [Resume the relay-log feature for data sources](#resume-the-relay-log-feature-for-a-data-source)
 * [Change the bindings between the data source and DM-workers](#change-the-bindings-between-the-data-source-and-dm-workers)
 * [Get the list of schema names of a data source](#get-the-list-of-schema-names-of-a-data-source)
 * [Get the list of table names of a specified schema in a data source](#get-the-list-of-table-names-of-a-specified-shema-in-a-data-source)
@@ -364,7 +364,7 @@ curl -X 'GET' \
 }
 ```
 
-## Start the relay-log feature for a data source
+## Start the relay-log feature for data sources
 
 This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a data source](##get-the-status-information-of-a-data-source).
 
@@ -391,7 +391,7 @@ curl -X 'PATCH' \
 }'
 ```
 
-## Stop the relay-log feature for a data source
+## Stop the relay-log feature for data sources
 
 This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a data source](##get-the-status-information-of-a-data-source).
 
@@ -415,7 +415,7 @@ curl -X 'PATCH' \
 }'
 ```
 
-## Pause the relay-log feature for a data source
+## Pause the relay-log feature for data sources
 
 This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a data source](##get-the-status-information-of-a-data-source).
 
@@ -433,7 +433,7 @@ curl -X 'PATCH' \
   -H 'accept: */*'
 ```
 
-## Resume the relay-log feature for a data source
+## Resume the relay-log feature for data sources
 
 This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a data source](##get-the-status-information-of-a-data-source).
 
