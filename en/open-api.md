@@ -1,9 +1,9 @@
 ---
-title: Operate the DM Cluster Using OpenAPI
+title: Maintain DM Clusters Using OpenAPI
 summary: Learn about how to use OpenAPI interface to manage the cluster status and data replication.
 ---
 
-# Operate the DM Cluster Using OpenAPI
+# Maintain DM Clusters Using OpenAPI
 
 > **Warning:**
 >

@@ -43,6 +43,7 @@
   + Tools
     - [Maintain DM Clusters Using TiUP (Recommended)](maintain-dm-using-tiup.md)
     - [Maintain DM Clusters Using dmctl](dmctl-introduction.md)
+    - [Maintain DM Clusters Using OpenAPI](open-api.md)
   + Cluster Upgrade
     - [Manually Upgrade from v1.0.x to v2.0.x](manually-upgrade-dm-1.0-to-2.0.md)
     - [Upgrade Between v1.0.x](upgrade-dm-1.0.md)
