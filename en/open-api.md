@@ -26,9 +26,9 @@ You can use the APIs to perform the following maintenance operations on the DM c
 
 ## APIs for managing clusters
 
-* [Get the status information of a DM-master node](#get-the-status-information-of-a-dm-master-node)
+* [Get the information of a DM-master node](#get-the-status-information-of-a-dm-master-node)
 * [Stop a DM-master node](#stop-a-dm-master-node)
-* [Get the status information of a DM-worker node](#get-the-status-information-of-a-dm-worker-node)
+* [Get the information of a DM-worker node](#get-the-status-information-of-a-dm-worker-node)
 * [Stop a DM-worker node](#stop-a-dm-worker-node)
 
 ## APIs for managing data sources
@@ -36,7 +36,7 @@ You can use the APIs to perform the following maintenance operations on the DM c
 * [Create a data source](#create-a-data-source)
 * [Get the data source list](#get-the-data-source-list)
 * [Delete the data source](#delete-the-data-source)
-* [Get the status information of a data source](#get-the-status-information-of-a-data-source)
+* [Get the information of a data source](#get-the-status-information-of-a-data-source)
 * [Start the relay-log feature for data sources](#start-the-relay-log-feature-for-a-data-source)
 * [Stop the relay-log feature for data sources](#stop-the-relay-log-feature-for-a-data-source)
 * [Pause the relay-log feature for data sources](#pause-the-relay-log-feature-for-a-data-source)
@@ -50,7 +50,7 @@ You can use the APIs to perform the following maintenance operations on the DM c
 * [Create a replication task](#create-a-replication-task)
 * [Get the replication task list](#get-the-replication-task-list)
 * [Stop a replication task](#stop-a-replication-task)
-* [Get the status information of a replication task](#get-the-status-information-of-a-replication-task)
+* [Get the information of a replication task](#get-the-status-information-of-a-replication-task)
 * [Pause a replication task](#pause-a-replication-task)
 * [Resume a replication task](#resume-a-replication-task)
 * [Get the list of schema names of the data source that is associated with a replication task](#get-the-list-of-schema-names-of-the-data-source-that-is-associated-with-a-replication-task)
@@ -74,9 +74,9 @@ After sending an API request, if an error occurs, the returned error message is 
 
 From the above JSON output, `error_msg` describes the error message and `error_code` is the corresponding error code.
 
-## Get the status information of a DM-master node
+## Get the information of a DM-master node
 
-This API is a synchronous interface. If the request is successful, the status information of the corresponding node is returned.
+This API is a synchronous interface. If the request is successful, the information of the corresponding node is returned.
 
 ### Request URI
 
@@ -124,9 +124,9 @@ curl -X 'DELETE' \
   -H 'accept: */*'
 ```
 
-## Get the status information of a DM-worker node
+## Get the information of a DM-worker node
 
-This API is a synchronous interface. If the request is successful, the status information of the corresponding node is returned.
+This API is a synchronous interface. If the request is successful, the information of the corresponding node is returned.
 
 ### Request URI
 
@@ -325,9 +325,9 @@ curl -X 'DELETE' \
   -H 'accept: application/json'
 ```
 
-## Get the status information of a data source
+## Get the information of a data source
 
-This API is a synchronous interface. If the request is successful, the status information of the corresponding node is returned.
+This API is a synchronous interface. If the request is successful, the information of the corresponding node is returned.
 
 ### Request URI
 
@@ -366,7 +366,7 @@ curl -X 'GET' \
 
 ## Start the relay-log feature for data sources
 
-This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a data source](##get-the-status-information-of-a-data-source).
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a data source](##get-the-status-information-of-a-data-source).
 
 ### Request URI
 
@@ -393,7 +393,7 @@ curl -X 'PATCH' \
 
 ## Stop the relay-log feature for data sources
 
-This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a data source](##get-the-status-information-of-a-data-source).
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a data source](##get-the-status-information-of-a-data-source).
 
 ### Request URI
 
@@ -417,7 +417,7 @@ curl -X 'PATCH' \
 
 ## Pause the relay-log feature for data sources
 
-This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a data source](##get-the-status-information-of-a-data-source).
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a data source](##get-the-status-information-of-a-data-source).
 
 ### Request URI
 
@@ -435,7 +435,7 @@ curl -X 'PATCH' \
 
 ## Resume the relay-log feature for data sources
 
-This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a data source](##get-the-status-information-of-a-data-source).
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a data source](##get-the-status-information-of-a-data-source).
 
 ### Request URI
 
@@ -453,7 +453,7 @@ curl -X 'PATCH' \
 
 ## Change the bindings between the data source and DM-workers
 
-This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a DM-worker node](#get-the-status-information-of-a-dm-worker-node).
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a DM-worker node](#get-the-status-information-of-a-dm-worker-node).
 
 ### Request URI
 
@@ -523,7 +523,7 @@ curl -X 'GET' \
 
 ## Create a replication task
 
-This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a replication task](#get-the-status-information-of-a-replication-task).
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a replication task](#get-the-status-information-of-a-replication-task).
 
 ### Request URI
 
@@ -829,7 +829,7 @@ curl -X 'GET' \
 
 ## Stop a replication task
 
-This API is an asynchronous interface. If the request is successful, the status code of the returned body is 204. To learn about its latest status, You can [get the status information of a replication task](#get-the-status-information-of-a-replication-task).
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 204. To learn about its latest status, You can [get the information of a replication task](#get-the-status-information-of-a-replication-task).
 
 ### Request URI
 
@@ -845,9 +845,9 @@ curl -X 'DELETE' \
   -H 'accept: */*'
 ```
 
-## Get the status information of a replication task
+## Get the information of a replication task
 
-This API is a synchronous interface. If the request is successful, the status information of the corresponding node is returned.
+This API is a synchronous interface. If the request is successful, the information of the corresponding node is returned.
 
 ### Request URI
 
@@ -918,7 +918,7 @@ curl -X 'GET' \
 
 ## Pause a replication task
 
-This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a replication task](#get-the-status-information-of-a-replication-task).
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a replication task](#get-the-status-information-of-a-replication-task).
 
 ### Request URI
 
@@ -940,7 +940,7 @@ curl -X 'PATCH' \
 
 ## Resume a replication task
 
-This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the status information of a replication task](#get-the-status-information-of-a-replication-task).
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a replication task](#get-the-status-information-of-a-replication-task).
 
 ### Request URI
 
