@@ -93,14 +93,14 @@ In the case of clearly mentioning "incremental", use replicate/replication inste
 
 ### Safe mode
 
-Safe mode is the mode in which DML statements can be imported more than once when the primary key or unique index exists in the table schema. In this mode, some statements from the upstream are migrated to the downstream only after they are re-written. The `INSERT` statement is re-written as `REPLACE`; the `UPDATE` statement is re-written as `DELETE` and `REPLACE`.
+Safe mode is the mode in which DML statements can be imported more than once when the primary key or unique index exists in the table schema. In this mode, some statements from the upstream are migrated to the downstream only after they are re-written. Before v5.3.0, the `INSERT` statement is re-written as `REPLACE`; the `UPDATE` statement is re-written as `DELETE` and `REPLACE`. After v5.3.0, the `INSERT` statement is re-written as `INSERT ON DUPLICATE KEY UPDATE`; the `UPDATE` statement is re-written as `DELETE` and `INSERT ON DUPLICATE KEY UPDATE`.
 
 This mode is enabled in any of the following situations:
 
-- TiDB DM automatically enables the safe mode within 1 minutes immediately after the incremental replication task is started or resumed.
 - The safe mode remains enabled when the `safe-mode` parameter in the task configuration file is set to `true`.
 - In shard merge scenarios, the safe mode remains enabled before DDL statements are replicated in all sharded tables.
 - If the argument `--consistency none` is configured for the dump processing unit of a full migration task, it cannot be determined whether the binlog changes at the beginning of the export affect the exported data or not. Therefore, the safe mode remains enabled for the incremental replication of these binlog changes.
+- The task paused by error and some data may be executed twice after resumed.
 
 ### Shard DDL
 

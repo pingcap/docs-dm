@@ -96,7 +96,7 @@ CREATE TABLE `messages` (
    ## This scenario usually happens when the full migrated data is not a consistent snapshot of the data source. You need to start migrating incremental data at a position before the full data migration starting point.
    syncers: # The configuration parameters of sync unit.
      global: # The name of the configuration.
-       safe-mode: true # If you set `safe-mode` to `true`, `INSERT`` from data sources is rewritten to `REPLACE` and `UPDATE` is rewritten to `DELETE` and `REPLACE`. This is to ensure that when primary keys or unique keys exist in table structure, you can re-import DML when migrating data. TiDB DM automatically enables the safe mode within 1 minute immediately after the incremental replication task is started or resumed.
+       safe-mode: true # If you set `safe-mode` to `true`, before v5.3.0, `INSERT` from data sources is rewritten to `REPLACE` and `UPDATE` is rewritten to `DELETE` and `REPLACE` After v5.3.0, `INSERT` is rewritten to `INSERT ON DUPLICATE KEY UPDATE` and `UPDATE`. is rewritten to `DELETE` and `INSERT ON DUPLICATE KEY UPDATE`. This is to ensure that when primary keys or unique keys exist in table structure, you can re-import DML when migrating data.
 
    ## Configure the data source
    mysql-instances:
