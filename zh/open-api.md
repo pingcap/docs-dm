@@ -9,7 +9,7 @@ summary: 了解如何使用 OpenAPI 接口来管理集群状态和数据同步�
 >
 > 当前该功能为实验特性，默认关闭，不建议在生产环境中使用。
 
-DM 提供 OpenAPI 功能，用户可通过 OpenAPI 对 DM 集群进行查询和运维操作。OpenAPI 的总体功能和 [dmctl 工具](./dmctl-introduction.md)类似。如需开启该功能，请在 dm-master 的配置文件中增加如下配置项：
+DM 提供 OpenAPI 功能，你可以通过 OpenAPI 对 DM 集群进行查询和运维操作。OpenAPI 的总体功能和 [dmctl 工具](./dmctl-introduction.md)类似。如需开启该功能，请在 dm-master 的配置文件中增加如下配置项：
 
 ```toml
 [experimental]
