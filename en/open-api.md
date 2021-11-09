@@ -43,7 +43,7 @@ You can use the APIs to perform the following maintenance operations on the DM c
 * [Resume the relay-log feature for data sources](#resume-the-relay-log-feature-for-data-sources)
 * [Change the bindings between the data source and DM-workers](#change-the-bindings-between-the-data-source-and-dm-workers)
 * [Get the list of schema names of a data source](#get-the-list-of-schema-names-of-a-data-source)
-* [Get the list of table names of a specified schema in a data source](#get-the-list-of-table-names-of-a-specified-shema-in-a-data-source)
+* [Get the list of table names of a specified schema in a data source](#get-the-list-of-table-names-of-a-specified-schema-in-a-data-source)
 
 ## APIs for managing replication tasks
 
@@ -54,10 +54,10 @@ You can use the APIs to perform the following maintenance operations on the DM c
 * [Pause a replication task](#pause-a-replication-task)
 * [Resume a replication task](#resume-a-replication-task)
 * [Get the list of schema names of the data source that is associated with a replication task](#get-the-list-of-schema-names-of-the-data-source-that-is-associated-with-a-replication-task)
-* [Get the list of table names of a specified shema in the data source that is associated with a replication task](#get-the-list-of-table-names-of-a-specified-shema-in-the-data-source-that-is-associated-with-a-replication-task)
-* [Get the CREATE statement for shemas of the data source that is associated with a replication task](#get-the-create-statement-for-shemas-of-a-data-source-that-is-associated-with-a-replication-task)
-* [Update the CREATE statement for shemas of the data source that is associated with a replication task](#update-the-create-statement-for-shemas-of-the-data-source-that-is-associated-with-a-replication-task)
-* [Delete a shema of the data source that is associated with a replication task](#delete-a-shema-of-the-data-source-that-is-associated-with-a-replication-task)
+* [Get the list of table names of a specified schema in the data source that is associated with a replication task](#get-the-list-of-table-names-of-a-specified-schema-in-the-data-source-that-is-associated-with-a-replication-task)
+* [Get the CREATE statement for schemas of the data source that is associated with a replication task](#get-the-create-statement-for-schemas-of-a-data-source-that-is-associated-with-a-replication-task)
+* [Update the CREATE statement for schemas of the data source that is associated with a replication task](#update-the-create-statement-for-schemas-of-the-data-source-that-is-associated-with-a-replication-task)
+* [Delete a schema of the data source that is associated with a replication task](#delete-a-schema-of-the-data-source-that-is-associated-with-a-replication-task)
 
 The following sections describe the specific usage of the APIs.
 
@@ -366,7 +366,7 @@ curl -X 'GET' \
 
 ## Start the relay-log feature for data sources
 
-This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a data source](##get-the-information-of-a-data-source).
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a data source](#get-the-information-of-a-data-source).
 
 ### Request URI
 
@@ -393,7 +393,7 @@ curl -X 'PATCH' \
 
 ## Stop the relay-log feature for data sources
 
-This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a data source](##get-the-information-of-a-data-source).
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a data source](#get-the-information-of-a-data-source).
 
 ### Request URI
 
@@ -417,7 +417,7 @@ curl -X 'PATCH' \
 
 ## Pause the relay-log feature for data sources
 
-This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a data source](##get-the-information-of-a-data-source).
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a data source](#get-the-information-of-a-data-source).
 
 ### Request URI
 
@@ -435,7 +435,7 @@ curl -X 'PATCH' \
 
 ## Resume the relay-log feature for data sources
 
-This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a data source](##get-the-information-of-a-data-source).
+This API is an asynchronous interface. If the request is successful, the status code of the returned body is 200. To learn about its latest status, You can [get the information of a data source](#get-the-information-of-a-data-source).
 
 ### Request URI
 
@@ -984,7 +984,7 @@ curl -X 'GET' \
 ]
 ```
 
-## Get the list of table names of a specified shema in the data source that is associated with a replication task
+## Get the list of table names of a specified schema in the data source that is associated with a replication task
 
 This API is a synchronous interface. If the request is successful, the corresponding list is returned.
 
@@ -1008,7 +1008,7 @@ curl -X 'GET' \
 ]
 ```
 
-## Get the CREATE statement for shemas of the data source that is associated with a replication task
+## Get the CREATE statement for schemas of the data source that is associated with a replication task
 
 This API is a synchronous interface. If the request is successful, the corresponding CREATE statement is returned.
 
@@ -1034,7 +1034,7 @@ curl -X 'GET' \
 }
 ```
 
-## Update the CREATE statement for shemas of the data source that is associated with a replication task
+## Update the CREATE statement for schemas of the data source that is associated with a replication task
 
 This API is a synchronous interface. If the request is successful, the status code of the returned body is 200.
 
@@ -1058,7 +1058,7 @@ curl -X 'PUT' \
 }'
 ```
 
-## Delete a shema of the data source that is associated with a replication task
+## Delete a schema of the data source that is associated with a replication task
 
 This API is a synchronous interface. If the request is successful, the status code of the returned body is 200.
 
