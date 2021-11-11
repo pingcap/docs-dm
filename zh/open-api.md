@@ -9,7 +9,7 @@ summary: 了解如何使用 OpenAPI 接口来管理集群状态和数据同步�
 >
 > 当前该功能为实验特性，默认关闭，不建议在生产环境中使用。
 
-DM 提供 OpenAPI 功能，你可以通过 OpenAPI 对 DM 集群进行查询和运维操作。OpenAPI 的总体功能和 [dmctl 工具](./dmctl-introduction.md)类似。如需开启该功能，请在 dm-master 的配置文件中增加如下配置项：
+DM 提供 OpenAPI 功能，你可以通过 OpenAPI 对 DM 集群进行查询和运维操作。OpenAPI 的总体功能和 [dmctl 工具](./dmctl-introduction.md)类似。如需开启该功能，请在 DM-master 的配置文件中增加如下配置项：
 
 ```toml
 [experimental]
@@ -20,16 +20,16 @@ openapi = true
 >
 > - DM 提供符合 OpenAPI 3.0.0 标准的 [Spec 文档](https://github.com/pingcap/ticdc/blob/master/dm/openapi/spec/dm.yaml)，其中包含了所有 API 的请求参数和返回体，你可自行复制到如 [Swagger Editor](https://editor.swagger.io/) 等工具中在线预览文档。
 >
-> - OpenAPI Server 运行在 dm-master 监听的端口默认是 8216，部署 dm-master 后，你可访问 `http://{host}:{port}/api/v1/docs` 在线预览文档。
+> - 部署 DM-master 后，你可访问 `http://{master-addr}/api/v1/docs` 在线预览文档。
 
 你可以通过 OpenAPI 完成 DM 集群的如下运维操作：
 
 ## 集群相关 API
 
-* [获取 dm-master 节点信息](#获取-dm-master-节点信息)
-* [下线 dm-master 节点](#下线-dm-master-节点)
-* [获取 dm-worker 节点信息](#获取-dm-worker-节点信息)
-* [下线 dm-worker 节点](#下线-dm-worker-节点)
+* [获取 DM-master 节点信息](#获取-dm-master-节点信息)
+* [下线 DM-master 节点](#下线-dm-master-节点)
+* [获取 DM-worker 节点信息](#获取-dm-worker-节点信息)
+* [下线 DM-worker 节点](#下线-dm-worker-节点)
 
 ## 数据源相关 API
 
@@ -41,7 +41,7 @@ openapi = true
 * [对数据源停止 relay-log 功能](#对数据源停止-relay-log-功能)
 * [对数据源暂停 relay-log 功能](#对数据源暂停-relay-log-功能)
 * [对数据源恢复 relay-log 功能](#对数据源恢复-relay-log-功能)
-* [更改数据源和 dm-worker 的绑定关系](#更改数据源和-dm-worker-的绑定关系)
+* [更改数据源和 DM-worker 的绑定关系](#更改数据源和-dm-worker-的绑定关系)
 * [获取数据源的数据库名列表](#获取数据源的数据库名列表)
 * [获取数据源的指定数据库的表名列表](#获取数据源的指定数据库的表名列表)
 
@@ -74,7 +74,7 @@ openapi = true
 
 如上所示，`error_msg` 描述错误信息，`error_code` 则是对应的错误码。
 
-## 获取 dm-master 节点信息
+## 获取 DM-master 节点信息
 
 该接口是一个同步接口，请求成功会返回对应节点的状态信息。
 
@@ -106,7 +106,7 @@ curl -X 'GET' \
 }
 ```
 
-## 下线 dm-master 节点
+## 下线 DM-master 节点
 
 该接口是一个同步接口，请求成功后返回体的 Status Code 是 204。
 
@@ -124,7 +124,7 @@ curl -X 'DELETE' \
   -H 'accept: */*'
 ```
 
-## 获取 dm-worker 节点信息
+## 获取 DM-worker 节点信息
 
 该接口是一个同步接口，请求成功会返回对应节点的状态信息。
 
@@ -156,7 +156,7 @@ curl -X 'GET' \
 }
 ```
 
-## 下线 dm-worker 节点
+## 下线 DM-worker 节点
 
 该接口是一个同步接口，请求成功后返回体的 Status Code 是 204。
 
@@ -451,9 +451,9 @@ curl -X 'PATCH' \
   -H 'accept: */*'
 ```
 
-## 更改数据源和 dm-worker 的绑定关系
+## 更改数据源和 DM-worker 的绑定关系
 
-这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取 dm-worker 节点信息](#获取-dm-worker-节点信息)接口获取最新的状态。
+这是一个异步接口，请求成功的 Status Code 是 200，可通过[获取 DM-worker 节点信息](#获取-dm-worker-节点信息)接口获取最新的状态。
 
 ### 请求 URI
 
