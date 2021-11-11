@@ -20,7 +20,7 @@ openapi = true
 >
 > - DM provides the [specification document](https://github.com/pingcap/ticdc/blob/master/dm/openapi/spec/dm.yaml) that meets the OpenAPI 3.0.0 standard. This document contains all the request parameters and returned values. You can copy the document yaml and preview it in [Swagger Editor](https://editor.swagger.io/).
 >
-> - The listening port of the DM-master node is 8216 by default. After you deploy the DM-master nodes, you can access `http://{host}:{port}/api/v1/docs` to preview the documentation online.
+> - After you deploy the DM-master nodes, you can access `http://{master-addr}/api/v1/docs` to preview the documentation online.
 
 You can use the APIs to perform the following maintenance operations on the DM cluster:
 
