@@ -120,7 +120,7 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 
 ## 2.0 集群运行 1.0 已有数据迁移任务时报错 `Error 1054: Unknown column 'binlog_gtid' in 'field list'`
 
-在 DM 2.0 中，为 checkpoint 等元信息表引入了更多的字段。如果在 2.0 中，通过 `start-task` 直接使用 1.0 集群的任务配置文件从增量复制阶段继续运行，则会出现 `Error 1054: Unknown column 'binlog_gtid' in 'field list'` 错误。
+在 DM 2.0 之后，为 checkpoint 等元信息表引入了更多的字段。如果通过 `start-task` 直接使用 1.0 集群的任务配置文件从增量复制阶段继续运行，则会出现 `Error 1054: Unknown column 'binlog_gtid' in 'field list'` 错误。
 
 对于此错误，可使用以下任一方式进行处理：
 
@@ -181,7 +181,7 @@ if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to
 
 出现报错的原因是 TiDB parser 无法解析上游的 DDL，例如 `ALTER EVENT`，所以 `sql-skip` 不会按预期生效。可以在任务配置文件中添加 [Binlog 过滤规则](key-features.md#binlog-event-filter)进行过滤，并设置 `schema-pattern: "*"`。从 DM 2.0.1 版本开始，已预设过滤了 `EVENT` 相关语句。
 
-在 DM v2.0 版本中 `sql-skip` 已经被 `handle-error` 替代，`handle-error` 可以跳过该类错误。
+在 DM v2.0 版本之后 `sql-skip` 已经被 `handle-error` 替代，`handle-error` 可以跳过该类错误。
 
 ## DM 同步时下游长时间出现 REPLACE 语句
 

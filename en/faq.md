@@ -126,9 +126,9 @@ Set the parameters below to a value larger than the default 67108864 (64M).
 
 For details, see [Loader solution](https://docs.pingcap.com/tidb/stable/loader-overview#solution).
 
-## How to handle the error `Error 1054: Unknown column 'binlog_gtid' in 'field list'` that occurs when existing DM migration tasks of an DM 1.0 cluster are running on a DM 2.0 cluster?
+## How to handle the error `Error 1054: Unknown column 'binlog_gtid' in 'field list'` that occurs when existing DM migration tasks of an DM 1.0 cluster are running on a DM 2.0 newer cluster?
 
-DM 2.0 introduces more fields to metadata tables such as checkpoint. In DM 2.0, if you directly run the `start-task` command with the task configuration file of the DM 1.0 cluster to continue the incremental data replication, the error `Error 1054: Unknown column 'binlog_gtid' in 'field list'` occurs.
+After DM 2.0, if you directly run the `start-task` command with the task configuration file of the DM 1.0 cluster to continue the incremental data replication, the error `Error 1054: Unknown column 'binlog_gtid' in 'field list'` occurs.
 
 This error can be handled in any of the following ways:
 
@@ -193,7 +193,7 @@ if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to
 
 The reason for this type of error is that the TiDB parser cannot parse DDL statements sent by the upstream, such as `ALTER EVENT`, so `sql-skip` does not take effect as expected. You can add [binlog event filters](key-features.md#binlog-event-filter) in the configuration file to filter those statements and set `schema-pattern: "*"`. Starting from DM v2.0.1, DM pre-filters statements related to `EVENT`.
 
-In DM v2.0, `handle-error` replaces `sql-skip`. You can use `handle-error` instead to avoid this issue.
+After DM v2.0, `handle-error` replaces `sql-skip`. You can use `handle-error` instead to avoid this issue.
 
 ## Why do `REPLACE` statements keep appearing in the downstream when DM is replicating?
 
