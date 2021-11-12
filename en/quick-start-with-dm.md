@@ -31,7 +31,7 @@ The detailed information of each instance is as follows:
 
 ### Download DM binary package
 
-Download DM Latest binary package or compile the package manually.
+Download DM latest binary package or compile the package manually.
 
 #### Method 1: Download the latest version of binary package
 
