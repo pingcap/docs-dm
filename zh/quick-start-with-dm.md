@@ -29,7 +29,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/quick-start-with-dm/','/docs-cn/tidb
 
 ### 准备 DM binary 包
 
-首先需要下载 DM 2.0 的 binary 或者手动编译。
+首先需要下载 DM 最新的 binary 或者手动编译。
 
 #### 第一种方式：下载最新 DM binary 包
 
