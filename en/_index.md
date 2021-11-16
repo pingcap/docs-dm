@@ -13,7 +13,7 @@ The latest stable version of DM is v5.3.
 **What's new in DM 5.3:**
 
 - Compact multiple updates on a single row into one statement and merge batch updates of multiple rows into one statement to make sure low-latency replication from MySQL to TiDB.
-- Add DM OpenAPI to better maintain DM clusters (experimental).
+- Add [DM OpenAPI](open-api.md) to better maintain DM clusters (experimental).
 
 **Notes**
 

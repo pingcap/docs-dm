@@ -11,7 +11,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/']
 DM 最新稳定版本是 5.3，相比 2.0 版本支持了以下特性：
 
 - 合并单行数据的多次变更，将点查更新合并为批量操作，实现以更低的延迟将数据从 MySQL 同步数据到 TiDB。
-- 增加 DM OpenAPI 以更方便地管理集群（实验特性）。
+- 增加 DM [OpenAPI](open-api.md) 以更方便地管理集群（实验特性）。
 
 **重要说明**
 
