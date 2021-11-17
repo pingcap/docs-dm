@@ -118,7 +118,7 @@ syncers:                             # sync 处理单元的运行配置参数
     # 如 UPDATE tb SET b=1 WHERE a=1; UPDATE tb(a,b) SET b=2 WHERE a=1; 会被压缩成 UPDATE tb(a,b) SET b=2 WHERE a=1; 其中 a 为主键
     # 如 DELETE FROM tb WHERE a=1; INSERT INTO tb(a,b) VALUES(1,1); 会被压缩成 INSERT INTO tb(a,b) VALUES(1,1); 其中 a 为主键
     compact: false
-    # 设置为 true，DM 会尽可能的将多条同类型的语句合并到一条语句中，生成一条带多行数据的 SQL 语句。
+    # 设置为 true，DM 会尽可能地将多条同类型的语句合并到一条语句中，生成一条带多行数据的 SQL 语句。
     # 如 INSERT INTO tb(a,b) VALUES(1,1); INSERT INTO tb(a,b) VALUES(2,2); 会变成 INSERT INTO tb(a,b) VALUES(1,1),(2,2);
     # 如 UPDATE tb SET b=11 WHERE a=1; UPDATE tb(a,b) set b=22 WHERE a=2; 会变成 INSERT INTO tb(a,b) VALUES(1,11),(2,22) ON DUPLICATE KEY UPDATE a=VALUES(a), b=VALUES(b); 其中 a 为主键
     # 如 DELETE FROM tb WHERE a=1; DELETE FROM tb WHERE a=2 会变成 DELETE FROM tb WHERE (a) IN (1),(2)。其中 a 为主键
