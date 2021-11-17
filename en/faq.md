@@ -130,10 +130,7 @@ For details, see [Loader solution](https://docs.pingcap.com/tidb/stable/loader-o
 
 After DM 2.0, if you directly run the `start-task` command with the task configuration file of the DM 1.0 cluster to continue the incremental data replication, the error `Error 1054: Unknown column 'binlog_gtid' in 'field list'` occurs.
 
-This error can be handled in any of the following ways:
-
-- [Import a DM 1.0 cluster into a new DM 2.0 cluster using TiUP](maintain-dm-using-tiup.md#import-and-upgrade-a-dm-10-cluster-deployed-using-dm-ansible).
-- [Manually import DM migration tasks of a DM 1.0 cluster to a DM 2.0 cluster](manually-upgrade-dm-1.0-to-2.0.md)。
+This error can be handled by [manually importing DM migration tasks of a DM 1.0 cluster to a DM 2.0 cluster](manually-upgrade-dm-1.0-to-2.0.md).
 
 ## Why does TiUP fail to deploy some versions of DM (for example, v2.0.0-hotfix)？
 
@@ -152,7 +149,7 @@ Check the configuration items `block-allow-list` and `table-route`:
 
 ## Why does the `replicate lag` monitor metric show no data when DM is not replicating from upstream?
 
-In DM 1.0, you need to enable `enable-heartbeat` to generate the monitor data. In DM 2.0, it is expected to have no data in the monitor metric `replicate lag` because this feature is not supported.
+In DM 1.0, you need to enable `enable-heartbeat` to generate the monitor data. In DM 2.0 and later versions, it is expected to have no data in the monitor metric `replicate lag` because this feature is not supported.
 
 ## How to handle the error `fail to initial unit Sync of subtask` when DM is starting a task, with the `RawCause` in the error message showing `context deadline exceeded`?
 
