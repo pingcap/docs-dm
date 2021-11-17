@@ -118,10 +118,10 @@ syncers:
 
     # If set to true, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. This ensures that DML statements can be imported repeatedly during data migration when there is any primary key or unique index in the table schema.
     safe-mode: false
-    # If set to true, DM will compact as many upstream statements on the same rows as possible into a single statements without increasing latency.
-    # such as `INSERT INTO tb(a,b) VALUES(1,1); UPDATE tb SET b=11 WHERE a=1`;` will be compacted to `INSERT INTO tb(a,b) VALUES(1,11);`, a is the primary key
-    # `UPDATE tb SET b=1 WHERE a=1; UPDATE tb(a,b) SET b=2 WHERE a=1;` will be compacted to `UPDATE tb(a,b) SET b=2 WHERE a=1;`, a is the primary key
-    # `DELETE FROM tb WHERE a=1; INSERT INTO tb(a,b) VALUES(1,1);` will be compacted to `INSERT INTO tb(a,b) VALUES(1,1);`, a is the primary key
+    # If set to true, DM compacts as many upstream statements on the same rows as possible into a single statements without increasing latency.
+    # For example, `INSERT INTO tb(a,b) VALUES(1,1); UPDATE tb SET b=11 WHERE a=1`;` will be compacted to `INSERT INTO tb(a,b) VALUES(1,11);`, and "a" is the primary key
+    # `UPDATE tb SET b=1 WHERE a=1; UPDATE tb(a,b) SET b=2 WHERE a=1;` will be compacted to `UPDATE tb(a,b) SET b=2 WHERE a=1;`, and "a" is the primary key
+    # `DELETE FROM tb WHERE a=1; INSERT INTO tb(a,b) VALUES(1,1);` will be compacted to `INSERT INTO tb(a,b) VALUES(1,1);`, and "a" is the primary key
     compact: false
     # if set to true, DM will combine as many statements of the same type as possible into a single statement and generate a single SQL statement with multiple rows of data.
     # such as `INSERT INTO tb(a,b) VALUES(1,1); INSERT INTO tb(a,b) VALUES(2,2);` will become `INSERT INTO tb(a,b) VALUES(1,1),(2,2);`
