@@ -17,8 +17,8 @@ The latest stable version of DM is v5.3.
 
 **Notes**
 
-- DM's github repository has been moved to [https://github.com/pingcap/ticdc/tree/master/dm](https://github.com/pingcap/ticdc/tree/master/dm). You can go to the new repository to submit issue for follow-up feedback.
-- The DM release schedule will be aligned with TiCDC, so the version number is also keep same on both sides, the planned v2.1.0 release will be changed to v5.3.0.
+- DM's GitHub repository has been moved to [https://github.com/pingcap/ticdc/tree/master/dm](https://github.com/pingcap/ticdc/tree/master/dm). You can go to the new repository to submit issues for follow-up feedback.
+- The DM release schedule will be aligned with [TiCDC](https://docs.pingcap.com/tidb/stable/ticdc-overview), so its version number also keeps up with TiCDC. Since v2.1.0, the DM version number is changed to v5.3.0.
 
 <NavColumns>
 <NavColumn>

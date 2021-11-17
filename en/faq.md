@@ -200,7 +200,7 @@ You can check the DM-worker log file and search for a line containing `change co
 
 ## In DM v2.0, why does the full import task fail if DM restarts during the task?
 
-In DM v2.0.1 and lower versions, if DM restarts before the full import completes, the bindings between upstream data sources and DM-worker nodes might change. For example, it is possible that the intermediate data of the dump unit is on DM-worker node A but the load unit is run by DM-worker node B, thus causing the operation to fail.
+In DM v2.0.1 and earlier versions, if DM restarts before the full import completes, the bindings between upstream data sources and DM-worker nodes might change. For example, it is possible that the intermediate data of the dump unit is on DM-worker node A but the load unit is run by DM-worker node B, thus causing the operation to fail.
 
 The following are two solutions to this issue:
 
