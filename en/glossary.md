@@ -100,7 +100,7 @@ This mode is enabled in any of the following situations:
 - The safe mode remains enabled when the `safe-mode` parameter in the task configuration file is set to `true`.
 - In shard merge scenarios, the safe mode remains enabled before DDL statements are replicated in all sharded tables.
 - If the argument `--consistency none` is configured for the dump processing unit of a full migration task, it cannot be determined whether the binlog changes at the beginning of the export affect the exported data or not. Therefore, the safe mode remains enabled for the incremental replication of these binlog changes.
-- The task paused by error and some data may be executed twice after resumed.
+- If the task is paused by error and then resumed, some data may be executed twice.
 
 ### Shard DDL
 
