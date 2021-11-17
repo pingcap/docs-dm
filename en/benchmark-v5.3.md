@@ -126,7 +126,7 @@ In this test, the `worker-count` of sync unit is set to 32 and `batch` is set to
 
 | Sysbench type| DM QPS | Max DM execution latency (ms) | TiDB QPS | TiDB 99 duration (ms) |
 | :--------------: | :-------------: | :------------------: | :------: | :-------------------: |
-| insert_only      | 29.1k          | 64                   | 21.9k    | 8                    |
+| insert_only      | 29.1k          | 64                   | 32.0k    | 8                    |
 | write_only       | 23.5k           | 296                  | 24.2k     | 18                    |
 
 ## Recommended parameter configuration
