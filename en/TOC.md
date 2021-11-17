@@ -91,7 +91,7 @@
 + [FAQ](faq.md)
 + [Glossary](glossary.md)
 + Release Notes
-  + v5.0
+  + v5.3
     - [5.3.0](releases/5.3.0.md)
   + v2.0
     - [2.0.7](releases/2.0.7.md)
