@@ -96,7 +96,7 @@ CREATE TABLE `messages` (
    ##  该场景多见于，全量迁移的数据不属于数据源的一个一致性快照，随后从一个早于全量迁移数据之前的位置开始同步增量数据
    syncers:            # sync 处理单元的运行配置参数
      global:           # 配置名称
-       safe-mode: true # 设置为 true，v5.3.0 之前，将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`。v5.3.0 之后，将 `INSERT` 改写为 `INSERT ON DUPLICATE KEY UPDATE`，将 `UPDATE` 改写为 `DELETE` 与 `INSERT ON DUPLICATE KEY UPDATE`。
+       safe-mode: true # 设置为 true，则将来自数据源的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`。
 
    ## 配置数据源
    mysql-instances:

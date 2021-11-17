@@ -111,7 +111,7 @@ syncers:                             # sync 处理单元的运行配置参数
     batch: 100                       # sync 迁移到下游数据库的一个事务批次 SQL 语句数，默认值为 100，建议一般不超过 500。
     enable-ansi-quotes: true         # 若 `session` 中设置 `sql-mode: "ANSI_QUOTES"`，则需开启此项
 
-    # 设置为 true，v5.3.0 之前，将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`。将 `INSERT` 改写为 `INSERT ON DUPLICATE KEY UPDATE`，将 `UPDATE` 改写为 `DELETE` 与 `INSERT ON DUPLICATE KEY UPDATE`。保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。
+    # 设置为 true，则将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。
     safe-mode: false
     # 设置为 true，DM 会在不增加延迟的情况下，尽可能的将上游对同一条数据的多次操作压缩成一次操作。
     # 如 INSERT INTO tb(a,b) VALUES(1,1); UPDATE tb SET b=11 WHERE a=1; 会被压缩成 INSERT INTO tb(a,b) VALUES(1,11); 其中 a 为主键

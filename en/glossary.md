@@ -93,7 +93,7 @@ In the case of clearly mentioning "incremental", use replicate/replication inste
 
 ### Safe mode
 
-Safe mode is the mode in which DML statements can be imported more than once when the primary key or unique index exists in the table schema. In this mode, some statements from the upstream are migrated to the downstream only after they are re-written. Before v5.3.0, the `INSERT` statement is re-written as `REPLACE`; the `UPDATE` statement is re-written as `DELETE` and `REPLACE`. After v5.3.0, the `INSERT` statement is re-written as `INSERT ON DUPLICATE KEY UPDATE`; the `UPDATE` statement is re-written as `DELETE` and `INSERT ON DUPLICATE KEY UPDATE`.
+Safe mode is the mode in which DML statements can be imported more than once when the primary key or unique index exists in the table schema. In this mode, some statements from the upstream are migrated to the downstream only after they are re-written. The `INSERT` statement is re-written as `REPLACE`; the `UPDATE` statement is re-written as `DELETE` and `REPLACE`.
 
 This mode is enabled in any of the following situations:
 

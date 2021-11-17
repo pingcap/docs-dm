@@ -116,7 +116,7 @@ syncers:
     batch: 100                       # The number of SQL statements in a transaction batch that the sync processing unit replicates to the downstream database (100 by default). Generally, it is recommended to set the value less than 500.
     enable-ansi-quotes: true         # Enable this argument if `sql-mode: "ANSI_QUOTES"` is set in the `session`
 
-    # If set to true, before v5.3.0, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. After v5.3.0, `INSERT` statements are rewritten to `INSERT ON DUPLICATE KEY UPDATE` statements, and `UPDATE` statements are rewritten to `DELETE` and `INSERT ON DUPLICATE KEY UPDATE` statements. This ensures that DML statements can be imported repeatedly during data migration when there is any primary key or unique index in the table schema.
+    # If set to true, `INSERT` statements from upstream are rewritten to `REPLACE` statements, and `UPDATE` statements are rewritten to `DELETE` and `REPLACE` statements. This ensures that DML statements can be imported repeatedly during data migration when there is any primary key or unique index in the table schema.
     safe-mode: false
     # If set to true, DM will compact as many upstream statements on the same rows as possible into a single statements without increasing latency.
     # such as `INSERT INTO tb(a,b) VALUES(1,1); UPDATE tb SET b=11 WHERE a=1`;` will be compacted to `INSERT INTO tb(a,b) VALUES(1,11);`, a is the primary key

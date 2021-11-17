@@ -95,7 +95,7 @@ DM-worker 内部用于从上游拉取 Binlog 并写入数据到 Relay log 的处
 
 ### Safe mode
 
-指增量复制过程中，用于支持在表结构中存在主键或唯一索引的条件下可重复导入 DML 的模式。该模式的主要特点是：v5.3.0 之前，将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE` 后再向下游执行。v5.3.0 之后，将 `INSERT` 改写为 `INSERT ON DUPLICATE KEY UPDATE`，将 `UPDATE` 改写为 `DELETE` 与 `INSERT ON DUPLICATE KEY UPDATE`。
+指增量复制过程中，用于支持在表结构中存在主键或唯一索引的条件下可重复导入 DML 的模式。该模式的主要特点是：将来自上游的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE` 后再向下游执行。
 
 该模式会在满足如下任一条件时启用：
 
