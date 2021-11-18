@@ -125,8 +125,8 @@ syncers:
     compact: false
     # If set to true, DM combines as many statements of the same type as possible into a single statement and generates a single SQL statement with multiple rows of data.
     # For example, `INSERT INTO tb(a,b) VALUES(1,1); INSERT INTO tb(a,b) VALUES(2,2);` will become `INSERT INTO tb(a,b) VALUES(1,1),(2,2);`
-    # `UPDATE tb SET b=11 WHERE a=1; UPDATE tb(a,b) set b=22 WHERE a=2;` will become `INSERT INTO tb(a,b) VALUES(1,11),(2,22) ON DUPLICATE KEY UPDATE a=VALUES(a), b= VALUES(b);`, and "a" is the primary key
-    # `DELETE FROM tb WHERE a=1; DELETE FROM tb WHERE a=2` will become `DELETE FROM tb WHERE (a) IN (1),(2)`, and "a" is the primary key
+    # `UPDATE tb SET b=11 WHERE a=1; UPDATE tb(a,b) set b=22 WHERE a=2;` will become `INSERT INTO tb(a,b) VALUES(1,11),(2,22) ON DUPLICATE KEY UPDATE a=VALUES(a), b= VALUES(b);`, where "a" is the primary key
+    # `DELETE FROM tb WHERE a=1; DELETE FROM tb WHERE a=2` will become `DELETE FROM tb WHERE (a) IN (1),(2)`, where "a" is the primary key
     multiple-rows: true
 
 # ----------- Instance configuration -----------
