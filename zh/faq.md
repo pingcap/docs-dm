@@ -145,11 +145,11 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 
 ## DM v2.0.0 启动任务时出现 `fail to initial unit Sync of subtask`，报错信息的 `RawCause` 显示 `context deadline exceeded`
 
-该问题是 DM v2.0.0 版本的已知问题，在同步任务的表数目较多时触发，将在 v2.0.1 修复。使用 TiUP 部署的用户可以升级到开发版 nightly 解决该问题，或者访问 GitHub 上 [DM 仓库的 release 页面](https://github.com/pingcap/dm/releases)下载 v2.0.0-hotfix 版本手动替换可执行文件。
+该问题是 DM v2.0.0 版本的已知问题，在同步任务的表数目较多时触发，将在 v2.0.1 修复。使用 TiUP 部署的用户可以升级到开发版 nightly 解决该问题，或者访问 GitHub 上 [DM 仓库的 release 页面](https://github.com/pingcap/ticdc/releases)下载 v2.0.0-hotfix 版本手动替换可执行文件。
 
 ## DM 同步中报错 `duplicate entry`
 
-用户需要首先确认任务中没有配置`disable-detect`（v2.0.7 及之前版本），没有其他同步程序或手动插入数据，表中没有配置相关的 DML 过滤器。
+用户需要首先确认任务中没有配置 `disable-detect`（v2.0.7 及之前版本），没有其他同步程序或手动插入数据，表中没有配置相关的 DML 过滤器。
 
 为了便于排查问题，用户收集到下游 TiDB 相关 general log 后可以在 [AskTUG 社区](https://asktug.com/tags/dm) 联系专家进行排查。收集 general log 的方式如下：
 

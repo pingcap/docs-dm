@@ -128,7 +128,7 @@ For details, see [Loader solution](https://docs.pingcap.com/tidb/stable/loader-o
 
 ## How to handle the error `Error 1054: Unknown column 'binlog_gtid' in 'field list'` that occurs when existing DM migration tasks of an DM 1.0 cluster are running on a DM 2.0 or newer cluster?
 
-After DM 2.0, if you directly run the `start-task` command with the task configuration file of the DM 1.0 cluster to continue the incremental data replication, the error `Error 1054: Unknown column 'binlog_gtid' in 'field list'` occurs.
+Since DM v2.0, if you directly run the `start-task` command with the task configuration file of the DM 1.0 cluster to continue the incremental data replication, the error `Error 1054: Unknown column 'binlog_gtid' in 'field list'` occurs.
 
 This error can be handled by [manually importing DM migration tasks of a DM 1.0 cluster to a DM 2.0 cluster](manually-upgrade-dm-1.0-to-2.0.md).
 
@@ -153,7 +153,7 @@ In DM 1.0, you need to enable `enable-heartbeat` to generate the monitor data. I
 
 ## How to handle the error `fail to initial unit Sync of subtask` when DM is starting a task, with the `RawCause` in the error message showing `context deadline exceeded`?
 
-This is a known issue in DM 2.0.0 version and will be fixed in DM 2.0.1 version. It is likely to be triggered when a replication task has a lot of tables to process. If you use TiUP to deploy DM, you can upgrade DM to the nightly version to fix this issue. Or you can download the 2.0.0-hotfix version from [the release page of DM](https://github.com/pingcap/dm/releases) on GitHub and manually replace the executable files.
+This is a known issue in DM 2.0.0 version and will be fixed in DM 2.0.1 version. It is likely to be triggered when a replication task has a lot of tables to process. If you use TiUP to deploy DM, you can upgrade DM to the nightly version to fix this issue. Or you can download the 2.0.0-hotfix version from [the release page of DM](https://github.com/pingcap/ticdc/releases) on GitHub and manually replace the executable files.
 
 ## How to handle the error `duplicate entry` when DM is replicating data?
 
@@ -190,7 +190,7 @@ if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to
 
 The reason for this type of error is that the TiDB parser cannot parse DDL statements sent by the upstream, such as `ALTER EVENT`, so `sql-skip` does not take effect as expected. You can add [binlog event filters](key-features.md#binlog-event-filter) in the configuration file to filter those statements and set `schema-pattern: "*"`. Starting from DM v2.0.1, DM pre-filters statements related to `EVENT`.
 
-After DM v2.0, `handle-error` replaces `sql-skip`. You can use `handle-error` instead to avoid this issue.
+Since DM v2.0, `handle-error` replaces `sql-skip`. You can use `handle-error` instead to avoid this issue.
 
 ## Why do `REPLACE` statements keep appearing in the downstream when DM is replicating?
 
