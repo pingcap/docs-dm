@@ -16,7 +16,7 @@ DM 最新稳定版本是 5.3，相比 2.0 版本支持了以下特性：
 **重要说明**
 
 - 由于某些原因，DM 的 GitHub 仓库已移到 [https://github.com/pingcap/ticdc/tree/master/dm](https://github.com/pingcap/ticdc/tree/master/dm)。请到新的仓库提交问题，以获得后续反馈。
-- DM 新版本的发布时间将与 [TiCDC](https://docs.pingcap.com/zh/tidb/stable/ticdc-overview) 保持一致，因此版本号也将保持一致。自 v2.1.0 起，DM 版本号将改为 v5.3.0。
+- 截至 DM v2.0，DM 采用独立于 TiDB 的版本号。DM v2.0 后，DM 采用与 TiDB 相同的版本号。因此，DM v2.0 的后一版本为 DM v5.3。DM v2.0 到 v5.3 无兼容性变更，升级过程与正常升级无差异，仅仅是版本号上的提升。
 
 <NavColumns>
 <NavColumn>
