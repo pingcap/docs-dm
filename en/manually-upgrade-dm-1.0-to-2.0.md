@@ -1,5 +1,5 @@
 ---
-title: Manually Upgrade TiDB Data Migration from v1.0.x to v2.0.x+
+title: Manually Upgrade TiDB Data Migration from v1.0.x to v2.0+
 summary: Learn how to manually upgrade TiDB data migration from v1.0.x to v2.0.x+.
 ---
 
