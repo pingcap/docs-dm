@@ -107,7 +107,7 @@ from:
 >
 > 如果已有其他可用的 v2.0.x+ 集群，可跳过此步。
 
-[使用 TiUP](deploy-a-dm-cluster-using-tiup.md) 按所需要节点数部署新的 v2.0.x+ 集群。
+[使用 TiUP](deploy-a-dm-cluster-using-tiup.md) 按所需要节点数部署新的 v2.0+ 集群。
 
 ## 第 3 步：下线 v1.0.x 集群
 
@@ -117,7 +117,7 @@ from:
 
 ## 第 4 步：升级数据迁移任务
 
-1. 使用 [`operate-source`](manage-source.md#数据源操作) 命令将 [准备 v2.0.x+ 的配置文件](#第-1-步准备-v20x-的配置文件) 中得到的上游数据库 source 配置加载到 v2.0.x+ 集群中。
+1. 使用 [`operate-source`](manage-source.md#数据源操作) 命令将 [准备 v2.0+ 的配置文件](#第-1-步准备-v20x-的配置文件) 中得到的上游数据库 source 配置加载到 v2.0+ 集群中。
 
 2. 在下游 TiDB 中，从 v1.0.x 的数据复制任务对应的增量 checkpoint 表中获取对应的全局 checkpoint 信息。
 
@@ -134,7 +134,7 @@ from:
         +------------------+-------------------------+------------+
         ```
 
-3. 更新 v1.0.x 的数据迁移任务配置文件以启动新的 v2.0.x+ 数据迁移任务。
+3. 更新 v1.0.x 的数据迁移任务配置文件以启动新的 v2.0+ 数据迁移任务。
 
     - 如 v1.0.x 的数据迁移任务配置文件为 `task_v1.yaml`，则将其复制一份为 `task_v2.yaml`。
     - 对 `task_v2.yaml` 进行以下修改：
@@ -159,8 +159,8 @@ from:
             >
             > 如在 source 配置中启动了 `enable-gtid`，当前需要通过解析 binlog 或 relay log 文件获取 binlog position 对应的 GTID sets 并在 `meta` 中设置为 `binlog-gtid`。
 
-4. 使用 [`start-task`](create-task.md) 命令以 v2.0.x+ 的数据迁移任务配置文件启动升级后的数据迁移任务。
+4. 使用 [`start-task`](create-task.md) 命令以 v2.0+ 的数据迁移任务配置文件启动升级后的数据迁移任务。
 
 5. 使用 [`query-status`](query-status.md) 命令确认数据迁移任务是否运行正常。
 
-如果数据迁移任务运行正常，则表明 DM 升级到 v2.0.x+ 的操作成功。
+如果数据迁移任务运行正常，则表明 DM 升级到 v2.0+ 的操作成功。
