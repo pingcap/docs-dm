@@ -3,15 +3,15 @@ title: Manually Upgrade TiDB Data Migration from v1.0.x to v2.0.x+
 summary: Learn how to manually upgrade TiDB data migration from v1.0.x to v2.0.x+.
 ---
 
-# Manually Upgrade TiDB Data Migration from v1.0.x to v2.0.x+
+# Manually Upgrade TiDB Data Migration from v1.0.x to v2.0+
 
-This document introduces how to manually upgrade the TiDB DM tool from v1.0.x to v2.0.x+. The main idea is to use the global checkpoint information in v1.0.x to start a new data migration task in the v2.0.x+ cluster.
+This document introduces how to manually upgrade the TiDB DM tool from v1.0.x to v2.0+. The main idea is to use the global checkpoint information in v1.0.x to start a new data migration task in the v2.0+ cluster.
 
 For how to automatically upgrade the TiDB DM tool from v1.0.x to v2.0.x+, refer to [Using TiUP to automatically import the 1.0 cluster deployed by DM-Ansible](maintain-dm-using-tiup.md#import-and-upgrade-a-dm-10-cluster-deployed-using-dm-ansible).
 
 > **Note:**
 >
-> - Currently, upgrading DM from v1.0.x to v2.0.x+ is not supported when the data migration task is in the process of full export or full import.
+> - Currently, upgrading DM from v1.0.x to v2.0+ is not supported when the data migration task is in the process of full export or full import.
 > - As the gRPC protocol used for interaction between the components of the DM cluster is updated greatly, you need to make sure that the DM components (including dmctl) use the same version before and after the upgrade.
 > - Because the metadata storage of the DM cluster (such as checkpoint, shard DDL lock status and online DDL metadata, etc.) is updated greatly, the metadata of v1.0.x cannot be reused automatically in v2.0.x+. So you need to make sure the following requirements are satisfied before performing the upgrade operation:
 >     - All data migration tasks are not in the process of shard DDL coordination.
@@ -19,13 +19,13 @@ For how to automatically upgrade the TiDB DM tool from v1.0.x to v2.0.x+, refer 
 
 The steps for manual upgrade are as follows.
 
-## Step 1: Prepare v2.0.x+ configuration file
+## Step 1: Prepare v2.0+ configuration file
 
-The prepared configuration files of v2.0.x+ include the configuration files of the upstream database and the configuration files of the data migration task.
+The prepared configuration files of v2.0+ include the configuration files of the upstream database and the configuration files of the data migration task.
 
 ### Upstream database configuration file
 
-In v2.0.x+, the [upstream database configuration file](source-configuration-file.md) is separated from the process configuration of the DM-worker, so you need to obtain the source configuration based on the [v1.0.x DM-worker configuration](https://docs.pingcap.com/tidb-data-migration/stable/dm-worker-configuration-file).
+In v2.0+, the [upstream database configuration file](source-configuration-file.md) is separated from the process configuration of the DM-worker, so you need to obtain the source configuration based on the [v1.0.x DM-worker configuration](https://docs.pingcap.com/tidb-data-migration/stable/dm-worker-configuration-file).
 
 > **Note:**
 >
