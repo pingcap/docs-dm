@@ -1,34 +1,34 @@
 ---
-title: TiDB Data Migration 1.0.x 到 2.0.x+ 手动升级
-summary: 了解如何从 TiDB Data Migration 1.0.x 手动升级到 2.0.x+。
+title: TiDB Data Migration 1.0.x 到 2.0+ 手动升级
+summary: 了解如何从 TiDB Data Migration 1.0.x 手动升级到 2.0+。
 aliases: ['/docs-cn/tidb-data-migration/dev/manually-upgrade-dm-1.0-to-2.0/']
 ---
 
-# TiDB Data Migration 1.0.x 到 2.0.x+ 手动升级
+# TiDB Data Migration 1.0.x 到 2.0+ 手动升级
 
-本文档主要介绍如何手动从 DM v1.0.x 升级到 v2.0.x+，主要思路为利用 v1.0.x 时的全局 checkpoint 信息在 v2.0.x+ 集群中启动一个新的增量数据复制任务。
+本文档主要介绍如何手动从 DM v1.0.x 升级到 v2.0+，主要思路为利用 v1.0.x 时的全局 checkpoint 信息在 v2.0+ 集群中启动一个新的增量数据复制任务。
 
 > **注意：**
 >
-> - DM 当前不支持在数据迁移任务处于全量导出或全量导入过程中从 v1.0.x 升级到 v2.0.x+。
+> - DM 当前不支持在数据迁移任务处于全量导出或全量导入过程中从 v1.0.x 升级到 v2.0+。
 > - 由于 DM 各组件间用于交互的 gRPC 协议进行了较大变更，因此需确保升级前后 DM 集群各组件（包括 dmctl）使用相同的版本。
-> - 由于 DM 集群的元数据存储（如 checkpoint、shard DDL lock 状态及 online DDL 元信息等）发生了较大变更，升级到 v2.0.x+ 后无法自动复用 v1.0.x 的元数据，因此在执行升级操作前需要确保：
+> - 由于 DM 集群的元数据存储（如 checkpoint、shard DDL lock 状态及 online DDL 元信息等）发生了较大变更，升级到 v2.0+ 后无法自动复用 v1.0.x 的元数据，因此在执行升级操作前需要确保：
 >     - 所有数据迁移任务不处于 shard DDL 协调过程中。
 >     - 所有数据迁移任务不处于 online DDL 协调过程中。
 
 下面是手动升级的具体步骤。
 
-## 第 1 步：准备 v2.0.x+ 的配置文件
+## 第 1 步：准备 v2.0+ 的配置文件
 
-准备的 v2.0.x+ 的配置文件包括上游数据库的配置文件以及数据迁移任务的配置文件。
+准备的 v2.0+ 的配置文件包括上游数据库的配置文件以及数据迁移任务的配置文件。
 
 ### 上游数据库配置文件
 
-在 v2.0.x+ 中将[上游数据库 source 相关的配置](source-configuration-file.md)从 DM-worker 的进程配置中独立了出来，因此需要根据 [v1.0.x 的 DM-worker 配置](https://docs.pingcap.com/zh/tidb-data-migration/stable/dm-worker-configuration-file)拆分得到 source 配置。
+在 v2.0+ 中将[上游数据库 source 相关的配置](source-configuration-file.md)从 DM-worker 的进程配置中独立了出来，因此需要根据 [v1.0.x 的 DM-worker 配置](https://docs.pingcap.com/zh/tidb-data-migration/stable/dm-worker-configuration-file)拆分得到 source 配置。
 
 > **注意：**
 >
-> 当前从 v1.0.x 升级到 v2.0.x+ 时，如在 source 配置中启用了 `enable-gtid`，则后续需要通过解析 binlog 或 relay log 文件获取 binlog position 对应的 GTID sets。
+> 当前从 v1.0.x 升级到 v2.0+ 时，如在 source 配置中启用了 `enable-gtid`，则后续需要通过解析 binlog 或 relay log 文件获取 binlog position 对应的 GTID sets。
 
 #### 从 DM-Ansible 部署的 v1.0.x 升级
 
@@ -99,13 +99,13 @@ from:
 
 ### 数据迁移任务配置文件
 
-对于[数据迁移任务配置向导](task-configuration-guide.md)，v2.0.x+ 基本与 v1.0.x 保持兼容，可直接复制 v1.0.x 的配置。
+对于[数据迁移任务配置向导](task-configuration-guide.md)，v2.0+ 基本与 v1.0.x 保持兼容，可直接复制 v1.0.x 的配置。
 
-## 第 2 步：部署 v2.0.x+ 集群
+## 第 2 步：部署 v2.0+ 集群
 
 > **注意：**
 >
-> 如果已有其他可用的 v2.0.x+ 集群，可跳过此步。
+> 如果已有其他可用的 v2.0+ 集群，可跳过此步。
 
 [使用 TiUP](deploy-a-dm-cluster-using-tiup.md) 按所需要节点数部署新的 v2.0+ 集群。
 
