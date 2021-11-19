@@ -28,7 +28,7 @@ summary: 了解如何快速上手部署试用 TiDB Data Migration 工具。
 
 ### 准备 DM binary 包
 
-首先需要下载 DM 2.0 的 binary 或者手动编译。
+首先需要下载 DM 最新的 binary 或者手动编译。
 
 #### 第一种方式：下载最新 DM binary 包
 
@@ -154,7 +154,7 @@ insert into t2 (id, uid, name) values (3, 20001, 'José Arcadio Buendía'), (4, 
 > **注意：**
 >
 > + 如果数据源没有设置密码，则可以跳过该步骤。
-> + DM v2.0 可以使用明文密码配置数据源的访问密码信息。
+> + 自 v2.0 起，DM 可以使用明文密码配置数据源的访问密码信息。
 
 为了安全，可配置及使用加密后的 MySQL 访问密码，以密码为 "123456" 为例：
 

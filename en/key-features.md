@@ -106,7 +106,7 @@ The block and allow lists filtering rule of the upstream database instance table
 ### Parameter configuration
 
 ```yaml
-block-allow-list:             # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
+block-allow-list:             # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
   rule-1:
     do-dbs: ["test*"]         # Starting with characters other than "~" indicates that it is a wildcard;
                               # v1.0.5 or later versions support the regular expression rules.
@@ -201,7 +201,7 @@ Assume that the upstream MySQL instances include the following tables:
 The configuration is as follows:
 
 ```yaml
-block-allow-list:  # This configuration applies to DM versions higher than v2.0.0-beta.2. Use black-white-list otherwise.
+block-allow-list:  # Use black-white-list if the DM version is earlier than or equal to v2.0.0-beta.2.
   bw-rule:
     do-dbs: ["forum_backup_2018", "forum"]
     ignore-dbs: ["~^forum_backup_"]
@@ -381,7 +381,7 @@ In the MySQL ecosystem, tools such as gh-ost and pt-osc are widely used. DM prov
 
 <SimpleTab>
 <div label="v2.0.5 and later">
- 
+
 In v2.0.5 and later versions, you need to use the `online-ddl` configuration item in the `task` configuration file.
 
 - If the upstream MySQL/MariaDB (at the same time) uses the gh-ost or pt-osc tool, set `online-ddl` to `true` in the task configuration file:
