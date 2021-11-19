@@ -1,6 +1,5 @@
 ---
 title: 多数据源合并迁移到 TiDB
-aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/','/zh/tidb-data-migration/dev/usage-scenario-simple-replication']
 ---
 
 # 多数据源合并迁移到 TiDB

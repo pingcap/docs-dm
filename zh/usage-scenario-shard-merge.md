@@ -1,6 +1,5 @@
 ---
 title: 分表合并迁移到 TiDB
-aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 ---
 
 # 分表合并迁移到 TiDB

@@ -1,6 +1,5 @@
 ---
 title: DM 1.0-GA 性能测试报告
-aliases: ['/docs-cn/tidb-data-migration/dev/benchmark-v1.0-ga/']
 ---
 
 # DM 1.0-GA 性能测试报告
