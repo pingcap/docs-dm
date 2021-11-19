@@ -1,7 +1,6 @@
 ---
 title: 从兼容 MySQL 的数据库迁移数据——以 Amazon Aurora MySQL 为例
 summary: 使用 DM 从 MySQL/Amazon Aurora MySQL 迁移数据。
-aliases: ['/docs-cn/tidb-data-migration/dev/migrate-from-mysql-aurora/']
 ---
 
 # 从兼容 MySQL 的数据库迁移数据——以 Amazon Aurora MySQL 为例
