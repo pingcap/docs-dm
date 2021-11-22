@@ -14,15 +14,9 @@
       - [Optimistic Mode](feature-shard-merge-optimistic.md)
     - [Migrate from MySQL Databases that Use GH-ost/PT-osc](feature-online-ddl.md)
     - [Filter Certain Row Changes Using SQL Expressions](feature-expression-filter.md)
-<<<<<<< HEAD
-  + [DM Architecture](dm-arch.md)
-  + [Benchmarks](benchmark-v2.0-ga.md)
-+ Quick Start
-=======
   - [DM Architecture](dm-arch.md)
-  - [Benchmarks](benchmark-v5.3.0.md)
+  - [Benchmarks](benchmark-v2.0-ga.md)
 - Quick Start
->>>>>>> aece77e6 (chore: list as the first child in TOC (#831))
   - [Quick Start](quick-start-with-dm.md)
   - [Deploy a DM cluster Using TiUP](deploy-a-dm-cluster-using-tiup.md)
   - [Create a Data Source](quick-start-create-source.md)
@@ -45,19 +39,11 @@
   - Tools
     - [Maintain DM Clusters Using TiUP (Recommended)](maintain-dm-using-tiup.md)
     - [Maintain DM Clusters Using dmctl](dmctl-introduction.md)
-<<<<<<< HEAD
-  + Cluster Upgrade
+  - Cluster Upgrade
     - [Manually Upgrade from v1.0.x to v2.0.x](manually-upgrade-dm-1.0-to-2.0.md)
     - [Upgrade Between v1.0.x](upgrade-dm-1.0.md)
-  + [Manage Data Source](manage-source.md)
-  + Manage a Data Migration Task
-=======
-    - [Maintain DM Clusters Using OpenAPI](open-api.md)
-  - Cluster Upgrade
-    - [Manually Upgrade from v1.0.x to v2.0+](manually-upgrade-dm-1.0-to-2.0.md)
   - [Manage Data Source](manage-source.md)
   - Manage a Data Migration Task
->>>>>>> aece77e6 (chore: list as the first child in TOC (#831))
     - [Task Configuration Guide](task-configuration-guide.md)
     - [Precheck a Task](precheck.md)
     - [Create a Task](create-task.md)

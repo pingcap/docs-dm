@@ -14,15 +14,9 @@
       - [乐观模式](feature-shard-merge-optimistic.md)
     - [迁移使用 GH-ost/PT-osc 的源数据库](feature-online-ddl.md)
     - [使用 SQL 表达式过滤某些行变更](feature-expression-filter.md)
-<<<<<<< HEAD
-  + [DM 架构](dm-arch.md)
-  + [性能数据](benchmark-v2.0-ga.md)
-+ 快速上手
-=======
   - [DM 架构](dm-arch.md)
-  - [性能数据](benchmark-v5.3.0.md)
+  - [性能数据](benchmark-v2.0-ga.md)
 - 快速上手
->>>>>>> aece77e6 (chore: list as the first child in TOC (#831))
   - [快速上手试用](quick-start-with-dm.md)
   - [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)
   - [创建数据源](quick-start-create-source.md)
@@ -45,15 +39,9 @@
   - 集群运维工具
     - [使用 TiUP 运维集群（推荐）](maintain-dm-using-tiup.md)
     - [使用 dmctl 运维集群](dmctl-introduction.md)
-<<<<<<< HEAD
-  + 升级版本
+  - 升级版本
     - [1.0.x 到 2.0.x 手动升级](manually-upgrade-dm-1.0-to-2.0.md)
     - [1.0.x 版本间升级](upgrade-dm-1.0.md)
-=======
-    - [使用 OpenAPI 运维集群](open-api.md)
-  - 升级版本
-    - [1.0.x 到 2.0+ 手动升级](manually-upgrade-dm-1.0-to-2.0.md)
->>>>>>> aece77e6 (chore: list as the first child in TOC (#831))
   - [管理数据源](manage-source.md)
   - 管理迁移任务
     - [任务配置向导](task-configuration-guide.md)
