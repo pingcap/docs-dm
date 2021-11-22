@@ -562,7 +562,7 @@ curl -X 'POST' \
       }
     },
     "binlog_filter_rule": {
-      "additionalProp1": {
+      "rule-1": {
         "ignore_event": [
           "all dml"
         ],
@@ -570,7 +570,7 @@ curl -X 'POST' \
           "^Drop"
         ]
       },
-      "additionalProp2": {
+      "rule-2": {
         "ignore_event": [
           "all dml"
         ],
@@ -578,7 +578,7 @@ curl -X 'POST' \
           "^Drop"
         ]
       },
-      "additionalProp3": {
+      "rule-3": {
         "ignore_event": [
           "all dml"
         ],
@@ -599,7 +599,9 @@ curl -X 'POST' \
           "table": "tb1"
         },
         "binlog_filter_rule": [
-          "rule-1"
+          "rule-1",
+          "rule-2",
+          "rule-3"
         ]
       }
     ],
@@ -653,7 +655,7 @@ curl -X 'POST' \
     }
   },
   "binlog_filter_rule": {
-    "additionalProp1": {
+    "rule-1": {
       "ignore_event": [
         "all dml"
       ],
@@ -661,7 +663,7 @@ curl -X 'POST' \
         "^Drop"
       ]
     },
-    "additionalProp2": {
+    "rule-2": {
       "ignore_event": [
         "all dml"
       ],
@@ -669,7 +671,7 @@ curl -X 'POST' \
         "^Drop"
       ]
     },
-    "additionalProp3": {
+    "rule-3": {
       "ignore_event": [
         "all dml"
       ],
@@ -690,7 +692,9 @@ curl -X 'POST' \
         "table": "tb1"
       },
       "binlog_filter_rule": [
-        "rule-1"
+        "rule-1",
+        "rule-2",
+        "rule-3"
       ]
     }
   ],
@@ -761,7 +765,7 @@ curl -X 'GET' \
         }
       },
       "binlog_filter_rule": {
-        "additionalProp1": {
+        "rule-1": {
           "ignore_event": [
             "all dml"
           ],
@@ -769,7 +773,7 @@ curl -X 'GET' \
             "^Drop"
           ]
         },
-        "additionalProp2": {
+        "rule-2": {
           "ignore_event": [
             "all dml"
           ],
@@ -777,7 +781,7 @@ curl -X 'GET' \
             "^Drop"
           ]
         },
-        "additionalProp3": {
+        "rule-3": {
           "ignore_event": [
             "all dml"
           ],
@@ -798,7 +802,9 @@ curl -X 'GET' \
             "table": "tb1"
           },
           "binlog_filter_rule": [
-            "rule-1"
+            "rule-1",
+            "rule-2",
+            "rule-3"
           ]
         }
       ],
