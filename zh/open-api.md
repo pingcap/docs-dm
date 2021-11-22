@@ -601,7 +601,7 @@ curl -X 'POST' \
         "binlog_filter_rule": [
           "rule-1",
           "rule-2",
-          "rule-3"
+          "rule-3",
         ]
       }
     ],
@@ -804,7 +804,7 @@ curl -X 'GET' \
           "binlog_filter_rule": [
             "rule-1",
             "rule-2",
-            "rule-3"
+            "rule-3",
           ]
         }
       ],
