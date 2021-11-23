@@ -83,9 +83,9 @@
   - [监控指标](monitor-a-dm-cluster.md)
   - [告警信息](alert-rules.md)
   - [错误码](error-handling.md#常见故障处理方法)
-+ [常见问题](faq.md)
-+ [术语表](glossary.md)
-+ 版本发布历史
+- [常见问题](faq.md)
+- [术语表](glossary.md)
+- 版本发布历史
   + v5.3
     - [5.3.0](releases/5.3.0.md)
   + v2.0

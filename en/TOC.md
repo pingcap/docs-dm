@@ -83,9 +83,9 @@
   - [Monitoring Metrics](monitor-a-dm-cluster.md)
   - [Alert Rules](alert-rules.md)
   - [Error Codes](error-handling.md#handle-common-errors)
-+ [FAQ](faq.md)
-+ [Glossary](glossary.md)
-+ Release Notes
+- [FAQ](faq.md)
+- [Glossary](glossary.md)
+- Release Notes
   + v5.3
     - [5.3.0](releases/5.3.0.md)
   + v2.0
