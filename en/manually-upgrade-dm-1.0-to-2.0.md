@@ -1,35 +1,35 @@
 ---
-title: Manually Upgrade TiDB Data Migration from v1.0.x to v2.0.x
-summary: Learn how to manually upgrade TiDB data migration from v1.0.x to v2.0.x.
+title: Manually Upgrade TiDB Data Migration from v1.0.x to v2.0+
+summary: Learn how to manually upgrade TiDB data migration from v1.0.x to v2.0+.
 ---
 
-# Manually Upgrade TiDB Data Migration from v1.0.x to v2.0.x
+# Manually Upgrade TiDB Data Migration from v1.0.x to v2.0+
 
-This document introduces how to manually upgrade the TiDB DM tool from v1.0.x to v2.0.x. The main idea is to use the global checkpoint information in v1.0.x to start a new data migration task in the v2.0.x cluster.
+This document introduces how to manually upgrade the TiDB DM tool from v1.0.x to v2.0+. The main idea is to use the global checkpoint information in v1.0.x to start a new data migration task in the v2.0+ cluster.
 
-For how to automatically upgrade the TiDB DM tool from v1.0.x to v2.0.x, refer to [Using TiUP to automatically import the 1.0 cluster deployed by DM-Ansible](maintain-dm-using-tiup.md#import-and-upgrade-a-dm-10-cluster-deployed-using-dm-ansible).
+For how to automatically upgrade the TiDB DM tool from v1.0.x to v2.0+, refer to [Using TiUP to automatically import the 1.0 cluster deployed by DM-Ansible](maintain-dm-using-tiup.md#import-and-upgrade-a-dm-10-cluster-deployed-using-dm-ansible).
 
 > **Note:**
 >
-> - Currently, upgrading DM from v1.0.x to v2.0.x is not supported when the data migration task is in the process of full export or full import.
+> - Currently, upgrading DM from v1.0.x to v2.0+ is not supported when the data migration task is in the process of full export or full import.
 > - As the gRPC protocol used for interaction between the components of the DM cluster is updated greatly, you need to make sure that the DM components (including dmctl) use the same version before and after the upgrade.
-> - Because the metadata storage of the DM cluster (such as checkpoint, shard DDL lock status and online DDL metadata, etc.) is updated greatly, the metadata of v1.0.x cannot be reused automatically in v2.0.x. So you need to make sure the following requirements are satisfied before performing the upgrade operation:
+> - Because the metadata storage of the DM cluster (such as checkpoint, shard DDL lock status and online DDL metadata, etc.) is updated greatly, the metadata of v1.0.x cannot be reused automatically in v2.0+. So you need to make sure the following requirements are satisfied before performing the upgrade operation:
 >     - All data migration tasks are not in the process of shard DDL coordination.
 >     - All data migration tasks are not in the process of online DDL coordination.
 
 The steps for manual upgrade are as follows.
 
-## Step 1: Prepare v2.0.x configuration file
+## Step 1: Prepare v2.0+ configuration file
 
-The prepared configuration files of v2.0.x include the configuration files of the upstream database and the configuration files of the data migration task.
+The prepared configuration files of v2.0+ include the configuration files of the upstream database and the configuration files of the data migration task.
 
 ### Upstream database configuration file
 
-In v2.0.x, the [upstream database configuration file](source-configuration-file.md) is separated from the process configuration of the DM-worker, so you need to obtain the source configuration based on the [v1.0.x DM-worker configuration](https://docs.pingcap.com/tidb-data-migration/stable/dm-worker-configuration-file).
+In v2.0+, the [upstream database configuration file](source-configuration-file.md) is separated from the process configuration of the DM-worker, so you need to obtain the source configuration based on the [v1.0.x DM-worker configuration](https://docs.pingcap.com/tidb-data-migration/stable/dm-worker-configuration-file).
 
 > **Note:**
 >
-> If `enable-gtid` in the source configuration is enabled during the upgrade from v1.0.x to v2.0.x, you need to parse the binlog or relay log file to obtain the GTID sets corresponding to the binlog position.
+> If `enable-gtid` in the source configuration is enabled during the upgrade from v1.0.x to v2.0+, you need to parse the binlog or relay log file to obtain the GTID sets corresponding to the binlog position.
 
 #### Upgrade a v1.0.x cluster deployed by DM-Ansible
 
@@ -98,15 +98,15 @@ from:
 
 ### Data migration task configuration file
 
-For [data migration task configuration guide](task-configuration-guide.md), v2.0.x is basically compatible with v1.0.x. You can directly copy the configuration of v1.0.x.
+For [data migration task configuration guide](task-configuration-guide.md), v2.0+ is basically compatible with v1.0.x. You can directly copy the configuration of v1.0.x.
 
-## Step 2: Deploy the v2.0.x cluster
+## Step 2: Deploy the v2.0+ cluster
 
 > **Note:**
 >
-> Skip this step if you have other v2.0.x clusters available.
+> Skip this step if you have other v2.0+ clusters available.
 
-[Use TiUP](deploy-a-dm-cluster-using-tiup.md) to deploy a new v2.0.x cluster according to the required number of nodes.
+[Use TiUP](deploy-a-dm-cluster-using-tiup.md) to deploy a new v2.0+ cluster according to the required number of nodes.
 
 ## Step 3：Stop the v1.0.x cluster
 
@@ -116,7 +116,7 @@ If the original v1.0.x cluster is deployed by binary, you can stop the DM-worker
 
 ## Step 4: Upgrade data migration task
 
-1. Use the [`operate-source`](manage-source.md#operate-data-source) command to load the upstream database source configuration from [step 1](#step-1-prepare-v20x-configuration-file) into the v2.0.x cluster.
+1. Use the [`operate-source`](manage-source.md#operate-data-source) command to load the upstream database source configuration from [step 1](#step-1-prepare-v20-configuration-file) into the v2.0+ cluster.
 
 2. In the downstream TiDB cluster, obtain the corresponding global checkpoint information from the incremental checkpoint table of the v1.0.x data migration task.
 
@@ -133,7 +133,7 @@ If the original v1.0.x cluster is deployed by binary, you can stop the DM-worker
         +------------------+-------------------------+------------+
         ```
 
-3. Update the v1.0.x data migration task configuration file to start a new v2.0.x data migration task.
+3. Update the v1.0.x data migration task configuration file to start a new v2.0+ data migration task.
 
     - If the data migration task configuration file of v1.0.x is `task_v1.yaml`, copy it and rename it to `task_v2.yaml`.
     - Make the following changes to `task_v2.yaml`:
@@ -158,8 +158,8 @@ If the original v1.0.x cluster is deployed by binary, you can stop the DM-worker
             >
             > If `enable-gtid` is enabled in the source configuration, currently you need to parse the binlog or relay log file to obtain the GTID sets corresponding to the binlog position, and set it to `binlog-gtid` in the `meta`.
 
-4. Use the [`start-task`](create-task.md) command to start the upgraded data migration task through the v2.0.x data migration task configuration file.
+4. Use the [`start-task`](create-task.md) command to start the upgraded data migration task through the v2.0+ data migration task configuration file.
 
 5. Use the [`query-status`](query-status.md) command to confirm whether the data migration task is running normally.
 
-If the data migration task runs normally, it indicates that the DM upgrade to v2.0.x is successful.
+If the data migration task runs normally, it indicates that the DM upgrade to v2.0+ is successful.

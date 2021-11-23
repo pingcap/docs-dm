@@ -126,14 +126,11 @@ Set the parameters below to a value larger than the default 67108864 (64M).
 
 For details, see [Loader solution](https://docs.pingcap.com/tidb/stable/loader-overview#solution).
 
-## How to handle the error `Error 1054: Unknown column 'binlog_gtid' in 'field list'` that occurs when existing DM migration tasks of an DM 1.0 cluster are running on a DM 2.0 cluster?
+## How to handle the error `Error 1054: Unknown column 'binlog_gtid' in 'field list'` that occurs when existing DM migration tasks of an DM 1.0 cluster are running on a DM 2.0 or newer cluster?
 
-DM 2.0 introduces more fields to metadata tables such as checkpoint. In DM 2.0, if you directly run the `start-task` command with the task configuration file of the DM 1.0 cluster to continue the incremental data replication, the error `Error 1054: Unknown column 'binlog_gtid' in 'field list'` occurs.
+Since DM v2.0, if you directly run the `start-task` command with the task configuration file of the DM 1.0 cluster to continue the incremental data replication, the error `Error 1054: Unknown column 'binlog_gtid' in 'field list'` occurs.
 
-This error can be handled in any of the following ways:
-
-- [Import a DM 1.0 cluster into a new DM 2.0 cluster using TiUP](maintain-dm-using-tiup.md#import-and-upgrade-a-dm-10-cluster-deployed-using-dm-ansible).
-- [Manually import DM migration tasks of a DM 1.0 cluster to a DM 2.0 cluster](manually-upgrade-dm-1.0-to-2.0.md)。
+This error can be handled by [manually importing DM migration tasks of a DM 1.0 cluster to a DM 2.0 cluster](manually-upgrade-dm-1.0-to-2.0.md).
 
 ## Why does TiUP fail to deploy some versions of DM (for example, v2.0.0-hotfix)？
 
@@ -152,11 +149,11 @@ Check the configuration items `block-allow-list` and `table-route`:
 
 ## Why does the `replicate lag` monitor metric show no data when DM is not replicating from upstream?
 
-In DM 1.0, you need to enable `enable-heartbeat` to generate the monitor data. In DM 2.0, it is expected to have no data in the monitor metric `replicate lag` because this feature is not supported.
+In DM 1.0, you need to enable `enable-heartbeat` to generate the monitor data. In DM 2.0 and later versions, it is expected to have no data in the monitor metric `replicate lag` because this feature is not supported.
 
 ## How to handle the error `fail to initial unit Sync of subtask` when DM is starting a task, with the `RawCause` in the error message showing `context deadline exceeded`?
 
-This is a known issue in DM 2.0.0 version and will be fixed in DM 2.0.1 version. It is likely to be triggered when a replication task has a lot of tables to process. If you use TiUP to deploy DM, you can upgrade DM to the nightly version to fix this issue. Or you can download the 2.0.0-hotfix version from [the release page of DM](https://github.com/pingcap/dm/releases) on GitHub and manually replace the executable files.
+This is a known issue in DM 2.0.0 version and will be fixed in DM 2.0.1 version. It is likely to be triggered when a replication task has a lot of tables to process. If you use TiUP to deploy DM, you can upgrade DM to the nightly version to fix this issue. Or you can download the 2.0.0-hotfix version from [the release page of DM](https://github.com/pingcap/ticdc/releases) on GitHub and manually replace the executable files.
 
 ## How to handle the error `duplicate entry` when DM is replicating data?
 
@@ -193,7 +190,7 @@ if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to
 
 The reason for this type of error is that the TiDB parser cannot parse DDL statements sent by the upstream, such as `ALTER EVENT`, so `sql-skip` does not take effect as expected. You can add [binlog event filters](key-features.md#binlog-event-filter) in the configuration file to filter those statements and set `schema-pattern: "*"`. Starting from DM v2.0.1, DM pre-filters statements related to `EVENT`.
 
-In DM v2.0, `handle-error` replaces `sql-skip`. You can use `handle-error` instead to avoid this issue.
+Since DM v2.0, `handle-error` replaces `sql-skip`. You can use `handle-error` instead to avoid this issue.
 
 ## Why do `REPLACE` statements keep appearing in the downstream when DM is replicating?
 
@@ -203,7 +200,7 @@ You can check the DM-worker log file and search for a line containing `change co
 
 ## In DM v2.0, why does the full import task fail if DM restarts during the task?
 
-In DM v2.0.1 and lower versions, if DM restarts before the full import completes, the bindings between upstream data sources and DM-worker nodes might change. For example, it is possible that the intermediate data of the dump unit is on DM-worker node A but the load unit is run by DM-worker node B, thus causing the operation to fail.
+In DM v2.0.1 and earlier versions, if DM restarts before the full import completes, the bindings between upstream data sources and DM-worker nodes might change. For example, it is possible that the intermediate data of the dump unit is on DM-worker node A but the load unit is run by DM-worker node B, thus causing the operation to fail.
 
 The following are two solutions to this issue:
 
@@ -356,7 +353,7 @@ For data sources that can be replicated normally (such as `mysql2` in the above 
 
 ## In DM v2.0, how do I handle the error "heartbeat config is different from previous used: serverID not equal" when switching the connection between DM-workers and MySQL instances in a virtual IP environment with the `heartbeat` feature enabled?
 
-The `heartbeat` feature is disabled by default in DM v2.0. If you enable the feature in the task configuration file, it interferes with the high availability feature. To solve this issue, you can disable the `heartbeat` feature by setting `enable-heartbeat` to `false` in the task configuration file,  and then reload the task configuration file. DM will forcibly disable the `heartbeat` feature in subsequent releases.
+The `heartbeat` feature is disabled by default in DM v2.0 and later versions. If you enable the feature in the task configuration file, it interferes with the high availability feature. To solve this issue, you can disable the `heartbeat` feature by setting `enable-heartbeat` to `false` in the task configuration file,  and then reload the task configuration file. DM will forcibly disable the `heartbeat` feature in subsequent releases.
 
 ## Why does a DM-master fail to join the cluster after it restarts and DM reports the error "fail to start embed etcd, RawCause: member xxx has already been bootstrapped"?
 
