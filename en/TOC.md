@@ -3,6 +3,7 @@
 
 - About DM
   - [What is DM?](overview.md)
+  - [5.3 Release Notes](releases/5.3.0.md)
   - Basic Features
     - [Table Routing](key-features.md#table-routing)
     - [Block and Allow Lists](key-features.md#block-and-allow-table-lists)
