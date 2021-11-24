@@ -8,17 +8,10 @@ aliases: ['/docs/tidb-data-migration/dev/']
 
 [TiDB Data Migration](https://github.com/pingcap/ticdc/tree/master/dm) (DM) is a convenient data migration tool, which supports data migration from MySQL-compatible databases (such as MySQL, MariaDB, and Aurora MySQL) into TiDB. It can help to reduce the operation cost of data migration.
 
-The latest stable version of DM is v5.3.
-
-**What's new in DM 5.3:**
-
-- Compact multiple updates on a single row into one statement and merge batch updates of multiple rows into one statement to make sure low-latency replication from MySQL to TiDB.
-- Add [DM OpenAPI](open-api.md) to better maintain DM clusters (experimental).
-
 **Notes**
 
 - DM's GitHub repository has been moved to [https://github.com/pingcap/ticdc/tree/master/dm](https://github.com/pingcap/ticdc/tree/master/dm). You can go to the new repository to submit issues for follow-up feedback.
-- The DM release schedule will be aligned with [TiCDC](https://docs.pingcap.com/tidb/stable/ticdc-overview), so its version number also keeps up with TiCDC. Since v2.1.0, the DM version number is changed to v5.3.0.
+- As of DM v2.0, DM uses a TiDB-independent version number; after DM v2.0, DM uses the same version number as TiDB. Therefore, the next version of DM v2.0 is DM v5.3. There are no compatibility changes from DM v2.0 to v5.3, and the upgrade process is no different from a normal upgrade, only an increase in version number.
 
 <NavColumns>
 <NavColumn>
