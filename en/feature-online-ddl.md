@@ -52,7 +52,7 @@ In the task configuration file, `online-ddl` is at the same level of `name`. For
 ## ********* Basic configuration *********
 name: test                      # The name of the task. Should be globally unique.
 task-mode: all                  # The task mode. Can be set to `full`/`incremental`/`all`.
-shard-mode: "pessimistic"       # The shard merge mode. Optional modes are ""/"pessimistic"/"optimistic". The "" mode is used by default which means no specific mode is required. If the task is a shard merge task, set it to the "pessimistic" mode. After understanding the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
+shard-mode: "pessimistic"       # The shard merge mode. Optional modes are ""/"pessimistic"/"optimistic". The "" mode is used by default which means sharding DDL merge is disabled. If the task is a shard merge task, set it to the "pessimistic" mode. After understanding the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
 meta-schema: "dm_meta"          # The downstream database that stores the `meta` information.
 online-ddl: true                # Supports automatic processing of "gh-ost" and "pt" for the upstream database.
 online-ddl-scheme: "gh-ost"     # `online-ddl-scheme` will be deprecated in the future, so it is recommended to use `online-ddl`.
