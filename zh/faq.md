@@ -147,7 +147,7 @@ DM 在最后 `rename ghost_table to origin table` 的步骤会把内存的 DDL �
 
 ## DM v2.0.0 启动任务时出现 `fail to initial unit Sync of subtask`，报错信息的 `RawCause` 显示 `context deadline exceeded`
 
-该问题是 DM v2.0.0 的已知问题，在同步任务的表数目较多时触发，将在 v2.0.1 修复。使用 TiUP 部署的用户可以升级到开发版 nightly 解决该问题，或者访问 GitHub 上 [DM 仓库的 release 页面](https://github.com/pingcap/dm/releases)下载 v2.0.0-hotfix 版本手动替换可执行文件。
+该问题是 DM v2.0.0 的已知问题，在同步任务的表数目较多时触发，将在 v2.0.1 修复。使用 TiUP 部署的用户可以升级到开发版 nightly 解决该问题，或者访问 GitHub 上 [DM 仓库的 release 页面](https://github.com/pingcap/ticdc/releases)下载 v2.0.0-hotfix 版本手动替换可执行文件。
 
 ## DM 同步中报错 `duplicate entry`
 
