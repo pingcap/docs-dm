@@ -13,6 +13,7 @@
 <!-- You **must** choose the DM version(s) that your changes apply to. Fill in "x" in [] to tick the checkbox below.-->
 
 - [ ] master (the latest development version)
+- [ ] v5.3 (TiDB DM 5.3 versions)
 - [ ] v2.0 (TiDB DM 2.0 versions)
 - [ ] v1.0 (TiDB DM 1.0 versions)
 

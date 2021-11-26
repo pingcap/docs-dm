@@ -1,8 +1,8 @@
 ---
-title: Data Migration 增量数据迁移场景
+title: 增量迁移数据到 TiDB
 ---
 
-# Data Migration 增量数据迁移场景
+# 增量迁移数据到 TiDB
 
 本文介绍如何使用 DM 将源数据库从指定位置开始的 Binlog 同步到下游 TiDB。本文以迁移一个数据源 MySQL 实例为例。
 
@@ -96,7 +96,7 @@ CREATE TABLE `messages` (
    ##  该场景多见于，全量迁移的数据不属于数据源的一个一致性快照，随后从一个早于全量迁移数据之前的位置开始同步增量数据
    syncers:            # sync 处理单元的运行配置参数
      global:           # 配置名称
-       safe-mode: true # 设置为 true，则将来自数据源的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`，保证在表结构中存在主键或唯一索引的条件下迁移数据时可以重复导入 DML。在启动或恢复增量复制任务的前 1 分钟内 TiDB DM 会自动启动 safe mode
+       safe-mode: true # 设置为 true，则将来自数据源的 `INSERT` 改写为 `REPLACE`，将 `UPDATE` 改写为 `DELETE` 与 `REPLACE`。
 
    ## 配置数据源
    mysql-instances:

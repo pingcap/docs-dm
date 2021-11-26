@@ -1,11 +1,11 @@
 ---
-title: DM 分库分表合并场景
+title: 分表合并迁移到 TiDB
 aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-shard-merge/']
 ---
 
-# DM 分库分表合并场景
+# 分表合并迁移到 TiDB
 
-本文介绍如何在分库分表合并场景中使用 Data Migration (DM)。
+本文介绍如何在分库分表合并场景中使用 Data Migration (DM) 将上游数据迁移至下游 TiDB 集群。
 
 下面介绍了一个简单的场景，两个数据源 MySQL 实例的分库和分表数据需要迁移至下游 TiDB 集群。更多详情请参阅[分表合并数据迁移最佳实践](shard-merge-best-practices.md)。
 

@@ -6,19 +6,12 @@ aliases: ['/docs/tidb-data-migration/dev/']
 
 # TiDB Data Migration Documentation
 
-[TiDB Data Migration](https://github.com/pingcap/dm) (DM) is an integrated data migration task management platform, which supports data migration from MySQL-compatible databases (such as MySQL, MariaDB, and Aurora MySQL) into TiDB. It can help to reduce the operation cost of data migration.
+[TiDB Data Migration](https://github.com/pingcap/ticdc/tree/master/dm) (DM) is a convenient data migration tool, which supports data migration from MySQL-compatible databases (such as MySQL, MariaDB, and Aurora MySQL) into TiDB. It can help to reduce the operation cost of data migration.
 
-The latest stable version of DM is v2.0.
+**Notes**
 
-**What's new in DM v2.0:**
-
-- [High availability of data migration tasks](dm-arch.md#high-availability). The data migration task can run normally even when some DM-master or DM-worker nodes fail.
-- [Sharding DDL support in the optimistic mode](feature-shard-merge-optimistic.md). In this mode, migration latency can be reduced in some scenarios and you can make A/B changes in the upstream database.
-- Better usability, including the new [error handling mechanism](handle-failed-ddl-statements.md) and the easier-to-read error messages and error handling suggestions.
-- [TLS support](enable-tls.md) for connections between the upstream and the downstream, and for connections between DM components.
-- Support for migrating data from MySQL 8.0 (experimental).
-
-Currently, DM does not have a graphical interface and provides limited support for managing a large number of data migration tasks. **If you need to operate a large number of data migration tasks, using DM might be inconvenient.**
+- DM's GitHub repository has been moved to [https://github.com/pingcap/ticdc/tree/master/dm](https://github.com/pingcap/ticdc/tree/master/dm). You can go to the new repository to submit issues for follow-up feedback.
+- As of DM v2.0, DM uses a TiDB-independent version number; after DM v2.0, DM uses the same version number as TiDB. Therefore, the next version of DM v2.0 is DM v5.3. There are no compatibility changes from DM v2.0 to v5.3, and the upgrade process is no different from a normal upgrade, only an increase in version number.
 
 <NavColumns>
 <NavColumn>
