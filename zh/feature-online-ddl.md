@@ -54,7 +54,7 @@ online-ddl 在 task 配置文件里面与 name 同级，例子详见下面配置
 ## ********* 基本信息配置 *********
 name: test                      # 任务名称，需要全局唯一
 task-mode: all                  # 任务模式，可设为 "full"、"incremental"、"all"
-shard-mode: "pessimistic"       # 如果为分库分表合并任务则需要配置该项。默认使用悲观协调模式 "pessimistic"，在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
+shard-mode: "pessimistic"       # 默认值为 "" 即无需协调。如果为分库分表合并任务，请设置为悲观协调模式 "pessimistic"。在深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
 online-ddl: true                # 支持上游使用 gh-ost 、pt 两种工具的自动处理
 online-ddl-scheme: "gh-ost"     # `online-ddl-scheme` 在未来将被弃用，建议使用 `online-ddl`

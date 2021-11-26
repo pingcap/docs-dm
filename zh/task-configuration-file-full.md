@@ -23,7 +23,8 @@ title: DM 任务完整配置文件介绍
 ## ********* 基本信息配置 *********
 name: test                      # 任务名称，需要全局唯一
 task-mode: all                  # 任务模式，可设为 "full" - "只进行全量数据迁移"、"incremental" - "Binlog 实时同步"、"all" - "全量 + Binlog 实时同步"
-shard-mode: "pessimistic"       # 任务协调模式，可选的模式有 ""、"pessimistic、"optimistic"。默认使用 "" 即无需协调。如果是分库分表合并任务，请设置为悲观协调模式 "pessimistic"。
+is-sharding: true               # 该配置项从 DM v2.0.0 起弃用，其功能被 `shard-mode` 取代，建议使用 `shard-mode` 代替 `is-sharding`
+shard-mode: "pessimistic"       # 任务协调模式，可选的模式有 ""、"pessimistic、"optimistic"。默认值为 "" 即无需协调。如果是分库分表合并任务，请设置为悲观协调模式 "pessimistic"。
                                 # 在 v2.0.6 版本后乐观模式逐渐成熟，深入了解乐观协调模式的原理和使用限制后，也可以设置为乐观协调模式 "optimistic"
 meta-schema: "dm_meta"          # 下游储存 `meta` 信息的数据库
 timezone: "Asia/Shanghai"       # 时区
@@ -38,10 +39,10 @@ target-database:                # 下游数据库实例配置
   user: "root"
   password: "/Q7B9DizNLLTTfiZHv9WoEAKamfpIUs="  # 推荐使用经 `dmctl encrypt` 加密后的密码
   max-allowed-packet: 67108864                  # 设置 DM 内部连接 TiDB 服务器时，TiDB 客户端的 "max_allowed_packet" 限制（即接受的最大数据包限制），单位为字节，默认 67108864 (64 MB)
-                                                # 该配置项从 DM v2.0.0 版本起弃用，DM 会自动获取连接 TiDB 的 "max_allowed_packet"
+                                                # 该配置项从 DM v2.0.0 起弃用，DM 会自动获取连接 TiDB 的 "max_allowed_packet"
   session:                                      # 设置 TiDB 的 session 变量，在 v1.0.6 版本引入。更多变量及解释参见 `https://docs.pingcap.com/zh/tidb/stable/system-variables`
-    sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE" # 从 DM v2.0.0 版本起，如果配置文件中没有出现该项，DM 会自动从下游 TiDB 中获得适合用于 "sql_mode" 的值。手动配置该项具有更高优先级
-    tidb_skip_utf8_check: 1                              # 从 DM v2.0.0 版本起，如果配置文件中没有出现该项，DM 会自动从下游 TiDB 中获得适合用于 "tidb_skip_utf8_check" 的值。手动配置该项具有更高优先级
+    sql_mode: "ANSI_QUOTES,NO_ZERO_IN_DATE,NO_ZERO_DATE" # 从 DM v2.0.0 起，如果配置文件中没有出现该项，DM 会自动从下游 TiDB 中获得适合用于 "sql_mode" 的值。手动配置该项具有更高优先级
+    tidb_skip_utf8_check: 1                              # 从 DM v2.0.0 起，如果配置文件中没有出现该项，DM 会自动从下游 TiDB 中获得适合用于 "tidb_skip_utf8_check" 的值。手动配置该项具有更高优先级
     tidb_constraint_check_in_place: 0
   security:                       # 下游 TiDB TLS 相关配置
     ssl-ca: "/path/to/ca.pem"
