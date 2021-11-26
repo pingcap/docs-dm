@@ -181,7 +181,7 @@ The following example shows how to configure the task as a shard merge task:
 
 ## ********* Basic information *********
 name: test                      # The name of the task. Should be globally unique.
-shard-mode: "pessimistic"       # The shard-mode must be configured for a shard merge task. By default, use the "pessimistic" mode. After getting a deep understanding of the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
+shard-mode: "pessimistic"       # The shard merge mode. Optional modes are ""/"pessimistic"/"optimistic". The "" mode is used by default which means no specific mode is required. If the task is a shard merge task, set it to the "pessimistic" mode. After getting a deep understanding of the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
 ```
 
 ## Other configurations
@@ -193,7 +193,7 @@ The following is an overall task configuration example of this document. The com
 
 ## ********* Basic configuration *********
 name: test                      # The name of the task. Should be globally unique.
-shard-mode: "pessimistic"       # The shard-mode must be configured for a shard merge task. By default, use the "pessimistic" mode. After getting a deep understanding of the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
+shard-mode: "pessimistic"       # The shard merge mode. Optional modes are ""/"pessimistic"/"optimistic". The "" mode is used by default which means no specific mode is required. If the task is a shard merge task, set it to the "pessimistic" mode. After getting a deep understanding of the principles and restrictions of the "optimistic" mode, you can set it to the "optimistic" mode.
 task-mode: all                  # The task mode. Can be set to `full`(only migrates full data)/`incremental`(replicates binlog synchronously)/`all` (replicates both full and incremental binlogs).
 
 ## ******** Data source configuration **********
