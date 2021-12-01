@@ -2,8 +2,8 @@
 <!-- markdownlint-disable MD041 -->
 
 - 关于 DM
-  - [什么是 DM？](overview.md)
-  - [5.3 Release Notes](releases/5.3.0.md)
+  - [DM 简介](overview.md)
+  - [DM 5.3 Release Notes](releases/5.3.0.md)
   - 基本功能
     - [Table routing](key-features.md#table-routing)
     - [Block & Allow Lists](key-features.md#block--allow-table-lists)
