@@ -9,8 +9,8 @@ summary: Learn about TiDB Data Migration documentation.
 
 > **Note:**
 >
-> - Since October 2021, DM's GitHub repository has been moved to [pingcap/ticdc](https://github.com/pingcap/ticdc/tree/master/dm). If you have any issue, submit your issue to the `pingcap/ticdc` repository for follow-up feedback.
-> - In earlier versions (v1.0 and v2.0), DM uses a TiDB-independent version number. Since v5.3, DM uses the same version number as TiDB. The next version of DM v2.0 is DM v5.3. There are no compatibility changes from DM v2.0 to v5.3, and the upgrade process is no different from a normal upgrade, only an increase in version number.
+> - Since October 2021, DM's GitHub repository has been moved to [pingcap/ticdc](https://github.com/pingcap/ticdc/tree/master/dm). If you see any issues with DM, submit your issue to the `pingcap/ticdc` repository for feedback.
+> - In earlier versions (v1.0 and v2.0), DM uses version numbers that are independent of TiDB versions. Since v5.3, DM uses the same version number as TiDB. The next version of DM v2.0 is DM v5.3. There are no compatibility changes from DM v2.0 to v5.3, and the upgrade process is no different from a normal upgrade, only an increase in version number.
 
 <NavColumns>
 <NavColumn>
