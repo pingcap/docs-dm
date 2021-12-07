@@ -21,7 +21,7 @@
   - [Quick Start](quick-start-with-dm.md)
   - [Deploy a DM cluster Using TiUP](deploy-a-dm-cluster-using-tiup.md)
   - [Create a Data Source](quick-start-create-source.md)
-  - [Data Migration Scenarios]
+  - Data Migration Scenarios
     - [Data Migration Scenario Overview](quick-create-migration-task.md)
     - [Migrate Data from Multiple Data Sources to TiDB](usage-scenario-simple-migration.md)
     - [Migrate Sharded Schemas and Tables to TiDB](usage-scenario-shard-merge.md)
