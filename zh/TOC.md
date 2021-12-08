@@ -61,7 +61,7 @@
 - 使用场景
   - [从 Aurora 迁移数据到 TiDB](migrate-from-mysql-aurora.md)
   - [TiDB 表结构存在更多列的迁移场景](usage-scenario-downstream-more-columns.md)
-  - [变更同步的 MySQL 实例](usage-scenario-master-slave-switch.md)
+  - [变更同步的 MySQL 实例](/usage-scenario-master-slave-switch.md)
 - 故障处理
   - [故障及处理方法](error-handling.md)
   - [性能问题及处理方法](handle-performance-issues.md)
