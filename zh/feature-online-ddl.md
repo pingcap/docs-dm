@@ -9,14 +9,13 @@ aliases: ['/docs-cn/tidb-data-migration/dev/feature-online-ddl-scheme/','/zh/tid
 
 ## 概述
 
-DDL 是数据库应用中必然会使用的一类 SQL。MySQL 虽然在 5.6 的版本以后支持了 online-ddl 功能，但是也有或多或少的限制。比如 MDL 锁的获取，某些 DDL
-还是需要以 Copy 的方式来进行，在生产业务使用中，DDL 执行过程中的锁表会一定程度上阻塞数据库的读取或者写入。
+DDL 是数据库应用中必然会使用的一类 SQL。MySQL 虽然在 5.6 的版本以后支持了 online-ddl 功能，但是也有或多或少的限制。比如 MDL 锁的获取，某些 DDL 还是需要以 Copy 的方式来进行，在生产业务使用中，DDL 执行过程中的锁表会一定程度上阻塞数据库的读取或者写入。
 
 因此，用户往往会选择 online DDL 工具执行 DDL，把对读写的影响降到最低。常见的 Online DDL 工具有 [gh-ost](https://github.com/github/gh-ost) 和 [pt-osc](https://www.percona.com/doc/percona-toolkit/3.0/pt-online-schema-change.html)。
 
 这些工具的工作原理可以概括为
 
-1. 根据 DDL 目标表 (real table) 的表结构新建一张镜像表 (ghost table)；
+2. 根据 DDL 目标表 (real table) 的表结构新建一张镜像表 (ghost table)；
 2. 在镜像表上应用 DDL；
 3. 将 DDL 目标表的数据同步到镜像表；
 4. 在目标表与镜像表数据一致后，通过 `RENAME` 语句使镜像表替换掉目标表。
