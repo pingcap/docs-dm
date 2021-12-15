@@ -17,7 +17,7 @@ title: Data Migration 简介
 
 要快速了解 DM 的原理架构、适用场景，建议先观看下面的培训视频（时长 22 分钟）。注意本视频只作为学习参考，具体操作步骤和最新功能，请以文档内容为准。
 
-<video src="https://tidb-docs.s3.us-east-2.amazonaws.com/migration-videos/Lesson+20+%E8%AF%BE%E7%A8%8B+Part01.mp4" width="600px" height="450px" controls="controls"></video>
+<video src="https://tidb-docs.s3.us-east-2.amazonaws.com/compressed+-+Lesson+20+part+1.mp4" width="600px" height="450px" controls="controls" poster="https://tidb-docs.s3.us-east-2.amazonaws.com/thumbnail+-+lesson+20+part+1.png"></video>
 
 下文介绍 DM 所具备的功能。
 
