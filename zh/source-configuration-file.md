@@ -20,7 +20,7 @@ enable-gtid: false
 enable-relay: false       # 该配置项从 DM v2.0.2 版本起弃用，使用 `start-relay` 命令开启 relay log
 relay-binlog-name: ""     # 拉取上游 binlog 的起始文件名
 relay-binlog-gtid: ""     # 拉取上游 binlog 的起始 GTID
-relay-dir: "./relay_log"  # 存储 relay log 的目录，默认值为 "./relay_log"
+relay-dir: "relay-dir"    # 存储 relay log 的目录，默认值为 "relay-dir"
 
 from:
   host: "127.0.0.1"
