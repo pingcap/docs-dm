@@ -187,4 +187,4 @@ This document introduces how to deal with the alert information in DM.
 
 - Solution:
 
-    Refer to [Handle Performance Issues](handle-performance-issues.md).
+    Refer to [Handle Performance Issues](dm-handle-performance-issues.md).
