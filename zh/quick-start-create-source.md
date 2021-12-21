@@ -11,7 +11,7 @@ summary: 了解如何为 DM 创建数据源。
 
 本文档介绍如何为 TiDB Data Migration (DM) 的数据迁移任务创建数据源。
 
-数据源包含了访问迁移任务上游所需的信息。数据迁移任务需要引用对应的数据源来获取访问配置信息。因此，在创建数据迁移任务之前，需要先创建任务的数据源。详细的数据源管理命令请参考[管理上游数据源](manage-source.md)。
+数据源包含了访问迁移任务上游所需的信息。数据迁移任务需要引用对应的数据源来获取访问配置信息。因此，在创建数据迁移任务之前，需要先创建任务的数据源。详细的数据源管理命令请参考[管理上游数据源](dm-manage-source.md)。
 
 ## 第一步：配置数据源
 
@@ -57,7 +57,7 @@ summary: 了解如何为 DM 创建数据源。
 tiup dmctl --master-addr <master-addr> operate-source create ./source-mysql-01.yaml
 ```
 
-数据源配置文件的其他配置参考[数据源配置文件介绍](source-configuration-file.md)。
+数据源配置文件的其他配置参考[数据源配置文件介绍](dm-source-configuration-file.md)。
 
 命令返回结果如下：
 

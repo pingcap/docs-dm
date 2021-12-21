@@ -68,7 +68,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
 
 ## 迁移方案
 
-- 为了满足[迁移要求](#迁移要求)中第一点的前三条要求，需要配置以下 [table routing 规则](key-features.md#table-routing)：
+- 为了满足[迁移要求](#迁移要求)中第一点的前三条要求，需要配置以下 [table routing 规则](dm-key-features.md#table-routing)：
 
     {{< copyable "" >}}
 
@@ -86,7 +86,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
         target-schema: "user_south"
     ```
 
-- 为了满足[迁移要求](#迁移要求)中第二点的第一条要求，需要配置以下 [table routing 规则](key-features.md#table-routing)：
+- 为了满足[迁移要求](#迁移要求)中第二点的第一条要求，需要配置以下 [table routing 规则](dm-key-features.md#table-routing)：
 
     {{< copyable "" >}}
 
@@ -105,7 +105,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
         target-table:  "store_shenzhen"
     ```
 
-- 为了满足[迁移要求](#迁移要求)中第一点的第四条要求，需要配置以下 [binlog event filter 规则](key-features.md#binlog-event-filter)：
+- 为了满足[迁移要求](#迁移要求)中第一点的第四条要求，需要配置以下 [binlog event filter 规则](dm-key-features.md#binlog-event-filter)：
 
     {{< copyable "" >}}
 
@@ -123,7 +123,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
         action: Ignore
     ```
 
-- 为了满足[迁移要求](#迁移要求)中第二点的第二条要求，需要配置以下 [binlog event filter 规则](key-features.md#binlog-event-filter)：
+- 为了满足[迁移要求](#迁移要求)中第二点的第二条要求，需要配置以下 [binlog event filter 规则](dm-key-features.md#binlog-event-filter)：
 
     {{< copyable "" >}}
 
@@ -140,7 +140,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
     >
     > `store-filter-rule` 不同于 `log-filter-rule` 和 `user-filter-rule`。`store-filter-rule` 是针对整个 `store` 库的规则，而 `log-filter-rule` 和 `user-filter-rule` 是针对 `user` 库中 `log` 表的规则。
 
-- 为了满足[迁移要求](#迁移要求)中的第三点要求，需要配置以下 [Block & Allow Lists](key-features.md#block--allow-table-lists)：
+- 为了满足[迁移要求](#迁移要求)中的第三点要求，需要配置以下 [Block & Allow Lists](dm-key-features.md#block--allow-table-lists)：
 
     {{< copyable "" >}}
 
@@ -152,7 +152,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/usage-scenario-simple-replication/',
 
 ## 迁移任务配置
 
-以下是完整的迁移任务配置，更多详情请参阅 [数据迁移任务配置向导](task-configuration-guide.md)。
+以下是完整的迁移任务配置，更多详情请参阅 [数据迁移任务配置向导](dm-task-configuration-guide.md)。
 
 {{< copyable "" >}}
 

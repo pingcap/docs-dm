@@ -20,7 +20,7 @@ MySQL/MariaDB 生成的 Binlog 文件中的数据变更信息，具体请参考 
 
 ### Binlog event filter
 
-比 Block & allow table list 更加细粒度的过滤功能，具体可参考 [Binlog Event Filter](overview.md#binlog-event-filter)。
+比 Block & allow table list 更加细粒度的过滤功能，具体可参考 [Binlog Event Filter](dm-overview.md#binlog-event-filter)。
 
 ### Binlog position
 
@@ -32,7 +32,7 @@ DM-worker 内部用于读取上游 Binlog 或本地 Relay log 并迁移到下游
 
 ### Block & allow table list
 
-针对上游数据库实例表的黑白名单过滤功能，具体可参考 [Block & Allow Table Lists](overview.md#block--allow-lists)。该功能与 [MySQL Replication Filtering](https://dev.mysql.com/doc/refman/5.6/en/replication-rules.html) 及 [MariaDB Replication Filters](https://mariadb.com/kb/en/library/replication-filters/) 类似。
+针对上游数据库实例表的黑白名单过滤功能，具体可参考 [Block & Allow Table Lists](dm-overview.md#block--allow-lists)。该功能与 [MySQL Replication Filtering](https://dev.mysql.com/doc/refman/5.6/en/replication-rules.html) 及 [MariaDB Replication Filters](https://mariadb.com/kb/en/library/replication-filters/) 类似。
 
 ## C
 
@@ -122,13 +122,13 @@ DM-worker 内部用于从上游拉取 Binlog 并写入数据到 Relay log 的处
 
 ### Subtask status
 
-数据迁移子任务所处的状态，目前包括 `New`、`Running`、`Paused`、`Stopped` 及 `Finished` 5 种状态。有关数据迁移任务、子任务状态的更多信息可参考[任务状态](query-status.md#任务状态)。
+数据迁移子任务所处的状态，目前包括 `New`、`Running`、`Paused`、`Stopped` 及 `Finished` 5 种状态。有关数据迁移任务、子任务状态的更多信息可参考[任务状态](dm-query-status.md#任务状态)。
 
 ## T
 
 ### Table routing
 
-用于支持将上游 MySQL/MariaDB 实例的某些表迁移到下游指定表的路由功能，可以用于分库分表的合并迁移，具体可参考 [Table routing](key-features.md#table-routing)。
+用于支持将上游 MySQL/MariaDB 实例的某些表迁移到下游指定表的路由功能，可以用于分库分表的合并迁移，具体可参考 [Table routing](dm-key-features.md#table-routing)。
 
 ### Task
 
@@ -136,4 +136,4 @@ DM-worker 内部用于从上游拉取 Binlog 并写入数据到 Relay log 的处
 
 ### Task status
 
-数据迁移子任务所处的状态，由 [Subtask status](#subtask-status) 整合而来，具体信息可查看[任务状态](query-status.md#任务状态)。
+数据迁移子任务所处的状态，由 [Subtask status](#subtask-status) 整合而来，具体信息可查看[任务状态](dm-query-status.md#任务状态)。

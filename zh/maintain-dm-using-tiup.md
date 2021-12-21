@@ -181,7 +181,7 @@ tiup dm scale-in prod-cluster -N 172.16.5.140:8262
 
 > **注意：**
 >
-> 从 v2.0.5 版本开始，dmctl 支持[导出和导入集群的数据源和任务配置](export-import-config.md)。
+> 从 v2.0.5 版本开始，dmctl 支持[导出和导入集群的数据源和任务配置](dm-export-import-config.md)。
 >
 > 升级前，可使用 `config export` 命令导出集群的配置文件，升级后如需降级回退到旧版本，可重建旧集群后，使用 `config import` 导入之前的配置。
 >
