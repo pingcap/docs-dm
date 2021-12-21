@@ -36,7 +36,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/']
 <NavColumn>
 <ColumnTitle>部署使用</ColumnTitle>
 
-- [软硬件要求](hardware-and-software-requirements.md)
+- [软硬件要求](dm-hardware-and-software-requirements.md)
 - [使用 TiUP 部署集群（推荐）](deploy-a-dm-cluster-using-tiup.md)
 - [使用 TiUP 离线镜像部署集群](deploy-a-dm-cluster-using-tiup-offline.md)
 - [使用 Binary 部署集群](deploy-a-dm-cluster-using-binary.md)
@@ -53,7 +53,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/']
 - [升级版本](manually-upgrade-dm-1.0-to-2.0.md)
 - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
 - [处理告警](handle-alerts.md)
-- [日常巡检](daily-check.md)
+- [日常巡检](dm-daily-check.md)
 
 </NavColumn>
 
@@ -72,7 +72,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/']
 - [DM 命令行参数](command-line-flags.md)
 - [配置概述](config-overview.md)
 - [监控指标](monitor-a-dm-cluster.md)
-- [告警信息](alert-rules.md)
+- [告警信息](dm-alert-rules.md)
 - [错误码](error-handling.md#常见故障处理方法)
 
 </NavColumn>

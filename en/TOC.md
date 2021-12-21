@@ -28,7 +28,7 @@
     - [Migrate Incremental Data to TiDB](usage-scenario-incremental-migration.md)
     - [Migrate Tables when There Are More Columns Downstream](usage-scenario-downstream-more-columns.md)
 - Deploy
-  - [Software and Hardware Requirements](hardware-and-software-requirements.md)
+  - [Software and Hardware Requirements](dm-hardware-and-software-requirements.md)
   - Deploy a DM Cluster
     - [Use TiUP (Recommended)](deploy-a-dm-cluster-using-tiup.md)
     - [Use TiUP Offline](deploy-a-dm-cluster-using-tiup-offline.md)
@@ -57,7 +57,7 @@
   - [Manually Handle Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
   - [Manage Schemas of Tables to be Migrated](manage-schema.md)
   - [Handle Alerts](handle-alerts.md)
-  - [Daily Check](daily-check.md)
+  - [Daily Check](dm-daily-check.md)
 - Usage Scenarios
   - [Migrate from Aurora to TiDB](migrate-from-mysql-aurora.md)
   - [Migrate when TiDB Tables Have More Columns](usage-scenario-downstream-more-columns.md)
@@ -80,12 +80,12 @@
     - [Data Migration Task Configuration](task-configuration-guide.md)
 - Secure
   - [Enable TLS for DM Connections](enable-tls.md)
-  - [Generate Self-signed Certificates](generate-self-signed-certificates.md)
+  - [Generate Self-signed Certificates](dm-generate-self-signed-certificates.md)
   - [Monitoring Metrics](monitor-a-dm-cluster.md)
-  - [Alert Rules](alert-rules.md)
+  - [Alert Rules](dm-alert-rules.md)
   - [Error Codes](error-handling.md#handle-common-errors)
 - [FAQ](faq.md)
-- [Glossary](glossary.md)
+- [Glossary](dm-glossary.md)
 - Release Notes
   - v5.3
     - [5.3.0](releases/5.3.0.md)

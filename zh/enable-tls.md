@@ -19,7 +19,7 @@ summary: 了解如何为 DM 的连接开启加密传输。
 
     有多种工具可以生成自签名证书，如 `openssl`，`cfssl` 及 `easy-rsa` 等基于 `openssl` 的工具。
 
-    这里提供一个使用 `openssl` 生成证书的示例：[生成自签名证书](generate-self-signed-certificates.md)。
+    这里提供一个使用 `openssl` 生成证书的示例：[生成自签名证书](dm-generate-self-signed-certificates.md)。
 
 2. 配置证书。
 

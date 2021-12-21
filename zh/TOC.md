@@ -28,7 +28,7 @@
     - [增量迁移数据到 TiDB](usage-scenario-incremental-migration.md)
     - [下游 TiDB 表结构存在更多列的数据迁移](usage-scenario-downstream-more-columns.md)
 - 部署使用
-  - [软硬件要求](hardware-and-software-requirements.md)
+  - [软硬件要求](dm-hardware-and-software-requirements.md)
   - 部署 DM 集群
     - [使用 TiUP（推荐）](deploy-a-dm-cluster-using-tiup.md)
     - [使用 TiUP 离线镜像](deploy-a-dm-cluster-using-tiup-offline.md)
@@ -57,7 +57,7 @@
   - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
   - [管理迁移表的表结构](manage-schema.md)
   - [处理告警](handle-alerts.md)
-  - [日常巡检](daily-check.md)
+  - [日常巡检](dm-daily-check.md)
 - 使用场景
   - [从 Aurora 迁移数据到 TiDB](migrate-from-mysql-aurora.md)
   - [TiDB 表结构存在更多列的迁移场景](usage-scenario-downstream-more-columns.md)
@@ -80,12 +80,12 @@
     - [数据迁移任务配置向导](task-configuration-guide.md)
   - 安全
     - [为 DM 的连接开启加密传输](enable-tls.md)
-    - [生成自签名证书](generate-self-signed-certificates.md)
+    - [生成自签名证书](dm-generate-self-signed-certificates.md)
   - [监控指标](monitor-a-dm-cluster.md)
-  - [告警信息](alert-rules.md)
+  - [告警信息](dm-alert-rules.md)
   - [错误码](error-handling.md#常见故障处理方法)
 - [常见问题](faq.md)
-- [术语表](glossary.md)
+- [术语表](dm-glossary.md)
 - 版本发布历史
   - v5.3
     - [5.3.0](releases/5.3.0.md)

@@ -57,7 +57,7 @@ To ensure a successful migration, you need to do prechecks before starting the m
 
 ### DM nodes deployment
 
-As the hub of data migration, DM needs to connect to the upstream Aurora cluster and the downstream TiDB cluster. Therefore, you need to use the MySQL client to check whether the nodes in which DM is to be deployed can connect to the upstream and downstream. In addition, for details of DM requirements on hardware, software, and the node number, see [DM Cluster Software and Hardware Recommendations](hardware-and-software-requirements.md).
+As the hub of data migration, DM needs to connect to the upstream Aurora cluster and the downstream TiDB cluster. Therefore, you need to use the MySQL client to check whether the nodes in which DM is to be deployed can connect to the upstream and downstream. In addition, for details of DM requirements on hardware, software, and the node number, see [DM Cluster Software and Hardware Recommendations](dm-hardware-and-software-requirements.md).
 
 ### Aurora
 
@@ -187,7 +187,7 @@ When the data sources are successfully added, the return information of each dat
 
 > **Note:**
 >
-> Because Aurora does not support FTWRL, write operations have to be paused when you only perform the full data migration to export data. See [AWS documentation](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls) for details. In this example, both full data migration and incremental replication are performed, and DM automatically enables the [`safe mode`](glossary.md#safe-mode) to solve this pause issue. To ensure data consistency in other combinations of task mode, see [AWS documentation](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls).
+> Because Aurora does not support FTWRL, write operations have to be paused when you only perform the full data migration to export data. See [AWS documentation](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls) for details. In this example, both full data migration and incremental replication are performed, and DM automatically enables the [`safe mode`](dm-glossary.md#safe-mode) to solve this pause issue. To ensure data consistency in other combinations of task mode, see [AWS documentation](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls).
 
 This example migrates the existing data in Aurora and replicates incremental data to TiDB in real time, which is the **full data migration plus incremental replication** mode. According to the TiDB cluster information above, the added `source-id`, and the table to be migrated, save the following task configuration file `task.yaml`:
 

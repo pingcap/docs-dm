@@ -36,7 +36,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 <NavColumn>
 <ColumnTitle>Deploy and Use</ColumnTitle>
 
-- [Software and Hardware Requirements](hardware-and-software-requirements.md)
+- [Software and Hardware Requirements](dm-hardware-and-software-requirements.md)
 - [Deploy DM Using TiUP (Recommended)](deploy-a-dm-cluster-using-tiup.md)
 - [Deploy DM Using TiUP Offline](deploy-a-dm-cluster-using-tiup-offline.md)
 - [Deploy DM Using Binary](deploy-a-dm-cluster-using-binary.md)
@@ -53,7 +53,7 @@ aliases: ['/docs/tidb-data-migration/dev/']
 - [Upgrade DM](manually-upgrade-dm-1.0-to-2.0.md)
 - [Manually Handle Sharding DDL Locks](manually-handling-sharding-ddl-locks.md)
 - [Handle Alerts](handle-alerts.md)
-- [Daily Check](daily-check.md)
+- [Daily Check](dm-daily-check.md)
 
 </NavColumn>
 

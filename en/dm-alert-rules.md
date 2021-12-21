@@ -1,6 +1,7 @@
 ---
 title: DM Alert Information
 summary: Introduce the alert information of DM.
+aliases: ['/tidb-data-migration/dev/alert-rules/']
 ---
 
 # DM Alert Information

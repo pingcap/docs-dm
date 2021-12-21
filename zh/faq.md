@@ -182,7 +182,7 @@ if the DDL is not needed, you can use a filter rule with \"*\" schema-pattern to
 
 ## DM 同步时下游长时间出现 REPLACE 语句
 
-请检查是否符合 [safe mode 触发条件](glossary.md#safe-mode)。如果任务发生错误并自动恢复，或者发生高可用调度，会满足“启动或恢复任务的前 1 分钟”这一条件，因此启用 safe mode。
+请检查是否符合 [safe mode 触发条件](dm-glossary.md#safe-mode)。如果任务发生错误并自动恢复，或者发生高可用调度，会满足“启动或恢复任务的前 1 分钟”这一条件，因此启用 safe mode。
 
 可以检查 DM-worker 日志，在其中搜索包含 `change count` 的行，该行的 `new count` 非零时会启用 safe mode。检查 safe mode 启用时间以及启用前是否有报错，以定位启用原因。
 

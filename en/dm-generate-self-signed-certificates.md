@@ -1,6 +1,7 @@
 ---
 title: Generate Self-signed Certificates
 summary: Use `openssl` to generate self-signed certificates.
+aliases: ['/tidb-data-migration/dev/generate-self-signed-certificates/']
 ---
 
 # Generate Self-signed Certificates
