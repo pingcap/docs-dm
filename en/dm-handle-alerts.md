@@ -187,9 +187,4 @@ This document introduces how to deal with the alert information in DM.
 
 - Solution:
 
-    Refer to [Handle Performance Issues](dm-handle-performance-issues.md).
-nit by **more than** 1 for 10 minutes, an alert is triggered.
-
-- Solution:
-
     Refer to [Handle Performance Issues](handle-performance-issues.md).
