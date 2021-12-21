@@ -68,7 +68,7 @@ If GTID is enabled in Aurora, you can migrate data based on GTID. For how to ena
 > **Note:**
 >
 > + GTID-based data migration requires MySQL 5.7 (Aurora 2.04) version or later.
-> + In addition to the Aurora-specific configuration above, the upstream database must meet other requirements for migrating from MySQL, such as table schemas, character sets, and privileges. See [Checking Items](precheck.md#checking-items) for details.
+> + In addition to the Aurora-specific configuration above, the upstream database must meet other requirements for migrating from MySQL, such as table schemas, character sets, and privileges. See [Checking Items](dm-precheck.md#checking-items) for details.
 
 ## Step 2: Deploy the DM cluster
 
@@ -122,7 +122,7 @@ The number of `master`s and `worker`s in the returned result is consistent with 
 
 > **Note:**
 >
-> The configuration file used by DM supports database passwords in plaintext or ciphertext. It is recommended to use password encrypted using dmctl. To obtain the ciphertext password, see [Encrypt the database password using dmctl](manage-source.md#encrypt-the-database-password).
+> The configuration file used by DM supports database passwords in plaintext or ciphertext. It is recommended to use password encrypted using dmctl. To obtain the ciphertext password, see [Encrypt the database password using dmctl](dm-manage-source.md#encrypt-the-database-password).
 
 Save the following configuration files of data source according to the example, in which the value of `source-id` will be used in the task configuration in [step 4](#step-4-configure-the-task).
 

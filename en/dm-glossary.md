@@ -20,7 +20,7 @@ Binlog events are information about data modification made to a MySQL or MariaDB
 
 ### Binlog event filter
 
-[Binlog event filter](key-features.md#binlog-event-filter) is a more fine-grained filtering feature than the block and allow lists filtering rule. Refer to [binlog event filter](overview.md#binlog-event-filtering) for details.
+[Binlog event filter](dm-key-features.md#binlog-event-filter) is a more fine-grained filtering feature than the block and allow lists filtering rule. Refer to [binlog event filter](dm-overview.md#binlog-event-filtering) for details.
 
 ### Binlog position
 
@@ -32,7 +32,7 @@ Binlog replication processing unit is the processing unit used in DM-worker to r
 
 ### Block & allow table list
 
-Block & allow table list is the feature that filters or only migrates all operations of some databases or some tables. Refer to [block & allow table lists](overview.md#block-and-allow-lists-migration-at-the-schema-and-table-levels) for details. This feature is similar to [MySQL Replication Filtering](https://dev.mysql.com/doc/refman/5.6/en/replication-rules.html) and [MariaDB Replication Filters](https://mariadb.com/kb/en/replication-filters/).
+Block & allow table list is the feature that filters or only migrates all operations of some databases or some tables. Refer to [block & allow table lists](dm-overview.md#block-and-allow-lists-migration-at-the-schema-and-table-levels) for details. This feature is similar to [MySQL Replication Filtering](https://dev.mysql.com/doc/refman/5.6/en/replication-rules.html) and [MariaDB Replication Filters](https://mariadb.com/kb/en/replication-filters/).
 
 ## C
 
@@ -120,13 +120,13 @@ The subtask is a part of a data migration task that is running on each DM-worker
 
 ### Subtask status
 
-The subtask status is the status of a data migration subtask. The current status options include `New`, `Running`, `Paused`, `Stopped`, and `Finished`. Refer to [subtask status](query-status.md#subtask-status) for more details about the status of a data migration task or subtask.
+The subtask status is the status of a data migration subtask. The current status options include `New`, `Running`, `Paused`, `Stopped`, and `Finished`. Refer to [subtask status](dm-query-status.md#subtask-status) for more details about the status of a data migration task or subtask.
 
 ## T
 
 ### Table routing
 
-The table routing feature enables DM to migrate a certain table of the upstream MySQL or MariaDB instance to the specified table in the downstream, which can be used to merge and migrate sharded tables. Refer to [table routing](key-features.md#table-routing) for details.
+The table routing feature enables DM to migrate a certain table of the upstream MySQL or MariaDB instance to the specified table in the downstream, which can be used to merge and migrate sharded tables. Refer to [table routing](dm-key-features.md#table-routing) for details.
 
 ### Task
 
@@ -134,4 +134,4 @@ The data migration task, which is started after you successfully execute a `star
 
 ### Task status
 
-The task status refers to the status of a data migration task. The task status depends on the statuses of all its subtasks. Refer to [subtask status](query-status.md#subtask-status) for details.
+The task status refers to the status of a data migration task. The task status depends on the statuses of all its subtasks. Refer to [subtask status](dm-query-status.md#subtask-status) for details.
