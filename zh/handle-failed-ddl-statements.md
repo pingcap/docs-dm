@@ -29,7 +29,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/skip-or-replace-abnormal-sql-stateme
 
 ### query-status
 
-`query-status` 命令用于查询当前 MySQL 实例内子任务及 relay 单元等的状态和错误信息，详见[查询状态](dm-query-status.md)。
+`query-status` 命令用于查询当前 MySQL 实例内子任务及 relay 单元等的状态和错误信息，详见[查询状态](query-status.md)。
 
 ### handle-error
 

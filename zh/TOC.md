@@ -2,12 +2,12 @@
 <!-- markdownlint-disable MD041 -->
 
 - 关于 DM
-  - [DM 简介](dm-overview.md)
+  - [DM 简介](overview.md)
   - [DM 5.3 Release Notes](releases/5.3.0.md)
   - 基本功能
-    - [Table routing](dm-key-features.md#table-routing)
-    - [Block & Allow Lists](dm-key-features.md#block--allow-table-lists)
-    - [Binlog Event Filter](dm-key-features.md#binlog-event-filter)
+    - [Table routing](key-features.md#table-routing)
+    - [Block & Allow Lists](key-features.md#block--allow-table-lists)
+    - [Binlog Event Filter](key-features.md#binlog-event-filter)
   - 高级功能
     - 分库分表合并迁移
       - [概述](feature-shard-merge.md)
@@ -16,7 +16,7 @@
     - [迁移使用 GH-ost/PT-osc 的源数据库](feature-online-ddl.md)
     - [使用 SQL 表达式过滤某些行变更](feature-expression-filter.md)
   - [DM 架构](dm-arch.md)
-  - [性能数据](dm-benchmark-v5.3.0.md)
+  - [性能数据](benchmark-v5.3.0.md)
 - 快速上手
   - [快速上手试用](quick-start-with-dm.md)
   - [使用 TiUP 部署 DM 集群](deploy-a-dm-cluster-using-tiup.md)
@@ -35,56 +35,56 @@
     - [使用 Binary](deploy-a-dm-cluster-using-binary.md)
     - [使用 Kubernetes](https://docs.pingcap.com/zh/tidb-in-kubernetes/dev/deploy-tidb-dm)
   - [使用 DM 迁移数据](migrate-data-using-dm.md)
-  - [测试 DM 性能](dm-performance-test.md)
+  - [测试 DM 性能](performance-test.md)
 - 运维操作
   - 集群运维工具
     - [使用 TiUP 运维集群（推荐）](maintain-dm-using-tiup.md)
     - [使用 dmctl 运维集群](dmctl-introduction.md)
-    - [使用 OpenAPI 运维集群](dm-open-api.md)
+    - [使用 OpenAPI 运维集群](open-api.md)
   - 升级版本
     - [1.0.x 到 2.0+ 手动升级](manually-upgrade-dm-1.0-to-2.0.md)
-  - [管理数据源](dm-manage-source.md)
+  - [管理数据源](manage-source.md)
   - 管理迁移任务
-    - [任务配置向导](dm-task-configuration-guide.md)
-    - [任务前置检查](dm-precheck.md)
-    - [创建任务](dm-create-task.md)
-    - [查询状态](dm-query-status.md)
-    - [暂停任务](dm-pause-task.md)
-    - [恢复任务](dm-resume-task.md)
-    - [停止任务](dm-stop-task.md)
-    - [导出和导入集群的数据源和任务配置](dm-export-import-config.md)
+    - [任务配置向导](task-configuration-guide.md)
+    - [任务前置检查](precheck.md)
+    - [创建任务](create-task.md)
+    - [查询状态](query-status.md)
+    - [暂停任务](pause-task.md)
+    - [恢复任务](resume-task.md)
+    - [停止任务](stop-task.md)
+    - [导出和导入集群的数据源和任务配置](export-import-config.md)
     - [处理出错的 DDL 语句](handle-failed-ddl-statements.md)
   - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
-  - [管理迁移表的表结构](dm-manage-schema.md)
-  - [处理告警](dm-handle-alerts.md)
+  - [管理迁移表的表结构](manage-schema.md)
+  - [处理告警](handle-alerts.md)
   - [日常巡检](dm-daily-check.md)
 - 使用场景
   - [从 Aurora 迁移数据到 TiDB](migrate-from-mysql-aurora.md)
   - [TiDB 表结构存在更多列的迁移场景](usage-scenario-downstream-more-columns.md)
   - [变更同步的 MySQL 实例](usage-scenario-master-slave-switch.md)
 - 故障处理
-  - [故障及处理方法](dm-error-handling.md)
-  - [性能问题及处理方法](dm-handle-performance-issues.md)
+  - [故障及处理方法](error-handling.md)
+  - [性能问题及处理方法](handle-performance-issues.md)
 - 性能调优
-  - [配置调优](dm-tune-configuration.md)
+  - [配置调优](tune-configuration.md)
 - 参考指南
   - 架构
     - [DM 架构简介](dm-arch.md)
     - [DM-worker 简介](dm-worker-intro.md)
-  - [DM 命令行参数](dm-command-line-flags.md)
+  - [DM 命令行参数](command-line-flags.md)
   - 配置
-    - [概述](dm-config-overview.md)
+    - [概述](config-overview.md)
     - [DM-master 配置](dm-master-configuration-file.md)
     - [DM-worker 配置](dm-worker-configuration-file.md)
-    - [上游数据库配置](dm-source-configuration-file.md)
-    - [数据迁移任务配置向导](dm-task-configuration-guide.md)
+    - [上游数据库配置](source-configuration-file.md)
+    - [数据迁移任务配置向导](task-configuration-guide.md)
   - 安全
-    - [为 DM 的连接开启加密传输](dm-enable-tls.md)
+    - [为 DM 的连接开启加密传输](enable-tls.md)
     - [生成自签名证书](dm-generate-self-signed-certificates.md)
   - [监控指标](monitor-a-dm-cluster.md)
   - [告警信息](dm-alert-rules.md)
-  - [错误码](dm-error-handling.md#常见故障处理方法)
-- [常见问题](dm-faq.md)
+  - [错误码](error-handling.md#常见故障处理方法)
+- [常见问题](faq.md)
 - [术语表](dm-glossary.md)
 - 版本发布历史
   - v5.3

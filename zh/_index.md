@@ -17,8 +17,8 @@ aliases: ['/docs-cn/tidb-data-migration/dev/']
 <NavColumn>
 <ColumnTitle>关于 TiDB Data Migration</ColumnTitle>
 
-- [什么是 DM？](dm-overview.md)
-- [DM 架构](dm-overview.md)
+- [什么是 DM？](overview.md)
+- [DM 架构](overview.md)
 - [性能数据](benchmark-v2.0-ga.md)
 
 </NavColumn>
@@ -41,7 +41,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/']
 - [使用 TiUP 离线镜像部署集群](deploy-a-dm-cluster-using-tiup-offline.md)
 - [使用 Binary 部署集群](deploy-a-dm-cluster-using-binary.md)
 - [使用 DM 迁移数据](migrate-data-using-dm.md)
-- [测试 DM 性能](dm-performance-test.md)
+- [测试 DM 性能](performance-test.md)
 
 </NavColumn>
 
@@ -52,7 +52,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/']
 - [使用 dmctl 运维集群](dmctl-introduction.md)
 - [升级版本](manually-upgrade-dm-1.0-to-2.0.md)
 - [手动处理 Sharding DDL Lock](manually-handling-sharding-ddl-locks.md)
-- [处理告警](dm-handle-alerts.md)
+- [处理告警](handle-alerts.md)
 - [日常巡检](dm-daily-check.md)
 
 </NavColumn>
@@ -69,11 +69,11 @@ aliases: ['/docs-cn/tidb-data-migration/dev/']
 <ColumnTitle>参考指南</ColumnTitle>
 
 - [DM 架构](dm-arch.md)
-- [DM 命令行参数](dm-command-line-flags.md)
-- [配置概述](dm-config-overview.md)
+- [DM 命令行参数](command-line-flags.md)
+- [配置概述](config-overview.md)
 - [监控指标](monitor-a-dm-cluster.md)
 - [告警信息](dm-alert-rules.md)
-- [错误码](dm-error-handling.md#常见故障处理方法)
+- [错误码](error-handling.md#常见故障处理方法)
 
 </NavColumn>
 
