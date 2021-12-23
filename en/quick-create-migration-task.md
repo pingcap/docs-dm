@@ -17,7 +17,7 @@ This document introduces how to configure a data migration task in different sce
 In addition to scenario-based documents, you can also refer to the following ones:
 
 - For a complete example of data migration task configuration, refer to [DM Advanced Task Configuration File](task-configuration-file-full.md).
-- For a data migration task configuration guide, refer to [Data Migration Task Configuration Guide](task-configuration-guide.md).
+- For a data migration task configuration guide, refer to [Data Migration Task Configuration Guide](dm-task-configuration-guide.md).
 
 ## Migrate Data from Multiple Data Sources to TiDB
 
