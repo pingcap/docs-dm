@@ -6,11 +6,11 @@ title: DM 任务配置文件介绍
 
 本文档主要介绍 Data Migration (DM) 的任务基础配置文件，包含[全局配置](#全局配置)和[实例配置](#实例配置)两部分。
 
-完整的任务配置参见 [DM 任务完整配置文件介绍](task-configuration-file-full.md)。关于各配置项的功能和配置，请参阅[数据迁移功能](dm-key-features.md)。
+完整的任务配置参见 [DM 任务完整配置文件介绍](task-configuration-file-full.md)。关于各配置项的功能和配置，请参阅[数据迁移功能](key-features.md)。
 
 ## 关键概念
 
-关于包括 `source-id` 和 DM-worker ID 在内的关键概念的介绍，请参阅[关键概念](dm-config-overview.md#关键概念)。
+关于包括 `source-id` 和 DM-worker ID 在内的关键概念的介绍，请参阅[关键概念](config-overview.md#关键概念)。
 
 ## 基础配置文件示例
 
@@ -77,7 +77,7 @@ mysql-instances:
 
 ### 功能配置集
 
-对于一般的业务场景，只需要配置黑白名单过滤规则集，配置说明参见以上示例配置文件中 `block-allow-list` 的注释以及 [Block & Allow Lists](dm-key-features.md#block--allow-table-lists)
+对于一般的业务场景，只需要配置黑白名单过滤规则集，配置说明参见以上示例配置文件中 `block-allow-list` 的注释以及 [Block & Allow Lists](key-features.md#block--allow-table-lists)
 
 ## 实例配置
 

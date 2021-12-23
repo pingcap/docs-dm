@@ -24,7 +24,7 @@ aliases: ['/docs-cn/tidb-data-migration/dev/manually-upgrade-dm-1.0-to-2.0/']
 
 ### 上游数据库配置文件
 
-在 v2.0+ 中将[上游数据库 source 相关的配置](dm-source-configuration-file.md)从 DM-worker 的进程配置中独立了出来，因此需要根据 [v1.0.x 的 DM-worker 配置](https://docs.pingcap.com/zh/tidb-data-migration/stable/dm-worker-configuration-file)拆分得到 source 配置。
+在 v2.0+ 中将[上游数据库 source 相关的配置](source-configuration-file.md)从 DM-worker 的进程配置中独立了出来，因此需要根据 [v1.0.x 的 DM-worker 配置](https://docs.pingcap.com/zh/tidb-data-migration/stable/dm-worker-configuration-file)拆分得到 source 配置。
 
 > **注意：**
 >
@@ -99,7 +99,7 @@ from:
 
 ### 数据迁移任务配置文件
 
-对于[数据迁移任务配置向导](dm-task-configuration-guide.md)，v2.0+ 基本与 v1.0.x 保持兼容，可直接复制 v1.0.x 的配置。
+对于[数据迁移任务配置向导](task-configuration-guide.md)，v2.0+ 基本与 v1.0.x 保持兼容，可直接复制 v1.0.x 的配置。
 
 ## 第 2 步：部署 v2.0+ 集群
 
@@ -117,7 +117,7 @@ from:
 
 ## 第 4 步：升级数据迁移任务
 
-1. 使用 [`operate-source`](dm-manage-source.md#数据源操作) 命令将 [准备 v2.0+ 的配置文件](#第-1-步准备-v20-的配置文件) 中得到的上游数据库 source 配置加载到 v2.0+ 集群中。
+1. 使用 [`operate-source`](manage-source.md#数据源操作) 命令将 [准备 v2.0+ 的配置文件](#第-1-步准备-v20-的配置文件) 中得到的上游数据库 source 配置加载到 v2.0+ 集群中。
 
 2. 在下游 TiDB 中，从 v1.0.x 的数据复制任务对应的增量 checkpoint 表中获取对应的全局 checkpoint 信息。
 
@@ -159,8 +159,8 @@ from:
             >
             > 如在 source 配置中启动了 `enable-gtid`，当前需要通过解析 binlog 或 relay log 文件获取 binlog position 对应的 GTID sets 并在 `meta` 中设置为 `binlog-gtid`。
 
-4. 使用 [`start-task`](dm-create-task.md) 命令以 v2.0+ 的数据迁移任务配置文件启动升级后的数据迁移任务。
+4. 使用 [`start-task`](create-task.md) 命令以 v2.0+ 的数据迁移任务配置文件启动升级后的数据迁移任务。
 
-5. 使用 [`query-status`](dm-query-status.md) 命令确认数据迁移任务是否运行正常。
+5. 使用 [`query-status`](query-status.md) 命令确认数据迁移任务是否运行正常。
 
 如果数据迁移任务运行正常，则表明 DM 升级到 v2.0+ 的操作成功。

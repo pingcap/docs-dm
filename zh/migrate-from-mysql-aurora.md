@@ -56,7 +56,7 @@ Aurora 集群数据与迁移计划如下：
 
 ### DM 部署节点
 
-DM 作为数据迁移的核心，需要正常连接上游 Aurora 集群与下游 TiDB 集群，因此通过 MySQL client 等方式检查部署 DM 的节点是否能连通上下游。除此以外，关于 DM 节点数目、软硬件等要求，参见 [DM 集群软硬件环境需求](dm-hardware-and-software-requirements.md)。
+DM 作为数据迁移的核心，需要正常连接上游 Aurora 集群与下游 TiDB 集群，因此通过 MySQL client 等方式检查部署 DM 的节点是否能连通上下游。除此以外，关于 DM 节点数目、软硬件等要求，参见 [DM 集群软硬件环境需求](hardware-and-software-requirements.md)。
 
 ### Aurora
 
@@ -67,7 +67,7 @@ DM 在增量复制阶段依赖 `ROW` 格式的 binlog，参见[为 Aurora 实例
 > **注意：**
 >
 > + 基于 GTID 进行数据迁移需要 MySQL 5.7 (Aurora 2.04) 或更高版本。
-> + 除上述 Aurora 特有配置以外，上游数据库需满足迁移 MySQL 的其他要求，例如表结构、字符集、权限等，参见[上游 MySQL 实例检查内容](dm-precheck.md#检查内容)。
+> + 除上述 Aurora 特有配置以外，上游数据库需满足迁移 MySQL 的其他要求，例如表结构、字符集、权限等，参见[上游 MySQL 实例检查内容](precheck.md#检查内容)。
 
 ## 第 2 步：部署 DM 集群
 
@@ -121,7 +121,7 @@ tiup dmctl --master-addr 127.0.0.1:8261 list-member
 
 > **注意：**
 >
-> DM 所使用的配置文件支持明文或密文数据库密码，推荐使用密文数据库密码确保安全。如何获得密文数据库密码，参见[使用 dmctl 加密数据库密码](dm-manage-source.md#加密数据库密码)。
+> DM 所使用的配置文件支持明文或密文数据库密码，推荐使用密文数据库密码确保安全。如何获得密文数据库密码，参见[使用 dmctl 加密数据库密码](manage-source.md#加密数据库密码)。
 
 根据示例信息保存如下的数据源配置文件，其中 `source-id` 的值将在第 4 步配置任务时被引用。
 
@@ -186,7 +186,7 @@ tiup dmctl --master-addr 127.0.0.1:8261 operate-source create dm-test/source2.ya
 
 > **注意：**
 >
-> 由于 Aurora 不支持 FTWRL，仅使用全量模式导出数据时需要暂停写入，参见 [AWS 官网说明](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)。在示例的全量+增量模式下，DM 将自动启用 [`safe mode`](dm-glossary.md#safe-mode) 解决这一问题。在其他模式下如需保证数据一致，参见 [AWS 官网说明](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)操作。
+> 由于 Aurora 不支持 FTWRL，仅使用全量模式导出数据时需要暂停写入，参见 [AWS 官网说明](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)。在示例的全量+增量模式下，DM 将自动启用 [`safe mode`](glossary.md#safe-mode) 解决这一问题。在其他模式下如需保证数据一致，参见 [AWS 官网说明](https://aws.amazon.com/cn/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/)操作。
 
 本示例选择迁移 Aurora 已有数据并将新增数据实时迁移给 TiDB，即**全量+增量**模式。根据上文的 TiDB 集群信息、已添加的 `source-id`、要迁移的表，保存如下任务配置文件 `task.yaml`：
 

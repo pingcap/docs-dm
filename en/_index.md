@@ -16,7 +16,7 @@ summary: Learn about TiDB Data Migration documentation.
 <NavColumn>
 <ColumnTitle>About TiDB Data Migration</ColumnTitle>
 
-- [What is DM?](dm-overview.md)
+- [What is DM?](overview.md)
 - [DM Architecture](dm-arch.md)
 - [Performance](benchmark-v2.0-ga.md)
 
@@ -35,12 +35,12 @@ summary: Learn about TiDB Data Migration documentation.
 <NavColumn>
 <ColumnTitle>Deploy and Use</ColumnTitle>
 
-- [Software and Hardware Requirements](dm-hardware-and-software-requirements.md)
+- [Software and Hardware Requirements](hardware-and-software-requirements.md)
 - [Deploy DM Using TiUP (Recommended)](deploy-a-dm-cluster-using-tiup.md)
 - [Deploy DM Using TiUP Offline](deploy-a-dm-cluster-using-tiup-offline.md)
 - [Deploy DM Using Binary](deploy-a-dm-cluster-using-binary.md)
 - [Use DM to Migrate Data](migrate-data-using-dm.md)
-- [DM Performance Test](dm-performance-test.md)
+- [DM Performance Test](performance-test.md)
 
 </NavColumn>
 
@@ -51,8 +51,8 @@ summary: Learn about TiDB Data Migration documentation.
 - [Maintain DM Clusters Using dmctl](dmctl-introduction.md)
 - [Upgrade DM](manually-upgrade-dm-1.0-to-2.0.md)
 - [Manually Handle Sharding DDL Locks](manually-handling-sharding-ddl-locks.md)
-- [Handle Alerts](dm-handle-alerts.md)
-- [Daily Check](dm-daily-check.md)
+- [Handle Alerts](handle-alerts.md)
+- [Daily Check](daily-check.md)
 
 </NavColumn>
 
@@ -68,9 +68,9 @@ summary: Learn about TiDB Data Migration documentation.
 <ColumnTitle>Reference</ColumnTitle>
 
 - [DM Architecture](dm-arch.md)
-- [Configuration File Overview](dm-config-overview.md)
+- [Configuration File Overview](config-overview.md)
 - [Monitoring Metrics and Alerts](monitor-a-dm-cluster.md)
-- [Error Handling](dm-error-handling.md)
+- [Error Handling](error-handling.md)
 
 </NavColumn>
 

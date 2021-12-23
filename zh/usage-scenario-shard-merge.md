@@ -77,7 +77,7 @@ CREATE TABLE `sale_01` (
 
 ## 迁移方案
 
-- 要满足迁移需求 #1，无需配置 [table routing 规则](dm-key-features.md#table-routing)。按照[去掉自增主键的主键属性](shard-merge-best-practices.md#去掉自增主键的主键属性)的要求，在下游手动建表。
+- 要满足迁移需求 #1，无需配置 [table routing 规则](key-features.md#table-routing)。按照[去掉自增主键的主键属性](shard-merge-best-practices.md#去掉自增主键的主键属性)的要求，在下游手动建表。
     
     {{< copyable "sql" >}}
 
@@ -100,7 +100,7 @@ CREATE TABLE `sale_01` (
     ignore-checking-items: ["auto_increment_ID"]
     ```
 
-- 要满足迁移需求 #2，配置 [table routing 规则](dm-key-features.md#table-routing)如下：
+- 要满足迁移需求 #2，配置 [table routing 规则](key-features.md#table-routing)如下：
 
     {{< copyable "" >}}
 
@@ -117,7 +117,7 @@ CREATE TABLE `sale_01` (
         target-table:  "sale"
     ```
 
-- 要满足迁移需求 #3，配置 [Block & Allow Lists](dm-key-features.md#block--allow-table-lists) 如下：
+- 要满足迁移需求 #3，配置 [Block & Allow Lists](key-features.md#block--allow-table-lists) 如下：
 
     {{< copyable "" >}}
 
@@ -130,7 +130,7 @@ CREATE TABLE `sale_01` (
           tbl-name: "log_bak"
     ```
 
-- 要满足迁移需求 #4，配置 [Binlog event filter 规则](dm-key-features.md#binlog-event-filter)如下：
+- 要满足迁移需求 #4，配置 [Binlog event filter 规则](key-features.md#binlog-event-filter)如下：
 
     {{< copyable "" >}}
 
@@ -150,7 +150,7 @@ CREATE TABLE `sale_01` (
 
 ## 迁移任务配置
 
-迁移任务的完整配置如下，更多详情请参阅[数据迁移任务配置向导](dm-task-configuration-guide.md)。
+迁移任务的完整配置如下，更多详情请参阅[数据迁移任务配置向导](task-configuration-guide.md)。
 
 {{< copyable "" >}}
 
