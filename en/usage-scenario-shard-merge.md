@@ -80,7 +80,7 @@ In the above structure, `sid` is the shard key, which can ensure that the same `
 
 ## Migration solution
 
-- To satisfy the migration requirements #1, you do not need to configure the [table routing rule](key-features.md#table-routing). You need to manually create a table based on the requirements in the section [Remove the `PRIMARY KEY` attribute from the column](shard-merge-best-practices.md#remove-the-primary-key-attribute-from-the-column):
+- To satisfy the migration requirements #1, you do not need to configure the [table routing rule](dm-key-features.md#table-routing). You need to manually create a table based on the requirements in the section [Remove the `PRIMARY KEY` attribute from the column](shard-merge-best-practices.md#remove-the-primary-key-attribute-from-the-column):
 
     {{< copyable "sql" >}}
 
@@ -103,7 +103,7 @@ In the above structure, `sid` is the shard key, which can ensure that the same `
     ignore-checking-items: ["auto_increment_ID"]
     ```
 
-- To satisfy the migration requirement #2, configure the [table routing rule](key-features.md#table-routing) as follows:
+- To satisfy the migration requirement #2, configure the [table routing rule](dm-key-features.md#table-routing) as follows:
 
     {{< copyable "" >}}
 
@@ -120,7 +120,7 @@ In the above structure, `sid` is the shard key, which can ensure that the same `
         target-table:  "sale"
     ```
 
-- To satisfy the migration requirements #3, configure the [Block and allow table lists](key-features.md#block-and-allow-table-lists) as follows:
+- To satisfy the migration requirements #3, configure the [Block and allow table lists](dm-key-features.md#block-and-allow-table-lists) as follows:
 
     {{< copyable "" >}}
 
@@ -133,7 +133,7 @@ In the above structure, `sid` is the shard key, which can ensure that the same `
           tbl-name: "log_bak"
     ```
 
-- To satisfy the migration requirement #4, configure the [binlog event filter rule](key-features.md#binlog-event-filter) as follows:
+- To satisfy the migration requirement #4, configure the [binlog event filter rule](dm-key-features.md#binlog-event-filter) as follows:
 
     {{< copyable "" >}}
 
@@ -153,7 +153,7 @@ In the above structure, `sid` is the shard key, which can ensure that the same `
 
 ## Migration task configuration
 
-The complete configuration of the migration task is shown as follows. For more details, see [Data Migration Task Configuration Guide](task-configuration-guide.md).
+The complete configuration of the migration task is shown as follows. For more details, see [Data Migration Task Configuration Guide](dm-task-configuration-guide.md).
 
 {{< copyable "" >}}
 
