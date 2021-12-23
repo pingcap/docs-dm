@@ -1,6 +1,7 @@
 ---
 title: DM 2.0-GA Benchmark Report
 summary: Learn about the performance of DM 2.0-GA.
+aliases: ['/zh/tidb-data-migration/dev/benchmark-v2.0-ga/']
 ---
 
 # DM 2.0-GA Benchmark Report

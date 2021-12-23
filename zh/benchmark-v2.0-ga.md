@@ -1,6 +1,7 @@
 ---
 title: DM 2.0-GA 性能测试报告
 summary: 了解 DM 2.0-GA 版本的性能。
+aliases: ['/tidb-data-migration/dev/benchmark-v2.0-ga/']
 ---
 
 # DM 2.0-GA 性能测试报告
