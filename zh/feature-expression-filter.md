@@ -6,7 +6,7 @@ title: 使用 SQL 表达式过滤某些行变更
 
 ## 概述
 
-在数据迁移的过程中，DM 提供了 [Binlog Event Filter](key-features.md#binlog-event-filter) 功能过滤某些类型的 binlog event，例如不向下游迁移 `DELETE` 事件以达到归档、审计等目的。但是 Binlog Event Filter 无法以更细粒度判断某一行的 `DELETE` 事件是否要被过滤。
+在数据迁移的过程中，DM 提供了 [Binlog Event Filter](dm-key-features.md#binlog-event-filter) 功能过滤某些类型的 binlog event，例如不向下游迁移 `DELETE` 事件以达到归档、审计等目的。但是 Binlog Event Filter 无法以更细粒度判断某一行的 `DELETE` 事件是否要被过滤。
 
 为了解决上述问题，DM 支持使用 SQL 表达式过滤某些行变更。DM 支持的 `ROW` 格式的 binlog 中，binlog event 带有所有列的值。用户可以基于这些值配置 SQL 表达式。如果该表达式对于某条行变更的计算结果是 `TRUE`，DM 就不会向下游迁移该条行变更。
 
@@ -16,7 +16,7 @@ title: 使用 SQL 表达式过滤某些行变更
 
 ## 配置示例
 
-与 [Binlog Event Filter](key-features.md#binlog-event-filter) 类似，表达式过滤需要在数据迁移任务配置文件里配置，详见下面配置样例。完整的配置及意义，可以参考 [DM 完整配置文件示例](task-configuration-file-full.md#完整配置文件示例)：
+与 [Binlog Event Filter](dm-key-features.md#binlog-event-filter) 类似，表达式过滤需要在数据迁移任务配置文件里配置，详见下面配置样例。完整的配置及意义，可以参考 [DM 完整配置文件示例](task-configuration-file-full.md#完整配置文件示例)：
 
 ```yml
 name: test
