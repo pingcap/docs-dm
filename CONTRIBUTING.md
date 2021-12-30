@@ -33,7 +33,7 @@ Currently, we maintain the following versions of TiDB Data Migration documentati
 
 | Branch name | Version description |
 | :--- | :-- |
-| `master` | no updates are allowed since December 23, 2021 |
+| `master` | **no updates are allowed since December 23, 2021** |
 | `release-5.3` | the latest 5.3 stable version |
 | `release-2.0` | the latest 2.0 stable version |
 | `release-1.0` | the latest 1.0 stable version |
