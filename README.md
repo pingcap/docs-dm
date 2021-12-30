@@ -20,14 +20,13 @@ Currently, we maintain the following versions for TiDB DM documentation, each wi
 
 | Branch name | Version description |
 | :--- | :-- |
-| `master` | the latest development version |
+| `master` | **no updates are allowed since December 23, 2021**  |
 | `release-2.0` | the latest 2.0 stable version |
 | `release-1.0` | the latest 1.0 stable version |
 
 > **Note:**
 >
-> - Previously, we maintain the TiDB DM documentation in the [docs](https://github.com/pingcap/docs) and [docs-cn](https://github.com/pingcap/docs-cn) repository.
-> - Since March 31, 2020, all the DM documentation has been moved to this repository, and maintained based on versions in the branches above.
+> Since December 23, 2021, the TiDB DM documentation in the master branch has been merged to TiDB documentation by [#8042](https://github.com/pingcap/docs-cn/pull/8042) and [#7317](https://github.com/pingcap/docs/pull/7317). To create a PR for TiDB DM versions later than v5.3, either go to TiDB [English documentation repository](https://github.com/pingcap/docs) or [Chinese documentation repository](https://github.com/pingcap/docs-cn).
 
 ## Contributing
 
