@@ -280,7 +280,6 @@ worker-addr = ":8262"
 log-file = "logs/worker1.log"
 relay-dir = "data/relay1"
 meta-dir = "data/meta1"
-dir = "data/dump1"
 
 [from]
 host = "127.0.0.1"
