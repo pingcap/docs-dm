@@ -29,20 +29,34 @@ Before you contribute, please take a quick look at some general information abou
 
 ### Learn about docs versions
 
-Currently, we maintain three versions of TiDB Data Migration documentation, each with a separate branch:
+Currently, we maintain the following versions of TiDB Data Migration documentation, each with a separate branch:
 
 | Branch name | Version description |
 | :--- | :-- |
+<<<<<<< HEAD
 | `master` | the latest development version |
+=======
+| `master` | **no updates are allowed since December 23, 2021** |
+| `release-5.3` | the latest 5.3 stable version |
+>>>>>>> cc6e23d8 (repository: add information about the DM doc master branch changes  (#879))
 | `release-2.0` | the latest 2.0 stable version |
 | `release-1.0` | the latest 1.0 stable version |
+
+> **Note:**
+>
+> Since December 23, 2021, the TiDB DM documentation in the master branch has been merged to TiDB documentation by [#8042](https://github.com/pingcap/docs-cn/pull/8042) and [#7317](https://github.com/pingcap/docs/pull/7317). To create a PR for TiDB DM versions later than v5.3, either go to TiDB [English documentation repository](https://github.com/pingcap/docs) or [Chinese documentation repository](https://github.com/pingcap/docs-cn).
 
 ### Use cherry-pick labels
 
 - If your changes apply to only one docs version, just submit a PR to the corresponding version branch.
 
 - If your changes apply to multiple docs versions, you don't have to submit a PR to each branch. Instead, after you submit your PR, trigger the ti-chi-bot to submit a PR to other version branches by adding one or several of the following labels as needed. Once the current PR is merged, ti-chi-bot will start to work.
+<<<<<<< HEAD
     - `needs-cherry-pick-master` label: ti-chi-bot will submit a PR to the `master` branch.
+=======
+
+    - `needs-cherry-pick-release-5.3` label: ti-chi-bot will submit a PR to the `release-5.3` branch.
+>>>>>>> cc6e23d8 (repository: add information about the DM doc master branch changes  (#879))
     - `needs-cherry-pick-release-2.0` label: ti-chi-bot will submit a PR to the `release-2.0` branch.
     - `needs-cherry-pick-release-1.0` label: ti-chi-bot will submit a PR to the `release-1.0` branch.
 
