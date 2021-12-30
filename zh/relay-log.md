@@ -7,7 +7,7 @@ summary: 了解目录结构、初始迁移规则和 DM relay log 的数据清理
 
 DM (Data Migration) 工具的 relay log 由若干组有编号的文件和一个索引文件组成。这些有编号的文件包含了描述数据库更改的事件。索引文件包含所有使用过的 relay log 的文件名。
 
-在启用 relay log 功能后，DM-worker 会自动将上游 binlog 迁移到本地配置目录（若使用 TiUP 部署 DM，则迁移目录默认为 `<deploy_dir> / relay_log` ）。DM-worker 在运行过程中，会将上游 binlog 实时迁移到本地文件。DM-worker 的 sync 处理单元会实时读取本地 relay log 的 binlog 事件，将这些事件转换为 SQL 语句，再将 SQL 语句迁移到下游数据库。
+在启用 relay log 功能后，DM-worker 会自动将上游 binlog 迁移到本地配置目录（若使用 TiUP 部署 DM，则迁移目录默认为 `<deploy_dir> / <relay_log>`）。本地配置目录 `<relay_log>` 的默认值是 `relay-dir`，可在[上游数据库配置文件](dm-source-configuration-file.md)中进行修改）。DM-worker 在运行过程中，会将上游 binlog 实时迁移到本地文件。DM-worker 的 sync 处理单元会实时读取本地 relay log 的 binlog 事件，将这些事件转换为 SQL 语句，再将 SQL 语句迁移到下游数据库。
 
 > **注意：**
 >
@@ -20,7 +20,7 @@ DM (Data Migration) 工具的 relay log 由若干组有编号的文件和一个�
 Relay log 本地存储的目录结构示例如下：
 
 ```
-<deploy_dir>/relay_log/
+<deploy_dir>/<relay_log>/
 |-- 7e427cc0-091c-11e9-9e45-72b7c59d52d7.000001
 |   |-- mysql-bin.000001
 |   |-- mysql-bin.000002
@@ -98,7 +98,7 @@ Relay log 迁移的起始位置由如下规则决定：
 
 > **注意：**
 > 
-> 自 v2.0.2 起，上游数据源配置中的 `enable-relay` 项已经失效。在[加载数据源配置](manage-source.md#数据源操作)时，如果发现配置中的 `enable-relay` 项为 `true`，DM 会给出如下信息提示：
+> 自 v2.0.2 起，上游数据源配置中的 `enable-relay` 项已经失效。在[加载数据源配置](dm-manage-source.md#数据源操作)时，如果发现配置中的 `enable-relay` 项为 `true`，DM 会给出如下信息提示：
 > 
 > ```
 > Please use `start-relay` to specify which workers should pull relay log of relay-enabled sources.
@@ -140,7 +140,7 @@ Relay log 迁移的起始位置由如下规则决定：
 
 在 v2.0.2 之前的版本（不含 v2.0.2），DM-worker 在绑定上游数据源时，会检查上游数据源配置中的 `enable-relay` 项。如果 `enable-relay` 为 `true`，则为该数据源启用 relay log 功能。
 
-具体配置方式参见[上游数据源配置文件介绍](source-configuration-file.md)
+具体配置方式参见[上游数据源配置文件介绍](dm-source-configuration-file.md)
 
 </div>
 </SimpleTab>

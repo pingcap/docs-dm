@@ -5,18 +5,18 @@ summary: Learn about TiDB Data Migration documentation.
 
 # TiDB Data Migration Documentation
 
-[TiDB Data Migration](https://github.com/pingcap/ticdc/tree/master/dm) (DM) is a convenient data migration tool, which supports data migration from MySQL-compatible databases (such as MySQL, MariaDB, and Aurora MySQL) into TiDB. It can help to reduce the operation cost of data migration.
+[TiDB Data Migration](https://github.com/pingcap/tiflow/tree/master/dm) (DM) is a convenient data migration tool, which supports data migration from MySQL-compatible databases (such as MySQL, MariaDB, and Aurora MySQL) into TiDB. It can help to reduce the operation cost of data migration.
 
 > **Note:**
 >
-> - Since October 2021, DM's GitHub repository has been moved to [pingcap/ticdc](https://github.com/pingcap/ticdc/tree/master/dm). If you see any issues with DM, submit your issue to the `pingcap/ticdc` repository for feedback.
+> - Since October 2021, DM's GitHub repository has been moved to [pingcap/tiflow](https://github.com/pingcap/tiflow/tree/master/dm). If you see any issues with DM, submit your issue to the `pingcap/tiflow` repository for feedback.
 > - In earlier versions (v1.0 and v2.0), DM uses version numbers that are independent of TiDB. Since v5.3, DM uses the same version number as TiDB. The next version of DM v2.0 is DM v5.3. There are no compatibility changes from DM v2.0 to v5.3, and the upgrade process is no different from a normal upgrade, only an increase in version number.
 
 <NavColumns>
 <NavColumn>
 <ColumnTitle>About TiDB Data Migration</ColumnTitle>
 
-- [What is DM?](overview.md)
+- [What is DM?](dm-overview.md)
 - [DM Architecture](dm-arch.md)
 - [Performance](benchmark-v2.0-ga.md)
 
@@ -35,12 +35,12 @@ summary: Learn about TiDB Data Migration documentation.
 <NavColumn>
 <ColumnTitle>Deploy and Use</ColumnTitle>
 
-- [Software and Hardware Requirements](hardware-and-software-requirements.md)
+- [Software and Hardware Requirements](dm-hardware-and-software-requirements.md)
 - [Deploy DM Using TiUP (Recommended)](deploy-a-dm-cluster-using-tiup.md)
 - [Deploy DM Using TiUP Offline](deploy-a-dm-cluster-using-tiup-offline.md)
 - [Deploy DM Using Binary](deploy-a-dm-cluster-using-binary.md)
 - [Use DM to Migrate Data](migrate-data-using-dm.md)
-- [DM Performance Test](performance-test.md)
+- [DM Performance Test](dm-performance-test.md)
 
 </NavColumn>
 
@@ -51,8 +51,8 @@ summary: Learn about TiDB Data Migration documentation.
 - [Maintain DM Clusters Using dmctl](dmctl-introduction.md)
 - [Upgrade DM](manually-upgrade-dm-1.0-to-2.0.md)
 - [Manually Handle Sharding DDL Locks](manually-handling-sharding-ddl-locks.md)
-- [Handle Alerts](handle-alerts.md)
-- [Daily Check](daily-check.md)
+- [Handle Alerts](dm-handle-alerts.md)
+- [Daily Check](dm-daily-check.md)
 
 </NavColumn>
 
@@ -68,9 +68,9 @@ summary: Learn about TiDB Data Migration documentation.
 <ColumnTitle>Reference</ColumnTitle>
 
 - [DM Architecture](dm-arch.md)
-- [Configuration File Overview](config-overview.md)
+- [Configuration File Overview](dm-config-overview.md)
 - [Monitoring Metrics and Alerts](monitor-a-dm-cluster.md)
-- [Error Handling](error-handling.md)
+- [Error Handling](dm-error-handling.md)
 
 </NavColumn>
 
