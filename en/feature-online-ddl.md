@@ -9,7 +9,7 @@ This document introduces the `online-ddl` feature of DM when DM is used to migra
 
 ## Overview
 
-DDL statements are always used in database applications. MySQL 5.6 and later versions support the `online-ddl` feature, but there are limitations. For example, DDL execution sometimes acquires an MDL lock, resulting in table lock that can block reads or writes to and from a database to a certain extent in production scenarios. In other cases, some DDLs copy the whole table and this affects overall database performance.
+DDL statements are always used in database applications. MySQL 5.6 and later versions support the `online-ddl` feature, but there are limitations. For example, DDL execution sometimes acquires an MDL lock, resulting in a table lock that can block reads or writes to and from a database to a certain extent in production scenarios. In other cases, some DDLs copy the whole table and this affects overall database performance.
 
 Therefore, online DDL tools are often used to execute DDLs to reduce the impact on reads and writes. Common DDL tools are [gh-ost](https://github.com/github/gh-ost) and [pt-osc](https://www.percona.com/doc/percona-toolkit/3.0/pt-online-schema-change.html).
 
