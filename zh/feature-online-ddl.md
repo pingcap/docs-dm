@@ -8,7 +8,7 @@ title: 迁移使用 GH-ost/PT-osc 的源数据库
 
 ## 概述
 
-DDL 是数据库应用中必然会使用的一类 SQL。MySQL 虽然在 5.6 的版本以后支持了 online-ddl 功能，但是也有或多或少的限制。比如 MDL 锁的获取，某些 DDL 还是需要以 Copy 的方式来进行，在生产业务使用中，DDL 执行过程中的锁表会一定程度上阻塞数据库的读取或者写入。
+DDL 是数据库应用中必然会使用的一类 SQL。MySQL 虽然在 5.6 的版本以后支持了 online-ddl 功能，但是也有或多或少的限制。比如某些时候执行 DDL 会获取 MDL 锁，造成锁表，生产环境中，锁表会一定程度阻塞数据库的读取或写入。另外，某些 DDL 需要复制整个表，从而影响数据库整体性能。
 
 因此，用户往往会选择 online DDL 工具执行 DDL，把对读写的影响降到最低。常见的 Online DDL 工具有 [gh-ost](https://github.com/github/gh-ost) 和 [pt-osc](https://www.percona.com/doc/percona-toolkit/3.0/pt-online-schema-change.html)。
 
