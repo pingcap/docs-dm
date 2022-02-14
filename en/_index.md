@@ -9,6 +9,7 @@ summary: Learn about TiDB Data Migration documentation.
 
 > **Note:**
 >
+> - Since DM v5.4, the TiDB Data Migration documentation has been merged into the TiDB documentation of the same version. To read the DM documentation of v5.4 or a later version, go to the [TiDB Documentation](https://docs.pingcap.com/zh/tidb/stable/dm-overview) of the same version.
 > - Since October 2021, DM's GitHub repository has been moved to [pingcap/tiflow](https://github.com/pingcap/tiflow/tree/master/dm). If you see any issues with DM, submit your issue to the `pingcap/tiflow` repository for feedback.
 > - In earlier versions (v1.0 and v2.0), DM uses version numbers that are independent of TiDB. Since v5.3, DM uses the same version number as TiDB. The next version of DM v2.0 is DM v5.3. There are no compatibility changes from DM v2.0 to v5.3, and the upgrade process is no different from a normal upgrade, only an increase in version number.
 
