@@ -9,6 +9,7 @@ summary: 了解 TiDB Data Migration 用户文档。
 
 > **注意：**
 >
+> - 从 DM v5.4 起，TiDB Data Migration 的用户文档已合并入相同版本号的 TiDB 文档。如需阅读 v5.4 及之后版本的 DM 文档，请访问对应版本的 [TiDB 文档](https://docs.pingcap.com/zh/tidb/stable/dm-overview)。
 > - DM 的 GitHub 代码仓库已于 2021 年 12 月迁移到 [pingcap/tiflow](https://github.com/pingcap/tiflow/tree/master/dm)。如有任何关于 DM 的问题，请在 `pingcap/tiflow` 仓库提交，以获得后续反馈。
 > - 在较早版本中（v1.0 和 v2.0），DM 采用独立于 TiDB 的版本号。从 DM v5.3 起，DM 采用与 TiDB 相同的版本号。DM v2.0 的下一个版本为 DM v5.3。DM v2.0 到 v5.3 无兼容性变更，升级过程与正常升级无差异，仅仅是版本号上的增加。
 
