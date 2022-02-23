@@ -41,10 +41,10 @@
     - [Maintain DM Clusters Using TiUP (Recommended)](maintain-dm-using-tiup.md)
     - [Maintain DM Clusters Using dmctl](dmctl-introduction.md)
     - [Maintain DM Clusters Using OpenAPI](dm-open-api.md)
-  + Cluster Upgrade
+  - Cluster Upgrade
     - [Manually Upgrade from v1.0.x to v2.0+](manually-upgrade-dm-1.0-to-2.0.md)
-  + [Manage Data Source](dm-manage-source.md)
-  + Manage a Data Migration Task
+  - [Manage Data Source](dm-manage-source.md)
+  - Manage a Data Migration Task
     - [Task Configuration Guide](dm-task-configuration-guide.md)
     - [Precheck a Task](dm-precheck.md)
     - [Create a Task](dm-create-task.md)
