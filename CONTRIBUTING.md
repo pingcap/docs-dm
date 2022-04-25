@@ -133,7 +133,3 @@ git push -u origin new-branch-name # "-u" is used to track the remote branch fro
 2. Click the `Compare & pull request` button next to your `new-branch-name` branch to create your PR. See [Pull Request Title Style](https://github.com/pingcap/community/blob/master/contributors/commit-message-pr-style.md#pull-request-title-style).
 
 Now, your PR is successfully submitted! After this PR is merged, you will automatically become a contributor to TiDB Data Migration documentation.
-
-## Contact
-
-Join the Slack channel: [#sig-docs](https://slack.tidb.io/invite?team=tidb-community&channel=sig-docs&ref=pingcap-docs)
