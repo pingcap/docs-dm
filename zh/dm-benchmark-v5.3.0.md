@@ -1,7 +1,7 @@
 ---
 title: DM 5.3.0 性能测试报告
 summary: 了解 DM 5.3.0 版本的性能。
-aliases: ['/zh/tidb-data-migration/stable/benchmark-v5.3.0/']
+aliases: ['/zh/tidb-data-migration/stable/benchmark-v5.3.0/','/zh/tidb/stable/dm-benchmark-v5.3.0/']
 ---
 
 # DM 5.3.0 性能测试报告
