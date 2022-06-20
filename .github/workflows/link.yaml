@@ -30,4 +30,4 @@ jobs:
         with:
           title: Broken Link Detected
           content-filepath: out.md
-          assignees: shichun-0415
+          assignees: ran-huang
