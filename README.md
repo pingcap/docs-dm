@@ -34,7 +34,3 @@ Currently, we maintain the following versions for TiDB DM documentation, each wi
 Find anything that can be improved in the TiDB Data Migration Documentation? Welcome to contribute to the repo!
 
 See [TiDB Data Migration Documentation Contributing Guide](/CONTRIBUTING.md) to become a contributor. 🤓
-
-## Contributors over time
-
-[![Contributors over time](https://contributor-graph-api.apiseven.com/contributors-svg?chart=contributorOverTime&repo=pingcap/docs-dm)](https://www.apiseven.com/en/contributor-graph?chart=contributorOverTime&repo=pingcap/docs-dm)
